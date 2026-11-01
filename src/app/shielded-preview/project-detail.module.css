@@ -1,0 +1,120 @@
+.page{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);grid-template-areas:"intro status" "body evidence" "footer footer";gap:24px 32px;min-width:0;padding:4px 0 0;color:var(--ink);font-size:17px;line-height:1.6}
+.page>*{min-width:0}
+.page svg{display:block;flex-shrink:0}
+.intro{grid-area:intro;align-self:start;padding:4px 0}
+.identity{display:flex;align-items:center;gap:17px}
+.projectIcon{display:flex;align-items:center;justify-content:center;color:var(--secondary-ink,#c2c2c2);flex-shrink:0}
+.projectIcon>svg{width:42px;height:42px;stroke-width:1.15}
+.sectionLabel{display:block;color:var(--text-muted,#b0b0b0);font-size:13px;line-height:1.5;letter-spacing:.07em;text-transform:uppercase}
+.page .identity h1{font-size:clamp(32px,3.2vw,42px);line-height:1.14;letter-spacing:-1.8px;font-weight:450;margin:0;overflow-wrap:anywhere}
+.page .identity h1:focus{outline:none;box-shadow:none}
+.page .lead{font-size:19px;line-height:1.6;color:#c9c9c9;max-width:52ch;margin:23px 0 17px!important}
+.tags{display:flex;align-items:center;flex-wrap:wrap;gap:6px 15px;padding:0;margin:0;list-style:none;color:var(--text-muted,#b0b0b0);font-size:13px}
+.tags li+li:before{content:"·";margin-right:15px;color:#666}
+.sectionNav{display:flex;align-items:center;gap:4px 20px;flex-wrap:wrap;margin-top:16px}
+.sectionNav a{display:inline-flex;align-items:center;min-height:44px;color:var(--secondary-ink,#c2c2c2);font-size:15px;text-underline-offset:5px}
+.sectionNav a:hover{color:white;text-decoration:underline}
+.statusPanel{grid-area:status;align-self:start;padding:20px;background:#111;border:1px solid #272727;border-radius:7px;scroll-margin-top:24px}
+.page .statusPanel h2{font-size:22px;line-height:1.35;letter-spacing:-.4px;font-weight:500;margin:9px 0 13px}
+.page .statusPanel>p,.page .nextStep p{font-size:16px;line-height:1.7;color:var(--secondary-ink,#c2c2c2);margin:0!important}
+.nextStep{margin-top:21px;padding-top:17px;border-top:1px solid #292929}
+.page .nextStep h3{font-size:14px;line-height:1.5;font-weight:500;color:#ddd;margin:0 0 8px}
+.body{grid-area:body;min-width:0}
+.section{padding:25px 0 27px;border-top:1px solid #292929;scroll-margin-top:24px}
+.page .section h2{font-size:23px;font-weight:500;letter-spacing:-.45px;line-height:1.35;margin:0 0 16px}
+.page .section>p{font-size:17px;line-height:1.75;color:var(--secondary-ink,#c2c2c2);margin:0!important;max-width:66ch}
+.scope{margin-top:19px}
+.scope .sectionLabel{font-size:12px}
+.page .scope p{font-size:16px;line-height:1.7;color:var(--secondary-ink,#c2c2c2);margin:7px 0 0!important}
+.technicalContext{margin-top:15px;color:var(--secondary-ink,#c2c2c2);font-size:15px}
+.technicalContext summary{font-size:14px}
+.technicalContext>div{padding:10px 0 0}
+.page .technicalContext p{font-size:15px;line-height:1.7;margin:0 0 15px!important}
+.technicalContext dl{margin:0}
+.technicalContext dl>div{display:grid;grid-template-columns:minmax(95px,1fr) 2.4fr;gap:18px;padding:12px 0;border-top:1px solid #202020}
+.technicalContext dt{color:#ddd;font-size:14px;font-weight:500}
+.technicalContext dd{margin:0;color:var(--text-muted,#b0b0b0);font-size:15px;line-height:1.7}
+.timeline{list-style:none;padding:0;margin:24px 0 0}
+.timeline li{display:grid;grid-template-columns:89px minmax(0,1fr);gap:17px;padding:0 0 25px}
+.timeline li:last-child{padding-bottom:0}
+.timeline li>time{font-size:12px;color:var(--text-muted,#b0b0b0);line-height:1.6;padding-top:2px;font-variant-numeric:tabular-nums}
+.timeline li>div{position:relative;padding-left:21px;border-left:1px solid #383838}
+.timeline li>div:before{content:"";position:absolute;width:6px;height:6px;left:-3.5px;top:8px;background:#aaa;border-radius:50%;box-shadow:0 0 0 4px var(--bg)}
+.page .timeline h3{font-size:17px;line-height:1.4;font-weight:500;color:#ddd;margin:0}
+.page .timeline p{font-size:15px;line-height:1.7;color:var(--text-muted,#b0b0b0);margin:9px 0!important}
+.timeline .evidenceLink{font-size:13px;min-height:30px;justify-content:flex-start;gap:7px}
+.evidence{grid-area:evidence;align-self:start;position:sticky;top:24px;padding-top:25px;border-top:1px solid #292929;scroll-margin-top:24px}
+.sourceHeading{margin-bottom:17px}
+.page .sourceHeading h2{font-size:19px;line-height:1.4;font-weight:500;letter-spacing:-.25px;margin:0 0 7px}
+.sourceHeading>span{font-size:13px;color:var(--text-muted,#b0b0b0)}
+.page .evidence>p{font-size:15px;line-height:1.75;color:var(--secondary-ink,#c2c2c2);margin:0!important}
+.sourceLinks{display:flex;flex-direction:column;gap:11px;margin-top:19px}
+.evidenceLink{display:inline-flex;align-items:center;justify-content:space-between;gap:14px;min-height:34px;color:#d0d0d0;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.evidenceLink:hover{color:white;text-decoration:underline;text-underline-offset:4px}
+.repositories{margin-top:23px;padding-top:18px;border-top:1px solid #252525}
+.page .repositories h3{font-size:14px;color:var(--secondary-ink,#c2c2c2);font-weight:500;margin:0 0 8px}
+.repositories>div{padding:9px 0}
+.repositories .evidenceLink{display:flex;width:100%;font-size:13px}
+.page .repositories p{color:var(--text-muted,#b0b0b0);font-size:12px;line-height:1.7;margin:3px 0!important;overflow-wrap:anywhere}
+.page .caption{font-size:13px;color:var(--text-muted,#b0b0b0);line-height:1.7}
+.evidence>.caption{margin-top:20px!important}
+.page .section .notice{font-size:14px;line-height:1.7;background:none;border:0;border-left:2px solid #555;border-radius:0;color:var(--secondary-ink,#c2c2c2);padding:2px 0 2px 13px;margin:15px 0!important}
+.commits{margin-top:10px}
+.commits>a{display:flex;align-items:flex-start;gap:12px;padding:17px 0;color:#ddd;border-bottom:1px solid #242424}
+.commits>a:last-child{border-bottom:0;padding-bottom:0}
+.commits>a>div{flex:1;min-width:0}
+.commits>a>span{margin-top:3px}
+.commits>a>svg{margin-top:5px;color:var(--text-muted,#b0b0b0)}
+.repoName{font-size:12px;color:var(--text-muted,#b0b0b0);overflow-wrap:anywhere}
+.page .commits h3{font-size:15px;font-weight:400;line-height:1.6;margin:5px 0 6px;overflow-wrap:anywhere}
+.page .commits p{font-size:12px;line-height:1.6;color:var(--text-muted,#b0b0b0);margin:0!important}
+.commits>a:hover h3{text-decoration:underline;text-underline-offset:4px;color:#fff}
+.footer{grid-area:footer;display:flex;align-items:center;justify-content:space-between;gap:25px;border-top:1px solid #292929;padding-top:20px}
+.back{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0;border:0;background:transparent;color:var(--secondary-ink,#c2c2c2);font-size:14px!important}
+.back:hover{color:#fff}
+.nextProject{display:flex;align-items:center;justify-content:space-between;gap:24px;color:var(--text-muted,#b0b0b0);font-size:12px}
+.nextProject strong{display:block;font-size:20px;font-weight:450;color:#ddd;line-height:1.5;margin-top:3px}
+.nextProject:hover strong{color:white;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:1150px){.page{grid-template-columns:minmax(0,1.55fr) minmax(260px,1fr);gap:28px}.statusPanel{padding:20px}.page .lead{font-size:19px}.page .identity h1{font-size:42px}.sectionNav{gap:7px 19px}}
+@media(max-width:1050px){.page{grid-template-columns:minmax(0,1fr);grid-template-areas:"intro" "status" "body" "evidence" "footer";gap:25px}.intro{padding:0}.page .lead{max-width:65ch}.statusPanel{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:30px}.statusPanel>.sectionLabel,.statusPanel>h2,.page .statusPanel>p{grid-column:1}.nextStep{grid-column:2;grid-row:1/4;margin:0;padding:0 0 0 24px;border-top:0;border-left:1px solid #292929}.evidence{position:static}.sourceLinks{max-width:440px}.page .evidence>p{max-width:70ch}.repositories{max-width:580px}.section:last-child{padding-bottom:0}}
+@media(max-width:650px){.page{gap:25px;padding-top:3px}.identity{gap:13px}.projectIcon>svg{width:32px;height:32px}.page .identity h1{font-size:36px;letter-spacing:-1.2px}.page .lead{font-size:18px;line-height:1.7;margin-top:18px!important}.tags{font-size:12px;gap:5px 12px}.tags li+li:before{margin-right:12px}.sectionNav{gap:4px 16px;margin-top:12px}.sectionNav a{font-size:15px;min-height:44px}.statusPanel{display:block;padding:20px}.page .statusPanel h2{font-size:21px}.page .statusPanel>p,.page .nextStep p{font-size:16px}.nextStep{margin-top:17px;padding:15px 0 0;border-left:0;border-top:1px solid #292929}.section{padding-top:22px}.page .section h2{font-size:22px}.page .section>p{font-size:16px}.page .scope p{font-size:16px}.technicalContext dl>div{grid-template-columns:1fr;gap:5px}.timeline li{grid-template-columns:1fr;gap:8px;padding-bottom:22px}.timeline li>time{padding-left:20px}.timeline li>div{padding-left:20px;margin-left:2px}.page .timeline h3{font-size:16px}.page .timeline p{font-size:14px}.evidence{padding-top:23px}.footer{gap:15px}.nextProject{gap:12px}.nextProject strong{font-size:19px}.back{font-size:13px!important}.section,.statusPanel,.evidence{scroll-margin-top:80px}}
+@media(prefers-reduced-motion:reduce){.page *{scroll-behavior:auto!important}}
+.evidenceLink>svg,.back>svg,.nextProject>svg{width:18px;height:18px;display:block;flex-shrink:0}
+.evidenceLink{min-height:40px}
+.commits>a>svg{display:block;align-self:center;flex-shrink:0}
+
+.readingLinks{display:flex;flex-direction:column;margin-top:10px}.readingLinks>a{display:flex;align-items:center;justify-content:space-between;gap:20px;color:var(--ink);padding:14px 0;border-bottom:1px solid var(--border);font-size:17px;line-height:1.5}.readingLinks>a:hover{text-decoration:underline;text-underline-offset:4px}.readingLinks small{display:block;font-size:13px;color:var(--text-muted);margin-bottom:4px}.readingLinks h3{font-size:17px;font-weight:500;margin:22px 0 4px}.readingLinks svg{flex-shrink:0}
+
+/* Project records use the same full-width reading rhythm as governance. */
+.page{grid-template-columns:minmax(0,1fr);grid-template-areas:"navigation" "intro" "status" "body" "evidence" "footer";gap:24px;padding:0;container-type:inline-size}
+.recordNav{grid-area:navigation;display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+.sectionNav{margin:0;gap:4px 20px}
+.page .lead{max-width:80ch;margin:18px 0 12px!important}
+.statusPanel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;padding:22px;border-radius:8px}
+.statusPanel>.sectionLabel,.statusPanel>h2,.page .statusPanel>p{grid-column:1}
+.nextStep{grid-column:2;grid-row:1/4;margin:0;padding:0 0 0 28px;border-top:0;border-left:1px solid #303030}
+.body{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;align-items:start}
+.section:first-child{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 32px}.section:first-child>h2{grid-column:1/-1;margin-bottom:0}.section:first-child>.scope{margin-top:0}.section:first-child>.technicalContext{grid-column:1/-1;margin-top:0}
+.section{padding:0;border:0;min-width:0}
+.section:nth-child(n+2){grid-column:1/-1;border-top:1px solid #292929;padding-top:24px}
+.page .section>p{max-width:72ch;font-size:16px}
+.page .section h2{font-size:22px}
+.readingLinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.readingLinks>a{font-size:16px;padding:16px 18px;background:#101010;border:1px solid #2c2c2c;border-radius:8px}.readingLinks>a:hover{border-color:#555;background:#161616}.readingLinks h3{grid-column:1/-1;margin:8px 0 0;font-size:16px}
+.timeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.timeline li{display:flex;flex-direction:column;gap:12px;padding:20px!important;border:1px solid #2c2c2c;border-radius:8px;background:#101010}
+.timeline li>time{font-size:13px;padding:0}
+.timeline li>div{border:0;padding:0;display:flex;flex-direction:column;flex:1}
+.timeline li>div:before{display:none}
+.timeline .evidenceLink{margin-top:auto;padding-top:10px;justify-content:space-between;min-height:44px}
+.commits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.commits>a,.commits>a:last-child{padding:18px;border:1px solid #2c2c2c;background:#101010;border-radius:8px}
+.commits>a:hover,.timeline li:has(a:hover){background:#161616;border-color:#555}
+.page .commits h3{font-size:16px}
+.page .commits p,.repoName{font-size:13px}
+.evidence{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 32px;padding-top:24px}
+.sourceHeading{margin:0}.page .evidence>p{grid-column:1;max-width:72ch}.sourceLinks{grid-column:1;margin:0;max-width:none}
+.repositories{grid-column:2;grid-row:1/4;margin:0;padding:0 0 0 28px;border-top:0;border-left:1px solid #292929;max-width:none}
+.repositories .evidenceLink{font-size:15px}.page .repositories p{font-size:13px}
+.footer{justify-content:flex-end;padding-top:16px}.nextProject{min-width:200px;max-width:100%}
+@container(min-width:1200px){.timeline,.commits,.readingLinks{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container(max-width:680px){.recordNav{gap:8px}.sectionNav{gap:0 16px}.statusPanel{display:block;padding:20px}.nextStep{margin-top:18px;padding:18px 0 0;border-left:0;border-top:1px solid #303030}.body,.timeline,.commits,.evidence,.readingLinks,.section:first-child{grid-template-columns:minmax(0,1fr)}.section+.section{border-top:1px solid #292929;padding-top:24px}.repositories{grid-column:1;grid-row:auto;padding:18px 0 0;border-left:0;border-top:1px solid #292929}.page .lead{font-size:18px}.page .identity h1{font-size:34px}.timeline li{padding:18px!important}}

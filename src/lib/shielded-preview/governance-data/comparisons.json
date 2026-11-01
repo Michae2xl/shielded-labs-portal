@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-02",
+  "rounds": [
+    {
+      "id": "2026-09-nu7-scope",
+      "title": "NU7 scope · September 2026",
+      "resultDate": "2026-09-14",
+      "note": "Five scope questions, transcribed from the original published results. Option labels are shortened; consult the linked ballots for full wording. This is a scoped comparison, not the complete polling archive.",
+      "bodies": [
+        {
+          "id": "zcap",
+          "name": "ZCAP",
+          "unit": "votes",
+          "decimals": 0,
+          "rule": "One eligible panel member, one ballot; questions may be skipped.",
+          "participation": "135 of 198 eligible members submitted a ballot. Q3 records 134 answers; the other questions record 135.",
+          "sourceUrl": "https://forum.zcashcommunity.com/t/nu7-sentiment-polls-results/57590/4",
+          "tallyUrl": "https://global.discourse-cdn.com/zcash/original/3X/8/7/87f6b82d2cb558ab63a9494fe2f00685ee836e2f.png"
+        },
+        {
+          "id": "coinholders",
+          "name": "Coinholders",
+          "unit": "ZEC",
+          "decimals": 3,
+          "rule": "Coin-weighted voting; the recorded weight varies by question.",
+          "participation": "Approximately 2.4 million ZEC per question. This is voting weight, not a count of people or a share of all holders.",
+          "sourceUrl": "https://forum.zcashcommunity.com/t/nu7-coinholder-vote/56912/42",
+          "tallyUrl": "https://forum.zcashcommunity.com/t/nu7-coinholder-vote/56912/42"
+        }
+      ],
+      "questions": [
+        {
+          "id": "issuance",
+          "title": "Issuance schedule",
+          "options": [
+            {
+              "id": "smooth",
+              "label": "Gradual issuance"
+            },
+            {
+              "id": "halvings",
+              "label": "Keep halvings"
+            },
+            {
+              "id": "defer",
+              "label": "Defer smoothing"
+            },
+            {
+              "id": "abstain",
+              "label": "Abstention",
+              "abstention": true
+            }
+          ],
+          "weights": {
+            "zcap": [
+              "57",
+              "54",
+              "9",
+              "15"
+            ],
+            "coinholders": [
+              "22384875",
+              "2375932375",
+              "4147625",
+              "1072125"
+            ]
+          }
+        },
+        {
+          "id": "reissuance",
+          "title": "Reissuance timing",
+          "options": [
+            {
+              "id": "soon",
+              "label": "Earliest possible start"
+            },
+            {
+              "id": "2027",
+              "label": "February 2027"
+            },
+            {
+              "id": "2031",
+              "label": "February 2031"
+            },
+            {
+              "id": "abstain",
+              "label": "Abstention",
+              "abstention": true
+            }
+          ],
+          "weights": {
+            "zcap": [
+              "67",
+              "19",
+              "31",
+              "18"
+            ],
+            "coinholders": [
+              "70239625",
+              "6283000",
+              "2319643750",
+              "4985625"
+            ]
+          }
+        },
+        {
+          "id": "sprout",
+          "title": "Sprout retirement",
+          "options": [
+            {
+              "id": "nu7",
+              "label": "At NU7 activation"
+            },
+            {
+              "id": "year",
+              "label": "After one year"
+            },
+            {
+              "id": "unset",
+              "label": "Leave the date open"
+            },
+            {
+              "id": "abstain",
+              "label": "Abstention",
+              "abstention": true
+            }
+          ],
+          "weights": {
+            "zcap": [
+              "65",
+              "38",
+              "23",
+              "8"
+            ],
+            "coinholders": [
+              "2333854625",
+              "13787000",
+              "49820875",
+              "1683750"
+            ]
+          }
+        },
+        {
+          "id": "blocks",
+          "title": "Shorter block intervals",
+          "options": [
+            {
+              "id": "yes",
+              "label": "In favor"
+            },
+            {
+              "id": "no",
+              "label": "Against"
+            },
+            {
+              "id": "abstain",
+              "label": "Abstention",
+              "abstention": true
+            }
+          ],
+          "weights": {
+            "zcap": [
+              "95",
+              "19",
+              "21"
+            ],
+            "coinholders": [
+              "2397669375",
+              "141625",
+              "1652250"
+            ]
+          }
+        },
+        {
+          "id": "readiness",
+          "title": "Scope versus readiness",
+          "options": [
+            {
+              "id": "ready",
+              "label": "Ship ready features"
+            },
+            {
+              "id": "wait",
+              "label": "Wait for all features"
+            },
+            {
+              "id": "oppose",
+              "label": "Oppose the plan"
+            },
+            {
+              "id": "abstain",
+              "label": "Abstention",
+              "abstention": true
+            }
+          ],
+          "weights": {
+            "zcap": [
+              "86",
+              "34",
+              "5",
+              "10"
+            ],
+            "coinholders": [
+              "2382601500",
+              "12707500",
+              "4000",
+              "4161375"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

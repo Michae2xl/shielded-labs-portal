@@ -1,0 +1,1118 @@
+{
+  "viewports": [
+    [
+      1440,
+      1000
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "cardHeights": {
+    "before": [
+      161,
+      161,
+      161,
+      161,
+      161,
+      161
+    ],
+    "after": [
+      163,
+      163,
+      163,
+      163,
+      163,
+      163
+    ]
+  },
+  "method": "Rendered HTML text colors against nearest solid ancestor background; disabled and hidden elements excluded. Focused visual check, not a full accessibility audit.",
+  "checks": [
+    {
+      "label": "Overview desktop",
+      "headings": [
+        "Independent. For Zcash.",
+        "Projects",
+        "Governance",
+        "Code activity"
+      ],
+      "lowContrast": [],
+      "minFont": 13,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.77,
+          "size": 13,
+          "text": "In development"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.77,
+          "size": 13,
+          "text": "Research & design"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.77,
+          "size": 13,
+          "text": "Proposal reference"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.77,
+          "size": 13,
+          "text": "NU6.3 reference"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=overview",
+      "width": 1440
+    },
+    {
+      "label": "Projects desktop",
+      "headings": [
+        "Projects"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.42,
+          "size": 12,
+          "text": "Sustainability"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Consensus"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Cryptography"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Security"
+        }
+      ],
+      "scrollWidth": 1440,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=projects",
+      "width": 1440
+    },
+    {
+      "label": "Team & community desktop",
+      "headings": [
+        "Team & community · Team",
+        "Jason McGee Stramaglia",
+        "Zooko Wilcox",
+        "Nate Wilcox"
+      ],
+      "lowContrast": [],
+      "minFont": 13,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Team information reviewed 25 Oct 2026"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 10.6,
+          "size": 15,
+          "text": "Leadership"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 10.6,
+          "size": 15,
+          "text": "Engineering"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 10.6,
+          "size": 15,
+          "text": "Cryptography"
+        }
+      ],
+      "scrollWidth": 1440,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=people",
+      "width": 1440
+    },
+    {
+      "label": "Code activity desktop loaded",
+      "headings": [
+        "Contributors",
+        "Activity",
+        "Commits 262"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 9.15,
+          "size": 13,
+          "text": "262"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 9.25,
+          "size": 12,
+          "text": "5"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 9.25,
+          "size": 12,
+          "text": "4"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "6/6 sources refreshed · 28 Oct 2026"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=activity",
+      "width": 1440
+    },
+    {
+      "label": "Contributor map desktop",
+      "headings": [
+        "Contributors",
+        "Activity",
+        "Commits 262"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(18, 18, 18)",
+          "contrast": 5.15,
+          "size": 13,
+          "text": "2"
+        },
+        {
+          "color": "rgb(18, 18, 18)",
+          "contrast": 5.15,
+          "size": 13,
+          "text": "4"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "contrast": 7.46,
+          "size": 13,
+          "text": "1"
+        },
+        {
+          "color": "rgb(255, 255, 255)",
+          "contrast": 7.46,
+          "size": 13,
+          "text": "1"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=activity",
+      "width": 1440
+    },
+    {
+      "label": "Milestones desktop loaded",
+      "headings": [
+        "Milestones · All milestones",
+        "Epoch introduced",
+        "Coordinated response",
+        "Preventive research finds a critical flaw"
+      ],
+      "lowContrast": [],
+      "minFont": 13,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Epoch"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Research"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Ironwood"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Security"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=impact",
+      "width": 1440
+    },
+    {
+      "label": "Governance overview desktop",
+      "headings": [
+        "Governance · Overview",
+        "Under review",
+        "Q3 2026 results",
+        "Funding records"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 7.84,
+          "size": 13,
+          "text": "1"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 7.84,
+          "size": 13,
+          "text": "2"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 7.84,
+          "size": 13,
+          "text": "3"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 7.84,
+          "size": 13,
+          "text": "5"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance",
+      "width": 1440
+    },
+    {
+      "label": "Proposals desktop",
+      "headings": [
+        "Governance · Proposals",
+        "Under review"
+      ],
+      "lowContrast": [],
+      "minFont": 13,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.93,
+          "size": 13,
+          "text": "18"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Prodiggyy"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "28 Oct 2026"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "zakrad"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals",
+      "width": 1440
+    },
+    {
+      "label": "Voting desktop",
+      "headings": [
+        "Governance · Voting",
+        "Poll archive"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Historical records"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Closed"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Results published"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Postponed · moved to Q3"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting",
+      "width": 1440
+    },
+    {
+      "label": "Grants desktop",
+      "headings": [
+        "Governance · Grants",
+        "Funding ledger"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Open"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Completed"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Open"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Completed"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "width": 1440
+    },
+    {
+      "label": "Results desktop",
+      "headings": [
+        "Governance · Results",
+        "Q3 2026 outcomes"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Closed"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "width": 1440
+    },
+    {
+      "label": "ZCAP desktop",
+      "headings": [
+        "Governance · ZCAP",
+        "Issuance schedule"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.42,
+          "size": 14,
+          "text": "Exclude abstentions"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Published results"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "NU7 scope · September 2026"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 14,
+          "text": "Percentages"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap",
+      "width": 1440
+    },
+    {
+      "label": "Insights desktop",
+      "headings": [
+        "Governance · Insights",
+        "Proposal decisions"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Approved"
+        }
+      ],
+      "scrollWidth": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "width": 1440
+    },
+    {
+      "label": "Grants mobile",
+      "headings": [
+        "Governance · Grants",
+        "Funding ledger"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Open"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Completed"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Open"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Completed"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "width": 390
+    },
+    {
+      "label": "Grant detail mobile",
+      "headings": [
+        "Zcash Privacy & Adoption in Two Bolivian Universities by BlockivIA",
+        "Recorded payments",
+        "Milestones",
+        "Sources & context"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 13,
+          "text": "Recorded status"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 13,
+          "text": "Recorded budget"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 13,
+          "text": "Milestones marked paid"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "Zcash Community Grants"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&record=zcg_regular%7CZcash+Privacy+%26+Adoption+in+Two+Bolivian+Universities+by+BlockivIA",
+      "width": 390
+    },
+    {
+      "label": "Proposals mobile",
+      "headings": [
+        "Governance · Proposals",
+        "Under review"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.93,
+          "size": 13,
+          "text": "18"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Prodiggyy"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "28 Oct 2026"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "Requested USD"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals",
+      "width": 390
+    },
+    {
+      "label": "Voting mobile",
+      "headings": [
+        "Governance · Voting",
+        "Poll archive"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Historical records"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Closed"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Results published"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Postponed · moved to Q3"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting",
+      "width": 390
+    },
+    {
+      "label": "Results mobile",
+      "headings": [
+        "Governance · Results",
+        "Q3 2026 outcomes"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Closed"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "width": 390
+    },
+    {
+      "label": "ZCAP mobile",
+      "headings": [
+        "Governance · ZCAP",
+        "Issuance schedule"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.42,
+          "size": 13,
+          "text": "Exclude abstentions"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Published results"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "NU7 scope · September 2026"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 14,
+          "text": "Percentages"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap",
+      "width": 390
+    },
+    {
+      "label": "Insights mobile",
+      "headings": [
+        "Governance · Insights",
+        "Proposal decisions"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Rejected"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Approved"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "width": 390
+    },
+    {
+      "label": "Insight payments mobile",
+      "headings": [
+        "Governance · Insights",
+        "Recorded grant payments"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "707 paid entries"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "Budget USD"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "Recorded ZEC"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "22 paid entries"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=payments",
+      "width": 390
+    },
+    {
+      "label": "Governance overview mobile loaded",
+      "headings": [
+        "Governance · Overview",
+        "Under review",
+        "Q3 2026 results",
+        "Funding records"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 7.84,
+          "size": 13,
+          "text": "1"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 7.84,
+          "size": 13,
+          "text": "2"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 7.84,
+          "size": 13,
+          "text": "3"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 7.84,
+          "size": 13,
+          "text": "5"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=overview",
+      "width": 390
+    },
+    {
+      "label": "Projects mobile",
+      "headings": [
+        "Projects"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.42,
+          "size": 12,
+          "text": "Consensus"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Cryptography"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Sustainability"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 12,
+          "text": "Security"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=projects",
+      "width": 390
+    },
+    {
+      "label": "Project detail mobile",
+      "headings": [
+        "NSM",
+        "Proposal reference",
+        "Purpose & scope",
+        "Sources & context"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.71,
+          "size": 13,
+          "text": "Current stage"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "Sustainability"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "ZIP 233–235"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "Supply economics"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=projects&project=nsm",
+      "width": 390
+    },
+    {
+      "label": "Milestones mobile",
+      "headings": [
+        "Milestones · All milestones",
+        "Epoch introduced",
+        "Coordinated response",
+        "Preventive research finds a critical flaw"
+      ],
+      "lowContrast": [],
+      "minFont": 13,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Epoch"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Research"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Ironwood"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Security"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=impact",
+      "width": 390
+    },
+    {
+      "label": "Team mobile",
+      "headings": [
+        "Team & community · Team",
+        "Jason McGee Stramaglia",
+        "Zooko Wilcox",
+        "Nate Wilcox"
+      ],
+      "lowContrast": [],
+      "minFont": 13,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 13,
+          "text": "Team information reviewed 25 Oct 2026"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 10.34,
+          "size": 14,
+          "text": "Chief Product Officer"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 10.6,
+          "size": 15,
+          "text": "Leadership"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 10.6,
+          "size": 15,
+          "text": "Engineering"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=people",
+      "width": 390
+    },
+    {
+      "label": "Code activity mobile",
+      "headings": [
+        "Contributors",
+        "Activity",
+        "Commits 296"
+      ],
+      "lowContrast": [],
+      "minFont": 12,
+      "sample": [
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 9.15,
+          "size": 13,
+          "text": "296"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 9.25,
+          "size": 12,
+          "text": "6"
+        },
+        {
+          "color": "rgb(194, 194, 194)",
+          "contrast": 9.25,
+          "size": 12,
+          "text": "4"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 9.29,
+          "size": 12,
+          "text": "Saved GitHub data · 25 Oct 2026"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=activity",
+      "width": 390
+    },
+    {
+      "label": "Overview mobile",
+      "headings": [
+        "Independent. For Zcash.",
+        "Projects",
+        "Governance",
+        "Code activity"
+      ],
+      "lowContrast": [],
+      "minFont": 13,
+      "sample": [
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.77,
+          "size": 13,
+          "text": "In development"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.77,
+          "size": 13,
+          "text": "Research & design"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.77,
+          "size": 13,
+          "text": "Proposal reference"
+        },
+        {
+          "color": "rgb(176, 176, 176)",
+          "contrast": 8.77,
+          "size": 13,
+          "text": "NU6.3 reference"
+        }
+      ],
+      "scrollWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=overview",
+      "width": 390
+    }
+  ]
+}

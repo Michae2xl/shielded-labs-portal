@@ -1,0 +1,316 @@
+{
+  "checkedAt": "2026-10-29T17:58:31.157Z",
+  "baseUrl": "http://127.0.0.1:4246/shielded-preview",
+  "checks": [
+    {
+      "name": "Grants desktop aligned values and arrows",
+      "geometry": [
+        {
+          "amount": "Budget · USD$1,500.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$11,040.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$26,400.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$150,000.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$1,203,000.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$738,942.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$60,000.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$128,000.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$584,992.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$599,000.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$750,000.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        },
+        {
+          "amount": "Budget · USD$400,000.00",
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "right": 1351.3203125
+        }
+      ]
+    },
+    {
+      "name": "Grant program and search combined",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&filter=coinholder&q=Ironwood",
+      "rows": 4
+    },
+    {
+      "name": "Grant direct detail",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&record=coinholder%7CIronwood+zk-SNARK+Formal+Verification+%28Project+Tachyon%29&filter=coinholder&q=Ironwood",
+      "title": "Ironwood zk-SNARK Formal Verification (Project Tachyon)",
+      "payments": true,
+      "dialogs": 0
+    },
+    {
+      "name": "Grant return preserves search and program",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&filter=coinholder&q=Ironwood",
+      "search": "Ironwood"
+    },
+    {
+      "name": "Grant page 2 survives detail and return",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&filter=coinholder&page=2",
+      "rows": 10
+    },
+    {
+      "name": "Grant empty search",
+      "visible": true
+    },
+    {
+      "name": "Proposal desktop value and arrow alignment",
+      "geometry": [
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 104,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 118.796875,
+          "valueRight": 1351.3203125
+        },
+        {
+          "arrowRight": 1385.3203125,
+          "height": 118.796875,
+          "valueRight": 1351.3203125
+        }
+      ]
+    },
+    {
+      "name": "Review proposal direct detail",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&record=review%3A520&q=shielded",
+      "title": "Authenticated Shielded Sync Gateway",
+      "dialogs": 0
+    },
+    {
+      "name": "Proposal return retains search",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&q=shielded",
+      "search": "shielded"
+    },
+    {
+      "name": "Historical proposal opens internally",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&record=history%3Ad8b7c1f9a30fbdf25a7ecc2d6c5db7ea0e2eca5ba244b03ddbc2136e69e6f806&lane=history&filter=approved&page=2",
+      "title": "Zcash World, Mumbai (Devcon 8 week)"
+    },
+    {
+      "name": "Historical proposal survives reload and returns to selected status and page",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&lane=history&filter=approved&page=2",
+      "filter": "approved"
+    },
+    {
+      "name": "Q3 proposals at 390px",
+      "viewport": {
+        "page": 390,
+        "width": 390
+      },
+      "filter": "Funded"
+    },
+    {
+      "name": "Largest Q3 amount fits at 320px",
+      "amount": "$1,950,000.00",
+      "amountWidth": 103.78125,
+      "columnWidth": 120.453125,
+      "fontSize": "16px",
+      "page": 305,
+      "rowWidth": 233,
+      "viewport": 320
+    },
+    {
+      "name": "Q3 internal detail at 320px",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&record=q3%3A33&lane=q3&filter=Funded&q=ZODL",
+      "viewport": {
+        "page": 305,
+        "width": 320
+      },
+      "dialogs": 0
+    },
+    {
+      "name": "Q3 return keeps outcome and search",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&lane=q3&filter=Funded&q=ZODL",
+      "search": "ZODL"
+    },
+    {
+      "name": "Proposal empty state",
+      "visible": true
+    },
+    {
+      "name": "Proposal reset retains collection",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&lane=q3"
+    },
+    {
+      "name": "Grants mobile layout",
+      "viewport": {
+        "page": 390,
+        "width": 390
+      }
+    },
+    {
+      "name": "ZCG grant program",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&filter=zcg_regular",
+      "rows": 12
+    },
+    {
+      "name": "ZCG grant opens on mobile",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&record=zcg_regular%7CZcash+Privacy+%26+Adoption+in+Two+Bolivian+Universities+by+BlockivIA&filter=zcg_regular",
+      "viewport": {
+        "page": 375,
+        "width": 390
+      },
+      "milestones": true
+    },
+    {
+      "name": "Largest grant budget fits at 320px",
+      "amount": "$1,950,000.00",
+      "amountWidth": 103.78125,
+      "columnWidth": 120.453125,
+      "page": 305,
+      "viewport": 320
+    },
+    {
+      "name": "Grants responsive width 768",
+      "dimensions": {
+        "page": 753,
+        "width": 768
+      }
+    },
+    {
+      "name": "Grants responsive width 1280",
+      "dimensions": {
+        "page": 1265,
+        "width": 1280
+      }
+    },
+    {
+      "name": "Historical missing amount stays distinct from zero",
+      "values": [
+        "Requested · USD—Not recorded",
+        "Requested · USD—Not recorded",
+        "Requested · USD—Not recorded"
+      ],
+      "dimensions": {
+        "page": 1265,
+        "width": 1280
+      }
+    },
+    {
+      "name": "Methodology expands inline with missing-value explanation",
+      "text": "Amounts are funding requests. A dash means the amount is not recorded. Decisions, payments and delivery are tracked separately."
+    },
+    {
+      "name": "Adjacent Voting layout preserved",
+      "dimensions": {
+        "page": 1265,
+        "width": 1280
+      },
+      "rows": 12,
+      "columns": "476.344px 476.344px"
+    },
+    {
+      "name": "Adjacent Results layout preserved",
+      "dimensions": {
+        "page": 1265,
+        "width": 1280
+      },
+      "rows": 12,
+      "columns": "476.344px 476.344px"
+    },
+    {
+      "name": "Browser console errors",
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+.directory{min-width:0;color:#eee;font-size:17px;line-height:1.6;--line:#292929}
+.directory *{box-sizing:border-box}
+.directory button{font:inherit;cursor:pointer}
+.directory a{color:inherit;text-decoration:none}
+.directory svg{flex-shrink:0}
+.directory a:focus-visible,.directory button:focus-visible{outline:2px solid #ddd;outline-offset:4px}
+.menu{position:relative;display:flex;align-items:center;gap:4px;width:100%;max-width:100%;overflow-x:auto;scrollbar-width:thin;background:#121212;border:1px solid #252525;padding:4px;border-radius:6px;margin:16px 0 28px}
+.directory .menu button{display:flex;align-items:center;justify-content:center;min-height:42px;flex:1 0 105px;white-space:nowrap;padding:10px 12px;border:0;border-radius:4px;background:transparent;color:var(--secondary-ink,#c2c2c2);font-size:15px;line-height:20px}
+.menu button:hover{color:white;background:#222}
+.menu button[aria-current]{background:#333;color:white}
+.srOnly{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.timeline{display:flex;flex-direction:column}
+.milestoneRow{display:grid;grid-template-columns:125px minmax(0,1fr) 18px;align-items:center;gap:24px;padding:22px 0;border-top:1px solid var(--line)}
+.milestoneRow:first-child{border-top:0;padding-top:9px}
+.dateColumn{display:flex;align-self:start;flex-direction:column;gap:6px;padding-top:4px}
+.dateColumn time{color:var(--secondary-ink,#c2c2c2);font-size:14px;font-variant-numeric:tabular-nums}
+.dateColumn span{color:var(--text-muted,#b0b0b0);font-size:13px}
+.category{font-size:13px;color:var(--text-muted,#b0b0b0);text-transform:uppercase;letter-spacing:.06em}
+.directory .milestoneCopy h2{font-size:23px;font-weight:500;line-height:1.4;letter-spacing:-.4px;margin:7px 0 9px}
+.directory .milestoneCopy p{font-size:16px;color:var(--secondary-ink,#c2c2c2);line-height:1.7;max-width:75ch;margin:0}
+.milestoneRow>svg,.personCard>svg,.communityCard>svg{color:var(--text-muted,#b0b0b0);display:block;width:18px;height:18px;justify-self:end;align-self:center}
+.milestoneRow:hover h2,.personCard:hover h2,.communityCard:hover h2,.projectRow:hover h3,.colleague:hover h3,.relatedEvent:hover span{text-decoration:underline;text-underline-offset:5px;color:white}
+.peopleGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.personCard{display:grid;grid-template-columns:64px minmax(0,1fr) 18px;gap:16px;align-items:center;min-height:112px;padding:20px 18px;background:#101010;border:1px solid #242424;border-radius:7px}
+.personCard:hover{background:#141414;border-color:#393939}
+.portrait,.initials{width:64px;height:64px;object-fit:cover;border-radius:50%;flex-shrink:0}
+.initials{display:flex;align-items:center;justify-content:center;color:var(--secondary-ink,#c2c2c2);background:#222;font-size:20px}
+.directory .personCard h2{font-size:18px;line-height:1.45;font-weight:500;letter-spacing:-.15px;margin:0 0 6px;overflow-wrap:anywhere}
+.directory .personCard p{font-size:14px;line-height:1.6;color:var(--secondary-ink,#c2c2c2);margin:0}
+.personCard>div>span{display:block;font-size:12px;line-height:1.6;color:var(--text-muted,#b0b0b0);margin-top:9px}
+.personCard>svg{width:16px;height:16px}
+.detailPortrait{border:1px solid #333}
+.directory .sourceLink{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;min-height:36px;font-size:14px;line-height:1.6;color:var(--secondary-ink,#c2c2c2);max-width:100%;overflow-wrap:anywhere}
+.sourceLink>svg{width:15px;height:15px}
+.sourceLink:hover{color:white;text-decoration:underline;text-underline-offset:4px}
+.directory .sourceDate{font-size:13px!important;color:var(--text-muted,#b0b0b0)!important;margin-top:22px!important}
+.directoryFooter{display:flex;align-items:center;flex-wrap:wrap;gap:12px 24px;padding:20px 0 0;margin-top:24px;border-top:1px solid var(--line)}
+.directory .directoryFooter>p,.directory .footnote{font-size:13px;color:var(--text-muted,#b0b0b0);line-height:1.7;margin:0}
+.directoryFooter>p{margin-right:auto!important}
+.directory .footnote{padding-top:24px;margin-top:20px;border-top:1px solid var(--line)}
+.directory .projectRows{margin-top:20px}
+.directory .projectRow{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}
+.projectRow:last-child{border-bottom:0}
+.directory .projectRow h3{font-size:19px;line-height:1.5;margin:0 0 7px}
+.directory .projectRow p{font-size:15px;line-height:1.7;margin:0!important;color:var(--text-muted,#b0b0b0)}
+.projectRow>svg{color:var(--text-muted,#b0b0b0)}
+.attribution{margin:0}
+.attribution>div{padding:17px 0;border-bottom:1px solid var(--line)}
+.attribution>div:first-child{padding-top:0}
+.attribution>div:last-child{border-bottom:0;padding-bottom:0}
+.attribution dt{font-size:17px;font-weight:500;color:#ddd;margin-bottom:8px}
+.attribution dd{margin:0;font-size:16px;color:var(--secondary-ink,#c2c2c2);line-height:1.7}
+.relatedEvents{margin-top:20px}
+.relatedEvent{display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding:16px 0}
+.relatedEvent time{display:block;font-size:12px;color:var(--text-muted,#b0b0b0);line-height:1.7}
+.relatedEvent span{display:block;font-size:16px;color:var(--secondary-ink,#c2c2c2);line-height:1.6;margin-top:5px}
+.relatedEvent>svg{color:var(--text-muted,#b0b0b0)}
+.colleague{display:flex;align-items:center;gap:16px;border-top:1px solid var(--line);padding:17px 0}
+.colleague:first-child{border-top:0;padding-top:0}
+.colleague>div{flex:1;min-width:0}
+.colleague .portrait{width:48px;height:48px}
+.directory .colleague h3{font-size:17px;line-height:1.5;margin:0 0 4px}
+.directory .colleague p{font-size:14px;color:var(--text-muted,#b0b0b0);margin:0!important}
+.colleague>svg{color:var(--text-muted,#b0b0b0)}
+.communityGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.communityCard{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #272727;border-radius:7px;background:#101010;padding:20px;min-height:112px}
+.communityCard>div{min-width:0}
+.directory .communityCard h2{font-size:20px;line-height:1.4;letter-spacing:-.3px;margin:0 0 10px}
+.directory .communityCard p{font-size:14px;line-height:1.6;color:var(--text-muted,#b0b0b0);margin:0}
+.publicLinks{display:flex;flex-direction:column;gap:9px}
+.publicLinks>.sourceLink{max-width:380px;width:100%}
+.empty{padding:32px 0}
+.directory .empty h1{font-size:30px;margin-bottom:20px}
+.empty>button{display:block;border:1px solid #444;background:#161616;color:#eee;border-radius:5px;padding:10px 16px;margin-top:20px}
+@media(max-width:1250px){.peopleGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.communityGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:750px){.peopleGrid,.communityGrid{grid-template-columns:1fr}.personCard{min-height:110px;padding:21px}.milestoneRow{grid-template-columns:minmax(0,1fr) 18px;gap:12px 16px;padding:20px 0}.dateColumn{grid-column:1/-1;flex-direction:row;gap:14px;padding:0}.milestoneCopy{grid-column:1}.milestoneRow>svg{grid-column:2}.directory .milestoneCopy h2{font-size:21px}.directory .milestoneCopy p{font-size:15px}}
+@media(max-width:650px){.menu{margin:12px 0 23px}.directory .menu button{flex:0 0 auto;font-size:14px;min-height:42px}.directoryFooter{align-items:flex-start;gap:10px 22px}.directoryFooter>p{flex-basis:100%}.directory .personCard h2{font-size:18px}.personCard{grid-template-columns:58px minmax(0,1fr) 15px;gap:13px;padding:20px 17px}.portrait,.initials{width:58px;height:58px}.directory .colleague h3{font-size:16px}.attribution dt{font-size:16px}.attribution dd{font-size:15px}.directory .projectRow h3{font-size:18px}.directory .projectRow p{font-size:15px}.communityCard{padding:22px}}
+@media(max-width:650px){.personCard{grid-template-columns:58px minmax(0,1fr) 18px;gap:12px}.communityCard{padding:20px}}
+
+/* All directory collections share one responsive card grid. */
+.directory{container-type:inline-size}
+.timeline,.peopleGrid,.communityGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+.milestoneRow,.milestoneRow:first-child,.personCard{display:flex;flex-direction:column;align-items:stretch;gap:20px;padding:22px;min-width:0;min-height:0;background:#101010;border:1px solid #2c2c2c;border-radius:8px}
+.milestoneRow:hover,.personCard:hover,.communityCard:hover{background:#161616;border-color:#555}
+.directory .milestoneCopy h2{font-size:21px;line-height:1.4;margin:9px 0 12px}
+.directory .milestoneCopy p{font-size:16px;line-height:1.65}
+.category{font-size:13px;letter-spacing:0;text-transform:none}
+.cardFooter{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;border-top:1px solid #292929;padding-top:14px;color:#b0b0b0;font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums}
+.cardFooter svg{width:18px;height:18px;display:block}
+.personIdentity{display:flex;align-items:center;gap:16px;min-width:0}.personIdentity>div{min-width:0}
+.directory .personCard h2{font-size:19px;margin:0 0 6px;line-height:1.4}
+.directory .personCard p{font-size:15px;line-height:1.55}
+.portrait,.initials{width:56px;height:56px}
+.communityCard{min-height:120px;padding:22px;border-color:#2c2c2c;border-radius:8px}
+.directory .communityCard p{font-size:15px}
+.directory .projectRows,.relatedEvents,.colleagues{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+.directory .projectRow,.relatedEvent,.colleague,.colleague:first-child{border:1px solid #2c2c2c;background:#101010;border-radius:8px;padding:18px;min-width:0;gap:12px}
+.directory .projectRow h3{font-size:18px}.directory .projectRow p{font-size:15px}
+.colleague .portrait{width:40px;height:40px}
+@container(min-width:1200px){.timeline,.peopleGrid,.communityGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container(max-width:680px){.timeline,.peopleGrid,.communityGrid,.directory .projectRows,.relatedEvents,.colleagues{grid-template-columns:minmax(0,1fr)}.milestoneRow,.milestoneRow:first-child,.personCard,.communityCard{padding:20px}.directory>nav{flex-wrap:wrap}.directory>nav>button{flex:1 0 auto;min-width:0}.directory .personCard h2{font-size:18px}.directory .milestoneCopy h2{font-size:20px}}
+
+@container(max-width:680px){.directory>nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}.directory>nav>button{white-space:normal;min-width:0!important}}

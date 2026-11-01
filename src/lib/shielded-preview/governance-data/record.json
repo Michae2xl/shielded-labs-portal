@@ -1,0 +1,739 @@
+{
+  "checkedAt": "2026-09-30",
+  "note": "Compiled from public sources on 2026-09-24 and last checked on 2026-09-30; each entry keeps its source links.",
+  "elections": [
+    {
+      "id": "2020-09-mgrc-inaugural",
+      "label": "Inaugural Major Grants Review Committee (pre-2021 context)",
+      "date": "2020-09-18",
+      "month": null,
+      "seats": 5,
+      "ballots": 89,
+      "elected": [
+        {
+          "name": "Shawn (@Shawn)",
+          "approvals": 62
+        },
+        {
+          "name": "Holmes Wilson",
+          "approvals": 57
+        },
+        {
+          "name": "Sarah Jamie Lewis",
+          "approvals": 53
+        },
+        {
+          "name": "Hudson Jameson",
+          "approvals": 51
+        },
+        {
+          "name": "Chris Burniske",
+          "approvals": 50
+        }
+      ],
+      "sources": [
+        "https://vote.heliosvoting.org/helios/elections/fd30d13c-e010-11ea-88f3-4a6a23563c24/view",
+        "https://forum.zcashcommunity.com/t/inaugural-post-in-mgrc-updates/37410"
+      ]
+    },
+    {
+      "id": "2021-12-zomg",
+      "label": "ZOMG election (postponed 90 days from Sept 2021)",
+      "date": "2022-01-01",
+      "month": null,
+      "seats": 5,
+      "ballots": 96,
+      "elected": [
+        {
+          "name": "Aditya Bharadwaj (aiyadt)",
+          "approvals": 74
+        },
+        {
+          "name": "Hudson Jameson",
+          "approvals": 67
+        },
+        {
+          "name": "Michael Harms (Brunchtime)",
+          "approvals": 64
+        },
+        {
+          "name": "Jason McGee (aquietinvestor)",
+          "approvals": 61
+        },
+        {
+          "name": "Brian (Wobbzz)",
+          "approvals": 47
+        }
+      ],
+      "sources": [
+        "https://vote.heliosvoting.org/helios/elections/2d0787fc-61de-11ec-8619-8ee85a8a1b8a/view",
+        "https://forum.zcashcommunity.com/t/zomg-elections-90-day-postponement/40134"
+      ]
+    },
+    {
+      "id": "2022-06-zcg",
+      "label": "ZCG election June 2022 (Hudson Jameson's seat; began staggering)",
+      "date": "2022-07-01",
+      "month": null,
+      "seats": 1,
+      "ballots": 129,
+      "elected": [
+        {
+          "name": "Cody Burns (dontpanicburns)",
+          "approvals": 52
+        }
+      ],
+      "sources": [
+        "https://vote.heliosvoting.org/helios/elections/37e58fc6-f224-11ec-bf24-f6d18567a65e/view",
+        "https://forum.zcashcommunity.com/t/results-of-the-june-2022-zcg-election/41863"
+      ]
+    },
+    {
+      "id": "2022-12-zcg",
+      "label": "ZCG election December 2022",
+      "date": "2023-01-01",
+      "month": null,
+      "seats": 4,
+      "ballots": 134,
+      "elected": [
+        {
+          "name": "Jason McGee",
+          "approvals": 105
+        },
+        {
+          "name": "Wobbzz",
+          "approvals": 91
+        },
+        {
+          "name": "Michael Harms",
+          "approvals": 81
+        },
+        {
+          "name": "Amber O'Hearn (ambimorph)",
+          "approvals": 80
+        }
+      ],
+      "sources": [
+        "https://vote.heliosvoting.org/helios/elections/f67d65f4-7d88-11ed-92a2-52f71fd5a070/view",
+        "https://forum.zcashcommunity.com/t/zcg-committee-election-december-2022/43415"
+      ]
+    },
+    {
+      "id": "2023-06-zcg",
+      "label": "ZCG election June 2023",
+      "date": "2023-07-01",
+      "month": null,
+      "seats": 2,
+      "ballots": 100,
+      "elected": [
+        {
+          "name": "GGuy",
+          "approvals": 78
+        },
+        {
+          "name": "Wobbzz (resigned and re-ran)",
+          "approvals": 74
+        }
+      ],
+      "sources": [
+        "https://vote.heliosvoting.org/helios/elections/1a67b74a-0f4b-11ee-b703-ce0c56736bd3/view",
+        "https://forum.zcashcommunity.com/t/zcg-committee-election-june-2023/44668"
+      ]
+    },
+    {
+      "id": "2023-12-zcg",
+      "label": "ZCG election December 2023",
+      "date": "2024-01-01",
+      "month": null,
+      "seats": 3,
+      "ballots": 139,
+      "elected": [
+        {
+          "name": "Jason McGee",
+          "approvals": 111
+        },
+        {
+          "name": "Michael Harms",
+          "approvals": 96
+        },
+        {
+          "name": "Amber O'Hearn",
+          "approvals": 89
+        }
+      ],
+      "sources": [
+        "https://vote.heliosvoting.org/helios/elections/a12e050e-9f1f-11ee-a9a0-6e1a1ab4deb2/view",
+        "https://forum.zcashcommunity.com/t/zcg-committee-election-december-2023/46047"
+      ]
+    },
+    {
+      "id": "2024-06-zcg",
+      "label": "ZCG election June 2024",
+      "date": "2024-07-01",
+      "month": null,
+      "seats": 2,
+      "ballots": 136,
+      "elected": [
+        {
+          "name": "GGuy",
+          "approvals": 79
+        },
+        {
+          "name": "Wobbzz",
+          "approvals": 73
+        }
+      ],
+      "sources": [
+        "https://vote.heliosvoting.org/helios/elections/f219e72a-2f12-11ef-a4d3-360fad1b0509/view",
+        "https://forum.zcashcommunity.com/t/zcg-committee-election-june-2024/47770"
+      ]
+    },
+    {
+      "id": "2024-12-zcg",
+      "label": "ZCG election December 2024",
+      "date": null,
+      "month": "2024-12",
+      "seats": 3,
+      "ballots": 136,
+      "elected": [
+        {
+          "name": "Jason McGee",
+          "approvals": 100
+        },
+        {
+          "name": "Zerodartz",
+          "approvals": 86
+        },
+        {
+          "name": "Artkor",
+          "approvals": 68
+        }
+      ],
+      "sources": [
+        "https://vote.heliosvoting.org/helios/elections/1bc219f8-bd89-11ef-8c2d-2e5436e7697a/view",
+        "https://forum.zcashcommunity.com/t/zcg-committee-election-december-2024/49593"
+      ]
+    },
+    {
+      "id": "2025-06-zcg",
+      "label": "ZCG election June 2025",
+      "date": "2025-06-30",
+      "month": null,
+      "seats": 2,
+      "ballots": 93,
+      "elected": [
+        {
+          "name": "Decentralistdan",
+          "approvals": 82
+        },
+        {
+          "name": "GGuy",
+          "approvals": 59
+        }
+      ],
+      "sources": [
+        "https://forum.zcashcommunity.com/t/zcap-poll-now-open-june-zcg-election/51511/14"
+      ]
+    },
+    {
+      "id": "2025-12-zcg",
+      "label": "ZCG election December 2025",
+      "date": "2025-12-18",
+      "month": null,
+      "seats": 3,
+      "ballots": 145,
+      "elected": [
+        {
+          "name": "Zerodartz",
+          "approvals": 108
+        },
+        {
+          "name": "Artkor",
+          "approvals": 84
+        },
+        {
+          "name": "Hanh",
+          "approvals": 75
+        }
+      ],
+      "sources": [
+        "https://siv.org/election/1764095177433",
+        "https://forum.zcashcommunity.com/t/zcap-siv-poll-zcg-elections-open-now/53685/20"
+      ]
+    },
+    {
+      "id": "2026-06-zcg",
+      "label": "ZCG election June 2026",
+      "date": "2026-06-29",
+      "month": null,
+      "seats": 2,
+      "ballots": 99,
+      "elected": [
+        {
+          "name": "GGuy",
+          "approvals": 76
+        },
+        {
+          "name": "Paul Brigner",
+          "approvals": 58
+        }
+      ],
+      "sources": [
+        "https://siv.org/election/1781186010850",
+        "https://forum.zcashcommunity.com/t/zcash-community-grants-zcg-nominations-now-open-for-june-election/55720/26"
+      ]
+    }
+  ],
+  "polls": [
+    {
+      "id": "2019-07-nu3-codename-straw-poll",
+      "name": "First Coin Holder's Straw Poll (NU3 codename)",
+      "status": "closed_no_official_tally",
+      "informal": true,
+      "kind": "sentiment",
+      "scope": "network",
+      "date": "2019-08-02",
+      "totalZec": null,
+      "questions": 1,
+      "quorum": null,
+      "outcome": "NU3 was later named Heartwood; the thread does not document how the poll was used.",
+      "verifiable": "partial",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/announcing-the-first-coin-holders-straw-poll/34154"
+      ]
+    },
+    {
+      "id": "2019-staked-poll-dev-fund",
+      "name": "Staked Poll on Zcash Dev Fund Debate (coin-weighted petition)",
+      "status": "closed_final_tally_not_preserved",
+      "informal": true,
+      "kind": "sentiment",
+      "scope": "network",
+      "date": "2019-12-02",
+      "totalZec": null,
+      "questions": 1,
+      "quorum": null,
+      "outcome": "Unofficial; ZF said it was not an official input. ZIP 1014 came from ZF's separate sentiment collection.",
+      "verifiable": "partial",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/staked-poll-on-zcash-dev-fund-debate/34846/92",
+        "https://docs.google.com/spreadsheets/d/1AHq-KoiE0mKmllcr_LTwS5tNacf5HHt_VFKPL_tYlHU"
+      ]
+    },
+    {
+      "id": "2021-09-ecc-coinholder-poll",
+      "name": "ECC coin-holder poll: post-NU5 priorities and ZIP 1014 amendments",
+      "status": "closed",
+      "informal": false,
+      "kind": "sentiment",
+      "scope": "network",
+      "date": "2021-10-01",
+      "totalZec": null,
+      "questions": 3,
+      "quorum": null,
+      "outcome": "Non-binding input to ECC roadmap research.",
+      "verifiable": "partial",
+      "sources": [
+        "https://electriccoin.co/blog/coin-holder-poll-results-summary/",
+        "https://forum.zcashcommunity.com/t/coin-holder-polling-instructions/40170"
+      ]
+    },
+    {
+      "id": "2024-07-ywallet-test-poll",
+      "name": "Coinholder test poll: block reward allocation (YWallet Coin Voting v1)",
+      "status": "closed",
+      "informal": true,
+      "kind": "test",
+      "scope": "network",
+      "date": "2024-07-06",
+      "totalZec": 17805.67,
+      "questions": 1,
+      "quorum": null,
+      "outcome": "Test only; non-binding.",
+      "verifiable": "no",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/coin-weighted-poll/47964/124"
+      ]
+    },
+    {
+      "id": "2024-07-ywallet-devfund-polls",
+      "name": "Coinholder Dev Fund proposal polls #1 and #2 (YWallet)",
+      "status": "closed",
+      "informal": false,
+      "kind": "funding_model",
+      "scope": "network",
+      "date": "2024-07-15",
+      "totalZec": 461183,
+      "questions": 2,
+      "quorum": null,
+      "outcome": "Hybrid Deferred led; top two (Hybrid Deferred, Lockbox 20%) went to a runoff.",
+      "verifiable": "no",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/coin-weighted-poll/47964/160",
+        "https://forum.zcashcommunity.com/t/coin-weighted-poll/47964/140"
+      ]
+    },
+    {
+      "id": "2024-07-ywallet-devfund-runoff",
+      "name": "Coinholder Dev Fund runoff poll (YWallet)",
+      "status": "closed",
+      "informal": false,
+      "kind": "funding_model",
+      "scope": "network",
+      "date": "2024-07-28",
+      "totalZec": 300854,
+      "questions": 1,
+      "quorum": null,
+      "outcome": "Hybrid Deferred won here and in ZCAP/other runoffs; became ZIP 1015, activated in NU6 (2024-11-23).",
+      "verifiable": "no",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/coin-weighted-poll/47964/182",
+        "https://forum.zcashcommunity.com/t/coin-weighted-poll/47964/175"
+      ]
+    },
+    {
+      "id": "2024-12-nsm-coinholder-poll",
+      "name": "Coinholder Poll: include NSM in NU7?",
+      "status": "closed",
+      "informal": false,
+      "kind": "sentiment",
+      "scope": "network",
+      "date": "2024-12-08",
+      "totalZec": 264613.4918499,
+      "questions": 1,
+      "quorum": null,
+      "outcome": "All weight Yes; some No ballots carried zero weight; a participant reported a lost No vote. Non-binding.",
+      "verifiable": "no",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/coinholder-poll-nsm/49310/28"
+      ]
+    },
+    {
+      "id": "2025-04-coin-voting-2-test-poll",
+      "name": "Coin Voting 2.0 test poll (favorite mobile wallet)",
+      "status": "closed",
+      "informal": true,
+      "kind": "test",
+      "scope": "network",
+      "date": "2025-04-05",
+      "totalZec": 28606.91,
+      "questions": 1,
+      "quorum": null,
+      "outcome": "Test of tooling only.",
+      "verifiable": "unknown",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/coin-voting-2-0-participate-in-a-test-poll/50560/35"
+      ]
+    },
+    {
+      "id": "2025-05-devfund-funding-model-poll",
+      "name": "Coinholder poll on funding-model ZIPs (Dev Fund 2025)",
+      "status": "closed",
+      "informal": false,
+      "kind": "funding_model",
+      "scope": "network",
+      "date": "2025-05-01",
+      "totalZec": 1127272.09,
+      "questions": 2,
+      "quorum": null,
+      "outcome": "C&C favored (also top in ZCAP and ZAC Helios polls); became ZIP 1016, activated with NU6.1 on 2025-11-24.",
+      "verifiable": "yes",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/may-2025-polling-results-megathread/51152/2",
+        "https://forum.zcashcommunity.com/t/coinholder-polling-on-governance-and-funding/50812/18"
+      ]
+    },
+    {
+      "id": "2025-09-cdrgp-ratification-poll",
+      "name": "Coinholder poll to ratify the Retroactive Grants Program (NU6.1 CDRGP)",
+      "status": "closed",
+      "informal": false,
+      "kind": "funding_model",
+      "scope": "fund",
+      "date": "2025-09-03",
+      "totalZec": 1494765,
+      "questions": 3,
+      "quorum": null,
+      "outcome": "Program ratified as retroactive-only, partial funding allowed, structure approved.",
+      "verifiable": "yes",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/polling-closed-coinholder-poll-to-ratify-the-retroactive-grants-program/52013/38",
+        "https://shieldedlabs.net/zcash-coinholders-approve-retroactive-grants-program/"
+      ]
+    },
+    {
+      "id": "2025-11-cdrgp-q4-round",
+      "name": "Coinholder-Directed Retroactive Grants Program, Q4 2025 round (first grants poll)",
+      "status": "closed",
+      "informal": false,
+      "kind": "grant_decision",
+      "scope": "fund",
+      "date": "2025-11-25",
+      "totalZec": 1232440,
+      "questions": 9,
+      "quorum": "At least 420,000 ZEC must vote on a proposal, simple majority in favor (ZIP 1016).",
+      "outcome": "5 of 9 approved; the ECC grant was later vetoed by key-holders.",
+      "verifiable": "yes",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/coinholder-directed-retroactive-grants-program-results-nov-2025/53487",
+        "https://shieldedlabs.net/coinholder-directed-retroactive-grants-program-q4-results/"
+      ]
+    },
+    {
+      "id": "2026-02-nu7-protocol-feature-sentiment-poll",
+      "name": "Coinholder: Protocol Feature Sentiment Poll (NU7 sentiment, 11 questions)",
+      "status": "closed",
+      "informal": false,
+      "kind": "sentiment",
+      "scope": "network",
+      "date": "2026-02-20",
+      "totalZec": 1235710,
+      "questions": 11,
+      "quorum": null,
+      "outcome": "Advisory. ZF summary: consensus on Tachyon, quantum recoverability, explicit fees, fee burning; ZSAs and others contested.",
+      "verifiable": "yes",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/nu7-sentiment-polling-results/54756/10",
+        "https://forum.zcashcommunity.com/t/nu7-polling-results-what-we-heard-and-where-we-go-from-here/54775"
+      ]
+    },
+    {
+      "id": "2026-04-cdrgp-q1-round",
+      "name": "Coinholder-Directed Grants Program, Q1 2026 round",
+      "status": "closed",
+      "informal": false,
+      "kind": "grant_decision",
+      "scope": "fund",
+      "date": "2026-04-01",
+      "totalZec": 500607.94,
+      "questions": 7,
+      "quorum": "At least 420,000 ZEC per proposal, simple majority (ZIP 1016). Each question totalled 500,607.94 ZEC incl. Abstain.",
+      "outcome": "Only Maya approved.",
+      "verifiable": "yes",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/polling-closed-coinholder-directed-grants-program-q1-round/55048/17",
+        "https://forum.zcashcommunity.com/t/polling-closed-coinholder-directed-grants-program-q1-round/55048/23"
+      ]
+    },
+    {
+      "id": "2026-06-zodl-nu7-poll",
+      "name": "NU7 sentiment poll via Zodl (planned)",
+      "status": "paused_before_voting",
+      "informal": false,
+      "kind": "sentiment",
+      "scope": "network",
+      "date": "2026-06-07",
+      "totalZec": null,
+      "quorum": null,
+      "outcome": "Paused on 2026-06-07 after the Ironwood (NU6.3) decision; no votes tallied. Questions reused in the Aug-Sep vote.",
+      "verifiable": null,
+      "sources": [
+        "https://forum.zcashcommunity.com/t/nu7-sentiment-polling-questions-for-community-review-coinholder-voting-via-zodl/55713/73"
+      ]
+    },
+    {
+      "id": "2026-q2-cdrgp-round",
+      "name": "Coinholder-Directed Retroactive Grants Program, Q2 2026 poll",
+      "status": "postponed_merged_into_q3",
+      "informal": false,
+      "kind": "grant_decision",
+      "scope": "fund",
+      "date": "2026-06-11",
+      "totalZec": null,
+      "quorum": null,
+      "outcome": "Poll postponed 2026-06-11 by FPF with Valar Group because of the Orchard vulnerability; submissions carried to Q3.",
+      "verifiable": null,
+      "sources": [
+        "https://forum.zcashcommunity.com/t/coinholder-directed-retroactive-grants-program-q2-2026-30-day-review-period-now-open-postponed-to-q3/55701/3"
+      ]
+    },
+    {
+      "id": "2026-09-nu7-scope-coinholder-vote",
+      "name": "NU7 Scope coinholder vote",
+      "status": "closed_results_published",
+      "informal": false,
+      "kind": "protocol_scope",
+      "scope": "network",
+      "date": "2026-09-14",
+      "totalZec": 2403537,
+      "questions": 5,
+      "quorum": "Results treated as legitimate if at least 1,000,000 ZEC participates in at least one question.",
+      "outcome": "Preserve halvings; reissuance Feb 2031; v4 off at NU7; 25s blocks; ship by deadline.",
+      "verifiable": "yes",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/nu7-coinholder-vote/56912/42",
+        "https://prod.vote-chain-primary.valargroup.org/shielded-vote/v1/vote-summary/16eef7ebc77e0e04fb1c7329abfcc390f4a0c002964671ebb360914a3e5a3f11"
+      ]
+    },
+    {
+      "id": "2026-09-cdrgp-q3-round",
+      "name": "Coinholder-Directed Retroactive Grants Program, Q3 2026 round (37 proposals)",
+      "status": "closed",
+      "informal": false,
+      "kind": "grant_decision",
+      "scope": "fund",
+      "date": "2026-09-29",
+      "totalZec": 2181452.875,
+      "quorum": "At least 420,000 ZEC per proposal and a simple majority in favour (ZIP 1016); both 'Reject' options count as No.",
+      "outcome": "17 of 37 funded, 20 rejected. Connaugh Zcash Videos was first published as Abstain and corrected to Funded on Sep 30, 2026, with abstentions left out of the majority test.",
+      "verifiable": "yes",
+      "sources": [
+        "https://forum.zcashcommunity.com/t/q3-coinholder-directed-retroactive-grants-program-results/57909",
+        "https://zvote.zfnd.org/shielded-vote/v1/vote-summary/2cba66eb16c7581a1692cb0b033785da0131059f645a0d2fb4dc2a5131505e01",
+        "https://forum.zcashcommunity.com/t/q3-coinholder-directed-retroactive-grants-program-voting-now-open/57650"
+      ]
+    }
+  ],
+  "upgrades": [
+    {
+      "name": "Overwinter",
+      "height": 347500,
+      "time": "2018-06-26T01:37:31Z",
+      "zips": [
+        200,
+        201,
+        202,
+        203,
+        143
+      ],
+      "governance": "ECC-led ZIP process; activation height set in zcashd release; no community or coin vote found.",
+      "source": "https://zips.z.cash/zip-0201"
+    },
+    {
+      "name": "Sapling",
+      "height": 419200,
+      "time": "2018-10-29T02:15:37Z",
+      "zips": [
+        205,
+        243
+      ],
+      "governance": "ECC-led ZIP process plus node release; no community or coin vote found.",
+      "source": "https://zips.z.cash/zip-0205"
+    },
+    {
+      "name": "Blossom",
+      "height": 653600,
+      "time": "2019-12-11T21:50:05Z",
+      "zips": [
+        206,
+        208
+      ],
+      "governance": "ZIP process (ECC, ZF) plus node release; no community or coin vote found.",
+      "source": "https://zips.z.cash/zip-0206"
+    },
+    {
+      "name": "Heartwood",
+      "height": 903000,
+      "time": "2020-07-16T10:56:08Z",
+      "zips": [
+        250,
+        213,
+        221
+      ],
+      "governance": "ZIP process plus node release; codename had an informal 2019 coinholder straw poll.",
+      "source": "https://zips.z.cash/zip-0250"
+    },
+    {
+      "name": "Canopy",
+      "height": 1046400,
+      "time": "2020-11-18T12:34:16Z",
+      "zips": [
+        251,
+        207,
+        211,
+        212,
+        214,
+        215,
+        1014
+      ],
+      "governance": "Dev fund (ZIP 1014) chosen after ZF's 2019 community sentiment collection (ZCAP Helios, forum, others); deployed by node release.",
+      "source": "https://zips.z.cash/zip-0251"
+    },
+    {
+      "name": "NU5",
+      "height": 1687104,
+      "time": "2022-05-31T17:50:05Z",
+      "zips": [
+        252,
+        224,
+        225,
+        244,
+        216,
+        239
+      ],
+      "governance": "ZIP process (ECC, ZF) plus node releases; no community or coin vote found.",
+      "source": "https://zips.z.cash/zip-0252"
+    },
+    {
+      "name": "NU6",
+      "height": 2726400,
+      "time": "2024-11-23T11:02:59Z",
+      "zips": [
+        253,
+        1015,
+        2001,
+        236
+      ],
+      "governance": "2024 polls (ZCAP Helios, YWallet coinholder polls, other panels) then July runoff chose Hybrid Deferred (ZIP 1015); ZIP editors finalized.",
+      "source": "https://zips.z.cash/zip-0253"
+    },
+    {
+      "name": "NU6.1",
+      "height": 3146400,
+      "time": "2025-11-24T19:56:42Z",
+      "zips": [
+        255,
+        1016,
+        271
+      ],
+      "governance": "Apr-May 2025 ZCAP, ZAC and coinholder polls favored C&C (ZIP 1016); coinholders ratified the grants program in Sept 2025.",
+      "source": "https://zips.z.cash/zip-0255"
+    },
+    {
+      "name": "Orchard temporary vulnerability mitigation (soft fork)",
+      "height": 3363426,
+      "time": "2026-06-02T03:30:07Z",
+      "zips": [
+        257,
+        256
+      ],
+      "governance": "Emergency security response; disabled Orchard actions after a soundness bug reported 2026-05-29.",
+      "source": "https://zips.z.cash/zip-0257"
+    },
+    {
+      "name": "NU6.2",
+      "height": 3364600,
+      "time": "2026-06-03T04:03:08Z",
+      "zips": [
+        257
+      ],
+      "governance": "Emergency upgrade re-enabling Orchard with fixed circuit; coordinated by ZODL and node teams; no poll.",
+      "source": "https://zips.z.cash/zip-0257"
+    },
+    {
+      "name": "NU6.3 (Ironwood)",
+      "height": 3428143,
+      "time": "2026-07-28T14:07:23Z",
+      "zips": [
+        258,
+        229,
+        2005,
+        2006
+      ],
+      "governance": "Joint proposal announced 2026-06-06 by Shielded Labs, ZF, Tachyon Group, Valar Group and ZODL after the Orchard bug; planned NU7 poll paused; no coin vote.",
+      "source": "https://zips.z.cash/zip-0258"
+    },
+    {
+      "name": "NU7",
+      "height": null,
+      "time": null,
+      "zips": [
+        259,
+        218,
+        2003
+      ],
+      "governance": "Scope set by Aug-Sep 2026 coinholder vote plus ZCAP/community polls; orgs aligned on Feb 2031 reissuance.",
+      "source": "https://zips.z.cash/zip-0259"
+    }
+  ]
+}

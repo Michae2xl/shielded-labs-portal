@@ -1,0 +1,1570 @@
+{
+  "date": "2026-10-28",
+  "scope": "Local Shielded Labs governance internal sections",
+  "checks": [
+    {
+      "name": "Proposals desktop",
+      "cards": [
+        {
+          "width": 445,
+          "x": 284,
+          "y": 362
+        },
+        {
+          "width": 445,
+          "x": 745,
+          "y": 362
+        },
+        {
+          "width": 445,
+          "x": 1205,
+          "y": 362
+        },
+        {
+          "width": 445,
+          "x": 284,
+          "y": 565
+        }
+      ],
+      "documentWidth": 1686,
+      "headings": [
+        "Under review"
+      ],
+      "mainWidth": 1438,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals",
+      "viewport": 1686,
+      "pass": true
+    },
+    {
+      "name": "Grants desktop",
+      "cards": [
+        {
+          "width": 440,
+          "x": 284,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 740,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 1195,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 284,
+          "y": 607
+        }
+      ],
+      "documentWidth": 1671,
+      "headings": [
+        "Funding ledger"
+      ],
+      "mainWidth": 1423,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "viewport": 1686,
+      "pass": true
+    },
+    {
+      "name": "Voting desktop",
+      "cards": [
+        {
+          "width": 440,
+          "x": 284,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 740,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 1195,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 284,
+          "y": 596
+        }
+      ],
+      "documentWidth": 1671,
+      "headings": [
+        "Poll archive"
+      ],
+      "mainWidth": 1423,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting",
+      "viewport": 1686,
+      "pass": true
+    },
+    {
+      "name": "Results desktop",
+      "cards": [
+        {
+          "width": 440,
+          "x": 284,
+          "y": 436
+        },
+        {
+          "width": 440,
+          "x": 740,
+          "y": 436
+        },
+        {
+          "width": 440,
+          "x": 1195,
+          "y": 436
+        },
+        {
+          "width": 440,
+          "x": 284,
+          "y": 681
+        }
+      ],
+      "documentWidth": 1671,
+      "headings": [
+        "Q3 2026 outcomes"
+      ],
+      "mainWidth": 1423,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "viewport": 1686,
+      "pass": true
+    },
+    {
+      "name": "ZCAP desktop",
+      "cards": [],
+      "documentWidth": 1671,
+      "headings": [
+        "Issuance schedule"
+      ],
+      "mainWidth": 1423,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap",
+      "viewport": 1686,
+      "pass": true
+    },
+    {
+      "name": "ZCAP members desktop",
+      "cards": [
+        {
+          "width": 440,
+          "x": 284,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 740,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 1195,
+          "y": 362
+        },
+        {
+          "width": 440,
+          "x": 284,
+          "y": 514
+        }
+      ],
+      "documentWidth": 1671,
+      "headings": [
+        "Member directory"
+      ],
+      "mainWidth": 1423,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members",
+      "viewport": 1686,
+      "pass": true
+    },
+    {
+      "name": "Insights desktop",
+      "cards": [
+        {
+          "width": 440,
+          "x": 284,
+          "y": 360
+        },
+        {
+          "width": 440,
+          "x": 740,
+          "y": 360
+        },
+        {
+          "width": 440,
+          "x": 1195,
+          "y": 360
+        },
+        {
+          "width": 440,
+          "x": 284,
+          "y": 549
+        }
+      ],
+      "documentWidth": 1671,
+      "headings": [
+        "Proposal decisions"
+      ],
+      "mainWidth": 1423,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "viewport": 1686,
+      "pass": true
+    },
+    {
+      "name": "Proposals mobile",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 572
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 790
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 982
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1174
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Under review"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Voting mobile",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 629
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 878
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1073
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1294
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Poll archive"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Grants mobile",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 595
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 847
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1126
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1378
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Funding ledger"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Results mobile",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 707
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 928
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1149
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1382
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Q3 2026 outcomes"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "ZCAP mobile",
+      "cards": [],
+      "documentWidth": 375,
+      "headings": [
+        "Issuance schedule"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Insights mobile",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 508
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 687
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 867
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1046
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Proposal decisions"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Insights payments mobile",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 508
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 707
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 881
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1153
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Recorded grant payments"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=payments",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Proposal detail mobile",
+      "cards": [],
+      "documentWidth": 375,
+      "headings": [
+        "Application summary",
+        "Sources & context"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&record=review%3A520&q=Sync",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Proposal search preserved in href and return",
+      "pass": true,
+      "href": "?view=governance&section=proposals&record=review%3A520&lane=review&q=Sync",
+      "query": "Sync",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&q=Sync"
+    },
+    {
+      "name": "Proposal pagination preserved",
+      "pass": true,
+      "href": "?view=governance&section=proposals&record=review%3A504&lane=review&page=2",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&page=2"
+    },
+    {
+      "name": "Grant detail mobile",
+      "cards": [],
+      "documentWidth": 375,
+      "headings": [
+        "Recorded payments",
+        "Milestones",
+        "Sources & context"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&record=coinholder%7CValargroup+Ironwood+work&filter=coinholder&q=Ironwood",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Grant program and search preserved",
+      "pass": true,
+      "href": "?view=governance&section=grants&record=coinholder%7CValargroup+Ironwood+work&filter=coinholder&q=Ironwood",
+      "query": "Ironwood",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&filter=coinholder&q=Ironwood"
+    },
+    {
+      "name": "Proposals 320px final",
+      "cards": [
+        {
+          "width": 261,
+          "x": 22,
+          "y": 620
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 809
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1051
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1267
+        }
+      ],
+      "documentWidth": 305,
+      "headings": [
+        "Under review"
+      ],
+      "mainWidth": 305,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals",
+      "viewport": 320,
+      "pass": true
+    },
+    {
+      "name": "Voting 320px final",
+      "cards": [
+        {
+          "width": 261,
+          "x": 22,
+          "y": 595
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 868
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1114
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1360
+        }
+      ],
+      "documentWidth": 305,
+      "headings": [
+        "Poll archive"
+      ],
+      "mainWidth": 305,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting",
+      "viewport": 320,
+      "pass": true
+    },
+    {
+      "name": "Grants 320px final",
+      "cards": [
+        {
+          "width": 261,
+          "x": 22,
+          "y": 595
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 915
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1235
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1528
+        }
+      ],
+      "documentWidth": 305,
+      "headings": [
+        "Funding ledger"
+      ],
+      "mainWidth": 305,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "viewport": 320,
+      "pass": true
+    },
+    {
+      "name": "Results 320px final",
+      "cards": [
+        {
+          "width": 261,
+          "x": 22,
+          "y": 685
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 951
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1217
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1537
+        }
+      ],
+      "documentWidth": 305,
+      "headings": [
+        "Q3 2026 outcomes"
+      ],
+      "mainWidth": 305,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "viewport": 320,
+      "pass": true
+    },
+    {
+      "name": "ZCAP 320px final",
+      "cards": [],
+      "documentWidth": 305,
+      "headings": [
+        "Issuance schedule"
+      ],
+      "mainWidth": 305,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap",
+      "viewport": 320,
+      "pass": true
+    },
+    {
+      "name": "Insights 320px final",
+      "cards": [
+        {
+          "width": 261,
+          "x": 22,
+          "y": 556
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 735
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 915
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1094
+        }
+      ],
+      "documentWidth": 305,
+      "headings": [
+        "Proposal decisions"
+      ],
+      "mainWidth": 305,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "viewport": 320,
+      "pass": true
+    },
+    {
+      "name": "Proposals 1440px final",
+      "cards": [
+        {
+          "width": 549,
+          "x": 280,
+          "y": 362
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 362
+        },
+        {
+          "width": 549,
+          "x": 280,
+          "y": 565
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 565
+        }
+      ],
+      "documentWidth": 1425,
+      "headings": [
+        "Under review"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Voting 1440px final",
+      "cards": [
+        {
+          "width": 549,
+          "x": 280,
+          "y": 362
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 362
+        },
+        {
+          "width": 549,
+          "x": 280,
+          "y": 596
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 596
+        }
+      ],
+      "documentWidth": 1425,
+      "headings": [
+        "Poll archive"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Grants 1440px final",
+      "cards": [
+        {
+          "width": 549,
+          "x": 280,
+          "y": 362
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 362
+        },
+        {
+          "width": 549,
+          "x": 280,
+          "y": 607
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 607
+        }
+      ],
+      "documentWidth": 1425,
+      "headings": [
+        "Funding ledger"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Results 1440px final",
+      "cards": [
+        {
+          "width": 549,
+          "x": 280,
+          "y": 436
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 436
+        },
+        {
+          "width": 549,
+          "x": 280,
+          "y": 654
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 654
+        }
+      ],
+      "documentWidth": 1425,
+      "headings": [
+        "Q3 2026 outcomes"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "ZCAP 1440px final",
+      "cards": [],
+      "documentWidth": 1425,
+      "headings": [
+        "Issuance schedule"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Insights 1440px final",
+      "cards": [
+        {
+          "width": 361,
+          "x": 280,
+          "y": 360
+        },
+        {
+          "width": 361,
+          "x": 656,
+          "y": 360
+        },
+        {
+          "width": 361,
+          "x": 1033,
+          "y": 360
+        },
+        {
+          "width": 361,
+          "x": 280,
+          "y": 549
+        }
+      ],
+      "documentWidth": 1425,
+      "headings": [
+        "Proposal decisions"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Insights Q3 outcomes desktop",
+      "cards": [
+        {
+          "width": 549,
+          "x": 280,
+          "y": 360
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 360
+        },
+        {
+          "width": 549,
+          "x": 280,
+          "y": 609
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 609
+        }
+      ],
+      "documentWidth": 1425,
+      "headings": [
+        "Q3 voting outcomes"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=outcomes",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Insights NU7 comparison desktop",
+      "cards": [
+        {
+          "width": 549,
+          "x": 280,
+          "y": 360
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 360
+        },
+        {
+          "width": 549,
+          "x": 280,
+          "y": 571
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 571
+        }
+      ],
+      "documentWidth": 1425,
+      "headings": [
+        "NU7 panel comparison"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=panels",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Insights opens full ZCAP comparison internally",
+      "pass": true
+    },
+    {
+      "name": "ZCAP exclusion updates percentages and URL",
+      "pass": true,
+      "comparison": "Gradual issuanceZCAP47.5%57 votesCoinholders0.9%22,384.875 ZECKeep halvingsZCAP45.0%54 votesCoinholders98.9%2,375,932.375 ZECDefer smoothingZCAP7.5%9 votesCoinholders0.2%4,147.625 ZECAbstentionOutside the percentage baseZCAP—15 votesCoinholders—1,072.125 ZEC",
+      "selected": "Exclude abstentions",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=issuance&basis=exclude"
+    },
+    {
+      "name": "ZCAP member detail desktop",
+      "cards": [],
+      "documentWidth": 1425,
+      "headings": [
+        "Participation & public votes",
+        "Sources & context"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&record=member%3A%5B%22Tom+Howard%22%2C%22%22%5D&lane=members&filter=name-desc&q=a&page=2",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "ZCAP member search, sort and page preserved",
+      "pass": true,
+      "query": "a",
+      "sort": "name-desc",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members&filter=name-desc&q=a&page=2"
+    },
+    {
+      "name": "Q3 result detail desktop",
+      "cards": [],
+      "documentWidth": 1425,
+      "headings": [
+        "Ballot breakdown",
+        "Decision rule",
+        "Application",
+        "Sources & context"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&record=q3%3A60&filter=Funded",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Q3 outcome filter preserved",
+      "pass": true,
+      "selected": "Funded17",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&filter=Funded"
+    },
+    {
+      "name": "Elections desktop",
+      "cards": [
+        {
+          "width": 549,
+          "x": 280,
+          "y": 362
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 362
+        },
+        {
+          "width": 549,
+          "x": 280,
+          "y": 598
+        },
+        {
+          "width": 549,
+          "x": 845,
+          "y": 598
+        }
+      ],
+      "documentWidth": 1425,
+      "headings": [
+        "Committee elections"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&lane=elections",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Election detail returns to elections",
+      "pass": true
+    },
+    {
+      "name": "Poll detail desktop",
+      "cards": [],
+      "documentWidth": 1425,
+      "headings": [
+        "Recorded outcome",
+        "Voting rules & scope",
+        "Sources & context"
+      ],
+      "mainWidth": 1177,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&record=poll%3A2026-09-cdrgp-q3-round",
+      "viewport": 1440,
+      "pass": true
+    },
+    {
+      "name": "Poll detail returns to archive",
+      "pass": true
+    },
+    {
+      "name": "Upgrade detail returns to upgrades",
+      "pass": true
+    },
+    {
+      "name": "Payment totals remain on one line at 1440px",
+      "pass": true,
+      "lines": [
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 125,
+          "text": "$20,639,647.49",
+          "width": 124.53125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 150,
+          "text": "398,694.62015481",
+          "width": 150.453125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 114,
+          "text": "$8,556,933.00",
+          "width": 114.4140625
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 80,
+          "text": "7,887.125",
+          "width": 79.6484375
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 125,
+          "text": "$29,196,580.49",
+          "width": 124.53125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 150,
+          "text": "406,581.74515481",
+          "width": 150.453125
+        }
+      ]
+    },
+    {
+      "name": "Payment totals remain on one line at 390px",
+      "pass": true,
+      "lines": [
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 125,
+          "text": "$20,639,647.49",
+          "width": 124.53125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 150,
+          "text": "398,694.62015481",
+          "width": 150.453125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 114,
+          "text": "$8,556,933.00",
+          "width": 114.4140625
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 80,
+          "text": "7,887.125",
+          "width": 79.6484375
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 125,
+          "text": "$29,196,580.49",
+          "width": 124.53125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 150,
+          "text": "406,581.74515481",
+          "width": 150.453125
+        }
+      ]
+    },
+    {
+      "name": "Payment totals remain on one line at 320px",
+      "pass": true,
+      "lines": [
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 125,
+          "text": "$20,639,647.49",
+          "width": 124.53125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 150,
+          "text": "398,694.62015481",
+          "width": 150.453125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 114,
+          "text": "$8,556,933.00",
+          "width": 114.4140625
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 80,
+          "text": "7,887.125",
+          "width": 79.6484375
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 125,
+          "text": "$29,196,580.49",
+          "width": 124.53125
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "scroll": 150,
+          "text": "406,581.74515481",
+          "width": 150.453125
+        }
+      ]
+    },
+    {
+      "name": "Insights payments 320px final",
+      "cards": [
+        {
+          "width": 261,
+          "x": 22,
+          "y": 611
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 839
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1067
+        },
+        {
+          "width": 261,
+          "x": 22,
+          "y": 1367
+        }
+      ],
+      "documentWidth": 305,
+      "headings": [
+        "Recorded grant payments"
+      ],
+      "mainWidth": 305,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=payments",
+      "viewport": 320,
+      "pass": true
+    },
+    {
+      "name": "Grant amounts readable without splitting at 390px",
+      "pass": true,
+      "values": [
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$1,500.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$11,040.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$26,400.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$150,000.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$1,203,000.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$738,942.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$60,000.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$128,000.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$584,992.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$599,000.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$750,000.00"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "$400,000.00"
+        }
+      ]
+    },
+    {
+      "name": "Result weights readable without splitting at 390px",
+      "pass": true,
+      "values": [
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,181,451.875"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,181,452.875"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,181,450"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,682.25"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,174.625"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,186.75"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,222.875"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,209.875"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,208.75"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,209.625"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,237.625"
+        },
+        {
+          "height": 23.796875,
+          "lineHeight": 23.8,
+          "text": "2,179,245.625"
+        }
+      ]
+    },
+    {
+      "name": "Zcash Community Grants: Application history mobile final",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 626
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 845
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1037
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1256
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Application history"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&lane=history",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Coinholder grants: Q3 2026 applications mobile final",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 649
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 841
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1033
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1252
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Q3 2026 applications"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&lane=q3",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Protocol decisions: Network upgrades mobile final",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 595
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 787
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1006
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1198
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Network upgrades"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&filter=upgrades",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Zcash Community Grants: Committee elections mobile final",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 547
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 769
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 990
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1212
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Committee elections"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&lane=elections",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Member directory mobile final",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 697
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 841
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 975
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1119
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Member directory"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Coinholder grants · 2026: Q3 voting outcomes mobile final",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 508
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 673
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 949
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1138
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "Q3 voting outcomes"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=outcomes",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "September 2026 · published responses: NU7 panel comparison mobile final",
+      "cards": [
+        {
+          "width": 331,
+          "x": 22,
+          "y": 508
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 709
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 933
+        },
+        {
+          "width": 331,
+          "x": 22,
+          "y": 1135
+        }
+      ],
+      "documentWidth": 375,
+      "headings": [
+        "NU7 panel comparison"
+      ],
+      "mainWidth": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=panels",
+      "viewport": 390,
+      "pass": true
+    },
+    {
+      "name": "Insight outcome values remain intact on mobile",
+      "pass": true,
+      "values": [
+        {
+          "height": 25.1953125,
+          "lineHeight": 25.2,
+          "text": "17"
+        },
+        {
+          "height": 25.1953125,
+          "lineHeight": 25.2,
+          "text": "$8,389,992.00"
+        },
+        {
+          "height": 25.1953125,
+          "lineHeight": 25.2,
+          "text": "20"
+        },
+        {
+          "height": 25.1953125,
+          "lineHeight": 25.2,
+          "text": "$624,391.20"
+        }
+      ]
+    }
+  ]
+}

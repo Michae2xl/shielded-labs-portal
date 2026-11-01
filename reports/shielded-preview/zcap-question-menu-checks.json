@@ -1,0 +1,189 @@
+{
+  "date": "2026-10-29",
+  "zcapChecks": [
+    {
+      "name": "Issuance desktop",
+      "documentWidth": 1440,
+      "heading": "Which issuance schedule should Zcash use?",
+      "question": "Question 01Issuance schedule",
+      "selectedBasis": "All responses",
+      "totals": [
+        "ZCAP135member ballotsAll responses",
+        "Coinholders2,403,537ZEC voting weightAll responses"
+      ],
+      "width": 1440
+    },
+    {
+      "name": "Sprout all responses",
+      "documentWidth": 1425,
+      "heading": "When should Sprout be retired?",
+      "question": "Question 03Sprout retirement",
+      "selectedBasis": "All responses",
+      "totals": [
+        "ZCAP134member ballotsAll responses",
+        "Coinholders2,399,146.25ZEC voting weightAll responses"
+      ],
+      "width": 1440
+    },
+    {
+      "name": "Sprout excluding abstentions",
+      "documentWidth": 1425,
+      "heading": "When should Sprout be retired?",
+      "question": "Question 03Sprout retirement",
+      "selectedBasis": "Exclude abstentions",
+      "totals": [
+        "ZCAP126member ballotsExcluding abstentions",
+        "Coinholders2,397,462.5ZEC voting weightExcluding abstentions"
+      ],
+      "width": 1440
+    },
+    {
+      "name": "Sprout state retained after reload",
+      "documentWidth": 1425,
+      "heading": "When should Sprout be retired?",
+      "question": "Question 03Sprout retirement",
+      "selectedBasis": "Exclude abstentions",
+      "totals": [
+        "ZCAP126member ballotsExcluding abstentions",
+        "Coinholders2,397,462.5ZEC voting weightExcluding abstentions"
+      ],
+      "width": 1440
+    },
+    {
+      "name": "Question 02 Reissuance timing",
+      "documentWidth": 1425,
+      "heading": "When should reissuance begin?",
+      "question": "Question 02Reissuance timing",
+      "selectedBasis": "Exclude abstentions",
+      "totals": [
+        "ZCAP117member ballotsExcluding abstentions",
+        "Coinholders2,396,166.375ZEC voting weightExcluding abstentions"
+      ],
+      "width": 1440
+    },
+    {
+      "name": "Question 04 Shorter block intervals",
+      "documentWidth": 1425,
+      "heading": "Should Zcash use shorter block intervals?",
+      "question": "Question 04Shorter block intervals",
+      "selectedBasis": "Exclude abstentions",
+      "totals": [
+        "ZCAP114member ballotsExcluding abstentions",
+        "Coinholders2,397,811ZEC voting weightExcluding abstentions"
+      ],
+      "width": 1440
+    },
+    {
+      "name": "Question 05 Scope versus readiness",
+      "documentWidth": 1425,
+      "heading": "Should NU7 ship ready features or wait for its full scope?",
+      "question": "Question 05Scope versus readiness",
+      "selectedBasis": "Exclude abstentions",
+      "totals": [
+        "ZCAP125member ballotsExcluding abstentions",
+        "Coinholders2,395,313ZEC voting weightExcluding abstentions"
+      ],
+      "width": 1440
+    },
+    {
+      "name": "Member details and return preserve search",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members&q=Alex+Bornstein",
+      "search": "Alex Bornstein"
+    },
+    {
+      "name": "Issuance mobile 390",
+      "documentWidth": 375,
+      "heading": "Which issuance schedule should Zcash use?",
+      "question": "Question 01Issuance schedule",
+      "selectedBasis": "All responses",
+      "totals": [
+        "ZCAP135member ballotsAll responses",
+        "Coinholders2,403,537ZEC voting weightAll responses"
+      ],
+      "width": 390
+    },
+    {
+      "name": "Question select mobile",
+      "documentWidth": 375,
+      "heading": "Should NU7 ship ready features or wait for its full scope?",
+      "question": "Question 05Scope versus readiness",
+      "selectedBasis": "All responses",
+      "totals": [
+        "ZCAP135member ballotsAll responses",
+        "Coinholders2,399,474.375ZEC voting weightAll responses"
+      ],
+      "width": 390
+    },
+    {
+      "name": "Long exact values mobile 320",
+      "documentWidth": 305,
+      "heading": "Which issuance schedule should Zcash use?",
+      "question": "Question 01Issuance schedule",
+      "selectedBasis": "Exclude abstentions",
+      "totals": [
+        "ZCAP120member ballotsExcluding abstentions",
+        "Coinholders2,402,464.875ZEC voting weightExcluding abstentions"
+      ],
+      "width": 320
+    }
+  ],
+  "headingChecks": [
+    {
+      "name": "Overview desktop",
+      "documentWidth": 1425,
+      "extraLabels": 0,
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "Governance desktop",
+      "documentWidth": 1440,
+      "extraLabels": 0,
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "Governance rendered desktop",
+      "documentWidth": 1425,
+      "extraLabels": 0,
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "Governance record",
+      "documentWidth": 1425,
+      "extraLabels": 0,
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "Project collection",
+      "documentWidth": 1425,
+      "extraLabels": 0,
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "Project detail",
+      "documentWidth": 1425,
+      "extraLabels": 0,
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "Institutional reader",
+      "documentWidth": 1425,
+      "extraLabels": 0,
+      "width": 1440,
+      "passed": true
+    },
+    {
+      "name": "Overview mobile 320",
+      "documentWidth": 305,
+      "extraLabels": 0,
+      "width": 320,
+      "passed": true
+    }
+  ],
+  "consoleErrors": []
+}

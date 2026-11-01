@@ -1,0 +1,1158 @@
+{
+  "reviewedAt": "2026-10-28",
+  "checks": [
+    {
+      "label": "Results desktop",
+      "arrowEdges": [
+        1087
+      ],
+      "heading": "Governance · Results",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            153,
+            153,
+            153,
+            153,
+            153,
+            153,
+            153
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Result collections",
+          "widths": [
+            135,
+            121
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        97,
+        97,
+        97,
+        97
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "width": 1440
+    },
+    {
+      "label": "Proposals desktop",
+      "arrowEdges": [
+        1087
+      ],
+      "heading": "Governance · Proposals",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            153,
+            153,
+            153,
+            153,
+            153,
+            153,
+            153
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Proposal collections",
+          "widths": [
+            128,
+            137,
+            158
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        94,
+        94,
+        94,
+        94
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals",
+      "width": 1440
+    },
+    {
+      "label": "Voting desktop",
+      "arrowEdges": [
+        1087
+      ],
+      "heading": "Governance · Voting",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            153,
+            153,
+            153,
+            153,
+            153,
+            153,
+            153
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Voting collections",
+          "widths": [
+            162,
+            176
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        125,
+        97,
+        97,
+        97
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting",
+      "width": 1440
+    },
+    {
+      "label": "Grants desktop",
+      "arrowEdges": [
+        1087
+      ],
+      "heading": "Governance · Grants",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            153,
+            153,
+            153,
+            153,
+            153,
+            153,
+            153
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Grant programs",
+          "widths": [
+            144,
+            86,
+            125
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        125,
+        97,
+        97,
+        97
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "width": 1440
+    },
+    {
+      "label": "ZCAP desktop",
+      "arrowEdges": [],
+      "heading": "Governance · ZCAP",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            153,
+            153,
+            153,
+            153,
+            153,
+            153,
+            153
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "ZCAP views",
+          "widths": [
+            83,
+            100,
+            70,
+            124,
+            94,
+            121
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap",
+      "width": 1440
+    },
+    {
+      "label": "Insights desktop",
+      "arrowEdges": [
+        1087
+      ],
+      "heading": "Governance · Insights",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            153,
+            153,
+            153,
+            153,
+            153,
+            153,
+            153
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Insight views",
+          "widths": [
+            123,
+            134,
+            117,
+            140
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        80,
+        80,
+        80,
+        80
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "width": 1440
+    },
+    {
+      "label": "Payments desktop",
+      "arrowEdges": [
+        1087
+      ],
+      "heading": "Governance · Insights",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            153,
+            153,
+            153,
+            153,
+            153,
+            153,
+            153
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Insight views",
+          "widths": [
+            123,
+            134,
+            117,
+            140
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        93,
+        93,
+        93,
+        97
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=payments",
+      "width": 1440
+    },
+    {
+      "label": "Projects desktop",
+      "arrowEdges": [],
+      "heading": "Projects",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Project navigation",
+          "widths": [
+            155,
+            155,
+            155,
+            155,
+            155,
+            155,
+            155
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=projects",
+      "width": 1440
+    },
+    {
+      "label": "Project detail desktop",
+      "arrowEdges": [],
+      "heading": "Epoch",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Project navigation",
+          "widths": [
+            153,
+            153,
+            153,
+            153,
+            153,
+            153,
+            153
+          ]
+        },
+        {
+          "heights": [],
+          "name": "Project sections",
+          "widths": []
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=projects&project=epoch",
+      "width": 1440
+    },
+    {
+      "label": "Milestones desktop",
+      "arrowEdges": [],
+      "heading": "Milestones · All milestones",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Milestones navigation",
+          "widths": [
+            271,
+            271,
+            271,
+            271
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=impact",
+      "width": 1440
+    },
+    {
+      "label": "Team & community desktop",
+      "arrowEdges": [],
+      "heading": "Team & community · Team",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Team & community navigation",
+          "widths": [
+            182,
+            182,
+            182,
+            182,
+            182,
+            182
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=people",
+      "width": 1440
+    },
+    {
+      "label": "Code activity desktop",
+      "arrowEdges": [],
+      "heading": "Contributors",
+      "menus": [],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=activity",
+      "width": 1440
+    },
+    {
+      "label": "Code activity mobile",
+      "arrowEdges": [],
+      "heading": "Contributors",
+      "menus": [],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=activity",
+      "width": 390
+    },
+    {
+      "label": "Contributor map mobile",
+      "arrowEdges": [],
+      "heading": "Contributors",
+      "menus": [],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=activity",
+      "width": 390
+    },
+    {
+      "label": "Projects mobile",
+      "arrowEdges": [],
+      "heading": "Projects",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Project navigation",
+          "widths": [
+            102,
+            87,
+            68,
+            58,
+            91,
+            56,
+            120
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=projects",
+      "width": 390
+    },
+    {
+      "label": "Project detail mobile",
+      "arrowEdges": [],
+      "heading": "Epoch",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Project navigation",
+          "widths": [
+            102,
+            87,
+            68,
+            58,
+            91,
+            56,
+            120
+          ]
+        },
+        {
+          "heights": [],
+          "name": "Project sections",
+          "widths": []
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=projects&project=epoch",
+      "width": 390
+    },
+    {
+      "label": "Milestones mobile",
+      "arrowEdges": [],
+      "heading": "Milestones · All milestones",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Milestones navigation",
+          "widths": [
+            121,
+            109,
+            79,
+            86
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=impact",
+      "width": 390
+    },
+    {
+      "label": "Team & community mobile",
+      "arrowEdges": [],
+      "heading": "Team & community · Team",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Team & community navigation",
+          "widths": [
+            61,
+            100,
+            109,
+            120,
+            101,
+            116
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=people",
+      "width": 390
+    },
+    {
+      "label": "Zcash governance mobile",
+      "arrowEdges": [],
+      "heading": "Governance · Overview",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance",
+      "width": 390
+    },
+    {
+      "label": "Proposals mobile",
+      "arrowEdges": [
+        353
+      ],
+      "heading": "Governance · Proposals",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Proposal collections",
+          "widths": [
+            128,
+            137,
+            158
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        159,
+        131,
+        131,
+        159
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals",
+      "width": 390
+    },
+    {
+      "label": "Voting mobile",
+      "arrowEdges": [
+        353
+      ],
+      "heading": "Governance · Voting",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Voting collections",
+          "widths": [
+            162,
+            176
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        190,
+        134,
+        162,
+        188
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting",
+      "width": 390
+    },
+    {
+      "label": "Grants mobile",
+      "arrowEdges": [
+        353
+      ],
+      "heading": "Governance · Grants",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Grant programs",
+          "widths": [
+            144,
+            86,
+            125
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        215,
+        215,
+        215,
+        215
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "width": 390
+    },
+    {
+      "label": "Results mobile",
+      "arrowEdges": [
+        353
+      ],
+      "heading": "Governance · Results",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Result collections",
+          "widths": [
+            135,
+            121
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        167,
+        167,
+        195,
+        167
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "width": 390
+    },
+    {
+      "label": "ZCAP mobile",
+      "arrowEdges": [],
+      "heading": "Governance · ZCAP",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "ZCAP views",
+          "widths": [
+            83,
+            100,
+            70,
+            124,
+            94,
+            121
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap",
+      "width": 390
+    },
+    {
+      "label": "Insights decisions mobile",
+      "arrowEdges": [
+        353
+      ],
+      "heading": "Governance · Insights",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Insight views",
+          "widths": [
+            123,
+            134,
+            117,
+            140
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        80,
+        80,
+        80,
+        80
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "width": 390
+    },
+    {
+      "label": "Insights payments mobile",
+      "arrowEdges": [
+        353
+      ],
+      "heading": "Governance · Insights",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Insight views",
+          "widths": [
+            123,
+            134,
+            117,
+            140
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        165,
+        165,
+        165,
+        156
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=payments",
+      "width": 390
+    },
+    {
+      "label": "Insight detail mobile",
+      "arrowEdges": [],
+      "heading": "Zcash Privacy & Adoption in Two Bolivian Universities by BlockivIA",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [],
+          "name": "Record sections",
+          "widths": []
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&record=zcg_regular%7CZcash+Privacy+%26+Adoption+in+Two+Bolivian+Universities+by+BlockivIA",
+      "width": 390
+    },
+    {
+      "label": "ZCAP members mobile",
+      "arrowEdges": [
+        353
+      ],
+      "heading": "Governance · ZCAP",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            90,
+            91,
+            69,
+            69,
+            73,
+            63,
+            77
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "ZCAP views",
+          "widths": [
+            83,
+            100,
+            70,
+            124,
+            94,
+            121
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        113,
+        100,
+        113,
+        100
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members",
+      "width": 390
+    },
+    {
+      "label": "Grants medium",
+      "arrowEdges": [
+        799
+      ],
+      "heading": "Governance · Grants",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            110,
+            110,
+            110,
+            110,
+            110,
+            110,
+            110
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Grant programs",
+          "widths": [
+            144,
+            86,
+            125
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        122,
+        148,
+        122,
+        122
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants",
+      "width": 1100
+    },
+    {
+      "label": "Results medium",
+      "arrowEdges": [
+        799
+      ],
+      "heading": "Governance · Results",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            110,
+            110,
+            110,
+            110,
+            110,
+            110,
+            110
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Result collections",
+          "widths": [
+            135,
+            121
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        95,
+        95,
+        122,
+        95
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+      "width": 1100
+    },
+    {
+      "label": "Insights medium",
+      "arrowEdges": [
+        799
+      ],
+      "heading": "Governance · Insights",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            110,
+            110,
+            110,
+            110,
+            110,
+            110,
+            110
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Insight views",
+          "widths": [
+            123,
+            134,
+            117,
+            140
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        80,
+        80,
+        80,
+        80
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+      "width": 1100
+    },
+    {
+      "label": "Insights payments medium",
+      "arrowEdges": [
+        799
+      ],
+      "heading": "Governance · Insights",
+      "menus": [
+        {
+          "heights": [
+            44
+          ],
+          "name": "Governance sections",
+          "widths": [
+            110,
+            110,
+            110,
+            110,
+            110,
+            110,
+            110
+          ]
+        },
+        {
+          "heights": [
+            44
+          ],
+          "name": "Insight views",
+          "widths": [
+            123,
+            134,
+            117,
+            140
+          ]
+        }
+      ],
+      "overflow": false,
+      "rowHeights": [
+        93,
+        93,
+        93,
+        120
+      ],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=payments",
+      "width": 1100
+    },
+    {
+      "label": "Overview mobile",
+      "arrowEdges": [],
+      "heading": "Independent. For Zcash.",
+      "menus": [],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=overview",
+      "width": 390
+    },
+    {
+      "label": "Overview desktop",
+      "arrowEdges": [],
+      "heading": "Independent. For Zcash.",
+      "menus": [],
+      "overflow": false,
+      "rowHeights": [],
+      "url": "http://127.0.0.1:4246/shielded-preview?view=overview",
+      "width": 1440
+    }
+  ],
+  "validation": {
+    "productionBuild": "passed",
+    "fontSizesAndTextColors": "preserved"
+  }
+}

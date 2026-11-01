@@ -1,0 +1,764 @@
+{
+  "checkedAt": "2026-10-28T18:34:12.524Z",
+  "checks": [
+    {
+      "test": "Selected NU7 question opens its full internal comparison",
+      "pass": true
+    },
+    {
+      "test": "Home fills the available Mac width with balanced gutters",
+      "pass": true,
+      "measure": {
+        "body": 1671,
+        "document": 1671,
+        "main": 1423,
+        "marginLeft": 248,
+        "maxWidth": "none",
+        "paddingLeft": "36px",
+        "paddingRight": "36px",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "All seven governance links fit at 390px with 44px targets",
+      "pass": true
+    },
+    {
+      "test": "Funded summary opens 17 filtered results",
+      "pass": true
+    },
+    {
+      "test": "Result opens as an internal record, retaining outcome filter",
+      "pass": true
+    },
+    {
+      "test": "Return from result retains the Funded collection",
+      "pass": true
+    },
+    {
+      "test": "Proposals at 390px",
+      "pass": true,
+      "measurement": {
+        "headings": [
+          "Governance · Proposals",
+          "Under review"
+        ],
+        "nav": [
+          {
+            "current": null,
+            "height": 44,
+            "label": "Overview",
+            "right": 185,
+            "x": 28
+          },
+          {
+            "current": "page",
+            "height": 44,
+            "label": "Proposals",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Grants",
+            "right": 347,
+            "x": 271
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Voting",
+            "right": 104,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Results",
+            "right": 185,
+            "x": 109
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "ZCAP",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Insights",
+            "right": 347,
+            "x": 271
+          }
+        ],
+        "viewport": 390,
+        "width": 375
+      }
+    },
+    {
+      "test": "Grants at 390px",
+      "pass": true,
+      "measurement": {
+        "headings": [
+          "Governance · Grants",
+          "Funding ledger"
+        ],
+        "nav": [
+          {
+            "current": null,
+            "height": 44,
+            "label": "Overview",
+            "right": 185,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Proposals",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": "page",
+            "height": 44,
+            "label": "Grants",
+            "right": 347,
+            "x": 271
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Voting",
+            "right": 104,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Results",
+            "right": 185,
+            "x": 109
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "ZCAP",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Insights",
+            "right": 347,
+            "x": 271
+          }
+        ],
+        "viewport": 390,
+        "width": 375
+      }
+    },
+    {
+      "test": "Voting at 390px",
+      "pass": true,
+      "measurement": {
+        "headings": [
+          "Governance · Voting",
+          "Poll archive"
+        ],
+        "nav": [
+          {
+            "current": null,
+            "height": 44,
+            "label": "Overview",
+            "right": 185,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Proposals",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Grants",
+            "right": 347,
+            "x": 271
+          },
+          {
+            "current": "page",
+            "height": 44,
+            "label": "Voting",
+            "right": 104,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Results",
+            "right": 185,
+            "x": 109
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "ZCAP",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Insights",
+            "right": 347,
+            "x": 271
+          }
+        ],
+        "viewport": 390,
+        "width": 375
+      }
+    },
+    {
+      "test": "Results at 390px",
+      "pass": true,
+      "measurement": {
+        "headings": [
+          "Governance · Results",
+          "Q3 2026 outcomes"
+        ],
+        "nav": [
+          {
+            "current": null,
+            "height": 44,
+            "label": "Overview",
+            "right": 185,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Proposals",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Grants",
+            "right": 347,
+            "x": 271
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Voting",
+            "right": 104,
+            "x": 28
+          },
+          {
+            "current": "page",
+            "height": 44,
+            "label": "Results",
+            "right": 185,
+            "x": 109
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "ZCAP",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Insights",
+            "right": 347,
+            "x": 271
+          }
+        ],
+        "viewport": 390,
+        "width": 375
+      }
+    },
+    {
+      "test": "ZCAP at 390px",
+      "pass": true,
+      "measurement": {
+        "headings": [
+          "Governance · ZCAP",
+          "Issuance schedule"
+        ],
+        "nav": [
+          {
+            "current": null,
+            "height": 44,
+            "label": "Overview",
+            "right": 185,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Proposals",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Grants",
+            "right": 347,
+            "x": 271
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Voting",
+            "right": 104,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Results",
+            "right": 185,
+            "x": 109
+          },
+          {
+            "current": "page",
+            "height": 44,
+            "label": "ZCAP",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Insights",
+            "right": 347,
+            "x": 271
+          }
+        ],
+        "viewport": 390,
+        "width": 375
+      }
+    },
+    {
+      "test": "Insights at 390px",
+      "pass": true,
+      "measurement": {
+        "headings": [
+          "Governance · Insights",
+          "Proposal decisions"
+        ],
+        "nav": [
+          {
+            "current": null,
+            "height": 44,
+            "label": "Overview",
+            "right": 185,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Proposals",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Grants",
+            "right": 347,
+            "x": 271
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Voting",
+            "right": 104,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Results",
+            "right": 185,
+            "x": 109
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "ZCAP",
+            "right": 266,
+            "x": 190
+          },
+          {
+            "current": "page",
+            "height": 44,
+            "label": "Insights",
+            "right": 347,
+            "x": 271
+          }
+        ],
+        "viewport": 390,
+        "width": 375
+      }
+    },
+    {
+      "test": "Governance overview at 320px",
+      "pass": true,
+      "measurement": {
+        "headings": [
+          "Governance · Overview",
+          "Funding",
+          "Decisions",
+          "Participation",
+          "In focus",
+          "Open for review"
+        ],
+        "nav": [
+          {
+            "current": "page",
+            "height": 44,
+            "label": "Overview",
+            "right": 150,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Proposals",
+            "right": 213.5,
+            "x": 155
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Grants",
+            "right": 277,
+            "x": 218.5
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Voting",
+            "right": 86.5,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Results",
+            "right": 150,
+            "x": 91.5
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "ZCAP",
+            "right": 213.5,
+            "x": 155
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Insights",
+            "right": 277,
+            "x": 218.5
+          }
+        ],
+        "viewport": 320,
+        "width": 305
+      }
+    },
+    {
+      "test": "Governance overview at 768px",
+      "pass": true,
+      "measurement": {
+        "headings": [
+          "Governance · Overview",
+          "Funding",
+          "Decisions",
+          "Participation",
+          "In focus",
+          "Open for review"
+        ],
+        "nav": [
+          {
+            "current": "page",
+            "height": 44,
+            "label": "Overview",
+            "right": 144.984375,
+            "x": 28
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Proposals",
+            "right": 246.3203125,
+            "x": 159.984375
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Grants",
+            "right": 336.65625,
+            "x": 250.3203125
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Voting",
+            "right": 437.9921875,
+            "x": 351.65625
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Results",
+            "right": 528.328125,
+            "x": 441.9921875
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "ZCAP",
+            "right": 632.1640625,
+            "x": 543.328125
+          },
+          {
+            "current": null,
+            "height": 44,
+            "label": "Insights",
+            "right": 725,
+            "x": 636.1640625
+          }
+        ],
+        "viewport": 768,
+        "width": 753
+      }
+    },
+    {
+      "test": "Overview fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1671,
+        "mainWidth": 1423,
+        "maxWidth": "none",
+        "title": "Independent. For Zcash.",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "Zcash governance fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1671,
+        "mainWidth": 1423,
+        "maxWidth": "none",
+        "title": "Governance · Overview",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "Projects fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1686,
+        "mainWidth": 1438,
+        "maxWidth": "none",
+        "title": "Projects",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "Code activity fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1671,
+        "mainWidth": 1423,
+        "maxWidth": "none",
+        "title": "Contributors",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "Milestones fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1671,
+        "mainWidth": 1423,
+        "maxWidth": "none",
+        "title": "Milestones · All milestones",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "Team & community fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1686,
+        "mainWidth": 1438,
+        "maxWidth": "none",
+        "title": "Team & community · Team",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "Blog fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1671,
+        "mainWidth": 1423,
+        "maxWidth": "none",
+        "title": "Blog",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "Resources fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1671,
+        "mainWidth": 1423,
+        "maxWidth": "none",
+        "title": "Project resources",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "About fluid layout at 1686px",
+      "pass": true,
+      "measure": {
+        "body": 1671,
+        "mainWidth": 1423,
+        "maxWidth": "none",
+        "title": "About Shielded Labs",
+        "viewport": 1686
+      }
+    },
+    {
+      "test": "Overview mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "Independent. For Zcash.",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "Zcash governance mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "Governance · Overview",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "Projects mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "Projects",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "Code activity mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "Contributors",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "Milestones mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "Milestones · All milestones",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "Team & community mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "Team & community · Team",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "Blog mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "Blog",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "Resources mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "Project resources",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "About mobile menu and width at 390px",
+      "pass": true,
+      "measure": {
+        "body": 375,
+        "menuOpen": "false",
+        "title": "About Shielded Labs",
+        "viewport": 390
+      }
+    },
+    {
+      "test": "Browser Back restores the selected NU7 question",
+      "pass": true,
+      "value": "reissuance"
+    },
+    {
+      "test": "Dashboard proposal opens full application with no modal",
+      "pass": true,
+      "detail": {
+        "dialogs": 0,
+        "title": "Authenticated Shielded Sync Gateway",
+        "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&record=review%3A520"
+      }
+    },
+    {
+      "test": "Dashboard payment opens grant and milestone details with no modal",
+      "pass": true,
+      "detail": {
+        "dialogs": 0,
+        "milestones": true,
+        "title": "Zcash Privacy & Adoption in Two Bolivian Universities by BlockivIA",
+        "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&record=zcg_regular%7CZcash+Privacy+%26+Adoption+in+Two+Bolivian+Universities+by+BlockivIA"
+      }
+    }
+  ]
+}

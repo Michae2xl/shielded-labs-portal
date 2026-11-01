@@ -1,0 +1,103 @@
+{
+  "checkedAt": "2026-10-28T17:17:20.496Z",
+  "checks": [
+    {
+      "case": "article return preserves Security filter",
+      "scroll": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=blog&section=security",
+      "width": 1440
+    },
+    {
+      "case": "FAQ direct reader",
+      "questions": 23,
+      "scroll": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=resources&section=crosslink&record=crosslink-faq",
+      "width": 1440
+    },
+    {
+      "case": "FAQ mobile",
+      "scroll": 375,
+      "title": "Crosslink FAQ",
+      "width": 390
+    },
+    {
+      "case": "About mobile",
+      "scroll": 375,
+      "title": "About Shielded Labs",
+      "width": 390
+    },
+    {
+      "case": "Board profile direct",
+      "scroll": 390,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=about&section=board&record=board-awa-sun-yin",
+      "width": 390
+    },
+    {
+      "case": "Expired job detail",
+      "closed": true,
+      "scroll": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=about&section=careers&record=cryptographer",
+      "width": 390
+    },
+    {
+      "case": "Privacy internal",
+      "scroll": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=about&section=privacy",
+      "width": 390
+    },
+    {
+      "case": "Final build Privacy 320",
+      "scroll": 305,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=about&section=privacy",
+      "width": 320
+    },
+    {
+      "case": "Project to full handbook",
+      "headings": 128,
+      "scroll": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=resources&section=crosslink&record=crosslink-handbook",
+      "width": 1440
+    },
+    {
+      "case": "NSM title deduplicated",
+      "headings": [
+        "Network Sustainability Mechanism",
+        "Summary",
+        "Frequently Asked Questions (FAQ)",
+        "Related reading",
+        "On this page",
+        "Project",
+        "Source"
+      ],
+      "scroll": 1425,
+      "width": 1440
+    },
+    {
+      "case": "Global search to FAQ",
+      "scroll": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=resources&section=crosslink&record=crosslink-faq",
+      "width": 1440
+    },
+    {
+      "case": "Governance adjacent navigation",
+      "scroll": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance",
+      "width": 1440
+    },
+    {
+      "articles": 20,
+      "case": "Final Blog desktop",
+      "scroll": 1425,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=blog",
+      "width": 1440
+    },
+    {
+      "case": "Final article mobile",
+      "paragraphs": 22,
+      "scroll": 375,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=blog&section=all&record=epoch-future-proof-cryptography-for-zcash",
+      "width": 390
+    }
+  ],
+  "errors": []
+}

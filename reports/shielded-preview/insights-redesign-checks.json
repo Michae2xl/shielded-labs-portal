@@ -1,0 +1,365 @@
+[
+  {
+    "name": "320px exact totals fit",
+    "values": [
+      {
+        "height": 33.59375,
+        "lineHeight": "33.6px",
+        "text": "$29,196,580.49"
+      },
+      {
+        "height": 33.59375,
+        "lineHeight": "33.6px",
+        "text": "406,581.74515481"
+      }
+    ]
+  },
+  {
+    "name": "ZCG decisions at 1280px",
+    "documentWidth": 1265,
+    "menuTargets": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "panels": [
+      {
+        "title": "Decision breakdown",
+        "width": 490.5078125,
+        "x": 276.15625,
+        "y": 286
+      },
+      {
+        "title": "Latest decisions",
+        "width": 454.1796875,
+        "x": 782.6640625,
+        "y": 286
+      }
+    ],
+    "width": 1280
+  },
+  {
+    "name": "Grant payments at 1280px",
+    "documentWidth": 1265,
+    "menuTargets": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "panels": [
+      {
+        "title": "Recorded payments",
+        "width": 490.5078125,
+        "x": 276.15625,
+        "y": 286
+      },
+      {
+        "title": "Latest payments",
+        "width": 454.1796875,
+        "x": 782.6640625,
+        "y": 286
+      }
+    ],
+    "width": 1280
+  },
+  {
+    "name": "Q3 outcomes at 1280px",
+    "documentWidth": 1265,
+    "menuTargets": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "panels": [
+      {
+        "title": "Voting outcomes",
+        "width": 490.5078125,
+        "x": 276.15625,
+        "y": 286
+      },
+      {
+        "title": "Largest requests",
+        "width": 454.1796875,
+        "x": 782.6640625,
+        "y": 286
+      }
+    ],
+    "width": 1280
+  },
+  {
+    "name": "NU7 comparison at 1280px",
+    "documentWidth": 1265,
+    "menuTargets": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "panels": [
+      {
+        "title": "Leading responses",
+        "width": 960.6875,
+        "x": 276.15625,
+        "y": 286
+      }
+    ],
+    "width": 1280
+  },
+  {
+    "name": "ZCG decisions at 390px",
+    "documentWidth": 375,
+    "menuTargets": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "panels": [
+      {
+        "title": "Decision breakdown",
+        "width": 331,
+        "x": 22,
+        "y": 470.390625
+      },
+      {
+        "title": "Latest decisions",
+        "width": 331,
+        "x": 22,
+        "y": 1121.984375
+      }
+    ],
+    "width": 390
+  },
+  {
+    "name": "Grant payments at 390px",
+    "documentWidth": 375,
+    "menuTargets": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "panels": [
+      {
+        "title": "Recorded payments",
+        "width": 331,
+        "x": 22,
+        "y": 470.390625
+      },
+      {
+        "title": "Latest payments",
+        "width": 331,
+        "x": 22,
+        "y": 1240.3359375
+      }
+    ],
+    "width": 390
+  },
+  {
+    "name": "Q3 outcomes at 390px",
+    "documentWidth": 375,
+    "menuTargets": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "panels": [
+      {
+        "title": "Voting outcomes",
+        "width": 331,
+        "x": 22,
+        "y": 470.390625
+      },
+      {
+        "title": "Largest requests",
+        "width": 331,
+        "x": 22,
+        "y": 1041.28125
+      }
+    ],
+    "width": 390
+  },
+  {
+    "name": "NU7 comparison at 390px",
+    "documentWidth": 375,
+    "menuTargets": [
+      48,
+      48,
+      48,
+      48
+    ],
+    "panels": [
+      {
+        "title": "Leading responses",
+        "width": 331,
+        "x": 22,
+        "y": 470.390625
+      }
+    ],
+    "width": 390
+  },
+  {
+    "name": "ZCG decisions at 320px",
+    "documentWidth": 305,
+    "menuTargets": [
+      62,
+      62,
+      62,
+      62
+    ],
+    "panels": [
+      {
+        "title": "Decision breakdown",
+        "width": 261,
+        "x": 22,
+        "y": 498.390625
+      },
+      {
+        "title": "Latest decisions",
+        "width": 261,
+        "x": 22,
+        "y": 1168.578125
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "Grant payments at 320px",
+    "documentWidth": 305,
+    "menuTargets": [
+      62,
+      62,
+      62,
+      62
+    ],
+    "panels": [
+      {
+        "title": "Recorded payments",
+        "width": 261,
+        "x": 22,
+        "y": 498.390625
+      },
+      {
+        "title": "Latest payments",
+        "width": 261,
+        "x": 22,
+        "y": 1293.8359375
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "Q3 outcomes at 320px",
+    "documentWidth": 305,
+    "menuTargets": [
+      62,
+      62,
+      62,
+      62
+    ],
+    "panels": [
+      {
+        "title": "Voting outcomes",
+        "width": 261,
+        "x": 22,
+        "y": 498.390625
+      },
+      {
+        "title": "Largest requests",
+        "width": 261,
+        "x": 22,
+        "y": 1087.875
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "NU7 comparison at 320px",
+    "documentWidth": 305,
+    "menuTargets": [
+      62,
+      62,
+      62,
+      62
+    ],
+    "panels": [
+      {
+        "title": "Leading responses",
+        "width": 261,
+        "x": 22,
+        "y": 498.390625
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "Decision status opens matching archive",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&lane=history&filter=approved",
+    "filter": "approved"
+  },
+  {
+    "name": "Return to decision insights",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights",
+    "active": "page"
+  },
+  {
+    "name": "Decision opens internal record",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&record=history%3Af692fd22de263b2aa680b8b50240bc1e2b1494a12885d61bbf69ca29452e862e&lane=history",
+    "headings": [
+      "Zcash @BlockchainLife 2026",
+      "Application summary",
+      "Sources & context"
+    ]
+  },
+  {
+    "name": "Payment program opens matching grants",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&filter=coinholder"
+  },
+  {
+    "name": "Payment opens internal grant",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants&record=zcg_regular%7CZcash+Privacy+%26+Adoption+in+Two+Bolivian+Universities+by+BlockivIA",
+    "headings": [
+      "Zcash Privacy & Adoption in Two Bolivian Universities by BlockivIA",
+      "Recorded payments",
+      "Milestones",
+      "Startup Funding",
+      "Milestone 1",
+      "Milestone 2",
+      "Sources & context"
+    ]
+  },
+  {
+    "name": "Outcome opens matching results",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&filter=Funded"
+  },
+  {
+    "name": "Outcome opens internal ballot",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&record=q3%3A33&filter=Funded",
+    "headings": [
+      "ZODL Q1 & Q2 2026 Core Protocol Development",
+      "Ballot breakdown",
+      "Decision rule",
+      "Application",
+      "Sources & context"
+    ]
+  },
+  {
+    "name": "Question opens full ZCAP comparison",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=reissuance",
+    "allResponses": "true"
+  },
+  {
+    "name": "Comparison selection survives reload",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights&lane=panels",
+    "active": "page"
+  },
+  {
+    "name": "Context remains accessible inline",
+    "expanded": "true",
+    "basisVisible": true
+  }
+]

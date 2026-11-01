@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-29",
+  "checks": [
+    {
+      "label": "Search and internal detail return",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals&lane=history&q=Wallet+Core"
+    },
+    {
+      "label": "Grants",
+      "active": "Grants",
+      "collections": [
+        "All programs218",
+        "ZCG196",
+        "Coinholder22"
+      ],
+      "documentWidth": 1425,
+      "duplicateHeaders": 0,
+      "icons": 7
+    },
+    {
+      "label": "Voting",
+      "active": "Voting",
+      "collections": [
+        "Coinholder polls15",
+        "Network upgrades12"
+      ],
+      "documentWidth": 1425,
+      "duplicateHeaders": 0,
+      "icons": 7
+    },
+    {
+      "label": "Results",
+      "active": "Results",
+      "collections": [
+        "Coinholder · Q3 2026",
+        "ZCG elections"
+      ],
+      "documentWidth": 1425,
+      "duplicateHeaders": 0,
+      "icons": 7
+    },
+    {
+      "label": "Insights",
+      "active": "Insights",
+      "collections": [
+        "ZCG decisions",
+        "Grant payments",
+        "Q3 outcomes",
+        "NU7 comparison"
+      ],
+      "documentWidth": 1425,
+      "duplicateHeaders": 0,
+      "icons": 7
+    },
+    {
+      "label": "ZCAP",
+      "active": "ZCAP",
+      "collections": [],
+      "documentWidth": 1425,
+      "duplicateHeaders": 0,
+      "icons": 7
+    },
+    {
+      "label": "Overview",
+      "active": "Overview",
+      "collections": [],
+      "documentWidth": 1425,
+      "duplicateHeaders": 0,
+      "icons": 7
+    }
+  ],
+  "errors": []
+}

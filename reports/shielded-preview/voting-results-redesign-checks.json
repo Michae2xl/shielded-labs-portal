@@ -1,0 +1,257 @@
+[
+  {
+    "name": "Results initial desktop",
+    "documentWidth": 1440,
+    "results": 12,
+    "width": 1440
+  },
+  {
+    "name": "Funded filter",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&filter=Funded",
+    "allFunded": true
+  },
+  {
+    "name": "Results page 2",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&filter=Funded&page=2",
+    "count": 5
+  },
+  {
+    "name": "Q3 detail stays in portal",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&record=q3%3A50&filter=Funded&page=2",
+    "title": "Ironwood zk-SNARK Formal Verification (Project Tachyon)"
+  },
+  {
+    "name": "Results return keeps page and filter",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&filter=Funded&page=2",
+    "sameRows": true
+  },
+  {
+    "name": "Results search within Funded",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&filter=Funded&q=Ironwood",
+    "count": 4
+  },
+  {
+    "name": "Results reload retains search",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&filter=Funded&q=Ironwood",
+    "search": "Ironwood"
+  },
+  {
+    "name": "Results 320px",
+    "documentWidth": 305,
+    "weights": [
+      {
+        "height": 32.3984375,
+        "lineHeight": "32.4px",
+        "text": "99.8%"
+      },
+      {
+        "height": 21.59375,
+        "lineHeight": "21.6px",
+        "text": "2,179,204"
+      },
+      {
+        "height": 32.3984375,
+        "lineHeight": "32.4px",
+        "text": ">99.9%"
+      },
+      {
+        "height": 21.59375,
+        "lineHeight": "21.6px",
+        "text": "2,179,262.875"
+      },
+      {
+        "height": 32.3984375,
+        "lineHeight": "32.4px",
+        "text": ">99.9%"
+      },
+      {
+        "height": 21.59375,
+        "lineHeight": "21.6px",
+        "text": "2,179,230.125"
+      },
+      {
+        "height": 32.3984375,
+        "lineHeight": "32.4px",
+        "text": "99.9%"
+      },
+      {
+        "height": 21.59375,
+        "lineHeight": "21.6px",
+        "text": "2,179,275.25"
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "Elections 320px",
+    "documentWidth": 305,
+    "records": 11,
+    "width": 320
+  },
+  {
+    "name": "Election search by elected member",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&lane=elections&q=Paul",
+    "count": 1
+  },
+  {
+    "name": "Election detail opens inside portal",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&record=election%3A2026-06-zcg&lane=elections&q=Paul",
+    "title": "ZCG election June 2026"
+  },
+  {
+    "name": "Election return retains search",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&lane=elections&q=Paul"
+  },
+  {
+    "name": "Voting search",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&q=NU7",
+    "count": 4
+  },
+  {
+    "name": "Voting opens full internal record",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&record=poll%3A2026-09-nu7-scope-coinholder-vote&q=NU7",
+    "title": "NU7 Scope coinholder vote"
+  },
+  {
+    "name": "Voting return retains search",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&q=NU7"
+  },
+  {
+    "name": "Voting page return",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&page=2",
+    "sameRows": true
+  },
+  {
+    "name": "Upgrades 320px",
+    "documentWidth": 305,
+    "records": 12,
+    "width": 320
+  },
+  {
+    "name": "Upgrade detail internal",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&record=upgrade%3ANU6.3+%28Ironwood%29&filter=upgrades&q=Ironwood",
+    "title": "NU6.3 (Ironwood)"
+  },
+  {
+    "name": "Upgrade return retains filter and query",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&filter=upgrades&q=Ironwood"
+  },
+  {
+    "name": "Voting empty search",
+    "found": true
+  },
+  {
+    "name": "Upgrade reset recovers list",
+    "count": 12
+  },
+  {
+    "name": "Voting sources inline",
+    "found": true
+  },
+  {
+    "name": "Voting final 1280px",
+    "documentWidth": 1265,
+    "records": 12,
+    "width": 1280
+  },
+  {
+    "name": "Voting final 320px",
+    "documentWidth": 305,
+    "records": 12,
+    "width": 320
+  },
+  {
+    "name": "Rejected filter",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results&filter=Rejected",
+    "allRejected": true
+  },
+  {
+    "name": "Results empty search",
+    "found": true
+  },
+  {
+    "name": "Results reset filters",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results",
+    "count": 12
+  },
+  {
+    "name": "Results final 320px",
+    "documentWidth": 305,
+    "values": [
+      {
+        "height": 34,
+        "scrollWidth": 54,
+        "text": "5.4%",
+        "width": 54
+      },
+      {
+        "height": 34,
+        "scrollWidth": 108,
+        "text": "2,181,451.875",
+        "width": 108
+      },
+      {
+        "height": 34,
+        "scrollWidth": 67,
+        "text": "24.1%",
+        "width": 67
+      },
+      {
+        "height": 34,
+        "scrollWidth": 108,
+        "text": "2,181,452.875",
+        "width": 108
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "Results final 1280px",
+    "documentWidth": 1265,
+    "values": [
+      {
+        "height": 34,
+        "scrollWidth": 56,
+        "text": "5.4%",
+        "width": 56
+      },
+      {
+        "height": 34,
+        "scrollWidth": 121,
+        "text": "2,181,451.875",
+        "width": 121
+      },
+      {
+        "height": 34,
+        "scrollWidth": 70,
+        "text": "24.1%",
+        "width": 70
+      },
+      {
+        "height": 34,
+        "scrollWidth": 121,
+        "text": "2,181,452.875",
+        "width": 121
+      }
+    ],
+    "width": 1280
+  },
+  {
+    "name": "Results methodology inline",
+    "found": true
+  },
+  {
+    "name": "Adjacent Proposals retains card layout",
+    "columns": "472.344px 472.344px",
+    "found": true
+  },
+  {
+    "name": "Adjacent Grants retains card layout",
+    "columns": "472.344px 472.344px",
+    "found": true
+  },
+  {
+    "name": "Final browser errors",
+    "errors": []
+  }
+]

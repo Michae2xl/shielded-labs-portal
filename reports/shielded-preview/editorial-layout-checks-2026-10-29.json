@@ -1,0 +1,264 @@
+{
+  "date": "2026-10-29",
+  "scope": [
+    "Blog",
+    "Resources",
+    "About"
+  ],
+  "checks": [
+    {
+      "check": "Blog desktop listing",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1686,
+      "heading": "Blog",
+      "width": 1686
+    },
+    {
+      "check": "Blog direct article desktop",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Zcash Governance Is a Superpower",
+      "width": 1686
+    },
+    {
+      "check": "Article outline opens section",
+      "passed": true
+    },
+    {
+      "check": "Article return preserves category and search",
+      "passed": true
+    },
+    {
+      "check": "Blog reload preserves search",
+      "passed": true
+    },
+    {
+      "check": "Empty search can be cleared",
+      "passed": true
+    },
+    {
+      "check": "Resources desktop listing",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Project resources",
+      "width": 1686
+    },
+    {
+      "check": "Crosslink FAQ direct detail desktop",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Crosslink FAQ",
+      "width": 1686
+    },
+    {
+      "check": "FAQ question anchor opens directly",
+      "passed": true
+    },
+    {
+      "check": "Resource return preserves project and search",
+      "passed": true
+    },
+    {
+      "check": "About organization desktop",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "About Shielded Labs",
+      "width": 1686
+    },
+    {
+      "check": "Board desktop cards",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1686,
+      "heading": "Board of Directors",
+      "width": 1686
+    },
+    {
+      "check": "Board profile opens internally",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1686,
+      "heading": "Jason McGee Stramaglia",
+      "width": 1686
+    },
+    {
+      "check": "Board profile returns to board cards",
+      "passed": true
+    },
+    {
+      "check": "Careers closed role detail",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1686,
+      "heading": "Cryptographer",
+      "width": 1686
+    },
+    {
+      "check": "Contact form mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Contact",
+      "width": 390
+    },
+    {
+      "check": "Privacy reading mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Privacy",
+      "width": 390
+    },
+    {
+      "check": "Organization mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "About Shielded Labs",
+      "width": 390
+    },
+    {
+      "check": "Organization compact desktop 1024",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1009,
+      "heading": "About Shielded Labs",
+      "width": 1024
+    },
+    {
+      "check": "Resources mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Project resources",
+      "width": 390
+    },
+    {
+      "check": "FAQ mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Crosslink FAQ",
+      "width": 390
+    },
+    {
+      "check": "Mobile question selector reaches answer",
+      "passed": true,
+      "text": "Does Crosslink include slashing?",
+      "top": 89.8671875
+    },
+    {
+      "check": "FAQ narrow phone 320",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 305,
+      "heading": "Crosslink FAQ",
+      "width": 320
+    },
+    {
+      "check": "Simulator portal frame narrow 320",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 305,
+      "heading": "Dynamic Fees lab",
+      "width": 320
+    },
+    {
+      "check": "Simulator section retains library navigation",
+      "passed": true
+    },
+    {
+      "check": "Simulator returns to same library category",
+      "passed": true
+    },
+    {
+      "check": "Blog narrow mobile 320",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 305,
+      "heading": "Blog",
+      "width": 320
+    },
+    {
+      "check": "Blog mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Blog",
+      "width": 390
+    },
+    {
+      "check": "Blog article mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Epoch: Future-Proof Cryptography for Zcash",
+      "width": 390
+    },
+    {
+      "check": "Article project reference stays inside portal",
+      "passed": true
+    },
+    {
+      "check": "Project resource opens internal guide",
+      "passed": true
+    },
+    {
+      "check": "Board mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Board of Directors",
+      "width": 390
+    },
+    {
+      "check": "Board profile mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Jason McGee Stramaglia",
+      "width": 390
+    },
+    {
+      "check": "Profile category no longer duplicates back label",
+      "passed": true
+    },
+    {
+      "check": "About source uses full compact width",
+      "passed": true,
+      "display": "block",
+      "sourceWidth": 729,
+      "width": 729
+    },
+    {
+      "check": "Blog compact desktop 1440",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1425,
+      "heading": "Blog",
+      "width": 1440
+    },
+    {
+      "check": "Final Blog wide desktop 1686",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Blog",
+      "width": 1686
+    },
+    {
+      "check": "Browser console has no errors during final check",
+      "passed": true,
+      "errors": []
+    }
+  ],
+  "summary": {
+    "total": 38,
+    "passed": 38
+  }
+}

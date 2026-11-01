@@ -1,0 +1,306 @@
+[
+  {
+    "name": "Excluded basis retains raw votes",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=issuance&basis=exclude",
+    "rows": [
+      "Gradual issuanceZCAP47.5%57 votesCoinholders0.9%22,384.875 ZEC",
+      "Keep halvingsZCAP45.0%54 votesCoinholders98.9%2,375,932.375 ZEC",
+      "Defer smoothingZCAP7.5%9 votesCoinholders0.2%4,147.625 ZEC",
+      "AbstentionExcluded from percentagesZCAP—15 votesCoinholders—1,072.125 ZEC"
+    ],
+    "totals": [
+      {
+        "body": "ZCAP",
+        "total": "120"
+      },
+      {
+        "body": "Coinholders",
+        "total": "2,402,464.875"
+      },
+      {
+        "body": "Gradual issuance"
+      },
+      {
+        "body": "Keep halvings"
+      },
+      {
+        "body": "Defer smoothing"
+      },
+      {
+        "body": "Abstention"
+      }
+    ]
+  },
+  {
+    "name": "320px exact totals",
+    "documentWidth": 305,
+    "totals": [
+      {
+        "height": 26.25,
+        "lineHeight": "26.25px",
+        "text": "120"
+      },
+      {
+        "height": 20,
+        "lineHeight": "20px",
+        "text": "2,402,464.875"
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "Member search by handle",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members&q=alxiong",
+    "members": [
+      "AXAlex Xiong@alxiongJoined August 2026"
+    ]
+  },
+  {
+    "name": "Member profile internal",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&record=member%3A%5B%22Alex+Xiong%22%2C%22%40alxiong%22%5D&lane=members&q=alxiong",
+    "title": "Alex Xiong"
+  },
+  {
+    "name": "Member return retains search",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members&q=alxiong",
+    "search": "alxiong"
+  },
+  {
+    "name": "Member sort descending",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members&filter=name-desc",
+    "members": [
+      "ZZoz (on the forum)@ZozJoined May 2022",
+      "ZWZooko Wilcox@zookoJoined November 2024",
+      "Zzksquirrel@zksquirrelJoined November 2022",
+      "Zzkcroc (on the forum)@zkcrocJoined July 2025",
+      "ZZkashmoneyJoined July 2022",
+      "Zzk_nd3r@zk_nd3rJoined June 2026",
+      "ZZerodartz (on the forum)@zerodartzJoined May 2024",
+      "Zzecretary (on the forum)@zecretaryJoined May 2022",
+      "ZZecMec (on the forum)@ZecMecJoined September 2023",
+      "ZZArabia (on the forum)@ZArabiaJoined June 2026",
+      "Zzancas (on the forum)@zancasJoined May 2021",
+      "YYoditar (on the forum)@YoditarJoined May 2022"
+    ]
+  },
+  {
+    "name": "Member page 2",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members&filter=name-desc&page=2",
+    "members": [
+      "XCXander CollinsJoined March 2026",
+      "Wwobbzz (on the forum)@wobbzzJoined December 2021",
+      "VDVladimir Dinev@ZeroisSpecialJoined Before May '21",
+      "VVlad (on the Zcash Community group on Telegram)Joined May 2022",
+      "VAVivek Arte@vivekJoined September 2023",
+      "Vvito (on the forum)@vitoJoined May 2024",
+      "VMVincent Marchese (vgm on the forum)@vgmJoined May 2021",
+      "UUSCMigs@USCMigsJoined August 2026",
+      "TTron@TronJoined December 2025",
+      "Ttreasonous (on the forum)@TreasonousJoined April 2025",
+      "THTom HowardJoined August 2026",
+      "Ttokidoki (on the forum)@tokidokiJoined December 2021"
+    ]
+  },
+  {
+    "name": "Profile return preserves page and sort",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members&filter=name-desc&page=2",
+    "sameMembers": true
+  },
+  {
+    "name": "Empty roster search",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members&filter=name-desc&q=zz-no-matching-member",
+    "heading": "No matching records"
+  },
+  {
+    "name": "Reset roster filters",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&lane=members",
+    "count": 12
+  },
+  {
+    "name": "Question 2: Reissuance timing desktop",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=reissuance&basis=exclude",
+    "question": "When should reissuance begin?",
+    "excluded": "true"
+  },
+  {
+    "name": "Question 3: Sprout retirement desktop",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=sprout&basis=exclude",
+    "question": "When should Sprout be retired?",
+    "excluded": "true"
+  },
+  {
+    "name": "Question 4: Shorter block intervals desktop",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=blocks&basis=exclude",
+    "question": "Should Zcash use shorter block intervals?",
+    "excluded": "true"
+  },
+  {
+    "name": "Question 5: Scope versus readiness desktop",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=readiness&basis=exclude",
+    "question": "Should NU7 ship ready features or wait for its full scope?",
+    "excluded": "true"
+  },
+  {
+    "name": "Sources open inside ZCAP",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=readiness&basis=exclude",
+    "basis": "Voting basis"
+  },
+  {
+    "name": "Poll opens in portal",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting&record=poll%3A2026-09-nu7-scope-coinholder-vote",
+    "title": "NU7 Scope coinholder vote"
+  },
+  {
+    "name": "Back preserves question and basis",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap&filter=readiness&basis=exclude"
+  },
+  {
+    "name": "issuance at 320px",
+    "documentWidth": 305,
+    "totals": [
+      {
+        "height": 26.25,
+        "lineHeight": "26.25px",
+        "text": "120",
+        "width": 35.9921875
+      },
+      {
+        "height": 20,
+        "lineHeight": "20px",
+        "text": "2,402,464.875",
+        "width": 101.1875
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "reissuance at 320px",
+    "documentWidth": 305,
+    "totals": [
+      {
+        "height": 26.25,
+        "lineHeight": "26.25px",
+        "text": "117",
+        "width": 35.9921875
+      },
+      {
+        "height": 20,
+        "lineHeight": "20px",
+        "text": "2,396,166.375",
+        "width": 101.1875
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "sprout at 320px",
+    "documentWidth": 305,
+    "totals": [
+      {
+        "height": 26.25,
+        "lineHeight": "26.25px",
+        "text": "126",
+        "width": 35.9921875
+      },
+      {
+        "height": 20,
+        "lineHeight": "20px",
+        "text": "2,397,462.5",
+        "width": 83.140625
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "blocks at 320px",
+    "documentWidth": 305,
+    "totals": [
+      {
+        "height": 26.25,
+        "lineHeight": "26.25px",
+        "text": "114",
+        "width": 35.9921875
+      },
+      {
+        "height": 26.25,
+        "lineHeight": "26.25px",
+        "text": "2,397,811",
+        "width": 93.890625
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "readiness at 320px",
+    "documentWidth": 305,
+    "totals": [
+      {
+        "height": 26.25,
+        "lineHeight": "26.25px",
+        "text": "125",
+        "width": 35.9921875
+      },
+      {
+        "height": 26.25,
+        "lineHeight": "26.25px",
+        "text": "2,395,313",
+        "width": 93.890625
+      }
+    ],
+    "width": 320
+  },
+  {
+    "name": "Final 1280px layout",
+    "buttons": [
+      {
+        "height": 44,
+        "label": "All responses",
+        "scrollWidth": 97,
+        "width": 97
+      },
+      {
+        "height": 44,
+        "label": "Exclude abstentions",
+        "scrollWidth": 137,
+        "width": 137
+      }
+    ],
+    "documentWidth": 1265,
+    "totals": [
+      {
+        "height": 31.25,
+        "lineHeight": "31.25px",
+        "text": "120"
+      },
+      {
+        "height": 31.25,
+        "lineHeight": "31.25px",
+        "text": "2,402,464.875"
+      }
+    ],
+    "width": 1280
+  },
+  {
+    "name": "Final 1440px layout",
+    "buttons": [
+      {
+        "height": 44,
+        "label": "All responses",
+        "scrollWidth": 97,
+        "width": 97
+      },
+      {
+        "height": 44,
+        "label": "Exclude abstentions",
+        "scrollWidth": 137,
+        "width": 137
+      }
+    ],
+    "documentWidth": 1425,
+    "width": 1440
+  },
+  {
+    "name": "Final browser errors",
+    "errors": []
+  }
+]

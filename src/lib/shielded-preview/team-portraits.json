@@ -1,0 +1,66 @@
+{
+  "source": "https://shieldedlabs.net/team/",
+  "reviewedAt": "2026-10-25",
+  "portraits": {
+    "jason-mcgee-stramaglia": {
+      "alt": "Jason_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2024/11/Jason_Headshot-400x400.png",
+      "src": "/shielded-preview/team/jason-mcgee-stramaglia.png"
+    },
+    "zooko-wilcox": {
+      "alt": "Zooko_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2024/11/Zooko_Headshot-400x400.png",
+      "src": "/shielded-preview/team/zooko-wilcox.png"
+    },
+    "nate-wilcox": {
+      "alt": "Nate_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2024/11/Nate_Headshot-400x400.png",
+      "src": "/shielded-preview/team/nate-wilcox.png"
+    },
+    "mark-henderson": {
+      "alt": "Mark_Henderson",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/02/Mark_Henderson-400x400.png",
+      "src": "/shielded-preview/team/mark-henderson.png"
+    },
+    "sam-smith": {
+      "alt": "Sam_Smith",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/02/Sam_Smith-400x400.png",
+      "src": "/shielded-preview/team/sam-smith.png"
+    },
+    "andrew-reece": {
+      "alt": "Andrew_Reece_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/02/Andrew_Reece_Headshot-400x400.png",
+      "src": "/shielded-preview/team/andrew-reece.png"
+    },
+    "phillip-trudeau-tavara": {
+      "alt": "Phillip_Trudeau_Tavara_Headshot2",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/11/Phillip_Trudeau_Tavara_Headshot2-400x400.png",
+      "src": "/shielded-preview/team/phillip-trudeau-tavara.png"
+    },
+    "shoaib-ahmed": {
+      "alt": "Shoaib_Ahmed_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/10/Shoaib_Ahmed_Headshot-400x400.png",
+      "src": "/shielded-preview/team/shoaib-ahmed.png"
+    },
+    "ulrich-habock": {
+      "alt": "Ulrich Hab\u00f6ck_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/10/Ulrich-Habock_Headshot-400x400.png",
+      "src": "/shielded-preview/team/ulrich-habock.png"
+    },
+    "luke-edwards": {
+      "alt": "Luke_Edwards_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/10/Luke_Edwards_Headshot-400x400.png",
+      "src": "/shielded-preview/team/luke-edwards.png"
+    },
+    "suyash-bagad": {
+      "alt": "Suyash_Bagad_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/10/Suyash_Bagad_Headshot-400x400.png",
+      "src": "/shielded-preview/team/suyash-bagad.png"
+    },
+    "robert-fegler": {
+      "alt": "Robert_Headshot",
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/04/Robert_Headshot-400x400.png",
+      "src": "/shielded-preview/team/robert-fegler.png"
+    }
+  }
+}

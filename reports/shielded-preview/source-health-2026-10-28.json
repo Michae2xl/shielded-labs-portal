@@ -1,0 +1,93 @@
+[
+  {
+    "endpoint": "http://127.0.0.1:4246/api/shielded-preview",
+    "checkedAt": "2026-10-28T17:06:24.601Z",
+    "repos": [
+      {
+        "name": "crosslink_monolith",
+        "state": "live",
+        "commits": 100,
+        "fetchedAt": "2026-10-28T17:06:24.129Z"
+      },
+      {
+        "name": "zero",
+        "state": "live",
+        "commits": 100,
+        "fetchedAt": "2026-10-28T17:06:24.601Z"
+      },
+      {
+        "name": "shielded_transport_pigeon",
+        "state": "live",
+        "commits": 100,
+        "fetchedAt": "2026-10-28T17:06:23.934Z"
+      },
+      {
+        "name": "crosslink_book",
+        "state": "live",
+        "commits": 48,
+        "fetchedAt": "2026-10-28T17:06:24.002Z"
+      },
+      {
+        "name": "zebra-dynamic-fees",
+        "state": "live",
+        "commits": 100,
+        "fetchedAt": "2026-10-28T17:06:24.469Z"
+      },
+      {
+        "name": "sl-orchard",
+        "state": "live",
+        "commits": 100,
+        "fetchedAt": "2026-10-28T17:06:24.266Z"
+      }
+    ],
+    "grantsState": "live"
+  },
+  {
+    "endpoint": "http://127.0.0.1:4246/api/shielded-preview/governance",
+    "checkedAt": "2026-10-28T17:06:38.109Z",
+    "sources": {
+      "proposals": {
+        "state": "mirror",
+        "observedAt": "2026-10-28T17:06:35.549Z",
+        "error": false,
+        "total": 753,
+        "url": "https://openzcash.org/zcg/proposals"
+      },
+      "review": {
+        "state": "fetched",
+        "observedAt": "2026-10-28T17:06:35.719Z",
+        "error": false,
+        "total": 18,
+        "url": "https://openzcash.org/api/zcg/office"
+      },
+      "grants": {
+        "state": "fetched",
+        "observedAt": "2026-10-28T17:06:35.686Z",
+        "error": false,
+        "total": 218,
+        "url": "https://openzcash.org/api/zcg/data/grants"
+      },
+      "payments": {
+        "state": "fetched",
+        "observedAt": "2026-10-28T17:06:35.783Z",
+        "error": false,
+        "total": 913,
+        "url": "https://openzcash.org/api/zcg/data/disbursements?limit=2000"
+      },
+      "members": {
+        "state": "fetched",
+        "observedAt": "2026-10-28T17:06:38.109Z",
+        "error": false,
+        "total": 202,
+        "url": "https://docs.google.com/spreadsheets/d/1pg_zSzigrxjdF-1oLz9WDzscglL2_1vzK4jTRNcXiCQ/edit"
+      },
+      "verification": {
+        "state": "fetched",
+        "observedAt": "2026-10-28T17:06:36.024Z",
+        "error": false,
+        "total": null,
+        "url": "https://openzcash.org/api/coinholders/verify?round=q3-2026&format=json"
+      }
+    }
+  }
+]

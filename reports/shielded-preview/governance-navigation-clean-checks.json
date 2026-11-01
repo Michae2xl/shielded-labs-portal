@@ -1,0 +1,127 @@
+[
+  {
+    "label": "Desktop",
+    "active": "Overview",
+    "documentWidth": 1440,
+    "labels": [
+      "Overview",
+      "Proposals",
+      "Grants",
+      "Voting",
+      "Results",
+      "ZCAP",
+      "Insights"
+    ],
+    "minTargetHeight": 52,
+    "navHeight": 53,
+    "navScrollWidth": 1129,
+    "navWidth": 1129,
+    "width": 1440
+  },
+  {
+    "label": "Open Proposals",
+    "active": "Proposals",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=proposals"
+  },
+  {
+    "label": "Open Grants",
+    "active": "Grants",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=grants"
+  },
+  {
+    "label": "Open Voting",
+    "active": "Voting",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=voting"
+  },
+  {
+    "label": "Open Results",
+    "active": "Results",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=results"
+  },
+  {
+    "label": "Open ZCAP",
+    "active": "ZCAP",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=zcap"
+  },
+  {
+    "label": "Open Insights",
+    "active": "Insights",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=governance&section=insights"
+  },
+  {
+    "label": "Viewport 901",
+    "active": "Insights",
+    "documentWidth": 886,
+    "labels": [
+      "Overview",
+      "Proposals",
+      "Grants",
+      "Voting",
+      "Results",
+      "ZCAP",
+      "Insights"
+    ],
+    "minTargetHeight": 52,
+    "navHeight": 53,
+    "navScrollWidth": 606,
+    "navWidth": 606,
+    "width": 901
+  },
+  {
+    "label": "Viewport 651",
+    "active": "Insights",
+    "documentWidth": 636,
+    "labels": [
+      "Overview",
+      "Proposals",
+      "Grants",
+      "Voting",
+      "Results",
+      "ZCAP",
+      "Insights"
+    ],
+    "minTargetHeight": 52,
+    "navHeight": 53,
+    "navScrollWidth": 580,
+    "navWidth": 580,
+    "width": 651
+  },
+  {
+    "label": "Viewport 390",
+    "active": "Insights",
+    "documentWidth": 375,
+    "labels": [
+      "Overview",
+      "Proposals",
+      "Grants",
+      "Voting",
+      "Results",
+      "ZCAP",
+      "Insights"
+    ],
+    "minTargetHeight": 44,
+    "navHeight": 90,
+    "navScrollWidth": 331,
+    "navWidth": 331,
+    "width": 390
+  },
+  {
+    "label": "Viewport 320",
+    "active": "Insights",
+    "documentWidth": 305,
+    "labels": [
+      "Overview",
+      "Proposals",
+      "Grants",
+      "Voting",
+      "Results",
+      "ZCAP",
+      "Insights"
+    ],
+    "minTargetHeight": 44,
+    "navHeight": 90,
+    "navScrollWidth": 261,
+    "navWidth": 261,
+    "width": 320
+  }
+]

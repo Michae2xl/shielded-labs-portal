@@ -1,0 +1,37 @@
+[
+  {
+    "id": "jason-mcgee-stramaglia",
+    "name": "Jason McGee Stramaglia",
+    "portrait": "/shielded-preview/editorial/b91e7c219c015735bf40.png",
+    "social": "https://x.com/aquietinvestor",
+    "source": "https://shieldedlabs.net/board/"
+  },
+  {
+    "id": "zooko-wilcox",
+    "name": "Zooko Wilcox",
+    "portrait": "/shielded-preview/editorial/9c05a7e36017b3fd900f.png",
+    "social": "https://x.com/zooko",
+    "source": "https://shieldedlabs.net/board/"
+  },
+  {
+    "id": "awa-sun-yin",
+    "name": "Awa Sun Yin",
+    "portrait": "/shielded-preview/editorial/265b620815039e00a265.png",
+    "social": "https://x.com/awasunyin",
+    "source": "https://shieldedlabs.net/board/"
+  },
+  {
+    "id": "chris-berg",
+    "name": "Chris Berg",
+    "portrait": "/shielded-preview/editorial/a17e9b09fbee0758af6f.png",
+    "social": "https://x.com/chrisberg",
+    "source": "https://shieldedlabs.net/board/"
+  },
+  {
+    "id": "frank-braun",
+    "name": "Frank Braun",
+    "portrait": "/shielded-preview/editorial/05f79754f5fd96204d1a.png",
+    "social": "https://x.com/thefrankbraun",
+    "source": "https://shieldedlabs.net/board/"
+  }
+]

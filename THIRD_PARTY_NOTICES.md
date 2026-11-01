@@ -1,0 +1,12 @@
+# Third-party notices
+
+Portal code and the small reused catalogs/utilities were extracted from [OpenZcash](https://github.com/Michae2xl/openzcash). Its MIT license and copyright notice are preserved in `LICENSE`. The extraction includes local changes that were not yet committed upstream; see the manifest for file-level provenance.
+
+Shielded Labs names, logos, editorial text, portraits and project material retain their original ownership and source attribution. Their inclusion does not imply that the code's MIT license changes their licensing. Source URLs and capture dates are retained in the data files and readers.
+
+Inter and Geist Mono font files are unchanged copies of the Google Fonts assets already used by the source application. They are served locally so installing/building the portal does not require a font download. Their SIL Open Font License notices are in `public/fonts/Inter-OFL.txt` and `public/fonts/GeistMono-OFL.txt`.
+
+- [Inter license](https://github.com/google/fonts/blob/main/ofl/inter/OFL.txt)
+- [Geist Mono license](https://github.com/google/fonts/blob/main/ofl/geistmono/OFL.txt)
+
+Simulator applications are embedded from their original publishers and have not been copied or relicensed. Dependencies retain their respective licenses in their packages.

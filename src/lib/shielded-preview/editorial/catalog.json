@@ -1,0 +1,2385 @@
+[
+  {
+    "id": "epoch-future-proof-cryptography-for-zcash",
+    "title": "Epoch: Future-Proof Cryptography for Zcash",
+    "view": "blog",
+    "category": "News",
+    "projects": [
+      "epoch"
+    ],
+    "author": "Jason McGee",
+    "publishedAt": "2026-10-01T12:06:31Z",
+    "updatedAt": "2026-10-02T12:10:07Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+    "summary": "Shielded Labs is excited to announce Epoch, a new research and engineering project to future-proof Zcash against emerging threats from quantum computing, increasingly capable AI, sophisticated…",
+    "minutes": 6,
+    "headings": [
+      {
+        "id": "what-is-epoch",
+        "title": "What Is Epoch?",
+        "level": 2
+      },
+      {
+        "id": "why-this-matters-now",
+        "title": "Why This Matters Now",
+        "level": 2
+      },
+      {
+        "id": "phase-1-research-and-design",
+        "title": "Phase 1: Research and Design",
+        "level": 2
+      },
+      {
+        "id": "team",
+        "title": "Team",
+        "level": 2
+      },
+      {
+        "id": "staying-unstoppable",
+        "title": "Staying Unstoppable",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/eb09553eea91e49ca4dc.jpg",
+      "alt": "Artwork for Epoch: Future-Proof Cryptography for Zcash",
+      "width": 1600,
+      "height": 900,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/10/epoch-wordpress-featured.jpg"
+    }
+  },
+  {
+    "id": "zcash-governance-is-a-superpower",
+    "title": "Zcash Governance Is a Superpower",
+    "view": "blog",
+    "category": "Governance",
+    "projects": [],
+    "author": "Jason McGee",
+    "publishedAt": "2026-09-18T12:01:32Z",
+    "updatedAt": "2026-10-02T12:05:19Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/zcash-governance-is-a-superpower/",
+    "summary": "There has been a lot of discussion lately about the Dev Fund, and I want to use this opportunity to share Shielded Labs’ perspective on governance. This essay covers three topics: How Zcash…",
+    "minutes": 10,
+    "headings": [
+      {
+        "id": "a-short-history-of-zcash-governance",
+        "title": "A Short History of Zcash Governance",
+        "level": 2
+      },
+      {
+        "id": "how-governance-works-today",
+        "title": "How Governance Works Today",
+        "level": 2
+      },
+      {
+        "id": "why-this-works",
+        "title": "Why This Works",
+        "level": 2
+      },
+      {
+        "id": "good-governance-makes-zec-valuable",
+        "title": "Good Governance Makes ZEC Valuable",
+        "level": 2
+      },
+      {
+        "id": "checks-and-balances",
+        "title": "Checks and Balances",
+        "level": 3
+      },
+      {
+        "id": "what-happens-without-balance",
+        "title": "What Happens Without Balance",
+        "level": 3
+      },
+      {
+        "id": "governance-is-our-superpower",
+        "title": "Governance Is Our Superpower",
+        "level": 3
+      },
+      {
+        "id": "where-the-process-can-improve",
+        "title": "Where the Process Can Improve",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/6c7e0079f5d164c8ca91.png",
+      "alt": "Artwork for Zcash Governance Is a Superpower",
+      "width": 1600,
+      "height": 900,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/09/shielded-labs-governance-banner-centered.png"
+    }
+  },
+  {
+    "id": "thoughts-on-the-dev-fund",
+    "title": "Thoughts on the Dev Fund",
+    "view": "blog",
+    "category": "Governance",
+    "projects": [],
+    "author": "Jason McGee",
+    "publishedAt": "2026-09-15T12:00:27Z",
+    "updatedAt": "2026-10-02T12:01:05Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/thoughts-on-the-dev-fund/",
+    "summary": "Maxime’s essay on the Dev Fund  has generated a lot of discussion over the past week. It’s been good to see so many people engage with the question of whether the Dev Fund should continue, and…",
+    "minutes": 11,
+    "headings": [
+      {
+        "id": "what-the-dev-fund-built",
+        "title": "What the Dev Fund built",
+        "level": 2
+      },
+      {
+        "id": "two-separate-things",
+        "title": "Two separate things",
+        "level": 2
+      },
+      {
+        "id": "beyond-good-and-evil",
+        "title": "Beyond good and evil",
+        "level": 2
+      },
+      {
+        "id": "the-track-record",
+        "title": "The track record",
+        "level": 2
+      },
+      {
+        "id": "what-happens-in-2028",
+        "title": "What happens in 2028",
+        "level": 2
+      },
+      {
+        "id": "where-we-go-from-here",
+        "title": "Where we go from here",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/c829c63d09396869339f.png",
+      "alt": "Artwork for Thoughts on the Dev Fund",
+      "width": 1600,
+      "height": 900,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/10/dev-fund-banner.png"
+    }
+  },
+  {
+    "id": "four-questions-about-the-orchard-vulnerability",
+    "title": "Four Questions About the Orchard Vulnerability",
+    "view": "blog",
+    "category": "Security",
+    "projects": [
+      "ironwood"
+    ],
+    "author": "Jason McGee and Zooko Wilcox",
+    "publishedAt": "2026-06-15T02:08:05Z",
+    "updatedAt": "2026-08-03T19:21:01Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/four-questions-about-the-orchard-vulnerability/",
+    "summary": "The recent Orchard vulnerability raised important questions about the Zcash supply and the safety of user funds. Discussions have mixed together several distinct issues, making it difficult to…",
+    "minutes": 6,
+    "headings": [
+      {
+        "id": "four-different-questions",
+        "title": "Four Different Questions",
+        "level": 2
+      },
+      {
+        "id": "was-the-orchard-vulnerability-ever-exploited",
+        "title": "Was the Orchard vulnerability ever exploited?",
+        "level": 2
+      },
+      {
+        "id": "will-legitimate-orchard-funds-be-recoverable",
+        "title": "Will legitimate Orchard funds be recoverable?",
+        "level": 2
+      },
+      {
+        "id": "can-users-verify-that-the-supply-of-zcash-has-not-been-inflated",
+        "title": "Can users verify that the supply of Zcash has not been inflated?",
+        "level": 2
+      },
+      {
+        "id": "how-do-we-know-there-aren-t-other-counterfeiting-vulnerabilities",
+        "title": "How do we know there aren’t other counterfeiting vulnerabilities?",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 2
+      },
+      {
+        "id": "acknowledgements",
+        "title": "Acknowledgements",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/d334a62c79c6ca6d697e.jpeg",
+      "alt": "Artwork for Four Questions About the Orchard Vulnerability",
+      "width": 1536,
+      "height": 1024,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/06/Orchard-Four-Questions.jpeg"
+    }
+  },
+  {
+    "id": "ironwood-verifying-the-soundness-of-zcashs-circulating-supply",
+    "title": "Ironwood: Verifying the Soundness of Zcash’s Circulating Supply",
+    "view": "blog",
+    "category": "Security",
+    "projects": [
+      "ironwood"
+    ],
+    "author": "Zooko Wilcox, Jason McGee, and Taylor Hornby",
+    "publishedAt": "2026-06-06T14:10:39Z",
+    "updatedAt": "2026-08-03T19:22:07Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/ironwood-verifying-the-soundness-of-zcashs-circulating-supply/",
+    "summary": "Shielded Labs is working with The Zcash Foundation, Tachyon Group, Valar Group, and the Zcash Open Development Lab (ZODL) on a proposal called “Ironwood” that allows any user to verify the…",
+    "minutes": 5,
+    "headings": [
+      {
+        "id": "summary",
+        "title": "Summary",
+        "level": 2
+      },
+      {
+        "id": "ironwood",
+        "title": "Ironwood",
+        "level": 2
+      },
+      {
+        "id": "why-ironwood-works",
+        "title": "Why Ironwood Works",
+        "level": 2
+      },
+      {
+        "id": "generating-evidence-of-whether-or-not-the-vulnerability-was-exploited",
+        "title": "Generating Evidence of Whether or Not The Vulnerability Was Exploited",
+        "level": 2
+      },
+      {
+        "id": "wallets",
+        "title": "Wallets",
+        "level": 2
+      },
+      {
+        "id": "timing",
+        "title": "Timing",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 2
+      },
+      {
+        "id": "acknowledgements",
+        "title": "Acknowledgements",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/d3bd3c3048f63bf08a5d.jpeg",
+      "alt": "Artwork for Ironwood: Verifying the Soundness of Zcash’s Circulating Supply",
+      "width": 1536,
+      "height": 1024,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/06/Ironwood-XL.jpeg"
+    }
+  },
+  {
+    "id": "the-orchard-counterfeiting-vulnerability",
+    "title": "The Orchard Counterfeiting Vulnerability",
+    "view": "blog",
+    "category": "Security",
+    "projects": [
+      "ironwood"
+    ],
+    "author": "Zooko Wilcox, Jason McGee, and Taylor Hornby",
+    "publishedAt": "2026-06-04T21:26:17Z",
+    "updatedAt": "2026-08-03T19:22:44Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/the-orchard-counterfeiting-vulnerability/",
+    "summary": "On May 29, 2026, Taylor Hornby discovered a critical counterfeiting vulnerability in Zcash’s Orchard pool.",
+    "minutes": 5,
+    "headings": [
+      {
+        "id": "summary",
+        "title": "Summary",
+        "level": 2
+      },
+      {
+        "id": "background",
+        "title": "Background",
+        "level": 2
+      },
+      {
+        "id": "what-we-know-and-what-we-don-t-know",
+        "title": "What We Know and What We Don’t Know",
+        "level": 2
+      },
+      {
+        "id": "assessment-prior-exploitation-of-this-orchard-vulnerability-seems-unlikely",
+        "title": "Assessment: Prior Exploitation Of This Orchard Vulnerability Seems Unlikely",
+        "level": 2
+      },
+      {
+        "id": "proving-the-integrity-of-the-zcash-supply",
+        "title": "Proving the Integrity of the Zcash Supply",
+        "level": 2
+      },
+      {
+        "id": "accelerating-our-security-research",
+        "title": "Accelerating Our Security Research",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 2
+      },
+      {
+        "id": "acknowledgements",
+        "title": "Acknowledgements",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/770fc8623c5d7db8a030.png",
+      "alt": "Artwork for The Orchard Counterfeiting Vulnerability",
+      "width": 1536,
+      "height": 1024,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/06/SL-Security-Update.png"
+    }
+  },
+  {
+    "id": "crosslink-feature-net-reflections-on-the-first-six-weeks",
+    "title": "Crosslink Feature Net: Reflections on the First Six Weeks",
+    "view": "blog",
+    "category": "News",
+    "projects": [
+      "crosslink"
+    ],
+    "author": "Jason McGee",
+    "publishedAt": "2026-05-29T16:29:10Z",
+    "updatedAt": "2026-08-03T19:23:10Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/crosslink-feature-net-reflections-on-the-first-six-weeks/",
+    "summary": "It has been a little over six weeks since we launched the Crosslink incentivized feature net, where participants can join the network as miners or finalizers and stake to earn rewards. We wanted…",
+    "minutes": 7,
+    "headings": [
+      {
+        "id": "stalled-bft",
+        "title": "Stalled BFT",
+        "level": 2
+      },
+      {
+        "id": "what-s-next",
+        "title": "What’s Next",
+        "level": 2
+      },
+      {
+        "id": "reward-distribution",
+        "title": "Reward Distribution",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/0bbfb2142530a762fbb3.png",
+      "alt": "Artwork for Crosslink Feature Net: Reflections on the First Six Weeks",
+      "width": 1672,
+      "height": 941,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/05/Crosslink-First-Six-Weeks.png"
+    }
+  },
+  {
+    "id": "zcash-dynamic-fees-now",
+    "title": "Zcash Dynamic Fees, Now!",
+    "view": "blog",
+    "category": "Engineering Update",
+    "projects": [
+      "fees"
+    ],
+    "author": "Mark Henderson",
+    "publishedAt": "2026-05-27T13:37:27Z",
+    "updatedAt": "2026-08-03T19:23:36Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/zcash-dynamic-fees-now/",
+    "summary": "Today, Zcash transactions use a fixed fee model based on transaction complexity. This creates a “Goldilocks zone” in the price of ZEC: fees need to be high enough to discourage spam, but low…",
+    "minutes": 4,
+    "headings": [
+      {
+        "id": "wallet-feature-pilots",
+        "title": "Wallet Feature Pilots",
+        "level": 2
+      },
+      {
+        "id": "priority-delivery",
+        "title": "Priority Delivery",
+        "level": 3
+      },
+      {
+        "id": "speed-up-semantics",
+        "title": "“Speed Up” Semantics",
+        "level": 3
+      },
+      {
+        "id": "the-fee-suggestion-endpoint-z-getstandardfee",
+        "title": "The Fee Suggestion Endpoint ( z_getstandardfee )",
+        "level": 2
+      },
+      {
+        "id": "parameter-tuning",
+        "title": "Parameter Tuning",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/4e7cbe68f6290e131d8f.jpg",
+      "alt": "Artwork for Zcash Dynamic Fees, Now!",
+      "width": 720,
+      "height": 342,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/05/Artboard-1_1-100.jpg"
+    }
+  },
+  {
+    "id": "advisory-reduce-your-zcashd-attack-surface-by-shielding-it-behind-zebra",
+    "title": "Advisory: Reduce Your zcashd Attack Surface by Shielding It Behind Zebra",
+    "view": "blog",
+    "category": "Security",
+    "projects": [],
+    "author": "Zooko Wilcox, Mark Henderson, Judah Caruso",
+    "publishedAt": "2026-04-17T22:40:00Z",
+    "updatedAt": "2026-08-03T19:24:09Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/advisory-reduce-your-zcashd-attack-surface-by-shielding-it-behind-zebra/",
+    "summary": "Shielded Labs recommends that exchanges, custodians, infrastructure providers, and anyone running a publicly-reachable  zcashd  reduce their attack surface by placing Zebra in front of it. This…",
+    "minutes": 4,
+    "headings": [
+      {
+        "id": "the-cybersecurity-aipocalypse",
+        "title": "The Cybersecurity AIpocalypse",
+        "level": 2
+      },
+      {
+        "id": "the-mitigation-zebra-as-a-network-shield",
+        "title": "The mitigation: Zebra as a network shield",
+        "level": 3
+      },
+      {
+        "id": "what-about-bugs-in-zebra",
+        "title": "What about bugs in Zebra?",
+        "level": 3
+      },
+      {
+        "id": "what-about-chain-forks",
+        "title": "What about chain-forks?",
+        "level": 3
+      },
+      {
+        "id": "what-about-bugs-in-code-shared-by-both-zcashd-and-zebra",
+        "title": "What about bugs in code shared by both zcashd and Zebra?",
+        "level": 3
+      },
+      {
+        "id": "setup",
+        "title": "Setup",
+        "level": 2
+      },
+      {
+        "id": "monitoring",
+        "title": "Monitoring",
+        "level": 2
+      },
+      {
+        "id": "for-more-help",
+        "title": "For more help",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/28d89bcdcadd0b4af209.png",
+      "alt": "Artwork for Advisory: Reduce Your zcashd Attack Surface by Shielding It Behind Zebra",
+      "width": 1536,
+      "height": 1024,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/04/SL-Security-Advisory.png"
+    }
+  },
+  {
+    "id": "crosslink-incentivized-feature-nets",
+    "title": "Crosslink: Incentivized Feature Nets",
+    "view": "blog",
+    "category": "News",
+    "projects": [
+      "crosslink"
+    ],
+    "author": "Jason McGee",
+    "publishedAt": "2026-04-02T15:48:50Z",
+    "updatedAt": "2026-04-04T00:51:47Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/crosslink-incentivized-feature-nets/",
+    "summary": "Shielded Labs is transitioning Crosslink from its prototype phase into productization. As part of this next phase,  we are introducing a series of incentivized testnets , which we call  feature…",
+    "minutes": 6,
+    "headings": [
+      {
+        "id": "rewards-structure",
+        "title": "Rewards Structure",
+        "level": 2
+      },
+      {
+        "id": "protocol-guardians",
+        "title": "Protocol Guardians",
+        "level": 2
+      },
+      {
+        "id": "development-approach",
+        "title": "Development Approach",
+        "level": 2
+      },
+      {
+        "id": "roadmap",
+        "title": "Roadmap",
+        "level": 2
+      },
+      {
+        "id": "get-involved",
+        "title": "Get Involved",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/092f3c202b1769161d24.png",
+      "alt": "Artwork for Crosslink: Incentivized Feature Nets",
+      "width": 1921,
+      "height": 1081,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/04/Incentivized-Feature-Nets.png"
+    }
+  },
+  {
+    "id": "zcash-vulnerability-successfully-remediated",
+    "title": "Zcash Vulnerability Successfully Remediated",
+    "view": "blog",
+    "category": "News",
+    "projects": [],
+    "author": "Zooko Wilcox [*], Daira-Emma Hopwood [†], Jack “str4d” Grigg [†] , Judah Caruso [*], Jason McGee [*], and Josh Swihart [†]",
+    "publishedAt": "2026-03-31T15:27:47Z",
+    "updatedAt": "2026-08-03T19:27:04Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/zcash-vulnerability-successfully-remediated/",
+    "summary": "Security researcher Alex “Scalar” Sol identified a vulnerability in zcashd that could have allowed invalid transactions introduced by a miner to be accepted under certain conditions, potentially…",
+    "minutes": 6,
+    "headings": [
+      {
+        "id": "key-points",
+        "title": "Key Points",
+        "level": 3
+      },
+      {
+        "id": "section",
+        "title": "",
+        "level": 3
+      },
+      {
+        "id": "summary",
+        "title": "Summary",
+        "level": 3
+      },
+      {
+        "id": "background",
+        "title": "Background",
+        "level": 3
+      },
+      {
+        "id": "third-party-disclosure",
+        "title": "Third Party Disclosure",
+        "level": 3
+      },
+      {
+        "id": "timeline",
+        "title": "Timeline",
+        "level": 3
+      },
+      {
+        "id": "october-28-2018",
+        "title": "October 28, 2018",
+        "level": 3
+      },
+      {
+        "id": "july-28-2020",
+        "title": "July 28, 2020",
+        "level": 3
+      },
+      {
+        "id": "november-18-2020",
+        "title": "November 18, 2020",
+        "level": 3
+      },
+      {
+        "id": "june-14-2023",
+        "title": "June 14, 2023",
+        "level": 3
+      },
+      {
+        "id": "march-23-2026",
+        "title": "March 23, 2026",
+        "level": 3
+      },
+      {
+        "id": "march-24-2026",
+        "title": "March 24, 2026",
+        "level": 3
+      },
+      {
+        "id": "march-25-2026",
+        "title": "March 25, 2026",
+        "level": 3
+      },
+      {
+        "id": "march-26-2026",
+        "title": "March 26, 2026",
+        "level": 3
+      },
+      {
+        "id": "march-31-2026",
+        "title": "March 31, 2026",
+        "level": 3
+      },
+      {
+        "id": "vulnerability-details",
+        "title": "Vulnerability Details",
+        "level": 3
+      },
+      {
+        "id": "acknowledgements",
+        "title": "Acknowledgements",
+        "level": 3
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/ff47bf91afaef7b72230.png",
+      "alt": "Artwork for Zcash Vulnerability Successfully Remediated",
+      "width": 1536,
+      "height": 1024,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/03/signal-2026-03-30-090824.png"
+    }
+  },
+  {
+    "id": "thoughts-on-sentiment-polling-and-governance",
+    "title": "Thoughts on Sentiment Polling and Governance",
+    "view": "blog",
+    "category": "News",
+    "projects": [],
+    "author": "Jason McGee",
+    "publishedAt": "2026-02-23T23:01:08Z",
+    "updatedAt": "2026-08-03T19:26:27Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/thoughts-on-sentiment-polling-and-governance/",
+    "summary": "In light of the recent governance polling, I want to share our perspective on how we interpret the results, what they may imply for Shielded Labs’ projects like the Network Sustainability…",
+    "minutes": 7,
+    "headings": [
+      {
+        "id": "history",
+        "title": "History",
+        "level": 3
+      },
+      {
+        "id": "how-governance-works-today",
+        "title": "How Governance Works Today",
+        "level": 3
+      },
+      {
+        "id": "shielded-labs-interpretation-of-the-results",
+        "title": "Shielded Labs’ Interpretation of the Results",
+        "level": 3
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/9479c0a4dd4419228f3d.png",
+      "alt": "Artwork for Thoughts on Sentiment Polling and Governance",
+      "width": 1536,
+      "height": 1024,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2026/02/Zcash-Governance.png"
+    }
+  },
+  {
+    "id": "coinholder-directed-retroactive-grants-program-q4-results",
+    "title": "Coinholder-Directed Retroactive Grants Program: Q4 Results",
+    "view": "blog",
+    "category": "News",
+    "projects": [],
+    "author": "Jason McGee",
+    "publishedAt": "2025-11-26T16:32:55Z",
+    "updatedAt": "2026-08-03T19:27:35Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/coinholder-directed-retroactive-grants-program-q4-results/",
+    "summary": "The results are in! Coinholders voted on nine proposals in the inaugural Coinholder-Directed Retroactive Grants Program, and five were approved: FPF Administration, Bitcoin VN, Electric Coin…",
+    "minutes": 1,
+    "headings": [
+      {
+        "id": "coinholder-directed-retroactive-grants-program",
+        "title": "Coinholder-Directed Retroactive Grants Program",
+        "level": 3
+      },
+      {
+        "id": "shielded-labs",
+        "title": "Shielded Labs",
+        "level": 3
+      },
+      {
+        "id": "more-information",
+        "title": "More Information",
+        "level": 3
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/ddb43bb46302face80d6.png",
+      "alt": "Artwork for Coinholder-Directed Retroactive Grants Program: Q4 Results",
+      "width": 1920,
+      "height": 1080,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/11/Coinholder_results_16_9.png"
+    }
+  },
+  {
+    "id": "crosslink-updated-staking-design",
+    "title": "Crosslink: Updated Staking Design",
+    "view": "blog",
+    "category": "News",
+    "projects": [
+      "crosslink"
+    ],
+    "author": "Jason McGee",
+    "publishedAt": "2025-10-27T17:01:37Z",
+    "updatedAt": "2025-11-05T22:33:18Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/crosslink-updated-staking-design/",
+    "summary": "Crosslink builds on Proof of Work (PoW) by adding a finality gadget that provides an additional layer of security and protection against rollbacks. All economic activity and block validation…",
+    "minutes": 10,
+    "headings": [
+      {
+        "id": "updated-staking-design",
+        "title": "Updated Staking Design",
+        "level": 2
+      },
+      {
+        "id": "rationale-trade-offs",
+        "title": "Rationale & Trade-Offs",
+        "level": 2
+      },
+      {
+        "id": "privacy",
+        "title": "Privacy",
+        "level": 3
+      },
+      {
+        "id": "security",
+        "title": "Security",
+        "level": 3
+      },
+      {
+        "id": "time-to-market",
+        "title": "Time to Market",
+        "level": 3
+      },
+      {
+        "id": "incentivizing-long-term-holders-and-network-health",
+        "title": "Incentivizing Long-Term Holders and Network Health",
+        "level": 3
+      },
+      {
+        "id": "attracting-new-capital-and-usability",
+        "title": "Attracting New Capital and Usability",
+        "level": 3
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/8dcca4a9c0ee5d419fae.jpg",
+      "alt": "Artwork for Crosslink: Updated Staking Design",
+      "width": 1921,
+      "height": 1081,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/10/Crosslink-Updated-Staking-Design.jpg"
+    }
+  },
+  {
+    "id": "zcash-and-staking-economics",
+    "title": "Zcash and Staking Economics",
+    "view": "blog",
+    "category": "News",
+    "projects": [],
+    "author": "Jason McGee",
+    "publishedAt": "2025-09-12T16:31:39Z",
+    "updatedAt": "2025-10-02T08:09:22Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/zcash-and-staking-economics/",
+    "summary": "Crosslink is the beating heart of Zcash. Like the heart’s two sides pumping blood to the lungs and the rest of the body, it depends on both stakers and miners to keep the network secure and…",
+    "minutes": 4,
+    "headings": [
+      {
+        "id": "overview",
+        "title": "Overview",
+        "level": 2
+      },
+      {
+        "id": "section",
+        "title": "",
+        "level": 3
+      },
+      {
+        "id": "security-budget-and-issuance",
+        "title": "Security Budget and Issuance",
+        "level": 3
+      },
+      {
+        "id": "section-2",
+        "title": "",
+        "level": 2
+      },
+      {
+        "id": "staking-delegation",
+        "title": "Staking & Delegation",
+        "level": 2
+      },
+      {
+        "id": "a-note-on-privacy",
+        "title": "A Note On Privacy",
+        "level": 3
+      },
+      {
+        "id": "staking-lifecycle",
+        "title": "Staking Lifecycle",
+        "level": 3
+      },
+      {
+        "id": "roster-design",
+        "title": "Roster Design",
+        "level": 2
+      },
+      {
+        "id": "requirements",
+        "title": "Requirements",
+        "level": 3
+      },
+      {
+        "id": "roster-lifecycle",
+        "title": "Roster Lifecycle",
+        "level": 3
+      },
+      {
+        "id": "operational-monitoring-and-slashing",
+        "title": "Operational Monitoring and Slashing",
+        "level": 3
+      },
+      {
+        "id": "call-to-action",
+        "title": "Call to Action",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/4979bb06c7fed56a2b6d.png",
+      "alt": "Artwork for Zcash and Staking Economics",
+      "width": 1921,
+      "height": 1080,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/09/Artboard-1-16x9-1.png"
+    }
+  },
+  {
+    "id": "zcash-coinholders-approve-retroactive-grants-program",
+    "title": "Zcash Coinholders Approve Retroactive Grants Program",
+    "view": "blog",
+    "category": "News",
+    "projects": [],
+    "author": "Jason McGee",
+    "publishedAt": "2025-09-04T14:35:04Z",
+    "updatedAt": "2025-11-26T16:38:05Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/zcash-coinholders-approve-retroactive-grants-program/",
+    "summary": "The  results  are in! Coinholders have voted to ratify the new Coinholder Grants Program, confirming it will operate as a retroactive grants program and approving the process outlined in the…",
+    "minutes": 4,
+    "headings": [
+      {
+        "id": "zip-1016",
+        "title": "ZIP 1016",
+        "level": 2
+      },
+      {
+        "id": "coinholder-directed-retroactive-grants-program",
+        "title": "Coinholder-Directed Retroactive Grants Program",
+        "level": 2
+      },
+      {
+        "id": "shielded-labs",
+        "title": "Shielded Labs",
+        "level": 2
+      },
+      {
+        "id": "next-steps",
+        "title": "Next Steps",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/e19928edea193ebd077e.png",
+      "alt": "Artwork for Zcash Coinholders Approve Retroactive Grants Program",
+      "width": 1180,
+      "height": 664,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/11/Coinholder_grants_header_16_9.png"
+    }
+  },
+  {
+    "id": "accelerate-zcash-lets-deliver-a-smaller-network-upgrade-sooner",
+    "title": "Accelerate Zcash: Let’s Deliver A Smaller Network Upgrade Sooner",
+    "view": "blog",
+    "category": "News",
+    "projects": [],
+    "author": "Jason McGee",
+    "publishedAt": "2025-08-13T21:15:12Z",
+    "updatedAt": "2025-11-26T16:38:59Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/accelerate-zcash-lets-deliver-a-smaller-network-upgrade-sooner/",
+    "summary": "Zcash needs to ship protocol upgrades faster and more frequently. NU7 has been delayed for far too long, with shifting timelines, expanding scope, and growing dependencies slowing progress. This…",
+    "minutes": 6,
+    "headings": [
+      {
+        "id": "the-train-can-t-leave-the-station",
+        "title": "The train can’t leave the station",
+        "level": 2
+      },
+      {
+        "id": "let-s-ship-a-smaller-network-upgrade-sooner",
+        "title": "Let’s ship a smaller network upgrade sooner",
+        "level": 2
+      },
+      {
+        "id": "why-the-nsm-why-not-zsas",
+        "title": "Why the NSM? Why not ZSAs?",
+        "level": 2
+      },
+      {
+        "id": "next-steps",
+        "title": "Next Steps",
+        "level": 2
+      },
+      {
+        "id": "conclusion",
+        "title": "Conclusion",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/f393f10a4fc08185afd8.png",
+      "alt": "Artwork for Accelerate Zcash: Let’s Deliver A Smaller Network Upgrade Sooner",
+      "width": 1180,
+      "height": 664,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/11/zcash_acc_16_9.png"
+    }
+  },
+  {
+    "id": "crosslink-roadmap-q1-2025",
+    "title": "Crosslink Roadmap",
+    "view": "blog",
+    "category": "Engineering Update",
+    "projects": [
+      "crosslink"
+    ],
+    "author": "Mark Henderson",
+    "publishedAt": "2025-03-07T20:54:23Z",
+    "updatedAt": "2025-11-26T16:39:45Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/crosslink-roadmap-q1-2025/",
+    "summary": "For a high level overview of our roadmap, please visit this  link .",
+    "minutes": 7,
+    "headings": [
+      {
+        "id": "challenges-and-trade-offs",
+        "title": "Challenges and Trade-Offs",
+        "level": 2
+      },
+      {
+        "id": "the-vertical-slice",
+        "title": "The Vertical Slice",
+        "level": 2
+      },
+      {
+        "id": "early-upstream-prs",
+        "title": "Early Upstream PRs",
+        "level": 2
+      },
+      {
+        "id": "the-roadmap",
+        "title": "The Roadmap",
+        "level": 2
+      },
+      {
+        "id": "milestone-1-placeholders-and-processes",
+        "title": "Milestone 1: Placeholders and Processes",
+        "level": 2
+      },
+      {
+        "id": "milestone-2-disconnected-bft",
+        "title": "Milestone 2 – Disconnected BFT",
+        "level": 2
+      },
+      {
+        "id": "milestone-3-pow-consensus",
+        "title": "Milestone 3 – PoW Consensus",
+        "level": 2
+      },
+      {
+        "id": "milestone-4-staking-transaction-semantics",
+        "title": "Milestone 4 – Staking Transaction Semantics",
+        "level": 2
+      },
+      {
+        "id": "milestone-5-pre-productionization-tech-debt-final-refactoring",
+        "title": "Milestone 5 – Pre-Productionization, Tech Debt, Final Refactoring",
+        "level": 2
+      },
+      {
+        "id": "productionization-phase",
+        "title": "Productionization Phase",
+        "level": 2
+      }
+    ],
+    "image": {
+      "src": "/shielded-preview/editorial/de7edbf3debbdc07b343.png",
+      "alt": "Artwork for Crosslink Roadmap",
+      "width": 1920,
+      "height": 1080,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/11/Crosslink_16_9.png"
+    }
+  },
+  {
+    "id": "shielded-labs-seeks-fifth-board-member",
+    "title": "Shielded Labs Seeks Fifth Board Member",
+    "view": "blog",
+    "category": "News",
+    "projects": [],
+    "author": "Jason McGee",
+    "publishedAt": "2025-02-25T12:52:37Z",
+    "updatedAt": "2025-11-26T17:03:32Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/shielded-labs-seeks-fifth-board-member/",
+    "summary": "Shielded Labs, a donation-funded Zcash support organization, is seeking a board member to help shape its strategic direction and oversee its leadership team. This position provides the…",
+    "minutes": 2,
+    "headings": [],
+    "image": {
+      "src": "/shielded-preview/editorial/996fd1ff596ad27a2bee.png",
+      "alt": "Artwork for Shielded Labs Seeks Fifth Board Member",
+      "width": 1920,
+      "height": 1080,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2025/02/SL_logo_on_black_16_9.png"
+    }
+  },
+  {
+    "id": "network-sustainability-mechanism-nsm",
+    "title": "Network Sustainability Mechanism (NSM)",
+    "view": "blog",
+    "category": "News",
+    "projects": [
+      "nsm"
+    ],
+    "author": "Jason McGee",
+    "publishedAt": "2024-11-24T13:12:52Z",
+    "updatedAt": "2024-11-24T14:54:00Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/network-sustainability-mechanism-nsm/",
+    "summary": "Twitter Spaces Event – November 5, 2024",
+    "minutes": 1,
+    "headings": [],
+    "image": {
+      "src": "/shielded-preview/editorial/a6ebcd64a46684c38458.png",
+      "alt": "Artwork for Network Sustainability Mechanism (NSM)",
+      "width": 678,
+      "height": 376,
+      "source": "https://shieldedlabs.net/wp-content/uploads/2024/11/Snip20241124_17-1.png"
+    }
+  },
+  {
+    "id": "zero-guide",
+    "title": "Zero overview",
+    "view": "resources",
+    "category": "Guide",
+    "projects": [
+      "zero"
+    ],
+    "author": "Shielded Labs",
+    "publishedAt": "2026-08-22T23:53:47Z",
+    "updatedAt": "2026-08-22T23:57:29Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/zero/",
+    "summary": "Infrastructure software, supported deployments and repositories.",
+    "minutes": 1,
+    "headings": [
+      {
+        "id": "repositories",
+        "title": "Repositories",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "ironwood-guide",
+    "title": "Ironwood overview",
+    "view": "resources",
+    "category": "Guide",
+    "projects": [
+      "ironwood"
+    ],
+    "author": "Shielded Labs",
+    "publishedAt": "2026-07-15T11:33:38Z",
+    "updatedAt": "2026-07-20T01:54:22Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/ironwood/",
+    "summary": "The original upgrade guide: supply soundness, user guidance and audit references.",
+    "minutes": 3,
+    "headings": [
+      {
+        "id": "section",
+        "title": "",
+        "level": 2
+      },
+      {
+        "id": "what-is-ironwood",
+        "title": "What Is Ironwood?",
+        "level": 2
+      },
+      {
+        "id": "why-ironwood-matters",
+        "title": "Why Ironwood Matters",
+        "level": 2
+      },
+      {
+        "id": "what-users-should-expect",
+        "title": "What Users Should Expect",
+        "level": 2
+      },
+      {
+        "id": "additional-resources",
+        "title": "Additional Resources",
+        "level": 2
+      },
+      {
+        "id": "built-through-collaboration",
+        "title": "Built Through Collaboration",
+        "level": 2
+      }
+    ],
+    "notice": "This page preserves the July 2026 publication, including its activation timeline. The October Epoch announcement reports the later NU6.3 deployment."
+  },
+  {
+    "id": "fees-roadmap",
+    "title": "Dynamic Fees roadmap",
+    "view": "resources",
+    "category": "Roadmap",
+    "projects": [
+      "fees"
+    ],
+    "author": "Shielded Labs",
+    "publishedAt": "2026-03-26T14:58:47Z",
+    "updatedAt": "2026-05-22T17:06:20Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+    "summary": "Wallet pilots, fee estimation, parameter tuning and open design questions.",
+    "minutes": 2,
+    "headings": [
+      {
+        "id": "dynamic-fees-2026-roadmap",
+        "title": "Dynamic Fees 2026 Roadmap",
+        "level": 2
+      },
+      {
+        "id": "the-zcash-dynamic-fees-roadmap",
+        "title": "The Zcash Dynamic Fees Roadmap",
+        "level": 2
+      },
+      {
+        "id": "phase-1-experimental-wallet-pilots",
+        "title": "Phase 1: Experimental Wallet Pilots",
+        "level": 2
+      },
+      {
+        "id": "phase-2-the-fee-estimator-z-getstandardfee",
+        "title": "Phase 2: The Fee Estimator ( z_getstandardfee )",
+        "level": 2
+      },
+      {
+        "id": "phase-3-parameter-tuning",
+        "title": "Phase 3: Parameter Tuning",
+        "level": 2
+      },
+      {
+        "id": "required-zips",
+        "title": "Required ZIPs",
+        "level": 2
+      },
+      {
+        "id": "open-questions",
+        "title": "Open Questions",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "fees-guide",
+    "title": "Dynamic Fees overview",
+    "view": "resources",
+    "category": "Guide",
+    "projects": [
+      "fees"
+    ],
+    "author": "Shielded Labs",
+    "publishedAt": "2025-12-12T18:21:40Z",
+    "updatedAt": "2026-08-03T19:15:53Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/fees/",
+    "summary": "The fee mechanism initiative and its experimental resources.",
+    "minutes": 1,
+    "headings": []
+  },
+  {
+    "id": "crosslink-faq",
+    "title": "Crosslink FAQ",
+    "view": "resources",
+    "category": "FAQ",
+    "projects": [
+      "crosslink"
+    ],
+    "author": "Shielded Labs",
+    "publishedAt": "2025-11-05T00:01:12Z",
+    "updatedAt": "2026-07-30T23:07:36Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/crosslink-faq/",
+    "summary": "23 questions about finality, staking, privacy, security and governance.",
+    "minutes": 8,
+    "headings": [
+      {
+        "id": "is-zcash-moving-to-full-proof-of-stake",
+        "title": "Is Zcash moving to full Proof-of-Stake?",
+        "level": 3
+      },
+      {
+        "id": "what-is-crosslink",
+        "title": "What is Crosslink?",
+        "level": 3
+      },
+      {
+        "id": "why-is-finality-important",
+        "title": "Why is finality important?",
+        "level": 3
+      },
+      {
+        "id": "how-is-crosslink-s-finality-different-from-the-finality-zcash-already-has",
+        "title": "How is Crosslink’s finality different from the finality Zcash already has?",
+        "level": 3
+      },
+      {
+        "id": "how-does-crosslink-staking-work",
+        "title": "How does Crosslink staking work?",
+        "level": 3
+      },
+      {
+        "id": "where-do-staking-rewards-come-from",
+        "title": "Where do staking rewards come from?",
+        "level": 3
+      },
+      {
+        "id": "how-much-yield-will-stakers-earn",
+        "title": "How much yield will stakers earn?",
+        "level": 3
+      },
+      {
+        "id": "what-are-epoch-and-unbonding-periods",
+        "title": "What are epoch and unbonding periods?",
+        "level": 3
+      },
+      {
+        "id": "why-are-staking-and-unstaking-actions-batched",
+        "title": "Why are staking and unstaking actions batched?",
+        "level": 3
+      },
+      {
+        "id": "what-is-stake-quantization-and-why-does-it-matter",
+        "title": "What is stake quantization and why does it matter?",
+        "level": 3
+      },
+      {
+        "id": "why-is-there-an-unbonding-delay",
+        "title": "Why is there an unbonding delay?",
+        "level": 3
+      },
+      {
+        "id": "does-crosslink-include-slashing",
+        "title": "Does Crosslink include slashing?",
+        "level": 3
+      },
+      {
+        "id": "does-crosslink-compromise-privacy",
+        "title": "Does Crosslink compromise privacy?",
+        "level": 3
+      },
+      {
+        "id": "why-are-they-called-finalizers-and-not-validators",
+        "title": "Why are they called finalizers and not validators?",
+        "level": 3
+      },
+      {
+        "id": "is-crosslink-fully-shielded-staking",
+        "title": "Is Crosslink fully shielded staking?",
+        "level": 3
+      },
+      {
+        "id": "does-crosslink-increase-zcash-s-attack-surface",
+        "title": "Does Crosslink increase Zcash’s attack surface?",
+        "level": 3
+      },
+      {
+        "id": "what-happens-if-there-s-an-attack-or-consensus-failure",
+        "title": "What happens if there’s an attack or consensus failure?",
+        "level": 3
+      },
+      {
+        "id": "why-were-the-parameters-changed-from-the-original-design",
+        "title": "Why were the parameters changed from the original design?",
+        "level": 3
+      },
+      {
+        "id": "what-is-tenderlink",
+        "title": "What is Tenderlink?",
+        "level": 3
+      },
+      {
+        "id": "why-is-time-to-market-an-important-goal-for-crosslink",
+        "title": "Why is time to market an important goal for Crosslink?",
+        "level": 3
+      },
+      {
+        "id": "when-will-crosslink-be-completed",
+        "title": "When will Crosslink be completed?",
+        "level": 3
+      },
+      {
+        "id": "what-is-the-governance-process-for-crosslink",
+        "title": "What is the governance process for Crosslink?",
+        "level": 3
+      },
+      {
+        "id": "has-crosslink-received-an-independent-security-review",
+        "title": "Has Crosslink received an independent security review?",
+        "level": 3
+      }
+    ],
+    "notice": "This FAQ describes a proposal. Its timeline and parameters reflect the source publication; follow the project overview for later milestones."
+  },
+  {
+    "id": "crosslink-roadmap",
+    "title": "Crosslink roadmap",
+    "view": "resources",
+    "category": "Roadmap",
+    "projects": [
+      "crosslink"
+    ],
+    "author": "Shielded Labs",
+    "publishedAt": "2025-03-29T14:35:15Z",
+    "updatedAt": "2026-04-18T19:38:15Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/roadmap/",
+    "summary": "Completed prototype milestones and the published production roadmap.",
+    "minutes": 1,
+    "headings": [
+      {
+        "id": "crosslink",
+        "title": "Crosslink",
+        "level": 2
+      },
+      {
+        "id": "placeholders-and-processes",
+        "title": "Placeholders and Processes",
+        "level": 3
+      },
+      {
+        "id": "disconnected-bft",
+        "title": "Disconnected BFT",
+        "level": 3
+      },
+      {
+        "id": "pow-consensus",
+        "title": "PoW Consensus",
+        "level": 3
+      },
+      {
+        "id": "staking-transaction-semantics",
+        "title": "Staking Transaction Semantics",
+        "level": 3
+      },
+      {
+        "id": "pre-productionization-tech-debt-final-refactoring",
+        "title": "Pre-Productionization, Tech Debt, Final Refactoring",
+        "level": 3
+      },
+      {
+        "id": "productionization-phase",
+        "title": "Productionization Phase",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "crosslink-guide",
+    "title": "Crosslink overview",
+    "view": "resources",
+    "category": "Guide",
+    "projects": [
+      "crosslink"
+    ],
+    "author": "Shielded Labs",
+    "publishedAt": "2025-03-19T19:35:25Z",
+    "updatedAt": "2026-09-06T00:50:24Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/crosslink/",
+    "summary": "The proposed finality upgrade, its goals and the paths to participate.",
+    "minutes": 1,
+    "headings": []
+  },
+  {
+    "id": "nsm-guide",
+    "title": "Network Sustainability Mechanism",
+    "view": "resources",
+    "category": "Guide & FAQ",
+    "projects": [
+      "nsm"
+    ],
+    "author": "Shielded Labs",
+    "publishedAt": "2024-11-10T15:58:48Z",
+    "updatedAt": "2026-08-27T21:50:33Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/nsm/",
+    "summary": "How the NSM works, its proposed mechanisms, ZIP references and 11 common questions.",
+    "minutes": 11,
+    "headings": [
+      {
+        "id": "summary",
+        "title": "Summary",
+        "level": 2
+      },
+      {
+        "id": "frequently-asked-questions-faq",
+        "title": "Frequently Asked Questions (FAQ)",
+        "level": 2
+      },
+      {
+        "id": "what-is-the-network-sustainability-mechanism-nsm",
+        "title": "What is the Network Sustainability Mechanism (NSM)?",
+        "level": 3
+      },
+      {
+        "id": "why-is-the-nsm-important",
+        "title": "Why is the NSM important?",
+        "level": 3
+      },
+      {
+        "id": "what-does-the-nsm-accomplish",
+        "title": "What does the NSM accomplish?",
+        "level": 3
+      },
+      {
+        "id": "what-are-the-immediate-benefits-and-use-cases-of-implementing-the-nsm",
+        "title": "What are the immediate benefits and use cases of implementing the NSM?",
+        "level": 3
+      },
+      {
+        "id": "what-are-some-examples-of-future-use-cases",
+        "title": "What are some examples of future use cases?",
+        "level": 3
+      },
+      {
+        "id": "how-and-when-will-burned-zec-be-reintroduced-as-future-block-rewards",
+        "title": "How and when will burned ZEC be reintroduced as future block rewards?",
+        "level": 3
+      },
+      {
+        "id": "what-other-ways-could-the-future-zec-be-spent",
+        "title": "What other ways could the future ZEC be spent?",
+        "level": 3
+      },
+      {
+        "id": "why-aren-t-we-talking-about-fees-and-other-long-term-burning-use-cases-now",
+        "title": "Why aren’t we talking about fees and other long-term burning use cases now?",
+        "level": 3
+      },
+      {
+        "id": "what-is-the-reason-for-smoothing-the-issuance-curve",
+        "title": "What is the reason for smoothing the issuance curve?",
+        "level": 3
+      },
+      {
+        "id": "how-will-burning-transaction-fees-impact-miners",
+        "title": "How will burning transaction fees impact miners?",
+        "level": 3
+      },
+      {
+        "id": "what-s-the-urgency-for-implementing-this-now",
+        "title": "What’s the urgency for implementing this now?",
+        "level": 3
+      }
+    ]
+  },
+  {
+    "id": "privacy",
+    "title": "Privacy",
+    "view": "about",
+    "category": "Policy",
+    "projects": [],
+    "author": "Shielded Labs",
+    "publishedAt": "2024-11-05T20:26:43Z",
+    "updatedAt": "2024-11-11T14:17:16Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/privacy-policy/",
+    "summary": "We do not use tracking cookies. The only cookies that are stored in your browser are to speed up site loading and to prevent spam with reCAPTCHA. If you do not wish to have these cookies you can…",
+    "minutes": 1,
+    "headings": [
+      {
+        "id": "who-we-are",
+        "title": "Who we are",
+        "level": 2
+      },
+      {
+        "id": "cookies",
+        "title": "Cookies",
+        "level": 2
+      },
+      {
+        "id": "embedded-content-from-other-websites",
+        "title": "Embedded content from other websites",
+        "level": 2
+      },
+      {
+        "id": "who-we-share-your-data-with",
+        "title": "Who we share your data with",
+        "level": 2
+      },
+      {
+        "id": "what-rights-you-have-over-your-data",
+        "title": "What rights you have over your data",
+        "level": 2
+      }
+    ],
+    "notice": "Policy published for shieldedlabs.net. The portal contact form forwards your name, email and message to Shielded Labs’ existing contact service. Interactive simulators load from their respective project hosts."
+  },
+  {
+    "id": "organization",
+    "title": "About Shielded Labs",
+    "view": "about",
+    "category": "Organization",
+    "projects": [],
+    "author": "Shielded Labs",
+    "publishedAt": "2013-10-11T15:46:20Z",
+    "updatedAt": "2025-10-22T22:57:57Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/",
+    "summary": "Shielded Labs is an independent, donation-funded Zcash support organization based in Switzerland. It is the first organization in the Zcash ecosystem that has never received direct or indirect…",
+    "minutes": 1,
+    "headings": [
+      {
+        "id": "values",
+        "title": "Values",
+        "level": 2
+      },
+      {
+        "id": "human-freedom",
+        "title": "Human Freedom",
+        "level": 3
+      },
+      {
+        "id": "independent-funding",
+        "title": "Independent Funding",
+        "level": 3
+      },
+      {
+        "id": "honor-the-holders",
+        "title": "Honor the Holders",
+        "level": 3
+      },
+      {
+        "id": "autonomy",
+        "title": "Autonomy",
+        "level": 3
+      },
+      {
+        "id": "innovation",
+        "title": "Innovation",
+        "level": 3
+      },
+      {
+        "id": "collaboration",
+        "title": "Collaboration",
+        "level": 3
+      },
+      {
+        "id": "mission",
+        "title": "Mission",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "epoch-guide",
+    "title": "Epoch research overview",
+    "view": "resources",
+    "category": "Research guide",
+    "projects": [
+      "epoch"
+    ],
+    "author": "Jason McGee",
+    "publishedAt": "2026-10-01T12:06:31Z",
+    "updatedAt": "2026-10-02T12:10:07Z",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+    "summary": "The research program for post-quantum cryptography and high-assurance Zcash implementations.",
+    "minutes": 6,
+    "headings": [
+      {
+        "id": "what-is-epoch",
+        "title": "What Is Epoch?",
+        "level": 2
+      },
+      {
+        "id": "why-this-matters-now",
+        "title": "Why This Matters Now",
+        "level": 2
+      },
+      {
+        "id": "phase-1-research-and-design",
+        "title": "Phase 1: Research and Design",
+        "level": 2
+      },
+      {
+        "id": "team",
+        "title": "Team",
+        "level": 2
+      },
+      {
+        "id": "staying-unstoppable",
+        "title": "Staying Unstoppable",
+        "level": 2
+      }
+    ]
+  },
+  {
+    "id": "crosslink-handbook",
+    "title": "Crosslink engineering handbook",
+    "view": "resources",
+    "category": "Technical reference",
+    "projects": [
+      "crosslink"
+    ],
+    "author": "Shielded Labs contributors",
+    "publishedAt": "2026-10-28T17:15:30.161553+00:00",
+    "updatedAt": "2026-10-28T17:15:30.161553+00:00",
+    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "dateKind": "retrieved",
+    "source": "https://shieldedlabs.github.io/zebra-crosslink/print.html",
+    "summary": "Scope, architecture, implementation, and build instructions from the Crosslink engineering handbook.",
+    "minutes": 128,
+    "headings": [
+      {
+        "id": "prototype-workshops",
+        "title": "Prototype Workshops",
+        "level": 2
+      },
+      {
+        "id": "prototype-codebase",
+        "title": "Prototype Codebase",
+        "level": 2
+      },
+      {
+        "id": "build-and-usage",
+        "title": "Build and Usage",
+        "level": 3
+      },
+      {
+        "id": "design-and-implementation",
+        "title": "Design and Implementation",
+        "level": 3
+      },
+      {
+        "id": "maintainers",
+        "title": "Maintainers",
+        "level": 2
+      },
+      {
+        "id": "contributing",
+        "title": "Contributing",
+        "level": 2
+      },
+      {
+        "id": "license",
+        "title": "License",
+        "level": 2
+      },
+      {
+        "id": "user-documentation",
+        "title": "User Documentation",
+        "level": 2
+      },
+      {
+        "id": "building-zebra-crosslink",
+        "title": "Building zebra-crosslink",
+        "level": 2
+      },
+      {
+        "id": "dependencies",
+        "title": "Dependencies",
+        "level": 2
+      },
+      {
+        "id": "usage",
+        "title": "Usage",
+        "level": 2
+      },
+      {
+        "id": "nix-support",
+        "title": "nix Support",
+        "level": 2
+      },
+      {
+        "id": "standard-flake-commands",
+        "title": "Standard flake commands",
+        "level": 2
+      },
+      {
+        "id": "crosslink-design",
+        "title": "Crosslink Design",
+        "level": 2
+      },
+      {
+        "id": "warnings",
+        "title": "WARNINGS",
+        "level": 2
+      },
+      {
+        "id": "scope-for-crosslink",
+        "title": "Scope for Crosslink",
+        "level": 2
+      },
+      {
+        "id": "what-are-our-goals-for-the-first-deployment-of-crosslink",
+        "title": "What are our goals for the first deployment of Crosslink?",
+        "level": 2
+      },
+      {
+        "id": "rationale",
+        "title": "Rationale",
+        "level": 2
+      },
+      {
+        "id": "why-add-a-proof-of-stake-finality-gadget",
+        "title": "Why add a Proof-of-Stake finality gadget?",
+        "level": 2
+      },
+      {
+        "id": "why-keep-the-proof-of-work-blockchain",
+        "title": "Why Keep the Proof-of-Work blockchain?",
+        "level": 2
+      },
+      {
+        "id": "ux-goals",
+        "title": "UX goals",
+        "level": 2
+      },
+      {
+        "id": "deployment-goals",
+        "title": "Deployment Goals",
+        "level": 2
+      },
+      {
+        "id": "trade-offs",
+        "title": "Trade-offs",
+        "level": 2
+      },
+      {
+        "id": "non-goals",
+        "title": "Non-Goals",
+        "level": 2
+      },
+      {
+        "id": "engineering-deliverables-for-shielded-labs-crosslink-deployment",
+        "title": "Engineering Deliverables for Shielded Lab's Crosslink Deployment",
+        "level": 2
+      },
+      {
+        "id": "code-products",
+        "title": "Code Products",
+        "level": 2
+      },
+      {
+        "id": "technical-documentation",
+        "title": "Technical Documentation",
+        "level": 2
+      },
+      {
+        "id": "external-validation-partnerships",
+        "title": "External Validation Partnerships",
+        "level": 2
+      },
+      {
+        "id": "crosslink-security-properties",
+        "title": "Crosslink Security Properties",
+        "level": 2
+      },
+      {
+        "id": "irreversible-finality",
+        "title": "Irreversible Finality",
+        "level": 2
+      },
+      {
+        "id": "livenessavailability",
+        "title": "Liveness/Availability",
+        "level": 2
+      },
+      {
+        "id": "finality-progress",
+        "title": "Finality Progress",
+        "level": 2
+      },
+      {
+        "id": "censorship-resistance",
+        "title": "Censorship-resistance",
+        "level": 2
+      },
+      {
+        "id": "supply-integrity",
+        "title": "Supply-integrity",
+        "level": 2
+      },
+      {
+        "id": "the-five-component-model",
+        "title": "The Five Component Model",
+        "level": 2
+      },
+      {
+        "id": "wallets",
+        "title": "Wallets",
+        "level": 2
+      },
+      {
+        "id": "miners",
+        "title": "Miners",
+        "level": 2
+      },
+      {
+        "id": "finalizers",
+        "title": "Finalizers",
+        "level": 2
+      },
+      {
+        "id": "stakers",
+        "title": "Stakers",
+        "level": 2
+      },
+      {
+        "id": "users",
+        "title": "Users",
+        "level": 2
+      },
+      {
+        "id": "attacker-resource-scenarios",
+        "title": "Attacker Resource Scenarios",
+        "level": 2
+      },
+      {
+        "id": "user-led-emergency-hardforks",
+        "title": "User-Led Emergency Hardforks",
+        "level": 2
+      },
+      {
+        "id": "a-proposed-governance-zip-for-the-use-of-an-emergency-user-led-hard-fork-to-correct-layer-1-security-failures",
+        "title": "A Proposed Governance ZIP for the Use of an Emergency User-Led Hard Fork to Correct Layer-1 Security Failures",
+        "level": 2
+      },
+      {
+        "id": "crosslink-design-in-a-nutshell",
+        "title": "Crosslink Design in a Nutshell",
+        "level": 2
+      },
+      {
+        "id": "roles-and-capabilities",
+        "title": "Roles and Capabilities",
+        "level": 2
+      },
+      {
+        "id": "changes-to-transactions",
+        "title": "Changes to Transactions",
+        "level": 2
+      },
+      {
+        "id": "changes-to-the-coinbase-transaction",
+        "title": "Changes to the Coinbase Transaction",
+        "level": 3
+      },
+      {
+        "id": "new-transaction-format--staking-actions",
+        "title": "New Transaction Format & Staking Actions",
+        "level": 3
+      },
+      {
+        "id": "further-restrictions-on-staking-actions",
+        "title": "Further Restrictions on Staking Actions",
+        "level": 4
+      },
+      {
+        "id": "changes-to-ledger-state",
+        "title": "Changes to Ledger State",
+        "level": 2
+      },
+      {
+        "id": "the-roster",
+        "title": "The Roster",
+        "level": 3
+      },
+      {
+        "id": "ledger-state-invariants",
+        "title": "Ledger State Invariants",
+        "level": 3
+      },
+      {
+        "id": "height-eventual-ledger-state",
+        "title": "Height-Eventual Ledger State",
+        "level": 4
+      },
+      {
+        "id": "finality-transaction-semantics-ledger-state-and-the-roster",
+        "title": "Finality, Transaction Semantics, Ledger State, and the Roster",
+        "level": 3
+      },
+      {
+        "id": "the-bft-sub-protocol",
+        "title": "The BFT Sub-Protocol",
+        "level": 2
+      },
+      {
+        "id": "todos-from-deep-dive",
+        "title": "TODOS from deep dive:",
+        "level": 2
+      },
+      {
+        "id": "terminology",
+        "title": "Terminology",
+        "level": 2
+      },
+      {
+        "id": "crosslink-finality",
+        "title": "Crosslink Finality",
+        "level": 2
+      },
+      {
+        "id": "the-crosslink-2-construction",
+        "title": "The Crosslink 2 Construction",
+        "level": 2
+      },
+      {
+        "id": "conventions",
+        "title": "Conventions",
+        "level": 2
+      },
+      {
+        "id": "discussion-of-incorrect-applications-of-the-gst-formalization-of-partial-synchrony-to-cont",
+        "title": "Discussion of incorrect applications of the GST formalization of partial synchrony to continuously operating protocols.",
+        "level": 3
+      },
+      {
+        "id": "views",
+        "title": "Views",
+        "level": 2
+      },
+      {
+        "id": "subprotocols",
+        "title": "Subprotocols",
+        "level": 2
+      },
+      {
+        "id": "model-for-bft-protocols-Πorigbftbft",
+        "title": "Model for BFT protocols (Π {origbft,bft} )",
+        "level": 3
+      },
+      {
+        "id": "safety-of-Πbft",
+        "title": "Safety of Π ∗ bft ​",
+        "level": 4
+      },
+      {
+        "id": "adapting-the-streamlet-bft-protocol",
+        "title": "Adapting the Streamlet BFT protocol.",
+        "level": 3
+      },
+      {
+        "id": "model-for-best-chain-protocols-Πorigbcbc",
+        "title": "Model for best-chain protocols (Π {origbc,bc} )",
+        "level": 3
+      },
+      {
+        "id": "header-validity-for-proof-of-work-protocols",
+        "title": "Header validity for Proof‑of‑Work protocols.",
+        "level": 3
+      },
+      {
+        "id": "safety-of-Πbc",
+        "title": "Safety of Π ∗ bc ​",
+        "level": 4
+      },
+      {
+        "id": "explain-the-confusion-in-the-literature-about-what-variants-of-this-property-are-called",
+        "title": "Explain the confusion in the literature about what variants of this property are called.",
+        "level": 3
+      },
+      {
+        "id": "discussion-of-gkl2020-s-communication-model-and-network-partition",
+        "title": "Discussion of [GKL2020]’s communication model and network partition.",
+        "level": 3
+      },
+      {
+        "id": "why-are-this-property-and-prefix-consistency-above-stated-as-unconditional-properties-of-p",
+        "title": "Why are this property, and Prefix Consistency above, stated as unconditional properties of protocol executions , rather than as probabilistic assumptions?",
+        "level": 3
+      },
+      {
+        "id": "why-is-the-quantification-in-prefix-agreement-over-two-different-times-t-and-t",
+        "title": "Why is the quantification in Prefix Agreement over two different times t and t′ ?",
+        "level": 3
+      },
+      {
+        "id": "definition-of-crosslink-2",
+        "title": "Definition of Crosslink 2",
+        "level": 2
+      },
+      {
+        "id": "parameters",
+        "title": "Parameters",
+        "level": 3
+      },
+      {
+        "id": "stalled-mode",
+        "title": "Stalled Mode",
+        "level": 3
+      },
+      {
+        "id": "structural-additions",
+        "title": "Structural additions",
+        "level": 3
+      },
+      {
+        "id": "use-of-the-headers-bc-field-and-its-relation-to-the-ch-field-in-snap-and-chat",
+        "title": "Use of the headers_bc field, and its relation to the ch field in Snap‑and‑Chat.",
+        "level": 3
+      },
+      {
+        "id": "why-is-a-distinguished-value-needed-for-the-headers-bc-field-in-the-genesis-bft-block",
+        "title": "Why is a distinguished value needed for the headers_bc field in the genesis bft‑block?",
+        "level": 3
+      },
+      {
+        "id": "why-is-the-context-bft-field-needed-why-not-use-a-final-bft-field-to-refer-directly-to-the",
+        "title": "Why is the context_bft field needed? Why not use a final_bft field to refer directly to the last final bft‑block before the context block?",
+        "level": 3
+      },
+      {
+        "id": "locally-finalized-chain",
+        "title": "Locally finalized chain",
+        "level": 3
+      },
+      {
+        "id": "why-does-fin-i-need-to-be-maintained-using-local-state",
+        "title": "Why does fin i need to be maintained using local state?",
+        "level": 3
+      },
+      {
+        "id": "why-do-we-need-to-use-candidate-h-rather-than-snapshot-lf-h",
+        "title": "Why do we need to use candidate(H) rather than snapshot(LF(H))?",
+        "level": 3
+      },
+      {
+        "id": "locally-boundedavailable-chain",
+        "title": "Locally bounded‑available chain",
+        "level": 3
+      },
+      {
+        "id": "why-is-the-otherwise-case-in-the-definition-of-ba-i-t-necessary",
+        "title": "Why is the ‘otherwise’ case in the definition of (ba μ ) i t necessary?",
+        "level": 3
+      },
+      {
+        "id": "syncing-and-checkpoints",
+        "title": "Syncing and checkpoints",
+        "level": 3
+      },
+      {
+        "id": "Πbft-changes-from-Πorigbft",
+        "title": "Π bft changes from Π origbft",
+        "level": 3
+      },
+      {
+        "id": "Πbft-proposal-and-block-validity",
+        "title": "Π bft proposal and block validity",
+        "level": 4
+      },
+      {
+        "id": "why-have-validity-rules-been-separated-from-the-honest-voting-condition-below",
+        "title": "Why have validity rules been separated from the honest voting condition below?",
+        "level": 3
+      },
+      {
+        "id": "what-does-the-linearity-rule-do",
+        "title": "What does the Linearity rule do?",
+        "level": 3
+      },
+      {
+        "id": "why-does-the-linearity-rule-allow-keeping-the-same-snapshot-as-the-parent",
+        "title": "Why does the Linearity rule allow keeping the same snapshot as the parent?",
+        "level": 3
+      },
+      {
+        "id": "Πbft-block-finality-in-context",
+        "title": "Π bft block finality in context",
+        "level": 4
+      },
+      {
+        "id": "Πbft-honest-proposal",
+        "title": "Π bft honest proposal",
+        "level": 4
+      },
+      {
+        "id": "why-1",
+        "title": "Why σ + 1?",
+        "level": 3
+      },
+      {
+        "id": "how-is-it-possible-that-the-linearity-rule-would-not-be-satisfied-by-choosing-headers-from",
+        "title": "How is it possible that the Linearity rule would not be satisfied by choosing headers from an honest proposer’s bc‑best‑chain?",
+        "level": 3
+      },
+      {
+        "id": "Πbft-honest-voting",
+        "title": "Π bft honest voting",
+        "level": 4
+      },
+      {
+        "id": "wait-what-how-much-validation-is-that",
+        "title": "Wait what, how much validation is that?",
+        "level": 3
+      },
+      {
+        "id": "how-does-this-compare-to-snap-and-chat",
+        "title": "How does this compare to Snap‑and‑Chat?",
+        "level": 3
+      },
+      {
+        "id": "Πbc-changes-from-Πorigbc",
+        "title": "Π bc changes from Π origbc",
+        "level": 3
+      },
+      {
+        "id": "Πbc-block-validity",
+        "title": "Π bc block validity",
+        "level": 4
+      },
+      {
+        "id": "explain-the-definition-of-finality-depth",
+        "title": "Explain the definition of finality‑depth.",
+        "level": 3
+      },
+      {
+        "id": "Πbc-contextual-validity",
+        "title": "Π bc contextual validity",
+        "level": 4
+      },
+      {
+        "id": "Πbc-honest-block-production",
+        "title": "Π bc honest block production",
+        "level": 4
+      },
+      {
+        "id": "why-not-choose-t-such-that-h-1-bc-context-bft-bft-bft-last-final-t",
+        "title": "Why not choose T such that H ⌈ 1 bc . context_bft ⪯ bft bft‑last‑final( T )?",
+        "level": 3
+      },
+      {
+        "id": "why-choose-the-longest-c-rather-than-the-longest-bft-last-final-c",
+        "title": "Why choose the longest C , rather than the longest bft‑last‑final( C )?",
+        "level": 3
+      },
+      {
+        "id": "why-this-tie-breaking-rule",
+        "title": "Why this tie‑breaking rule?",
+        "level": 3
+      },
+      {
+        "id": "penalty-for-failure-to-defend",
+        "title": "Penalty for Failure to Defend",
+        "level": 2
+      },
+      {
+        "id": "key-top-level-details",
+        "title": "Key Top-Level Details",
+        "level": 2
+      },
+      {
+        "id": "security-analysis-of-crosslink-2",
+        "title": "Security Analysis of Crosslink 2",
+        "level": 2
+      },
+      {
+        "id": "liveness-argument",
+        "title": "Liveness argument",
+        "level": 2
+      },
+      {
+        "id": "safety-argument",
+        "title": "Safety argument",
+        "level": 2
+      },
+      {
+        "id": "discussion",
+        "title": "Discussion",
+        "level": 3
+      },
+      {
+        "id": "proof-of-safety-for-logfin",
+        "title": "Proof of safety for LOG fin",
+        "level": 3
+      },
+      {
+        "id": "proof-of-safety-for-logba",
+        "title": "Proof of safety for LOG ba",
+        "level": 3
+      },
+      {
+        "id": "disadvantages-of-crosslink",
+        "title": "Disadvantages of Crosslink",
+        "level": 2
+      },
+      {
+        "id": "more-invasive-changes",
+        "title": "More invasive changes",
+        "level": 3
+      },
+      {
+        "id": "finalization-latency",
+        "title": "Finalization latency",
+        "level": 3
+      },
+      {
+        "id": "more-involved-liveness-argument",
+        "title": "More involved liveness argument",
+        "level": 3
+      },
+      {
+        "id": "every-rule-in-crosslink-2-is-individually-necessary",
+        "title": "Every rule in Crosslink 2 is individually necessary",
+        "level": 2
+      },
+      {
+        "id": "design-analysis-history",
+        "title": "Design Analysis History",
+        "level": 2
+      },
+      {
+        "id": "mechanism-design-audit-of-crosslink-zebra",
+        "title": "Mechanism Design Audit of Crosslink Zebra",
+        "level": 2
+      },
+      {
+        "id": "pre-registration-process",
+        "title": "Pre-Registration Process",
+        "level": 2
+      },
+      {
+        "id": "proposal-mechanism-design-audit-of-crosslink-zebra",
+        "title": "Proposal: Mechanism Design Audit of Crosslink Zebra",
+        "level": 2
+      },
+      {
+        "id": "objective",
+        "title": "Objective",
+        "level": 2
+      },
+      {
+        "id": "scope",
+        "title": "Scope",
+        "level": 2
+      },
+      {
+        "id": "questions-to-answer",
+        "title": "Questions to answer:",
+        "level": 2
+      },
+      {
+        "id": "out-of-scope",
+        "title": "Out of scope",
+        "level": 3
+      },
+      {
+        "id": "deliverables",
+        "title": "Deliverables",
+        "level": 2
+      },
+      {
+        "id": "work-plan--timeline",
+        "title": "Work Plan & Timeline",
+        "level": 2
+      },
+      {
+        "id": "outreach--followup",
+        "title": "Outreach & Follow‑up",
+        "level": 2
+      },
+      {
+        "id": "crosslink-architecture-decision-records",
+        "title": "Crosslink Architecture Decision Records",
+        "level": 2
+      },
+      {
+        "id": "crosslink-implementation",
+        "title": "Crosslink Implementation",
+        "level": 2
+      },
+      {
+        "id": "protocol-and-engineering-documentation",
+        "title": "Protocol and Engineering Documentation",
+        "level": 2
+      },
+      {
+        "id": "implementation-approach",
+        "title": "Implementation Approach",
+        "level": 2
+      },
+      {
+        "id": "style-conventions",
+        "title": "Style Conventions",
+        "level": 2
+      }
+    ],
+    "notice": "Engineering documentation retrieved from the published handbook. Prototype commands and network parameters can change."
+  }
+]

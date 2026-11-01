@@ -1,0 +1,17 @@
+.form{max-width:760px;color:var(--ink);font-size:16px;line-height:1.6}
+.lead{font-size:19px;color:var(--secondary-ink);margin:0 0 26px!important;max-width:48ch}
+.form fieldset{border:0;margin:0;padding:0;min-width:0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.form label{display:flex;flex-direction:column;gap:8px;margin-bottom:23px;min-width:0}
+.form input:not([type=checkbox]),.form textarea{width:100%;min-width:0;background:var(--surface);color:var(--ink);border:1px solid #4a4a4a;border-radius:5px;padding:12px 14px;font:inherit;outline-offset:3px}
+.form textarea{resize:vertical;min-height:160px;max-height:480px}
+.form input:focus-visible,.form textarea:focus-visible,.form button:focus-visible,.form a:focus-visible{outline:2px solid #eee;outline-offset:3px}
+.form .consent{flex-direction:row;align-items:flex-start;gap:12px;font-size:14px;color:var(--secondary-ink);max-width:65ch}
+.consent input{width:18px;height:18px;flex-shrink:0;accent-color:#ddd;margin-top:3px}
+.actions{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.actions button{display:inline-flex;align-items:center;justify-content:center;gap:26px;background:#e9e9e9;color:#111;min-height:48px;border:0;border-radius:5px;padding:10px 20px;font-size:16px;font-weight:500;cursor:pointer}
+.actions button:hover{background:#fff}.actions button:disabled{opacity:.55;cursor:wait}
+.actions a{font-size:14px;color:var(--secondary-ink);text-decoration:underline;text-underline-offset:4px}
+.status{font-size:15px;line-height:1.7;margin-top:20px;color:#e4e4e4}.status:empty{margin:0}.status:focus{outline:none}
+.error{color:#f1b6b0}.form small{font-size:13px}
+@media(max-width:650px){.pair{grid-template-columns:1fr;gap:0}.lead{font-size:18px}.form label{margin-bottom:20px}.actions{gap:18px}}

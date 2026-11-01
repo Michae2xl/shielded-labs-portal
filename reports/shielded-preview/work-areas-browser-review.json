@@ -1,0 +1,329 @@
+{
+  "checkedAt": "2026-10-28T20:49:36.066Z",
+  "checks": [
+    {
+      "check": "Internal contributor record from commit",
+      "url": "http://127.0.0.1:4246/shielded-preview?view=activity&mode=contributors&period=84&section=zero&cell=contributors%7Cgithub%3Ahu55a1n1%7Czero&record=person%3Agithub%3Ahu55a1n1",
+      "passed": true
+    },
+    {
+      "check": "Period, repository, contributor view and cell survive record round trip",
+      "passed": true,
+      "url": "http://127.0.0.1:4246/shielded-preview?view=activity&mode=contributors&period=84&section=zero&cell=contributors%7Cgithub%3Ahu55a1n1%7Czero"
+    },
+    {
+      "check": "Milestone opens internally with All filter intact",
+      "passed": true
+    },
+    {
+      "check": "Projects mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Projects",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Project detail mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Epoch",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Project detail narrow 320",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 305,
+      "heading": "Epoch",
+      "mainWidth": 305,
+      "width": 320
+    },
+    {
+      "check": "Team mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Team & community · Team",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Team profile mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Mark Henderson",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Team filter preserved after record",
+      "passed": true
+    },
+    {
+      "check": "Community record mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Zcash Brazil",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Community returns to directory",
+      "passed": true
+    },
+    {
+      "check": "Milestones mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Milestones · Security",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Milestone detail mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Preventive research finds a critical flaw",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Security filter retained on milestone return",
+      "passed": true
+    },
+    {
+      "check": "Code activity mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Contributors",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Contributor heatmap mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Contributors",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Contributor detail mobile 390",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 375,
+      "heading": "Andrew Reece",
+      "mainWidth": 375,
+      "width": 390
+    },
+    {
+      "check": "Contributor deep link survives reload",
+      "passed": true
+    },
+    {
+      "check": "Projects notebook 1440",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1425,
+      "heading": "Projects",
+      "mainWidth": 1177,
+      "width": 1440
+    },
+    {
+      "check": "Milestones notebook 1440",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1425,
+      "heading": "Milestones · All milestones",
+      "mainWidth": 1177,
+      "width": 1440
+    },
+    {
+      "check": "Team & community notebook 1440",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1425,
+      "heading": "Team & community · Team",
+      "mainWidth": 1177,
+      "width": 1440
+    },
+    {
+      "check": "Projects compact notebook 1024",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1009,
+      "heading": "Projects",
+      "mainWidth": 785,
+      "width": 1024
+    },
+    {
+      "check": "Milestones compact notebook 1024",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1009,
+      "heading": "Milestones · All milestones",
+      "mainWidth": 785,
+      "width": 1024
+    },
+    {
+      "check": "Team & community compact notebook 1024",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1009,
+      "heading": "Team & community · Team",
+      "mainWidth": 785,
+      "width": 1024
+    },
+    {
+      "check": "Code activity compact notebook 1024",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1009,
+      "heading": "Contributors",
+      "mainWidth": 785,
+      "width": 1024
+    },
+    {
+      "check": "Repository internal record desktop",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Zero",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Repository exploration selects the repository",
+      "passed": true
+    },
+    {
+      "check": "Code activity desktop 1686",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Contributors",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Forks are opt-in and expose six repositories",
+      "passed": true
+    },
+    {
+      "check": "Project detail desktop 1686",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Crosslink",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Project FAQ opens in portal",
+      "passed": true
+    },
+    {
+      "check": "Project milestone opens in portal",
+      "passed": true
+    },
+    {
+      "check": "Project commit opens in portal",
+      "passed": true
+    },
+    {
+      "check": "Crosslink direct project menu",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Crosslink",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Epoch direct project menu",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Epoch",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "NSM direct project menu",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "NSM",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Ironwood direct project menu",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Ironwood",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Zero direct project menu",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Zero",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Dynamic Fees direct project menu",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Dynamic Fees",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Adjacent governance overview",
+      "passed": true,
+      "dialogs": 0,
+      "documentWidth": 1671,
+      "heading": "Governance · Overview",
+      "mainWidth": 1423,
+      "width": 1686
+    },
+    {
+      "check": "Project card columns, widths and footer alignment",
+      "passed": true,
+      "columns": 3,
+      "count": 6,
+      "footerRows": [
+        373,
+        373,
+        373,
+        620,
+        620,
+        620
+      ],
+      "widths": [
+        445,
+        445,
+        445,
+        445,
+        445,
+        445
+      ]
+    }
+  ]
+}

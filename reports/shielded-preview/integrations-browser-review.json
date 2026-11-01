@@ -1,0 +1,169 @@
+[
+  {
+    "check": "article-image-and-layout",
+    "h1": "Epoch: Future-Proof Cryptography for Zcash",
+    "image": [
+      {
+        "alt": "Artwork for Epoch: Future-Proof Cryptography for Zcash",
+        "loaded": true
+      }
+    ],
+    "overflow": false,
+    "width": 1440
+  },
+  {
+    "check": "crosslink-interaction",
+    "before": "50% staked, 15.767 ZEC/year",
+    "after": "40% staked, 19.708 ZEC/year",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=resources&section=simulators&record=crosslink-simulator"
+  },
+  {
+    "check": "nsm-interaction",
+    "action": "Add burn event",
+    "result": "Editable burn amount, block and date added inside embedded simulator",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=resources&section=simulators&record=nsm-simulator"
+  },
+  {
+    "check": "fees-interaction",
+    "action": "Action count 2 to 4",
+    "result": "ZIP-317 calculator updates from 10,000 to 20,000 zats",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=resources&section=simulators&record=fees-simulator"
+  },
+  {
+    "activeField": "contact-name",
+    "check": "contact-native-validation",
+    "invalid": 5,
+    "overflow": false,
+    "sent": ""
+  },
+  {
+    "check": "contact-error-mocked-response",
+    "draftPreserved": true,
+    "message": "Sending could not be confirmed. Your draft is still here. Please wait 10 minutes before trying this message again.",
+    "retryEnabled": true
+  },
+  {
+    "check": "contact-success-mocked-response",
+    "draftCleared": true,
+    "message": "Your message has been sent to Shielded Labs. Thank you for getting in touch."
+  },
+  {
+    "check": "contact-mobile",
+    "fields": [
+      {
+        "font": "14px",
+        "id": "",
+        "width": 288.640625
+      },
+      {
+        "font": "16px",
+        "id": "contact-name",
+        "width": 331
+      },
+      {
+        "font": "16px",
+        "id": "contact-email",
+        "width": 331
+      },
+      {
+        "font": "16px",
+        "id": "contact-message",
+        "width": 331
+      }
+    ],
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "check": "overview-mobile",
+    "newsImages": [
+      {
+        "loaded": true,
+        "width": 100
+      },
+      {
+        "loaded": true,
+        "width": 100
+      },
+      {
+        "loaded": true,
+        "width": 100
+      }
+    ],
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "check": "blog-mobile",
+    "overflow": false,
+    "thumbnails": 20,
+    "width": 390
+  },
+  {
+    "bodyFont": 0,
+    "check": "article-mobile",
+    "hero": 331,
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "check": "crosslink-mobile",
+    "frameWidth": 329,
+    "overflow": false,
+    "width": 390
+  },
+  {
+    "check": "project-simulator-link",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=projects&project=crosslink",
+    "link": "?view=resources&section=crosslink&record=crosslink-simulator"
+  },
+  {
+    "check": "fees-mobile-section",
+    "iframe": "https://fees.shieldedinfra.net/#proposal",
+    "overflow": false,
+    "url": "http://127.0.0.1:4246/shielded-preview?view=resources&section=simulators&record=fees-simulator&simulation=%23proposal",
+    "width": 390
+  },
+  {
+    "check": "fees-back-navigation",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=resources&section=simulators&record=fees-simulator",
+    "iframe": "https://fees.shieldedinfra.net/#enter-zip-317-and-actions"
+  },
+  {
+    "check": "nsm-mobile",
+    "frame": {
+      "scrollWidth": 314,
+      "width": 314
+    },
+    "parent": {
+      "overflow": false,
+      "width": 390
+    }
+  },
+  {
+    "active": "Send message",
+    "check": "contact-final-new-message",
+    "draft": "",
+    "enabled": true,
+    "status": ""
+  },
+  {
+    "check": "overview-desktop-final",
+    "images": [
+      {
+        "loaded": true,
+        "width": 352.328125
+      },
+      {
+        "loaded": true,
+        "width": 352.3359375
+      },
+      {
+        "loaded": true,
+        "width": 352.3359375
+      }
+    ],
+    "overflow": false,
+    "width": 1440
+  }
+]

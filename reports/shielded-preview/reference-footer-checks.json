@@ -1,0 +1,88 @@
+[
+  {
+    "label": "Insights collapsed desktop",
+    "barHeight": 62,
+    "footerHeight": 78
+  },
+  {
+    "label": "View methodology opens",
+    "expanded": "true",
+    "calculationVisible": true
+  },
+  {
+    "label": "All source records retained",
+    "sourceLinks": 6,
+    "refreshEnabled": true
+  },
+  {
+    "label": "Changing view closes old notes",
+    "expanded": "false"
+  },
+  {
+    "label": "Proposals",
+    "sourceButtons": 1,
+    "refreshButtons": 1,
+    "expanded": "false"
+  },
+  {
+    "label": "Grants",
+    "sourceButtons": 1,
+    "refreshButtons": 1,
+    "expanded": "false"
+  },
+  {
+    "label": "Voting",
+    "sourceButtons": 1,
+    "refreshButtons": 1,
+    "expanded": "false"
+  },
+  {
+    "label": "Results",
+    "sourceButtons": 1,
+    "refreshButtons": 1,
+    "expanded": "false"
+  },
+  {
+    "label": "ZCAP",
+    "sourceButtons": 1,
+    "refreshButtons": 1,
+    "expanded": "false"
+  },
+  {
+    "label": "Overview",
+    "sourceButtons": 1,
+    "refreshButtons": 1,
+    "expanded": "false"
+  },
+  {
+    "label": "Mobile collapsed",
+    "barHeight": 106,
+    "documentWidth": 375,
+    "height": 2647,
+    "width": 390
+  },
+  {
+    "label": "Mobile 390 methodology opens",
+    "expanded": "true",
+    "calculationVisible": true,
+    "documentWidth": 375,
+    "width": 390
+  },
+  {
+    "label": "Mobile 320 all sources",
+    "documentWidth": 305,
+    "width": 320,
+    "sourceLinks": 6
+  },
+  {
+    "label": "Footer contact opens internally",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=about&section=contact",
+    "headingVisible": true,
+    "formVisible": true
+  },
+  {
+    "label": "Footer privacy opens internally",
+    "url": "http://127.0.0.1:4246/shielded-preview?view=about&section=privacy",
+    "headingVisible": true
+  }
+]
