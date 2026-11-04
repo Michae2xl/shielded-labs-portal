@@ -1,0 +1,61 @@
+# Renders zcash/zips into inert document nodes and publishes them to the
+# `zips-data` branch. The portal reads that branch when ZIPS_DATA_URL points at
+# it (see README), so a sync never needs a new deployment. Nothing here touches
+# `main`; the bundled snapshot under src/lib/shielded-preview/zips is refreshed
+# manually with `npm run import:zips`.
+name: Sync ZIPs
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zips-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out the importer
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/zips
+      - name: Check out zcash/zips with history
+        uses: actions/checkout@v4
+        with:
+          repository: zcash/zips
+          path: upstream
+          fetch-depth: 0
+          filter: blob:none
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install renderers
+        run: python3 -m pip install --quiet -r scripts/zips/requirements.txt
+      - name: Test the importer
+        run: python3 scripts/zips/test_import_zips.py
+      - name: Render the proposals
+        run: python3 scripts/zips/import_zips.py --source upstream --out build/zips-data --public build/zips-data/images
+      - name: Publish to the zips-data branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir publish && cd publish
+          git init -q
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git fetch -q origin zips-data; then git checkout -q -b zips-data FETCH_HEAD; else git checkout -q --orphan zips-data; fi
+          git rm -rqf --cached . 2>/dev/null || true
+          find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -R ../build/zips-data/. .
+          git add -A
+          if git diff --cached --quiet -- . ':!meta.json'; then echo 'No proposal changes since the last sync.'; exit 0; fi
+          commit="$(python3 -c "import json; print((json.load(open('meta.json'))['upstream']['commit'] or 'unknown')[:12])")"
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -qm "Sync ZIPs from zcash/zips ${commit}"
+          git push -q origin zips-data

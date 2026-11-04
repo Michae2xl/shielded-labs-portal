@@ -109,3 +109,5 @@
 .sourceGuides>a{min-height:44px}
 @media(max-width:1000px){.sourceCatalog{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.sourceCatalog{grid-template-columns:minmax(0,1fr)}}
+.governance .facts dd a{color:#eee;text-decoration:underline;text-decoration-color:#777;text-underline-offset:4px}
+.governance .facts dd a:hover{color:#fff;text-decoration-color:#fff}

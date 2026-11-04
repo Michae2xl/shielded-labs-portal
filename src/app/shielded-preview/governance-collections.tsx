@@ -13,11 +13,12 @@ import { coinholderTotals, type CoinholderProposal } from '@/lib/shielded-previe
 import { coinholderRoundLabel, coinholderRounds } from '@/lib/shielded-preview/coinholder-rounds';
 import c from './coinholder-proposals.module.css';
 
-type Section = 'Proposals' | 'Voting' | 'Grants' | 'Results' | 'ZCAP' | 'Insights';
+import { governanceSectionSlug, type GovernanceSection } from '@/lib/shielded-preview/governance-sections';
+type Section = GovernanceSection;
 export type CollectionSelection = { lane?: string; filter?: string; search?: string; page?: number; basis?: 'include' | 'exclude'; round?: string };
 export type CollectionNavigate = (section: Section, id?: string | null, selection?: CollectionSelection) => void;
 type Navigate = CollectionNavigate;
-type Controls = {
+export type Controls = {
   search: string; onSearch: (value: string) => void;
   filter: string; onFilter: (value: string) => void;
   page: number; onPage: (page: number) => void; onNavigate: Navigate;
@@ -33,8 +34,8 @@ const number = (value: number) => new Intl.NumberFormat('en-US', { maximumFracti
 const date = (value: string | null) => value ? new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value)) : 'Not recorded';
 const label = (value: string) => value.replaceAll('_', ' ').replace(/^\w/, c => c.toUpperCase());
 const matches = (text: string, query: string) => text.toLowerCase().includes(query.trim().toLowerCase());
-const visiblePage = (page: number, total: number) => Math.max(1, Math.min(page, Math.ceil(total / pageSize)));
-const pageRows = <T,>(rows: T[], page: number) => rows.slice((visiblePage(page, rows.length) - 1) * pageSize, visiblePage(page, rows.length) * pageSize);
+export const visiblePage = (page: number, total: number) => Math.max(1, Math.min(page, Math.ceil(total / pageSize)));
+export const pageRows = <T,>(rows: T[], page: number) => rows.slice((visiblePage(page, rows.length) - 1) * pageSize, visiblePage(page, rows.length) * pageSize);
 const polls = record.polls.filter(poll => poll.kind !== 'test').sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
 const pollTitles: Record<string, string> = {
   '2019-07-nu3-codename-straw-poll': 'NU3 codename · straw poll',
@@ -62,7 +63,7 @@ export function Arrow() {
 export function Link({ section, id, selection, onNavigate, children, className }: {
   section: Section; id?: string; selection?: CollectionSelection; onNavigate: Navigate; children: ReactNode; className?: string;
 }) {
-  const params = new URLSearchParams({ view: 'governance', section: section.toLowerCase() });
+  const params = new URLSearchParams({ view: 'governance', section: governanceSectionSlug(section) });
   if (id) params.set('record', id);
   if (selection?.lane) params.set('lane', selection.lane);
   if (selection?.filter && selection.filter !== 'all') params.set('filter', selection.filter);
@@ -105,7 +106,7 @@ export function Empty({ onReset }: { onReset: () => void }) {
   return <div className={s.empty}><h3>No matching records</h3><p>Try another search or reset the filters.</p><button onClick={onReset}>Reset filters<Arrow/></button></div>;
 }
 
-function Collection({ tabs, title, context, toolbar, summary, children, notice, aside, total, page, onPage, id, archive = false }: {
+export function Collection({ tabs, title, context, toolbar, summary, children, notice, aside, total, page, onPage, id, archive = false }: {
   tabs: ReactNode; title: string; context: string; toolbar: ReactNode; summary?: ReactNode;
   children: ReactNode; notice: ReactNode; aside: ReactNode; total: number | null; page: number; onPage: (page: number) => void; id: string; archive?: boolean;
 }) {

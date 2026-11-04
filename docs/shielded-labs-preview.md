@@ -47,6 +47,12 @@ guard or source/status semantics. The design review and screenshots are in
   its collection, filters, search and page, including after a direct record reload.
   Insights separates ZCG decisions, grant payments, Q3 outcomes and the NU7 panel
   comparison into four compact views, with links to their underlying records.
+- How it works: a neutral guide inside Governance (who decides, the seven stages from idea to
+  activation, what a ZIP is, where the Dev Fund debate stands, chain forks, glossary). Dated
+  statements name their date; sources are listed on the page.
+- ZIPs: the zcash/zips repository rendered inside Governance as numbered ZIPs, unnumbered drafts
+  and writing guides, with status filters, search, figures and MathML formulas. Each record links
+  the repository source, the official rendering, the discussion and the pull request.
 - Projects: six initiatives with filters and dedicated reading pages covering purpose,
   scope, milestones, next steps, repository activity and source attribution. Each page
   has a direct URL such as `?view=projects&project=crosslink`, section navigation and
@@ -56,7 +62,7 @@ guard or source/status semantics. The design review and screenshots are in
 - Impact: preventive research, discovery, coordinated response and attributed milestones.
 - Team & community: official published roster, discipline filters, reused community directory,
   and links to published opportunities.
-- Website proposal: menu-first navigation to six improvements and a delivery plan.
+- Website proposal: menu-first navigation to seven improvements and a delivery plan.
   Each suggestion opens directly with its rationale, delivery checks, preview
   coverage and contextual sources. The plan combines site structure, update
   workflow and six Community Lead responsibilities, with a printable brief.
@@ -414,3 +420,18 @@ Voting and Results now use full-width navigation and compact archive panels inst
 ### Proposals and Grants lists — 29 October 2026
 
 Proposals and Grants now share the archive presentation: three collection controls across the available width, compact rows, aligned status or milestone columns, and right-aligned USD values. Missing requested amounts use a dash with accessible text and a source-context explanation. Mobile rows retain complete amounts beneath each title. Collection, search, status and page state remain available through internal detail navigation and return. Evidence: `reports/shielded-preview/proposals-grants-lists-2026-10-29.md`.
+
+### ZIP library and How it works — 4 November 2026
+
+Governance gained two sections. `How it works` (`?view=governance&section=how-it-works`) explains
+the decision process at the level of the November forum overview, in English, with internal links
+to voting records, ZIPs and the Shielded Labs essays that back its figures. `ZIPs`
+(`?view=governance&section=zips`) lists the zcash/zips repository: 139 documents, 14 figures.
+Network upgrade records now link their ZIP references, and the global search finds ZIPs by
+number or title. Rendering happens outside the server: `scripts/zips/import_zips.py` turns
+reStructuredText and Markdown into the same inert node shape as the editorial import (docutils
+with raw HTML and file insertion disabled, MathML for formulas, an allowlist for tags and
+attributes, PNG figures only). A scheduled GitHub Actions job (`.github/workflows/zips-sync.yml`)
+publishes the result to the `zips-data` branch every six hours; the portal reads that branch when
+`ZIPS_DATA_URL` is set and otherwise serves the bundled snapshot. Open pull requests are not
+rendered yet; the guide links the unofficial preview site for them.

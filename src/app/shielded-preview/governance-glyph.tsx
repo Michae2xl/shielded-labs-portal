@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type GovernanceGlyphKind = 'overview' | 'proposals' | 'grants' | 'voting' | 'results' | 'zcap' | 'insights' | 'history' | 'network';
+export type GovernanceGlyphKind = 'overview' | 'proposals' | 'grants' | 'voting' | 'results' | 'zcap' | 'insights' | 'history' | 'network' | 'process' | 'zips';
 
 const drawings: Record<GovernanceGlyphKind, ReactNode> = {
   overview: <><path d="m24 5 19 19-19 19L5 24Z" opacity=".35"/><path d="m24 14 10 10-10 10-10-10Z" fill="currentColor" fillOpacity=".1"/><path d="M24 5v9m19 10h-9M24 43v-9M5 24h9"/><circle cx="24" cy="24" r="3" fill="currentColor" stroke="none"/></>,
@@ -11,6 +11,8 @@ const drawings: Record<GovernanceGlyphKind, ReactNode> = {
   zcap: <><path d="m24 7 15 9v17l-15 9-15-9V16Z" opacity=".35"/><path d="M24 13v6m10 11-5-3m-15 3 5-3" opacity=".6"/><circle cx="24" cy="8" r="4" fill="currentColor" fillOpacity=".1"/><circle cx="9" cy="33" r="4" fill="currentColor" fillOpacity=".1"/><circle cx="39" cy="33" r="4" fill="currentColor" fillOpacity=".1"/><circle cx="24" cy="24" r="6" fill="currentColor" fillOpacity=".12"/></>,
   insights: <><circle cx="23" cy="22" r="15" opacity=".35"/><path d="m34 34 9 9M23 7v5M8 22h5m10 15v-5m15-10h-5"/><path d="m17 26 5-9 4 6 5-5"/><circle cx="22" cy="17" r="2" fill="currentColor" stroke="none"/></>,
   history: <><path d="M11 14h27v27H11Z" fill="currentColor" fillOpacity=".06"/><path d="M8 7h33v7H8Z"/><path d="M20 21h10"/><circle cx="15" cy="33" r="9" fill="#111"/><path d="M15 28v5l4 2"/></>,
+  process: <><path d="M9 39V23L24 9l15 14v16" opacity=".35"/><path d="M9 39h30" opacity=".35"/><circle cx="24" cy="9" r="3" fill="currentColor" fillOpacity=".12"/><circle cx="9" cy="23" r="3" fill="currentColor" fillOpacity=".12"/><circle cx="39" cy="23" r="3" fill="currentColor" fillOpacity=".12"/><path d="M24 15v14m-6 4h12"/><path d="m20 25 4 4 4-4"/></>,
+  zips: <><path d="M12 8h18l8 8v24H12Z" fill="currentColor" fillOpacity=".07"/><path d="M30 8v8h8" opacity=".5"/><path d="M18 22h12m-12 6h12m-12 6h7"/><path d="M8 14v28h22" opacity=".3"/><circle cx="36" cy="36" r="7" fill="#111"/><path d="m33 36 2 2 4-4"/></>,
   network: <><path d="m24 8 16 16-16 16L8 24Z" opacity=".4"/><path d="M24 12v24M12 24h24" opacity=".35"/><path d="m24 18 6 6-6 6-6-6Z" fill="currentColor" fillOpacity=".1"/><circle cx="24" cy="8" r="3"/><circle cx="40" cy="24" r="3"/><circle cx="24" cy="40" r="3"/><circle cx="8" cy="24" r="3"/></>,
 };
 

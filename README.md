@@ -34,10 +34,19 @@ For independently hosted feedback, configure the Railway service to build with `
 npm run check:isolation
 npm test
 npm run test:importer
+npm run test:zips
 npm run lint
 npm run build
 npm run typecheck
 ```
+
+## ZIP library
+
+Governance includes the Zcash Improvement Proposals from [zcash/zips](https://github.com/zcash/zips) (MIT) and a `How it works` guide. The proposals are rendered outside the server by `scripts/zips/import_zips.py`: reStructuredText through docutils with raw HTML and file insertion disabled, Markdown through Python-Markdown, formulas as MathML, and an allowlist that keeps only known tags and attributes. The output uses the same inert node shape as the editorial import, so no proposal HTML reaches the browser.
+
+- The bundled snapshot lives in `src/lib/shielded-preview/zips` (index, metadata and one JSON document per ZIP) with PNG figures under `public/shielded-preview/zips`. Refresh it with `npm run import:zips`, which expects a zcash/zips checkout at `../zips` (`--source` accepts another path). Rendering needs `pip install -r scripts/zips/requirements.txt`; `npm run test:zips` skips the rendering tests when those packages are missing.
+- `.github/workflows/zips-sync.yml` renders the repository every six hours and publishes the result to the `zips-data` branch without a deployment. Set `ZIPS_DATA_URL` to that branch's raw base, for example `https://raw.githubusercontent.com/Michae2xl/shielded-labs-portal/zips-data`, and the API serves the synchronized index and documents, validated on read, with a five-minute cache; the bundled snapshot remains the fallback. Without the variable the portal serves the snapshot only and makes no network request for ZIPs.
+- Open pull requests are not rendered yet. The guide links the unofficial preview site for them.
 
 ## Included
 

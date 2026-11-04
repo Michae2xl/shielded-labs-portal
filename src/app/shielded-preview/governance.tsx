@@ -12,24 +12,27 @@ import { emptyCoinholderSource } from '@/lib/shielded-preview/coinholder-proposa
 import { coinholderRounds } from '@/lib/shielded-preview/coinholder-rounds';
 import type { GovernanceData, Source, VoteResult } from '@/lib/shielded-preview/governance-types';
 import GovernanceRecord from './governance-record';
-import GovernanceNavigation, { governanceSections, type GovernanceSection } from './governance-navigation';
+import GovernanceNavigation, { type GovernanceSection } from './governance-navigation';
+import { governanceSectionFromSlug, governanceSectionSlug } from '@/lib/shielded-preview/governance-sections';
+import { isZipLane, laneForRecord, zipReference } from '@/lib/shielded-preview/zips/library';
+import GovernanceProcess from './governance-process';
+import GovernanceZips from './governance-zips';
 import GovernanceOverview from './governance-overview';
 import GovernanceProgramGuide from './governance-program-guide';
 import CoinholderProposalRecord from './coinholder-proposal-record';
 import GovernanceInsights from './governance-insights';
 import GovernanceZcap from './governance-zcap';
 import GovernanceReferences, { GovernanceReferenceProvider } from './governance-references';
-import { GrantsCollection, ProposalsCollection, ResultsCollection, VotingCollection, type ProposalListItem } from './governance-collections';
+import { GrantsCollection, Link, ProposalsCollection, ResultsCollection, VotingCollection, type ProposalListItem } from './governance-collections';
 import g from './governance.module.css';
 
-const sections = governanceSections;
 type Section = GovernanceSection;
-const recordLane=(section:Section,id:string|null)=>section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
+const recordLane=(section:Section,id:string|null)=>section==='ZIPs'?laneForRecord(id):section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
 type ListingState={lane:string;filter:string;search:string;page:number;basis:'include'|'exclude';round:string};
 function listingParams(section:Section,id:string|null,state:ListingState){
- const params=new URLSearchParams({view:'governance',section:section.toLowerCase()});
+ const params=new URLSearchParams({view:'governance',section:governanceSectionSlug(section)});
  if(id)params.set('record',id);
- if((section==='Voting'||section==='Proposals'||section==='Results'||section==='Insights'||section==='ZCAP')&&state.lane!==recordLane(section,null))params.set('lane',state.lane);
+ if((section==='Voting'||section==='Proposals'||section==='Results'||section==='Insights'||section==='ZCAP'||section==='ZIPs')&&state.lane!==recordLane(section,null))params.set('lane',state.lane);
  if(state.filter!=='all')params.set('filter',state.filter);
  if(state.search)params.set('q',state.search);
  if(state.page>1)params.set('page',String(state.page));
@@ -62,8 +65,8 @@ export default function Governance(){
  const [round,setRound]=useState('all');
  const refresh=useCallback(async()=>{if(active.current)return;active.current=true;setBusy(true);try{const r=await fetch('/api/shielded-preview/governance',{signal:AbortSignal.timeout(20000)});if(!r.ok)throw new Error();setData(await r.json());setFailed(false)}catch{setFailed(true)}finally{active.current=false;setBusy(false)}},[]);
  useEffect(()=>{const read=()=>{
-  const p=new URLSearchParams(location.search);const next=sections.find(s=>s.toLowerCase()===p.get('section'))??'Overview';
-  const lanes=next==='Voting'?['current','archive','upgrades']:next==='Proposals'?['review','history','coinholder','q3']:next==='Results'?['q3','elections']:next==='Insights'?['decisions','payments','outcomes','panels']:next==='ZCAP'?['comparison','members']:[];
+  const p=new URLSearchParams(location.search);const next=governanceSectionFromSlug(p.get('section'))??'Overview';
+  const lanes=next==='ZIPs'?['zips','drafts','guides']:next==='Voting'?['current','archive','upgrades']:next==='Proposals'?['review','history','coinholder','q3']:next==='Results'?['q3','elections']:next==='Insights'?['decisions','payments','outcomes','panels']:next==='ZCAP'?['comparison','members']:[];
   const nextPage=Number(p.get('page')??1);
   const nextLane=lanes.includes(p.get('lane')??'')?p.get('lane')!:next==='Voting'&&p.get('filter')==='upgrades'?'upgrades':recordLane(next,p.get('record'));
   setSection(next);setLane(next==='Proposals'&&nextLane==='q3'?'coinholder':nextLane);setSelected(p.get('record'));
@@ -119,7 +122,10 @@ export default function Governance(){
   <div className={g.sourceGuides}><SourceLink url="https://zcashcommunitygrants.org/selection/">ZCG review process</SourceLink><SourceLink url="https://zfnd.org/zcash-community-advisory-panel/">ZCAP role and membership</SourceLink></div>
  </>}><div className={g.governance}>
   <GovernanceNavigation value={section} onChange={value=>go(value)}/>
-  {!selected&&<h1 ref={heading} tabIndex={-1} className={g.srOnly}>Governance · {section}</h1>}
+  {!selected&&section!=='How it works'&&<h1 ref={heading} tabIndex={-1} className={g.srOnly}>Governance · {section}</h1>}
+
+  {section==='How it works'&&<GovernanceProcess onBack={()=>go('Overview')} onNavigate={go}/>}
+  {section==='ZIPs'&&<GovernanceZips selected={selected} lane={isZipLane(lane)?lane:'zips'} filter={filter} search={search} page={page} onNavigate={go} onSearch={find} onFilter={chooseFilter} onPage={choosePage} onLane={chooseLane}/>}
 
   {!selected&&section==='Overview'&&<GovernanceOverview data={data} pollCount={polls.length} onNavigate={go}/>}
 
@@ -152,7 +158,7 @@ export default function Governance(){
   {!selected&&section==='Voting'&&<VotingCollection {...collectionControls} source={coinholderSource} lane={lane} onLane={chooseLane} busy={busy}/>}
   {selected&&section==='Voting'&&coinholderProposal&&<CoinholderProposalRecord proposal={coinholderProposal} source={coinholderSource} onBack={()=>go('Voting',null,{lane:'current'})}/>}
   {loadingCoinholder&&<section className={g.empty} role="status"><h1>{busy?'Loading proposal…':'Proposal source unavailable'}</h1><p>{busy?'Retrieving the FPF application.':'Try refreshing the data or return to the proposals.'}</p><button className={g.secondary} onClick={()=>go(section)}>Back to proposals</button></section>}
-  {programGuide&&<GovernanceProgramGuide onBack={()=>go('Overview')}/>}
+  {programGuide&&<GovernanceProgramGuide onBack={()=>go('Overview')} onNavigate={go}/>}
   {selected&&section==='Voting'&&poll&&<GovernanceRecord
    title={poll.name} context={poll.kind==='sentiment'?'Advisory poll':'Coin-weighted poll'} subtitle={poll.scope==='fund'?'Funding decisions':'Protocol & funding model'}
    metrics={<><Stat name="Recorded status" value={poll.informal?'Informal':label(poll.status)}/><Stat name="Recorded date" value={date(poll.date)}/><Stat name="Highest question weight" value={poll.totalZec===null?'Not recorded':`${number(poll.totalZec)} ZEC`}/></>}
@@ -167,7 +173,7 @@ export default function Governance(){
    metrics={<><Stat name="Recorded stage" value={upgrade.height?'Activated':'Protocol work'}/><Stat name="Activation block" value={upgrade.height?number(upgrade.height):'Not recorded'}/><Stat name="Activation date" value={date(upgrade.time)}/></>}
    sections={[{label:'Decision process',id:'governance-process'}]} backLabel="All votes" onBack={()=>go('Voting')}
    sources={<><p>Compiled OpenZcash record reviewed {date(record.checkedAt)}. A poll result is distinct from a release or mainnet activation.</p><SourceLink url={upgrade.source}>Protocol reference</SourceLink></>}
-  ><section id="governance-process"><h2>Decision process</h2><p>{upgrade.governance}</p><dl className={g.facts}><div><dt>ZIP references</dt><dd>{upgrade.zips.join(', ')||'Not recorded'}</dd></div></dl></section></GovernanceRecord>}
+  ><section id="governance-process"><h2>Decision process</h2><p>{upgrade.governance}</p><dl className={g.facts}><div><dt>ZIP references</dt><dd>{upgrade.zips.length?upgrade.zips.map((zip,i)=>{const reference=zipReference(Number(zip));return <span key={zip}>{i>0?', ':''}{reference?<Link section="ZIPs" id={reference.id} onNavigate={go}>ZIP {zip}</Link>:`ZIP ${zip}`}</span>}):'Not recorded'}</dd></div></dl></section></GovernanceRecord>}
 
   {section==='ZCAP'&&<GovernanceZcap source={data.members} selected={selected} lane={lane} filter={filter} search={search} page={page} basis={basis} onNavigate={go} onSearch={find} onFilter={chooseFilter} onPage={choosePage} onBasis={chooseBasis}/>}
 
@@ -190,7 +196,7 @@ export default function Governance(){
   ><section id="governance-elected"><h2>Elected members</h2><div className={g.checkRows}>{election.elected.map(p=><span key={p.name}>{p.name}<strong>{p.approvals??'Not recorded'} approvals</strong></span>)}</div><p className={g.recordNote}>Approval voting can support multiple candidates. Candidate approvals are not added to infer unique voters.</p></section></GovernanceRecord>}
 
   {!selected&&section==='Insights'&&<GovernanceInsights data={data} lane={lane} onLane={chooseLane} onNavigate={go}/>}
-  {selected&&!title&&!loadingCoinholder&&section!=='ZCAP'&&<section className={g.empty}><h1 ref={heading} tabIndex={-1}>Record not found</h1><p>This record is unavailable.</p><button className={g.secondary} onClick={()=>go(section)}>Back to {section.toLowerCase()}</button></section>}
+  {selected&&!title&&!loadingCoinholder&&section!=='ZCAP'&&section!=='ZIPs'&&section!=='How it works'&&<section className={g.empty}><h1 ref={heading} tabIndex={-1}>Record not found</h1><p>This record is unavailable.</p><button className={g.secondary} onClick={()=>go(section)}>Back to {section.toLowerCase()}</button></section>}
   {!selected&&section==='Overview'&&<div className={g.overviewReferences}><GovernanceReferences/></div>}
 
  </div></GovernanceReferenceProvider>;

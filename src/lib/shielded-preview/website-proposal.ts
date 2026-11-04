@@ -68,6 +68,14 @@ export const websiteSuggestions: WebsiteSuggestion[] = [
     destinations: [{ title: 'Attributed milestones', description: 'Research, engineering and the coordinated security response.', view: 'impact' }, { title: 'Team', description: 'Team profiles and related work.', view: 'people' }],
     references: [{ title: 'Orchard disclosure', url: sources.security }, { title: 'Published team', url: sources.team }, { title: 'Published opportunities', url: 'https://shieldedlabs.net/jobs/' }],
   },
+  {
+    ...improvements[6], id: 'zips', menu: 'ZIPs & process',
+    summary: 'Read every ZIP and understand the decision process without leaving the portal.',
+    preview: 'ZIP library & guide', next: 'Add open pull requests',
+    checks: ['Each ZIP shows its header status, owners, dates and a link to the repository source.', 'The guide separates proposals, polls, implementation and network adoption.', 'Dated statements about the Dev Fund debate name their date and source.'],
+    destinations: [{ title: 'ZIP library', description: 'Numbered ZIPs, unnumbered drafts and writing guides with status filters.', view: 'governance', section: 'zips' }, { title: 'How it works', description: 'Who decides, the seven stages and the current Dev Fund debate.', view: 'governance', section: 'how-it-works' }],
+    references: [{ title: 'zcash/zips repository', url: 'https://github.com/zcash/zips' }, { title: 'ZIP process (ZIP 0)', url: 'https://zips.z.cash/zip-0000' }],
+  },
 ];
 
 export const websiteMenu = [

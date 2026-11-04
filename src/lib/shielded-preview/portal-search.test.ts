@@ -17,6 +17,9 @@ describe('Global page and profile search', () => {
     expect(searchPortal('Foundation', navigation)).toContainEqual({ title: 'Foundation in place', kind: 'Milestone', href: '?view=impact&section=engineering&record=milestone%3A2025-03-21' });
     expect(searchPortal('slashing', navigation).some(result => new URL(result.href, 'https://portal.test').searchParams.get('record') === 'crosslink-faq')).toBe(true);
     expect(searchPortal('commits', navigation)).toContainEqual({ title: 'Code activity', kind: 'Portal', href: '?view=activity' });
+    expect(searchPortal('how it works', navigation)).toContainEqual({ title: 'How it works', kind: 'Governance', href: '?view=governance&section=how-it-works' });
+    expect(searchPortal('zip 32', navigation)).toContainEqual({ title: 'ZIP 32: Shielded Hierarchical Deterministic Wallets', kind: 'ZIP', href: '?view=governance&section=zips&record=zip-0032' });
+    expect(searchPortal('improvement proposals', navigation)).toContainEqual({ title: 'ZIPs', kind: 'Governance', href: '?view=governance&section=zips' });
   });
 
   it('does not invent results for empty or unmatched searches', () => {

@@ -12,3 +12,12 @@ Inter and Geist Mono font files are unchanged copies of the Google Fonts assets 
 Simulator applications are embedded from their original publishers and have not been copied or relicensed. Dependencies retain their respective licenses in their packages.
 
 ZODL, Zkool and Vizor wallet logos are unchanged assets from their official sites or repository. They retain their original ownership and are used only to identify links to the respective wallets. Source URLs and hashes are recorded in `docs/wallet-logo-sources.json`.
+
+## Zcash Improvement Proposals
+
+The ZIP library under `src/lib/shielded-preview/zips` and the figures under
+`public/shielded-preview/zips` are rendered from the zcash/zips repository
+(https://github.com/zcash/zips), which is published under the MIT license
+(see its `COPYING.rst`). Individual documents state their own license in the
+header shown on each record. The repository remains the canonical text; the
+portal shows a rendered copy with attribution and a link to the source file.

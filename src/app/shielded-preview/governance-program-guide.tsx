@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react';
 import { participationGuideSections, participationRound, participationSources as sources } from '@/lib/shielded-preview/governance-participation';
 import { coinholderProposalsHref } from '@/lib/shielded-preview/coinholder-proposals';
 import GovernanceGlyph from './governance-glyph';
+import { Link, type CollectionNavigate } from './governance-collections';
 import s from './governance-program-guide.module.css';
 
 function Arrow({ external = false }: { external?: boolean }) {
@@ -13,7 +14,7 @@ function External({ href, children, primary = false }: { href: string; children:
   return <a className={primary ? s.primary : s.link} href={href} target="_blank" rel="noopener noreferrer">{children}<Arrow external/></a>;
 }
 
-export default function GovernanceProgramGuide({ onBack }: { onBack: () => void }) {
+export default function GovernanceProgramGuide({ onBack, onNavigate }: { onBack: () => void; onNavigate?: CollectionNavigate }) {
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     let frame = 0;
@@ -75,7 +76,7 @@ export default function GovernanceProgramGuide({ onBack }: { onBack: () => void 
     </section>
 
     <div className={s.references}>
-      <details className={s.reference} id="program-governance" tabIndex={-1}><summary>How funding and governance work</summary><div><p>Coinholders vote on grants for completed work. A funding decision and its payment are separate records.</p><p>Protocol polls gather opinions. Network upgrades take effect when the network adopts the software.</p><p>Block rewards: <strong>8% to ZCG</strong> · <strong>12% to the coinholder fund</strong>.</p><External href={sources.funding}>Read ZIP 1016</External></div></details>
+      <details className={s.reference} id="program-governance" tabIndex={-1}><summary>How funding and governance work</summary><div><p>Coinholders vote on grants for completed work. A funding decision and its payment are separate records.</p><p>Protocol polls gather opinions. Network upgrades take effect when the network adopts the software.</p><p>Block rewards: <strong>8% to ZCG</strong> · <strong>12% to the coinholder fund</strong>.</p><External href={sources.funding}>Read ZIP 1016</External>{onNavigate && <Link section="How it works" onNavigate={onNavigate} className={s.link}>How Zcash governance works<Arrow/></Link>}</div></details>
       <details className={s.reference} id="program-sources" tabIndex={-1}><summary>Sources & program rules</summary><div className={s.inlineLinks}><External href={sources.shieldedLabs}>Shielded Labs · Governance</External><External href={sources.applicationGuide}>FPF · Application requirements</External><External href={sources.calendar}>FPF · Q4 calendar</External></div></details>
     </div>
   </article>;

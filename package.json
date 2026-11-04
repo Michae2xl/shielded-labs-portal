@@ -16,6 +16,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:importer": "python3 scripts/shielded-preview/test-editorial-import.py",
+    "test:zips": "python3 scripts/zips/test_import_zips.py",
+    "import:zips": "python3 scripts/zips/import_zips.py --source ../zips",
     "check:isolation": "node scripts/check-isolation.mjs"
   },
   "dependencies": {

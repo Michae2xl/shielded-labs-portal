@@ -9,7 +9,8 @@
 .group { margin-top: 28px; }
 .groupHeader { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 18px; }
 .overview .groupHeader h2 { margin: 0; font-size: 24px; line-height: 1.4; font-weight: 550; letter-spacing: -.4px; scroll-margin-top: 24px; }
-.groupHeader > a { display: inline-flex; align-items: center; gap: 12px; min-height: 42px; padding: 8px 13px; border: 1px solid #383838; border-radius: 6px; background: #161616; font-size: 14px; color: var(--accent-secondary); }
+.groupLinks { display: flex; flex-wrap: wrap; gap: 10px; }
+.groupHeader > a, .groupLinks > a { display: inline-flex; align-items: center; gap: 12px; min-height: 42px; padding: 8px 13px; border: 1px solid #383838; border-radius: 6px; background: #161616; font-size: 14px; color: var(--accent-secondary); }
 .activityGrid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
 .applications { grid-column: span 7; }
 .payments { grid-column: span 5; }
@@ -27,7 +28,7 @@
 .recordArrow svg { width: 16px; height: 16px; }
 .record:hover h4 { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
 .record:hover .recordArrow { color: var(--accent); }
-.groupHeader > a:hover { background: var(--accent-surface-hover); color: #fff; }
+.groupHeader > a:hover, .groupLinks > a:hover { background: var(--accent-surface-hover); color: #fff; }
 .overview .source { display: block; padding: 8px 20px 12px; color: var(--accent-muted); font-size: 13px; line-height: 1.5; }
 .overview .empty { margin: 0; padding: 22px; color: #bbb; font-size: 15px; line-height: 1.6; }
 .overview .editorialNote { margin-top: 24px; border-radius: 12px; border-color: #343434; background: #111; }
