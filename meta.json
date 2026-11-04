@@ -1,0 +1,19 @@
+{
+  "syncedAt": "2026-11-04T21:27:07.501353+00:00",
+  "upstream": {
+    "repository": "https://github.com/zcash/zips",
+    "branch": "main",
+    "commit": "d97c23e77eacdb7cd17cf63bca6440d66fb152db",
+    "committedAt": "2026-11-03T23:18:54Z"
+  },
+  "counts": {
+    "documents": 139,
+    "zips": 130,
+    "drafts": 6,
+    "guides": 3,
+    "images": 14
+  },
+  "failures": [],
+  "license": "MIT",
+  "generator": "scripts/zips/import_zips.py"
+}
