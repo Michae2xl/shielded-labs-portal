@@ -33,7 +33,7 @@ export default function GovernanceProcess({ onBack, onNavigate }: { onBack: () =
   const guide = governanceProcess;
   return <GovernanceRecord title={guide.title} context="Guide" subtitle={guide.summary}
     metrics={<>{guide.facts.map(fact => <div key={fact.name}><span>{fact.name}</span><strong>{fact.value}</strong></div>)}</>}
-    sections={guide.sections.map(section => ({ id: `process-${section.id}`, label: section.title }))} backLabel="Governance overview" onBack={onBack} idPrefix="process"
+    sections={[]} outline={guide.sections.map(section => ({ id: `process-${section.id}`, label: section.title }))} backLabel="Governance overview" onBack={onBack} idPrefix="process"
     sources={<>
       <p>Neutral description reviewed on {date(guide.reviewedAt)}. Dated statements name their date; the forum and repository links below are the primary sources. Essays published by Shielded Labs are linked where they are the source of a figure.</p>
       {guide.sources.map(source => <External key={source.href} href={source.href}>{source.label}</External>)}
