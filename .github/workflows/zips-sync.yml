@@ -23,17 +23,17 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Check out the importer
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: scripts/zips
       - name: Check out zcash/zips with history
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: zcash/zips
           path: upstream
           fetch-depth: 0
           filter: blob:none
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - name: Install renderers

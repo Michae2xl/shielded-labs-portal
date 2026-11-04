@@ -25,8 +25,14 @@ export function zipsDataUrl(): string | null {
   } catch { return null; }
 }
 
+/** A private repository needs a read-only credential for raw.githubusercontent.com; it is sent only to the configured https base. */
+function remoteHeaders(): Record<string, string> {
+  const credential = process.env.ZIPS_DATA_TOKEN?.trim();
+  return { Accept: 'application/json', 'User-Agent': 'Shielded-Labs-Portal', ...(credential && /^[A-Za-z0-9_]{20,255}$/.test(credential) ? { Authorization: `token ${credential}` } : {}) };
+}
+
 async function readRemote(url: string, limit: number): Promise<unknown> {
-  const response = await fetch(url, { headers: { Accept: 'application/json', 'User-Agent': 'Shielded-Labs-Portal' }, signal: AbortSignal.timeout(8000), cache: 'no-store' });
+  const response = await fetch(url, { headers: remoteHeaders(), signal: AbortSignal.timeout(8000), cache: 'no-store' });
   if (!response.ok) throw new Error(`Source unavailable (${response.status})`);
   if (Number(response.headers.get('content-length') ?? 0) > limit) throw new Error('Source exceeds the size limit');
   const text = await response.text();

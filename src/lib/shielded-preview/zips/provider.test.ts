@@ -6,7 +6,10 @@ afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(
 const remoteEntry = { ...bundledZips.entries[0], title: 'Fetched title' };
 const remoteMeta = { ...bundledZips.meta, syncedAt: '2026-11-04T12:00:00Z' };
 function remote(responses: Record<string, unknown>) {
-  return vi.fn(async (url: string) => url in responses ? Response.json(responses[url]) : new Response('missing', { status: 404 }));
+  return vi.fn(async (url: string, init?: RequestInit) => url in responses ? Response.json(responses[url]) : new Response('missing', { status: 404 }));
+}
+function sentHeaders(call: [string, RequestInit?] | undefined) {
+  return (call?.[1]?.headers ?? {}) as Record<string, string>;
 }
 
 describe('ZIP sync source boundaries', () => {
@@ -47,6 +50,20 @@ describe('ZIP sync source boundaries', () => {
     expect(a.entries[0].title).toBe('Fetched title');
     expect(a.meta.syncedAt).toBe('2026-11-04T12:00:00Z');
     expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+  it('sends the read-only credential to the sync base only when one is configured', async () => {
+    vi.stubEnv('ZIPS_DATA_URL', 'https://raw.example/zips-data');
+    const fetcher = remote({ 'https://raw.example/zips-data/index.json': [remoteEntry], 'https://raw.example/zips-data/meta.json': remoteMeta });
+    vi.stubGlobal('fetch', fetcher);
+    vi.stubEnv('ZIPS_DATA_TOKEN', 'exampleReadOnlyCredential0123456789');
+    const { getZipsIndex } = await import('./provider');
+    expect((await getZipsIndex()).state).toBe('fetched');
+    expect(sentHeaders(fetcher.mock.calls[0]).Authorization).toBe('token exampleReadOnlyCredential0123456789');
+    vi.resetModules();
+    vi.stubEnv('ZIPS_DATA_TOKEN', '');
+    const again = await import('./provider');
+    await again.getZipsIndex();
+    expect(sentHeaders(fetcher.mock.calls.at(-1)).Authorization).toBeUndefined();
   });
   it('keeps the bundled snapshot, flagged, when the sync branch is unavailable or invalid', async () => {
     vi.stubEnv('ZIPS_DATA_URL', 'https://raw.example/zips-data');
