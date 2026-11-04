@@ -6,7 +6,7 @@ afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); vi.restoreAllMocks(
 const remoteEntry = { ...bundledZips.entries[0], title: 'Fetched title' };
 const remoteMeta = { ...bundledZips.meta, syncedAt: '2026-11-04T12:00:00Z' };
 function remote(responses: Record<string, unknown>) {
-  return vi.fn(async (url: string, init?: RequestInit) => url in responses ? Response.json(responses[url]) : new Response('missing', { status: 404 }));
+  return vi.fn(async (url: string) => url in responses ? Response.json(responses[url]) : new Response('missing', { status: 404 }));
 }
 function sentHeaders(call: [string, RequestInit?] | undefined) {
   return (call?.[1]?.headers ?? {}) as Record<string, string>;

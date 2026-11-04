@@ -50,8 +50,9 @@ guard or source/status semantics. The design review and screenshots are in
 - How it works: a neutral guide inside Governance (who decides, the seven stages from idea to
   activation, what a ZIP is, where the Dev Fund debate stands, chain forks, glossary). Dated
   statements name their date; sources are listed on the page.
-- ZIPs: the zcash/zips repository rendered inside Governance as numbered ZIPs, unnumbered drafts
-  and writing guides, with status filters, search, figures and MathML formulas. Each record links
+- ZIPs: the zcash/zips repository rendered inside Governance as numbered ZIPs, unnumbered drafts,
+  writing guides and unofficial previews of the open pull requests, with status filters, search,
+  figures and MathML formulas. Each record links
   the repository source, the official rendering, the discussion and the pull request.
 - Projects: six initiatives with filters and dedicated reading pages covering purpose,
   scope, milestones, next steps, repository activity and source attribution. Each page
@@ -433,5 +434,9 @@ reStructuredText and Markdown into the same inert node shape as the editorial im
 with raw HTML and file insertion disabled, MathML for formulas, an allowlist for tags and
 attributes, PNG figures only). A scheduled GitHub Actions job (`.github/workflows/zips-sync.yml`)
 publishes the result to the `zips-data` branch every six hours; the portal reads that branch when
-`ZIPS_DATA_URL` is set and otherwise serves the bundled snapshot. Open pull requests are not
-rendered yet; the guide links the unofficial preview site for them.
+`ZIPS_DATA_URL` is set and otherwise serves the bundled snapshot. Open pull requests are
+rendered as a fourth lane since the same day: the sync job lists them with the GitHub API, fetches
+each head with git, renders the ZIP sources the pull request adds or changes (34 new documents
+and 24 changed ones from 48 of the 70 open pull requests at the first run; edits to the
+writing guides and the template are skipped) and labels every record
+with its pull request, commit and an unofficial-preview notice.

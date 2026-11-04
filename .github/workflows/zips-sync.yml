@@ -1,5 +1,5 @@
-# Renders zcash/zips into inert document nodes and publishes them to the
-# `zips-data` branch. The portal reads that branch when ZIPS_DATA_URL points at
+# Renders zcash/zips, including its open pull requests, into inert document
+# nodes and publishes them to the `zips-data` branch. The portal reads that branch when ZIPS_DATA_URL points at
 # it (see README), so a sync never needs a new deployment. Nothing here touches
 # `main`; the bundled snapshot under src/lib/shielded-preview/zips is refreshed
 # manually with `npm run import:zips`.
@@ -40,8 +40,14 @@ jobs:
         run: python3 -m pip install --quiet -r scripts/zips/requirements.txt
       - name: Test the importer
         run: python3 scripts/zips/test_import_zips.py
+      - name: List the open pull requests
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p build
+          gh api --paginate --slurp -X GET repos/zcash/zips/pulls -f state=open -f per_page=100 > build/pulls.json
       - name: Render the proposals
-        run: python3 scripts/zips/import_zips.py --source upstream --out build/zips-data --public build/zips-data/images
+        run: python3 scripts/zips/import_zips.py --source upstream --out build/zips-data --public build/zips-data/images --pulls build/pulls.json
       - name: Publish to the zips-data branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

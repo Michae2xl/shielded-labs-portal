@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { bundledZips, filterZips, laneForRecord, searchZips, zipHref, zipLabel, zipRecordId, zipReference, zipStatuses, zipSummary, zipTitle } from './library';
-import { zipEntrySchema, zipMetaSchema } from './types';
+import { bundledZips, filterZips, laneForRecord, proposalChange, searchZips, zipHref, zipLabel, zipRecordId, zipReference, zipStatuses, zipSummary, zipTitle } from './library';
+import { zipEntrySchema, zipMetaSchema, type ZipEntry } from './types';
 
 describe('Bundled ZIP snapshot', () => {
   it('validates every bundled entry and the sync metadata', () => {
@@ -37,6 +37,23 @@ describe('Bundled ZIP snapshot', () => {
     expect(zipReference(999999)).toBeNull();
     expect(zipSummary({ summary: '', status: 'Reserved' })).toContain('Reserved');
     expect(zipSummary({ summary: 'Abstract text', status: 'Final' })).toBe('Abstract text');
+  });
+  it('lists open pull requests as labelled previews, newest activity first', () => {
+    const proposals = filterZips(bundledZips.entries, { lane: 'proposals' });
+    expect(proposals.length).toBeGreaterThan(10);
+    expect(proposals.every(entry => entry.kind === 'proposal' && entry.pull && entry.official === entry.pull.url)).toBe(true);
+    expect(proposals.map(entry => entry.pull!.updatedAt)).toEqual([...proposals.map(entry => entry.pull!.updatedAt)].sort().reverse());
+    expect(proposals.filter(entry => entry.pull!.change === 'update').every(entry => entry.base !== null)).toBe(true);
+    const update = proposals.find(entry => entry.pull!.change === 'update' && entry.number !== null)!;
+    expect(update.base).toBe(`zip-${String(update.number).padStart(4, '0')}`);
+    expect(proposalChange(update)).toBe(`Updates ZIP ${update.number}`);
+    expect(proposalChange({ pull: { change: 'update' } as ZipEntry['pull'], base: 'zip-guide', number: null })).toBe('Updates a writing guide');
+    expect(proposalChange(proposals.find(entry => entry.pull!.change === 'new')!)).toBe('New ZIP');
+    expect(zipLabel(update)).toBe(`PR ${update.pull!.number}`);
+    expect(laneForRecord(update.id)).toBe('proposals');
+    expect(zipReference(update.number!)?.kind).toBe('zip');
+    expect(searchZips(`pr ${update.pull!.number}`).some(row => row.href === zipHref(update.id) && row.kind === 'Open pull request')).toBe(true);
+    expect(filterZips(bundledZips.entries, { lane: 'zips' }).some(entry => entry.kind === 'proposal')).toBe(false);
   });
   it('offers global search rows with the record destination', () => {
     expect(searchZips('  Hierarchical  ')).toContainEqual({ title: 'ZIP 32: Shielded Hierarchical Deterministic Wallets', kind: 'ZIP', href: '?view=governance&section=zips&record=zip-0032' });

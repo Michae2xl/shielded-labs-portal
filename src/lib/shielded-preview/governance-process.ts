@@ -75,13 +75,13 @@ export const governanceProcess: {
         [zip(1016), 'Community and coinholder funding model: the lockbox becomes a coinholder-controlled fund with quarterly votes'],
         [zip(214), 'Addresses and dates of the funding streams'],
       ] },
-      { kind: 'p', text: 'Many important proposals spend weeks as open pull requests waiting for editor attention. This portal lists the merged documents, including unnumbered drafts; the unofficial preview site zips.auzum197.com renders proposals straight from open pull requests, so they can be read and discussed before the merge. The normative text remains the repository.' },
-      { kind: 'links', items: [{ label: 'Numbered ZIPs', section: 'ZIPs', lane: 'zips' }, { label: 'Unnumbered drafts', section: 'ZIPs', lane: 'drafts' }, { label: 'Open pull requests, rendered · zips.auzum197.com', href: 'https://zips.auzum197.com/new/' }] },
+      { kind: 'p', text: 'Many important proposals spend weeks as open pull requests waiting for editor attention. This portal renders those pull requests too, as unofficial previews labelled with their pull request number and commit, so they can be read and discussed before the merge. The normative text remains the repository.' },
+      { kind: 'links', items: [{ label: 'Numbered ZIPs', section: 'ZIPs', lane: 'zips' }, { label: 'Unnumbered drafts', section: 'ZIPs', lane: 'drafts' }, { label: 'Open pull requests, rendered', section: 'ZIPs', lane: 'proposals' }] },
     ] },
     { id: 'dev-fund-and-zcg', title: 'The Dev Fund and ZCG: where things stand', blocks: [
       { kind: 'p', lead: 'As of 4 November 2026.', text: 'Nothing has been decided. If no proposal passes, the current rules continue until the third halving in 2028, when the Dev Fund ends and the full block reward goes to miners.' },
       { kind: 'p', lead: 'How it works today.', text: 'The Dev Fund is a protocol rule that sets aside 20% of each block: 8% to ZCG and 12% to the coinholder-controlled fund (ZIPs 1015 and 1016). The streams end at block 4,406,400, the third halving. The Dev Fund and the grant programs are different things: if the Dev Fund ended tomorrow, ZCG and the coinholder program would keep the balances they already hold.' },
-      { kind: 'table', caption: 'Proposals on the table, all drafts in open pull requests', columns: ['Proposal', 'Author', 'What it does'], rows: [
+      { kind: 'table', caption: 'Proposals on the table, all drafts in open pull requests and readable under ZIPs in this portal', columns: ['Proposal', 'Author', 'What it does'], rows: [
         [{ label: 'Future Dev and Legal Defense Fund Lockbox (PR 1428)', href: 'https://github.com/zcash/zips/pull/1428' }, 'aquietinvestor', 'Ends the ZCG stream, moves part of the balance ZCG holds into a future development and legal defense lockbox, and donates 50,000 ZEC to the NSM'],
         [{ label: 'Winding Down Zcash Community Grants (PR 1423)', href: 'https://github.com/zcash/zips/pull/1423' }, 'thowar2', 'Winds ZCG down gradually'],
         [{ label: 'Zcash Adoption Pool, ZAP (PR 1431)', href: 'https://github.com/zcash/zips/pull/1431' }, 'daira', 'An alternative design for development funding'],

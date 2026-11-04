@@ -32,6 +32,10 @@
 .document td>p,.document th>p{margin:0!important;white-space:normal}
 .document math{font-size:1.05em;color:#f0f0f0}
 .document math[display="block"]{display:block;margin:14px 0;overflow-x:auto;text-align:center}
+.preview{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin:0 0 22px;padding:14px 18px;border:1px solid #6b5a2a;border-left:3px solid #d9b25a;border-radius:8px;background:#1a160d;color:#e8dcbf;font-size:15px;line-height:1.6}
+.preview strong{color:#f3e6c4}
+.preview a{display:inline-flex;align-items:center;gap:8px;color:#f3e6c4;text-decoration:underline;text-underline-offset:4px}
+.preview a svg{width:16px;height:16px}
 .status{padding:12px 0;font-size:16px;line-height:1.6;color:#c2c2c2}
 .empty{padding:28px 0;color:#c2c2c2;font-size:16px;line-height:1.6}
 .empty h1{font-size:28px;margin:0 0 16px;color:#f0f0f0}

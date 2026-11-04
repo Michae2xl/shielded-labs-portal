@@ -6,7 +6,7 @@ shows the rendered text with attribution and a link to the repository, which
 remains the canonical text. Run by the scheduled sync job and, manually, to
 refresh the bundled snapshot:
 
-    python3 scripts/zips/import_zips.py --source ../zips
+    python3 scripts/zips/import_zips.py --source ../zips [--pulls pulls.json]
 
 Requires docutils (reStructuredText, MathML) and Markdown; see requirements.txt.
 """
@@ -23,6 +23,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from sanitize import clean, plain, prepare, summary  # noqa: E402
+from pulls import import_pulls, load_pulls  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / 'src/lib/shielded-preview/zips'
@@ -263,10 +264,8 @@ def file_dates(source_root):
     return dates
 
 
-def build_document(path, source_root, image, dates):
-    text = path.read_text(encoding='utf-8')
-    if len(text.encode('utf-8')) > SOURCE_LIMIT:
-        raise ValueError(f'{path.name} exceeds the import size limit')
+def render_document(text, path, image):
+    """Render one ZIP source (merged file or pull request head) into its index record and document."""
     meta = parse_header(text)
     if 'Title' not in meta or 'Status' not in meta:
         raise ValueError(f'{path.name} has no ZIP header')
@@ -274,14 +273,22 @@ def build_document(path, source_root, image, dates):
     portable = portable_math(text)
     rendered = render_rst(portable) if path.suffix == '.rst' else render_markdown(portable)
     nodes, headings = prepare(clean(rendered, path.name, image, heading_shift=1 if path.suffix == '.md' else 0))
-    words = len(plain(nodes).split())
     record.update({
-        'updatedAt': dates.get(f'zips/{path.name}'),
+        'updatedAt': None,
         'summary': summary(nodes),
-        'words': words,
+        'words': len(plain(nodes).split()),
         'digest': hashlib.sha256(text.encode('utf-8')).hexdigest(),
     })
     return record, dict(record, headings=headings, body=nodes)
+
+
+def build_document(path, source_root, image, dates):
+    text = path.read_text(encoding='utf-8')
+    if len(text.encode('utf-8')) > SOURCE_LIMIT:
+        raise ValueError(f'{path.name} exceeds the import size limit')
+    record, document = render_document(text, path, image)
+    updated = {'updatedAt': dates.get(f'zips/{path.name}')}
+    return dict(record, **updated), dict(document, **updated)
 
 
 def write_json(path, value, compact=False):
@@ -290,7 +297,7 @@ def write_json(path, value, compact=False):
     path.write_text(text + '\n', encoding='utf-8')
 
 
-def run(source_root, out, public, limit=None, log=print):
+def run(source_root, out, public, limit=None, pulls=None, log=print):
     source_root = source_root.resolve()
     files = sorted(path for path in (source_root / 'zips').iterdir() if path.suffix in ('.rst', '.md'))
     if limit:
@@ -313,10 +320,17 @@ def run(source_root, out, public, limit=None, log=print):
         index.append(record)
         write_json(documents_dir / f'{record["id"]}.json', document, compact=True)
         written.add(f'{record["id"]}.json')
+    pull_summary = None
+    if pulls:
+        proposals, proposal_documents, pull_summary = import_pulls(source_root, load_pulls(pulls), render_document, image)
+        for record, document in zip(proposals, proposal_documents):
+            index.append(record)
+            write_json(documents_dir / f'{record["id"]}.json', document, compact=True)
+            written.add(f'{record["id"]}.json')
     for stale in documents_dir.glob('*.json'):
         if stale.name not in written:
             stale.unlink()
-    index.sort(key=lambda item: (('zip', 'draft', 'guide').index(item['kind']), item['number'] or 0, item['id']))
+    index.sort(key=lambda item: (('zip', 'draft', 'guide', 'proposal').index(item['kind']), -(item['pull']['number']) if item['kind'] == 'proposal' else 0, item['number'] or 0, item['id']))
     commit = git(source_root, 'rev-parse', 'HEAD')
     committed = git(source_root, 'log', '-1', '--format=%cI')
     meta = {
@@ -324,14 +338,16 @@ def run(source_root, out, public, limit=None, log=print):
         'upstream': {'repository': REPOSITORY, 'branch': 'main', 'commit': commit or None,
                      'committedAt': iso_utc(committed) if committed else None},
         'counts': {'documents': len(index), 'zips': sum(item['kind'] == 'zip' for item in index),
-                   'drafts': sum(item['kind'] == 'draft' for item in index), 'guides': sum(item['kind'] == 'guide' for item in index), 'images': len(image.copied)},
+                   'drafts': sum(item['kind'] == 'draft' for item in index), 'guides': sum(item['kind'] == 'guide' for item in index),
+                   'proposals': sum(item['kind'] == 'proposal' for item in index), 'images': len(image.copied)},
         'failures': failures,
+        'pulls': pull_summary,
         'license': 'MIT',
         'generator': 'scripts/zips/import_zips.py',
     }
     write_json(out / 'index.json', index)
     write_json(out / 'meta.json', meta)
-    log(json.dumps({'documents': len(index), 'failures': failures, 'images': len(image.copied), 'commit': commit[:12] if commit else None}))
+    log(json.dumps({'documents': len(index), 'failures': failures, 'images': len(image.copied), 'pulls': pull_summary, 'commit': commit[:12] if commit else None}))
     return index, meta
 
 
@@ -341,8 +357,9 @@ def main():
     parser.add_argument('--out', type=Path, default=DEFAULT_OUT, help='Output directory for index.json, meta.json and documents/')
     parser.add_argument('--public', type=Path, default=DEFAULT_PUBLIC, help='Output directory for copied PNG figures')
     parser.add_argument('--limit', type=int, help='Import only the first N files (debugging)')
+    parser.add_argument('--pulls', type=Path, help='Saved GitHub API response listing the open pull requests to render as previews')
     args = parser.parse_args()
-    run(args.source, args.out, args.public, args.limit)
+    run(args.source, args.out, args.public, args.limit, args.pulls)
 
 
 if __name__ == '__main__':

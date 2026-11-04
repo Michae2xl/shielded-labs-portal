@@ -1,7 +1,7 @@
 'use client';
 
 import { createElement, useEffect, useState, type MouseEvent, type ReactNode } from 'react';
-import { bundledZips, filterZips, laneForRecord, zipLabel, zipLane, zipLanes, zipStatuses, zipTitle, zipsRepository, type ZipLane } from '@/lib/shielded-preview/zips/library';
+import { bundledZips, filterZips, laneForRecord, proposalChange, zipLabel, zipLane, zipLanes, zipStatuses, zipTitle, zipsRepository, type ZipLane } from '@/lib/shielded-preview/zips/library';
 import type { ZipDocument, ZipNode, ZipsIndex } from '@/lib/shielded-preview/zips/types';
 import type { Source } from '@/lib/shielded-preview/governance-types';
 import GovernanceRecord from './governance-record';
@@ -11,7 +11,8 @@ import a from './governance-archive.module.css';
 import z from './governance-zips.module.css';
 
 const date = (value: string | null | undefined) => value ? new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value)) : 'Not recorded';
-const titles: Record<ZipLane, string> = { zips: 'Numbered ZIPs', drafts: 'Unnumbered drafts', guides: 'Writing guides' };
+const titles: Record<ZipLane, string> = { zips: 'Numbered ZIPs', drafts: 'Unnumbered drafts', guides: 'Writing guides', proposals: 'Open pull requests' };
+const laneIcons: Record<ZipLane, 'zips' | 'process' | 'pull'> = { zips: 'zips', drafts: 'zips', guides: 'process', proposals: 'pull' };
 const elementTags = new Set('p h2 h3 h4 h5 h6 a strong em ul ol li dl dt dd blockquote pre code table thead tbody tfoot tr th td figure figcaption img br hr sup sub'.split(' '));
 const mathTags = new Set('math mrow mi mn mo msup msub msubsup mfrac msqrt mroot mtext mspace mover munder munderover mtable mtr mtd mstyle mpadded mphantom menclose semantics mmultiscripts mprescripts'.split(' '));
 const mathAttributes = new Set('display mathvariant displaystyle stretchy fence separator lspace rspace form accent accentunder width height depth voffset linethickness columnalign rowalign columnspacing rowspacing notation largeop movablelimits symmetric minsize maxsize mathsize scriptlevel'.split(' '));
@@ -85,17 +86,17 @@ export function ZipsCollection({ index, lane, onLane, ...controls }: Controls & 
   const statuses = zipStatuses(index.entries, lane);
   const count = (id: ZipLane) => index.entries.filter(entry => zipLane(entry) === id).length;
   return <Collection archive id="zips" title={titles[lane]} context="Zcash Improvement Proposals"
-    tabs={<Tabs label="ZIP collections" value={lane} onChange={onLane} items={zipLanes.map(item => ({ id: item.id, name: item.name, count: count(item.id), icon: item.id === 'guides' ? 'process' : 'zips' }))}/>}
+    tabs={<Tabs label="ZIP collections" value={lane} onChange={onLane} items={zipLanes.map(item => ({ id: item.id, name: item.name, count: count(item.id), icon: laneIcons[item.id] }))}/>}
     toolbar={<><Search name="Search ZIPs" value={search} onChange={onSearch}/>{statuses.length > 1 && <select aria-label="Filter ZIP status" value={filter} onChange={event => onFilter(event.target.value)}><option value="all">All statuses</option>{statuses.map(status => <option key={status} value={status}>{status}</option>)}</select>}</>}
     total={rows.length} page={page} onPage={onPage}
-    notice="A ZIP is a specification, not a decision. Its status comes from the document header; activation on the network is a separate milestone recorded under Voting."
+    notice={lane === 'proposals' ? 'Unofficial previews rendered from open pull requests. Anyone can open a pull request; nothing here is part of the ZIPs until the editors merge it.' : 'A ZIP is a specification, not a decision. Its status comes from the document header; activation on the network is a separate milestone recorded under Voting.'}
     aside={<><div><h3>Reading these records</h3><p>Rendered from the zcash/zips repository with its wording, links and formulas. Status follows the latest revision listed in the header.</p><p>{syncLabel(index)}</p></div><SourceInfo name="zcash/zips repository" source={repositorySource(index)}/></>}
   >
-    <div className={a.columns} aria-hidden="true"><span>Proposal</span><div className={a.measures}><span>Status</span><span>Last change</span></div><span/></div>
+    <div className={a.columns} aria-hidden="true"><span>{lane === 'proposals' ? 'Pull request' : 'Proposal'}</span><div className={a.measures}><span>Status</span><span>{lane === 'proposals' ? 'Activity' : 'Last change'}</span></div><span/></div>
     <ul className={a.rows} aria-label={titles[lane]}>{pageRows(rows, page).map(entry => <li key={entry.id}><Link section="ZIPs" id={entry.id} selection={{ lane, filter, search, page: visiblePage(page, rows.length) }} onNavigate={onNavigate} className={a.record}>
-      {entry.number === null ? <span className={a.symbol} aria-hidden="true"><GovernanceGlyph kind={entry.kind === 'guide' ? 'process' : 'zips'} size={23}/></span> : <span className={a.ballotNumber}><span className={z.srOnly}>ZIP </span>{entry.number}</span>}
-      <div className={a.identity}><h3>{entry.title}</h3><div className={a.meta}><span>{zipLabel(entry)}</span><span>{entry.category}</span>{entry.owners.length > 0 && <span>{entry.owners.slice(0, 2).join(', ')}{entry.owners.length > 2 ? ` +${entry.owners.length - 2}` : ''}</span>}</div></div>
-      <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Status</span><span className={a.status}>{entry.status}</span></span><span className={a.measure}><span className={a.mobileLabel}>Last change</span>{entry.updatedAt ? <time dateTime={entry.updatedAt}>{date(entry.updatedAt)}</time> : <small>Not recorded</small>}</span></div><Arrow/>
+      {entry.pull ? <span className={a.ballotNumber}><span className={z.srOnly}>Pull request </span>#{entry.pull.number}</span> : entry.number === null ? <span className={a.symbol} aria-hidden="true"><GovernanceGlyph kind={entry.kind === 'guide' ? 'process' : 'zips'} size={23}/></span> : <span className={a.ballotNumber}><span className={z.srOnly}>ZIP </span>{entry.number}</span>}
+      <div className={a.identity}><h3>{entry.title}</h3><div className={a.meta}>{entry.pull ? <><span>{proposalChange(entry)}</span><span>{entry.pull.author}</span>{entry.pull.draft && <span>Draft pull request</span>}</> : <><span>{zipLabel(entry)}</span><span>{entry.category}</span></>}{!entry.pull && entry.owners.length > 0 && <span>{entry.owners.slice(0, 2).join(', ')}{entry.owners.length > 2 ? ` +${entry.owners.length - 2}` : ''}</span>}</div></div>
+      <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Status</span><span className={a.status}>{entry.status}</span></span><span className={a.measure}><span className={a.mobileLabel}>{entry.pull ? 'Activity' : 'Last change'}</span>{entry.updatedAt ? <time dateTime={entry.updatedAt}>{date(entry.updatedAt)}</time> : <small>Not recorded</small>}</span></div><Arrow/>
     </Link></li>)}</ul>
     {!rows.length && <Empty onReset={() => { onSearch(''); onFilter('all'); }}/>}
   </Collection>;
@@ -122,17 +123,18 @@ export function ZipRecord({ id, index, onBack, onNavigate }: { id: string; index
   const document = loaded.get(id) ?? (state.id === id ? state.document : null);
   const failed = state.id === id && state.failed;
   const sections = (document?.headings ?? []).filter(heading => heading.level === 2).slice(0, 12).map(heading => ({ id: heading.id, label: heading.title }));
-  return <GovernanceRecord title={zipTitle(entry)} context={entry.kind === 'guide' ? 'ZIP writing guide' : entry.kind === 'draft' ? 'Draft Zcash Improvement Proposal' : 'Zcash Improvement Proposal'} subtitle={entry.category}
-    metrics={<><Stat name="Status" value={entry.status} note={entry.statusDetail}/><Stat name="Created" value={date(entry.created)}/><Stat name="Last change" value={date(entry.updatedAt)}/><Stat name={entry.owners.length === 1 ? 'Owner' : 'Owners'} value={entry.owners.join(', ') || 'Not recorded'}/></>}
+  const pull = entry.pull;
+  return <GovernanceRecord title={zipTitle(entry)} context={pull ? 'Open pull request · unofficial preview' : entry.kind === 'guide' ? 'ZIP writing guide' : entry.kind === 'draft' ? 'Draft Zcash Improvement Proposal' : 'Zcash Improvement Proposal'} subtitle={pull ? pull.title : entry.category}
+    metrics={pull ? <><Stat name="Header status" value={entry.status} note={entry.statusDetail}/><Stat name="Change" value={proposalChange(entry)}/><Stat name="Author" value={pull.author} note={pull.draft ? 'Draft pull request' : null}/><Stat name="Last activity" value={date(pull.updatedAt)}/></> : <><Stat name="Status" value={entry.status} note={entry.statusDetail}/><Stat name="Created" value={date(entry.created)}/><Stat name="Last change" value={date(entry.updatedAt)}/><Stat name={entry.owners.length === 1 ? 'Owner' : 'Owners'} value={entry.owners.join(', ') || 'Not recorded'}/></>}
     sections={sections} backLabel={titles[zipLane(entry)]} onBack={onBack} idPrefix="zip"
     sources={<>
-      <p>Text rendered from the repository with its original wording; the repository remains the canonical version. {syncLabel(index)}.{entry.license ? ` License: ${entry.license}.` : ''}</p>
-      <External href={entry.source}>Source file on GitHub</External>
-      <External href={entry.official}>Official rendering · zips.z.cash</External>
+      {pull ? <p>Unofficial preview rendered from the pull request head, commit {pull.headSha.slice(0, 7)}, with its original wording. The pull request is the canonical text until the editors merge it. {syncLabel(index)}.</p> : <p>Text rendered from the repository with its original wording; the repository remains the canonical version. {syncLabel(index)}.{entry.license ? ` License: ${entry.license}.` : ''}</p>}
+      {pull ? <><External href={pull.url}>Pull request #{pull.number} on GitHub</External><External href={entry.source}>File at this commit</External></> : <><External href={entry.source}>Source file on GitHub</External><External href={entry.official}>Official rendering · zips.z.cash</External></>}
       {entry.discussionsTo && <External href={entry.discussionsTo}>Discussion</External>}
-      {entry.pullRequest && <External href={entry.pullRequest}>Pull request</External>}
+      {!pull && entry.pullRequest && <External href={entry.pullRequest}>Pull request</External>}
     </>}
   >
+    {pull && <div className={z.preview} role="note"><strong>Unofficial preview.</strong> Rendered from pull request #{pull.number} at commit {pull.headSha.slice(0, 7)}; not part of the ZIPs until merged. {pull.files.length > 1 && <>The pull request also changes {pull.files.filter(file => file !== pull.file).join(', ')}. </>}{entry.base && <Link section="ZIPs" id={entry.base} onNavigate={onNavigate}>Read the current {entry.number === null ? 'document' : `ZIP ${entry.number}`}<Arrow/></Link>}</div>}
     <section id="zip-document" className={z.document}>{document ? <ZipBody nodes={document.body} onNavigate={onNavigate}/> : <p className={z.status} role="status">{failed ? 'The proposal text could not be loaded. Try again or read it at the source.' : 'Loading the proposal text…'}</p>}</section>
   </GovernanceRecord>;
 }

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const zipKinds = ['zip', 'draft', 'guide'] as const;
+export const zipKinds = ['zip', 'draft', 'guide', 'proposal'] as const;
 export type ZipKind = typeof zipKinds[number];
 export const zipIdPattern = /^[a-z0-9][a-z0-9-]{0,119}$/;
 const id = z.string().regex(zipIdPattern);
@@ -28,6 +28,22 @@ export const zipEntrySchema = z.object({
   summary: text(400),
   words: z.number().int().nonnegative(),
   digest: z.string().regex(/^[0-9a-f]{64}$/),
+  /** Merged document this proposal changes, when it is not a new ZIP. */
+  base: id.nullable().optional(),
+  /** Present on previews rendered from an open pull request. */
+  pull: z.object({
+    number: z.number().int().positive(),
+    title: text(300),
+    author: text(100),
+    draft: z.boolean(),
+    url: z.string().regex(/^https:\/\/github\.com\/zcash\/zips\/pull\/\d+$/),
+    headSha: z.string().regex(/^[0-9a-f]{40}$/),
+    createdAt: text(40),
+    updatedAt: text(40),
+    change: z.enum(['new', 'update']),
+    file: text(200),
+    files: z.array(text(200)).max(20),
+  }).optional(),
 });
 export type ZipEntry = z.infer<typeof zipEntrySchema>;
 
@@ -72,6 +88,7 @@ export const zipMetaSchema = z.object({
   upstream: z.object({ repository: https, branch: text(60), commit: z.string().regex(/^[0-9a-f]{40}$/).nullable(), committedAt: text(40).nullable() }),
   counts: z.record(z.string(), z.number().int().nonnegative()),
   failures: z.array(z.object({ file: text(200), error: text(300) })).max(500),
+  pulls: z.object({ listed: z.number().int().nonnegative(), rendered: z.number().int().nonnegative(), failures: z.array(z.object({ pull: z.number().int(), file: text(200).optional(), error: text(300) })).max(500) }).nullable().optional(),
   license: text(40),
   generator: text(120),
 });

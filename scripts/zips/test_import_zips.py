@@ -1,10 +1,12 @@
 import importlib.util
 import json
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
 
 import import_zips as importer
+import pulls
 import sanitize
 
 HAS_RENDERERS = importlib.util.find_spec('docutils') is not None and importlib.util.find_spec('markdown') is not None
@@ -193,13 +195,70 @@ class RenderTest(unittest.TestCase):
             (root / 'out/documents/stale.json').write_text('{}', encoding='utf-8')
             index, meta = importer.run(root / 'source', root / 'out', root / 'public', log=lambda _: None)
             self.assertEqual([item['id'] for item in index], ['zip-0032', 'draft-mcgee-test'])
-            self.assertEqual(meta['counts'], {'documents': 2, 'zips': 1, 'drafts': 1, 'guides': 0, 'images': 0})
+            self.assertEqual(meta['counts'], {'documents': 2, 'zips': 1, 'drafts': 1, 'guides': 0, 'proposals': 0, 'images': 0})
             self.assertEqual(meta['failures'][0]['file'], 'broken.rst')
             self.assertFalse((root / 'out/documents/stale.json').exists())
             document = json.loads((root / 'out/documents/zip-0032.json').read_text(encoding='utf-8'))
             self.assertEqual(document['summary'], 'This proposal defines wallets.')
             self.assertEqual(document['headings'], [{'id': 'abstract', 'title': 'Abstract', 'level': 2}])
             self.assertNotIn('body', json.loads((root / 'out/index.json').read_text(encoding='utf-8'))[0])
+
+
+class PullRequestTest(unittest.TestCase):
+    def test_only_open_well_formed_pull_requests_are_listed(self):
+        raw = {'number': 7, 'title': '  Add  draft ', 'html_url': 'https://github.com/zcash/zips/pull/7', 'state': 'open', 'draft': True, 'user': {'login': 'tester'},
+               'head': {'sha': 'a' * 40}, 'created_at': '2026-11-01T00:00:00Z', 'updated_at': '2026-11-02T10:00:00+01:00'}
+        pull = pulls.normalize_pull(raw)
+        self.assertEqual(pull['title'], 'Add draft')
+        self.assertEqual(pull['updatedAt'], '2026-11-02T09:00:00Z')
+        self.assertTrue(pull['draft'])
+        self.assertIsNone(pulls.normalize_pull(dict(raw, state='closed')))
+        self.assertIsNone(pulls.normalize_pull(dict(raw, html_url='https://github.com/other/repo/pull/7')))
+        self.assertIsNone(pulls.normalize_pull(dict(raw, html_url='https://github.com/zcash/zips/pull/8')))
+        self.assertIsNone(pulls.normalize_pull(dict(raw, head={'sha': 'not-a-sha'})))
+        self.assertEqual(pulls.pull_identifier(1428, 'draft-Mcgee_Future Fund.md'), 'pr-1428-draft-mcgee-future-fund')
+
+    @unittest.skipUnless(HAS_RENDERERS, 'docutils and Markdown are required for rendering tests')
+    def test_open_pull_requests_render_as_labelled_previews(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder) / 'source'
+            (root / 'zips').mkdir(parents=True)
+            git = lambda *args: subprocess.run(['git', '-C', str(root), *args], check=True, capture_output=True, text=True).stdout.strip()  # noqa: E731
+            git('init', '-q', '-b', 'main')
+            git('config', 'user.email', 'test@example.org')
+            git('config', 'user.name', 'Test')
+            (root / 'zips/zip-0032.rst').write_text(RST_HEADER, encoding='utf-8')
+            git('add', '-A')
+            git('commit', '-qm', 'main')
+            git('update-ref', 'refs/remotes/origin/main', 'HEAD')
+            git('checkout', '-qb', 'feature')
+            (root / 'zips/draft-test-new.md').write_text(MD_HEADER + '\nProposal body.\n', encoding='utf-8')
+            (root / 'zips/zip-0032.rst').write_text(RST_HEADER + '\nA changed paragraph.\n', encoding='utf-8')
+            (root / 'zips/zip-guide.rst').write_text(RST_HEADER.replace('ZIP: 32', 'ZIP: Unassigned'), encoding='utf-8')
+            git('add', '-A')
+            git('commit', '-qm', 'feature')
+            head = git('rev-parse', 'HEAD')
+            git('update-ref', 'refs/remotes/pr/7', 'HEAD')
+            git('checkout', '-q', 'main')
+            listing = Path(folder) / 'pulls.json'
+            listing.write_text(json.dumps([[{'number': 7, 'title': 'Add a draft', 'html_url': 'https://github.com/zcash/zips/pull/7', 'state': 'open', 'draft': False, 'user': {'login': 'tester'},
+                                             'head': {'sha': head}, 'created_at': '2026-11-01T00:00:00Z', 'updated_at': '2026-11-02T00:00:00Z'}]]), encoding='utf-8')
+            index, meta = importer.run(root, Path(folder) / 'out', Path(folder) / 'public', pulls=listing, log=lambda _: None)
+            proposals = {item['id']: item for item in index if item['kind'] == 'proposal'}
+            self.assertEqual(sorted(proposals), ['pr-7-draft-test-new', 'pr-7-zip-0032'])
+            new = proposals['pr-7-draft-test-new']
+            self.assertEqual((new['pull']['change'], new['base'], new['pull']['author'], new['pull']['number']), ('new', None, 'tester', 7))
+            self.assertEqual(new['source'], f'https://github.com/zcash/zips/blob/{head}/zips/draft-test-new.md')
+            self.assertEqual(new['official'], 'https://github.com/zcash/zips/pull/7')
+            self.assertEqual(new['updatedAt'], '2026-11-02T00:00:00Z')
+            update = proposals['pr-7-zip-0032']
+            self.assertEqual((update['pull']['change'], update['base'], update['number']), ('update', 'zip-0032', 32))
+            self.assertEqual(sorted(update['pull']['files']), ['draft-test-new.md', 'zip-0032.rst'])
+            self.assertEqual(meta['pulls'], {'listed': 1, 'rendered': 2, 'failures': []})
+            self.assertEqual(meta['counts']['proposals'], 2)
+            document = json.loads((Path(folder) / 'out/documents/pr-7-zip-0032.json').read_text(encoding='utf-8'))
+            self.assertIn('A changed paragraph.', sanitize.plain(document['body']))
+            self.assertEqual([item['id'] for item in index if item['kind'] == 'zip'], ['zip-0032'])
 
 
 if __name__ == '__main__':
