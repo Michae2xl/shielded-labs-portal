@@ -1,5 +1,5 @@
 .menu{display:flex;align-items:stretch;gap:4px;min-width:0;max-width:100%;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#444 transparent;overscroll-behavior-x:contain}
-.primary{padding:4px;margin:12px 0 24px;background:var(--surface,#111);border:1px solid var(--border,#292929);border-radius:var(--radius,7px)}
+.primary{padding:4px;margin:0 0 18px;background:var(--surface,#111);border:1px solid var(--border,#292929);border-radius:var(--radius,7px)}
 .menu.primary button,.menu.secondary button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--control-height,44px);padding:10px 14px;border:0;border-radius:4px;background:transparent;color:var(--secondary-ink,#aaa);font:inherit;font-size:15px;font-weight:450;line-height:22px;white-space:nowrap;transition:background .15s,color .15s}
 .menu.primary button{flex:1 0 0;min-width:max-content}
 .menu.secondary button{flex:0 0 auto;padding:10px 12px}
@@ -9,6 +9,6 @@
 .menu button>span{display:inline-flex;align-items:center;justify-content:center;min-width:1.5ch;font-size:13px;line-height:22px;font-variant-numeric:lining-nums tabular-nums;color:var(--secondary-ink,#c2c2c2)}
 .secondary{margin:0 0 20px;padding:0 0 8px;border-bottom:1px solid var(--border,#292929)}
 .secondary button[aria-current]{background:#222}
-@media(max-width:650px){.primary{margin:12px 0 20px}.menu.primary button,.menu.secondary button{flex:0 0 auto;padding:10px 12px}.secondary{margin-bottom:20px}}
+@media(max-width:650px){.primary{margin:0 0 16px}.menu.primary button,.menu.secondary button{flex:0 0 auto;padding:10px 12px}.secondary{margin-bottom:20px}}
 @media(prefers-reduced-motion:reduce){.menu.primary button,.menu.secondary button{transition:none}}
 @media print{.menu{display:none}}

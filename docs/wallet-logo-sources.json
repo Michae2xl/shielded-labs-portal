@@ -1,0 +1,26 @@
+[
+  {
+    "wallet": "zodl",
+    "asset": "public/wallet-logos/zodl.png",
+    "source": "https://zodl.com/wp-content/uploads/2026/08/cropped-favicon-round-corners-192x192.png",
+    "retrievedAt": "2026-11-01T20:31:11.006063+00:00",
+    "sha256": "eea10e2a34830e880debb1520413f92db90118a65a177770afee90a7ee48a4c1",
+    "modified": false
+  },
+  {
+    "wallet": "zkool",
+    "asset": "public/wallet-logos/zkool.png",
+    "source": "https://raw.githubusercontent.com/hhanh00/zkool2/15aa03f9b6c6e1b0e41c7b5230b17eb7c824baa5/flatpak/cc.methyl.Zkool.icon.png",
+    "retrievedAt": "2026-11-01T20:31:11.007756+00:00",
+    "sha256": "bb1ab38848ff635918aa90bdf72dc97c4b628c09d501cd902d5fd8525e53b762",
+    "modified": false
+  },
+  {
+    "wallet": "vizor",
+    "asset": "public/wallet-logos/vizor.png",
+    "source": "https://vizor.cash/icon.png?6d0c7fd2f0fbd5a6",
+    "retrievedAt": "2026-11-01T20:31:11.008952+00:00",
+    "sha256": "c049a9e088f9f0616817cb4f1d0f6c4ef987f502318d5aabdba2add1bfe4c8e3",
+    "modified": false
+  }
+]

@@ -54,10 +54,10 @@ export const websiteSuggestions: WebsiteSuggestion[] = [
   },
   {
     ...improvements[4], id: 'participation', menu: 'Participation',
-    summary: 'Help newcomers find the right proposal, vote, grant or community pathway.',
+    summary: 'Help newcomers find the right proposal, vote or grant pathway.',
     preview: 'Embedded governance', next: 'Build guided entry points',
     checks: ['Each route explains who can participate, how and by when.', 'Proposals, voting rules and results can be read without leaving the portal.', 'Guidance separates consultative input, funding decisions and payments.'],
-    destinations: [{ title: 'Governance portal', description: 'Proposals, voting, grants, panels and results.', view: 'governance' }, { title: 'Community directory', description: 'Find existing communities and their public channels.', view: 'people', section: 'communities' }],
+    destinations: [{ title: 'Governance portal', description: 'Proposals, voting, grants, panels and results.', view: 'governance' }],
     references: [{ title: 'Shielded Labs governance', url: sources.governance }, { title: 'OpenZcash methodology', url: 'https://openzcash.org/zcg/methodology' }],
   },
   {
@@ -65,7 +65,7 @@ export const websiteSuggestions: WebsiteSuggestion[] = [
     summary: 'Connect the organization’s contribution with evidence and ways to get involved.',
     preview: 'Milestones & people', next: 'Create a monthly brief',
     checks: ['Impact stories name contributors and link to primary evidence.', 'A monthly brief covers progress, open questions and next actions.', 'Participation routes and published opportunities are easy to find.'],
-    destinations: [{ title: 'Attributed milestones', description: 'Research, engineering and the coordinated security response.', view: 'impact' }, { title: 'People & communities', description: 'Team profiles, related work and public participation routes.', view: 'people' }],
+    destinations: [{ title: 'Attributed milestones', description: 'Research, engineering and the coordinated security response.', view: 'impact' }, { title: 'Team', description: 'Team profiles and related work.', view: 'people' }],
     references: [{ title: 'Orchard disclosure', url: sources.security }, { title: 'Published team', url: sources.team }, { title: 'Published opportunities', url: 'https://shieldedlabs.net/jobs/' }],
   },
 ];

@@ -2,6 +2,8 @@ import importedCatalog from './catalog.json';
 import { institutionalDocuments } from './institutional';
 import { internalSimulatorLink, simulatorDocuments } from './simulators';
 import type { EditorialEntry } from './types';
+import { projects } from '../content';
+import { projectHref } from '../project-navigation';
 
 export const editorialCatalog: EditorialEntry[] = [
   ...importedCatalog as EditorialEntry[],
@@ -19,11 +21,36 @@ export function editorialListHref(view: EditorialEntry['view'], section: string,
   return `?${params}`;
 }
 export function editorialHref(entry: EditorialEntry, section?: string, query = '') {
+  if (entry.view === 'resources' && entry.projects[0]) {
+    const params = new URLSearchParams(projectHref(entry.projects[0], entry.category === 'FAQ' ? 'faq' : 'resources', entry.id).slice(1));
+    if (query.trim()) params.set('q', query);
+    return `?${params}`;
+  }
   const params = new URLSearchParams({ view: entry.view });
   params.set('section', section ?? (entry.view === 'about' ? entry.id.startsWith('board-') ? 'board' : entry.id === 'cryptographer' ? 'careers' : entry.id : entry.view === 'resources' ? entry.projects[0] ?? 'all' : 'all'));
   params.set('record', entry.id);
   if (query.trim()) params.set('q', query);
   return `?${params}`;
+}
+
+/** Keep saved resource URLs working after the library moved into each project. */
+export function legacyProjectResourceHref(value: string): string | null {
+  const url = new URL(value, 'https://portal.example');
+  const view = url.searchParams.get('view');
+  if (view !== 'resources' && view !== 'projects') return null;
+  const entry = editorialCatalog.find(item => item.view === 'resources' && item.id === url.searchParams.get('record'));
+  let anchor = '';
+  try { anchor = decodeURIComponent(url.hash.slice(1)); } catch { /* Keep malformed anchors inert. */ }
+  const faq = entry?.category.includes('FAQ') && (entry.category === 'FAQ' || anchor === 'frequently-asked-questions-faq' || entry.headings.some(heading => heading.id === anchor && heading.level === 3));
+  if (view === 'projects' && !(faq && url.searchParams.get('section') === 'resources' && url.searchParams.get('project') === entry?.projects[0])) return null;
+  const project = projects.find(item => item.id === url.searchParams.get('section'));
+  const href = entry ? faq ? projectHref(entry.projects[0], 'faq', entry.id) : editorialHref(entry) : project ? projectHref(project, 'resources') : '?view=projects';
+  const params = new URLSearchParams(href.slice(1));
+  for (const key of ['q', 'topic', 'simulation']) {
+    const value = url.searchParams.get(key);
+    if (value) params.set(key, value);
+  }
+  return `?${params}${url.hash}`;
 }
 export function safeEditorialUrl(value: string): string | null {
   if (/[\u0000-\u001f\u007f]/.test(value)) return null;
@@ -35,11 +62,32 @@ export function safeEditorialUrl(value: string): string | null {
   } catch { return null; }
 }
 
+// Chapter links from the imported print edition need their section, not the book's start.
+const handbookChapters: Record<string, string> = {
+  'user/build-and-usage.html': 'building-zebra-crosslink',
+  'user/nix.html': 'nix-support',
+  'design.html': 'crosslink-design',
+  'design/scoping.html': 'scope-for-crosslink',
+  'design/security-properties.html': 'crosslink-security-properties',
+  'design/five-component-model.html': 'the-five-component-model',
+  'design/userled-emergency-hardforks.html': 'user-led-emergency-hardforks',
+  'design/nutshell.html': 'crosslink-design-in-a-nutshell',
+  'terminology.html': 'terminology',
+  'design/terminology.html': 'terminology',
+  'design/cl2-construction.html': 'the-crosslink-2-construction',
+  'design/analysis/construction.html': 'the-crosslink-2-construction',
+  'design/analysis/history/2025-12-11-mech-design/proposal.html': 'proposal-mechanism-design-audit-of-crosslink-zebra',
+  'implementation.html': 'crosslink-implementation',
+};
+
 // Resolve publisher links to the local record before rendering a document.
 export function resolveEditorialLink(value: string): string | null {
   const safe = safeEditorialUrl(value);
-  if (!safe || safe.startsWith('?') || safe.startsWith('#') || safe.startsWith('mailto:')) return safe;
+  if (!safe || safe.startsWith('#') || safe.startsWith('mailto:')) return safe;
+  if (safe.startsWith('?')) return legacyProjectResourceHref(safe) ?? safe;
   const url = new URL(safe);
+  let anchor = '';
+  try { anchor = decodeURIComponent(url.hash.slice(1)); } catch { return safe; }
   const simulator = internalSimulatorLink(url);
   if (simulator) return simulator;
   const matching = editorialCatalog.find(entry => {
@@ -49,21 +97,26 @@ export function resolveEditorialLink(value: string): string | null {
     return source.hostname === url.hostname && source.pathname.replace(/\/$/, '') === url.pathname.replace(/\/$/, '');
   });
   if (matching) {
-    const hash = decodeURIComponent(url.hash.slice(1)).toLowerCase();
-    const heading = matching.headings.find(item => item.id.toLowerCase() === hash);
-    return editorialHref(matching) + (heading ? `#${encodeURIComponent(heading.id)}` : '');
+    const heading = matching.headings.find(item => item.id.toLowerCase() === anchor.toLowerCase());
+    if (anchor && !heading) return safe;
+    const href = matching.category.includes('FAQ') && (heading?.level === 3 || heading?.id === 'frequently-asked-questions-faq')
+      ? projectHref(matching.projects[0], 'faq', matching.id) : editorialHref(matching);
+    return href + (heading ? `#${encodeURIComponent(heading.id)}` : '');
   }
   if (url.hostname === 'shieldedlabs.github.io' && url.pathname.startsWith('/zebra-crosslink/')) {
     const book = editorialCatalog.find(item => item.id === 'crosslink-handbook');
     if (book) {
-      const hash = decodeURIComponent(url.hash.slice(1));
-      const heading = book.headings.find(item => item.id === hash);
-      return editorialHref(book) + (heading ? `#${encodeURIComponent(heading.id)}` : '');
+      const chapter = url.pathname.slice('/zebra-crosslink/'.length);
+      const heading = book.headings.find(item => item.id === (anchor || handbookChapters[chapter]));
+      if (heading) return `${editorialHref(book)}#${encodeURIComponent(heading.id)}`;
+      if (!anchor && ['', 'index.html'].includes(chapter)) return editorialHref(book);
+      // Some source files and inline rule anchors are absent from the print import.
+      return safe;
     }
   }
-  if (url.hostname === 'github.com' && url.pathname.startsWith('/ShieldedLabs/zebra-crosslink/blob/main/')) {
+  if (url.hostname === 'github.com' && url.pathname === '/ShieldedLabs/zebra-crosslink/blob/main/book/src/design/scoping.md' && !anchor) {
     const book = editorialCatalog.find(item => item.id === 'crosslink-handbook');
-    if (book) return editorialHref(book) + (url.pathname.endsWith('scoping.md') ? '#scope-for-crosslink' : '');
+    if (book) return `${editorialHref(book)}#scope-for-crosslink`;
   }
   if (['shieldedlabs.net', 'www.shieldedlabs.net'].includes(url.hostname)) {
     const routes: Record<string, string> = { '/blog': 'blog', '/projects': 'projects', '/team': 'people', '/board': 'about&section=board', '/governance': 'governance', '/jobs': 'about&section=careers', '/contact': 'about&section=contact', '/job/cryptographer': 'about&section=careers&record=cryptographer' };

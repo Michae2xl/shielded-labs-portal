@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-11-01T19:30:17.006650+00:00",
+  "url": "https://oscar-calendar-absent-sized.trycloudflare.com",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 269292,
+      "contentType": "text/html; charset=utf-8",
+      "robots": "noindex, nofollow",
+      "prototypeNotice": true,
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src https://aphelionz.github.io https://zooko.github.io https://fees.shieldedinfra.net",
+      "frameOptions": "DENY"
+    },
+    {
+      "path": "/api/shielded-preview",
+      "status": 200,
+      "bytes": 279581,
+      "contentType": "application/json",
+      "robots": "noindex, nofollow",
+      "validJson": true
+    },
+    {
+      "path": "/api/shielded-preview/governance",
+      "status": 200,
+      "bytes": 1103034,
+      "contentType": "application/json",
+      "robots": "noindex, nofollow",
+      "validJson": true
+    },
+    {
+      "path": "/api/shielded-preview/editorial?id=crosslink-faq",
+      "status": 200,
+      "bytes": 18049,
+      "contentType": "application/json",
+      "robots": "noindex, nofollow",
+      "validJson": true
+    },
+    {
+      "path": "/api/shielded-preview/contact",
+      "status": 403,
+      "body": {
+        "sent": false,
+        "error": "Contact sending is disabled in this feedback prototype."
+      }
+    }
+  ]
+}

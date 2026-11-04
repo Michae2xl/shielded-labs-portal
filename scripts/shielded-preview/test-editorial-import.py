@@ -8,6 +8,12 @@ spec.loader.exec_module(module)
 
 
 class EditorialImportTest(unittest.TestCase):
+    def test_reviewed_project_associations_survive_reimport(self):
+        self.assertEqual(module.article_projects('zcash-and-staking-economics', 'Zcash and Staking Economics'), ['crosslink'])
+        self.assertEqual(module.article_projects('the-orchard-counterfeiting-vulnerability', 'The Orchard Counterfeiting Vulnerability'), ['ironwood'])
+        self.assertEqual(module.article_projects('crosslink-update', 'Crosslink update'), ['crosslink'])
+        self.assertEqual(module.article_projects('unrelated', 'Zcash governance'), [])
+
     def test_active_content_never_reaches_reader(self):
         nodes = module.clean('<script>alert(1)</script><style>x{}</style><iframe src="https://bad.test"></iframe><form><p>hidden form</p></form><p onclick="bad()">Visible <a href="jav&#97;script:alert(1)">safe text</a></p>', download=False)
         self.assertEqual(nodes, [{'tag': 'p', 'children': ['Visible ', 'safe text']}])

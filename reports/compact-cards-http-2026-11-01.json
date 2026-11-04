@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-11-01T20:19:03.474496+00:00",
+  "url": "https://shielded-labs-portal-preview.up.railway.app/",
+  "deploymentId": "4a57feda-bd31-4446-8f05-040d7a2cf4f5",
+  "status": 200,
+  "stylesheets": [
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/06bfh2gpvojwp.css",
+      "sha256": "6cfa7b531a5899935c280c741e7ce9f2981c0734c8c5d0cc07ca7af357830e56",
+      "bytes": 13004,
+      "containsCompactOutcome": false
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3sgh1m44ebmfy.css",
+      "sha256": "12d3593efce7053a942b2e62d368f71eda3268216d0bd2153d5bbe7bce7e35d7",
+      "bytes": 19674,
+      "containsCompactOutcome": false
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3rh8ahx9ddoj_.css",
+      "sha256": "5521b4290b0318bd66af0388e8c371fe04c135b4fc309bb60160d80451ff5632",
+      "bytes": 140536,
+      "containsCompactOutcome": false
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/0guw-llnu1tao.css",
+      "sha256": "d711edbe47c6b8c5395088541df8bd8f412836d4f7c27ed9cd1f3dae6cb433fc",
+      "bytes": 107233,
+      "containsCompactOutcome": true
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/2387virb0m1et.css",
+      "sha256": "013d6817bfdcedc0f817d51a011ce12e0f9dfffae3bfdb357c5b9e2f7bc4a848",
+      "bytes": 41304,
+      "containsCompactOutcome": false
+    }
+  ],
+  "compactOutcomeServed": true,
+  "globalNoticeAbsent": true
+}

@@ -1,4 +1,5 @@
 import type { EditorialDocument } from './types';
+import { projectHref } from '../project-navigation';
 
 const observedAt = '2026-10-28T00:00:00Z';
 export const simulators = [
@@ -51,7 +52,7 @@ export function internalSimulatorLink(url: URL): string | null {
   if (!tool) return null;
   const scenario = tool.id === 'crosslink-simulator' ? url.search : url.hash;
   const verified = new URL(simulatorSource(tool.id, scenario)!);
-  const params = new URLSearchParams({ view: 'resources', section: 'simulators', record: tool.id });
+  const params = new URLSearchParams(projectHref(tool.project, 'resources', tool.id).slice(1));
   if (verified.search || verified.hash) params.set('simulation', verified.search + verified.hash);
   return `?${params}`;
 }

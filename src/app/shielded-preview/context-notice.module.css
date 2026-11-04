@@ -1,0 +1,22 @@
+.notice {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+  padding: 17px 20px;
+  border: 1px solid var(--accent-border);
+  border-radius: 7px;
+  background: var(--accent-surface);
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .notice { padding: 15px 16px; }
+}
+
+@media print {
+  .notice { background: #fff; border-color: #777; color: #111; }
+}

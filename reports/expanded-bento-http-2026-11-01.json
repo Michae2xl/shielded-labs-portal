@@ -1,0 +1,47 @@
+{
+  "deploymentId": "bc6b3d4f-b880-4943-829b-ed92b0dcb3a3",
+  "checkedAt": "2026-11-01T21:11:34.922046+00:00",
+  "root": 200,
+  "requests": [
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=overview",
+      "status": 200,
+      "bytes": 268827
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=crosslink",
+      "status": 200,
+      "bytes": 262712
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=governance&section=insights&lane=payments",
+      "status": 200,
+      "bytes": 283011
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/06bfh2gpvojwp.css",
+      "status": 200,
+      "bytes": 13004
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3sgh1m44ebmfy.css",
+      "status": 200,
+      "bytes": 19674
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3rh8ahx9ddoj_.css",
+      "status": 200,
+      "bytes": 140536
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3f3i1iyh2s16t.css",
+      "status": 200,
+      "bytes": 105879
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/2387virb0m1et.css",
+      "status": 200,
+      "bytes": 41304
+    }
+  ]
+}

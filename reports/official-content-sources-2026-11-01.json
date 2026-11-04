@@ -1,0 +1,59 @@
+{
+  "verifiedAt": "2026-11-01T21:36:53.191610+00:00",
+  "projectExcerpts": [
+    {
+      "project": "crosslink",
+      "source": "https://shieldedlabs.net/crosslink-faq/",
+      "verbatimMatch": true,
+      "words": 14,
+      "excerptSha256": "dc15bd961c2ca8925242f79854e61eeb04d04c3e1f9d87a426ed44e86297cf9e",
+      "sourceSha256": "397f8ce379299b1c09ed93edb714f398b336544601eb73488f3730b272c067aa"
+    },
+    {
+      "project": "epoch",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "words": 20,
+      "excerptSha256": "378e34f4cdb98eb60be81d027ac28ff5a5eb051dba7726c1c6b37de6a9ed490d",
+      "sourceSha256": "0787ac23d2a0ab673da3becf5a64ff52cd35a5beb98e8c8b18263f947531523d"
+    },
+    {
+      "project": "nsm",
+      "source": "https://shieldedlabs.net/nsm/",
+      "verbatimMatch": true,
+      "words": 23,
+      "excerptSha256": "dc8f87ecc4454939ae2107ea1aa02d1b565b768965842976724dea676c2b0d6f",
+      "sourceSha256": "65f8f62a7ef1326d7114e15eadf0c49c383222f1b9289ad0f57d3c42212eaf84"
+    },
+    {
+      "project": "ironwood",
+      "source": "https://shieldedlabs.net/ironwood/",
+      "verbatimMatch": true,
+      "words": 23,
+      "excerptSha256": "592c9f144edf038b2ada2a8585f10496eb511af42fc0179f42eb5a871de8834c",
+      "sourceSha256": "84affbd45008802441ac2f4ddd2e2f79d37783c57fe656d236b5811b8244bcc1"
+    },
+    {
+      "project": "zero",
+      "source": "https://shieldedlabs.net/projects/",
+      "verbatimMatch": true,
+      "words": 22,
+      "excerptSha256": "f5a18f633c85d45725b9aaf7c93f903b9a2acd5312a1c8d5e1fdb54b126c38d2",
+      "sourceSha256": "efe60d094d094df219fc7d327b2c81786e588078e68a4210f321194417c51567"
+    },
+    {
+      "project": "fees",
+      "source": "https://shieldedlabs.net/fees/",
+      "verbatimMatch": true,
+      "words": 18,
+      "excerptSha256": "1636d9721eef9b3f8e200eb60a82bc83477b0ea840222b472facf074afa22605",
+      "sourceSha256": "4604c38c4f5304585ccc18f0f1bbca1b843ec2cceafca4f1ad3d28a3c83cb350"
+    }
+  ],
+  "organization": {
+    "source": "https://shieldedlabs.net/",
+    "paragraphs": 8,
+    "verbatimMatches": 8,
+    "sourceSha256": "ceabac798fa5fdef644fcab97d3ffb5162105be7a889caa3b53dc7600fed1ee9"
+  }
+}

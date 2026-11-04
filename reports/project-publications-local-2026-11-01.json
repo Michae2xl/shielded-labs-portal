@@ -1,0 +1,1147 @@
+{
+  "checkedAt": "2026-11-01T21:58:36.952Z",
+  "results": [
+    {
+      "project": "crosslink",
+      "section": "overview",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/crosslink/",
+              "text": "Crosslink is a proposed upgrade for Zcash by Shielded Labs."
+            }
+          ],
+          "source": "https://shieldedlabs.net/crosslink/",
+          "text": "Crosslink is a proposed upgrade for Zcash by Shielded Labs.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "Productionization Phase"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "Productionization PhaseStatus: In ProgressShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…Published window · Q2 2026 - Q2 2027Shielded Labs"
+        }
+      ],
+      "title": "Crosslink",
+      "width": 1175
+    },
+    {
+      "project": "crosslink",
+      "section": "progress",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/roadmap/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#pre-productionization-tech-debt-final-refactoring",
+          "text": "Completed 15 Apr 2026Pre-Productionization, Tech Debt, Final Refactoring"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#staking-transaction-semantics",
+          "text": "Completed 28 Jan 2026Staking Transaction Semantics"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#pow-consensus",
+          "text": "Completed 28 Aug 2025PoW Consensus"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#disconnected-bft",
+          "text": "Completed 16 May 2025Disconnected BFT"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#placeholders-and-processes",
+          "text": "Completed 21 Mar 2025Placeholders and Processes"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "Productionization Phase"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "Productionization PhaseStatus: In ProgressShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…Published window · Q2 2026 - Q2 2027Shielded Labs"
+        }
+      ],
+      "title": "Crosslink",
+      "width": 1175
+    },
+    {
+      "project": "epoch",
+      "section": "overview",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "Future-Proof Cryptography for Zcash"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Future-Proof Cryptography for ZcashShielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "Phase 1: Research and Design"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Phase 1: Research and DesignShielded LabsPublished 01 Oct 2026"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027…Shielded LabsPublished 01 Oct 2026"
+        }
+      ],
+      "title": "Epoch",
+      "width": 1175
+    },
+    {
+      "project": "epoch",
+      "section": "progress",
+      "viewport": "desktop",
+      "documentWidth": 1175,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=blog&section=all&record=epoch-future-proof-cryptography-for-zcash#phase-1-research-and-design",
+          "text": "Published 01 Oct 2026Epoch: Future-Proof Cryptography for Zcash"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "Phase 1: Research and Design"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Phase 1: Research and DesignShielded LabsPublished 01 Oct 2026"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027…Shielded LabsPublished 01 Oct 2026"
+        }
+      ],
+      "title": "Epoch",
+      "width": 1175
+    },
+    {
+      "project": "nsm",
+      "section": "overview",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/nsm/",
+              "text": "The NSM enables burned ZEC to support network sustainability."
+            }
+          ],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "The NSM enables burned ZEC to support network sustainability.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/nsm/",
+              "text": "There are three ZIPs associated with the NSM:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "There are three ZIPs associated with the NSM:ZIP 233ZIP 234ZIP 235Shielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "NSM",
+      "width": 1175
+    },
+    {
+      "project": "nsm",
+      "section": "progress",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/nsm/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "https://zips.z.cash/zip-0233",
+          "text": "ZIP 233"
+        },
+        {
+          "href": "https://zips.z.cash/zip-0234",
+          "text": "ZIP 234"
+        },
+        {
+          "href": "https://zips.z.cash/zip-0235",
+          "text": "ZIP 235"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/nsm/",
+              "text": "There are three ZIPs associated with the NSM:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "There are three ZIPs associated with the NSM:Shielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "NSM",
+      "width": 1175
+    },
+    {
+      "project": "ironwood",
+      "section": "overview",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/projects/",
+              "text": "Create a new shielded pool and restore the integrity of Zcash’s circulating supply."
+            }
+          ],
+          "source": "https://shieldedlabs.net/projects/",
+          "text": "Create a new shielded pool and restore the integrity of Zcash’s circulating supply.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "…since NU6.3, Ironwood notes have been designed to be quantum-recoverable…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "…since NU6.3, Ironwood notes have been designed to be quantum-recoverable…Shielded LabsPublished 01 Oct 2026"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Not specified in this source.Shielded LabsPublished 01 Oct 2026"
+        }
+      ],
+      "title": "Ironwood",
+      "width": 1175
+    },
+    {
+      "project": "ironwood",
+      "section": "progress",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=blog&section=all&record=epoch-future-proof-cryptography-for-zcash#why-this-matters-now",
+          "text": "Published 01 Oct 2026Epoch: Future-Proof Cryptography for Zcash"
+        },
+        {
+          "href": "?view=blog&section=all&record=ironwood-verifying-the-soundness-of-zcashs-circulating-supply",
+          "text": "Published 06 Jun 2026Ironwood: Verifying the Soundness of Zcash’s Circulating Supply"
+        },
+        {
+          "href": "?view=blog&section=all&record=the-orchard-counterfeiting-vulnerability",
+          "text": "Published 04 Jun 2026The Orchard Counterfeiting Vulnerability"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "…since NU6.3, Ironwood notes have been designed to be quantum-recoverable…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "…since NU6.3, Ironwood notes have been designed to be quantum-recoverable…Shielded LabsPublished 01 Oct 2026"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Not specified in this source.Shielded LabsPublished 01 Oct 2026"
+        }
+      ],
+      "title": "Ironwood",
+      "width": 1175
+    },
+    {
+      "project": "zero",
+      "section": "overview",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Zero is a supported suite of open-source Zcash infrastructure software…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Zero is a supported suite of open-source Zcash infrastructure software…Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Our current Zero repositories include:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Our current Zero repositories include:Zero Software Stackzero-indexerShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "Zero",
+      "width": 1175
+    },
+    {
+      "project": "zero",
+      "section": "progress",
+      "viewport": "desktop",
+      "documentWidth": 1175,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/zero/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "https://github.com/ShieldedLabs/zero",
+          "text": "Zero Software Stack"
+        },
+        {
+          "href": "https://github.com/ShieldedLabs/zero/tree/main/zeronym",
+          "text": "zero-indexer"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Our current Zero repositories include:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Our current Zero repositories include:Shielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "Zero",
+      "width": 1175
+    },
+    {
+      "project": "fees",
+      "section": "overview",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/projects/",
+              "text": "Develop market-driven, comparable-based transaction fee mechanics."
+            }
+          ],
+          "source": "https://shieldedlabs.net/projects/",
+          "text": "Develop market-driven, comparable-based transaction fee mechanics.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 1: Experimental Wallet Pilots"
+            }
+          ],
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Phase 1: Experimental Wallet PilotsShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 2: The Fee Estimator (z_getstandardfee)"
+            },
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 3: Parameter Tuning"
+            }
+          ],
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Phase 2: The Fee Estimator (z_getstandardfee)Phase 3: Parameter TuningShielded Labs"
+        }
+      ],
+      "title": "Dynamic Fees",
+      "width": 1175
+    },
+    {
+      "project": "fees",
+      "section": "progress",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=projects&project=fees&section=resources&record=fees-roadmap#phase-1-experimental-wallet-pilots",
+          "text": "Phase 1: Experimental Wallet Pilots"
+        },
+        {
+          "href": "?view=projects&project=fees&section=resources&record=fees-roadmap#phase-2-the-fee-estimator-z-getstandardfee",
+          "text": "Phase 2: The Fee Estimator (z_getstandardfee)"
+        },
+        {
+          "href": "?view=projects&project=fees&section=resources&record=fees-roadmap#phase-3-parameter-tuning",
+          "text": "Phase 3: Parameter Tuning"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 1: Experimental Wallet Pilots"
+            }
+          ],
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Phase 1: Experimental Wallet PilotsShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 2: The Fee Estimator (z_getstandardfee)"
+            },
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 3: Parameter Tuning"
+            }
+          ],
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Phase 2: The Fee Estimator (z_getstandardfee)Phase 3: Parameter TuningShielded Labs"
+        }
+      ],
+      "title": "Dynamic Fees",
+      "width": 1175
+    },
+    {
+      "project": "crosslink",
+      "section": "overview",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/crosslink/",
+              "text": "Crosslink is a proposed upgrade for Zcash by Shielded Labs."
+            }
+          ],
+          "source": "https://shieldedlabs.net/crosslink/",
+          "text": "Crosslink is a proposed upgrade for Zcash by Shielded Labs.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "Productionization Phase"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "Productionization PhaseStatus: In ProgressShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…Published window · Q2 2026 - Q2 2027Shielded Labs"
+        }
+      ],
+      "title": "Crosslink",
+      "width": 354
+    },
+    {
+      "project": "crosslink",
+      "section": "progress",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/roadmap/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#pre-productionization-tech-debt-final-refactoring",
+          "text": "Completed 15 Apr 2026Pre-Productionization, Tech Debt, Final Refactoring"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#staking-transaction-semantics",
+          "text": "Completed 28 Jan 2026Staking Transaction Semantics"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#pow-consensus",
+          "text": "Completed 28 Aug 2025PoW Consensus"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#disconnected-bft",
+          "text": "Completed 16 May 2025Disconnected BFT"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#placeholders-and-processes",
+          "text": "Completed 21 Mar 2025Placeholders and Processes"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "Productionization Phase"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "Productionization PhaseStatus: In ProgressShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…Published window · Q2 2026 - Q2 2027Shielded Labs"
+        }
+      ],
+      "title": "Crosslink",
+      "width": 354
+    },
+    {
+      "project": "epoch",
+      "section": "overview",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "Future-Proof Cryptography for Zcash"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Future-Proof Cryptography for ZcashShielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "Phase 1: Research and Design"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Phase 1: Research and DesignShielded LabsPublished 01 Oct 2026"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027…Shielded LabsPublished 01 Oct 2026"
+        }
+      ],
+      "title": "Epoch",
+      "width": 354
+    },
+    {
+      "project": "epoch",
+      "section": "progress",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=blog&section=all&record=epoch-future-proof-cryptography-for-zcash#phase-1-research-and-design",
+          "text": "Published 01 Oct 2026Epoch: Future-Proof Cryptography for Zcash"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "Phase 1: Research and Design"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Phase 1: Research and DesignShielded LabsPublished 01 Oct 2026"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027…Shielded LabsPublished 01 Oct 2026"
+        }
+      ],
+      "title": "Epoch",
+      "width": 354
+    },
+    {
+      "project": "nsm",
+      "section": "overview",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/nsm/",
+              "text": "The NSM enables burned ZEC to support network sustainability."
+            }
+          ],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "The NSM enables burned ZEC to support network sustainability.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/nsm/",
+              "text": "There are three ZIPs associated with the NSM:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "There are three ZIPs associated with the NSM:ZIP 233ZIP 234ZIP 235Shielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "NSM",
+      "width": 354
+    },
+    {
+      "project": "nsm",
+      "section": "progress",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/nsm/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "https://zips.z.cash/zip-0233",
+          "text": "ZIP 233"
+        },
+        {
+          "href": "https://zips.z.cash/zip-0234",
+          "text": "ZIP 234"
+        },
+        {
+          "href": "https://zips.z.cash/zip-0235",
+          "text": "ZIP 235"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/nsm/",
+              "text": "There are three ZIPs associated with the NSM:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "There are three ZIPs associated with the NSM:Shielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/nsm/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "NSM",
+      "width": 354
+    },
+    {
+      "project": "ironwood",
+      "section": "overview",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/projects/",
+              "text": "Create a new shielded pool and restore the integrity of Zcash’s circulating supply."
+            }
+          ],
+          "source": "https://shieldedlabs.net/projects/",
+          "text": "Create a new shielded pool and restore the integrity of Zcash’s circulating supply.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "…since NU6.3, Ironwood notes have been designed to be quantum-recoverable…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "…since NU6.3, Ironwood notes have been designed to be quantum-recoverable…Shielded LabsPublished 01 Oct 2026"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Not specified in this source.Shielded LabsPublished 01 Oct 2026"
+        }
+      ],
+      "title": "Ironwood",
+      "width": 354
+    },
+    {
+      "project": "ironwood",
+      "section": "progress",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=blog&section=all&record=epoch-future-proof-cryptography-for-zcash#why-this-matters-now",
+          "text": "Published 01 Oct 2026Epoch: Future-Proof Cryptography for Zcash"
+        },
+        {
+          "href": "?view=blog&section=all&record=ironwood-verifying-the-soundness-of-zcashs-circulating-supply",
+          "text": "Published 06 Jun 2026Ironwood: Verifying the Soundness of Zcash’s Circulating Supply"
+        },
+        {
+          "href": "?view=blog&section=all&record=the-orchard-counterfeiting-vulnerability",
+          "text": "Published 04 Jun 2026The Orchard Counterfeiting Vulnerability"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+              "text": "…since NU6.3, Ironwood notes have been designed to be quantum-recoverable…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "…since NU6.3, Ironwood notes have been designed to be quantum-recoverable…Shielded LabsPublished 01 Oct 2026"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "text": "Not specified in this source.Shielded LabsPublished 01 Oct 2026"
+        }
+      ],
+      "title": "Ironwood",
+      "width": 354
+    },
+    {
+      "project": "zero",
+      "section": "overview",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Zero is a supported suite of open-source Zcash infrastructure software…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Zero is a supported suite of open-source Zcash infrastructure software…Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Our current Zero repositories include:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Our current Zero repositories include:Zero Software Stackzero-indexerShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "Zero",
+      "width": 354
+    },
+    {
+      "project": "zero",
+      "section": "progress",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/zero/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "https://github.com/ShieldedLabs/zero",
+          "text": "Zero Software Stack"
+        },
+        {
+          "href": "https://github.com/ShieldedLabs/zero/tree/main/zeronym",
+          "text": "zero-indexer"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Our current Zero repositories include:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Our current Zero repositories include:Shielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "Zero",
+      "width": 354
+    },
+    {
+      "project": "fees",
+      "section": "overview",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/projects/",
+              "text": "Develop market-driven, comparable-based transaction fee mechanics."
+            }
+          ],
+          "source": "https://shieldedlabs.net/projects/",
+          "text": "Develop market-driven, comparable-based transaction fee mechanics.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 1: Experimental Wallet Pilots"
+            }
+          ],
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Phase 1: Experimental Wallet PilotsShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 2: The Fee Estimator (z_getstandardfee)"
+            },
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 3: Parameter Tuning"
+            }
+          ],
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Phase 2: The Fee Estimator (z_getstandardfee)Phase 3: Parameter TuningShielded Labs"
+        }
+      ],
+      "title": "Dynamic Fees",
+      "width": 354
+    },
+    {
+      "project": "fees",
+      "section": "progress",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=projects&project=fees&section=resources&record=fees-roadmap#phase-1-experimental-wallet-pilots",
+          "text": "Phase 1: Experimental Wallet Pilots"
+        },
+        {
+          "href": "?view=projects&project=fees&section=resources&record=fees-roadmap#phase-2-the-fee-estimator-z-getstandardfee",
+          "text": "Phase 2: The Fee Estimator (z_getstandardfee)"
+        },
+        {
+          "href": "?view=projects&project=fees&section=resources&record=fees-roadmap#phase-3-parameter-tuning",
+          "text": "Phase 3: Parameter Tuning"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 1: Experimental Wallet Pilots"
+            }
+          ],
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Phase 1: Experimental Wallet PilotsShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 2: The Fee Estimator (z_getstandardfee)"
+            },
+            {
+              "cite": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+              "text": "Phase 3: Parameter Tuning"
+            }
+          ],
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "text": "Phase 2: The Fee Estimator (z_getstandardfee)Phase 3: Parameter TuningShielded Labs"
+        }
+      ],
+      "title": "Dynamic Fees",
+      "width": 354
+    }
+  ],
+  "clickChecks": [
+    {
+      "case": "Crosslink milestone opens its roadmap",
+      "url": "http://127.0.0.1:4250/?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#pre-productionization-tech-debt-final-refactoring",
+      "heading": "Pre-Productionization, Tech Debt, Final Refactoring"
+    },
+    {
+      "case": "Fees phase opens its roadmap",
+      "url": "http://127.0.0.1:4250/?view=projects&project=fees&section=resources&record=fees-roadmap#phase-2-the-fee-estimator-z-getstandardfee",
+      "heading": "Phase 2: The Fee Estimator (z_getstandardfee)"
+    },
+    {
+      "case": "Ironwood update opens the cited article",
+      "url": "http://127.0.0.1:4250/?view=blog&section=all&record=epoch-future-proof-cryptography-for-zcash#why-this-matters-now",
+      "heading": "Why This Matters Now"
+    }
+  ],
+  "sharedCopyChecks": [
+    {
+      "case": "Project list",
+      "url": "http://127.0.0.1:4250/?view=projects",
+      "quotes": [
+        "Crosslink is a proposed upgrade for Zcash by Shielded Labs.",
+        "Future-Proof Cryptography for Zcash",
+        "The NSM enables burned ZEC to support network sustainability.",
+        "Create a new shielded pool and restore the integrity of Zcash’s circulating supply.",
+        "Zero is a supported suite of open-source Zcash infrastructure software…",
+        "Develop market-driven, comparable-based transaction fee mechanics."
+      ]
+    },
+    {
+      "case": "Home project cards",
+      "url": "http://127.0.0.1:4250/?view=overview",
+      "quotes": [
+        "Crosslink is a proposed upgrade for Zcash by Shielded Labs.",
+        "Future-Proof Cryptography for Zcash",
+        "The NSM enables burned ZEC to support network sustainability.",
+        "Create a new shielded pool and restore the integrity of Zcash’s circulating supply.",
+        "Zero is a supported suite of open-source Zcash infrastructure software…",
+        "Develop market-driven, comparable-based transaction fee mechanics."
+      ]
+    }
+  ],
+  "compactChecks": [
+    {
+      "project": "zero",
+      "documentWidth": 1162,
+      "grid": "\"purpose purpose reading\" \"progress progress next\"",
+      "height": 395.6036682128906,
+      "width": 1175
+    },
+    {
+      "project": "epoch",
+      "documentWidth": 1162,
+      "grid": "\"purpose purpose reading\" \"progress progress next\"",
+      "height": 512.2869262695312,
+      "width": 1175
+    },
+    {
+      "project": "epoch",
+      "documentWidth": 341,
+      "grid": "\"purpose\" \"progress\" \"next\" \"reading\"",
+      "width": 354
+    }
+  ],
+  "errors": []
+}

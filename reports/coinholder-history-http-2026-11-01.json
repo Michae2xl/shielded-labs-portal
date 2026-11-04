@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-11-01T20:51:54.724Z",
+  "deploymentId": "c36d4b16-83ec-49c0-8190-1119bc757054",
+  "pages": [
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/",
+      "status": 200
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=governance&section=proposals&lane=coinholder",
+      "status": 200
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/api/shielded-preview/governance",
+      "status": 200
+    }
+  ],
+  "stylesheets": [
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/06bfh2gpvojwp.css",
+      "status": 200
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3sgh1m44ebmfy.css",
+      "status": 200
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3rh8ahx9ddoj_.css",
+      "status": 200
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/29n5g0b0uwjwc.css",
+      "status": 200
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/2387virb0m1et.css",
+      "status": 200
+    }
+  ],
+  "applications": 69,
+  "sourceState": "fetched",
+  "observedAt": "2026-11-01T20:51:15.011Z",
+  "eligibleCurrent": [
+    71,
+    70,
+    69
+  ],
+  "rounds": {
+    "q4-2026": 6,
+    "q3-2026": 37,
+    "q2-2026": 9,
+    "q1-2026": 6,
+    "q4-2025": 8,
+    "unassigned": 12
+  },
+  "walletHeadingPresent": false
+}

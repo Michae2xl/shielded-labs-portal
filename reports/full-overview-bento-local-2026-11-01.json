@@ -1,0 +1,190 @@
+{
+  "desktop": {
+    "cards": [
+      {
+        "height": 256.2854919433594,
+        "title": "Coinholder grants",
+        "width": 569.4033813476562,
+        "x": 273.8565368652344
+      },
+      {
+        "height": 256.2854919433594,
+        "title": "Submit completed work",
+        "width": 276.70452880859375,
+        "x": 859.2542114257812
+      },
+      {
+        "height": 267.7769775390625,
+        "title": "Vote with ZEC",
+        "width": 276.70452880859375,
+        "x": 273.8565368652344
+      },
+      {
+        "height": 267.7769775390625,
+        "title": "Join ZCAP",
+        "width": 276.70452880859375,
+        "x": 566.5553588867188
+      },
+      {
+        "height": 267.7769775390625,
+        "title": "Join the discussion",
+        "width": 276.70452880859375,
+        "x": 859.2542114257812
+      },
+      {
+        "height": 470.7741394042969,
+        "title": "ZCG applications",
+        "width": 496.2286682128906,
+        "x": 273.8565368652344
+      },
+      {
+        "height": 470.7741394042969,
+        "title": "Grant payments",
+        "width": 349.8792419433594,
+        "x": 786.0795288085938
+      },
+      {
+        "height": 247.7769775390625,
+        "title": "Coinholder grants",
+        "width": 569.4033813476562,
+        "x": 273.8565368652344
+      },
+      {
+        "height": 508.5511169433594,
+        "title": "NU7 scope",
+        "width": 276.70452880859375,
+        "x": 859.2542114257812
+      },
+      {
+        "height": 244.77981567382812,
+        "title": "Protocol decisions",
+        "width": 276.70452880859375,
+        "x": 273.8565368652344
+      },
+      {
+        "height": 244.77981567382812,
+        "title": "Ecosystem funding",
+        "width": 276.70452880859375,
+        "x": 566.5553588867188
+      }
+    ],
+    "pageWidth": 1162,
+    "viewport": {
+      "height": 812,
+      "width": 1175
+    },
+    "wallets": [
+      {
+        "href": "https://zodl.com",
+        "loaded": true,
+        "name": "ZODL"
+      },
+      {
+        "href": "https://github.com/hhanh00/zkool2",
+        "loaded": true,
+        "name": "Zkool"
+      },
+      {
+        "href": "https://vizor.cash",
+        "loaded": true,
+        "name": "Vizor"
+      }
+    ]
+  },
+  "mobile": {
+    "cards": [
+      {
+        "height": 322.0099182128906,
+        "title": "Coinholder grants",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 214.2826690673828,
+        "title": "Submit completed work",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 265.7741394042969,
+        "title": "Vote with ZEC",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 214.2826690673828,
+        "title": "Join ZCAP",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 214.2826690673828,
+        "title": "Join the discussion",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 514.382080078125,
+        "title": "ZCG applications",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 583.9701538085938,
+        "title": "Grant payments",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 281.6548156738281,
+        "title": "Coinholder grants",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 430.96588134765625,
+        "title": "NU7 scope",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 223.28123474121097,
+        "title": "Protocol decisions",
+        "width": 296.9176025390625
+      },
+      {
+        "height": 221.67613220214844,
+        "title": "Ecosystem funding",
+        "width": 296.9176025390625
+      }
+    ],
+    "pageWidth": 341,
+    "viewport": {
+      "height": 767,
+      "width": 354
+    },
+    "wallets": [
+      {
+        "href": "https://zodl.com",
+        "loaded": true,
+        "name": "ZODL"
+      },
+      {
+        "href": "https://github.com/hhanh00/zkool2",
+        "loaded": true,
+        "name": "Zkool"
+      },
+      {
+        "href": "https://vizor.cash",
+        "loaded": true,
+        "name": "Vizor"
+      }
+    ]
+  },
+  "tablet": {
+    "gridColumns": "299.73px 299.737px",
+    "pageWidth": 895,
+    "viewport": {
+      "height": 818,
+      "width": 909
+    }
+  },
+  "consoleErrors": [],
+  "clicks": [
+    "ZecOne > internal record with sources",
+    "Zcash Arabia > grant milestones and source rows",
+    "Program guide > internal guide",
+    "View proposals > current Coinholder proposals"
+  ]
+}

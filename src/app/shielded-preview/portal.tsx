@@ -2,25 +2,30 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
-import { projects, milestones, sources, team, REVIEWED, type Project } from '@/lib/shielded-preview/content';
-import { projectGuides } from '@/lib/shielded-preview/project-guides';
-import { personId } from '@/lib/shielded-preview/directory';
-import { editorialHref, searchEditorial } from '@/lib/shielded-preview/editorial/library';
+import { projects, sources, REVIEWED, type Project } from '@/lib/shielded-preview/content';
+import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
+import { legacyProjectResourceHref, resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
+import { isProjectSection, projectHref, type ProjectSection } from '@/lib/shielded-preview/project-navigation';
+import { searchPortal } from '@/lib/shielded-preview/portal-search';
 import type { PortalData } from '@/lib/shielded-preview/types';
 import s from './portal.module.css';
 import pc from './project-collection.module.css';
 import PortalNavigation, { portalNavigation as navigation, type PortalView as View } from './portal-navigation';
 import PortalFooter from './portal-footer';
 import Overview from './overview';
-import SectionMenu from './section-menu';
-import ProjectDetail, { ProjectLink, projectHref } from './project-detail';
+import ProjectDetail, { ProjectLink } from './project-detail';
 
 const Governance = dynamic(() => import('./governance'));
 const Development = dynamic(() => import('./development'));
 const Editorial = dynamic(() => import('./editorial'));
 const Directory = dynamic(() => import('./directory'));
 const WebsiteProposal = dynamic(() => import('./website-proposal'));
-const isPortalView = (value: string | null | undefined): value is View => value === 'website' || navigation.some(item => item.id === value);
+const defaultView: View = 'governance';
+const isPortalView = (value: string | null | undefined): value is View => value === 'website' || value === 'resources' || navigation.some(item => item.id === value);
+const legacyProjectSections: Record<string, ProjectSection> = {
+  '#project-overview': 'overview', '#project-progress': 'progress', '#project-milestones': 'progress',
+  '#project-resources': 'resources', '#project-development': 'development',
+};
 
 function Icon({ name, size = 18 }: { name: string; size?: number }) {
   const paths: Record<string, ReactNode> = {
@@ -62,14 +67,14 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
 
 function ProjectCard({ item, onSelect }: { item: Project; onSelect: (item: Project) => void }) {
   return <ProjectLink className={pc.card} project={item} onSelect={onSelect}>
-    <div className={pc.heading}><Icon name={item.symbol} size={30}/><h2>{item.name}</h2></div>
-    <p>{projectGuides[item.id].lead}</p>
-    <div className={pc.footer}><span>{item.status}</span><Icon name="arrow"/></div>
+    <div className={pc.heading}><Icon name={item.symbol} size={30}/><h2>{item.name}</h2><Icon name="arrow"/></div>
+    <p><q cite={projectPublications[item.id].presentation.source}>{publicationQuote(projectPublications[item.id].presentation)}</q></p>
+    <div className={pc.footer}><span>{projectPublications[item.id].badge?.text ?? item.category}</span></div>
   </ProjectLink>;
 }
 
-export default function Portal({ initial, initialView = 'overview', initialProjectId, initialSection, initialRecord }: { initial: PortalData; initialView?: string; initialProjectId?: string; initialSection?: string; initialRecord?: string }) {
-  const [view, setView] = useState<View>(isPortalView(initialView) ? initialView : 'overview');
+export default function Portal({ initial, initialView = defaultView, initialProjectId, initialSection, initialRecord }: { initial: PortalData; initialView?: string; initialProjectId?: string; initialSection?: string; initialRecord?: string }) {
+  const [view, setView] = useState<View>(isPortalView(initialView) ? initialView : defaultView);
   const [data, setData] = useState(initial);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
@@ -86,66 +91,60 @@ export default function Portal({ initial, initialView = 'overview', initialProje
     catch { setError(true); } finally { inFlight.current = false; setBusy(false); }
   }, []);
   useEffect(() => {
-    const loadView = () => { const params = new URLSearchParams(location.search); const value = params.get('view'); setView(isPortalView(value) ? value : 'overview'); setProject(value === 'projects' ? projects.find(p => p.id === params.get('project')) ?? null : null); setDirectorySection(params.get('section')); setDirectoryRecord(params.get('record')); setQuery(''); };
+    const loadView = () => { const canonical = legacyProjectResourceHref(location.search + location.hash); if (canonical) window.history.replaceState(null, '', canonical); const params = new URLSearchParams(location.search); const value = params.get('view'); setView(isPortalView(value) ? value : defaultView); setProject(value === 'projects' ? projects.find(p => p.id === params.get('project')) ?? null : null); setDirectorySection(params.get('section') ?? (value === 'projects' ? legacyProjectSections[location.hash] ?? null : null)); setDirectoryRecord(params.get('record')); setQuery(''); };
     const initialLoad = setTimeout(() => { loadView(); void refresh(); }, 0);
     window.addEventListener('popstate', loadView);
     const timer = setInterval(() => { if (!document.hidden) void refresh(); }, 300000);
     return () => { clearTimeout(initialLoad); clearInterval(timer); window.removeEventListener('popstate', loadView); };
   }, [refresh]);
-  function go(next: View, section?: string, recordId?: string) { setView(next); setProject(null); setQuery(''); setDirectorySection(section ?? null); setDirectoryRecord(recordId ?? null); const params = new URLSearchParams({ view: next }); if (section) params.set('section', section); if (recordId) params.set('record', recordId); window.history.pushState(null, '', `?${params}`); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
-  function openProject(next: Project) { setView('projects'); setProject(next); setQuery(''); window.history.pushState(null, '', projectHref(next)); window.scrollTo({ top: 0, behavior: 'instant' }); }
+  function go(next: View, section?: string, recordId?: string) { const params = new URLSearchParams({ view: next }); if (section) params.set('section', section); if (recordId) params.set('record', recordId); if (next === 'resources') { followEditorial(`?${params}`); return; } setView(next); setProject(null); setQuery(''); setDirectorySection(section ?? null); setDirectoryRecord(recordId ?? null); window.history.pushState(null, '', `?${params}`); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
+  function openProject(next: Project, section: ProjectSection = 'overview', record?: string) { setView('projects'); setProject(next); setDirectorySection(section); setDirectoryRecord(record ?? null); setQuery(''); window.history.pushState(null, '', projectHref(next, section, record)); window.scrollTo({ top: 0, behavior: 'instant' }); }
+  function changeProjectSection(section: ProjectSection) { if (!project) return; setDirectorySection(section); setDirectoryRecord(null); window.history.pushState(null, '', projectHref(project, section)); window.dispatchEvent(new Event('shielded:navigate')); }
   function followEditorial(href: string) {
-    const target = new URL(href, window.location.href);
+    const target = new URL(resolveEditorialLink(href) ?? href, window.location.href);
     const nextView = target.searchParams.get('view');
     if (!isPortalView(nextView)) return;
     const nextProject = nextView === 'projects' ? projects.find(item => item.id === target.searchParams.get('project')) : null;
-    if (nextProject) openProject(nextProject);
+    const targetSection = target.searchParams.get('section');
+    if (nextProject) openProject(nextProject, isProjectSection(targetSection) ? targetSection : 'overview', target.searchParams.get('record') ?? undefined);
     else go(nextView, target.searchParams.get('section') ?? undefined, target.searchParams.get('record') ?? undefined);
-    if (['activity', 'blog', 'resources', 'about'].includes(nextView)) {
+    if (['projects', 'activity', 'blog', 'resources', 'about'].includes(nextView)) {
       window.history.replaceState(null, '', `${target.search}${target.hash}`);
       window.dispatchEvent(new Event('shielded:navigate'));
     }
     if (target.hash) {
       window.history.replaceState(null, '', `${window.location.search}${target.hash}`);
-      requestAnimationFrame(() => document.getElementById(decodeURIComponent(target.hash.slice(1)))?.scrollIntoView());
+      let anchor = target.hash.slice(1);
+      try { anchor = decodeURIComponent(anchor); } catch { /* Keep malformed fragments inert. */ }
+      requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView());
     }
   }
   const liveCount = data.repos.filter(r => r.state === 'live').length;
-  const searchResults = query.trim() ? [
-    ...searchEditorial(query).map(entry => ({ title: entry.title, kind: entry.view === 'blog' ? 'Article' : entry.category, run: () => followEditorial(editorialHref(entry)) })),
-    ...projects.filter(p => `${p.name} ${p.description} ${p.category}`.toLowerCase().includes(query.toLowerCase())).map(p => ({ title: p.name, kind: 'Project', run: () => openProject(p) })),
-    ...navigation.filter(n => `${n.title} ${n.keywords ?? ''}`.toLowerCase().includes(query.toLowerCase())).map(n => ({ title: n.title, kind: 'Portal', run: () => go(n.id) })),
-    ...['Proposals', 'Voting', 'Grants', 'ZCAP', 'Insights', 'Results'].filter(title => title.toLowerCase().includes(query.toLowerCase())).map(title => ({ title, kind: 'Governance', run: () => go('governance', title.toLowerCase()) })),
-    ...milestones.filter(m => `${m.name} ${m.type}`.toLowerCase().includes(query.toLowerCase())).map(m => ({ title: m.name, kind: 'Milestone', run: () => go('impact', m.type.toLowerCase(), `milestone:${m.date}`) })),
-    ...team.filter(p => `${p.name} ${p.role}`.toLowerCase().includes(query.toLowerCase())).map(p => ({ title: p.name, kind: p.role, run: () => go('people', p.group.toLowerCase(), `person:${personId(p)}`) })),
-  ] : [];
+  const searchResults = searchPortal(query, navigation).map(result => ({ ...result, run: () => followEditorial(result.href) }));
 
 
 
   return <div className={s.portal}>
     <a className={s.skip} href="#portal-main">Skip to content</a>
-    <PortalNavigation view={view} onNavigate={go}/>
+    <PortalNavigation view={view} onNavigate={go} search={{ query, onChange: setQuery, results: searchResults }}/>
 
     <div className={s.workspace}>
-      <header className={s.topbar}>
-        <nav className={s.breadcrumb} aria-label="Breadcrumb"><button onClick={()=>go('overview')}>Home</button>{view!=='overview'&&<><span>/</span>{project?<><button onClick={()=>go('projects')}>Projects</button><span>/</span><strong aria-current="page">{project.name}</strong></>:<strong aria-current="page">{view === 'website' ? 'Website proposal' : navigation.find(n=>n.id===view)?.title}</strong>}</>}</nav>
-        <div className={s.headerActions}><label className={s.search}><Icon name="search" size={16}/><input aria-label="Search the portal" placeholder="Search the portal…" value={query} onChange={e=>setQuery(e.target.value)}/>{query&&<button aria-label="Clear search" onClick={()=>setQuery('')}><Icon name="close" size={14}/></button>}</label></div>
-      </header>
       <main id="portal-main" className={s.main} tabIndex={-1}>
-        {query.trim() && <section className={s.searchResults} aria-label="Search results"><span className={s.eyebrow}>{searchResults.length} RESULTS</span>{searchResults.map(r => <button key={r.kind+r.title} onClick={r.run}><span>{r.title}<small>{r.kind}</small></span><Icon name="arrow"/></button>)}{!searchResults.length && <p>No matching pages, projects or people. Try “Epoch”, “grants” or “Mark”.</p>}</section>}
-
         {view === 'overview' && <Overview data={data} onNavigate={go} onProject={openProject}/>}
 
-        {view === 'projects' && <div className={pc.collection}>
-          {!project && <h1 className={s.srOnly}>Projects</h1>}
-          <SectionMenu label="Project navigation" value={project?.id ?? 'all'} items={[{ id: 'all', label: 'All projects' }, ...projects.map(item => ({ id: item.id, label: item.name }))]} onChange={id => { const next = projects.find(item => item.id === id); if (next) openProject(next); else go('projects'); }}/>
-          {project ? <ProjectDetail onFollow={followEditorial} key={project.id} project={project} data={data} glyph={<Icon name={project.symbol} size={90}/>} onBack={() => go('projects')} onSelect={openProject}/> : <>
+        {view === 'projects' && <div className={pc.collection} data-detail={project ? true : undefined}>
+          {!project && <h1 className={pc.collectionTitle}>Projects</h1>}
+          {project && <div className={pc.projectPicker}>
+            <button type="button" onClick={() => go('projects')}><Icon name="arrow" size={16}/>All projects</button>
+            <label><span className={s.srOnly}>Choose a project</span><select value={project.id} onChange={event => { const next = projects.find(item => item.id === event.target.value); if (next) openProject(next); }}>{projects.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
+          </div>}
+          {project ? <ProjectDetail onFollow={followEditorial} key={project.id} project={project} section={directorySection} record={directoryRecord} data={data} glyph={<Icon name={project.symbol} size={90}/>} onSection={changeProjectSection}/> : <>
             <div className={pc.grid}>{projects.map(p=><ProjectCard key={p.id} item={p} onSelect={openProject}/>)}</div>
 
           </>}
         </div>}
 
-        {view === 'activity' && <Development initialRepository={directorySection} initialRecord={directoryRecord} data={data} busy={busy} onRefresh={() => void refresh()}/>}
+        {view === 'activity' && <Development initialRepository={directorySection} initialRecord={directoryRecord} data={data} busy={busy} failed={error} onRefresh={() => void refresh()}/>}
 
         {view === 'governance' && <Governance/>}
 
@@ -159,6 +158,6 @@ export default function Portal({ initial, initialView = 'overview', initialProje
     </div>
 
 
-    {showSources && <Modal title="Sources & methodology" onClose={()=>setShowSources(false)}><p className={s.dialogLead}>Coverage, verification dates and primary sources.</p><div className={s.sourceRow}><strong>Engineering observations</strong><p>Six selected repositories, up to 100 latest commits per default branch. Core counts exclude forks and deduplicate commit hashes. Author identities are not an employee count.</p><small>{liveCount}/6 sources refreshed · Last check <DateLabel value={data.checkedAt}/>{error?' · Refresh failed; retaining prior observations.':''}</small></div><div className={s.sourceRow}><strong>Grants & ecosystem resources</strong><p>Grant records and community information come from OpenZcash. Each dataset keeps its source and observation date.</p><External href="https://openzcash.org/zcg/methodology">OpenZcash methodology</External></div><div className={s.sourceRow}><strong>Content review</strong><p>Project summaries, team roles and historical milestones reviewed on {REVIEWED}. Organizational statements are attributed; governance guidance is kept distinct from advocacy.</p></div><div className={s.resourceList}>{Object.entries(sources).map(([label,url])=><External key={label} href={url}>{label.charAt(0).toUpperCase()+label.slice(1)}</External>)}</div></Modal>}
+    {showSources && <Modal title="Sources & methodology" onClose={()=>setShowSources(false)}><p className={s.dialogLead}>Coverage, verification dates and primary sources.</p><div className={s.sourceRow}><strong>Engineering observations</strong><p>Six selected repositories, up to 100 latest commits per tracked branch. Core counts exclude forks and deduplicate commit hashes. Author identities are not an employee count.</p><small>{liveCount}/6 sources refreshed · Last check <DateLabel value={data.checkedAt}/>{error?' · Refresh failed; retaining prior observations.':''}</small></div><div className={s.sourceRow}><strong>Grant records</strong><p>Grant records come from OpenZcash. Each dataset keeps its source and observation date.</p><External href="https://openzcash.org/zcg/methodology">OpenZcash methodology</External></div><div className={s.sourceRow}><strong>Content review</strong><p>Project summaries, team roles and historical milestones reviewed on {REVIEWED}. Organizational statements are attributed; governance guidance is kept distinct from advocacy.</p></div><div className={s.resourceList}>{Object.entries(sources).map(([label,url])=><External key={label} href={url}>{label.charAt(0).toUpperCase()+label.slice(1)}</External>)}</div></Modal>}
   </div>;
 }

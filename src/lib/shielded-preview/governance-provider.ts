@@ -2,15 +2,17 @@ import 'server-only';
 import { z } from 'zod';
 import { parseCsv } from '@/lib/zcg/csv';
 import snapshot from './governance-data/snapshot.json';
+import { emptyCoinholderSource } from './coinholder-proposals';
+import { fetchCoinholderProposals } from './coinholder-provider';
 import { reviewSchema, paymentSchema, grantSchema, memberSchema, verificationSchema, type GovernanceData, type Source } from './governance-types';
 
 const TTL=300_000;
-const seed=snapshot as unknown as GovernanceData;
+const seed={...snapshot,coinholder:emptyCoinholderSource} as unknown as GovernanceData;
 let cache:GovernanceData|undefined;
 let refreshedAt=0;
 let pending:Promise<GovernanceData>|undefined;
 async function read(url:string){
- const response=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(8000),headers:{Accept:'application/json','User-Agent':'OpenZcash-internal-preview'}});
+ const response=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(8000),headers:{Accept:'application/json','User-Agent':'Shielded-Labs-Portal'}});
  if(!response.ok)throw new Error('Source unavailable');
  return response;
 }
@@ -23,7 +25,7 @@ async function refresh():Promise<GovernanceData>{
  const old=cache??seed;
  // Historical proposals stay a dated snapshot until an independent published history API is available.
  const proposals = { ...seed.proposals, state: 'snapshot' as const };
- const [review,grants,payments,members,verification]=await Promise.all([
+ const [review,grants,payments,members,verification,coinholder]=await Promise.all([
   update(old.review,async()=>reviewSchema.array().parse((await (await read(old.review.url)).json()).proposals)),
   update(old.grants,async()=>grantSchema.array().parse((await (await read(old.grants.url)).json()).data)),
   update(old.payments,async()=>{
@@ -40,8 +42,9 @@ async function refresh():Promise<GovernanceData>{
    return memberSchema.array().parse(rows);
   }),
   update(old.verification,async()=>verificationSchema.parse(await(await read(old.verification.url)).json())),
+  update(old.coinholder,fetchCoinholderProposals),
  ]);
- return {checkedAt:new Date().toISOString(),proposals,review,grants,payments,members,verification};
+ return {checkedAt:new Date().toISOString(),proposals,review,grants,payments,members,verification,coinholder};
 }
 export async function getGovernanceData(){
  if(cache&&Date.now()-refreshedAt<TTL)return cache;

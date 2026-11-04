@@ -13,4 +13,16 @@ describe('Shielded preview evidence boundaries', () => {
     const result = activityDays([repo('core', false, 'a'), repo('older', false, 'b', '2026-10-23T23:59:59Z'), repo('fork', true, 'c')], '2026-10-25T23:30:00Z', 3);
     expect(result).toEqual([{ day: '2026-10-23', count: 1 }, { day: '2026-10-24', count: 0 }, { day: '2026-10-25', count: 1 }]);
   });
+
+  it('shares UTC date handling and invalid-date exclusion with the development records', () => {
+    const repos = [repo('core', false, 'a', '2026-10-25T23:30:00-03:00'), repo('older', false, 'b', '2026-10-26T00:30:00+03:00'), repo('invalid', false, 'c', 'not a date')];
+    expect(observedCommits(repos).map(c => c.sha)).toEqual(['a', 'b']);
+    expect(activityDays(repos, '2026-10-25T23:45:00-03:00', 2)).toEqual([{ day: '2026-10-25', count: 1 }, { day: '2026-10-26', count: 1 }]);
+  });
+
+  it('keeps a deduplicated commit link and its primary repository aligned', () => {
+    const saved = repo('saved', false, 'same');
+    const refreshed = { ...repo('refreshed', false, 'same'), fetchedAt: '2026-10-26T23:30:00Z', state: 'live' as const };
+    expect(observedCommits([saved, refreshed])[0]).toMatchObject({ repo: 'refreshed', url: 'https://github.com/ShieldedLabs/refreshed/commit/same' });
+  });
 });

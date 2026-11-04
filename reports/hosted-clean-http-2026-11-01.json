@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-11-01T19:49:03.646557+00:00",
+  "baseUrl": "https://shielded-labs-portal-preview.up.railway.app",
+  "deploymentId": "894e0324-5af2-4e6f-9b2d-8f1ad48314df",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "globalNoticeAbsent": true,
+      "portalPresent": true
+    },
+    {
+      "path": "/?view=governance",
+      "status": 200,
+      "globalNoticeAbsent": true,
+      "portalPresent": true
+    },
+    {
+      "path": "/?view=projects&project=crosslink&section=faq",
+      "status": 200,
+      "globalNoticeAbsent": true,
+      "portalPresent": true
+    },
+    {
+      "path": "/api/shielded-preview",
+      "status": 200,
+      "validJson": true
+    }
+  ]
+}

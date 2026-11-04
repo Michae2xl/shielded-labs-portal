@@ -1,0 +1,124 @@
+{
+  "deploymentId": "bc6b3d4f-b880-4943-829b-ed92b0dcb3a3",
+  "checks": [
+    {
+      "areas": "\"purpose purpose reading\" \"progress next reading\"",
+      "headings": [
+        "Why it matters",
+        "Progress",
+        "What comes next",
+        "Start here"
+      ],
+      "scrollWidth": 1162,
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=crosslink",
+      "width": 1175
+    },
+    {
+      "display": "grid",
+      "questionCards": 5,
+      "scrollWidth": 1162,
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=governance&section=insights&lane=panels",
+      "width": 1175
+    },
+    {
+      "metrics": [
+        {
+          "height": 36.399147033691406,
+          "lineHeight": "36.4px",
+          "text": "$29,246,413.49"
+        },
+        {
+          "height": 33.59375,
+          "lineHeight": "33.6px",
+          "text": "406,622.27765481"
+        },
+        {
+          "height": 23.799715042114254,
+          "lineHeight": "23.8px",
+          "text": "$20,689,480.49"
+        },
+        {
+          "height": 23.799715042114254,
+          "lineHeight": "23.8px",
+          "text": "398,735.15265481"
+        },
+        {
+          "height": 23.799715042114254,
+          "lineHeight": "23.8px",
+          "text": "$8,556,933.00"
+        },
+        {
+          "height": 23.799715042114254,
+          "lineHeight": "23.8px",
+          "text": "7,887.125"
+        }
+      ],
+      "scrollWidth": 341,
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=governance&section=insights&lane=payments",
+      "width": 354
+    },
+    {
+      "images": [
+        {
+          "loaded": true,
+          "src": "/logos/shielded-labs.png"
+        },
+        {
+          "loaded": true,
+          "src": "/shielded-preview/avatars/aphelionz.jpg"
+        },
+        {
+          "loaded": true,
+          "src": "/shielded-preview/avatars/pmttavara.png"
+        },
+        {
+          "loaded": true,
+          "src": "/_next/image?url=%2Fshielded-preview%2Feditorial%2Feb09553eea91e49ca4dc.jpg&w=3840&q=75"
+        },
+        {
+          "loaded": true,
+          "src": "/_next/image?url=%2Fshielded-preview%2Feditorial%2F6c7e0079f5d164c8ca91.png&w=3840&q=75"
+        },
+        {
+          "loaded": true,
+          "src": "/_next/image?url=%2Fshielded-preview%2Feditorial%2Fc829c63d09396869339f.png&w=3840&q=75"
+        },
+        {
+          "loaded": true,
+          "src": "/logos/zcash.svg"
+        },
+        {
+          "loaded": true,
+          "src": "/logos/shielded-labs.png"
+        }
+      ],
+      "scrollWidth": 1162,
+      "tiles": [
+        {
+          "background": "rgb(17, 17, 17)",
+          "corner": "12px",
+          "title": "Milestones"
+        },
+        {
+          "background": "rgb(17, 17, 17)",
+          "corner": "12px",
+          "title": "Code activity"
+        },
+        {
+          "background": "rgb(17, 17, 17)",
+          "corner": "12px",
+          "title": "From the blog"
+        },
+        {
+          "background": "rgb(17, 17, 17)",
+          "corner": "12px",
+          "title": "Zcash Governance"
+        }
+      ],
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=overview#overview-milestones",
+      "width": 1175
+    }
+  ],
+  "consoleErrors": [],
+  "publicInteraction": "Project Explore progress opens Crosslink milestones"
+}

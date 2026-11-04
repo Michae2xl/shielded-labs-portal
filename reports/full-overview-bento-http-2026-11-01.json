@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-11-01T20:34:27.434193+00:00",
+  "deployment": "99f034ea-f791-4870-b340-8c964b4efb33",
+  "page": {
+    "url": "https://shielded-labs-portal-preview.up.railway.app/",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "hasWalletPaths": true
+  },
+  "stylesheets": [
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/06bfh2gpvojwp.css",
+      "status": 200,
+      "bytes": 13004
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3sgh1m44ebmfy.css",
+      "status": 200,
+      "bytes": 19674
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3rh8ahx9ddoj_.css",
+      "status": 200,
+      "bytes": 140536
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/40v6l5lp-x0u2.css",
+      "status": 200,
+      "bytes": 115393
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/2ghpxff2ihhqz.css",
+      "status": 200,
+      "bytes": 26795
+    }
+  ],
+  "logos": [
+    {
+      "name": "zodl",
+      "status": 200,
+      "contentType": "image/png",
+      "sha256": "eea10e2a34830e880debb1520413f92db90118a65a177770afee90a7ee48a4c1",
+      "matchesSource": true
+    },
+    {
+      "name": "zkool",
+      "status": 200,
+      "contentType": "image/png",
+      "sha256": "bb1ab38848ff635918aa90bdf72dc97c4b628c09d501cd902d5fd8525e53b762",
+      "matchesSource": true
+    },
+    {
+      "name": "vizor",
+      "status": 200,
+      "contentType": "image/png",
+      "sha256": "c049a9e088f9f0616817cb4f1d0f6c4ef987f502318d5aabdba2add1bfe4c8e3",
+      "matchesSource": true
+    }
+  ]
+}

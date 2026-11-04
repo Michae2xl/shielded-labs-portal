@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-11-01T20:07:32.296990+00:00",
+  "url": "https://shielded-labs-portal-preview.up.railway.app/",
+  "deploymentId": "bebe7431-d16a-4c7f-b0f1-bd9e2e411297",
+  "status": 200,
+  "stylesheets": [
+    "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/06bfh2gpvojwp.css",
+    "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3sgh1m44ebmfy.css",
+    "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/2v73acfq95um6.css",
+    "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/13trvwnywz9ic.css",
+    "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/2387virb0m1et.css"
+  ],
+  "whiteAccentServed": true,
+  "globalNoticeAbsent": true,
+  "defaultGovernance": true,
+  "browserPrimaryAction": {
+    "text": "rgb(17, 17, 17)",
+    "background": "rgb(242, 242, 242)",
+    "icon": "rgb(17, 17, 17)"
+  },
+  "localChecks": [
+    "CSS parse: 28 stylesheets",
+    "Program guide navigation",
+    "Crosslink FAQ answer expanded",
+    "Narrow viewport: no horizontal overflow",
+    "Mobile menu opened",
+    "git diff --check"
+  ]
+}

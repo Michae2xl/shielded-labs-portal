@@ -1,0 +1,13 @@
+.git/
+.next/
+node_modules/
+.env*
+.codex/
+.agents/
+reports/
+docs/
+coverage/
+*.tsbuildinfo
+__pycache__/
+*.pyc
+.DS_Store

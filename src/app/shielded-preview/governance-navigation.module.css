@@ -2,23 +2,23 @@
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 8px;
-  margin: 0 0 26px;
-  padding-bottom: 18px;
+  margin: 0 0 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border, #292929);
 }
 
 .navigation a {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  min-height: 88px;
-  padding: 12px 6px;
+  gap: 7px;
+  min-height: 48px;
+  padding: 10px 6px;
   border-radius: 8px;
   color: var(--secondary-ink, #c2c2c2);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 24px;
   text-decoration: none;
@@ -35,9 +35,9 @@
   background: transparent;
 }
 
-.navigation a svg { color: #aaa; transition: color 160ms ease, transform 160ms ease; }
+.navigation a svg { width: 20px; height: 20px; color: #aaa; transition: color 160ms ease; }
 .navigation a:hover { background: #111; color: #fff; }
-.navigation a:hover svg { color: #eee; transform: translateY(-2px); }
+.navigation a:hover svg { color: #eee; }
 .navigation a[aria-current] { background: #151515; color: #fff; font-weight: 600; }
 .navigation a[aria-current] svg { color: #f0f0f0; }
 .navigation a[aria-current]::after { background: #f0f0f0; }
@@ -53,19 +53,19 @@
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 6px 4px;
-    margin-bottom: 20px;
-    padding-bottom: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
   }
   .navigation a {
     grid-column: span 3;
-    min-height: 64px;
-    gap: 6px;
+    min-height: 44px;
+    gap: 4px;
     padding: 8px 2px;
     font-size: clamp(12px, 3.35vw, 14px);
     line-height: 18px;
   }
   .navigation a:nth-child(n+5) { grid-column: span 4; }
-  .navigation a svg { width: 26px; height: 26px; }
+  .navigation a svg { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) { .navigation a, .navigation a svg { transition: none; } .navigation a:hover svg { transform: none; } }

@@ -1,0 +1,295 @@
+{
+  "reviewedAt": "2026-11-01",
+  "projects": {
+    "crosslink": {
+      "presentation": {
+        "source": "https://shieldedlabs.net/crosslink/",
+        "documentId": "crosslink-guide",
+        "text": "Crosslink is a proposed upgrade for Zcash by Shielded Labs."
+      },
+      "badge": {
+        "source": "https://shieldedlabs.net/roadmap/",
+        "documentId": "crosslink-roadmap",
+        "anchor": "productionization-phase",
+        "text": "In Progress"
+      },
+      "progress": {
+        "source": "https://shieldedlabs.net/roadmap/",
+        "documentId": "crosslink-roadmap",
+        "anchor": "productionization-phase",
+        "text": "Productionization Phase",
+        "detail": "Status: In Progress"
+      },
+      "next": {
+        "source": "https://shieldedlabs.net/roadmap/",
+        "documentId": "crosslink-roadmap",
+        "anchor": "productionization-phase",
+        "text": "deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback",
+        "ellipsisStart": true,
+        "ellipsisEnd": true,
+        "window": "Q2 2026 - Q2 2027"
+      },
+      "recordsHeading": "Completed milestones",
+      "records": [
+        {
+          "source": "https://shieldedlabs.net/roadmap/",
+          "documentId": "crosslink-roadmap",
+          "anchor": "pre-productionization-tech-debt-final-refactoring",
+          "title": "Pre-Productionization, Tech Debt, Final Refactoring",
+          "date": "2026-04-15",
+          "dateLabel": "Completed"
+        },
+        {
+          "source": "https://shieldedlabs.net/roadmap/",
+          "documentId": "crosslink-roadmap",
+          "anchor": "staking-transaction-semantics",
+          "title": "Staking Transaction Semantics",
+          "date": "2026-01-28",
+          "dateLabel": "Completed"
+        },
+        {
+          "source": "https://shieldedlabs.net/roadmap/",
+          "documentId": "crosslink-roadmap",
+          "anchor": "pow-consensus",
+          "title": "PoW Consensus",
+          "date": "2025-08-28",
+          "dateLabel": "Completed"
+        },
+        {
+          "source": "https://shieldedlabs.net/roadmap/",
+          "documentId": "crosslink-roadmap",
+          "anchor": "disconnected-bft",
+          "title": "Disconnected BFT",
+          "date": "2025-05-16",
+          "dateLabel": "Completed"
+        },
+        {
+          "source": "https://shieldedlabs.net/roadmap/",
+          "documentId": "crosslink-roadmap",
+          "anchor": "placeholders-and-processes",
+          "title": "Placeholders and Processes",
+          "date": "2025-03-21",
+          "dateLabel": "Completed"
+        }
+      ]
+    },
+    "epoch": {
+      "presentation": {
+        "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+        "documentId": "epoch-future-proof-cryptography-for-zcash",
+        "publishedAt": "2026-10-01",
+        "text": "Future-Proof Cryptography for Zcash"
+      },
+      "badge": {
+        "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+        "documentId": "epoch-future-proof-cryptography-for-zcash",
+        "anchor": "phase-1-research-and-design",
+        "publishedAt": "2026-10-01",
+        "text": "Research and Design"
+      },
+      "progress": {
+        "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+        "documentId": "epoch-future-proof-cryptography-for-zcash",
+        "anchor": "phase-1-research-and-design",
+        "publishedAt": "2026-10-01",
+        "text": "Phase 1: Research and Design"
+      },
+      "next": {
+        "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+        "documentId": "epoch-future-proof-cryptography-for-zcash",
+        "anchor": "phase-1-research-and-design",
+        "publishedAt": "2026-10-01",
+        "text": "From there, we are targeting a production-ready cryptographic implementation by the end of 2027",
+        "ellipsisEnd": true
+      },
+      "recordsHeading": "Published updates",
+      "records": [
+        {
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "documentId": "epoch-future-proof-cryptography-for-zcash",
+          "anchor": "phase-1-research-and-design",
+          "publishedAt": "2026-10-01",
+          "title": "Epoch: Future-Proof Cryptography for Zcash",
+          "date": "2026-10-01",
+          "dateLabel": "Published"
+        }
+      ]
+    },
+    "nsm": {
+      "presentation": {
+        "source": "https://shieldedlabs.net/nsm/",
+        "documentId": "nsm-guide",
+        "anchor": "what-does-the-nsm-accomplish",
+        "text": "The NSM enables burned ZEC to support network sustainability."
+      },
+      "progress": {
+        "source": "https://shieldedlabs.net/nsm/",
+        "documentId": "nsm-guide",
+        "anchor": "summary",
+        "text": "There are three ZIPs associated with the NSM:"
+      },
+      "next": {
+        "source": "https://shieldedlabs.net/nsm/",
+        "documentId": "nsm-guide",
+        "text": null
+      },
+      "recordsHeading": "Published references",
+      "records": [
+        {
+          "title": "ZIP 233",
+          "href": "https://zips.z.cash/zip-0233",
+          "source": "https://shieldedlabs.net/nsm/",
+          "documentId": "nsm-guide"
+        },
+        {
+          "title": "ZIP 234",
+          "href": "https://zips.z.cash/zip-0234",
+          "source": "https://shieldedlabs.net/nsm/",
+          "documentId": "nsm-guide"
+        },
+        {
+          "title": "ZIP 235",
+          "href": "https://zips.z.cash/zip-0235",
+          "source": "https://shieldedlabs.net/nsm/",
+          "documentId": "nsm-guide"
+        }
+      ],
+      "summaryReferences": true
+    },
+    "ironwood": {
+      "presentation": {
+        "source": "https://shieldedlabs.net/projects/",
+        "text": "Create a new shielded pool and restore the integrity of Zcash’s circulating supply."
+      },
+      "badge": {
+        "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+        "documentId": "epoch-future-proof-cryptography-for-zcash",
+        "anchor": "why-this-matters-now",
+        "publishedAt": "2026-10-01",
+        "text": "NU6.3"
+      },
+      "progress": {
+        "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+        "documentId": "epoch-future-proof-cryptography-for-zcash",
+        "anchor": "why-this-matters-now",
+        "publishedAt": "2026-10-01",
+        "text": "since NU6.3, Ironwood notes have been designed to be quantum-recoverable",
+        "ellipsisStart": true,
+        "ellipsisEnd": true
+      },
+      "next": {
+        "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+        "documentId": "epoch-future-proof-cryptography-for-zcash",
+        "anchor": "why-this-matters-now",
+        "publishedAt": "2026-10-01",
+        "text": null
+      },
+      "recordsHeading": "Published updates",
+      "records": [
+        {
+          "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+          "documentId": "epoch-future-proof-cryptography-for-zcash",
+          "anchor": "why-this-matters-now",
+          "publishedAt": "2026-10-01",
+          "title": "Epoch: Future-Proof Cryptography for Zcash",
+          "date": "2026-10-01",
+          "dateLabel": "Published"
+        },
+        {
+          "source": "https://shieldedlabs.net/ironwood-verifying-the-soundness-of-zcashs-circulating-supply/",
+          "documentId": "ironwood-verifying-the-soundness-of-zcashs-circulating-supply",
+          "publishedAt": "2026-06-06",
+          "title": "Ironwood: Verifying the Soundness of Zcash’s Circulating Supply",
+          "date": "2026-06-06",
+          "dateLabel": "Published"
+        },
+        {
+          "source": "https://shieldedlabs.net/the-orchard-counterfeiting-vulnerability/",
+          "documentId": "the-orchard-counterfeiting-vulnerability",
+          "publishedAt": "2026-06-04",
+          "title": "The Orchard Counterfeiting Vulnerability",
+          "date": "2026-06-04",
+          "dateLabel": "Published"
+        }
+      ]
+    },
+    "zero": {
+      "presentation": {
+        "source": "https://shieldedlabs.net/zero/",
+        "documentId": "zero-guide",
+        "text": "Zero is a supported suite of open-source Zcash infrastructure software",
+        "ellipsisEnd": true
+      },
+      "progress": {
+        "source": "https://shieldedlabs.net/zero/",
+        "documentId": "zero-guide",
+        "anchor": "repositories",
+        "text": "Our current Zero repositories include:"
+      },
+      "next": {
+        "source": "https://shieldedlabs.net/zero/",
+        "documentId": "zero-guide",
+        "text": null
+      },
+      "recordsHeading": "Published repositories",
+      "records": [
+        {
+          "title": "Zero Software Stack",
+          "href": "https://github.com/ShieldedLabs/zero",
+          "source": "https://shieldedlabs.net/zero/",
+          "documentId": "zero-guide"
+        },
+        {
+          "title": "zero-indexer",
+          "href": "https://github.com/ShieldedLabs/zero/tree/main/zeronym",
+          "source": "https://shieldedlabs.net/zero/",
+          "documentId": "zero-guide"
+        }
+      ],
+      "summaryReferences": true
+    },
+    "fees": {
+      "presentation": {
+        "source": "https://shieldedlabs.net/projects/",
+        "text": "Develop market-driven, comparable-based transaction fee mechanics."
+      },
+      "progress": {
+        "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+        "documentId": "fees-roadmap",
+        "anchor": "phase-1-experimental-wallet-pilots",
+        "text": "Phase 1: Experimental Wallet Pilots"
+      },
+      "next": {
+        "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+        "documentId": "fees-roadmap",
+        "anchor": "phase-2-the-fee-estimator-z-getstandardfee",
+        "text": null,
+        "steps": [
+          "Phase 2: The Fee Estimator (z_getstandardfee)",
+          "Phase 3: Parameter Tuning"
+        ]
+      },
+      "recordsHeading": "Published roadmap",
+      "records": [
+        {
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "documentId": "fees-roadmap",
+          "anchor": "phase-1-experimental-wallet-pilots",
+          "title": "Phase 1: Experimental Wallet Pilots"
+        },
+        {
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "documentId": "fees-roadmap",
+          "anchor": "phase-2-the-fee-estimator-z-getstandardfee",
+          "title": "Phase 2: The Fee Estimator (z_getstandardfee)"
+        },
+        {
+          "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+          "documentId": "fees-roadmap",
+          "anchor": "phase-3-parameter-tuning",
+          "title": "Phase 3: Parameter Tuning"
+        }
+      ]
+    }
+  }
+}

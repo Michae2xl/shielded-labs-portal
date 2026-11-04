@@ -1,0 +1,64 @@
+{
+  "cards": [
+    {
+      "height": 256.2854919433594,
+      "title": "Coinholder grants",
+      "width": 569.4033813476562
+    },
+    {
+      "height": 256.2854919433594,
+      "title": "Submit completed work",
+      "width": 276.70452880859375
+    },
+    {
+      "height": 267.7769775390625,
+      "title": "Vote with ZEC",
+      "width": 276.70452880859375
+    },
+    {
+      "height": 267.7769775390625,
+      "title": "Join ZCAP",
+      "width": 276.70452880859375
+    },
+    {
+      "height": 267.7769775390625,
+      "title": "Join the discussion",
+      "width": 276.70452880859375
+    },
+    {
+      "height": 470.7741394042969,
+      "title": "ZCG applications",
+      "width": 496.2286682128906
+    },
+    {
+      "height": 470.7741394042969,
+      "title": "Grant payments",
+      "width": 349.8792419433594
+    }
+  ],
+  "pageWidth": 1162,
+  "viewport": {
+    "height": 812,
+    "width": 1175
+  },
+  "wallets": [
+    {
+      "href": "https://zodl.com",
+      "loaded": true,
+      "name": "ZODL"
+    },
+    {
+      "href": "https://github.com/hhanh00/zkool2",
+      "loaded": true,
+      "name": "Zkool"
+    },
+    {
+      "href": "https://vizor.cash",
+      "loaded": true,
+      "name": "Vizor"
+    }
+  ],
+  "consoleErrors": [],
+  "internalProgramGuide": true,
+  "cardsScope": "Newly unified participation and activity cards"
+}

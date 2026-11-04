@@ -1,0 +1,69 @@
+{
+  "checks": [
+    {
+      "metrics": [
+        {
+          "height": 23.799715042114254,
+          "lineHeight": "23.8px",
+          "text": "$8,389,992.00"
+        },
+        {
+          "height": 23.799715042114254,
+          "lineHeight": "23.8px",
+          "text": "$624,391.20"
+        }
+      ],
+      "scrollWidth": 341,
+      "url": "http://127.0.0.1:4250/?view=governance&section=insights&lane=outcomes",
+      "width": 354
+    },
+    {
+      "metrics": [
+        {
+          "height": 36.20028305053711,
+          "lineHeight": "36.2079px",
+          "nowrap": "normal",
+          "text": "$29,246,413.49"
+        },
+        {
+          "height": 28.96306800842285,
+          "lineHeight": "28.9664px",
+          "nowrap": "nowrap",
+          "text": "406,622.27765481"
+        }
+      ],
+      "scrollWidth": 1162,
+      "url": "http://127.0.0.1:4250/?view=governance&section=insights&lane=payments",
+      "width": 1175
+    },
+    {
+      "areas": "\"purpose purpose progress\" \"next next reading\"",
+      "scrollWidth": 1162,
+      "url": "http://127.0.0.1:4250/?view=projects&project=zero",
+      "width": 1175
+    },
+    {
+      "areas": "\"purpose purpose\" \"progress next\" \"reading reading\"",
+      "scrollWidth": 917,
+      "url": "http://127.0.0.1:4250/?view=projects&project=epoch",
+      "width": 931
+    }
+  ],
+  "interactions": [
+    "Project progress opens the existing milestones",
+    "Research opens project-scoped documents",
+    "FAQ answer expands on mobile",
+    "Overview code activity opens Zero history",
+    "All funded outcomes applies the Funded filter",
+    "Latest payment opens Zcash Arabia with milestones and source rows",
+    "NU7 issuance opens matching question with all-response basis"
+  ],
+  "consoleErrors": [],
+  "tests": {
+    "files": 27,
+    "passed": 145
+  },
+  "build": "production webpack passed",
+  "lint": "passed",
+  "isolation": "passed"
+}

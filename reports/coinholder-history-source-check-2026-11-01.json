@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-11-01T20:49:20.488Z",
+  "source": "https://api.github.com/repos/Financial-Privacy-Foundation/ZcashCoinholderGrantsProgram/issues?state=all&per_page=100",
+  "rawIssues": 70,
+  "applications": 69,
+  "excluded": [
+    73
+  ],
+  "eligibleCurrent": [
+    71,
+    70,
+    69
+  ],
+  "rounds": {
+    "q4-2026": 6,
+    "q3-2026": 37,
+    "q2-2026": 9,
+    "q1-2026": 6,
+    "q4-2025": 8,
+    "unassigned": 12
+  },
+  "missingAmounts": [
+    65,
+    17,
+    16
+  ]
+}

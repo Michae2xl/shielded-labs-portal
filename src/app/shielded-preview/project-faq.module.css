@@ -1,0 +1,54 @@
+.faq { min-width: 0; }
+.header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+.faq .header h2 { font-size: 22px; line-height: 1.35; letter-spacing: -.45px; margin: 0; }
+.search { display: flex; align-items: center; gap: 10px; flex: 0 0 280px; border: 1px solid #383838; border-radius: 7px; padding: 0 14px; max-width: 100%; background: #111; color: #aaa; }
+.search input { width: 100%; min-width: 0; min-height: 44px; border: 0; outline: 0; background: none; color: #eee; font: inherit; font-size: 15px; }
+.search input::placeholder { color: #999; }
+.search:focus-within { outline: 2px solid var(--project-accent); outline-offset: 3px; }
+.layout { display: grid; gap: 16px; margin-bottom: 24px; }
+.topics { display: flex; flex-wrap: wrap; gap: 8px; }
+.topics button { display: flex; align-items: center; min-height: 40px; padding: 8px 13px; border: 1px solid #2d2d2d; border-radius: 6px; color: #b8b8b8; background: transparent; font: inherit; font-size: 13px; line-height: 1.5; text-align: left; cursor: pointer; }
+.topics button:hover { background: #141414; color: #eee; }
+.topics button[aria-pressed="true"] { background: var(--accent-surface-hover); border-color: var(--accent-border); color: var(--accent); }
+.faq button:focus-visible, .faq a:focus-visible { outline: 2px solid var(--project-accent); outline-offset: 3px; }
+.questions { min-width: 0; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.faq .count { color: #aaa; font-size: 12px; margin: 0 0 12px; }
+.accordion { border: 1px solid #2e2e2e; border-radius: 9px; background: #101010; overflow: hidden; }
+.question { border-bottom: 1px solid #2e2e2e; scroll-margin-top: 24px; }
+.question:last-child { border-bottom: 0; }
+.question[data-open] { background: var(--accent-surface); }
+.faq .question h3 { margin: 0; font-size: 16px; line-height: 1.55; }
+.question h3 > button { display: grid; grid-template-columns: minmax(0, 1fr) 18px; gap: 20px; align-items: center; min-height: 64px; padding: 17px 20px; width: 100%; border: 0; background: none; color: #e9e9e9; text-align: left; cursor: pointer; font: inherit; font-weight: 500; }
+.question h3 > button:hover { background: #ffffff04; }
+.question h3 > button:focus-visible { outline-offset: -3px; }
+.question h3 svg { color: #9c9c9c; }
+.question[data-open] h3 svg { color: var(--project-accent); }
+.answer { padding: 0 58px 20px 20px; }
+.answer > div { font-size: 16px; line-height: 1.8; max-width: 76ch; }
+.answerActions { margin-top: 2px; }
+.answerLink { display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; background: none; color: var(--accent-secondary); font: inherit; font-size: 13px; min-height: 40px; cursor: pointer; }
+.answerLink:hover { text-decoration: underline; text-underline-offset: 4px; }
+.manualLink { display: grid; gap: 7px; margin-top: 8px; color: #bbb; font-size: 13px; }
+.manualLink input { min-width: 0; width: 100%; min-height: 42px; padding: 8px 10px; border: 1px solid #555; border-radius: 5px; background: #151515; color: #eee; font: inherit; }
+.empty { padding: 30px 22px; border: 1px solid #333; border-radius: 8px; color: #bbb; }
+.faq .empty h3 { color: #eee; margin: 0 0 8px; font-size: 18px; }
+.faq .empty p { font-size: 15px; margin: 0 0 15px; }
+.empty button { min-height: 42px; padding: 8px 14px; border: 1px solid #555; border-radius: 6px; background: #1a1a1a; color: #eee; font: inherit; font-size: 14px; cursor: pointer; }
+.source { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 20px; margin-top: 18px; color: #a9a9a9; font-size: 12px; line-height: 1.6; }
+.source a { display: inline-flex; align-items: center; gap: 10px; min-height: 36px; }
+.source a:hover { color: #eee; text-decoration: underline; text-underline-offset: 4px; }
+@container (max-width: 650px) {
+  .header { flex-direction: column; align-items: stretch; gap: 14px; margin-bottom: 16px; }
+  .search { flex-basis: auto; width: 100%; }
+  .search input { font-size: 16px; }
+  .topics { gap: 7px; }
+  .topics button { padding: 9px 12px; min-height: 44px; }
+}
+@container (max-width: 460px) {
+  .faq .header h2 { font-size: 21px; }
+  .question { scroll-margin-top: 90px; }
+  .question h3 > button { padding: 16px; gap: 14px; min-height: 64px; }
+  .answer { padding: 0 16px 18px; }
+  .answer > div { font-size: 16px; }
+}

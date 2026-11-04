@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { feeSections, simulatorSource, type Simulator } from '@/lib/shielded-preview/editorial/simulators';
+import { editorialCatalog, editorialHref } from '@/lib/shielded-preview/editorial/library';
 import s from './simulator.module.css';
 
-export default function SimulatorView({ tool, onFollow, backHref }: { tool: Simulator; onFollow: (href: string) => void; backHref?: string }) {
+export default function SimulatorView({ tool, onFollow, backHref, embedded = false }: { tool: Simulator; onFollow: (href: string) => void; backHref?: string; embedded?: boolean }) {
   const [source, setSource] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [frameState, setFrameState] = useState<{ key: string; failed: boolean } | null>(null);
@@ -21,11 +22,12 @@ export default function SimulatorView({ tool, onFollow, backHref }: { tool: Simu
     window.addEventListener('popstate', update); window.addEventListener('shielded:navigate', update);
     return () => { window.removeEventListener('popstate', update); window.removeEventListener('shielded:navigate', update); };
   }, [tool.id]);
-  const guide = `?view=resources&section=${tool.project}&record=${tool.guide}`;
+  const guide = editorialHref(editorialCatalog.find(entry => entry.id === tool.guide)!);
+  const Title = embedded ? 'h2' : 'h1';
   return <article className={s.simulator}>
-    {backHref && <a className={s.back} href={backHref} onClick={event => { if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onFollow(backHref); }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg>Resources</a>}
+    {backHref && <a className={s.back} href={backHref} onClick={event => { if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onFollow(backHref); }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg>{embedded ? 'Research & guides' : 'Resources'}</a>}
     <header className={s.header}>
-      <div><h1 ref={heading} tabIndex={-1}>{tool.title}</h1><p>{tool.summary}</p></div>
+      <div><Title ref={heading} tabIndex={-1}>{tool.title}</Title><p>{tool.summary}</p></div>
       <a href={guide} onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) { event.preventDefault(); onFollow(guide); } }}>{tool.guideLabel}<span aria-hidden="true">→</span></a>
     </header>
     <div className={s.toolbar}>

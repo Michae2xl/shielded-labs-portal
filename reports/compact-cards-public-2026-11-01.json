@@ -1,0 +1,49 @@
+{
+  "before": [
+    {
+      "height": 453,
+      "title": "Coinholder grants",
+      "width": 470
+    },
+    {
+      "height": 453,
+      "title": "NU7 scope",
+      "width": 470
+    },
+    {
+      "height": 295,
+      "title": "Protocol decisions",
+      "width": 470
+    },
+    {
+      "height": 295,
+      "title": "Ecosystem funding",
+      "width": 470
+    }
+  ],
+  "after": [
+    {
+      "height": 268,
+      "title": "Coinholder grants",
+      "width": 423
+    },
+    {
+      "height": 341,
+      "title": "NU7 scope",
+      "width": 423
+    },
+    {
+      "height": 227,
+      "title": "Protocol decisions",
+      "width": 423
+    },
+    {
+      "height": 227,
+      "title": "Ecosystem funding",
+      "width": 423
+    }
+  ],
+  "note": "Native viewport width changed between captures; widths recorded for context.",
+  "url": "https://shielded-labs-portal-preview.up.railway.app/#governance-outcomes-heading",
+  "deploymentId": "4a57feda-bd31-4446-8f05-040d7a2cf4f5"
+}

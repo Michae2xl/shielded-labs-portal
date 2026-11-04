@@ -1,0 +1,57 @@
+{
+  "id": "f2d307cc-0314-4dba-9af2-fbbd97f2c9df",
+  "status": "SUCCESS",
+  "createdAt": "2026-11-01T21:58:49.741Z",
+  "meta": {
+    "buildOnly": false,
+    "cliAgentSessionId": "01a197eb-f468-79f0-83f1-215341c867b2",
+    "cliCaller": "codex",
+    "cliMessage": "Use official project introductions, progress and next steps",
+    "fileServiceManifest": {},
+    "imageDigest": "sha256:1340a107f2b6585d56b7335d7fe336ec16f268a8e17d3ce739d887b016f3183f",
+    "logsV2": true,
+    "nixpacksProviders": [],
+    "propertyFileMapping": {},
+    "reason": "deploy",
+    "rootDirectory": null,
+    "runtime": "V2",
+    "serviceManifest": {
+      "build": {
+        "buildCommand": "npm run build:feedback",
+        "buildEnvironment": "V3",
+        "builder": "RAILPACK",
+        "dockerfilePath": null,
+        "nixpacksConfigPath": null,
+        "nixpacksPlan": null,
+        "watchPatterns": []
+      },
+      "deploy": {
+        "cronSchedule": null,
+        "drainingSeconds": null,
+        "healthcheckPath": "/",
+        "healthcheckTimeout": 120,
+        "ipv6EgressEnabled": false,
+        "limitOverride": null,
+        "multiRegionConfig": {
+          "us-west2": {
+            "numReplicas": 1
+          }
+        },
+        "numReplicas": 1,
+        "overlapSeconds": null,
+        "preDeployCommand": null,
+        "preDeployTimeoutSeconds": null,
+        "region": null,
+        "registryCredentials": null,
+        "requiredMountPath": null,
+        "restartPolicyMaxRetries": 3,
+        "restartPolicyType": "ON_FAILURE",
+        "runtime": "V2",
+        "sleepApplication": false,
+        "startCommand": "npm run start:hosted",
+        "useLegacyStacker": false
+      }
+    },
+    "volumeMounts": []
+  }
+}

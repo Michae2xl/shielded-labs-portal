@@ -1,0 +1,57 @@
+.grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 16px; align-items: start; }
+.grid > * { min-width: 0; }
+.card { min-width: 0; padding: 18px 20px; border: 1px solid #343434; border-radius: 12px; background: #111; }
+.heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; padding-bottom: 10px; }
+.grid .heading h2, .emptyState h2 { font-size: 20px; line-height: 1.35; letter-spacing: -.35px; }
+.heading > span { color: #aaa; font-size: 12px; line-height: 1.5; }
+.commits { list-style: none; padding: 0; margin: 0; }
+.commits li + li { border-top: 1px solid #2c2c2c; }
+.commits a { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; min-height: 72px; }
+.commits a > :first-child { flex-shrink: 0; margin-top: 2px; }
+.commits a > svg { width: 16px; height: 16px; color: #a9a9a9; align-self: center; }
+.commitCopy { flex: 1; min-width: 0; }
+.grid .commitCopy h3 { font-size: 15px; line-height: 1.5; font-weight: 500; margin: 0; overflow-wrap: anywhere; }
+.commits a:hover h3, .repository:hover h3 { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+.commitMeta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; margin-top: 6px; color: #aaa; font-size: 12px; line-height: 1.5; }
+.commitMeta > span { overflow-wrap: anywhere; }
+.commitMeta time { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.commitRepo { color: #c4c4c4; }
+.action { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; padding-top: 12px; font-size: 14px; line-height: 1.5; font-weight: 500; }
+.activity > .action { border-top: 1px solid #343434; }
+.action:hover { text-decoration: underline; text-underline-offset: 4px; }
+.action > svg { width: 16px; height: 16px; color: #aaa; }
+.repositoryStack { display: grid; gap: 16px; }
+.repository { display: block; }
+.repository:hover { background: #161616; border-color: #555; }
+.repositoryHeading { display: flex; align-items: center; gap: 12px; }
+.repositoryHeading > div { flex: 1; min-width: 0; }
+.repositoryHeading > div > span { display: block; font-size: 12px; line-height: 1.5; color: #aaa; margin-bottom: 3px; }
+.grid .repositoryHeading h3 { font-size: 18px; line-height: 1.35; letter-spacing: -.2px; margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+.codeIcon { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; flex-shrink: 0; border: 1px solid #333; border-radius: 8px; color: #bbb; background: #181818; }
+.repositoryHeading > svg { width: 16px; color: #aaa; }
+.repositoryName { display: block; margin-top: 12px; color: #b7b7b7; font-family: inherit; font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+.facts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin: 14px 0; }
+.facts dt { color: #999; font-size: 12px; line-height: 1.5; }
+.facts dd { margin: 3px 0 0; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.retrieved { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 3px 12px; padding-top: 12px; border-top: 1px solid #303030; color: #aaa; font-size: 12px; line-height: 1.5; }
+.retrieved time { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.refreshNote { display: block; margin-top: 8px; color: #bbb; font-size: 12px; line-height: 1.5; }
+.grid .sample h3, .grid .unavailable h3 { font-size: 15px; line-height: 1.5; margin: 0; font-weight: 500; }
+.grid .sample p, .grid .unavailable p { margin: 7px 0 0; font-size: 13px; line-height: 1.65; color: #aaa; }
+.grid .emptyCopy, .emptyState p { font-size: 15px; line-height: 1.65; color: #b7b7b7; margin: 12px 0 20px; }
+.emptyState { display: flex; align-items: center; justify-content: space-between; gap: 20px 32px; }
+.emptyState p { max-width: 60ch; margin-bottom: 0; }
+.emptyState .action { flex-shrink: 0; padding-top: 0; }
+@container project (max-width: 760px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .repositoryStack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sample { grid-column: 1 / -1; }
+  .emptyState { align-items: flex-start; flex-direction: column; gap: 8px; }
+}
+@container project (max-width: 480px) {
+  .grid, .repositoryStack { gap: 12px; }
+  .repositoryStack { grid-template-columns: minmax(0, 1fr); }
+  .card { padding: 16px; }
+  .commits a { gap: 10px; }
+  .commitMeta { gap: 2px 9px; }
+}

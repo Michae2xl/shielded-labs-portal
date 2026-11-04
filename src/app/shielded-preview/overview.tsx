@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 import { milestones, projects, type Project } from '@/lib/shielded-preview/content';
+import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
 import { developmentDays, repositoryLabels, windowCommits, developmentCommits } from '@/lib/shielded-preview/development-metrics';
 import type { PortalData } from '@/lib/shielded-preview/types';
 import ContributorAvatar from './contributor-avatar';
@@ -13,15 +14,6 @@ import s from './overview.module.css';
 
 type OverviewView = 'projects' | 'governance' | 'activity' | 'impact' | 'blog';
 type Navigate = (view: OverviewView, section?: string, record?: string) => void;
-
-const governance = [
-  { section: 'proposals', title: 'Proposals', description: 'Applications under review' },
-  { section: 'voting', title: 'Voting', description: 'Eligibility and rules' },
-  { section: 'grants', title: 'Grants', description: 'Payments and milestones' },
-  { section: 'results', title: 'Results', description: 'Ballots and outcomes' },
-  { section: 'zcap', title: 'ZCAP', description: 'Members and responses' },
-  { section: 'insights', title: 'Insights', description: 'Data and comparisons' },
-];
 
 function Arrow() {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>;
@@ -61,54 +53,59 @@ export default function Overview({ data, onNavigate, onProject }: {
 
   return <div className={s.overview}>
     <header className={s.intro}>
-      <h1 ref={heading} tabIndex={-1}>Independent. <span>For Zcash.</span></h1>
+      <div className={s.introCopy}>
+        <h1 ref={heading} tabIndex={-1}>Shielded Labs</h1>
+        <p className={s.tagline}>Independent. For Zcash.</p>
+      </div>
       <div className={s.shield}><ShieldSculpture/></div>
     </header>
 
-    <section aria-labelledby="overview-governance" className={s.governance}>
-      <div className={s.governanceIntro}>
-        <h2 id="overview-governance">Zcash Governance Panel</h2>
-        <p>The decisions, funding and community participation shaping Zcash.</p>
-        <PortalLink view="governance" section="overview" onNavigate={onNavigate} className={s.governanceAction}>Open the panel<Arrow/></PortalLink>
-      </div>
-      <div className={s.governanceLinks}>{governance.map(item => <PortalLink key={item.section} view="governance" section={item.section} onNavigate={onNavigate}>
-        <div><h3>{item.title}</h3><p>{item.description}</p></div><Arrow/>
-      </PortalLink>)}</div>
+    <section aria-labelledby="overview-projects" className={s.projects}>
+      <header className={s.sectionHeader}><h2 id="overview-projects">Projects</h2><PortalLink view="projects" onNavigate={onNavigate}>All projects<Arrow/></PortalLink></header>
+      <div className={s.projectGrid}>{projects.map(project => <ProjectLink key={project.id} project={project} onSelect={onProject} className={s.project}>
+        <div className={s.projectTitle}><h3>{project.name}</h3><Arrow/></div>
+        <p><q cite={projectPublications[project.id].presentation.source}>{publicationQuote(projectPublications[project.id].presentation)}</q></p>
+        <span className={s.stage}>{projectPublications[project.id].badge?.text ?? project.category}</span>
+      </ProjectLink>)}</div>
     </section>
 
-    <section aria-labelledby="overview-news" className={s.news}>
-      <header className={s.sectionHeader}><h2 id="overview-news">Latest news</h2><PortalLink view="blog" onNavigate={onNavigate} label="All articles"><Arrow/></PortalLink></header>
-      <div className={s.newsGrid}>{latestNews.map(entry => <PortalLink key={entry.id} view="blog" section="all" record={entry.id} onNavigate={onNavigate} className={s.newsCard}>
-        {entry.image && <Image src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="(max-width: 650px) 100px, (max-width: 900px) calc((100vw - 104px) / 3), calc((100vw - 368px) / 3)"/>}
-        <div><DateStamp date={entry.publishedAt}/><h3>{entry.title}</h3></div><Arrow/>
-      </PortalLink>)}</div>
-    </section>
-
-    <div className={s.workspace}>
-      <section aria-labelledby="overview-projects" className={s.projects}>
-        <header className={s.sectionHeader}><h2 id="overview-projects">Projects</h2><PortalLink view="projects" onNavigate={onNavigate} label="All projects"><Arrow/></PortalLink></header>
-        <div className={s.projectGrid}>{projects.map(project => <ProjectLink key={project.id} project={project} onSelect={onProject} className={s.project}>
-          <div className={s.projectTitle}><h3>{project.name}</h3><Arrow/></div>
-          <p>{project.description}</p>
-          <span className={s.stage}>{project.status}</span>
-        </ProjectLink>)}</div>
+    <div className={s.updates}>
+      <section aria-labelledby="overview-milestones" className={s.milestones}>
+        <header className={s.sectionHeader}><h2 id="overview-milestones">Milestones</h2></header>
+        <div>{recentMilestones.map(milestone => <PortalLink key={milestone.date} view="impact" section={milestone.type.toLowerCase()} record={`milestone:${milestone.date}`} onNavigate={onNavigate} className={s.milestone}>
+          <div><DateStamp date={milestone.date}/><h3>{milestone.name}</h3><p>{milestone.detail}</p></div><Arrow/>
+        </PortalLink>)}</div>
+        <PortalLink view="impact" onNavigate={onNavigate} className={s.cardAction}>All milestones<Arrow/></PortalLink>
       </section>
 
       <section aria-labelledby="overview-code" className={s.code}>
-        <header className={s.sectionHeader}><h2 id="overview-code">Code activity</h2><PortalLink view="activity" onNavigate={onNavigate} label="All code activity"><Arrow/></PortalLink></header>
-        <div className={s.recentCode}>{recentRepositories.map(({ repo, latest }) => <PortalLink key={repo.name} view="activity" section={repo.name} onNavigate={onNavigate} className={s.repository} label={`Explore ${repositoryLabels[repo.name] ?? repo.name} activity`}>
+        <header className={s.sectionHeader}><h2 id="overview-code">Code activity</h2><span className={s.period}>35-day sample</span></header>
+        <div className={s.recentCode}>{recentRepositories.map(({ repo, latest }) => <PortalLink key={repo.name} view="activity" section={repo.name} record={`repo:${repo.name}`} onNavigate={onNavigate} className={s.repository} label={`Explore ${repositoryLabels[repo.name] ?? repo.name} activity`}>
           <ContributorAvatar name={latest.author} login={latest.login} size={36}/>
           <div><h3>{repositoryLabels[repo.name] ?? repo.name}</h3><p>{latest.title}</p><span className={s.codeMeta}>{latest.author}<DateStamp date={latest.date}/></span></div><Arrow/>
         </PortalLink>)}</div>
         {!recentRepositories.length && <p className={s.empty}>No repository activity in the available 35-day sample.</p>}
+        <PortalLink view="activity" onNavigate={onNavigate} className={s.cardAction}>All activity<Arrow/></PortalLink>
       </section>
 
-      <section aria-labelledby="overview-milestones" className={s.milestones}>
-        <header className={s.sectionHeader}><h2 id="overview-milestones">Milestones</h2><PortalLink view="impact" onNavigate={onNavigate} label="All milestones"><Arrow/></PortalLink></header>
-        <div>{recentMilestones.map(milestone => <PortalLink key={milestone.date} view="impact" section={milestone.type.toLowerCase()} record={`milestone:${milestone.date}`} onNavigate={onNavigate} className={s.milestone}>
-          <div><DateStamp date={milestone.date}/><h3>{milestone.name}</h3><p>{milestone.detail}</p></div><Arrow/>
-        </PortalLink>)}</div>
-      </section>
+    <section aria-labelledby="overview-news" className={s.news}>
+      <header className={s.sectionHeader}><h2 id="overview-news">From the blog</h2></header>
+      <div className={s.newsGrid}>{latestNews.map(entry => <PortalLink key={entry.id} view="blog" section="all" record={entry.id} onNavigate={onNavigate} className={s.newsCard}>
+        {entry.image && <Image src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="80px"/>}
+        <div><DateStamp date={entry.publishedAt}/><h3>{entry.title}</h3></div><Arrow/>
+      </PortalLink>)}</div>
+      <PortalLink view="blog" onNavigate={onNavigate} className={s.cardAction}>All articles<Arrow/></PortalLink>
+    </section>
+
+    <section aria-labelledby="overview-governance" className={s.governance}>
+      <Image src="/logos/zcash.svg" width={38} height={38} alt=""/>
+      <div className={s.governanceIntro}>
+        <p className={s.kicker}>Zcash ecosystem</p>
+        <h2 id="overview-governance">Zcash Governance</h2>
+        <p>Follow proposals, funding, voting and published outcomes across the Zcash ecosystem.</p>
+      </div>
+      <PortalLink view="governance" section="overview" onNavigate={onNavigate} className={s.cardAction}>Open governance<Arrow/></PortalLink>
+    </section>
     </div>
   </div>;
 }

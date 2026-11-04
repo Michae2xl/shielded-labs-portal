@@ -1,0 +1,51 @@
+{
+  "deploymentId": "69baf765-c509-447f-bbad-598fff4235e4",
+  "cards": [
+    {
+      "bottom": 338.3735656738281,
+      "height": 247.7769775390625,
+      "label": "governance-results-heading",
+      "width": 569.4033813476562,
+      "x": 273.8565368652344,
+      "y": 90.59658813476562
+    },
+    {
+      "bottom": 599.147705078125,
+      "height": 508.5511169433594,
+      "label": "governance-network-heading",
+      "width": 276.70452880859375,
+      "x": 859.2542114257812,
+      "y": 90.59658813476562
+    },
+    {
+      "bottom": 599.147705078125,
+      "height": 244.77981567382812,
+      "label": "governance-protocol-heading",
+      "width": 276.70452880859375,
+      "x": 273.8565368652344,
+      "y": 354.3678894042969
+    },
+    {
+      "bottom": 599.147705078125,
+      "height": 244.77981567382812,
+      "label": "governance-allocation-heading",
+      "width": 276.70452880859375,
+      "x": 566.5553588867188,
+      "y": 354.3678894042969
+    }
+  ],
+  "grid": {
+    "areas": "\"grants grants network\" \"protocol funding network\"",
+    "width": 862.1022338867188
+  },
+  "url": "https://shielded-labs-portal-preview.up.railway.app/#governance-outcomes-heading",
+  "viewport": {
+    "height": 812,
+    "scrollWidth": 1162,
+    "width": 1175
+  },
+  "checks": {
+    "fundedClick": "Results opened with Funded selected",
+    "publicConsoleErrors": []
+  }
+}

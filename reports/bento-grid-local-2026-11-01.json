@@ -1,0 +1,116 @@
+{
+  "desktop": {
+    "cards": [
+      {
+        "h": 247.7769775390625,
+        "label": "governance-results-heading",
+        "w": 569.4033813476562,
+        "x": 273.8565368652344,
+        "y": 55.596588134765625
+      },
+      {
+        "h": 508.5511169433594,
+        "label": "governance-network-heading",
+        "w": 276.70452880859375,
+        "x": 859.2542114257812,
+        "y": 55.596588134765625
+      },
+      {
+        "h": 244.77981567382812,
+        "label": "governance-protocol-heading",
+        "w": 276.70452880859375,
+        "x": 273.8565368652344,
+        "y": 319.3678894042969
+      },
+      {
+        "h": 244.77981567382812,
+        "label": "governance-allocation-heading",
+        "w": 276.70452880859375,
+        "x": 566.5553588867188,
+        "y": 319.3678894042969
+      }
+    ],
+    "grid": {
+      "areas": "\"grants grants network\" \"protocol funding network\"",
+      "width": 862.1022338867188
+    },
+    "reviewed": [
+      {
+        "font": "17px",
+        "text": "Reviewed 1 Nov 2026 · Rules vary by poll."
+      }
+    ],
+    "viewport": {
+      "height": 812,
+      "scroll": 1162,
+      "width": 1175
+    }
+  },
+  "mobile": {
+    "cards": [
+      {
+        "label": "governance-results-heading",
+        "scrollWidth": 295,
+        "width": 296.9176025390625
+      },
+      {
+        "label": "governance-network-heading",
+        "scrollWidth": 295,
+        "width": 296.9176025390625
+      },
+      {
+        "label": "governance-protocol-heading",
+        "scrollWidth": 295,
+        "width": 296.9176025390625
+      },
+      {
+        "label": "governance-allocation-heading",
+        "scrollWidth": 295,
+        "width": 296.9176025390625
+      }
+    ],
+    "grid": [
+      {
+        "areas": "\"grants\" \"network\" \"protocol\" \"funding\"",
+        "width": 296.9176025390625
+      }
+    ],
+    "source": [
+      {
+        "href": "https://zips.z.cash/zip-1016",
+        "target": "_blank"
+      }
+    ],
+    "viewport": {
+      "height": 767,
+      "scrollWidth": 341,
+      "width": 354
+    }
+  },
+  "interactions": {
+    "funded": "Click and keyboard open Results with Funded filter selected",
+    "comparison": "Sprout retirement: 48.5% / 97.3%; compare link opens Sprout with abstentions included",
+    "guide": "How it works opens internal Program guide, governance section expanded"
+  },
+  "tablet": {
+    "width": 745,
+    "scrollWidth": 732,
+    "areas": "grants network / protocol funding"
+  },
+  "tests": {
+    "existing": 14,
+    "files": 3
+  },
+  "productionBuild": {
+    "compiled": true,
+    "typecheck": true,
+    "isolation": true,
+    "cssFilesParsed": 29,
+    "clicks": [
+      "Funded filter",
+      "Sprout question",
+      "Sprout comparison"
+    ],
+    "consoleErrors": []
+  }
+}

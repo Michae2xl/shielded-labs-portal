@@ -1,0 +1,98 @@
+{
+  "deploymentId": "70c2ed91-e4b3-4988-bbf5-295534cbd5fb",
+  "checks": [
+    {
+      "cards": [
+        {
+          "borderRadius": "12px",
+          "title": "Human Freedom"
+        },
+        {
+          "borderRadius": "12px",
+          "title": "Independent Funding"
+        },
+        {
+          "borderRadius": "12px",
+          "title": "Honor the Holders"
+        },
+        {
+          "borderRadius": "12px",
+          "title": "Autonomy"
+        },
+        {
+          "borderRadius": "12px",
+          "title": "Innovation"
+        },
+        {
+          "borderRadius": "12px",
+          "title": "Collaboration"
+        }
+      ],
+      "overflow": false,
+      "page": "organization",
+      "values": 6,
+      "viewport": 1175
+    },
+    {
+      "overflow": false,
+      "page": "crosslink",
+      "quote": "“Providing stronger settlement guarantees makes Zcash easier to integrate into the wider crypto economy.”",
+      "source": "https://shieldedlabs.net/crosslink-faq/",
+      "sourceHref": "https://shieldedlabs.net/crosslink-faq/",
+      "viewport": 1175
+    },
+    {
+      "overflow": false,
+      "page": "epoch",
+      "quote": "“We’re launching Epoch to protect Zcash users and the monetary base, and to bring greater certainty to Zcash’s long-term security.”",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "sourceHref": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "viewport": 1175
+    },
+    {
+      "overflow": false,
+      "page": "nsm",
+      "quote": "“The primary objective of the NSM is to create an automated mechanism that enables users to contribute to the sustainability of the network.”",
+      "source": "https://shieldedlabs.net/nsm/",
+      "sourceHref": "https://shieldedlabs.net/nsm/",
+      "viewport": 1175
+    },
+    {
+      "overflow": false,
+      "page": "ironwood",
+      "quote": "“Ironwood is a Zcash network upgrade designed to make it possible for every user to independently verify the soundness of Zcash’s circulating supply.”",
+      "source": "https://shieldedlabs.net/ironwood/",
+      "sourceHref": "https://shieldedlabs.net/ironwood/",
+      "viewport": 1175
+    },
+    {
+      "overflow": false,
+      "page": "zero",
+      "quote": "“Shielded Labs’ enterprise-grade suite of open-source Zcash infrastructure software intended for use by exchanges, mining pools, wallet providers, and other ecosystem partners.”",
+      "source": "https://shieldedlabs.net/projects/",
+      "sourceHref": "https://shieldedlabs.net/projects/",
+      "viewport": 1175
+    },
+    {
+      "overflow": false,
+      "page": "fees",
+      "quote": "“We are exploring how to make Zcash transaction fees more predictable, user-friendly, and resilient as the network evolves.”",
+      "source": "https://shieldedlabs.net/fees/",
+      "sourceHref": "https://shieldedlabs.net/fees/",
+      "viewport": 1175
+    },
+    {
+      "check": "external-source-click",
+      "url": "https://shieldedlabs.net/fees/",
+      "title": "Dynamic Fees - Shielded Labs"
+    },
+    {
+      "overflow": false,
+      "page": "organization-mobile",
+      "values": 6,
+      "viewport": 354
+    }
+  ],
+  "consoleErrors": [],
+  "recoveredNavigationTimeout": true
+}

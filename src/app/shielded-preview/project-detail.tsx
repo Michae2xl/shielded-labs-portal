@@ -1,17 +1,19 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
-import { milestones, projects, REVIEWED, sources, type Project } from '@/lib/shielded-preview/content';
+import { sources, type Project } from '@/lib/shielded-preview/content';
 import type { PortalData } from '@/lib/shielded-preview/types';
 import { projectGuides } from '@/lib/shielded-preview/project-guides';
+import { officialProjectExcerpts } from '@/lib/shielded-preview/official-project-excerpts';
+import { projectPublications, projectCopyReviewedAt, publicationQuote, type PublicationExcerpt, type PublicationRecord } from '@/lib/shielded-preview/project-publications';
 import { editorialCatalog, editorialHref } from '@/lib/shielded-preview/editorial/library';
-import { EditorialLink } from './editorial';
+import type { EditorialEntry } from '@/lib/shielded-preview/editorial/types';
+import { projectHref, type ProjectSection } from '@/lib/shielded-preview/project-navigation';
+import { EditorialLink, ProjectDocument } from './editorial';
+import ProjectFaq from './project-faq';
+import ProjectDevelopment from './project-development';
+import ContextNotice from './context-notice';
 import s from './project-detail.module.css';
-import ContributorAvatar from './contributor-avatar';
-import { activityHref } from '@/lib/shielded-preview/development-navigation';
-import { directoryHref } from '@/lib/shielded-preview/directory';
-
-export const projectHref = (project: Project) => `?view=projects&project=${project.id}`;
 
 export function ProjectLink({ project, onSelect, children, className }: {
   project: Project; onSelect: (project: Project) => void; children: ReactNode; className?: string;
@@ -23,85 +25,175 @@ export function ProjectLink({ project, onSelect, children, className }: {
   }}>{children}</a>;
 }
 
-function Arrow({ back = false }: { back?: boolean }) {
-  return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden="true" style={back ? { transform: 'rotate(180deg)' } : undefined}><path d="M4 12h16m-6-6 6 6-6 6"/></svg>;
+function Arrow({ external = false }: { external?: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'}/></svg>;
 }
-function EvidenceLink({ href, children }: { href: string; children: ReactNode }) {
-  return <a href={href} target="_blank" rel="noopener noreferrer" className={s.evidenceLink}>{children}<ExternalArrow/></a>;
+function SectionIcon({ kind }: { kind: ProjectSection }) {
+  const paths = {
+    overview: <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>,
+    progress: <><path d="M6 4v16M10 6h10M10 12h7M10 18h10"/><circle cx="6" cy="6" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="6" cy="18" r="2"/></>,
+    resources: <><path d="M12 5C9 3 5 3 2 4v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Zm0 0v15"/></>,
+    faq: <><path d="M4 3h16v14H9l-5 4Z"/><path d="M10 8a2 2 0 1 1 3 1.7c-.7.4-1 1-1 1.8M12 14h.01"/></>,
+    development: <><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"/></>,
+  };
+  return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[kind]}</svg>;
 }
-function ExternalArrow() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>; }
 function DateStamp({ date }: { date: string }) {
   return <time dateTime={date}>{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date))}</time>;
 }
-
-export default function ProjectDetail({ project, data, glyph, onBack, onSelect, onFollow }: {
-  project: Project; data: PortalData; glyph: ReactNode; onBack: () => void; onSelect: (project: Project) => void; onFollow: (href: string) => void;
+function SectionLink({ project, section, onSection, children, className, current }: {
+  project: Project; section: ProjectSection; onSection: (section: ProjectSection) => void;
+  children: ReactNode; className?: string; current?: boolean;
 }) {
-  const title = useRef<HTMLHeadingElement>(null);
-  useEffect(() => { title.current?.focus({ preventScroll: true }); }, [project.id]);
-  const position = projects.findIndex(p => p.id === project.id);
-  const next = projects[(position + 1) % projects.length];
-  const guide = projectGuides[project.id];
-  const repositories = data.repos.filter(repo => (project.repos as readonly string[]).includes(repo.name));
-  const commits = repositories.flatMap(repo => repo.commits.map(commit => ({ ...commit, repo: repo.name, fork: repo.fork })))
-    .sort((a, b) => b.date.localeCompare(a.date)).slice(0, 5);
+  return <a href={projectHref(project, section)} className={className} aria-current={current ? 'page' : undefined} onClick={event => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    onSection(section);
+  }}>{children}</a>;
+}
+const resourcePriority: Record<string, number> = { Guide: 0, 'Guide & FAQ': 0, 'Research guide': 0, FAQ: 1, Simulator: 2, Roadmap: 3, 'Technical reference': 4 };
+const resourceHints: Record<string, string> = {
+  Guide: 'Understand the project', 'Guide & FAQ': 'An introduction and common questions', 'Research guide': 'Explore the research',
+  FAQ: 'Answers to common questions', Simulator: 'Explore the assumptions', Roadmap: 'Follow the planned work', 'Technical reference': 'Explore implementation details',
+};
+function ResourceLink({ entry, onFollow }: { entry: EditorialEntry; onFollow: (href: string) => void }) {
+  return <EditorialLink href={editorialHref(entry)} onFollow={onFollow} className={s.resourceLink}>
+    <span className={s.resourceIcon}><SectionIcon kind={entry.category === 'Technical reference' ? 'development' : entry.category === 'FAQ' ? 'faq' : 'resources'}/></span>
+    <span className={s.resourceCopy}><small>{resourceHints[entry.category] ?? entry.category}</small><strong>{entry.title}</strong></span><Arrow/>
+  </EditorialLink>;
+}
+
+function publicationHref(reference: PublicationRecord) {
+  if (reference.href) return reference.href;
+  const entry = editorialCatalog.find(entry => entry.id === reference.documentId);
+  return entry ? `${editorialHref(entry)}${reference.anchor ? `#${reference.anchor}` : ''}` : reference.source;
+}
+function PublishedCopy({ excerpt, project, field, children }: {
+  excerpt: PublicationExcerpt; project: Project; field: 'presentation' | 'progress' | 'next'; children?: ReactNode;
+}) {
+  const quote = publicationQuote(excerpt);
+  return <div className={`${s.publishedCopy}${field === 'presentation' ? ` ${s.publishedLead}` : ''}`} data-publication={field}>
+    {quote !== null ? <p><q cite={excerpt.source}>{quote}</q></p> : !excerpt.steps?.length && <p className={s.unpublished}>Not specified in this source.</p>}
+    {excerpt.detail && <small className={s.publicationDetail}>{excerpt.detail}</small>}
+    {excerpt.steps && <ul className={s.publishedSteps}>{excerpt.steps.map(step => <li key={step}><q cite={excerpt.source}>{step}</q></li>)}</ul>}
+    {excerpt.window && <small className={s.publicationDetail}>Published window · {excerpt.window}</small>}
+    {children}
+    <div className={s.publicationSource}>
+      <a href={excerpt.source} target="_blank" rel="noopener noreferrer" aria-label={`Shielded Labs source for ${project.name} ${field}`}>Shielded Labs<Arrow external/></a>
+      {field !== 'presentation' && excerpt.publishedAt && <span>Published <DateStamp date={excerpt.publishedAt}/></span>}
+    </div>
+  </div>;
+}
+
+export default function ProjectDetail({ project, section, record, data, glyph, onSection, onFollow }: {
+  project: Project; section: string | null; record: string | null; data: PortalData; glyph: ReactNode;
+  onSection: (section: ProjectSection) => void; onFollow: (href: string) => void;
+}) {
   const reading = editorialCatalog.filter(entry => entry.projects.includes(project.id));
-  const resources = reading.filter(entry => entry.view === 'resources');
-  const articles = reading.filter(entry => entry.view === 'blog');
-  const history = milestones.filter(m => project.id === 'crosslink' ? m.type === 'Engineering' : project.id === 'epoch' ? m.type === 'Research' : project.id === 'ironwood' ? m.type === 'Security' : false);
+  const allResources = reading.filter(entry => entry.view === 'resources')
+    .sort((a, b) => (resourcePriority[a.category] ?? 5) - (resourcePriority[b.category] ?? 5));
+  const resources = allResources.filter(entry => entry.category !== 'FAQ');
+  const faqs = allResources.filter(entry => entry.category.includes('FAQ'));
+  const document = allResources.find(entry => entry.id === record);
+  const faq = record ? faqs.find(entry => entry.id === record) : faqs[0];
+  const sections: { id: ProjectSection; label: string }[] = [
+    { id: 'overview', label: 'Overview' }, { id: 'progress', label: 'Progress' }, { id: 'resources', label: 'Research' },
+    ...(faqs.length ? [{ id: 'faq' as const, label: 'FAQ' }] : []),
+    { id: 'development', label: 'Development' },
+  ];
+  const active = sections.find(item => item.id === section)?.id ?? 'overview';
+  const compact = active !== 'overview';
+  const title = useRef<HTMLHeadingElement>(null);
+  const panelHeading = useRef<HTMLHeadingElement>(null);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    (firstRender.current ? title : panelHeading).current?.focus({ preventScroll: true });
+    firstRender.current = false;
+  }, [active, record]);
+  const guide = projectGuides[project.id];
+  const excerpt = officialProjectExcerpts[project.id];
+  const publication = projectPublications[project.id];
+  const articles = reading.filter(entry => entry.view === 'blog').sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+  const latest = articles[0];
 
   return <article className={s.page} aria-labelledby="project-title">
-    <div className={s.recordNav}><button className={s.back} onClick={onBack}><Arrow back/>All projects</button><nav className={s.sectionNav} aria-label="Project sections"><a href="#project-overview">Overview</a><a href="#project-progress">Progress</a>{history.length > 0 && <a href="#project-milestones">Milestones</a>}{commits.length > 0 && <a href="#project-development">Code updates</a>}<a href="#project-resources">Resources & FAQs</a><a href="#project-sources">Sources</a></nav></div>
-    <header className={s.intro}>
+    <header className={`${s.hero}${compact ? ` ${s.compactHero}` : ''}`}>
       <div className={s.identity}>
         <span className={s.projectIcon} aria-hidden="true">{glyph}</span>
-        <div><h1 id="project-title" ref={title} tabIndex={-1}>{project.name}</h1></div>
+        <div className={s.identityCopy}>
+          <h1 id="project-title" ref={title} tabIndex={-1}>{project.name}</h1>
+          <div className={s.projectMeta}>
+            <span className={s.projectCategory} data-has-status={Boolean(publication.badge)}>{project.category}</span>
+            {publication.badge && <span className={s.projectStatus}><span aria-hidden="true"/>{publication.badge.text}</span>}
+          </div>
+        </div>
       </div>
-      <p className={s.lead}>{guide.lead}</p>
-      <ul className={s.tags} aria-label="Project focus">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
-
+      {!compact && <PublishedCopy excerpt={publication.presentation} project={project} field="presentation"/>}
     </header>
 
-    <section className={s.statusPanel} id="project-progress" aria-labelledby="project-stage">
-      <span className={s.sectionLabel}>Current stage</span>
-      <h2 id="project-stage">{project.status}</h2>
-      <p>{project.milestone}</p>
-      <div className={s.nextStep}><h3>Next step</h3><p>{project.next}</p></div>
-    </section>
+    <nav className={s.sectionNav} aria-label="Project sections">
+      {sections.map(item => <SectionLink key={item.id} project={project} section={item.id} onSection={onSection} current={active === item.id}><SectionIcon kind={item.id}/>{item.label}</SectionLink>)}
+    </nav>
 
-    <div className={s.body}>
-      <section id="project-overview" className={s.section}>
-        <h2>Purpose & scope</h2><p>{guide.benefit}</p>
-        <div className={s.scope}><span className={s.sectionLabel}>Focus</span><p>{project.scope}</p></div>
-        <details className={s.technicalContext}><summary>Technical context & terms</summary><div><p>{project.purpose}</p><dl>{guide.terms.map(item=><div key={item.term}><dt>{item.term}</dt><dd>{item.meaning}</dd></div>)}</dl></div></details>
-      </section>
+    <div className={s.panel} key={active}>
+      {active === 'overview' && <>
+        <div className={`${s.overviewGrid}${allResources.length < 2 ? ` ${s.compactReading}` : ''}`} id="project-overview">
+          <section className={`${s.card} ${s.purpose}`} aria-labelledby="project-panel-heading">
+            <div className={s.excerptHeading}>
+              <h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Why it matters</h2>
+              <a href={excerpt.source} target="_blank" rel="noopener noreferrer" aria-label={`Shielded Labs source for ${project.name}`} className={s.textLink}>Shielded Labs<Arrow external/></a>
+            </div>
+            <blockquote className={s.officialExcerpt} cite={excerpt.source}><p>“{excerpt.text}”</p></blockquote>
+          </section>
+          <section className={`${s.card} ${s.progressCard}`} aria-labelledby="project-progress-heading" id="project-progress">
+            <h2 id="project-progress-heading">Progress</h2>
+            <PublishedCopy excerpt={publication.progress} project={project} field="progress">
+              {publication.summaryReferences && <div className={s.publicationChips}>{publication.records.map(item => <EditorialLink key={item.title} href={publicationHref(item)} onFollow={onFollow}>{item.title}<Arrow external/></EditorialLink>)}</div>}
+            </PublishedCopy>
+            <SectionLink project={project} section="progress" onSection={onSection} className={s.cardAction}>Explore progress<Arrow/></SectionLink>
+          </section>
+          <section className={`${s.card} ${s.nextStep}`} aria-labelledby="project-next-heading">
+            <h2 id="project-next-heading">What comes next</h2><PublishedCopy excerpt={publication.next} project={project} field="next"/>
+          </section>
+          <aside className={`${s.card} ${s.startHere}`} aria-labelledby="project-start-heading">
+            <div className={s.sectionHeading}><h2 id="project-start-heading">Start here</h2></div>
+            <div className={s.resourceList}>{allResources.slice(0, 3).map(entry => <ResourceLink key={entry.id} entry={entry} onFollow={onFollow}/>)}</div>
+            {allResources.length > 1 && <SectionLink project={project} section="resources" onSection={onSection} className={s.cardAction}>Research & guides<Arrow/></SectionLink>}
+          </aside>
+          {latest && <EditorialLink href={editorialHref(latest)} onFollow={onFollow} className={s.latestUpdate}><span className={s.updateLabel}>Latest project update<small><DateStamp date={latest.publishedAt}/></small></span><strong>{latest.title}</strong><Arrow/></EditorialLink>}
+        </div>
+        <details className={s.technicalContext}>
+          <summary>How it works & key terms</summary>
+          <div className={s.technicalBody}><div><p>{project.purpose}</p><h3>Project scope</h3><p>{project.scope}</p><ul className={s.tags} aria-label="Project focus">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul></div><dl>{guide.terms.map(item => <div key={item.term}><dt>{item.term}</dt><dd>{item.meaning}</dd></div>)}</dl></div>
+        </details>
+      </>}
 
-      <section id="project-resources" className={s.section}>
-        <h2>Resources & FAQs</h2>
-        <div className={s.readingLinks}>{resources.map(entry => <EditorialLink key={entry.id} href={editorialHref(entry)} onFollow={onFollow}><span><small>{entry.category}</small>{entry.title}</span><Arrow/></EditorialLink>)}</div>
-        {articles.length > 0 && <div className={s.readingLinks}><h3>From the blog</h3>{articles.slice(0, 3).map(entry => <EditorialLink key={entry.id} href={editorialHref(entry)} onFollow={onFollow}><span><small><DateStamp date={entry.publishedAt}/></small>{entry.title}</span><Arrow/></EditorialLink>)}</div>}
-      </section>
+      {active === 'progress' && <div className={s.progressGrid}>
+        <section className={s.card} aria-labelledby="project-panel-heading" id="project-milestones">
+          <h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Progress</h2>
+          <PublishedCopy excerpt={publication.progress} project={project} field="progress"/>
+          <h3 className={s.publicationRecordsHeading}>{publication.recordsHeading}</h3>
+          <ul className={s.publicationRecords}>{publication.records.map(item => <li key={item.title}><EditorialLink href={publicationHref(item)} onFollow={onFollow}>
+            <span>{item.date && <small>{item.dateLabel} <DateStamp date={item.date}/></small>}<strong>{item.title}</strong></span><Arrow external={Boolean(item.href)}/>
+          </EditorialLink></li>)}</ul>
+        </section>
+        <aside className={`${s.card} ${s.nextCard}`}><h2>What comes next</h2><PublishedCopy excerpt={publication.next} project={project} field="next"/></aside>
+      </div>}
 
-      {history.length > 0 && <section id="project-milestones" className={s.section}>
-        <h2>{project.id === 'ironwood' ? 'Security milestones' : 'Milestones'}</h2>
-        <ol className={s.timeline} aria-label={project.id === 'ironwood' ? 'Security context' : 'Project milestones'}>{history.map(m => <li key={m.date}><DateStamp date={m.date}/><div><h3>{m.name}</h3><p>{m.detail}</p><EditorialLink className={s.evidenceLink} href={directoryHref('impact', m.type.toLowerCase(), `milestone:${m.date}`)} onFollow={onFollow}>Milestone details<Arrow/></EditorialLink></div></li>)}</ol>
-      </section>}
+      {active === 'resources' && (record ? document ? <ProjectDocument key={document.id} entry={document} onFollow={onFollow}/> : <div className={s.empty}><h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Document not found</h2><SectionLink project={project} section="resources" onSection={onSection} className={s.textLink}>Back to research & guides<Arrow/></SectionLink></div> : <div className={s.resourcesGrid} id="project-resources">
+        <section className={s.card} aria-labelledby="project-panel-heading"><div className={s.sectionHeading}><h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Research & guides</h2></div><div className={s.resourceCollection}>{resources.map(entry => <ResourceLink key={entry.id} entry={entry} onFollow={onFollow}/>)}</div>{faq && <SectionLink project={project} section="faq" onSection={onSection} className={s.faqCallout}><span className={s.resourceIcon}><SectionIcon kind="faq"/></span><span><strong>Frequently asked questions</strong></span><Arrow/></SectionLink>}</section>
+        <section className={s.card} aria-labelledby="project-articles-heading"><div className={s.sectionHeading}><h2 id="project-articles-heading">From the blog</h2></div>{articles.length ? <div className={s.articleList}>{articles.map(entry => <EditorialLink key={entry.id} href={editorialHref(entry)} onFollow={onFollow}><span><small><DateStamp date={entry.publishedAt}/></small><strong>{entry.title}</strong></span><Arrow/></EditorialLink>)}</div> : <p className={s.empty}>Project updates will appear here when they are available in the portal.</p>}</section>
+      </div>)}
 
-      {commits.length > 0 && <section id="project-development" className={s.section}>
-        <h2>Code activity</h2>
-        {repositories.some(repo => repo.fork) && <p className={s.notice}>Fork history may include upstream work and is excluded from Shielded Labs core activity counts.</p>}
-        <div className={s.commits}>{commits.map(c => <EditorialLink key={c.repo+c.sha} href={activityHref({ repo: c.repo, includeForks: c.fork, record: `commit:${c.sha}` })} onFollow={onFollow}><ContributorAvatar name={c.author} login={c.login} size={30}/><div><span className={s.repoName}>{c.repo}</span><h3>{c.title}</h3><p>{c.author} · <DateStamp date={c.date}/></p></div><Arrow/></EditorialLink>)}</div>
-      </section>}
+      {active === 'faq' && (faq ? <ProjectFaq key={faq.id} entry={faq} onFollow={onFollow}/> : <div className={s.empty}><h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Document not found</h2><SectionLink project={project} section="faq" onSection={onSection} className={s.textLink}>Back to frequently asked questions<Arrow/></SectionLink></div>)}
+
+      {active === 'development' && <ProjectDevelopment project={project} data={data} headingRef={panelHeading} onFollow={onFollow}/>}
     </div>
 
-    <aside className={s.evidence} id="project-sources" aria-labelledby="project-sources-heading">
-      <div className={s.sourceHeading}><h2 id="project-sources-heading">Sources & context</h2><span>Reviewed <DateStamp date={REVIEWED}/></span></div>
-      <p>{project.boundary}</p>
-      <div className={s.sourceLinks}><EvidenceLink href={project.source}>Primary project reference</EvidenceLink>{project.id === 'ironwood' && <EvidenceLink href={sources.epoch}>October update · NU6.3</EvidenceLink>}</div>
-      {repositories.length > 0 && <div className={s.repositories}><h3>Repositories</h3>{repositories.map(repo => <div key={repo.name}><EditorialLink className={s.evidenceLink} href={activityHref({ repo: repo.name, includeForks: repo.fork, record: `repo:${repo.name}` })} onFollow={onFollow}>{repo.name}<Arrow/></EditorialLink><p>{repo.fork ? 'Fork' : 'Core repository'} · {repo.branch}</p><p>{repo.state === 'live' ? 'Retrieved' : 'Saved record'} <DateStamp date={repo.fetchedAt}/></p></div>)}</div>}
-
-    </aside>
-
-    <footer className={s.footer}><ProjectLink project={next} onSelect={onSelect} className={s.nextProject}><span>Next project<strong>{next.name}</strong></span><Arrow/></ProjectLink></footer>
+    {active !== 'faq' && !(active === 'resources' && document) && <><ContextNotice>{project.boundary}</ContextNotice>
+    <footer className={s.sources} id="project-sources" aria-label="Project sources">
+      <span>Official excerpts checked <DateStamp date={projectCopyReviewedAt}/></span>
+      <div><a href={project.source} target="_blank" rel="noopener noreferrer">Primary project reference<Arrow external/></a>{project.id === 'ironwood' && <a href={sources.epoch} target="_blank" rel="noopener noreferrer">October update · NU6.3<Arrow external/></a>}</div>
+    </footer></>}
   </article>;
 }

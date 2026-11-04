@@ -7,9 +7,14 @@ import s from './governance-collections.module.css';
 import a from './governance-archive.module.css';
 import GovernanceGlyph, { type GovernanceGlyphKind } from './governance-glyph';
 import GovernanceReferences from './governance-references';
+import ContextNotice from './context-notice';
+import { CurrentParticipationRound } from './governance-participation';
+import { coinholderTotals, type CoinholderProposal } from '@/lib/shielded-preview/coinholder-proposals';
+import { coinholderRoundLabel, coinholderRounds } from '@/lib/shielded-preview/coinholder-rounds';
+import c from './coinholder-proposals.module.css';
 
 type Section = 'Proposals' | 'Voting' | 'Grants' | 'Results' | 'ZCAP' | 'Insights';
-export type CollectionSelection = { lane?: string; filter?: string; search?: string; page?: number; basis?: 'include' | 'exclude' };
+export type CollectionSelection = { lane?: string; filter?: string; search?: string; page?: number; basis?: 'include' | 'exclude'; round?: string };
 export type CollectionNavigate = (section: Section, id?: string | null, selection?: CollectionSelection) => void;
 type Navigate = CollectionNavigate;
 type Controls = {
@@ -20,7 +25,7 @@ type Controls = {
 export type ProposalListItem = {
   id: string; title: string; applicant: string; amount: number | null; status: string;
   summary: string; submitted: string | null; decided: string | null; url: string | null;
-  sourceUrl: string | null; origin: string; roundId?: string;
+  sourceUrl: string | null; origin: string; roundId?: string; rounds?: string[];
 };
 const pageSize = 12;
 const money = (value: number | null) => value === null ? 'Not recorded' : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(value);
@@ -64,6 +69,7 @@ export function Link({ section, id, selection, onNavigate, children, className }
   if (selection?.search) params.set('q', selection.search);
   if (selection?.page && selection.page > 1) params.set('page', String(selection.page));
   if (selection?.basis === 'exclude') params.set('basis', 'exclude');
+  if (selection?.round && selection.round !== 'all') params.set('round', selection.round);
   return <a href={`?${params}`} className={className} onClick={event => {
     if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
@@ -80,17 +86,18 @@ export function Tabs({ label, value, items, onChange }: {
 }
 
 export function Search({ name, value, onChange }: { name: string; value: string; onChange: (value: string) => void }) {
-  return <label className={s.search}><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input aria-label={name} placeholder={name} value={value} onChange={event => onChange(event.target.value)}/></label>;
+  return <label className={s.search}><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" aria-label={name} placeholder={name} value={value} onChange={event => onChange(event.target.value)}/></label>;
 }
 
 export function SourceInfo({ source, reviewedAt, name }: { source?: Source<unknown>; reviewedAt?: string; name: string }) {
   const state = !source ? 'Reviewed' : source.state === 'snapshot' ? 'Saved record' : source.state === 'mirror' ? 'Published record' : source.state === 'unavailable' ? 'Source unavailable' : 'Retrieved';
-  return <div className={s.source}><strong>{name}</strong><p>{state} · {date(source?.observedAt ?? reviewedAt ?? null)}{source?.error ? ' · Refresh unavailable' : ''}</p>{source?.url.startsWith('https://') && <a href={source.url} target="_blank" rel="noopener noreferrer">View source<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>}</div>;
+  return <div className={s.source}><strong>{name}</strong><p>{state} · {date(source?.observedAt ?? reviewedAt ?? null)}{source?.error ? ' · Refresh unavailable' : ''}</p>{source?.url.startsWith('https://') && <a href={source.url} target="_blank" rel="noopener noreferrer">View source{/^https:\/\/(www\.)?openzcash\.org(?:\/|$)/i.test(source.url) ? ' · OpenZcash' : ''}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>}</div>;
 }
 
 export function Pager({ page, total, onPage }: { page: number; total: number; onPage: (value: number) => void }) {
   const current = visiblePage(page, total);
   const pages = Math.max(1, Math.ceil(total / pageSize));
+  if (pages === 1) return <p className={s.srOnly} role="status">{total} records</p>;
   return <div className={s.pager}><span>{total ? `${(current - 1) * pageSize + 1}–${Math.min(current * pageSize, total)} of ${total}` : '0 records'}</span>{pages > 1 && <div><button aria-label="Previous page" disabled={current === 1} onClick={() => onPage(current - 1)}><span className={s.previous}><Arrow/></span></button><span>{current} / {pages}</span><button aria-label="Next page" disabled={current === pages} onClick={() => onPage(current + 1)}><Arrow/></button></div>}</div>;
 }
 
@@ -98,9 +105,9 @@ export function Empty({ onReset }: { onReset: () => void }) {
   return <div className={s.empty}><h3>No matching records</h3><p>Try another search or reset the filters.</p><button onClick={onReset}>Reset filters<Arrow/></button></div>;
 }
 
-function Collection({ tabs, title, context, toolbar, summary, children, aside, total, page, onPage, id, archive = false }: {
+function Collection({ tabs, title, context, toolbar, summary, children, notice, aside, total, page, onPage, id, archive = false }: {
   tabs: ReactNode; title: string; context: string; toolbar: ReactNode; summary?: ReactNode;
-  children: ReactNode; aside: ReactNode; total: number; page: number; onPage: (page: number) => void; id: string; archive?: boolean;
+  children: ReactNode; notice: ReactNode; aside: ReactNode; total: number | null; page: number; onPage: (page: number) => void; id: string; archive?: boolean;
 }) {
   const heading = useRef<HTMLHeadingElement>(null);
   function changePage(next: number) {
@@ -109,46 +116,59 @@ function Collection({ tabs, title, context, toolbar, summary, children, aside, t
     heading.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
   }
   return <div className={`${s.collection} ${archive ? a.archive : ''}`}>
-    {archive ? tabs : <div className={s.collectionTools}>{tabs}<div className={s.toolbar}>{toolbar}</div></div>}
+    {archive ? <div className={a.collectionTools}>{tabs}<div className={a.searchTools}>{toolbar}</div></div> : <div className={s.collectionTools}>{tabs}<div className={s.toolbar}>{toolbar}</div></div>}
     <div className={s.layout}>
       <section className={`${s.main} ${archive ? a.panel : ''}`} aria-labelledby={`${id}-heading`}>
         <h2 className={s.srOnly} ref={heading} tabIndex={-1} id={`${id}-heading`}>{context}: {title}</h2>
-        {archive ? <div className={a.tools}>{summary}<div className={a.searchTools}>{toolbar}</div></div> : summary}
+        {archive ? summary && <div className={a.tools}>{summary}</div> : summary}
         {children}
-        {archive ? <div className={a.pagination}><Pager page={page} total={total} onPage={changePage}/></div> : <Pager page={page} total={total} onPage={changePage}/>}
+        {total !== null && (archive ? <div className={a.pagination}><Pager page={page} total={total} onPage={changePage}/></div> : <Pager page={page} total={total} onPage={changePage}/>)}
       </section>
+      <ContextNotice>{notice}</ContextNotice>
       <GovernanceReferences key={`${context}:${title}`}><aside className={s.aside} aria-label={`${title}: context and sources`}>{aside}</aside></GovernanceReferences>
     </div>
   </div>;
 }
 
-export function ProposalsCollection({ datasets, lane, onLane, source, ...controls }: Controls & {
-  datasets: { review: ProposalListItem[]; history: ProposalListItem[]; q3: ProposalListItem[] };
+export function ProposalsCollection({ datasets, coinholderSource, lane, onLane, source, round, onRound, busy, ...controls }: Controls & {
+  datasets: { review: ProposalListItem[]; history: ProposalListItem[] };
+  coinholderSource: Source<CoinholderProposal[] | null>;
   lane: string; onLane: (value: string) => void; source: Source<unknown>;
+  round: string; onRound: (value: string) => void; busy: boolean;
 }) {
   const { search, onSearch, filter, onFilter, page, onPage, onNavigate } = controls;
-  const selected = lane === 'history' ? 'history' : lane === 'q3' ? 'q3' : 'review';
-  const rows = datasets[selected];
-  const statuses = [...new Set(rows.map(row => row.status))];
-  const filtered = rows.filter(row => matches(`${row.title} ${row.applicant}`, search) && (filter === 'all' || row.status === filter));
-  const titles = { review: 'Under review', history: 'Application history', q3: 'Q3 2026 applications' };
-  const statusHeading = selected === 'review' ? 'Submitted' : selected === 'q3' ? 'Vote outcome' : 'Status';
-  return <Collection archive id="proposals" title={titles[selected]} context={selected === 'q3' ? 'Coinholder grants' : 'Zcash Community Grants'}
-    tabs={<Tabs label="Proposal collections" value={selected} onChange={onLane} items={[{ id: 'review', name: 'ZCG review', count: datasets.review.length, icon: 'proposals' }, { id: 'history', name: 'ZCG history', count: datasets.history.length, icon: 'history' }, { id: 'q3', name: 'Coinholder · Q3 2026', count: datasets.q3.length, icon: 'grants' }]}/>}
-    toolbar={<><Search name="Search proposals" value={search} onChange={onSearch}/>{statuses.length > 1 && <select aria-label="Filter proposal status" value={filter} onChange={event => onFilter(event.target.value)}><option value="all">All statuses</option>{statuses.map(status => <option key={status} value={status}>{label(status)}</option>)}</select>}</>}
-    total={filtered.length} page={page} onPage={onPage}
-    aside={<><div><h3>Reading these applications</h3><p>Amounts are funding requests. A dash means the amount is not recorded. Decisions, payments and delivery are tracked separately.</p></div><SourceInfo name={selected === 'history' ? 'OpenZcash ZCG archive' : selected === 'review' ? 'OpenZcash review queue' : 'OpenZcash Q3 outcomes'} source={source}/></>}
+  // Old Q3 listing links now enter the complete Coinholder collection.
+  const selected = lane === 'history' ? 'history' : lane === 'q3' || lane === 'coinholder' ? 'coinholder' : 'review';
+  const isCoinholder = selected === 'coinholder';
+  const unavailable = isCoinholder && coinholderSource.data === null;
+  const rows: ProposalListItem[] = isCoinholder ? (coinholderSource.data ?? []).map(row => ({
+    id: `coinholder:${row.number}`, title: row.title, applicant: row.applicant,
+    amount: row.requestedUsdCents === null ? null : row.requestedUsdCents / 100, status: row.status,
+    summary: row.summary, submitted: row.createdAt, decided: null, url: row.url,
+    sourceUrl: row.url, origin: 'FPF applications', rounds: row.rounds,
+  })) : datasets[selected];
+  const statuses = [...new Set(rows.map(row => row.status))].sort();
+  const filtered = rows.filter(row => matches(`${row.title} ${row.applicant}`, search) && (filter === 'all' || row.status === filter) && (!isCoinholder || round === 'all' || row.rounds?.includes(round)));
+  const titles = { review: 'Under review', history: 'Application history', coinholder: 'Coinholder applications' };
+  const statusHeading = selected === 'review' ? 'Submitted' : 'Status';
+  return <Collection archive id="proposals" title={titles[selected]} context={isCoinholder ? 'Coinholder grants' : 'Zcash Community Grants'}
+    tabs={<Tabs label="Proposal collections" value={selected} onChange={onLane} items={[{ id: 'review', name: 'ZCG review', count: datasets.review.length, icon: 'proposals' }, { id: 'history', name: 'ZCG history', count: datasets.history.length, icon: 'history' }, { id: 'coinholder', name: 'Coinholder', count: coinholderSource.data?.length, icon: 'grants' }]}/>}
+    toolbar={<><Search name="Search proposals" value={search} onChange={onSearch}/>{isCoinholder && <select aria-label="Filter Coinholder round" value={round} onChange={event => onRound(event.target.value)}><option value="all">All rounds</option>{coinholderRounds.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}</select>}{statuses.length > 1 && <select aria-label="Filter proposal status" value={filter} onChange={event => onFilter(event.target.value)}><option value="all">All statuses</option>{statuses.map(status => <option key={status} value={status}>{label(status)}</option>)}</select>}</>}
+    total={unavailable ? null : filtered.length} page={page} onPage={onPage}
+    notice={isCoinholder ? 'All submitted applications, including closed records and resubmissions. Amounts are requests; approval and payment are separate.' : 'Amounts are funding requests. Decisions, payments and delivery are tracked separately.'}
+    aside={<><div><h3>Reading these applications</h3><p>A dash means the amount is not recorded.</p>{isCoinholder && <><p>Each application issue is counted once. Q2 applications carried into Q3 appear in both round filters, without increasing the total. Closed does not mean rejected.</p><p>Round assignments follow published application lists. Other records remain available under “Round not recorded”.</p>{coinholderRounds.filter(item => item.source && (round === 'all' || item.id === round)).map(item => <a key={item.id} href={item.source!} target="_blank" rel="noopener noreferrer">{item.label} · source ↗</a>)}</>}</div><SourceInfo name={isCoinholder ? 'FPF application history' : selected === 'history' ? 'OpenZcash ZCG archive' : 'OpenZcash review queue'} source={isCoinholder ? coinholderSource : source}/></>}
   >
+    {unavailable ? <div className={c.empty} role="status"><h3>{busy ? 'Loading applications…' : 'Application history unavailable'}</h3><p>{busy ? 'Retrieving the complete FPF history.' : 'The source could not be read. Refresh the data to try again.'}</p></div> : <>
     <div className={a.columns} aria-hidden="true"><span>Proposal</span><div className={`${a.measures} ${a.fundingMeasures}`}><span>{statusHeading}</span><span className={a.money}>Requested · USD</span></div><span/></div>
-    <ul className={a.rows} aria-label={titles[selected]}>{pageRows(filtered, page).map(row => <li key={row.id}><Link section="Proposals" id={row.id} selection={{ lane: selected, filter, search, page: visiblePage(page, filtered.length) }} onNavigate={onNavigate} className={a.record}>
+    <ul className={a.rows} aria-label={titles[selected]}>{pageRows(filtered, page).map(row => <li key={row.id}><Link section="Proposals" id={row.id} selection={{ lane: selected, filter, search, page: visiblePage(page, filtered.length), ...(isCoinholder ? { round } : {}) }} onNavigate={onNavigate} className={a.record}>
       <span className={a.symbol} aria-hidden="true"><GovernanceGlyph kind="proposals" size={23}/></span>
-      <div className={a.identity}><h3>{row.title}</h3><div className={a.meta}>{row.applicant.trim().toLowerCase() !== row.title.trim().toLowerCase() && <span>{row.applicant}</span>}{selected === 'history' && row.submitted && <time dateTime={row.submitted}>{date(row.submitted)}</time>}</div></div>
+      <div className={a.identity}><h3>{row.title}</h3><div className={a.meta}>{isCoinholder && <span>{coinholderRoundLabel(row.rounds ?? [])}</span>}{row.applicant.trim().toLowerCase() !== row.title.trim().toLowerCase() && <span className={isCoinholder ? c.historyApplicant : undefined}>{row.applicant}</span>}{selected !== 'review' && row.submitted && <time dateTime={row.submitted}>{date(row.submitted)}</time>}</div></div>
       <div className={`${a.measures} ${a.fundingMeasures}`}>
         <span className={a.measure}><span className={a.mobileLabel}>{statusHeading}</span>{selected === 'review' ? row.submitted ? <time dateTime={row.submitted}>{date(row.submitted)}</time> : <small>Not recorded</small> : <span className={a.status}>{label(row.status)}</span>}</span>
         <span className={`${a.measure} ${a.money}`}><span className={a.mobileLabel}>Requested · USD</span>{row.amount === null ? <small><span aria-hidden="true">—</span><span className={s.srOnly}>Not recorded</span></small> : <strong>{money(row.amount)}</strong>}</span>
       </div><Arrow/>
     </Link></li>)}</ul>
-    {!filtered.length && <Empty onReset={() => { onSearch(''); onFilter('all'); }}/>}
+    {!filtered.length && <Empty onReset={() => { onSearch(''); onFilter('all'); onRound('all'); }}/>}</>}
   </Collection>;
 }
 
@@ -159,7 +179,8 @@ export function GrantsCollection({ source, ...controls }: Controls & { source: S
     tabs={<Tabs label="Grant programs" value={filter} onChange={onFilter} items={[{ id: 'all', name: 'All programs', count: source.data.length, icon: 'overview' }, { id: 'zcg_regular', name: 'ZCG', count: source.data.filter(row => row.program === 'zcg_regular').length, icon: 'zcap' }, { id: 'coinholder', name: 'Coinholder', count: source.data.filter(row => row.program === 'coinholder').length, icon: 'grants' }]}/>}
     toolbar={<Search name="Search grants" value={search} onChange={onSearch}/>}
     total={filtered.length} page={page} onPage={onPage}
-    aside={<><div><h3>Funding basis</h3><dl className={s.definitions}><div><dt>Budget</dt><dd>USD value recorded by the source.</dd></div><div><dt>Milestones marked paid</dt><dd>Payment flags in the ledger, separate from delivery verification.</dd></div></dl></div><SourceInfo name="OpenZcash grant records" source={source}/></>}
+    notice="“Paid” is a ledger status, not independent verification of a transaction or project delivery. Budget values reflect the source record, not a current ZEC conversion."
+    aside={<><div><h3>Funding basis</h3><dl className={s.definitions}><div><dt>Budget</dt><dd>USD value recorded by the source.</dd></div><div><dt>Milestones marked paid</dt><dd>Payment flags in the ledger.</dd></div></dl></div><SourceInfo name="OpenZcash grant records" source={source}/></>}
   >
     <div className={a.columns} aria-hidden="true"><span>Grant</span><div className={`${a.measures} ${a.fundingMeasures}`}><span>Milestones<small>Marked paid</small></span><span className={a.money}>Budget · USD</span></div><span/></div>
     <ul className={a.rows} aria-label="Grant records">{pageRows(filtered, page).map(row => <li key={`${row.program}|${row.grant}`}><Link section="Grants" id={`${row.program}|${row.grant}`} selection={{ filter, search, page: visiblePage(page, filtered.length) }} onNavigate={onNavigate} className={a.record}>
@@ -183,29 +204,59 @@ function pollStatus(status: string) {
   return names[status] ?? label(status);
 }
 
-export function VotingCollection(controls: Controls) {
+export function VotingCollection({ source, lane, onLane, busy, ...controls }: Controls & {
+  source: Source<CoinholderProposal[] | null>; lane: string; onLane: (value: string) => void; busy: boolean;
+}) {
   const { search, onSearch, filter, onFilter, page, onPage, onNavigate } = controls;
-  const isUpgrade = filter === 'upgrades';
+  const isCurrent = lane === 'current';
+  const isUpgrade = lane === 'upgrades';
+  const tabs = <Tabs label="Voting collections" value={lane} onChange={onLane} items={[
+    { id: 'current', name: 'Current proposals', icon: 'proposals' },
+    { id: 'archive', name: 'Poll archive', icon: 'history' },
+    { id: 'upgrades', name: 'Network upgrades', icon: 'network' },
+  ]}/>;
+  if (isCurrent) {
+    const rows = (source.data ?? []).filter(row => row.readyForCurrentVote);
+    const categories = [...new Set(rows.map(row => row.category).filter((category): category is string => Boolean(category)))];
+    const filtered = rows.filter(row => matches(`${row.title} ${row.applicant} ${row.summary}`, search) && (filter === 'all' || row.category === filter));
+    const totals = coinholderTotals(rows);
+    const unavailable = source.data === null;
+    return <><CurrentParticipationRound compact/><Collection archive id="coinholder-proposals" title="Current proposals" context="Coinholder grants"
+      tabs={tabs}
+      toolbar={<><Search name="Search current proposals" value={search} onChange={onSearch}/>{categories.length > 1 && <select aria-label="Proposal category" value={filter} onChange={event => onFilter(event.target.value)}><option value="all">All categories</option>{categories.map(category => <option key={category}>{category}</option>)}</select>}</>}
+      summary={<div className={c.summary}><dl><div><dt>Proposals</dt><dd>{unavailable ? '—' : rows.length}</dd></div><div><dt>{totals.missingAmounts ? 'Known requests · USD' : 'Total requested · USD'}</dt><dd>{unavailable || rows.length > 0 && totals.missingAmounts === rows.length ? '—' : money(totals.requestedUsdCents / 100)}</dd></div></dl><div className={c.sourceState}>{source.observedAt && <span>{source.error ? 'Saved' : 'Updated'} <time dateTime={source.observedAt}>{date(source.observedAt)}</time></span>}{source.error && <span>Refresh unavailable</span>}{totals.missingAmounts > 0 && <span>{totals.missingAmounts} without a specified amount</span>}</div></div>}
+      total={unavailable ? null : filtered.length} page={page} onPage={onPage}
+      notice="Funding requests for the current round. Voting outcomes and grant payments are recorded separately."
+      aside={<><div><h3>Included applications</h3><p>Open Q4 applications marked “Ready For Vote - All Steps Completed” by the FPF. Earlier rounds, withdrawn and decided applications are excluded. Updates every five minutes.</p></div><SourceInfo name="FPF · Coinholder applications on GitHub" source={source}/></>}
+    >
+      <ul className={c.rows} aria-label="Current Coinholder proposals">{pageRows(filtered, page).map(row => <li key={row.number}><Link section="Voting" id={`proposal:${row.round}:${row.number}`} selection={{ lane: 'current', filter, search, page: visiblePage(page, filtered.length) }} onNavigate={onNavigate} className={c.row}>
+        <div className={c.identity}><div className={c.meta}><span>#{row.number}</span>{row.category && <span>{row.category}</span>}<time dateTime={row.createdAt}>{date(row.createdAt)}</time></div><h3>{row.title}</h3><p className={c.excerpt}>{row.summary}</p><span className={c.applicant}>{row.applicant}</span></div>
+        <div className={c.amount}><span>Requested · USD</span><strong>{row.requestedUsdCents === null ? 'Not specified' : money(row.requestedUsdCents / 100)}</strong><span className={c.view}>View proposal<Arrow/></span></div>
+      </Link></li>)}</ul>
+      {unavailable ? <div className={c.empty} role="status"><h3>{busy ? 'Loading current proposals…' : 'Current proposals unavailable'}</h3><p>{busy ? 'Checking the FPF applications.' : 'The source could not be reached. Try refreshing the data below.'}</p></div> : !rows.length ? <div className={c.empty}><h3>No eligible applications yet</h3><p>Completed applications will appear here after they are marked ready by the FPF.</p></div> : !filtered.length && <Empty onReset={() => { onSearch(''); onFilter('all'); }}/>}
+    </Collection></>;
+  }
   const filteredPolls = polls.filter(row => matches(`${row.name} ${pollTitles[row.id] ?? ''}`, search));
   const upgrades = [...record.upgrades].reverse().filter(row => matches(`${row.name} ${row.zips.join(' ')}`, search));
-  return <Collection archive id="voting" title={isUpgrade ? 'Network upgrades' : 'Poll archive'} context={isUpgrade ? 'Protocol decisions' : 'Coinholder participation'}
-    tabs={<Tabs label="Voting collections" value={isUpgrade ? 'upgrades' : 'all'} onChange={value => { onFilter(value); onSearch(''); }} items={[{ id: 'all', name: 'Coinholder polls', count: polls.length, icon: 'voting' }, { id: 'upgrades', name: 'Network upgrades', count: record.upgrades.length, icon: 'network' }]}/>}
+  return <><CurrentParticipationRound compact/><Collection archive id="voting" title={isUpgrade ? 'Network upgrades' : 'Poll archive'} context={isUpgrade ? 'Protocol decisions' : 'Coinholder participation'}
+    tabs={tabs}
     toolbar={<Search name={isUpgrade ? 'Search network upgrades' : 'Search voting archive'} value={search} onChange={onSearch}/>}
     total={isUpgrade ? upgrades.length : filteredPolls.length} page={page} onPage={onPage}
-    aside={<><div><h3>Participation & scope</h3><p>Polls inform decisions. ZIP status, node releases and network activation remain separate milestones.</p><details className={s.help}><summary>How participation works</summary><dl className={s.definitions}><div><dt>Coinholders</dt><dd>Each round defines eligibility, the balance snapshot, supported wallets and deadline.</dd></div><div><dt>ZCAP members</dt><dd>The panel receives instructions for each poll. Eligibility can change between rounds.</dd></div></dl></details></div><SourceInfo name="OpenZcash governance archive" reviewedAt={record.checkedAt}/></>}
+    notice="Polls inform decisions. ZIP status, node releases and network activation remain separate milestones."
+    aside={<SourceInfo name="OpenZcash governance archive" reviewedAt={record.checkedAt}/>}
   >
     <div className={a.columns} aria-hidden="true"><span>{isUpgrade ? 'Network upgrade' : 'Poll'}</span><div className={a.measures}><span>{isUpgrade ? 'Stage' : 'Status'}</span><span>{isUpgrade ? 'Activation' : 'Recorded date'}</span></div><span/></div>
-    <ul className={a.rows} aria-label={isUpgrade ? 'Network upgrades' : 'Coinholder polls'}>{isUpgrade ? pageRows(upgrades, page).map(row => <li key={row.name}><Link section="Voting" id={`upgrade:${row.name}`} selection={{ filter, search, page: visiblePage(page, upgrades.length) }} onNavigate={onNavigate} className={a.record}>
+    <ul className={a.rows} aria-label={isUpgrade ? 'Network upgrades' : 'Coinholder polls'}>{isUpgrade ? pageRows(upgrades, page).map(row => <li key={row.name}><Link section="Voting" id={`upgrade:${row.name}`} selection={{ lane: 'upgrades', filter, search, page: visiblePage(page, upgrades.length) }} onNavigate={onNavigate} className={a.record}>
       <span className={a.symbol} aria-hidden="true"><GovernanceGlyph kind="network" size={23}/></span>
       <div className={a.identity}><h3>{row.name}</h3><div className={a.meta}>{row.zips.map(zip => `ZIP ${zip}`).join(' · ') || 'No ZIP listed'}</div></div>
       <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Stage</span><span className={a.status}>{row.height ? 'Activated' : 'Protocol work'}</span></span><span className={a.measure}><span className={a.mobileLabel}>Activation</span>{row.time ? <time dateTime={row.time}>{date(row.time)}</time> : <small>Not recorded</small>}{row.height !== null && <small>Block {number(row.height)}</small>}</span></div><Arrow/>
-    </Link></li>) : pageRows(filteredPolls, page).map(row => <li key={row.id}><Link section="Voting" id={`poll:${row.id}`} selection={{ filter, search, page: visiblePage(page, filteredPolls.length) }} onNavigate={onNavigate} className={a.record}>
+    </Link></li>) : pageRows(filteredPolls, page).map(row => <li key={row.id}><Link section="Voting" id={`poll:${row.id}`} selection={{ lane: 'archive', filter, search, page: visiblePage(page, filteredPolls.length) }} onNavigate={onNavigate} className={a.record}>
       <span className={a.symbol} aria-hidden="true"><GovernanceGlyph kind="voting" size={23}/></span>
       <div className={a.identity}><h3>{pollTitles[row.id] ?? row.name}</h3><div className={a.meta}><span>{row.scope === 'fund' ? 'Funding' : 'Protocol & funding model'}</span>{row.informal && <span>Informal</span>}{row.kind === 'sentiment' && <span>Advisory</span>}</div></div>
       <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Status</span><span className={a.status}>{pollStatus(row.status)}</span></span><span className={a.measure}><span className={a.mobileLabel}>Recorded date</span>{row.date ? <time dateTime={row.date}>{date(row.date)}</time> : <small>Not recorded</small>}</span></div><Arrow/>
     </Link></li>)}</ul>
     {!(isUpgrade ? upgrades.length : filteredPolls.length) && <Empty onReset={() => onSearch('')}/>}
-  </Collection>;
+  </Collection></>;
 }
 
 const acceptShare = (share: number | null) => share === null ? 'Not recorded' : share > .999 && share < 1 ? '>99.9%' : share > 0 && share < .001 ? '<0.1%' : `${(share * 100).toFixed(1)}%`;
@@ -223,8 +274,9 @@ export function ResultsCollection({ source, lane, onLane, ...controls }: Control
     toolbar={<Search name={isElection ? 'Search elections' : 'Search voting results'} value={search} onChange={onSearch}/>}
     summary={!isElection && <div className={a.filters} role="group" aria-label="Filter voting results">{['all', 'Funded', 'Rejected'].map(outcome => <button key={outcome} aria-pressed={filter === outcome} onClick={() => onFilter(outcome)}><span>{outcome === 'all' ? 'All' : outcome}</span><strong>{outcome === 'all' ? results.length : results.filter(row => row.published === outcome).length}</strong></button>)}</div>}
     total={isElection ? filteredElections.length : filtered.length} page={page} onPage={onPage}
-    aside={isElection ? <><div><h3>Approval voting</h3><p>Voters can support several candidates. Candidate approvals are not added to count unique voters.</p></div><SourceInfo name="OpenZcash election archive" reviewedAt={record.checkedAt}/></> : <>
-      <div><h3>Outcome & verification</h3><p>“Funded” is a voting outcome. Payment records are available under Grants. Accept share excludes abstentions. ZEC weights apply to each proposal and are never added across ballots.</p><dl className={s.checks}><div><dt>Quorum met</dt><dd>{results.filter(row => row.quorumMet).length} / {results.length}</dd></div><div><dt>Rule agreement</dt><dd>{results.filter(row => row.agrees).length} / {results.length}</dd></div></dl></div>
+    notice={isElection ? 'Voters can support several candidates. Candidate approvals are not added to count unique voters.' : '“Funded” is a voting outcome. Payment records are available under Grants. ZEC weights apply to each proposal and are never added across ballots.'}
+    aside={isElection ? <SourceInfo name="OpenZcash election archive" reviewedAt={record.checkedAt}/> : <>
+      <div><h3>Outcome & verification</h3><p>Accept share excludes abstentions.</p><dl className={s.checks}><div><dt>Quorum met</dt><dd>{results.filter(row => row.quorumMet).length} / {results.length}</dd></div><div><dt>Rule agreement</dt><dd>{results.filter(row => row.agrees).length} / {results.length}</dd></div></dl></div>
       <SourceInfo name="OpenZcash Q3 verification" source={source}/>
     </>}
   >

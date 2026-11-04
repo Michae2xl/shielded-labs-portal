@@ -1,0 +1,70 @@
+{
+  "checkedAt": "2026-11-01T21:28:50.214106+00:00",
+  "deploymentId": "1e970ba5-0f71-4509-bbb4-ee0724d52825",
+  "routes": [
+    {
+      "project": "crosslink",
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=crosslink&section=development",
+      "status": 200,
+      "developmentPanelPresent": true,
+      "expectedHeading": "Recent commits"
+    },
+    {
+      "project": "epoch",
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=epoch&section=development",
+      "status": 200,
+      "developmentPanelPresent": true,
+      "expectedHeading": "No repository linked yet"
+    },
+    {
+      "project": "nsm",
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=nsm&section=development",
+      "status": 200,
+      "developmentPanelPresent": true,
+      "expectedHeading": "No repository linked yet"
+    },
+    {
+      "project": "ironwood",
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=ironwood&section=development",
+      "status": 200,
+      "developmentPanelPresent": true,
+      "expectedHeading": "Recent commits"
+    },
+    {
+      "project": "zero",
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=zero&section=development",
+      "status": 200,
+      "developmentPanelPresent": true,
+      "expectedHeading": "Recent commits"
+    },
+    {
+      "project": "fees",
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=fees&section=development",
+      "status": 200,
+      "developmentPanelPresent": true,
+      "expectedHeading": "Recent commits"
+    }
+  ],
+  "stylesheets": [
+    {
+      "path": "/_next/static/chunks/06bfh2gpvojwp.css",
+      "status": 200,
+      "bytes": 13004
+    },
+    {
+      "path": "/_next/static/chunks/3jd75_ixp3kg4.css",
+      "status": 200,
+      "bytes": 108835
+    },
+    {
+      "path": "/_next/static/chunks/3rh8ahx9ddoj_.css",
+      "status": 200,
+      "bytes": 140536
+    },
+    {
+      "path": "/_next/static/chunks/3sgh1m44ebmfy.css",
+      "status": 200,
+      "bytes": 19674
+    }
+  ]
+}

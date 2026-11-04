@@ -30,6 +30,6 @@ export const institutionalDocuments: EditorialDocument[] = [
   ...roster.map(person => entry(`board-${person.id}`, person.name, 'Board of Directors', person.source, 'Shielded Labs Board of Directors.', [
     p(`${person.name} is listed on the Shielded Labs Board of Directors.`),
     link('Public profile on X', person.social),
-    ...(person.name.startsWith('Jason') || person.name.startsWith('Zooko') ? [link('Team & community', '?view=people')] : []),
+    ...(person.name.startsWith('Jason') || person.name.startsWith('Zooko') ? [link('Team', '?view=people')] : []),
   ])),
 ];

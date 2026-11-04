@@ -1,0 +1,36 @@
+{
+  "deploymentId": "1e970ba5-0f71-4509-bbb4-ee0724d52825",
+  "checks": [
+    {
+      "check": "Published Crosslink bento",
+      "columns": "493.558px 352.55px",
+      "commitLinks": 5,
+      "documentWidth": 1162,
+      "repositoryLinks": 2,
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=crosslink&section=development",
+      "width": 1175
+    },
+    {
+      "check": "Published repository card opens its source record",
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=activity&section=crosslink_book&record=repo%3Acrosslink_book",
+      "title": "Crosslink docs",
+      "source": "https://github.com/ShieldedLabs/crosslink_book"
+    },
+    {
+      "check": "Published Epoch Development and research link",
+      "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=epoch&section=development",
+      "heading": "No repository linked yet",
+      "research": "?view=projects&project=epoch&section=resources"
+    },
+    {
+      "check": "Published mobile layout",
+      "columns": "296.918px",
+      "documentWidth": 341,
+      "width": 354
+    },
+    {
+      "check": "Public browser console",
+      "errors": []
+    }
+  ]
+}

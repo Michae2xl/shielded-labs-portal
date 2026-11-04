@@ -27,6 +27,8 @@ VOID = set('img br hr input meta link source area wbr'.split())
 BLOCK = set('div section article header footer p h1 h2 h3 h4 h5 h6 ul ol li blockquote table figure pre'.split())
 SHORTCODE = re.compile(r'\[/?(?:vc_|ut_|contact-form-|wpbakery)[^\]]*\]', re.I)
 PROJECTS = [('crosslink', 'Crosslink'), ('epoch', 'Epoch'), ('nsm', 'NSM'), ('ironwood', 'Ironwood'), ('zero', 'Zero'), ('fees', 'Dynamic Fees')]
+# Reviewed associations that cannot be recovered from the article title alone.
+ARTICLE_PROJECTS = {'zcash-and-staking-economics': ['crosslink']}
 PAGES = {
     'crosslink': ('crosslink-guide', 'Crosslink overview', 'Guide', ['crosslink']),
     'crosslink-faq': ('crosslink-faq', 'Crosslink FAQ', 'FAQ', ['crosslink']),
@@ -39,6 +41,13 @@ PAGES = {
     'home': ('organization', 'About Shielded Labs', 'Organization', []),
     'privacy-policy': ('privacy', 'Privacy', 'Policy', []),
 }
+
+
+def article_projects(slug, title):
+    project_ids = [key for key, name in PROJECTS if name.lower() in title.lower()]
+    if any(word in title.lower() for word in ('orchard', 'counterfeiting')):
+        project_ids.append('ironwood')
+    return list(dict.fromkeys(project_ids + ARTICLE_PROJECTS.get(slug, [])))
 
 
 def request(url):
@@ -254,9 +263,7 @@ def main():
             if kind == 'pages' and row['slug'] not in PAGES:
                 continue
             title = html.unescape(re.sub('<[^>]*>', '', row['title']['rendered']))
-            project_ids = [key for key, name in PROJECTS if name.lower() in title.lower()]
-            if any(word in title.lower() for word in ('orchard', 'counterfeiting')):
-                project_ids = list(set(project_ids + ['ironwood']))
+            project_ids = article_projects(row['slug'], title)
             identifier, category, view = row['slug'], categories.get(row.get('categories', [0])[0], 'News'), 'blog'
             if kind == 'pages':
                 identifier, title, category, project_ids = PAGES[row['slug']]

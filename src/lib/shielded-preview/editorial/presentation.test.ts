@@ -19,13 +19,13 @@ describe('Editorial presentation and return paths', () => {
     expect(groupContent(body, 2)).toEqual({ intro: body, sections: [] });
   });
   it('retains category and search text in record and list URLs', () => {
-    const entry = editorialCatalog.find(e => e.id === 'crosslink-faq')!;
-    const detail = new URL(editorialHref(entry, 'crosslink', 'privacy & staking'), 'https://portal.test');
-    expect(detail.searchParams.get('record')).toBe('crosslink-faq');
+    const entry = editorialCatalog.find(e => e.view === 'blog')!;
+    const detail = new URL(editorialHref(entry, 'engineering-update', 'privacy & staking'), 'https://portal.test');
+    expect(detail.searchParams.get('record')).toBe(entry.id);
     expect(detail.searchParams.get('q')).toBe('privacy & staking');
-    const back = new URL(editorialListHref('resources', detail.searchParams.get('section')!, detail.searchParams.get('q')!), detail);
+    const back = new URL(editorialListHref('blog', detail.searchParams.get('section')!, detail.searchParams.get('q')!), detail);
     expect(back.searchParams.get('record')).toBeNull();
-    expect(back.searchParams.get('section')).toBe('crosslink');
+    expect(back.searchParams.get('section')).toBe('engineering-update');
     expect(back.searchParams.get('q')).toBe('privacy & staking');
     expect(editorialListHref('blog', 'all')).toBe('?view=blog&section=all');
   });

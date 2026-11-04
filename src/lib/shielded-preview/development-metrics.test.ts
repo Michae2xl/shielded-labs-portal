@@ -31,6 +31,34 @@ describe('Development heatmap evidence', () => {
     expect(filterDevelopment(commits, { day: days[1] })).toEqual([]);
   });
 
+  it('normalizes offset dates before ordering, choosing the UTC window and drilling into a day', () => {
+    const days = developmentDays('2026-10-25T23:30:00-03:00', 2);
+    expect(days).toEqual(['2026-10-25', '2026-10-26']);
+    const commits = developmentCommits([repository('one', [
+      commit('utc-first', { date: '2026-10-26T00:30:00Z' }),
+      commit('utc-latest', { date: '2026-10-25T23:30:00-03:00' }),
+      commit('previous-day', { date: '2026-10-26T00:30:00+03:00' }),
+    ])]);
+    expect(commits.map(c => c.sha)).toEqual(['utc-latest', 'utc-first', 'previous-day']);
+    expect(windowCommits(commits, ['2026-10-26']).map(c => c.sha)).toEqual(['utc-latest', 'utc-first']);
+    expect(filterDevelopment(commits, { day: '2026-10-25' }).map(c => c.sha)).toEqual(['previous-day']);
+  });
+
+  it('uses the freshest observation of a shared hash while retaining every repository', () => {
+    const saved = { ...repository('saved', [commit('shared', { login: null, profileUrl: null })]), state: 'snapshot' as const };
+    const refreshed = { ...repository('refreshed', [commit('shared', { profileUrl: 'https://github.com/alex', url: 'https://github.com/ShieldedLabs/refreshed/commit/shared' })]), state: 'live' as const, fetchedAt: '2026-10-26T22:00:00Z' };
+    const [observed] = developmentCommits([saved, refreshed]);
+    expect(observed).toMatchObject({ login: 'alex', profileUrl: 'https://github.com/alex', url: 'https://github.com/ShieldedLabs/refreshed/commit/shared', repositories: ['saved', 'refreshed'], sourceRepository: 'refreshed' });
+    expect(developmentCommits([refreshed, saved])[0]).toMatchObject({ login: observed.login, profileUrl: observed.profileUrl, url: observed.url });
+    expect(saved.commits[0].login).toBeNull();
+  });
+
+  it('prefers a live source at the same observation time even when date formatting differs', () => {
+    const saved = { ...repository('saved', [commit('shared', { login: null })]), state: 'snapshot' as const };
+    const live = { ...repository('live', [commit('shared')]), state: 'live' as const, fetchedAt: '2026-10-25T22:00:00.000Z' };
+    expect(developmentCommits([saved, live])[0]).toMatchObject({ login: 'alex', sourceRepository: 'live' });
+  });
+
   it('keeps identical unlinked names distinct from accounts and recognizes automation', () => {
     const commits = developmentCommits([repository('one', [
       commit('linked'), commit('renamed', { login: 'Alex', author: 'Alex New' }),

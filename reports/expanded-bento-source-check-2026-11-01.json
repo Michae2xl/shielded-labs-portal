@@ -1,0 +1,14 @@
+{
+  "filesVerified": 267,
+  "changedFiles": [
+    "src/app/shielded-preview/governance-insights.module.css",
+    "src/app/shielded-preview/governance-insights.tsx",
+    "src/app/shielded-preview/overview.module.css",
+    "src/app/shielded-preview/overview.tsx",
+    "src/app/shielded-preview/project-detail.module.css",
+    "src/app/shielded-preview/project-detail.tsx",
+    "src/lib/shielded-preview/governance-navigation.test.ts"
+  ],
+  "stagingDirectory": "/var/folders/gr/gd_8zl314_b2kvlbv4lbptz40000gn/T/shielded-expanded-bento-jld_8u_r",
+  "isolatedSource": true
+}

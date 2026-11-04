@@ -1,0 +1,15 @@
+{
+  "total": 69,
+  "legacyQ3ShowsAll": true,
+  "historicalRecord": 2,
+  "backUrl": "http://127.0.0.1:4250/?view=governance&section=proposals&lane=coinholder&filter=Vetoed&round=q4-2025",
+  "mobile": {
+    "url": "http://127.0.0.1:4250/?view=governance&section=proposals&lane=coinholder&q=Consensus&round=q4-2026",
+    "documentWidth": 341,
+    "viewport": 354
+  },
+  "consoleErrors": [],
+  "eligibleCurrent": 3,
+  "q2CarryForwards": 9,
+  "walletLabelRemoved": true
+}

@@ -1,0 +1,136 @@
+{
+  "checkedAt": "2026-11-01T19:26:36.689Z",
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "noindex": "noindex, nofollow",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "contentSecurityPolicy": true
+    },
+    {
+      "path": "/shielded-preview",
+      "status": 200,
+      "noindex": "noindex, nofollow",
+      "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate",
+      "contentSecurityPolicy": true
+    },
+    {
+      "path": "/api/shielded-preview",
+      "status": 200,
+      "noindex": "noindex, nofollow",
+      "cacheControl": "private, no-store",
+      "contentSecurityPolicy": true
+    },
+    {
+      "path": "/api/shielded-preview/governance",
+      "status": 200,
+      "noindex": "noindex, nofollow",
+      "cacheControl": "private, no-store",
+      "contentSecurityPolicy": true
+    },
+    {
+      "path": "/api/shielded-preview/editorial?id=crosslink-faq",
+      "status": 200,
+      "noindex": "noindex, nofollow",
+      "cacheControl": "private, max-age=300",
+      "contentSecurityPolicy": true
+    },
+    {
+      "path": "/api/shielded-preview/editorial?id=missing-audit-record",
+      "status": 404,
+      "noindex": "noindex, nofollow",
+      "cacheControl": null,
+      "contentSecurityPolicy": true
+    }
+  ],
+  "sources": {
+    "repositories": [
+      {
+        "name": "crosslink_monolith",
+        "state": "live",
+        "count": 100,
+        "observedAt": "2026-11-01T19:26:19.920Z",
+        "refreshError": null
+      },
+      {
+        "name": "zero",
+        "state": "live",
+        "count": 100,
+        "observedAt": "2026-11-01T19:26:20.148Z",
+        "refreshError": null
+      },
+      {
+        "name": "shielded_transport_pigeon",
+        "state": "live",
+        "count": 100,
+        "observedAt": "2026-11-01T19:26:19.863Z",
+        "refreshError": null
+      },
+      {
+        "name": "crosslink_book",
+        "state": "live",
+        "count": 48,
+        "observedAt": "2026-11-01T19:26:20.908Z",
+        "refreshError": null
+      },
+      {
+        "name": "zebra-dynamic-fees",
+        "state": "live",
+        "count": 100,
+        "observedAt": "2026-11-01T19:26:20.235Z",
+        "refreshError": null
+      },
+      {
+        "name": "sl-orchard",
+        "state": "live",
+        "count": 100,
+        "observedAt": "2026-11-01T19:26:21.075Z",
+        "refreshError": null
+      }
+    ],
+    "governance": {
+      "proposals": {
+        "state": "snapshot",
+        "count": 753,
+        "observedAt": "2026-10-25T22:42:50.147360+00:00"
+      },
+      "review": {
+        "state": "fetched",
+        "count": 28,
+        "observedAt": "2026-11-01T19:26:19.195Z",
+        "error": false
+      },
+      "grants": {
+        "state": "fetched",
+        "count": 218,
+        "observedAt": "2026-11-01T19:26:19.188Z",
+        "error": false
+      },
+      "payments": {
+        "state": "fetched",
+        "count": 913,
+        "observedAt": "2026-11-01T19:26:19.553Z",
+        "error": false
+      },
+      "members": {
+        "state": "fetched",
+        "count": 202,
+        "observedAt": "2026-11-01T19:26:21.046Z",
+        "error": false
+      },
+      "verification": {
+        "state": "fetched",
+        "count": 37,
+        "observedAt": "2026-11-01T19:26:19.222Z",
+        "error": false
+      },
+      "coinholder": {
+        "state": "fetched",
+        "count": 3,
+        "observedAt": "2026-11-01T19:26:19.913Z",
+        "error": false
+      }
+    }
+  }
+}

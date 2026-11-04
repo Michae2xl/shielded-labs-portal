@@ -1,0 +1,12 @@
+{
+  "verifiedFiles": 269,
+  "changedFiles": [
+    "src/app/shielded-preview/project-detail.module.css",
+    "src/app/shielded-preview/project-detail.test.ts",
+    "src/app/shielded-preview/project-detail.tsx",
+    "src/app/shielded-preview/project-development.module.css",
+    "src/app/shielded-preview/project-development.tsx"
+  ],
+  "sourceMatchesStage": true,
+  "nodeModulesExcluded": true
+}

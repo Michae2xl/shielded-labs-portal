@@ -19,7 +19,6 @@ export const peopleGroups = [
   { id: 'engineering', label: 'Engineering' },
   { id: 'cryptography', label: 'Cryptography' },
   { id: 'operations', label: 'Operations' },
-  { id: 'communities', label: 'Communities' },
 ] as const;
 
 export const milestoneGroups = [

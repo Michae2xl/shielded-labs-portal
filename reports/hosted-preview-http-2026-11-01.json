@@ -1,0 +1,86 @@
+{
+  "checkedAt": "2026-11-01T19:41:26.885251+00:00",
+  "url": "https://shielded-labs-portal-preview.up.railway.app",
+  "deploymentId": "58645708-57e6-4e7c-8fab-643a1deb0271",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 269077,
+      "robots": "noindex, nofollow",
+      "prototypeNotice": true,
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src https://aphelionz.github.io https://zooko.github.io https://fees.shieldedinfra.net"
+    },
+    {
+      "path": "/shielded-preview?view=governance&section=overview",
+      "status": 200,
+      "bytes": 282720,
+      "robots": "noindex, nofollow",
+      "prototypeNotice": true,
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src https://aphelionz.github.io https://zooko.github.io https://fees.shieldedinfra.net"
+    },
+    {
+      "path": "/shielded-preview?view=projects&project=crosslink&section=faq",
+      "status": 200,
+      "bytes": 259354,
+      "robots": "noindex, nofollow",
+      "prototypeNotice": true,
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-src https://aphelionz.github.io https://zooko.github.io https://fees.shieldedinfra.net"
+    },
+    {
+      "path": "/api/shielded-preview",
+      "status": 200,
+      "bytes": 279581,
+      "robots": "noindex, nofollow",
+      "validJson": true,
+      "repositories": [
+        {
+          "name": "crosslink_monolith",
+          "state": "live"
+        },
+        {
+          "name": "zero",
+          "state": "live"
+        },
+        {
+          "name": "shielded_transport_pigeon",
+          "state": "live"
+        },
+        {
+          "name": "crosslink_book",
+          "state": "live"
+        },
+        {
+          "name": "zebra-dynamic-fees",
+          "state": "live"
+        },
+        {
+          "name": "sl-orchard",
+          "state": "live"
+        }
+      ]
+    },
+    {
+      "path": "/api/shielded-preview/governance",
+      "status": 200,
+      "bytes": 1103034,
+      "robots": "noindex, nofollow",
+      "validJson": true
+    },
+    {
+      "path": "/api/shielded-preview/editorial?id=crosslink-faq",
+      "status": 200,
+      "bytes": 18049,
+      "robots": "noindex, nofollow",
+      "validJson": true
+    },
+    {
+      "path": "/api/shielded-preview/contact",
+      "status": 403,
+      "body": {
+        "sent": false,
+        "error": "Contact sending is disabled in this feedback prototype."
+      }
+    }
+  ]
+}

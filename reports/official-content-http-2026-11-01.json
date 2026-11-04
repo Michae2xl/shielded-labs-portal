@@ -1,0 +1,65 @@
+{
+  "verifiedAt": "2026-11-01T21:41:19.534744+00:00",
+  "deploymentId": "70c2ed91-e4b3-4988-bbf5-295534cbd5fb",
+  "routes": [
+    {
+      "route": "?view=about&section=organization",
+      "status": 200
+    },
+    {
+      "route": "?view=projects&project=crosslink",
+      "status": 200,
+      "officialExcerptPresent": true,
+      "sourcePresent": true
+    },
+    {
+      "route": "?view=projects&project=epoch",
+      "status": 200,
+      "officialExcerptPresent": true,
+      "sourcePresent": true
+    },
+    {
+      "route": "?view=projects&project=nsm",
+      "status": 200,
+      "officialExcerptPresent": true,
+      "sourcePresent": true
+    },
+    {
+      "route": "?view=projects&project=ironwood",
+      "status": 200,
+      "officialExcerptPresent": true,
+      "sourcePresent": true
+    },
+    {
+      "route": "?view=projects&project=zero",
+      "status": 200,
+      "officialExcerptPresent": true,
+      "sourcePresent": true
+    },
+    {
+      "route": "?view=projects&project=fees",
+      "status": 200,
+      "officialExcerptPresent": true,
+      "sourcePresent": true
+    }
+  ],
+  "styles": [
+    {
+      "route": "/_next/static/chunks/06bfh2gpvojwp.css",
+      "status": 200
+    },
+    {
+      "route": "/_next/static/chunks/0vquoq9cm0sm2.css",
+      "status": 200
+    },
+    {
+      "route": "/_next/static/chunks/3fsvijhfy8k9j.css",
+      "status": 200
+    },
+    {
+      "route": "/_next/static/chunks/3rh8ahx9ddoj_.css",
+      "status": 200
+    }
+  ],
+  "organizationCardStylesPresent": true
+}

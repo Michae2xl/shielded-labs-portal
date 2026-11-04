@@ -11,12 +11,13 @@ describe('Governance refresh boundaries',()=>{
  it('retains dated records on failure and coalesces concurrent refreshes',async()=>{
   const fetcher=vi.fn().mockRejectedValue(new Error('offline'));vi.stubGlobal('fetch',fetcher);
   const {getGovernanceData}=await import('./governance-provider');
-  const [a,b]=await Promise.all([getGovernanceData(),getGovernanceData()]);expect(a).toBe(b);expect(fetcher).toHaveBeenCalledTimes(5);
+  const [a,b]=await Promise.all([getGovernanceData(),getGovernanceData()]);expect(a).toBe(b);expect(fetcher).toHaveBeenCalledTimes(6);
   expect(a.payments.data).toEqual(snapshot.payments.data);expect(a.payments.observedAt).toBe(snapshot.payments.observedAt);expect(a.payments.error).toBe(true);
   expect(a.verification.data?.rows).toHaveLength(37);
   expect(a.proposals.data).toEqual(snapshot.proposals.data);
   expect(a.proposals.observedAt).toBe(snapshot.proposals.observedAt);
   expect(a.proposals.state).toBe('snapshot');
+  expect(a.coinholder.data).toBeNull();expect(a.coinholder.state).toBe('unavailable');
  });
  it('rejects truncated ledgers without replacing the complete saved observation',async()=>{
   vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,json:async()=>({data:[],count:0,total:1088}),text:async()=>'<html>error</html>'})));
@@ -29,6 +30,7 @@ describe('Governance refresh boundaries',()=>{
    if(url===snapshot.grants.url)return Response.json({data:snapshot.grants.data});
    if(url===snapshot.payments.url)return Response.json({data:snapshot.payments.data,count:snapshot.payments.data.length,total:snapshot.payments.data.length});
    if(url===snapshot.verification.url)return Response.json(snapshot.verification.data);
+   if(url.startsWith('https://api.github.com/repos/Financial-Privacy-Foundation/'))return Response.json([]);
    if(url.startsWith('https://docs.google.com/spreadsheets/'))return new Response('Name,Handle,Joined\nExample member,example,2026-01-01');
    throw new Error('Unexpected source');
   }));
@@ -37,7 +39,7 @@ describe('Governance refresh boundaries',()=>{
   expect(data.proposals.state).toBe('snapshot');
   expect(data.proposals.observedAt).toBe(snapshot.proposals.observedAt);
   expect(data.proposals.data).toEqual(snapshot.proposals.data);
-  for(const name of ['review','grants','payments','members','verification'] as const){
+  for(const name of ['review','grants','payments','members','verification','coinholder'] as const){
    expect(data[name].state).toBe('fetched');
    expect(data[name].error).toBe(false);
   }

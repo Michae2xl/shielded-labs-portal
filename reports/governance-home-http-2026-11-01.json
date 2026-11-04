@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-11-01T19:54:56.429287+00:00",
+  "baseUrl": "https://shielded-labs-portal-preview.up.railway.app",
+  "deploymentId": "be8a036a-9211-4db6-b46d-bb857bebd452",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "heading": "Governance \u00b7 Overview",
+      "expectedHeading": "Governance \u00b7 Overview",
+      "passed": true,
+      "noticeAbsent": true
+    },
+    {
+      "path": "/shielded-preview",
+      "status": 200,
+      "heading": "Governance \u00b7 Overview",
+      "expectedHeading": "Governance \u00b7 Overview",
+      "passed": true,
+      "noticeAbsent": true
+    },
+    {
+      "path": "/?view=overview",
+      "status": 200,
+      "heading": "Shielded Labs",
+      "expectedHeading": "Shielded Labs",
+      "passed": true,
+      "noticeAbsent": true
+    },
+    {
+      "path": "/?view=projects&project=crosslink",
+      "status": 200,
+      "heading": "Crosslink",
+      "expectedHeading": "Crosslink",
+      "passed": true,
+      "noticeAbsent": true
+    }
+  ]
+}

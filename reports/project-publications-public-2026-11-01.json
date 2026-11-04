@@ -1,0 +1,233 @@
+{
+  "checkedAt": "2026-11-01T22:00:50.932Z",
+  "deploymentId": "f2d307cc-0314-4dba-9af2-fbbd97f2c9df",
+  "results": [
+    {
+      "project": "crosslink",
+      "section": "overview",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/crosslink/",
+              "text": "Crosslink is a proposed upgrade for Zcash by Shielded Labs."
+            }
+          ],
+          "source": "https://shieldedlabs.net/crosslink/",
+          "text": "Crosslink is a proposed upgrade for Zcash by Shielded Labs.Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "Productionization Phase"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "Productionization PhaseStatus: In ProgressShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…Published window · Q2 2026 - Q2 2027Shielded Labs"
+        }
+      ],
+      "title": "Crosslink",
+      "width": 1175
+    },
+    {
+      "project": "crosslink",
+      "section": "progress",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/roadmap/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#pre-productionization-tech-debt-final-refactoring",
+          "text": "Completed 15 Apr 2026Pre-Productionization, Tech Debt, Final Refactoring"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#staking-transaction-semantics",
+          "text": "Completed 28 Jan 2026Staking Transaction Semantics"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#pow-consensus",
+          "text": "Completed 28 Aug 2025PoW Consensus"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#disconnected-bft",
+          "text": "Completed 16 May 2025Disconnected BFT"
+        },
+        {
+          "href": "?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#placeholders-and-processes",
+          "text": "Completed 21 Mar 2025Placeholders and Processes"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "Productionization Phase"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "Productionization PhaseStatus: In ProgressShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/roadmap/",
+              "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/roadmap/",
+          "text": "…deploying Crosslink on a testnet, iterating on its design and implementation based on user feedback…Published window · Q2 2026 - Q2 2027Shielded Labs"
+        }
+      ],
+      "title": "Crosslink",
+      "width": 1175
+    },
+    {
+      "project": "zero",
+      "section": "overview",
+      "viewport": "desktop",
+      "documentWidth": 1162,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Zero is a supported suite of open-source Zcash infrastructure software…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Zero is a supported suite of open-source Zcash infrastructure software…Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Our current Zero repositories include:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Our current Zero repositories include:Zero Software Stackzero-indexerShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "Zero",
+      "width": 1175
+    },
+    {
+      "project": "zero",
+      "section": "overview",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [],
+      "publications": [
+        {
+          "field": "presentation",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Zero is a supported suite of open-source Zcash infrastructure software…"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Zero is a supported suite of open-source Zcash infrastructure software…Shielded Labs"
+        },
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Our current Zero repositories include:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Our current Zero repositories include:Zero Software Stackzero-indexerShielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "Zero",
+      "width": 354
+    },
+    {
+      "project": "zero",
+      "section": "progress",
+      "viewport": "mobile",
+      "documentWidth": 341,
+      "links": [
+        {
+          "href": "https://shieldedlabs.net/zero/",
+          "text": "Shielded Labs"
+        },
+        {
+          "href": "https://github.com/ShieldedLabs/zero",
+          "text": "Zero Software Stack"
+        },
+        {
+          "href": "https://github.com/ShieldedLabs/zero/tree/main/zeronym",
+          "text": "zero-indexer"
+        }
+      ],
+      "publications": [
+        {
+          "field": "progress",
+          "quotes": [
+            {
+              "cite": "https://shieldedlabs.net/zero/",
+              "text": "Our current Zero repositories include:"
+            }
+          ],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Our current Zero repositories include:Shielded Labs"
+        },
+        {
+          "field": "next",
+          "quotes": [],
+          "source": "https://shieldedlabs.net/zero/",
+          "text": "Not specified in this source.Shielded Labs"
+        }
+      ],
+      "title": "Zero",
+      "width": 354
+    }
+  ],
+  "referenceCheck": {
+    "url": "https://shielded-labs-portal-preview.up.railway.app/?view=projects&project=crosslink&section=resources&record=crosslink-roadmap#pre-productionization-tech-debt-final-refactoring",
+    "heading": "Pre-Productionization, Tech Debt, Final Refactoring"
+  },
+  "errors": [],
+  "screenshot": "/Users/maiconguimaraes/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/project-publications-public.png"
+}

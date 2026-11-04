@@ -1,0 +1,148 @@
+{
+  "verifiedAt": "2026-11-01T22:00:44.194274+00:00",
+  "deploymentId": "f2d307cc-0314-4dba-9af2-fbbd97f2c9df",
+  "routes": [
+    {
+      "route": "?view=projects&project=crosslink",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true,
+        "presentation": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=crosslink&section=progress",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=epoch",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true,
+        "presentation": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=epoch&section=progress",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=nsm",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true,
+        "presentation": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=nsm&section=progress",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=ironwood",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true,
+        "presentation": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=ironwood&section=progress",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=zero",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true,
+        "presentation": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=zero&section=progress",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=fees",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true,
+        "presentation": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=projects&project=fees&section=progress",
+      "status": 200,
+      "officialCopy": {
+        "progress": true,
+        "next": true
+      },
+      "recordsPresent": true
+    },
+    {
+      "route": "?view=overview",
+      "status": 200,
+      "allSixOfficialIntroductionsPresent": true
+    },
+    {
+      "route": "?view=projects",
+      "status": 200,
+      "allSixOfficialIntroductionsPresent": true
+    }
+  ],
+  "styles": [
+    {
+      "route": "/_next/static/chunks/06bfh2gpvojwp.css",
+      "status": 200
+    },
+    {
+      "route": "/_next/static/chunks/0b_daocllnb9b.css",
+      "status": 200
+    },
+    {
+      "route": "/_next/static/chunks/3fsvijhfy8k9j.css",
+      "status": 200
+    },
+    {
+      "route": "/_next/static/chunks/3rh8ahx9ddoj_.css",
+      "status": 200
+    }
+  ]
+}

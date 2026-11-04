@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-11-01T20:27:31.537143+00:00",
+  "deploymentId": "69baf765-c509-447f-bbad-598fff4235e4",
+  "url": "https://shielded-labs-portal-preview.up.railway.app/",
+  "checks": {
+    "rootOK": true,
+    "governanceDefault": true,
+    "bentoMarkup": true,
+    "bentoCSS": true,
+    "stylesOK": true
+  },
+  "stylesheets": [
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/06bfh2gpvojwp.css",
+      "status": 200,
+      "sha256": "6cfa7b531a5899935c280c741e7ce9f2981c0734c8c5d0cc07ca7af357830e56",
+      "bento": false
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3sgh1m44ebmfy.css",
+      "status": 200,
+      "sha256": "12d3593efce7053a942b2e62d368f71eda3268216d0bd2153d5bbe7bce7e35d7",
+      "bento": false
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/3rh8ahx9ddoj_.css",
+      "status": 200,
+      "sha256": "5521b4290b0318bd66af0388e8c371fe04c135b4fc309bb60160d80451ff5632",
+      "bento": false
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/1zzp9dc06-z83.css",
+      "status": 200,
+      "sha256": "8867b4c0ce044606fce3808a308d75bef92d8742a3d682b8a2aa4868c81061e2",
+      "bento": true
+    },
+    {
+      "url": "https://shielded-labs-portal-preview.up.railway.app/_next/static/chunks/2387virb0m1et.css",
+      "status": 200,
+      "sha256": "013d6817bfdcedc0f817d51a011ce12e0f9dfffae3bfdb357c5b9e2f7bc4a848",
+      "bento": false
+    }
+  ]
+}

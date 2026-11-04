@@ -1,0 +1,57 @@
+{
+  "before": [
+    {
+      "height": 453,
+      "title": "Coinholder grants",
+      "width": 470
+    },
+    {
+      "height": 453,
+      "title": "NU7 scope",
+      "width": 470
+    },
+    {
+      "height": 295,
+      "title": "Protocol decisions",
+      "width": 470
+    },
+    {
+      "height": 295,
+      "title": "Ecosystem funding",
+      "width": 470
+    }
+  ],
+  "afterInitialLocalRender": [
+    {
+      "height": 308,
+      "title": "Coinholder grants",
+      "width": 472
+    },
+    {
+      "height": 341,
+      "title": "NU7 scope",
+      "width": 472
+    },
+    {
+      "height": 227,
+      "title": "Protocol decisions",
+      "width": 472
+    },
+    {
+      "height": 228,
+      "title": "Ecosystem funding",
+      "width": 472
+    }
+  ],
+  "notes": "The initial local render includes a saved-record source stamp. Compare final public dimensions after deployment with the live baseline.",
+  "checked": [
+    "Funded 17 opens Results with the Funded filter",
+    "Sprout retirement changes percentages to 48.5% and 97.3%",
+    "Compare all responses opens the selected Sprout question",
+    "Insights ZCG decisions and Q3 outcomes reviewed",
+    "Project listing opens Crosslink",
+    "Shielded Labs Overview project cards reviewed",
+    "Narrow layout: 354 CSS-pixel viewport, 341 CSS-pixel page width",
+    "Narrow governance, context and project cards visually reviewed"
+  ]
+}

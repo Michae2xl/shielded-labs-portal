@@ -1,0 +1,165 @@
+{
+  "checks": [
+    {
+      "check": "Crosslink commit opens with original GitHub source",
+      "url": "http://127.0.0.1:4250/?view=activity&section=crosslink_monolith&record=commit%3A343294272103534efcf06e042975f0e33fe31a08",
+      "source": "https://github.com/ShieldedLabs/crosslink_monolith/commit/343294272103534efcf06e042975f0e33fe31a08"
+    },
+    {
+      "check": "Fork commit retains repository and forks filter",
+      "url": "http://127.0.0.1:4250/?view=activity&forks=1&section=zebra-dynamic-fees&record=commit%3A990dcb6a8a98af6f9f4ae307ce8cd812a74e37f8",
+      "title": "fix(ci): skip Trigger Integration Tests on fork PRs (#10712)",
+      "source": "https://github.com/ShieldedLabs/zebra-dynamic-fees/commit/990dcb6a8a98af6f9f4ae307ce8cd812a74e37f8"
+    },
+    {
+      "check": "Fork repository record and source",
+      "url": "http://127.0.0.1:4250/?view=activity&forks=1&section=zebra-dynamic-fees&record=repo%3Azebra-dynamic-fees",
+      "source": "https://github.com/ShieldedLabs/zebra-dynamic-fees"
+    },
+    {
+      "active": "Development",
+      "check": "Desktop project development",
+      "commits": 5,
+      "documentWidth": 1162,
+      "emptyState": false,
+      "panelColumns": "493.558px 352.55px",
+      "project": "Crosslink",
+      "repositories": 2,
+      "url": "http://127.0.0.1:4250/?view=projects&project=crosslink&section=development",
+      "width": 1175
+    },
+    {
+      "active": "Development",
+      "check": "Desktop project development",
+      "commits": 0,
+      "documentWidth": 1175,
+      "emptyState": true,
+      "panelColumns": "none",
+      "project": "Epoch",
+      "repositories": 0,
+      "url": "http://127.0.0.1:4250/?view=projects&project=epoch&section=development",
+      "width": 1175
+    },
+    {
+      "active": "Development",
+      "check": "Desktop project development",
+      "commits": 0,
+      "documentWidth": 1175,
+      "emptyState": true,
+      "panelColumns": "none",
+      "project": "NSM",
+      "repositories": 0,
+      "url": "http://127.0.0.1:4250/?view=projects&project=nsm&section=development",
+      "width": 1175
+    },
+    {
+      "active": "Development",
+      "check": "Desktop project development",
+      "commits": 5,
+      "documentWidth": 1162,
+      "emptyState": false,
+      "panelColumns": "493.558px 352.55px",
+      "project": "Ironwood",
+      "repositories": 1,
+      "url": "http://127.0.0.1:4250/?view=projects&project=ironwood&section=development",
+      "width": 1175
+    },
+    {
+      "active": "Development",
+      "check": "Desktop project development",
+      "commits": 5,
+      "documentWidth": 1162,
+      "emptyState": false,
+      "panelColumns": "493.558px 352.55px",
+      "project": "Zero",
+      "repositories": 1,
+      "url": "http://127.0.0.1:4250/?view=projects&project=zero&section=development",
+      "width": 1175
+    },
+    {
+      "active": "Development",
+      "check": "Desktop project development",
+      "commits": 5,
+      "documentWidth": 1162,
+      "emptyState": false,
+      "panelColumns": "493.558px 352.55px",
+      "project": "Dynamic Fees",
+      "repositories": 1,
+      "url": "http://127.0.0.1:4250/?view=projects&project=fees&section=development",
+      "width": 1175
+    },
+    {
+      "check": "Tablet Crosslink",
+      "columns": "637.28px",
+      "documentWidth": 917,
+      "repositoryColumns": "310.639px 310.646px",
+      "width": 931
+    },
+    {
+      "active": "Development",
+      "check": "Mobile project development",
+      "columns": "296.918px",
+      "documentWidth": 341,
+      "project": "Crosslink",
+      "width": 354
+    },
+    {
+      "active": "Development",
+      "check": "Mobile project development",
+      "columns": "none",
+      "documentWidth": 341,
+      "project": "Epoch",
+      "width": 354
+    },
+    {
+      "active": "Development",
+      "check": "Mobile project development",
+      "columns": "none",
+      "documentWidth": 341,
+      "project": "NSM",
+      "width": 354
+    },
+    {
+      "active": "Development",
+      "check": "Mobile project development",
+      "columns": "296.918px",
+      "documentWidth": 341,
+      "project": "Ironwood",
+      "width": 354
+    },
+    {
+      "active": "Development",
+      "check": "Mobile project development",
+      "columns": "296.918px",
+      "documentWidth": 341,
+      "project": "Zero",
+      "width": 354
+    },
+    {
+      "active": "Development",
+      "check": "Mobile project development",
+      "columns": "296.918px",
+      "documentWidth": 341,
+      "project": "Dynamic Fees",
+      "width": 354
+    },
+    {
+      "check": "Empty state opens project research internally",
+      "url": "http://127.0.0.1:4250/?view=projects&project=epoch&section=resources",
+      "heading": "Research & guides"
+    },
+    {
+      "check": "Direct Development reload preserves Epoch empty state",
+      "url": "http://127.0.0.1:4250/?view=projects&project=epoch&section=development"
+    }
+  ],
+  "consoleErrors": [],
+  "tests": {
+    "files": 27,
+    "passed": 154
+  },
+  "lint": "passed",
+  "typecheck": "passed",
+  "isolation": "passed",
+  "build": "passed"
+}

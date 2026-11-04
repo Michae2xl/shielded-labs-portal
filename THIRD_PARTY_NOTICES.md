@@ -10,3 +10,5 @@ Inter and Geist Mono font files are unchanged copies of the Google Fonts assets 
 - [Geist Mono license](https://github.com/google/fonts/blob/main/ofl/geistmono/OFL.txt)
 
 Simulator applications are embedded from their original publishers and have not been copied or relicensed. Dependencies retain their respective licenses in their packages.
+
+ZODL, Zkool and Vizor wallet logos are unchanged assets from their official sites or repository. They retain their original ownership and are used only to identify links to the respective wallets. Source URLs and hashes are recorded in `docs/wallet-logo-sources.json`.

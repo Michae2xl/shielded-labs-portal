@@ -1,0 +1,318 @@
+{
+  "verifiedAt": "2026-11-01T21:53:52.344125+00:00",
+  "checks": [
+    {
+      "project": "crosslink",
+      "field": "presentation.text",
+      "source": "https://shieldedlabs.net/crosslink/",
+      "verbatimMatch": true,
+      "textSha256": "656f4585febeb54fe910390e7bb6226b2a259d6bf12b87bd9842aa05856732c0"
+    },
+    {
+      "project": "crosslink",
+      "field": "progress.text",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "febb97ce5553fa6260db82d7ccabecd6759e8f5da8c04406f19820c61f52fb63"
+    },
+    {
+      "project": "crosslink",
+      "field": "progress.detail",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "c8979bf41437455f2860164399e5a40f84c5b36f048ca2c5381f2caa70b3d7b7"
+    },
+    {
+      "project": "crosslink",
+      "field": "next.text",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "b2644e75a9d093f9e27d7f8fa9ff394b0eee4a501940c78f4756a33b08c482c1"
+    },
+    {
+      "project": "crosslink",
+      "field": "next.window",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "aa3c2a805b976491d2218550d97ad1d9e54dff4aa5e79949e3ec338a18af0d94"
+    },
+    {
+      "project": "crosslink",
+      "field": "badge.text",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "b4cc4b07c300103a4bc38e01e084cc945144a7eb0ae61d74d62ca49b8abe0908"
+    },
+    {
+      "project": "crosslink",
+      "field": "record0",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "7088277f3d49257d0ffae397e3e30ec4a71fcb801a62cace12e32e9c5557973d"
+    },
+    {
+      "project": "crosslink",
+      "field": "record1",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "2648d5d705888ce89ce294ae620f80498d963ce444e8ecd4b6fb2a0f27a294e7"
+    },
+    {
+      "project": "crosslink",
+      "field": "record2",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "7651fa6bda4c5a3456b774e26bf3d9ef2bba0db2adf9ee12679fe72ef568f8d5"
+    },
+    {
+      "project": "crosslink",
+      "field": "record3",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "818a61146ba9ed904a377198215fd6dcc99caf5f3b3c166935154dde67e946e4"
+    },
+    {
+      "project": "crosslink",
+      "field": "record4",
+      "source": "https://shieldedlabs.net/roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "ac62b61d59c51737c62a1a960099b5e4846b0f0bf054d6901d5a95eeda90a144"
+    },
+    {
+      "project": "epoch",
+      "field": "presentation.text",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "textSha256": "36a3c6ff5ef56be101a56f12e1b7127255e9fccaab00d0b8b6a79c186c258d5b"
+    },
+    {
+      "project": "epoch",
+      "field": "progress.text",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "textSha256": "c97d3dbadd1b6c95c17a0d6c186cfd7373255f0d8d6d5316e6b1b58ba62fd3f1"
+    },
+    {
+      "project": "epoch",
+      "field": "next.text",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "textSha256": "f168f19b7b94b1e6fe31be477bbf24f1e3c212236bc357c051bde8ff59817788"
+    },
+    {
+      "project": "epoch",
+      "field": "badge.text",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "textSha256": "e409a74963a0aa8d39e8e6e3e725e7752f93d26ac23b96be608bd030d5ee45a3"
+    },
+    {
+      "project": "epoch",
+      "field": "record0",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "textSha256": "26dda8440fd8d6d1953ecbc4737029d327bcd9cb1ed723db929b35eaede09718"
+    },
+    {
+      "project": "nsm",
+      "field": "presentation.text",
+      "source": "https://shieldedlabs.net/nsm/",
+      "verbatimMatch": true,
+      "textSha256": "a8c870d08cbff409fd6f91aa5fa3ea3752bb58a862c6e9c2a480bd1b0a36fc0a"
+    },
+    {
+      "project": "nsm",
+      "field": "progress.text",
+      "source": "https://shieldedlabs.net/nsm/",
+      "verbatimMatch": true,
+      "textSha256": "63a869112fc25eaf590f2a7433b70716afc76ac05256a75840c2bcd74bf72c5b"
+    },
+    {
+      "project": "nsm",
+      "field": "record0",
+      "source": "https://shieldedlabs.net/nsm/",
+      "verbatimMatch": true,
+      "textSha256": "a810e819832f346924c98dd2ffd7560fccdedcd5dfab2e7804a57adb65f77056"
+    },
+    {
+      "project": "nsm",
+      "field": "record1",
+      "source": "https://shieldedlabs.net/nsm/",
+      "verbatimMatch": true,
+      "textSha256": "16344eff269a69c7294d1ea6d3d6ccf6ed8a903c5c1e5a488a9df5af8375e03a"
+    },
+    {
+      "project": "nsm",
+      "field": "record2",
+      "source": "https://shieldedlabs.net/nsm/",
+      "verbatimMatch": true,
+      "textSha256": "e27b38eb6e1c8f235904bf0d21dd58018eb7e36d7cc3e8bfbdace26d99640279"
+    },
+    {
+      "project": "ironwood",
+      "field": "presentation.text",
+      "source": "https://shieldedlabs.net/projects/",
+      "verbatimMatch": true,
+      "textSha256": "3a7384750e5384ee238f2dbc709f65d239dcf40f0f0ce5e9dcc26da54d837e33"
+    },
+    {
+      "project": "ironwood",
+      "field": "progress.text",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "textSha256": "8c375b9d6c35d1a174d89e39768ad441e51a3cf16affacf82a17acda872d870d"
+    },
+    {
+      "project": "ironwood",
+      "field": "badge.text",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "textSha256": "d8700f8ed2e1805fe9cc83144d453e0cc649c391b1a5be86b83f5d115cc93684"
+    },
+    {
+      "project": "ironwood",
+      "field": "record0",
+      "source": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/",
+      "verbatimMatch": true,
+      "textSha256": "26dda8440fd8d6d1953ecbc4737029d327bcd9cb1ed723db929b35eaede09718"
+    },
+    {
+      "project": "ironwood",
+      "field": "record1",
+      "source": "https://shieldedlabs.net/ironwood-verifying-the-soundness-of-zcashs-circulating-supply/",
+      "verbatimMatch": true,
+      "textSha256": "729e009d1cc428c9e5c6d8bed1cdb11f4d5bbaac55a359b3049fbbd1f88e7032"
+    },
+    {
+      "project": "ironwood",
+      "field": "record2",
+      "source": "https://shieldedlabs.net/the-orchard-counterfeiting-vulnerability/",
+      "verbatimMatch": true,
+      "textSha256": "85a9967433b96b2dab78d9351dd7d40b169a36df3902f38c1620857a0870f7bc"
+    },
+    {
+      "project": "zero",
+      "field": "presentation.text",
+      "source": "https://shieldedlabs.net/zero/",
+      "verbatimMatch": true,
+      "textSha256": "a3bf7654ddb6e93ad1f33643891353a412cdd65a196e20ff03c132808f19071c"
+    },
+    {
+      "project": "zero",
+      "field": "progress.text",
+      "source": "https://shieldedlabs.net/zero/",
+      "verbatimMatch": true,
+      "textSha256": "40c126293d93a2a2e7938dba241d418f37de067f90de1adbca9c0b20a4560ddb"
+    },
+    {
+      "project": "zero",
+      "field": "record0",
+      "source": "https://shieldedlabs.net/zero/",
+      "verbatimMatch": true,
+      "textSha256": "125b993c8168ce47a76b45b148d21d2a021dc670464276c6c4f4352c7d4b05bf"
+    },
+    {
+      "project": "zero",
+      "field": "record1",
+      "source": "https://shieldedlabs.net/zero/",
+      "verbatimMatch": true,
+      "textSha256": "eb11b6a47c6bdb32e18b5a22a602bf574330a833b319eec6039c83527802576a"
+    },
+    {
+      "project": "fees",
+      "field": "presentation.text",
+      "source": "https://shieldedlabs.net/projects/",
+      "verbatimMatch": true,
+      "textSha256": "cec36df227005b48af348a49a225c58f7a7e3d325768079caddfbce6d1e17de8"
+    },
+    {
+      "project": "fees",
+      "field": "progress.text",
+      "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "1d0604375c173ae2c631af64c023ed5f420c08e5ef30a6168c66763ddc24bcda"
+    },
+    {
+      "project": "fees",
+      "field": "next.step0",
+      "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "cf4be718a64c07c027225e50b3d67efbb2b9bcf28ae09d29557ce1ac2cd262d4"
+    },
+    {
+      "project": "fees",
+      "field": "next.step1",
+      "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "27df6881d4a8d54468754524224e041b5b05bf37117a7a148f4359e4e32a14f5"
+    },
+    {
+      "project": "fees",
+      "field": "record0",
+      "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "1d0604375c173ae2c631af64c023ed5f420c08e5ef30a6168c66763ddc24bcda"
+    },
+    {
+      "project": "fees",
+      "field": "record1",
+      "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "cf4be718a64c07c027225e50b3d67efbb2b9bcf28ae09d29557ce1ac2cd262d4"
+    },
+    {
+      "project": "fees",
+      "field": "record2",
+      "source": "https://shieldedlabs.net/dynamic-fees-roadmap/",
+      "verbatimMatch": true,
+      "textSha256": "27df6881d4a8d54468754524224e041b5b05bf37117a7a148f4359e4e32a14f5"
+    }
+  ],
+  "sources": [
+    {
+      "sha256": "19bbcb978da3f63f848c439e83a21e199b13ec3661151bfafefdd7a629f6fd6b",
+      "status": 200,
+      "url": "https://shieldedlabs.net/crosslink/"
+    },
+    {
+      "sha256": "8a35a4530795042b56c259888fc22b5650bedd03dce4f078828fc264765e7897",
+      "status": 200,
+      "url": "https://shieldedlabs.net/dynamic-fees-roadmap/"
+    },
+    {
+      "sha256": "0787ac23d2a0ab673da3becf5a64ff52cd35a5beb98e8c8b18263f947531523d",
+      "status": 200,
+      "url": "https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/"
+    },
+    {
+      "sha256": "d1da2d66cddf233ef70a8d1266e0128f10edb5e273601f7d54e5f36dc4246dee",
+      "status": 200,
+      "url": "https://shieldedlabs.net/ironwood-verifying-the-soundness-of-zcashs-circulating-supply/"
+    },
+    {
+      "sha256": "65f8f62a7ef1326d7114e15eadf0c49c383222f1b9289ad0f57d3c42212eaf84",
+      "status": 200,
+      "url": "https://shieldedlabs.net/nsm/"
+    },
+    {
+      "sha256": "efe60d094d094df219fc7d327b2c81786e588078e68a4210f321194417c51567",
+      "status": 200,
+      "url": "https://shieldedlabs.net/projects/"
+    },
+    {
+      "sha256": "c7ac861fb56bf28725e9c526c59e5764be47dd6854dc8fe240fb7dd0629f5786",
+      "status": 200,
+      "url": "https://shieldedlabs.net/roadmap/"
+    },
+    {
+      "sha256": "8800219adda6d52daa4d926c620b58f39de6c8beb1b98ad7eab06ea46bb9875b",
+      "status": 200,
+      "url": "https://shieldedlabs.net/the-orchard-counterfeiting-vulnerability/"
+    },
+    {
+      "sha256": "904cd65c4bbfc2b1d408fef3060dcc2ce3bccfe55ee4f921fa691bebe200fc94",
+      "status": 200,
+      "url": "https://shieldedlabs.net/zero/"
+    }
+  ]
+}

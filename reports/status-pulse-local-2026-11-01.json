@@ -1,0 +1,40 @@
+{
+  "desktop": {
+    "active": "true",
+    "animation": "governance-participation_proposalPulse__O_YEt",
+    "duration": "1.8s",
+    "label": "Accepting proposals",
+    "opacity": "0.642192",
+    "pageWidth": 1162,
+    "statusRect": {
+      "bottom": 204.55965614318848,
+      "height": 19.495737075805664,
+      "left": 470.2059631347656,
+      "right": 605.9872131347656,
+      "top": 185.0639190673828,
+      "width": 135.78125,
+      "x": 470.2059631347656,
+      "y": 185.0639190673828
+    },
+    "titleRect": {
+      "bottom": 205.802547454834,
+      "height": 27.99715805053711,
+      "left": 294.765625,
+      "right": 456.2073822021485,
+      "top": 177.80538940429688,
+      "width": 161.44175720214844,
+      "x": 294.765625,
+      "y": 177.80538940429688
+    },
+    "width": 1175
+  },
+  "mobile": {
+    "animation": "governance-participation_proposalPulse__O_YEt",
+    "headerText": "Coinholder grants\nAccepting proposals\nQ4 2026",
+    "opacity": "0.86047",
+    "pageWidth": 341,
+    "width": 354
+  },
+  "proposalsUrl": "http://127.0.0.1:4250/?view=governance&section=voting",
+  "consoleErrors": []
+}

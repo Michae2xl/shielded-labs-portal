@@ -1,0 +1,26 @@
+{
+  "deploymentId": "c36d4b16-83ec-49c0-8190-1119bc757054",
+  "legacyQ3ShowsAll": true,
+  "total": 69,
+  "q1Record": 19,
+  "backUrl": "https://shielded-labs-portal-preview.up.railway.app/?view=governance&section=proposals&lane=coinholder&round=q1-2026",
+  "wallets": {
+    "logos": [
+      {
+        "loaded": true,
+        "src": "/_next/image?url=%2Fwallet-logos%2Fzodl.png&w=64&q=75"
+      },
+      {
+        "loaded": true,
+        "src": "/_next/image?url=%2Fwallet-logos%2Fzkool.png&w=64&q=75"
+      },
+      {
+        "loaded": true,
+        "src": "/_next/image?url=%2Fwallet-logos%2Fvizor.png&w=64&q=75"
+      }
+    ],
+    "removed": true
+  },
+  "url": "https://shielded-labs-portal-preview.up.railway.app/?view=governance&section=proposals&lane=coinholder",
+  "consoleErrors": []
+}
