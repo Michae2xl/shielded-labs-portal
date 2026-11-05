@@ -7,6 +7,7 @@ import { participationRound } from '@/lib/shielded-preview/governance-participat
 import { Arrow, Link, type CollectionNavigate } from './governance-collections';
 import ContextNotice from './context-notice';
 import GovernanceParticipation, { GovernanceReference } from './governance-participation';
+import { DevFundOverviewCard } from './governance-dev-fund';
 import s from './governance-overview.module.css';
 import b from './governance-bento.module.css';
 
@@ -82,6 +83,7 @@ export default function GovernanceOverview({ data, pollCount, onNavigate }: {
   const grants = data.grants.data.filter(grant => grant.lastPaid).sort((a, b) => b.lastPaid.localeCompare(a.lastPaid)).slice(0, 3);
 
   return <div className={s.overview}>
+    <DevFundOverviewCard onNavigate={onNavigate}/>
     <GovernanceParticipation/>
 
     <section className={s.group} aria-labelledby="governance-activity-heading">

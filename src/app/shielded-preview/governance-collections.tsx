@@ -13,10 +13,12 @@ import { coinholderTotals, type CoinholderProposal } from '@/lib/shielded-previe
 import { coinholderRoundLabel, coinholderRounds } from '@/lib/shielded-preview/coinholder-rounds';
 import c from './coinholder-proposals.module.css';
 
-import { governanceSectionSlug, type GovernanceSection } from '@/lib/shielded-preview/governance-sections';
-type Section = GovernanceSection;
-export type CollectionSelection = { lane?: string; filter?: string; search?: string; page?: number; basis?: 'include' | 'exclude'; round?: string };
-export type CollectionNavigate = (section: Section, id?: string | null, selection?: CollectionSelection) => void;
+import { devFundLane, devFundSources, devFundTimeline } from '@/lib/shielded-preview/governance-dev-fund';
+import { DevFundProposals, DevFundVoting } from './governance-dev-fund';
+import { Arrow, Link, type CollectionNavigate, type CollectionSelection } from './governance-link';
+
+export { Arrow, Link };
+export type { CollectionNavigate, CollectionSelection };
 type Navigate = CollectionNavigate;
 export type Controls = {
   search: string; onSearch: (value: string) => void;
@@ -56,28 +58,6 @@ const pollTitles: Record<string, string> = {
 };
 const elections = [...record.elections].sort((a, b) => (b.date ?? b.month ?? '').localeCompare(a.date ?? a.month ?? ''));
 
-export function Arrow() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>;
-}
-
-export function Link({ section, id, selection, onNavigate, children, className }: {
-  section: Section; id?: string; selection?: CollectionSelection; onNavigate: Navigate; children: ReactNode; className?: string;
-}) {
-  const params = new URLSearchParams({ view: 'governance', section: governanceSectionSlug(section) });
-  if (id) params.set('record', id);
-  if (selection?.lane) params.set('lane', selection.lane);
-  if (selection?.filter && selection.filter !== 'all') params.set('filter', selection.filter);
-  if (selection?.search) params.set('q', selection.search);
-  if (selection?.page && selection.page > 1) params.set('page', String(selection.page));
-  if (selection?.basis === 'exclude') params.set('basis', 'exclude');
-  if (selection?.round && selection.round !== 'all') params.set('round', selection.round);
-  return <a href={`?${params}`} className={className} onClick={event => {
-    if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
-    onNavigate(section, id, selection);
-  }}>{children}</a>;
-}
-
 export function Tabs({ label, value, items, onChange }: {
   label: string; value: string; items: readonly { id: string; name: string; count?: number; icon?: GovernanceGlyphKind }[]; onChange: (value: string) => void;
 }) {
@@ -106,9 +86,9 @@ export function Empty({ onReset }: { onReset: () => void }) {
   return <div className={s.empty}><h3>No matching records</h3><p>Try another search or reset the filters.</p><button onClick={onReset}>Reset filters<Arrow/></button></div>;
 }
 
-export function Collection({ tabs, title, context, toolbar, summary, children, notice, aside, total, page, onPage, id, archive = false }: {
+export function Collection({ tabs, title, context, toolbar, summary, children, notice, aside, total, page, onPage, id, archive = false, bare = false }: {
   tabs: ReactNode; title: string; context: string; toolbar: ReactNode; summary?: ReactNode;
-  children: ReactNode; notice: ReactNode; aside: ReactNode; total: number | null; page: number; onPage: (page: number) => void; id: string; archive?: boolean;
+  children: ReactNode; notice: ReactNode; aside: ReactNode; total: number | null; page: number; onPage: (page: number) => void; id: string; archive?: boolean; bare?: boolean;
 }) {
   const heading = useRef<HTMLHeadingElement>(null);
   function changePage(next: number) {
@@ -117,9 +97,9 @@ export function Collection({ tabs, title, context, toolbar, summary, children, n
     heading.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
   }
   return <div className={`${s.collection} ${archive ? a.archive : ''}`}>
-    {archive ? <div className={a.collectionTools}>{tabs}<div className={a.searchTools}>{toolbar}</div></div> : <div className={s.collectionTools}>{tabs}<div className={s.toolbar}>{toolbar}</div></div>}
+    {archive ? <div className={a.collectionTools}>{tabs}{toolbar && <div className={a.searchTools}>{toolbar}</div>}</div> : <div className={s.collectionTools}>{tabs}<div className={s.toolbar}>{toolbar}</div></div>}
     <div className={s.layout}>
-      <section className={`${s.main} ${archive ? a.panel : ''}`} aria-labelledby={`${id}-heading`}>
+      <section className={`${s.main} ${archive && !bare ? a.panel : ''}`} aria-labelledby={`${id}-heading`}>
         <h2 className={s.srOnly} ref={heading} tabIndex={-1} id={`${id}-heading`}>{context}: {title}</h2>
         {archive ? summary && <div className={a.tools}>{summary}</div> : summary}
         {children}
@@ -131,6 +111,10 @@ export function Collection({ tabs, title, context, toolbar, summary, children, n
   </div>;
 }
 
+function DevFundAside() {
+  return <><div><h3>Reading this timeline</h3><p>Dates and rules as published on {date(devFundTimeline.publishedAt)}. Times are UTC where the announcement gives one. Questions, answer choices and results appear here only after they are published.</p></div><SourceInfo name="ZCG and the Dev Fund: Timeline for Proposals and Polling" source={{ state: 'fetched', url: devFundSources.timeline, observedAt: devFundTimeline.publishedAt, error: false, data: null }}/></>;
+}
+
 export function ProposalsCollection({ datasets, coinholderSource, lane, onLane, source, round, onRound, busy, ...controls }: Controls & {
   datasets: { review: ProposalListItem[]; history: ProposalListItem[] };
   coinholderSource: Source<CoinholderProposal[] | null>;
@@ -139,7 +123,13 @@ export function ProposalsCollection({ datasets, coinholderSource, lane, onLane, 
 }) {
   const { search, onSearch, filter, onFilter, page, onPage, onNavigate } = controls;
   // Old Q3 listing links now enter the complete Coinholder collection.
-  const selected = lane === 'history' ? 'history' : lane === 'q3' || lane === 'coinholder' ? 'coinholder' : 'review';
+  const selected = lane === devFundLane ? devFundLane : lane === 'history' ? 'history' : lane === 'q3' || lane === 'coinholder' ? 'coinholder' : 'review';
+  const tabs = <Tabs label="Proposal collections" value={selected} onChange={onLane} items={[{ id: 'review', name: 'ZCG review', count: datasets.review.length, icon: 'proposals' }, { id: 'history', name: 'ZCG history', count: datasets.history.length, icon: 'history' }, { id: 'coinholder', name: 'Coinholder', count: coinholderSource.data?.length, icon: 'grants' }, { id: devFundLane, name: 'ZCG / Dev Fund', icon: 'voting' }]}/>;
+  if (selected === devFundLane) return <Collection archive bare id="dev-fund-proposals" title="ZCG / Dev Fund" context="Proposals"
+    tabs={tabs} toolbar={null} total={null} page={page} onPage={onPage}
+    notice="This process has its own timeline. ZCG applications and Coinholder grants are listed under their own tabs."
+    aside={<DevFundAside/>}
+  ><DevFundProposals onNavigate={onNavigate}/></Collection>;
   const isCoinholder = selected === 'coinholder';
   const unavailable = isCoinholder && coinholderSource.data === null;
   const rows: ProposalListItem[] = isCoinholder ? (coinholderSource.data ?? []).map(row => ({
@@ -153,7 +143,7 @@ export function ProposalsCollection({ datasets, coinholderSource, lane, onLane, 
   const titles = { review: 'Under review', history: 'Application history', coinholder: 'Coinholder applications' };
   const statusHeading = selected === 'review' ? 'Submitted' : 'Status';
   return <Collection archive id="proposals" title={titles[selected]} context={isCoinholder ? 'Coinholder grants' : 'Zcash Community Grants'}
-    tabs={<Tabs label="Proposal collections" value={selected} onChange={onLane} items={[{ id: 'review', name: 'ZCG review', count: datasets.review.length, icon: 'proposals' }, { id: 'history', name: 'ZCG history', count: datasets.history.length, icon: 'history' }, { id: 'coinholder', name: 'Coinholder', count: coinholderSource.data?.length, icon: 'grants' }]}/>}
+    tabs={tabs}
     toolbar={<><Search name="Search proposals" value={search} onChange={onSearch}/>{isCoinholder && <select aria-label="Filter Coinholder round" value={round} onChange={event => onRound(event.target.value)}><option value="all">All rounds</option>{coinholderRounds.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}</select>}{statuses.length > 1 && <select aria-label="Filter proposal status" value={filter} onChange={event => onFilter(event.target.value)}><option value="all">All statuses</option>{statuses.map(status => <option key={status} value={status}>{label(status)}</option>)}</select>}</>}
     total={unavailable ? null : filtered.length} page={page} onPage={onPage}
     notice={isCoinholder ? 'All submitted applications, including closed records and resubmissions. Amounts are requests; approval and payment are separate.' : 'Amounts are funding requests. Decisions, payments and delivery are tracked separately.'}
@@ -215,7 +205,13 @@ export function VotingCollection({ source, lane, onLane, busy, ...controls }: Co
     { id: 'current', name: 'Current proposals', icon: 'proposals' },
     { id: 'archive', name: 'Poll archive', icon: 'history' },
     { id: 'upgrades', name: 'Network upgrades', icon: 'network' },
+    { id: devFundLane, name: 'ZCG / Dev Fund', icon: 'voting' },
   ]}/>;
+  if (lane === devFundLane) return <Collection archive bare id="dev-fund-voting" title="ZCG / Dev Fund" context="Voting"
+    tabs={tabs} toolbar={null} total={null} page={page} onPage={onPage}
+    notice="Polls inform decisions. ZIP status, node releases and network activation remain separate milestones."
+    aside={<DevFundAside/>}
+  ><DevFundVoting onNavigate={onNavigate}/></Collection>;
   if (isCurrent) {
     const rows = (source.data ?? []).filter(row => row.readyForCurrentVote);
     const categories = [...new Set(rows.map(row => row.category).filter((category): category is string => Boolean(category)))];

@@ -1,0 +1,29 @@
+'use client';
+
+import type { ReactNode } from 'react';
+import { governanceSectionSlug, type GovernanceSection } from '@/lib/shielded-preview/governance-sections';
+
+export type CollectionSelection = { lane?: string; filter?: string; search?: string; page?: number; basis?: 'include' | 'exclude'; round?: string };
+export type CollectionNavigate = (section: GovernanceSection, id?: string | null, selection?: CollectionSelection) => void;
+
+export function Arrow() {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>;
+}
+
+export function Link({ section, id, selection, onNavigate, children, className }: {
+  section: GovernanceSection; id?: string; selection?: CollectionSelection; onNavigate: CollectionNavigate; children: ReactNode; className?: string;
+}) {
+  const params = new URLSearchParams({ view: 'governance', section: governanceSectionSlug(section) });
+  if (id) params.set('record', id);
+  if (selection?.lane) params.set('lane', selection.lane);
+  if (selection?.filter && selection.filter !== 'all') params.set('filter', selection.filter);
+  if (selection?.search) params.set('q', selection.search);
+  if (selection?.page && selection.page > 1) params.set('page', String(selection.page));
+  if (selection?.basis === 'exclude') params.set('basis', 'exclude');
+  if (selection?.round && selection.round !== 'all') params.set('round', selection.round);
+  return <a href={`?${params}`} className={className} onClick={event => {
+    if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    onNavigate(section, id, selection);
+  }}>{children}</a>;
+}

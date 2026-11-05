@@ -9,6 +9,7 @@ import { ROUND_PROPOSALS } from '@/lib/zcg/coinholder-round';
 import { paymentsForGrant, paymentTotals, roundApplication } from '@/lib/shielded-preview/governance-metrics';
 import { grantsWithSameTitle } from '@/lib/shielded-preview/governance-relations';
 import { participationGuideId } from '@/lib/shielded-preview/governance-participation';
+import { devFundLane } from '@/lib/shielded-preview/governance-dev-fund';
 import { emptyCoinholderSource } from '@/lib/shielded-preview/coinholder-proposals';
 import { coinholderRounds } from '@/lib/shielded-preview/coinholder-rounds';
 import type { GovernanceData, Source, VoteResult } from '@/lib/shielded-preview/governance-types';
@@ -67,7 +68,7 @@ export default function Governance(){
  const refresh=useCallback(async()=>{if(active.current)return;active.current=true;setBusy(true);try{const r=await fetch('/api/shielded-preview/governance',{signal:AbortSignal.timeout(20000)});if(!r.ok)throw new Error();setData(await r.json());setFailed(false)}catch{setFailed(true)}finally{active.current=false;setBusy(false)}},[]);
  useEffect(()=>{const read=()=>{
   const p=new URLSearchParams(location.search);const next=governanceSectionFromSlug(p.get('section'))??'Overview';
-  const lanes=next==='ZIPs'?['zips','drafts','guides','proposals']:next==='Voting'?['current','archive','upgrades']:next==='Proposals'?['review','history','coinholder','q3']:next==='Results'?['q3','elections']:next==='Insights'?['decisions','payments','outcomes','panels']:next==='ZCAP'?['comparison','members']:[];
+  const lanes=next==='ZIPs'?['zips','drafts','guides','proposals']:next==='Voting'?['current','archive','upgrades',devFundLane]:next==='Proposals'?['review','history','coinholder','q3',devFundLane]:next==='Results'?['q3','elections']:next==='Insights'?['decisions','payments','outcomes','panels']:next==='ZCAP'?['comparison','members']:[];
   const nextPage=Number(p.get('page')??1);
   const nextLane=lanes.includes(p.get('lane')??'')?p.get('lane')!:next==='Voting'&&p.get('filter')==='upgrades'?'upgrades':recordLane(next,p.get('record'));
   setSection(next);setLane(next==='Proposals'&&nextLane==='q3'?'coinholder':nextLane);setSelected(p.get('record'));
