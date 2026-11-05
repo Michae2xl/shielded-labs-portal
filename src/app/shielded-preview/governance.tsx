@@ -80,6 +80,7 @@ export default function Governance(){
   const keep=next===section&&(id!==null||selected!==null);
   const state:ListingState={lane:keep?lane:recordLane(next,id),filter:keep?filter:'all',search:keep?search:'',page:keep?page:1,basis:keep?basis:'include',round:keep?round:'all',...overrides};
   if(next==='Voting'&&id===null&&selected?.startsWith('upgrade:'))state.lane='upgrades';
+  if(next==='ZIPs'&&id)state.lane=laneForRecord(id);
   setSection(next);setSelected(id);setLane(state.lane);setSearch(state.search);setFilter(state.filter);setPage(state.page);setBasis(state.basis);setRound(state.round);
   history.pushState(null,'',`?${listingParams(next,id,state)}`);window.dispatchEvent(new Event('shielded:navigate'));window.scrollTo({top:0,behavior:'instant'});
  }

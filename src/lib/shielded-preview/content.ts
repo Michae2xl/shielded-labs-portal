@@ -19,15 +19,22 @@ export const projects = [
 ] as const;
 export type Project = typeof projects[number];
 
-export const milestones = [
-  { date: '2025-03-21', name: 'Foundation in place', detail: 'Crosslink milestone 1: code structure and development processes.', type: 'Engineering', source: sources.roadmap },
-  { date: '2025-05-16', name: 'BFT prototype', detail: 'Crosslink milestone 2: disconnected BFT functionality.', type: 'Engineering', source: sources.roadmap },
-  { date: '2025-08-28', name: 'Consensus integration', detail: 'Crosslink milestone 3: PoW consensus respects BFT finality.', type: 'Engineering', source: sources.roadmap },
-  { date: '2026-01-28', name: 'Staking semantics', detail: 'Crosslink milestone 4: staking operations in the prototype.', type: 'Engineering', source: sources.roadmap },
-  { date: '2026-04-15', name: 'Toward production', detail: 'Crosslink milestone 5 completed; productionization phase follows.', type: 'Engineering', source: sources.roadmap },
-  { date: '2026-05-29', name: 'Preventive research finds a critical flaw', detail: 'Taylor Hornby discovers the Orchard vulnerability after Shielded Labs engaged him for ongoing security research.', type: 'Security', source: sources.security },
-  { date: '2026-06-02', name: 'Coordinated response', detail: 'The disclosure reports completion of the emergency response coordinated by ZODL with the ecosystem.', type: 'Security', source: sources.security },
-  { date: '2026-10-01', name: 'Epoch introduced', detail: 'A dedicated cryptography team begins research into post-quantum designs and formal verification.', type: 'Research', source: sources.epoch },
+export type Milestone = {
+  date: string; name: string; detail: string; type: 'Engineering' | 'Security' | 'Research' | 'Governance';
+  project: string; source: string; recordType: string; step?: string; governanceRecord?: string; context?: string;
+};
+export const MILESTONES_REVIEWED = '2026-11-04';
+export const milestones: Milestone[] = [
+  { date: '2024-12-08', name: 'Coinholders polled on the NSM', detail: 'A non-binding coinholder poll asks whether to include the NSM in NU7.', type: 'Governance', project: 'nsm', source: 'https://forum.zcashcommunity.com/t/coinholder-poll-nsm/49310/28', recordType: 'Coinholder poll', governanceRecord: 'poll:2024-12-nsm-coinholder-poll' },
+  { date: '2025-03-21', name: 'Foundation in place', detail: 'Code structure and minimal functionality are in place, with no consensus changes.', type: 'Engineering', project: 'crosslink', source: sources.roadmap, recordType: 'Prototype milestone', step: 'Milestone 1' },
+  { date: '2025-05-16', name: 'BFT prototype', detail: 'BFT functionality is added while Zcash’s existing consensus stays unaltered.', type: 'Engineering', project: 'crosslink', source: sources.roadmap, recordType: 'Prototype milestone', step: 'Milestone 2' },
+  { date: '2025-08-28', name: 'Consensus integration', detail: 'Proof of work is first modified to respect the finality the BFT protocol provides.', type: 'Engineering', project: 'crosslink', source: sources.roadmap, recordType: 'Prototype milestone', step: 'Milestone 3' },
+  { date: '2026-01-28', name: 'Staking semantics', detail: 'New transactions enable staking operations: delegations, PoS roster selection and rewards issuance.', type: 'Engineering', project: 'crosslink', source: sources.roadmap, recordType: 'Prototype milestone', step: 'Milestone 4' },
+  { date: '2026-04-15', name: 'Toward production', detail: 'Prototype design choices are revisited to plan the Mainnet readiness roadmap; the Productionization Phase follows.', type: 'Engineering', project: 'crosslink', source: sources.roadmap, recordType: 'Prototype milestone', step: 'Milestone 5' },
+  { date: '2026-05-29', name: 'Preventive research finds a critical flaw', detail: 'Taylor Hornby discovers the Orchard vulnerability after Shielded Labs engaged him for ongoing security research.', type: 'Security', project: 'ironwood', source: sources.security, recordType: 'Vulnerability discovery' },
+  { date: '2026-06-02', name: 'Coordinated response', detail: 'The disclosure reports completion of the emergency response coordinated by ZODL with the ecosystem.', type: 'Security', project: 'ironwood', source: sources.security, recordType: 'Emergency response' },
+  { date: '2026-07-28', name: 'NU6.3 activates Ironwood', detail: 'The network upgrade activates at block 3,428,143, following a joint proposal by Shielded Labs, the Zcash Foundation, Tachyon Group, Valar Group and ZODL.', type: 'Security', project: 'ironwood', source: 'https://zips.z.cash/zip-0258', recordType: 'Network upgrade', governanceRecord: 'upgrade:NU6.3 (Ironwood)', context: 'https://shieldedlabs.net/ironwood-verifying-the-soundness-of-zcashs-circulating-supply/' },
+  { date: '2026-10-01', name: 'Epoch introduced', detail: 'A dedicated cryptography team begins research into post-quantum designs and formal verification.', type: 'Research', project: 'epoch', source: sources.epoch, recordType: 'Research announcement' },
 ];
 
 export const team = [

@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 import { milestones, projects, type Project } from '@/lib/shielded-preview/content';
-import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
-import { developmentDays, repositoryLabels, windowCommits, developmentCommits } from '@/lib/shielded-preview/development-metrics';
+import { developmentDays, isMergeCommit, repositoryLabels, windowCommits, developmentCommits } from '@/lib/shielded-preview/development-metrics';
 import type { PortalData } from '@/lib/shielded-preview/types';
 import ContributorAvatar from './contributor-avatar';
-import { ProjectLink } from './project-detail';
+import ProjectCard from './project-card';
 import { ShieldSculpture } from './shield';
 import { editorialCatalog } from '@/lib/shielded-preview/editorial/library';
 import Image from 'next/image';
 import s from './overview.module.css';
+import pc from './project-collection.module.css';
 
 type OverviewView = 'projects' | 'governance' | 'activity' | 'impact' | 'blog';
 type Navigate = (view: OverviewView, section?: string, record?: string) => void;
@@ -37,13 +37,14 @@ function DateStamp({ date }: { date: string }) {
   return <time dateTime={date}>{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date))}</time>;
 }
 
-export default function Overview({ data, onNavigate, onProject }: {
+export default function Overview({ data, onNavigate, onProject, onFollow, projectGlyph }: {
   data: PortalData; onNavigate: Navigate; onProject: (project: Project) => void;
+  onFollow: (href: string) => void; projectGlyph: (project: Project) => ReactNode;
 }) {
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { heading.current?.focus({ preventScroll: true }); }, []);
   const days = developmentDays(data.checkedAt, 35);
-  const commits = windowCommits(developmentCommits(data.repos), days);
+  const commits = windowCommits(developmentCommits(data.repos), days).filter(commit => !isMergeCommit(commit));
   const recentRepositories = data.repos.filter(repo => !repo.fork).flatMap(repo => {
     const latest = commits.find(commit => commit.repositories.includes(repo.name));
     return latest ? [{ repo, latest }] : [];
@@ -62,17 +63,13 @@ export default function Overview({ data, onNavigate, onProject }: {
 
     <section aria-labelledby="overview-projects" className={s.projects}>
       <header className={s.sectionHeader}><h2 id="overview-projects">Projects</h2><PortalLink view="projects" onNavigate={onNavigate}>All projects<Arrow/></PortalLink></header>
-      <div className={s.projectGrid}>{projects.map(project => <ProjectLink key={project.id} project={project} onSelect={onProject} className={s.project}>
-        <div className={s.projectTitle}><h3>{project.name}</h3><Arrow/></div>
-        <p><q cite={projectPublications[project.id].presentation.source}>{publicationQuote(projectPublications[project.id].presentation)}</q></p>
-        <span className={s.stage}>{projectPublications[project.id].badge?.text ?? project.category}</span>
-      </ProjectLink>)}</div>
+      <div className={pc.collection}><div className={`${pc.grid} ${pc.compactNarrow}`}>{projects.map(project => <ProjectCard key={project.id} item={project} repositories={data.repos} glyph={projectGlyph(project)} arrow={<Arrow/>} heading="h3" onSelect={onProject} onFollow={onFollow}/>)}</div></div>
     </section>
 
     <div className={s.updates}>
       <section aria-labelledby="overview-milestones" className={s.milestones}>
         <header className={s.sectionHeader}><h2 id="overview-milestones">Milestones</h2></header>
-        <div>{recentMilestones.map(milestone => <PortalLink key={milestone.date} view="impact" section={milestone.type.toLowerCase()} record={`milestone:${milestone.date}`} onNavigate={onNavigate} className={s.milestone}>
+        <div>{recentMilestones.map(milestone => <PortalLink key={milestone.date} view="impact" section="all" record={`milestone:${milestone.date}`} onNavigate={onNavigate} className={s.milestone}>
           <div><DateStamp date={milestone.date}/><h3>{milestone.name}</h3><p>{milestone.detail}</p></div><Arrow/>
         </PortalLink>)}</div>
         <PortalLink view="impact" onNavigate={onNavigate} className={s.cardAction}>All milestones<Arrow/></PortalLink>

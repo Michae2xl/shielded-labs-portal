@@ -3,12 +3,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef, type ReactNode } from 'react';
 import { milestones, projects, REVIEWED, sources, team, type Project } from '@/lib/shielded-preview/content';
-import { directoryHref, milestoneGroups, milestoneProject, peopleGroups, personId, securityAttribution, teamContext, type DirectoryView, type Person } from '@/lib/shielded-preview/directory';
+import { directoryHref, milestoneGroupItems, peopleGroups, personId, teamContext, type DirectoryView, type Person } from '@/lib/shielded-preview/directory';
 import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
-import { officialProjectExcerpts } from '@/lib/shielded-preview/official-project-excerpts';
 import portraitData from '@/lib/shielded-preview/team-portraits.json';
 import RecordLayout from './governance-record';
 import SectionMenu from './section-menu';
+import MilestonesView from './milestones-view';
+import MilestoneRecord from './milestone-record';
 import { ProjectLink } from './project-detail';
 import s from './directory.module.css';
 
@@ -30,40 +31,22 @@ function ProjectRows({ ids, onProject }: { ids: string[]; onProject: (project: P
 export default function Directory({ view, section, record, onNavigate, onProject }: { view: DirectoryView; section: string | null; record: string | null; onNavigate: Navigate; onProject: (project: Project) => void }) {
   const person = view === 'people' ? team.find(person => `person:${personId(person)}` === record) : undefined;
   const milestone = view === 'impact' ? milestones.find(milestone => `milestone:${milestone.date}` === record) : undefined;
-  const groups = view === 'people' ? peopleGroups : milestoneGroups;
+  const groups = view === 'people' ? peopleGroups : milestoneGroupItems;
   const recordGroup = person?.group.toLowerCase() ?? milestone?.type.toLowerCase();
   const activeGroup = groups.some(group => group.id === section) ? section! : recordGroup ?? 'all';
   const heading = useRef<HTMLHeadingElement>(null);
   const hasRecord = Boolean(person || milestone);
   useEffect(() => { if (!record || !hasRecord) heading.current?.focus({ preventScroll: true }); }, [view, activeGroup, record, hasRecord]);
-  const relatedProject = milestone ? milestoneProject(milestone) : undefined;
   const context = person ? teamContext[person.group] : undefined;
   const colleagues = person ? team.filter(other => other.group === person.group && other.name !== person.name) : [];
-  const chronology = milestones.slice().reverse();
 
   return <div className={s.directory}>
-    <SectionMenu items={groups} value={activeGroup} onChange={onNavigate} label={view === 'people' ? 'Team navigation' : 'Milestones navigation'}/>
-    {!record && <h1 ref={heading} tabIndex={-1} className={s.srOnly}>{view === 'people' && activeGroup === 'all' ? 'Team' : `${view === 'people' ? 'Team' : 'Milestones'} · ${groups.find(group => group.id === activeGroup)?.label}`}</h1>}
+    {!milestone && <SectionMenu items={groups} value={activeGroup} onChange={onNavigate} label={view === 'people' ? 'Team navigation' : 'Milestones navigation'}/>}
+    {!record && view === 'people' && <h1 ref={heading} tabIndex={-1} className={s.srOnly}>{activeGroup === 'all' ? 'Team' : `Team · ${groups.find(group => group.id === activeGroup)?.label}`}</h1>}
 
-    {!record && view === 'impact' && <>
-      <div className={s.timeline}>{chronology.filter(item => activeGroup === 'all' || item.type.toLowerCase() === activeGroup).map(item => <EntryLink key={item.date} view="impact" section={activeGroup} record={`milestone:${item.date}`} onNavigate={onNavigate} className={s.milestoneRow}>
-        <time className={s.dateColumn} dateTime={item.date}>{dateLabel(item.date)}</time>
-        <div className={s.milestoneCopy}><span className={s.category}>{milestoneProject(item).name}{activeGroup === 'all' && ` · ${item.type}`}</span><h2>{item.name}</h2><p>{item.detail}</p></div>
-        <Arrow/>
-      </EntryLink>)}</div>
-      <p className={s.footnote}>Sources reviewed {dateLabel(REVIEWED)}</p>
-    </>}
+    {!record && view === 'impact' && <MilestonesView group={activeGroup} headingRef={heading} onNavigate={onNavigate}/>}
 
-    {milestone && relatedProject && <RecordLayout idPrefix="milestone" title={milestone.name} context={milestone.type} subtitle={relatedProject.name}
-      metrics={<><Stat label="Recorded date">{dateLabel(milestone.date)}</Stat><Stat label="Workstream">{milestone.type}</Stat><Stat label="Record type">{milestone.type === 'Engineering' ? 'Prototype milestone' : milestone.type === 'Research' ? 'Research announcement' : milestone.date === '2026-05-29' ? 'Vulnerability discovery' : 'Emergency response'}</Stat></>}
-      sections={[{ label: 'Context', id: 'milestone-context' }, ...(milestone.type === 'Security' ? [{ label: 'Attribution', id: 'milestone-attribution' }] : []), { label: 'Related work', id: 'milestone-related' }]}
-      backLabel={activeGroup === 'all' ? 'All milestones' : `All ${activeGroup} milestones`} onBack={() => onNavigate(activeGroup)}
-      sources={<><p>{milestone.type === 'Security' ? 'The disclosure does not establish that no prior exploitation occurred. Attribution follows the published account; no estimate of funds saved is made.' : relatedProject.boundary}</p><SourceLink href={milestone.source}>Primary source</SourceLink>{relatedProject.source !== milestone.source && <SourceLink href={relatedProject.source}>Project reference</SourceLink>}<p className={s.sourceDate}>Reviewed {dateLabel(REVIEWED)}</p></>}
-    >
-      <section id="milestone-context"><h2>What changed</h2><p>{milestone.detail}</p><h3>Project context</h3><p><q cite={officialProjectExcerpts[relatedProject.id].source}>{officialProjectExcerpts[relatedProject.id].text}</q></p><SourceLink href={officialProjectExcerpts[relatedProject.id].source}>Shielded Labs</SourceLink></section>
-      {milestone.type === 'Security' && <section id="milestone-attribution"><h2>Who did what</h2><dl className={s.attribution}>{securityAttribution.map(item => <div key={item.name}><dt>{item.name}</dt><dd>{item.action}</dd></div>)}</dl></section>}
-      <section id="milestone-related"><h2>Follow the work</h2><ProjectRows ids={[relatedProject.id]} onProject={onProject}/><div className={s.relatedEvents}>{chronology.filter(item => item.date !== milestone.date && item.type === milestone.type).map(item => <EntryLink key={item.date} view="impact" section={activeGroup} record={`milestone:${item.date}`} onNavigate={onNavigate} className={s.relatedEvent}><div><time dateTime={item.date}>{dateLabel(item.date)}</time><span>{item.name}</span></div><Arrow/></EntryLink>)}</div></section>
-    </RecordLayout>}
+    {milestone && <MilestoneRecord milestone={milestone} group={activeGroup} onNavigate={onNavigate} onProject={onProject}/>}
 
     {!record && view === 'people' && <>
       <div className={s.peopleGrid}>{team.filter(person => activeGroup === 'all' || person.group.toLowerCase() === activeGroup).map(person => <EntryLink key={person.name} view="people" section={activeGroup} record={`person:${personId(person)}`} onNavigate={onNavigate} className={s.personCard}><div className={s.personIdentity}><Portrait person={person}/><div><h2>{person.name}</h2><p>{person.role}</p></div></div><Arrow/></EntryLink>)}</div>

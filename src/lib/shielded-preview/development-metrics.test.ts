@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { contributorKey, developmentCommits, developmentContributors, developmentDays, filterDevelopment, heatLevel, windowCommits } from './development-metrics';
+import { contributorKey, developmentCommits, developmentContributors, developmentDays, filterDevelopment, heatLevel, isMergeCommit, windowCommits } from './development-metrics';
 import type { Commit, Repository } from './types';
 
 const commit = (sha: string, fields: Partial<Commit> = {}): Commit => ({ sha, title: 'Improve transport validation', author: 'Alex', login: 'alex', date: '2026-10-25T12:00:00Z', url: `https://github.com/ShieldedLabs/example/commit/${sha}`, ...fields });
 const repository = (name: string, commits: Commit[], fork = false): Repository => ({ name, commits, fork, branch: 'main', description: '', url: `https://github.com/ShieldedLabs/${name}`, language: 'Rust', fetchedAt: '2026-10-25T22:00:00Z' });
 
 describe('Development heatmap evidence', () => {
+  it('recognizes automatic merge messages without catching work that mentions merging', () => {
+    for (const title of ["Merge branch 'code' into dev", 'Merge pull request #12 from example/fix', "Merge remote-tracking branch 'origin/main'", 'merge tag v1.2.3', 'Merge commit abc123']) expect(isMergeCommit({ title }), title).toBe(true);
+    for (const title of ['Merge mining support for Crosslink', 'Fix merge conflict handling', 'Improve transport validation']) expect(isMergeCommit({ title }), title).toBe(false);
+  });
   it('deduplicates hashes, retains each source and excludes inherited fork history by default', () => {
     const repos = [repository('first', [commit('shared')]), repository('second', [commit('shared'), commit('unique')]), repository('fork', [commit('inherited'), commit('shared')], true)];
     const observed = developmentCommits(repos);

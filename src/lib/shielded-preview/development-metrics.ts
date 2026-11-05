@@ -26,6 +26,9 @@ export function developmentCommits(repos: Repository[], includeForks = false): O
 
 const utcDay = (value: string) => new Date(value).toISOString().slice(0, 10);
 
+/** Automatic merge messages say nothing about the work, so summaries skip them. */
+export const isMergeCommit = (commit: Pick<Commit, 'title'>) => /^merge (?:branch|remote-tracking branch|pull request|tag|commit)\b/i.test(commit.title.trim());
+
 export function developmentDays(anchor: string, length: number): string[] {
   const end = Date.parse(`${utcDay(anchor)}T00:00:00Z`);
   return Array.from({ length }, (_, index) => new Date(end - (length - 1 - index) * 86400000).toISOString().slice(0, 10));

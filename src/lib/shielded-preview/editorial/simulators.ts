@@ -3,11 +3,13 @@ import { projectHref } from '../project-navigation';
 
 const observedAt = '2026-10-28T00:00:00Z';
 export const simulators = [
-  { id: 'crosslink-simulator', project: 'crosslink', title: 'Crosslink economics', source: 'https://aphelionz.github.io/crosslink-economics-simulator/', model: 'Crosslink Economics Simulator', summary: 'Explore how staking participation, delegation and commission affect the model.', guide: 'crosslink-faq', guideLabel: 'Staking & security FAQ' },
-  { id: 'nsm-simulator', project: 'nsm', title: 'NSM issuance & supply', source: 'https://zooko.github.io/zcash-network-sustainability-simulator/', model: 'Zcash Network Sustainability Simulator', summary: 'Compare supply and issuance paths under different sustainability scenarios.', guide: 'nsm-guide', guideLabel: 'How the NSM works' },
-  { id: 'fees-simulator', project: 'fees', title: 'Dynamic Fees lab', source: 'https://fees.shieldedinfra.net/', model: 'Dynamic Fees Simulator', summary: 'Explore how fee rules and network demand affect transactions and the mempool.', guide: 'fees-guide', guideLabel: 'Dynamic Fees overview' },
+  { id: 'crosslink-simulator', project: 'crosslink', title: 'Crosslink economics', source: 'https://aphelionz.github.io/crosslink-economics-simulator/', model: 'Crosslink Economics Simulator', summary: 'Explore how staking participation, delegation and commission affect the model.', guide: 'crosslink-faq', guideLabel: 'Staking & security FAQ', linksLeaveFrame: false },
+  { id: 'nsm-simulator', project: 'nsm', title: 'NSM issuance & supply', source: 'https://zooko.github.io/zcash-network-sustainability-simulator/', model: 'Zcash Network Sustainability Simulator', summary: 'Compare supply and issuance paths under different sustainability scenarios.', guide: 'nsm-guide', guideLabel: 'How the NSM works', linksLeaveFrame: true },
+  { id: 'fees-simulator', project: 'fees', title: 'Dynamic Fees lab', source: 'https://fees.shieldedinfra.net/', model: 'Dynamic Fees Simulator', summary: 'Explore how fee rules and network demand affect transactions and the mempool.', guide: 'fees-guide', guideLabel: 'Dynamic Fees overview', linksLeaveFrame: true },
 ] as const;
 export type Simulator = typeof simulators[number];
+/** The models stay isolated from the portal, but may copy a scenario link and open links in a new tab. */
+export const simulatorFrame = { sandbox: 'allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox', allow: 'clipboard-write', referrerPolicy: 'no-referrer' } as const;
 export const feeSections = [
   { id: 'enter-zip-317-and-actions', label: 'Fee calculator' },
   { id: 'proposal', label: 'Fee proposal' },

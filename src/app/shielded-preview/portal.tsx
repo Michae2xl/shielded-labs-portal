@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
-import { projects, sources, REVIEWED, type Project } from '@/lib/shielded-preview/content';
+import { projects, sources, REVIEWED, MILESTONES_REVIEWED, type Project } from '@/lib/shielded-preview/content';
 import { legacyProjectResourceHref, resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import { isProjectSection, projectHref, type ProjectSection } from '@/lib/shielded-preview/project-navigation';
 import { searchPortal } from '@/lib/shielded-preview/portal-search';
@@ -91,7 +91,7 @@ export default function Portal({ initial, initialView = defaultView, initialProj
   }, [refresh]);
   function go(next: View, section?: string, recordId?: string) { const params = new URLSearchParams({ view: next }); if (section) params.set('section', section); if (recordId) params.set('record', recordId); if (next === 'resources') { followEditorial(`?${params}`); return; } setView(next); setProject(null); setQuery(''); setDirectorySection(section ?? null); setDirectoryRecord(recordId ?? null); window.history.pushState(null, '', `?${params}`); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
   function openProject(next: Project, section: ProjectSection = 'overview', record?: string) { setView('projects'); setProject(next); setDirectorySection(section); setDirectoryRecord(record ?? null); setQuery(''); window.history.pushState(null, '', projectHref(next, section, record)); window.scrollTo({ top: 0, behavior: 'instant' }); }
-  function changeProjectSection(section: ProjectSection) { if (!project) return; setDirectorySection(section); setDirectoryRecord(null); window.history.pushState(null, '', projectHref(project, section)); window.dispatchEvent(new Event('shielded:navigate')); }
+  function changeProjectSection(section: ProjectSection) { if (!project) return; setDirectorySection(section); setDirectoryRecord(null); window.history.pushState(null, '', projectHref(project, section)); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
   function followEditorial(href: string) {
     const target = new URL(resolveEditorialLink(href) ?? href, window.location.href);
     const nextView = target.searchParams.get('view');
@@ -122,7 +122,7 @@ export default function Portal({ initial, initialView = defaultView, initialProj
 
     <div className={s.workspace}>
       <main id="portal-main" className={s.main} tabIndex={-1}>
-        {view === 'overview' && <Overview data={data} onNavigate={go} onProject={openProject}/>}
+        {view === 'overview' && <Overview data={data} onNavigate={go} onProject={openProject} onFollow={followEditorial} projectGlyph={project => <Icon name={project.symbol} size={30}/>}/>}
 
         {view === 'projects' && <div className={pc.collection} data-detail={project ? true : undefined}>
           {!project && <h1 className={pc.collectionTitle}>Projects</h1>}
@@ -150,6 +150,6 @@ export default function Portal({ initial, initialView = defaultView, initialProj
     </div>
 
 
-    {showSources && <Modal title="Sources & methodology" onClose={()=>setShowSources(false)}><p className={s.dialogLead}>Coverage, verification dates and primary sources.</p><div className={s.sourceRow}><strong>Engineering observations</strong><p>Six selected repositories, up to 100 latest commits per tracked branch. Core counts exclude forks and deduplicate commit hashes. Author identities are not an employee count.</p><small>{liveCount}/6 sources refreshed · Last check <DateLabel value={data.checkedAt}/>{error?' · Refresh failed; retaining prior observations.':''}</small></div><div className={s.sourceRow}><strong>Grant records</strong><p>Grant records come from OpenZcash. Each dataset keeps its source and observation date.</p><External href="https://openzcash.org/zcg/methodology">OpenZcash methodology</External></div><div className={s.sourceRow}><strong>Content review</strong><p>Project summaries, team roles and historical milestones reviewed on {REVIEWED}. Organizational statements are attributed; governance guidance is kept distinct from advocacy.</p></div><div className={s.resourceList}>{Object.entries(sources).map(([label,url])=><External key={label} href={url}>{label.charAt(0).toUpperCase()+label.slice(1)}</External>)}</div></Modal>}
+    {showSources && <Modal title="Sources & methodology" onClose={()=>setShowSources(false)}><p className={s.dialogLead}>Coverage, verification dates and primary sources.</p><div className={s.sourceRow}><strong>Engineering observations</strong><p>Six selected repositories, up to 100 latest commits per tracked branch. Core counts exclude forks and deduplicate commit hashes. Author identities are not an employee count.</p><small>{liveCount}/6 sources refreshed · Last check <DateLabel value={data.checkedAt}/>{error?' · Refresh failed; retaining prior observations.':''}</small></div><div className={s.sourceRow}><strong>Grant records</strong><p>Grant records come from OpenZcash. Each dataset keeps its source and observation date.</p><External href="https://openzcash.org/zcg/methodology">OpenZcash methodology</External></div><div className={s.sourceRow}><strong>Content review</strong><p>Project summaries and team roles reviewed on {REVIEWED}; historical milestones reviewed on {MILESTONES_REVIEWED}. Organizational statements are attributed; governance guidance is kept distinct from advocacy.</p></div><div className={s.resourceList}>{Object.entries(sources).map(([label,url])=><External key={label} href={url}>{label.charAt(0).toUpperCase()+label.slice(1)}</External>)}</div></Modal>}
   </div>;
 }

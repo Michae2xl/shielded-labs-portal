@@ -13,7 +13,9 @@ import z from './governance-zips.module.css';
 const date = (value: string | null | undefined) => value ? new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value)) : 'Not recorded';
 const titles: Record<ZipLane, string> = { zips: 'Numbered ZIPs', drafts: 'Unnumbered drafts', guides: 'Writing guides', proposals: 'Open pull requests' };
 const laneIcons: Record<ZipLane, 'zips' | 'process' | 'pull'> = { zips: 'zips', drafts: 'zips', guides: 'process', proposals: 'pull' };
-const elementTags = new Set('p h2 h3 h4 h5 h6 a strong em ul ol li dl dt dd blockquote pre code table thead tbody tfoot tr th td figure figcaption img br hr sup sub'.split(' '));
+// Scroll to the anchor on the first load and after a link; Back and Forward keep the browser's restored position.
+let scrollToAnchor = true;
+const elementTags = new Set('span p h2 h3 h4 h5 h6 a strong em ul ol li dl dt dd blockquote pre code table thead tbody tfoot tr th td figure figcaption img br hr sup sub'.split(' '));
 const mathTags = new Set('math mrow mi mn mo msup msub msubsup mfrac msqrt mroot mtext mspace mover munder munderover mtable mtr mtd mstyle mpadded mphantom menclose semantics mmultiscripts mprescripts'.split(' '));
 const mathAttributes = new Set('display mathvariant displaystyle stretchy fence separator lspace rspace form accent accentunder width height depth voffset linethickness columnalign rowalign columnspacing rowspacing notation largeop movablelimits symmetric minsize maxsize mathsize scriptlevel'.split(' '));
 const mathValue = /^[A-Za-z0-9 .%,+-]{0,40}$/;
@@ -41,11 +43,8 @@ function ZipLink({ href, onNavigate, children }: { href: string; onNavigate: Col
       if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       onNavigate('ZIPs', id);
-      if (target.hash) {
-        let anchor = target.hash.slice(1);
-        try { anchor = decodeURIComponent(anchor); } catch { /* Keep malformed anchors inert. */ }
-        requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView());
-      }
+      scrollToAnchor = true;
+      if (target.hash) history.replaceState(null, '', `${location.search}${target.hash}`);
     };
     return <a href={href} onClick={click}>{children}</a>;
   }
@@ -118,11 +117,21 @@ export function ZipRecord({ id, index, onBack, onNavigate }: { id: string; index
       .catch(() => { if (active) setState({ id, document: null, failed: true }); });
     return () => { active = false; };
   }, [id]);
+  const textReady = loaded.has(id) || (state.id === id && Boolean(state.document));
+  useEffect(() => {
+    if (!textReady) return;
+    const wanted = scrollToAnchor;
+    scrollToAnchor = false;
+    if (!wanted || !location.hash) return;
+    let anchor = location.hash.slice(1);
+    try { anchor = decodeURIComponent(anchor); } catch { /* Keep malformed anchors inert. */ }
+    requestAnimationFrame(() => globalThis.document.getElementById(anchor)?.scrollIntoView());
+  }, [id, textReady]);
   const entry = index.entries.find(item => item.id === id);
   if (!entry) return <section className={z.empty}><h1 tabIndex={-1}>Record not found</h1><p>This proposal is not in the current ZIP index.</p><button onClick={onBack}>All ZIPs<Arrow/></button></section>;
-  const document = loaded.get(id) ?? (state.id === id ? state.document : null);
+  const proposalText = loaded.get(id) ?? (state.id === id ? state.document : null);
   const failed = state.id === id && state.failed;
-  const outline = (document?.headings ?? []).filter(heading => heading.level <= 3).slice(0, 60).map(heading => ({ id: heading.id, label: heading.title, level: heading.level }));
+  const outline = (proposalText?.headings ?? []).filter(heading => heading.level <= 3).slice(0, 60).map(heading => ({ id: heading.id, label: heading.title, level: heading.level }));
   const owners = entry.owners.length > 4 ? `${entry.owners.slice(0, 4).join(', ')} and ${entry.owners.length - 4} more` : entry.owners.join(', ');
   const pull = entry.pull;
   return <GovernanceRecord title={zipTitle(entry)} context={pull ? 'Open pull request · unofficial preview' : entry.kind === 'guide' ? 'ZIP writing guide' : entry.kind === 'draft' ? 'Draft Zcash Improvement Proposal' : 'Zcash Improvement Proposal'} subtitle={pull ? pull.title : entry.category}
@@ -136,7 +145,7 @@ export function ZipRecord({ id, index, onBack, onNavigate }: { id: string; index
     </>}
   >
     {pull && <div className={z.preview} role="note"><strong>Unofficial preview.</strong> Rendered from pull request #{pull.number} at commit {pull.headSha.slice(0, 7)}; not part of the ZIPs until merged. {pull.files.length > 1 && <>The pull request also changes {pull.files.filter(file => file !== pull.file).join(', ')}. </>}{entry.base && <Link section="ZIPs" id={entry.base} onNavigate={onNavigate}>Read the current {entry.number === null ? 'document' : `ZIP ${entry.number}`}<Arrow/></Link>}</div>}
-    <section id="zip-document" className={z.document}>{document ? <ZipBody nodes={document.body} onNavigate={onNavigate}/> : <p className={z.status} role="status">{failed ? 'The proposal text could not be loaded. Try again or read it at the source.' : 'Loading the proposal text…'}</p>}</section>
+    <section id="zip-document" className={z.document}>{pull && <div className={z.previewTag} role="note">Unofficial preview · Pull request #{pull.number}</div>}{proposalText ? <ZipBody nodes={proposalText.body} onNavigate={onNavigate}/> : <p className={z.status} role="status">{failed ? 'The proposal text could not be loaded. Try again or read it at the source.' : 'Loading the proposal text…'}</p>}</section>
   </GovernanceRecord>;
 }
 

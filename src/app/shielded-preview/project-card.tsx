@@ -13,8 +13,8 @@ function DateStamp({ date }: { date: string }) {
   return <time dateTime={date}>{new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date))}</time>;
 }
 
-export default function ProjectCard({ item, repositories, glyph, arrow, onSelect, onFollow }: {
-  item: Project; repositories: readonly Repository[]; glyph: ReactNode; arrow: ReactNode;
+export default function ProjectCard({ item, repositories, glyph, arrow, onSelect, onFollow, heading: Heading = 'h2' }: {
+  item: Project; repositories: readonly Repository[]; glyph: ReactNode; arrow: ReactNode; heading?: 'h2' | 'h3';
   onSelect: (item: Project) => void; onFollow: (href: string) => void;
 }) {
   const publication = projectPublications[item.id];
@@ -23,7 +23,7 @@ export default function ProjectCard({ item, repositories, glyph, arrow, onSelect
   const shortcuts = projectShortcuts(item);
   return <article className={s.card}>
     <ProjectLink className={s.cardLink} project={item} onSelect={onSelect}>
-      <div className={s.heading}>{glyph}<h2>{item.name}</h2>{arrow}</div>
+      <div className={s.heading}>{glyph}<Heading>{item.name}</Heading>{arrow}</div>
     </ProjectLink>
     <p className={s.quote}><q cite={publication.presentation.source}>{publicationQuote(publication.presentation)}</q></p>
     {signal && <div className={s.signal}>

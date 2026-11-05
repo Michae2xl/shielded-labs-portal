@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { existsSync } from 'node:fs';
 import { editorialCatalog, resolveEditorialLink } from './library';
-import { simulatorSource, simulators } from './simulators';
+import { simulatorSource, simulators, simulatorFrame } from './simulators';
 
 describe('Portal simulators and news artwork', () => {
   it('opens each official model inside an internal record', () => {
@@ -23,6 +23,15 @@ describe('Portal simulators and news artwork', () => {
     }
     expect(simulatorSource('unknown')).toBeNull();
   });
+  it('lets a model copy its scenario link and open links in a new tab, without reaching the portal', () => {
+    expect(simulatorFrame.allow).toBe('clipboard-write');
+    const permissions = simulatorFrame.sandbox.split(' ');
+    expect(permissions).toContain('allow-popups');
+    expect(permissions).not.toContain('allow-top-navigation');
+    expect(permissions).not.toContain('allow-modals');
+    expect(permissions).not.toContain('allow-forms');
+  });
+
   it('does not map similar, untrusted URLs into the frame', () => {
     expect(resolveEditorialLink('https://aphelionz.github.io.evil.example/crosslink-economics-simulator/')).not.toContain('?view=resources');
   });

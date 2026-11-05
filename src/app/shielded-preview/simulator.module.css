@@ -1,20 +1,46 @@
-.simulator{min-width:0;color:var(--ink)}
-.header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 18px}
-.header :is(h1,h2){font-size:clamp(26px,2.6vw,32px);line-height:1.25;font-weight:500;letter-spacing:-.8px;margin:0}.header :is(h1,h2):focus{outline:none}
-.header p{font-size:16px;line-height:1.65;color:var(--secondary-ink);max-width:66ch;margin:10px 0 0!important}
-.header>a{display:flex;align-items:center;gap:14px;flex-shrink:0;min-height:44px;font-size:15px;color:var(--ink)}
-.header a:hover,.caption a:hover{text-decoration:underline;text-underline-offset:4px}
-.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid var(--border);border-bottom:0;border-radius:7px 7px 0 0;padding:10px 16px;background:#111;color:var(--secondary-ink);font-size:14px;line-height:1.6}
-.toolbar>span>span{padding:0 7px;color:#777}
-.toolbar button{display:flex;align-items:center;justify-content:center;gap:9px;min-height:40px;flex-shrink:0;background:none;border:0;color:var(--ink);font-size:14px;cursor:pointer}
-.toolbar button:hover{color:white}
-.sectionSelect{display:flex;align-items:center;gap:14px;min-width:0}.sectionSelect select{max-width:100%;min-width:0;min-height:40px;background:#1b1b1b;color:var(--ink);border:1px solid #444;border-radius:4px;padding:0 12px;font-size:15px}
-.frameWrap{position:relative;border:1px solid var(--border);border-radius:0 0 7px 7px;overflow:hidden;background:#10131d;color:#ddd;min-height:700px}
-.frame{display:block;width:100%;height:clamp(740px,85vh,1060px);border:0;background:#10131d;color-scheme:dark}
+.simulator{min-width:0;color:var(--ink);container-type:inline-size}
+.back{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin-bottom:6px;color:var(--secondary-ink);font-size:14px}
+.back svg{flex-shrink:0}
+.back:hover{color:white}
+.header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px 24px;margin:0 0 14px}
+.header>div{min-width:0}
+.simulator .header :is(h1,h2){margin:0;font-size:24px;font-weight:500;letter-spacing:-.5px;line-height:1.3}
+.header :is(h1,h2):focus{outline:none}
+.header p{max-width:66ch;margin:4px 0 0!important;font-size:15px;line-height:1.55;color:var(--secondary-ink)}
+.header>a{display:inline-flex;align-items:center;gap:10px;flex-shrink:0;min-height:40px;padding:6px 12px;border:1px solid #383838;border-radius:6px;background:#181818;color:var(--ink);font-size:14px;line-height:1.4;white-space:nowrap}
+.header>a:hover{background:#242424;border-color:#666;color:#fff}
+.panel{overflow:hidden;background:#111;border:1px solid #343434;border-radius:12px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px 16px;padding:8px 16px;border-bottom:1px solid #2c2c2c;color:var(--secondary-ink);font-size:14px;line-height:1.5}
+.toolbarNote{min-width:0}
+.toolbarNote>span{padding:0 6px;color:#777}
+.sectionSelect{display:flex;align-items:center;gap:12px;min-width:0}
+.sectionSelect select{min-width:0;max-width:100%;min-height:40px;padding:0 12px;background:#1b1b1b;color:var(--ink);border:1px solid #444;border-radius:6px;font-size:15px}
+.actions{display:flex;align-items:center;gap:4px 18px;margin-left:auto}
+.actions a,.actions button{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0;background:none;border:0;color:var(--ink);font-size:14px;line-height:1.4;cursor:pointer;white-space:nowrap}
+.actions a:hover,.actions button:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.frameWrap{position:relative;overflow:hidden;background:#10131d;color:#ddd}
+/* Each model gets its content height, so it never scrolls inside the page. */
+.frame{display:block;width:100%;border:0;background:#10131d;color-scheme:dark}
+.frame[data-tool="crosslink-simulator"]{height:700px}
+.frame[data-tool="nsm-simulator"]{height:1010px}
+/* The lab is a long article with sections: it keeps its own scroll and fits the screen. */
+.frame[data-tool="fees-simulator"]{height:max(560px,calc(100dvh - 96px))}
 .loading{position:absolute;z-index:1;top:0;left:0;right:0;padding:20px!important;background:#111;font-size:15px}
-.caption{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;font-size:13px;line-height:1.7;color:var(--text-muted);padding:14px 0}
+.caption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px;padding:12px 0;font-size:13px;line-height:1.6;color:var(--text-muted)}
 .caption a{color:var(--secondary-ink)}
-@media(max-width:1100px){.header{align-items:flex-start;flex-direction:column;gap:6px}}
-@media(max-width:650px){.header{margin-bottom:18px}.header p{font-size:16px}.toolbar{padding:8px 12px;font-size:12px;gap:8px}.toolbar>span{max-width:24ch}.toolbar>span>span{display:none}.toolbar button{font-size:13px}.frame{height:820px}.frameWrap{min-height:700px}.caption{font-size:12px}}
-
-.back{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--secondary-ink);font-size:14px;margin-bottom:10px}.back svg{flex-shrink:0}.back:hover{color:white}.simulator{container-type:inline-size}.toolbar button,.sectionSelect select{min-height:44px}@container(max-width:620px){.toolbar{flex-wrap:wrap;gap:10px}.sectionSelect{width:100%;display:flex;flex-wrap:wrap;gap:8px}.sectionSelect select{flex:1;min-width:180px;font-size:16px}.header{margin-bottom:20px}.header :is(h1,h2){font-size:28px}}
+.caption a:hover{text-decoration:underline;text-underline-offset:4px}
+@container(max-width:1100px){.frame[data-tool="nsm-simulator"]{height:975px}}
+@container(max-width:920px){.frame[data-tool="crosslink-simulator"]{height:1075px}}
+@container(max-width:860px){.frame[data-tool="nsm-simulator"]{height:885px}}
+@container(max-width:700px){.frame[data-tool="crosslink-simulator"]{height:1155px}}
+@container(max-width:660px){.frame[data-tool="nsm-simulator"]{height:825px}}
+@container(max-width:620px){
+  .header{flex-direction:column}
+  .toolbar{padding:8px 12px}
+  .sectionSelect{width:100%}
+  .sectionSelect select{flex:1;font-size:16px}
+  .actions{width:100%;justify-content:space-between;margin-left:0}
+  .frame[data-tool="fees-simulator"]{height:max(480px,calc(100dvh - 190px))}
+}
+@container(max-width:560px){.frame[data-tool="crosslink-simulator"]{height:1275px}}
+@container(max-width:420px){.frame[data-tool="crosslink-simulator"]{height:1610px}.frame[data-tool="nsm-simulator"]{height:935px}}
