@@ -440,3 +440,12 @@ each head with git, renders the ZIP sources the pull request adds or changes (34
 and 24 changed ones from 48 of the 70 open pull requests at the first run; edits to the
 writing guides and the template are skipped) and labels every record
 with its pull request, commit and an unofficial-preview notice.
+
+References with a local page stay in the portal. `resolveEditorialLink` maps Shielded Labs posts and
+guides, the simulators, the Crosslink handbook and ZIPs on the default branch to their records, and
+`sourceHref` does the same for cited sources, except that a list page such as Projects or Team stays
+external because it holds no text to check a citation against. A pinned revision of a ZIP also stays
+external. Portal links with no click handler of their own navigate in place through the portal's root
+click handler. The Crosslink section Participate carries the OpenZcash test guide: its release and
+"sources checked" date live in `src/lib/shielded-preview/crosslink-guide/history.ts` and need a refresh
+whenever Shielded Labs ships a release, together with the same files in OpenZcash.

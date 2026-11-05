@@ -79,19 +79,34 @@ const handbookChapters: Record<string, string> = {
   'design/analysis/construction.html': 'the-crosslink-2-construction',
   'design/analysis/history/2025-12-11-mech-design/proposal.html': 'proposal-mechanism-design-audit-of-crosslink-zebra',
   'implementation.html': 'crosslink-implementation',
+  'design/analysis/cl2-security-analysis.html': 'security-analysis-of-crosslink-2',
+  'design/security-analysis.html': 'security-analysis-of-crosslink-2',
 };
+const SOURCE_FOOTNOTE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /** A ZIP on the official site or in the repository opens in the portal's own library. */
 function zipLibraryHref(url: URL): string | null {
   if (url.hostname === 'zips.z.cash' && ['', '/'].includes(url.pathname)) return '?view=governance&section=zips';
   const official = url.hostname === 'zips.z.cash' ? /^\/(zip-\d{4}|draft-[a-z0-9-]+)(?:\.(?:html|rst|md))?\/?$/i.exec(url.pathname) : null;
-  const repository = url.hostname === 'github.com' ? /^\/zcash\/zips\/blob\/[^/]+\/zips\/(zip-\d{4}|draft-[a-z0-9-]+)\.(?:rst|md)$/i.exec(url.pathname) : null;
+  // Only the default branch is the current text; a pinned commit stays where it points.
+  const repository = url.hostname === 'github.com' ? /^\/zcash\/zips\/blob\/(?:main|master)\/zips\/(zip-\d{4}|draft-[a-z0-9-]+)\.(?:rst|md)$/i.exec(url.pathname) : null;
   const id = (official ?? repository)?.[1].toLowerCase();
   return id && bundledZips.entries.some(entry => entry.id === id) ? zipHref(id, url.hash) : null;
 }
 
 /** True when a reference stays inside the portal, so links can show the right arrow. */
 export const opensInPortal = (href: string) => Boolean(resolveEditorialLink(href)?.startsWith('?view='));
+/**
+ * Where a cited source opens: the local document that holds its text, otherwise the source itself.
+ * A list page such as Projects or Team has nothing to check a citation against.
+ */
+export function sourceHref(href: string): string {
+  const resolved = resolveEditorialLink(href);
+  return resolved?.startsWith('?view=') && /[?&]record=/.test(resolved) ? resolved : href;
+}
+export const sourceOpensInPortal = (href: string) => sourceHref(href).startsWith('?view=');
+/** Attributes for a link that leaves the portal; a portal link needs none and navigates in place. */
+export const leavingLink = (href: string) => /^https?:/i.test(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 
 // Resolve publisher links to the local record before rendering a document.
 export function resolveEditorialLink(value: string): string | null {
@@ -113,25 +128,28 @@ export function resolveEditorialLink(value: string): string | null {
   });
   if (matching) {
     const heading = matching.headings.find(item => item.id.toLowerCase() === anchor.toLowerCase());
-    if (anchor && !heading) return safe;
+    // These markers point at footnotes the source page itself no longer has, so they stay plain text.
+    if (anchor && !heading) return SOURCE_FOOTNOTE.test(anchor) ? null : safe;
     const href = matching.category.includes('FAQ') && (heading?.level === 3 || heading?.id === 'frequently-asked-questions-faq')
       ? projectHref(matching.projects[0], 'faq', matching.id) : editorialHref(matching);
     return href + (heading ? `#${encodeURIComponent(heading.id)}` : '');
   }
-  if (url.hostname === 'shieldedlabs.github.io' && url.pathname.startsWith('/zebra-crosslink/')) {
+  if (url.hostname === 'shieldedlabs.github.io' && (url.pathname.startsWith('/zebra-crosslink/') || url.pathname === '/terminology.html')) {
     const book = editorialCatalog.find(item => item.id === 'crosslink-handbook');
     if (book) {
-      const chapter = url.pathname.slice('/zebra-crosslink/'.length);
-      const heading = book.headings.find(item => item.id === (anchor || handbookChapters[chapter]));
+      const chapter = url.pathname.replace(/^\/(?:zebra-crosslink\/)?/, '');
+      // An anchor the print edition lacks still opens its chapter, which holds the rule it names.
+      const heading = book.headings.find(item => item.id === anchor) ?? book.headings.find(item => item.id === handbookChapters[chapter]);
       if (heading) return `${editorialHref(book)}#${encodeURIComponent(heading.id)}`;
       if (!anchor && ['', 'index.html'].includes(chapter)) return editorialHref(book);
-      // Some source files and inline rule anchors are absent from the print import.
+      // Some source files and chapters are absent from the print import.
       return safe;
     }
   }
-  if (url.hostname === 'github.com' && url.pathname === '/ShieldedLabs/zebra-crosslink/blob/main/book/src/design/scoping.md' && !anchor) {
+  const bookSource = url.hostname === 'github.com' ? /^\/ShieldedLabs\/zebra-crosslink\/blob\/main\/book\/src\/(.+)\.md$/.exec(url.pathname) : null;
+  if (bookSource && handbookChapters[`${bookSource[1]}.html`]) {
     const book = editorialCatalog.find(item => item.id === 'crosslink-handbook');
-    if (book) return `${editorialHref(book)}#scope-for-crosslink`;
+    if (book) return `${editorialHref(book)}#${encodeURIComponent(handbookChapters[`${bookSource[1]}.html`])}`;
   }
   if (['shieldedlabs.net', 'www.shieldedlabs.net'].includes(url.hostname)) {
     const routes: Record<string, string> = { '/blog': 'blog', '/projects': 'projects', '/team': 'people', '/board': 'about&section=board', '/governance': 'governance', '/jobs': 'about&section=careers', '/contact': 'about&section=contact', '/job/cryptographer': 'about&section=careers&record=cryptographer' };

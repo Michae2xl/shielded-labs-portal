@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useState, type Dispatch, type ReactNode, type Ref, type SetStateAction } from 'react';
+import { useEffect, useRef, useState, type Dispatch, type ReactNode, type Ref, type SetStateAction } from 'react';
 import type { Project } from '@/lib/shielded-preview/content';
-import { FORUM, GUIDE_SOURCE, ISSUES, REPOSITORY, RELEASES, operateSteps, participationPaths, pathNotes, referencedIssues, relatedPages, rewardDetails, steps, type GuidePath } from '@/lib/shielded-preview/crosslink-guide/guide';
+import { FORUM, GUIDE_SOURCE, ISSUES, REPOSITORY, RELEASES, operateSteps, participationPaths, pathNotes, referencedIssues, relatedPages, rewardDetails, steps, toolAnchor, type GuidePath } from '@/lib/shielded-preview/crosslink-guide/guide';
 import { history, paidRounds, releaseNotes, releaseTag, reportedPaid, sourcesChecked } from '@/lib/shielded-preview/crosslink-guide/history';
 import { categories, communityTools, type ToolCategory } from '@/lib/shielded-preview/crosslink-guide/tools';
 import { editorialCatalog, editorialHref, opensInPortal } from '@/lib/shielded-preview/editorial/library';
@@ -13,6 +13,20 @@ import { ShieldMark } from './shield';
 import s from './crosslink-participate.module.css';
 
 type Follow = (href: string) => void;
+type Progress = { done: number[]; path: GuidePath };
+const PROGRESS_KEY = 'crosslink-guide-progress';
+function readProgress(): Progress {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(PROGRESS_KEY) ?? 'null') as Partial<Progress> | null;
+    return {
+      done: Array.isArray(saved?.done) ? saved.done.filter(step => Number.isInteger(step) && step >= 0 && step < steps.length) : [],
+      path: participationPaths.some(item => item.id === saved?.path) ? saved!.path! : 'test',
+    };
+  } catch { return { done: [], path: 'test' }; }
+}
+function saveProgress(progress: Progress) {
+  try { sessionStorage.setItem(PROGRESS_KEY, JSON.stringify(progress)); } catch { /* Progress only lasts this page view when storage is blocked. */ }
+}
 const toolPaths: Record<string, string> = {
   network: 'M12 8v8M8 6H5v12h3m8-12h3v12h-3M9 3h6v5H9zM9 16h6v5H9z',
   search: 'M16 16l5 5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0',
@@ -64,16 +78,51 @@ function Checklist({ done, setDone, open, setOpen, onFollow }: { done: number[];
   </>;
 }
 
-export default function CrosslinkParticipate({ project, view, headingRef, onFollow }: { project: Project; view: string | null; headingRef: Ref<HTMLHeadingElement>; onFollow: Follow }) {
+export default function CrosslinkParticipate({ project, view, headingRef, onFollow, onRecord }: { project: Project; view: string | null; headingRef: Ref<HTMLHeadingElement>; onFollow: Follow; onRecord?: (record?: string) => void }) {
   const [path, setPath] = useState<GuidePath>('test');
-  // Kept here so progress survives moving between the guide's tabs during a visit.
   const [done, setDone] = useState<number[]>([]);
   const [open, setOpen] = useState<number | null>(0);
   const [category, setCategory] = useState<ToolCategory>('All');
   const [communityView, setCommunityView] = useState<'tools' | 'issues'>('tools');
+  const [foundTool, setFoundTool] = useState<string | null>(null);
+  const restored = useRef(false);
   const content = useRef<HTMLDivElement>(null);
   const active = view === 'tools' || view === 'incentives' ? view : 'guide';
-  const show = (next: string) => onFollow(projectHref(project, 'participate', next === 'guide' ? undefined : next));
+  // Tabs change in place, so the reader stays where the menu is and focus stays on the tab.
+  const show = (next: string) => { if (next !== active) onRecord?.(next === 'guide' ? undefined : next); };
+  const moveToTabs = () => requestAnimationFrame(() => {
+    content.current?.scrollIntoView({ block: 'start' });
+    content.current?.querySelector<HTMLElement>('nav button[aria-current]')?.focus({ preventScroll: true });
+  });
+  // Progress lasts the whole visit, including trips to other pages and back.
+  useEffect(() => {
+    const start = setTimeout(() => {
+      const saved = readProgress();
+      setDone(saved.done);
+      setPath(saved.path);
+      restored.current = true;
+    }, 0);
+    return () => clearTimeout(start);
+  }, []);
+  useEffect(() => { if (restored.current) saveProgress({ done, path }); }, [done, path]);
+  // A search result names one tool: show it whatever filter or view was left on.
+  useEffect(() => {
+    const arrive = () => {
+      const anchor = location.hash.slice(1);
+      if (!communityTools.some(tool => toolAnchor(tool.name) === anchor)) return;
+      setCategory('All');
+      setCommunityView('tools');
+      setFoundTool(anchor);
+    };
+    const start = setTimeout(arrive, 0);
+    window.addEventListener('shielded:navigate', arrive);
+    return () => { clearTimeout(start); window.removeEventListener('shielded:navigate', arrive); };
+  }, []);
+  useEffect(() => {
+    if (!foundTool) return;
+    const frame = requestAnimationFrame(() => globalThis.document.getElementById(foundTool)?.scrollIntoView({ block: 'center' }));
+    return () => cancelAnimationFrame(frame);
+  }, [foundTool]);
   const visibleTools = communityTools.filter(tool => category === 'All' || tool.category === category);
   const notes = pathNotes[path];
   const related = relatedPages.flatMap(id => editorialCatalog.filter(entry => entry.id === id));
@@ -82,12 +131,12 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
   return <div className={s.participate}>
     <section className={s.hero} aria-labelledby="project-panel-heading">
       <div className={s.heroCopy}>
-        <Source href="https://shieldedlabs.net/" onFollow={onFollow} className={s.brand}>Shielded Labs</Source>
+        <Source href="https://shieldedlabs.net/" onFollow={onFollow} className={s.brand}><ShieldMark size={18}/>Shielded Labs</Source>
         <h2 id="project-panel-heading" ref={headingRef} tabIndex={-1}>Help shape the next layer of Zcash.</h2>
         <p>A practical testing guide, community tools and incentive updates for the Crosslink feature net.</p>
         <div className={s.heroActions}>
           <Source href={releaseNotes} onFollow={onFollow} className={s.primary}>Download {releaseTag}</Source>
-          <button type="button" className={s.secondary} onClick={() => { setPath('test'); show('guide'); content.current?.scrollIntoView({ behavior: 'instant', block: 'start' }); }}>Start testing<Arrow/></button>
+          <button type="button" className={s.secondary} onClick={() => { setPath('test'); show('guide'); moveToTabs(); }}>Start testing<Arrow/></button>
           <Source href={`${FORUM}/39`} onFollow={onFollow} className={s.secondary}>Program rules</Source>
         </div>
       </div>
@@ -112,8 +161,8 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
               <p>Official repository and issue tracker, alongside tools shared by the community.</p>
               <div className={s.resourceRows}>
                 <div><h4>Shielded Labs repository</h4><Source href={REPOSITORY} onFollow={onFollow}>Source code</Source></div>
-                <div><h4>Selected public issues</h4><button type="button" className={s.source} onClick={() => { setCommunityView('issues'); show('tools'); }}><span>Issues & discussions</span><Arrow/></button></div>
-                <div><h4>Community projects</h4><button type="button" className={s.source} onClick={() => { setCommunityView('tools'); show('tools'); }}><span>Browse tools</span><Arrow/></button></div>
+                <div><h4>Selected public issues</h4><button type="button" className={s.source} onClick={() => { setCommunityView('issues'); show('tools'); moveToTabs(); }}><span>Issues & discussions</span><Arrow/></button></div>
+                <div><h4>Community projects</h4><button type="button" className={s.source} onClick={() => { setCommunityView('tools'); show('tools'); moveToTabs(); }}><span>Browse tools</span><Arrow/></button></div>
                 <div><h4>Repository activity</h4><Source href={projectHref(project, 'development')} onFollow={onFollow}>Development</Source></div>
               </div>
             </>}
@@ -140,7 +189,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
                 <div><p>Zingo Delegator has a mobile guide. Its linked build is from Season 1; confirm Round 3 compatibility with the team.</p><Source href={delegator.href} onFollow={onFollow}>Mobile guide</Source></div>
               </details>
             </div>}
-            <button type="button" className={s.explore} onClick={() => { setCategory('All'); setCommunityView('tools'); show('tools'); }}><span>Explore community tools</span><Arrow/></button>
+            <button type="button" className={s.explore} onClick={() => { setCategory('All'); setCommunityView('tools'); show('tools'); moveToTabs(); }}><span>Explore community tools</span><Arrow/></button>
             <section className={s.card}>
               <h3>Also in this portal</h3>
               <ul className={s.related}>{related.map(entry => <li key={entry.id}><EditorialLink href={editorialHref(entry)} onFollow={onFollow}><span>{entry.title}</span><Arrow/></EditorialLink></li>)}</ul>
@@ -155,7 +204,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
         {communityView === 'tools' ? <>
           <div className={s.filters} role="group" aria-label="Filter community tools">{categories.map(item => <button type="button" key={item} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</button>)}</div>
           <p className={s.note} aria-live="polite">{visibleTools.length} resources · Confirm network compatibility in the project’s notes.</p>
-          <div className={s.toolGrid}>{visibleTools.map(tool => <article className={s.tool} key={tool.name}>
+          <div className={s.toolGrid}>{visibleTools.map(tool => <article className={s.tool} key={tool.name} id={toolAnchor(tool.name)} data-found={foundTool === toolAnchor(tool.name) || undefined}>
             <div className={s.toolTop}>
               <span className={s.toolLogo}>{tool.logo ? <Logo src={tool.logo}/> : <Glyph name={tool.symbol}/>}</span>
               <div><h4><Source href={tool.href} onFollow={onFollow} className={s.toolName}>{tool.name}</Source></h4><span className={s.author}>{tool.author}</span></div>

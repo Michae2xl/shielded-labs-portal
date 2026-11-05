@@ -5,7 +5,7 @@ import { MILESTONES_REVIEWED, type Milestone, type Project } from '@/lib/shielde
 import { milestoneGovernanceHref, milestoneProject, milestoneYears, securityAttribution, upgradeAttribution } from '@/lib/shielded-preview/directory';
 import { officialProjectExcerpts } from '@/lib/shielded-preview/official-project-excerpts';
 import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
-import { opensInPortal } from '@/lib/shielded-preview/editorial/library';
+import { sourceOpensInPortal } from '@/lib/shielded-preview/editorial/library';
 import { EditorialLink } from './editorial';
 import { ProjectLink } from './project-detail';
 import { Arrow, ViewLink, type Navigate } from './milestones-view';
@@ -14,7 +14,7 @@ import s from './milestone-record.module.css';
 const fullDate = (date: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date));
 
 function SourceLink({ href, onFollow, children }: { href: string; onFollow: (href: string) => void; children: ReactNode }) {
-  return <EditorialLink className={s.sourceLink} href={href} onFollow={onFollow}>{children}<Arrow external={!opensInPortal(href)}/></EditorialLink>;
+  return <EditorialLink source className={s.sourceLink} href={href} onFollow={onFollow}>{children}<Arrow external={!sourceOpensInPortal(href)}/></EditorialLink>;
 }
 
 export default function MilestoneRecord({ milestone, group, onNavigate, onProject, onFollow }: {

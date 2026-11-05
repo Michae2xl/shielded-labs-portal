@@ -10,6 +10,9 @@ export const GUIDE_SOURCE = 'https://openzcash.org/ongoing-test/crosslink';
 
 // Exact titles checked against the upstream GitHub API on 17 Oct 2026.
 // This is a curated index, not an assignment board or live issue-status feed.
+/** Anchor of a tool's card, so a search result can land on it. */
+export const toolAnchor = (name: string) => `tool-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+
 export const referencedIssues = [
   { id: 255, title: 'Crash After Clicking Edit Stake Button Due to Out-of-Bounds' },
   { id: 231, title: 'Reliable height/sync status' },

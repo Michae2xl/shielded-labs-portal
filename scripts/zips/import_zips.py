@@ -381,9 +381,10 @@ def build_document(path, source_root, image, dates):
 def link_documents(documents):
     """Point links between documents at records that exist.
 
-    A preview may link to a draft from its own pull request. Merged documents link only to
-    merged documents, so no pull request can take over their links. A link with no record
-    keeps its words but stops being a link, and a fragment the target does not have is dropped.
+    Merged documents link only to merged documents, so no pull request can take over their
+    links. A preview may also link to other previews, preferring its own pull request, since
+    both are already labelled unofficial. A link with no record keeps its words but stops
+    being a link, and a fragment the target does not have is dropped.
     """
     by_id = {document['id']: document for document in documents}
     anchors = {document['id']: collect_ids(document['body']) for document in documents}
@@ -395,8 +396,11 @@ def link_documents(documents):
     def target(record, source):
         if record in by_id:
             return record
-        same = [item for item in previews.get(record, []) if source.get('pull') and item['pull']['number'] == source['pull']['number']]
-        return same[0]['id'] if same else None
+        if not source.get('pull'):
+            return None
+        candidates = previews.get(record, [])
+        same = [item for item in candidates if item['pull']['number'] == source['pull']['number']]
+        return (same or candidates or [{}])[0].get('id')
 
     def walk(items, source):
         result = []

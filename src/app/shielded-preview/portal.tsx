@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
 import dynamic from 'next/dynamic';
 import { projects, sources, REVIEWED, MILESTONES_REVIEWED, type Project } from '@/lib/shielded-preview/content';
 import { legacyProjectResourceHref, resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
@@ -92,6 +92,12 @@ export default function Portal({ initial, initialView = defaultView, initialProj
   function go(next: View, section?: string, recordId?: string) { const params = new URLSearchParams({ view: next }); if (section) params.set('section', section); if (recordId) params.set('record', recordId); if (next === 'resources') { followEditorial(`?${params}`); return; } setView(next); setProject(null); setQuery(''); setDirectorySection(section ?? null); setDirectoryRecord(recordId ?? null); window.history.pushState(null, '', `?${params}`); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
   function openProject(next: Project, section: ProjectSection = 'overview', record?: string) { setView('projects'); setProject(next); setDirectorySection(section); setDirectoryRecord(record ?? null); setQuery(''); window.history.pushState(null, '', projectHref(next, section, record)); window.scrollTo({ top: 0, behavior: 'instant' }); }
   function changeProjectSection(section: ProjectSection) { if (!project) return; setDirectorySection(section); setDirectoryRecord(null); window.history.pushState(null, '', projectHref(project, section)); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
+  function changeProjectRecord(record?: string) {
+    if (!project) return;
+    setDirectoryRecord(record ?? null);
+    window.history.pushState(null, '', projectHref(project, isProjectSection(directorySection) ? directorySection : 'overview', record));
+    window.dispatchEvent(new Event('shielded:navigate'));
+  }
   function followEditorial(href: string) {
     const target = new URL(resolveEditorialLink(href) ?? href, window.location.href);
     const nextView = target.searchParams.get('view');
@@ -100,23 +106,31 @@ export default function Portal({ initial, initialView = defaultView, initialProj
     const targetSection = target.searchParams.get('section');
     if (nextProject) openProject(nextProject, isProjectSection(targetSection) ? targetSection : 'overview', target.searchParams.get('record') ?? undefined);
     else go(nextView, target.searchParams.get('section') ?? undefined, target.searchParams.get('record') ?? undefined);
-    if (['projects', 'activity', 'blog', 'resources', 'about'].includes(nextView)) {
-      window.history.replaceState(null, '', `${target.search}${target.hash}`);
-      window.dispatchEvent(new Event('shielded:navigate'));
-    }
+    // The whole address belongs to the destination: lanes, filters and anchors included.
+    window.history.replaceState(null, '', `${target.search}${target.hash}`);
+    window.dispatchEvent(new Event('shielded:navigate'));
     if (target.hash) {
-      window.history.replaceState(null, '', `${window.location.search}${target.hash}`);
       let anchor = target.hash.slice(1);
       try { anchor = decodeURIComponent(anchor); } catch { /* Keep malformed fragments inert. */ }
       requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView());
     }
+  }
+  /** A portal link with no handler of its own navigates in place instead of reloading the page. */
+  function followPortalLink(event: MouseEvent<HTMLDivElement>) {
+    if (event.defaultPrevented || event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const link = event.target instanceof Element ? event.target.closest('a') : null;
+    const href = link?.getAttribute('href');
+    if (!link || !href?.startsWith('?view=') || link.target) return;
+    if (!isPortalView(new URLSearchParams(href.split('#')[0]).get('view'))) return;
+    event.preventDefault();
+    followEditorial(href);
   }
   const liveCount = data.repos.filter(r => r.state === 'live').length;
   const searchResults = searchPortal(query, navigation).map(result => ({ ...result, run: () => followEditorial(result.href) }));
 
 
 
-  return <div className={s.portal}>
+  return <div className={s.portal} onClick={followPortalLink}>
     <a className={s.skip} href="#portal-main">Skip to content</a>
     <PortalNavigation view={view} onNavigate={go} search={{ query, onChange: setQuery, results: searchResults }}/>
 
@@ -125,12 +139,12 @@ export default function Portal({ initial, initialView = defaultView, initialProj
         {view === 'overview' && <Overview data={data} onNavigate={go} onProject={openProject} onFollow={followEditorial} projectGlyph={project => <Icon name={project.symbol} size={30}/>}/>}
 
         {view === 'projects' && <div className={pc.collection} data-detail={project ? true : undefined}>
-          {!project && <h1 className={pc.collectionTitle}>Projects</h1>}
+          {!project && <h1 className={s.srOnly}>Projects</h1>}
           {project && <div className={pc.projectPicker}>
             <button type="button" onClick={() => go('projects')}><Icon name="arrow" size={16}/>All projects</button>
             <label><span className={s.srOnly}>Choose a project</span><select value={project.id} onChange={event => { const next = projects.find(item => item.id === event.target.value); if (next) openProject(next); }}>{projects.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
           </div>}
-          {project ? <ProjectDetail onFollow={followEditorial} key={project.id} project={project} section={directorySection} record={directoryRecord} data={data} glyph={<Icon name={project.symbol} size={90}/>} onSection={changeProjectSection}/> : <>
+          {project ? <ProjectDetail onFollow={followEditorial} onRecord={changeProjectRecord} key={project.id} project={project} section={directorySection} record={directoryRecord} data={data} glyph={<Icon name={project.symbol} size={90}/>} onSection={changeProjectSection}/> : <>
             <div className={pc.grid}>{projects.map(p=><ProjectCard key={p.id} item={p} repositories={data.repos} glyph={<Icon name={p.symbol} size={30}/>} arrow={<Icon name="arrow"/>} onSelect={openProject} onFollow={followEditorial}/>)}</div>
 
           </>}

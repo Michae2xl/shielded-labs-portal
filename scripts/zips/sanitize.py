@@ -22,9 +22,11 @@ PHRASING = set('a strong em code sup sub'.split())
 RESERVED_IDS = {'zip-document', 'zip-sources', 'zip-sources-title'}
 WITH_ID = set('p h2 h3 h4 h5 h6 ul ol dl li dt dd blockquote pre table figure a sup'.split())
 ID = re.compile(r'^[A-Za-z0-9][A-Za-z0-9_.:-]{0,199}$')
-ZIP_LINK = re.compile(r'^(?:\./)?(zip-\d{4}|draft-[a-z0-9][a-z0-9-]*)(?:\.(?:rst|md|html))?(#[^#]*)?$', re.I)
+ZIP_LINK = re.compile(r'^(?:\./)?(zip-[a-z0-9][a-z0-9-]*|draft-[a-z0-9][a-z0-9-]*)(?:\.(?:rst|md|html))?(#[^#]*)?$', re.I)
+ZIP_SPELLING = re.compile(r'^zip-(\d{1,4})(?:-([a-z0-9-]+))?$')
 OFFICIAL_ZIP = re.compile(r'^(?:https://zips\.z\.cash/|(?:\.\./)*rendered/)(zip-\d{4}|draft-[a-z0-9][a-z0-9-]*)(?:\.(?:html|rst|md))?(#[^#]*)?$', re.I)
-REPOSITORY_ZIP = re.compile(r'^https://github\.com/zcash/zips/blob/[^/]+/zips/(zip-\d{4}|draft-[a-z0-9][a-z0-9-]*)\.(?:rst|md)(#[^#]*)?$', re.I)
+# Only the default branch is the current text; a pinned commit or another branch stays where it points.
+REPOSITORY_ZIP = re.compile(r'^https://github\.com/zcash/zips/blob/(?:main|master)/zips/(zip-[a-z0-9][a-z0-9-]*|draft-[a-z0-9][a-z0-9-]*)(?:\.(?:rst|md))?(#[^#]*)?$', re.I)
 RENDERED = re.compile(r'^(?:\.\./)*rendered/(.+)$')
 PROTOCOL = re.compile(r'^(?:\.\./)*protocol/(.+)$')
 BLOCKS = set('p h2 h3 h4 h5 h6 ul ol dl table blockquote pre figure hr details aside'.split())
@@ -94,6 +96,16 @@ def record_href(document_id, fragment=''):
     return f'?view=governance&section=zips&record={document_id}{fragment}'
 
 
+def zip_target(name, fragment):
+    """``zip-271`` and ``zip-0316-some-section`` are other spellings of a record and of a section in it."""
+    name = name.lower()
+    spelled = ZIP_SPELLING.match(name)
+    if spelled:
+        name = f'zip-{int(spelled.group(1)):04d}'
+        fragment = fragment or (f'#{spelled.group(2)}' if spelled.group(2) else '')
+    return record_href(name, fragment if ID.match(fragment[1:]) else '')
+
+
 def resolve_link(value, source_file):
     """Map repository-relative links to portal records or the official site."""
     value = html.unescape(value or '').strip()
@@ -101,14 +113,9 @@ def resolve_link(value, source_file):
         return None
     if value.startswith('#'):
         return value if ID.match(value[1:]) else None
-    match = ZIP_LINK.match(value)
+    match = ZIP_LINK.match(value) or OFFICIAL_ZIP.match(value) or REPOSITORY_ZIP.match(value)
     if match:
-        fragment = match.group(2) or ''
-        return record_href(match.group(1).lower(), fragment if ID.match(fragment[1:]) else '')
-    match = OFFICIAL_ZIP.match(value) or REPOSITORY_ZIP.match(value)
-    if match:
-        fragment = match.group(2) or ''
-        return record_href(match.group(1).lower(), fragment if ID.match(fragment[1:]) else '')
+        return zip_target(match.group(1), match.group(2) or '')
     match = RENDERED.match(value)
     if match:
         return safe_url(OFFICIAL + match.group(1), OFFICIAL)

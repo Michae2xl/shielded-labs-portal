@@ -63,3 +63,5 @@
  .updates{margin-top:20px;gap:12px}.newsCard{grid-template-columns:64px minmax(0,1fr) 16px;gap:10px}.newsCard>img{width:64px;height:52px}
 }
 @media print{.intro{padding-top:0}.updates{display:block}.updates>section{margin-bottom:28px}.repository,.milestone,.governance{break-inside:avoid}}
+.srOnly{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.sectionHeader>a{margin-left:auto}

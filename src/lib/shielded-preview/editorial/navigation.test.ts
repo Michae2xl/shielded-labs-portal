@@ -61,12 +61,16 @@ describe('Editorial source-to-record navigation', () => {
     }
   });
 
-  it('does not replace absent source files or rule anchors with the book opening', () => {
+  it('opens the chapter when a rule anchor is missing from the print edition', () => {
+    expect(resolveEditorialLink('https://shieldedlabs.github.io/zebra-crosslink/design/cl2-construction.html#linearity-rule')).toBe(`${editorialHref(handbook)}#the-crosslink-2-construction`);
+    expect(resolveEditorialLink('https://github.com/ShieldedLabs/zebra-crosslink/blob/main/book/src/design/terminology.md')).toBe(`${editorialHref(handbook)}#terminology`);
+  });
+
+  it('does not replace absent source files with the book opening', () => {
     for (const source of [
       'https://shieldedlabs.github.io/zebra-crosslink/LICENSE-MIT',
       'https://shieldedlabs.github.io/zebra-crosslink/LICENSE-APACHE',
       'https://shieldedlabs.github.io/zebra-crosslink/user/crosslink-testnet.html',
-      'https://shieldedlabs.github.io/zebra-crosslink/design/cl2-construction.html#linearity-rule',
       'https://github.com/ShieldedLabs/zebra-crosslink/blob/main/README.md',
       'https://shieldedlabs.net/crosslink-faq/#missing-answer',
     ]) expect(resolveEditorialLink(source)).toBe(source);

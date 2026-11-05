@@ -2,7 +2,7 @@
 
 import { createElement, useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import { projects } from '@/lib/shielded-preview/content';
-import { aboutSections, categoryId, editorialCatalog, editorialCategories, editorialHref, editorialListHref, resolveEditorialLink, safeEditorialUrl } from '@/lib/shielded-preview/editorial/library';
+import { aboutSections, categoryId, editorialCatalog, editorialCategories, editorialHref, editorialListHref, opensInPortal, resolveEditorialLink, safeEditorialUrl, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import { groupContent } from '@/lib/shielded-preview/editorial/presentation';
 import { faqContent } from '@/lib/shielded-preview/editorial/faq';
 import { projectHref } from '@/lib/shielded-preview/project-navigation';
@@ -17,12 +17,17 @@ import s from './editorial.module.css';
 
 type Follow = (href: string) => void;
 const allowedTags = new Set('p h2 h3 h4 h5 h6 a strong em ul ol li blockquote pre code table thead tbody tr th td figure figcaption img br hr sup sub'.split(' '));
+const headingTags = new Set('h2 h3 h4 h5 h6'.split(' '));
+// The handbook's print edition numbers its footnotes; their targets are rendered in the same page.
+const HANDBOOK_NOTE = /^https:\/\/shieldedlabs\.github\.io\/zebra-crosslink\/print\.html#(footnote-|fr-)(.+?)(-\d+)?$/;
+const nodeText = (node: ContentNode): string => typeof node === 'string' ? node : node.children.map(nodeText).join('');
+const hasImage = (node: ContentNode): boolean => typeof node !== 'string' && (node.tag === 'img' || node.children.some(hasImage));
 const loaded = new Map<string, EditorialDocument>();
 export function EditorialArrow({ back = false, external = false }: { back?: boolean; external?: boolean }) {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true" style={back ? { transform: 'rotate(180deg)' } : undefined}><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'}/></svg>;
 }
-export function EditorialLink({ href, onFollow, children, className, label }: { href: string; onFollow: Follow; children: ReactNode; className?: string; label?: string }) {
-  const safe = resolveEditorialLink(href);
+export function EditorialLink({ href, onFollow, children, className, label, source = false }: { href: string; onFollow: Follow; children: ReactNode; className?: string; label?: string; source?: boolean }) {
+  const safe = source ? safeEditorialUrl(sourceHref(href)) : resolveEditorialLink(href);
   if (!safe) return <span>{children}</span>;
   const internal = safe.startsWith('?view=');
   function click(event: MouseEvent<HTMLAnchorElement>) {
@@ -34,16 +39,27 @@ export function EditorialLink({ href, onFollow, children, className, label }: { 
 function DateLabel({ date }: { date: string }) {
   return <time dateTime={date}>{new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date))}</time>;
 }
-export function DocumentBody({ nodes, onFollow, actions = false }: { nodes: ContentNode[]; onFollow: Follow; actions?: boolean }) {
+export function DocumentBody({ nodes, onFollow, actions = false, anchors = false }: { nodes: ContentNode[]; onFollow: Follow; actions?: boolean; anchors?: boolean }) {
   return nodes.map((node, index) => {
     if (typeof node === 'string') return node;
     if (!allowedTags.has(node.tag)) return null;
     const onlyChild = node.children[0];
     if (actions && node.tag === 'p' && node.children.length === 1 && typeof onlyChild !== 'string' && onlyChild?.tag === 'a') {
-      return <p key={index} className={s.actionLink}><EditorialLink href={onlyChild.href ?? ''} onFollow={onFollow}><span><DocumentBody nodes={onlyChild.children} onFollow={onFollow}/></span><EditorialArrow/></EditorialLink></p>;
+      return <p key={index} className={s.actionLink}><EditorialLink href={onlyChild.href ?? ''} onFollow={onFollow}><span><DocumentBody nodes={onlyChild.children} onFollow={onFollow}/></span><EditorialArrow external={!opensInPortal(onlyChild.href ?? '')}/></EditorialLink></p>;
     }
-    const children = <DocumentBody nodes={node.children} onFollow={onFollow}/>;
-    if (node.tag === 'a') return <EditorialLink key={index} href={node.href ?? ''} onFollow={onFollow}>{children}</EditorialLink>;
+    const children = <DocumentBody nodes={node.children} onFollow={onFollow} anchors={anchors}/>;
+    if (headingTags.has(node.tag) && !nodeText(node).trim()) {
+      // The source sometimes wraps a figure in a heading; it is a figure, not a section.
+      return hasImage(node) ? <figure key={index}>{children}</figure> : null;
+    }
+    if (node.tag === 'a') {
+      const note = HANDBOOK_NOTE.exec(node.href ?? '');
+      if (note) {
+        const [marker, footnote] = [`fr-${note[2]}${note[3] ?? '-1'}`, `footnote-${note[2]}`];
+        return note[1] === 'fr-' ? <a key={index} id={footnote} href={`#${marker}`}>{children}</a> : <a key={index} id={marker} href={`#${footnote}`}>{children}</a>;
+      }
+      return <EditorialLink key={index} href={node.href ?? ''} onFollow={onFollow}>{children}</EditorialLink>;
+    }
     if (node.tag === 'img') {
       if (!/^\/shielded-preview\/editorial\/[a-f0-9]+\.(png|jpe?g|webp|gif)$/.test(node.src ?? '')) return null;
       // Imported editorial illustrations are local and retain their original aspect ratio.
@@ -51,6 +67,7 @@ export function DocumentBody({ nodes, onFollow, actions = false }: { nodes: Cont
       return <img key={index} src={node.src} alt={node.alt || 'Illustration from the source article'} loading="lazy" decoding="async"/>;
     }
     if (node.tag === 'br' || node.tag === 'hr') return createElement(node.tag, { key: index });
+    if (anchors && headingTags.has(node.tag) && node.id) return createElement(node.tag, { key: index, id: node.id }, children, <a key="anchor" className={s.anchor} href={`#${encodeURIComponent(node.id)}`} aria-hidden="true" tabIndex={-1}>#</a>);
     const element = createElement(node.tag, { key: index, id: node.id, ...(node.tag === 'td' || node.tag === 'th' ? { colSpan: node.colspan, rowSpan: node.rowspan } : {}) }, children);
     return node.tag === 'table' ? <div key={index} className={s.tableScroll} role="region" aria-label="Article table" tabIndex={0}>{element}</div> : element;
   });
@@ -128,7 +145,7 @@ function Reader({ entry, backHref, backLabel, onFollow, embedded = false, contac
   const related = editorialCatalog.filter(item => item.id !== entry.id && item.view === 'blog' && item.projects.some(project => entry.projects.includes(project))).slice(0, 3);
   const source = safeEditorialUrl(entry.source);
   const hasSeparateFaq = embedded && entry.category === 'Guide & FAQ';
-  const headings = hasSeparateFaq ? entry.headings.filter(heading => heading.level === 2 && heading.id !== 'frequently-asked-questions-faq') : entry.headings;
+  const headings = (hasSeparateFaq ? entry.headings.filter(heading => heading.level === 2 && heading.id !== 'frequently-asked-questions-faq') : entry.headings).filter(heading => heading.title.trim());
   const Title = embedded ? 'h2' : 'h1';
   return <article className={s.reader} data-layout={entry.id === 'organization' ? 'organization' : entry.view === 'about' && entry.id !== 'privacy' ? 'institutional' : 'article'} aria-labelledby="editorial-title">
     <header className={s.readerHeader}>
@@ -141,10 +158,10 @@ function Reader({ entry, backHref, backLabel, onFollow, embedded = false, contac
       {entry.id !== 'organization' && headings.length > 0 && <label className={s.mobileOutline}><span>On this page</span><select aria-label="Jump to a section" disabled={!result} defaultValue="" onChange={event => { if (event.target.value) window.location.hash = encodeURIComponent(event.target.value); }}><option value="" disabled>Choose a section</option>{headings.filter(h => h.level <= 3).map(h => <option key={h.id} value={h.id}>{h.title}</option>)}</select></label>}
     </header>
     <div className={s.readingColumn}>
-      {entry.view === 'blog' && entry.image && <Image className={s.featured} src={entry.image.src} alt={entry.image.alt} width={entry.image.width} height={entry.image.height} sizes="(max-width: 1050px) 95vw, 70vw" priority/>}
+      {entry.view === 'blog' && entry.image && <Image className={s.featured} src={entry.image.src} alt={entry.image.alt} width={entry.image.width} height={entry.image.height} sizes="(max-width: 1050px) 95vw, 800px" priority/>}
       {entry.notice && <p className={s.notice}>{entry.notice}</p>}
       {entry.id === 'organization' && result ? <OrganizationBody nodes={result.body} onFollow={onFollow}/> : entry.id === 'contact' && contactForm ? <ContactForm controller={contactForm} onPrivacy={() => onFollow('?view=about&section=privacy')}/> : <div className={s.prose} aria-busy={!result && !failed}>
-        {result ? <DocumentBody nodes={hasSeparateFaq ? faqContent(result).intro : result.body} onFollow={onFollow} actions={entry.view === 'about' && entry.id !== 'privacy'}/> : failed ? <div role="alert"><p>This document could not be loaded.</p><button onClick={retry}>Try again</button></div> : <p role="status">Loading article…</p>}
+        {result ? <DocumentBody nodes={hasSeparateFaq ? faqContent(result).intro : result.body} onFollow={onFollow} actions={entry.view === 'about' && entry.id !== 'privacy'} anchors={entry.view !== 'about'}/> : failed ? <div role="alert"><p>This document could not be loaded.</p><button onClick={retry}>Try again</button></div> : <p role="status">Loading article…</p>}
       </div>}
       {hasSeparateFaq && <div className={s.inlineLinks}><EditorialLink href={projectHref(entry.projects[0], 'faq', entry.id)} onFollow={onFollow}>Frequently asked questions<EditorialArrow/></EditorialLink></div>}
 

@@ -173,6 +173,12 @@
   .overviewGrid, .compactReading { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-areas: 'purpose purpose' 'progress next' 'reading reading'; }
   .resourceList { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 24px; }
 }
+/* Six tabs need more room than the others; without their icons they still fit one row. */
+@container project (min-width: 621px) and (max-width: 800px) {
+  .sectionNav[data-tabs="6"] { gap: 4px; justify-content: space-between; }
+  .sectionNav[data-tabs="6"] > a { gap: 0; }
+  .sectionNav[data-tabs="6"] > a > svg { display: none; }
+}
 @container (max-width: 620px) {
   .page { gap: 20px; }
   .hero { padding: 18px; }

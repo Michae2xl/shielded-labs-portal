@@ -14,7 +14,7 @@
 .document a[href^="#fnref"]{margin-left:2px;color:#a8a8a8;text-decoration:none}
 .document a[href^="#fnref"]:hover{color:#fff}
 .document a.anchor{margin-left:.45em;color:#8a8a8a;font-weight:400;text-decoration:none;opacity:0;transition:opacity .12s}
-.document :is(h2,h3,h4,h5,h6):hover>a.anchor,.document a.anchor:focus-visible{opacity:1}
+.document :is(h2,h3,h4,h5,h6):hover>a.anchor{opacity:1}
 .document a.anchor:hover{color:#fff}
 @media(hover:none){.document a.anchor{display:none}}
 .document sup{font-size:.72em;line-height:0}

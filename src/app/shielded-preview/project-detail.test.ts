@@ -4,15 +4,15 @@ import { describe, expect, it } from 'vitest';
 import { projects } from '@/lib/shielded-preview/content';
 import type { PortalData, Repository } from '@/lib/shielded-preview/types';
 import { activityHref } from '@/lib/shielded-preview/development-navigation';
-import { opensInPortal, resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
+import { sourceHref, sourceOpensInPortal } from '@/lib/shielded-preview/editorial/library';
 import { officialProjectExcerpts } from '@/lib/shielded-preview/official-project-excerpts';
 import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
 import ProjectDetail from './project-detail';
 
 const data: PortalData = { repos: [], grants: [], checkedAt: '2026-10-25', grantsState: 'unavailable', grantsFetchedAt: null };
 const nsm = projects.find(project => project.id === 'nsm')!;
-// A reference with a page in the portal opens it; anything else leaves in a new tab.
-const sourceLink = (source: string) => opensInPortal(source) ? `href="${resolveEditorialLink(source)!.replaceAll('&', '&amp;')}"` : `href="${source}" target="_blank" rel="noopener noreferrer"`;
+// A citation opens the local document that holds its text; anything else opens the source.
+const sourceLink = (source: string) => `href="${sourceHref(source).replaceAll('&', '&amp;')}"`;
 const renderFaq = (record: string | null) => renderToStaticMarkup(createElement(ProjectDetail, {
   project: nsm, section: 'faq', record, data, glyph: null, onSection: () => {}, onFollow: () => {},
 }));
@@ -29,6 +29,7 @@ describe('Official project excerpts', () => {
     expect(markup).toContain(sourceLink(excerpt.source));
     expect(markup).toContain(`aria-label="Shielded Labs source for ${project.name}"`);
     expect(new URL(excerpt.source).hostname).toBe('shieldedlabs.net');
+    if (!sourceOpensInPortal(excerpt.source)) expect(markup).toContain(`href="${excerpt.source}" aria-label="Shielded Labs source for ${project.name}" target="_blank"`);
   });
 });
 

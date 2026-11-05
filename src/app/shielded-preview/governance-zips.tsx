@@ -8,6 +8,7 @@ import GovernanceRecord from './governance-record';
 import GovernanceGlyph from './governance-glyph';
 import { Arrow, Collection, Empty, Link, Search, SourceInfo, Tabs, pageRows, visiblePage, type CollectionNavigate, type Controls } from './governance-collections';
 import a from './governance-archive.module.css';
+import { resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import ZipDiagram from './zip-diagram';
 import z from './governance-zips.module.css';
 
@@ -15,8 +16,17 @@ const date = (value: string | null | undefined) => value ? new Intl.DateTimeForm
 const titles: Record<ZipLane, string> = { zips: 'Numbered ZIPs', drafts: 'Unnumbered drafts', guides: 'Writing guides', proposals: 'Open pull requests' };
 const laneIcons: Record<ZipLane, 'zips' | 'process' | 'pull'> = { zips: 'zips', drafts: 'zips', guides: 'process', proposals: 'pull' };
 // Back and Forward keep the browser's restored position; any other arrival goes to the anchor.
+// Browsers also fire popstate for a same-page fragment click, which is not a traversal.
 let traversedAt = Number.NEGATIVE_INFINITY;
-if (typeof window !== 'undefined') window.addEventListener('popstate', () => { traversedAt = performance.now(); });
+let linkClickedAt = Number.NEGATIVE_INFINITY;
+if (typeof window !== 'undefined') {
+  window.addEventListener('click', event => {
+    if (!(event.target instanceof Element) || !event.target.closest('a')) return;
+    linkClickedAt = performance.now();
+    traversedAt = Number.NEGATIVE_INFINITY;
+  }, true);
+  window.addEventListener('popstate', () => { if (performance.now() - linkClickedAt > 300) traversedAt = performance.now(); });
+}
 /** Open the collapsible blocks around an anchor, so links and the outline land on visible text. */
 function revealAnchor(id: string) {
   let parent = globalThis.document.getElementById(id)?.parentElement ?? null;
@@ -61,7 +71,10 @@ function ZipLink({ href, onNavigate, children }: { href: string; onNavigate: Col
     return <a href={href} onClick={click}>{children}</a>;
   }
   if (href.startsWith('#') || href.startsWith('mailto:')) return <a href={href}>{children}</a>;
-  if (/^https?:\/\//.test(href)) return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
+  if (/^https?:\/\//i.test(href)) {
+    const local = resolveEditorialLink(href);
+    return local?.startsWith('?view=') ? <a href={local}>{children}</a> : <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
+  }
   return <span>{children}</span>;
 }
 
@@ -89,7 +102,7 @@ export function ZipBody({ nodes, onNavigate, math = false }: { nodes: ZipNode[];
     if (node.tag === 'br' || node.tag === 'hr') return createElement(node.tag, { key: index });
     if (node.tag === 'pre' && node.attrs?.lang === 'mermaid' && typeof node.children[0] === 'string') return <ZipDiagram key={index} source={node.children[0]}/>;
     if (node.tag === 'aside') return <aside key={index} className={z.box} data-kind={node.attrs?.kind === 'warning' ? 'warning' : 'note'}>{children}</aside>;
-    if (headingTags.has(node.tag) && node.id) return createElement(node.tag, { key: index, id: node.id }, children, <a key="anchor" className={z.anchor} href={`#${encodeURIComponent(node.id)}`} aria-label="Link to this section">#</a>);
+    if (headingTags.has(node.tag) && node.id) return createElement(node.tag, { key: index, id: node.id }, children, <a key="anchor" className={z.anchor} href={`#${encodeURIComponent(node.id)}`} aria-hidden="true" tabIndex={-1}>#</a>);
     const props: Record<string, unknown> = { key: index, id: node.id };
     if (node.tag === 'td' || node.tag === 'th') { props.colSpan = node.colspan; props.rowSpan = node.rowspan; }
     if (node.tag === 'ol' && node.start) props.start = node.start;

@@ -1,6 +1,7 @@
 'use client';
 
 import type { CoinholderProposal, ApplicationField } from '@/lib/shielded-preview/coinholder-proposals';
+import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import type { ReactNode } from 'react';
 import { coinholderRoundLabel, coinholderRounds } from '@/lib/shielded-preview/coinholder-rounds';
 import type { Source } from '@/lib/shielded-preview/governance-types';
@@ -11,7 +12,7 @@ import s from './coinholder-proposals.module.css';
 const date = (value: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
 function ApplicationText({ field }: { field: ApplicationField }) {
   return <div className={s.applicationField}><h3>{field.heading}</h3>{field.text.split(/\n\s*\n/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-    {field.links.length > 0 && <div className={s.sourceLinks}>{field.links.map(link => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">{link.label}<span>{new URL(link.url).hostname.replace(/^www\./, '')} ↗</span></a>)}</div>}
+    {field.links.length > 0 && <div className={s.sourceLinks}>{field.links.map(link => { const target = sourceHref(link.url); return <a key={link.url} href={target} {...leavingLink(target)}>{link.label}<span>{target.startsWith('?') ? 'In this portal →' : `${new URL(link.url).hostname.replace(/^www\./, '')} ↗`}</span></a>; })}</div>}
   </div>;
 }
 

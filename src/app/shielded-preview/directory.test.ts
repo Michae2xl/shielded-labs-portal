@@ -1,4 +1,4 @@
-import { resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
+import { sourceHref } from '@/lib/shielded-preview/editorial/library';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
@@ -37,7 +37,7 @@ describe('Directory cards and direct records', () => {
         onNavigate: () => {}, onProject: () => {}, onFollow: () => {},
       }));
       expect(markup, milestone.name).toContain(`id="milestone-record-title" tabindex="-1">${milestone.name}</h1>`);
-      expect(markup, milestone.name).toContain(`href="${(resolveEditorialLink(milestone.source) ?? '').replaceAll('&', '&amp;')}"`);
+      expect(markup, milestone.name).toContain(`href="${sourceHref(milestone.source).replaceAll('&', '&amp;')}"`);
       expect(markup, milestone.name).toContain(`href="?view=projects&amp;project=${project.id}"`);
       if (milestone.governanceRecord) {
         const known = [...record.upgrades.map(item => `upgrade:${item.name}`), ...record.polls.map(item => `poll:${item.id}`)];

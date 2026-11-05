@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { editorialCatalog, editorialHref, resolveEditorialLink, safeEditorialUrl, searchEditorial } from './library';
+import { editorialCatalog, editorialHref, resolveEditorialLink, safeEditorialUrl, searchEditorial, leavingLink, sourceHref } from './library';
 import documents from './documents.json';
 import { board, institutionalDocuments } from './institutional';
 import type { ContentNode } from './types';
@@ -57,5 +57,20 @@ describe('Shielded Labs editorial coverage', () => {
 
   it('rejects active or credential-bearing links', () => {
     for (const value of ['javascript:alert(1)', 'data:text/html,hello', 'https://u:p@example.com', 'java\nscript:bad()']) expect(safeEditorialUrl(value)).toBeNull();
+  });
+  it('sends cited sources to the local document that holds their text, and nowhere else', () => {
+    expect(sourceHref('https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/')).toContain('record=epoch-future-proof-cryptography-for-zcash');
+    expect(sourceHref('https://zips.z.cash/zip-0258')).toBe('?view=governance&section=zips&record=zip-0258');
+    for (const listPage of ['https://shieldedlabs.net/projects/', 'https://shieldedlabs.net/team/', 'https://shieldedlabs.net/governance/']) expect(sourceHref(listPage)).toBe(listPage);
+    expect(leavingLink('?view=people')).toEqual({});
+    expect(leavingLink('https://example.org/')).toEqual({ target: '_blank', rel: 'noopener noreferrer' });
+  });
+  it('keeps pinned revisions of a ZIP where they point', () => {
+    const pinned = 'https://github.com/zcash/zips/blob/4acf32ac6db409d93041c463880dad6df83875e1/zips/zip-0316.rst';
+    expect(resolveEditorialLink(pinned)).toBe(pinned);
+    expect(resolveEditorialLink('https://github.com/zcash/zips/blob/main/zips/zip-0316.rst')).toBe('?view=governance&section=zips&record=zip-0316');
+  });
+  it('leaves footnote markers with no target as text', () => {
+    expect(resolveEditorialLink('https://shieldedlabs.net/crosslink-incentivized-feature-nets/#55387e82-e104-405d-a208-028cc523224b')).toBeNull();
   });
 });

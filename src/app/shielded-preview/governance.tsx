@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import snapshot from '@/lib/shielded-preview/governance-data/snapshot.json';
 import record from '@/lib/shielded-preview/governance-data/record.json';
 import { comparisons } from '@/lib/shielded-preview/comparisons';
@@ -47,7 +48,7 @@ const label=(s:string)=>s.replaceAll('_',' ').replace(/^\w/,c=>c.toUpperCase());
 const polls=[...record.polls].filter(p=>p.kind!=='test').sort((a,b)=>(b.date??'').localeCompare(a.date??''));
 const elections=[...record.elections].sort((a,b)=>(b.date??b.month??'').localeCompare(a.date??a.month??''));
 function Arrow(){return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>}
-function SourceLink({url,children}:{url:string|null;children:ReactNode}){return url&&/^https:\/\//.test(url)?<a className={g.sourceLink} href={url} target="_blank" rel="noopener noreferrer">{children}{/^https:\/\/(www\.)?openzcash\.org(?:\/|$)/i.test(url)&&!(typeof children==='string'&&/openzcash/i.test(children))?' · OpenZcash':''}<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>:null}
+function SourceLink({url,children}:{url:string|null;children:ReactNode}){const target=url?sourceHref(url):null;return url&&target&&/^https:\/\//.test(url)?<a className={g.sourceLink} href={target} {...leavingLink(target)}>{children}{/^https:\/\/(www\.)?openzcash\.org(?:\/|$)/i.test(url)&&!(typeof children==='string'&&/openzcash/i.test(children))?' · OpenZcash':''}<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d={target.startsWith('?')?'M4 12h16m-6-6 6 6-6 6':'M6 18 18 6M6 6h12v12'}/></svg></a>:null}
 function State({children}:{children:ReactNode}){return <span className={g.state}>{children}</span>}
 function SourceNote({source,name}:{source:Source<unknown>;name:string}){return <div className={g.sourceNote}><strong>{name}</strong><span>{source.state==='unavailable'?'Source unavailable':source.state==='mirror'?'Published record':source.state==='fetched'?'Retrieved':'Saved record'}{source.observedAt?` · ${date(source.observedAt)}`:''}{source.error?' · Refresh unavailable':''}</span><SourceLink url={source.url}>Source</SourceLink></div>}
 function Stat({value,name,note}:{value:ReactNode;name:string;note?:string}){return <div><span>{name}</span><strong>{value}</strong>{note&&<small>{note}</small>}</div>}

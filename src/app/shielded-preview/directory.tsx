@@ -2,6 +2,7 @@
 
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef, type ReactNode } from 'react';
+import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import { milestones, projects, REVIEWED, sources, team, type Project } from '@/lib/shielded-preview/content';
 import { directoryHref, milestoneGroupItems, peopleGroups, personId, teamContext, type DirectoryView, type Person } from '@/lib/shielded-preview/directory';
 import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
@@ -17,7 +18,10 @@ type Navigate = (section: string, record?: string) => void;
 const portraits = portraitData.portraits as Record<string, { src: string }>;
 const dateLabel = (date: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date));
 function Arrow({ external = false }: { external?: boolean }) { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden="true"><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'}/></svg>; }
-function SourceLink({ href, children }: { href: string; children: ReactNode }) { return <a className={s.sourceLink} href={href} target="_blank" rel="noopener noreferrer">{children}<Arrow external/></a>; }
+function SourceLink({ href, children }: { href: string; children: ReactNode }) {
+  const target = sourceHref(href);
+  return <a className={s.sourceLink} href={target} {...leavingLink(target)}>{children}<Arrow external={!target.startsWith('?')}/></a>;
+}
 function Stat({ label, children }: { label: string; children: ReactNode }) { return <div><span>{label}</span><strong>{children}</strong></div>; }
 function EntryLink({ view, section, record, onNavigate, className, children }: { view: DirectoryView; section: string; record: string; onNavigate: Navigate; className: string; children: ReactNode }) {
   return <a className={className} href={directoryHref(view, section, record)} onClick={event => { if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onNavigate(section, record); }}>{children}</a>;

@@ -134,7 +134,7 @@ export default function Development({ data, busy, failed = false, onRefresh, ini
 
   return <div className={s.development}>
       <header className={s.header}>
-        <h1 id="development-title" tabIndex={-1}>Code activity</h1>
+        <h1 id="development-title" className={s.srOnly} tabIndex={-1}>Code activity</h1>
         <div className={s.sourceStatus}>
           <span role="status">{failed ? 'Refresh unavailable · retained observations' : rateLimited ? `${live}/${data.repos.length} sources refreshed · GitHub rate limit` : live ? `${live}/${data.repos.length} sources refreshed` : 'Saved GitHub data'} · {fullDate(observedAt)}</span>
           <button className={s.refresh} disabled={busy} onClick={onRefresh} aria-label="Refresh development activity">

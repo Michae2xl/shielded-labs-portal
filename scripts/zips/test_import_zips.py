@@ -106,6 +106,13 @@ class SanitizeTest(unittest.TestCase):
         self.assertEqual(resolve('https://zips.z.cash/zip-0244#abstract'), '?view=governance&section=zips&record=zip-0244#abstract')
         self.assertEqual(resolve('https://github.com/zcash/zips/blob/main/zips/zip-0244.rst'), '?view=governance&section=zips&record=zip-0244')
         self.assertEqual(resolve('../rendered/assets/data.csv'), 'https://zips.z.cash/assets/data.csv')
+        pinned = 'https://github.com/zcash/zips/blob/4acf32ac6db409d93041c463880dad6df83875e1/zips/zip-0316.rst'
+        self.assertEqual(resolve(pinned), pinned)
+        branch = 'https://github.com/zcash/zips/blob/end-zcg-stream/zips/draft-bowe-end-zcg-stream.md'
+        self.assertEqual(resolve(branch), branch)
+        self.assertEqual(resolve('zip-271'), '?view=governance&section=zips&record=zip-0271')
+        self.assertEqual(resolve('zip-0316-deriving-a-unified-address-from-a-uivk.rst'), '?view=governance&section=zips&record=zip-0316#deriving-a-unified-address-from-a-uivk')
+        self.assertEqual(resolve('zip-tbd2.md'), '?view=governance&section=zips&record=zip-tbd2')
         self.assertEqual(resolve('protocol/protocol.pdf'), 'https://zips.z.cash/protocol/protocol.pdf')
         self.assertEqual(resolve('../README.rst'), 'https://github.com/zcash/zips/blob/main/README.rst')
         self.assertEqual(resolve('#fn1'), '#fn1')
@@ -244,6 +251,7 @@ class LinkTest(unittest.TestCase):
             {'id': 'pr-7-draft-a-new', 'pull': pull, 'body': [{'tag': 'p', 'children': [link('draft-a-other')]}]},
             {'id': 'pr-9-draft-a-other', 'pull': {'number': 9, 'file': 'draft-a-other.md'}, 'body': []},
             {'id': 'pr-7-draft-a-other', 'pull': {'number': 7, 'file': 'draft-a-other.md'}, 'body': []},
+            {'id': 'pr-8-draft-a-third', 'pull': {'number': 8, 'file': 'draft-a-third.md'}, 'body': [{'tag': 'p', 'children': [link('draft-a-new')]}]},
         ]
         linked = importer.link_documents(documents)
         children = linked[0]['body'][1]['children']
@@ -252,6 +260,7 @@ class LinkTest(unittest.TestCase):
         self.assertEqual(children[2]['href'], '?view=governance&section=zips&record=zip-0001#real')
         self.assertEqual(children[3]['href'], '?view=governance&section=zips&record=zip-0001')
         self.assertEqual(linked[1]['body'][0]['children'][0]['href'], '?view=governance&section=zips&record=pr-7-draft-a-other')
+        self.assertEqual(linked[4]['body'][0]['children'][0]['href'], '?view=governance&section=zips&record=pr-7-draft-a-new')
 
     @unittest.skipUnless(HAS_RENDERERS, 'docutils and Markdown are required for rendering tests')
     def test_markdown_headings_match_the_ids_the_documents_link_to(self):

@@ -7,7 +7,7 @@ import CrosslinkParticipate from '@/app/shielded-preview/crosslink-participate';
 import { projects } from '../content';
 import { editorialCatalog, opensInPortal } from '../editorial/library';
 import { searchPortal } from '../portal-search';
-import { operateSteps, referencedIssues, relatedPages, rewardDetails, steps } from './guide';
+import { operateSteps, referencedIssues, relatedPages, rewardDetails, steps, toolAnchor } from './guide';
 import { history, paidRounds, reportedPaid, sourcesChecked } from './history';
 import { categories, communityTools } from './tools';
 
@@ -38,6 +38,8 @@ describe('Crosslink participation guide', () => {
     }
     for (const category of categories.slice(1)) expect(communityTools.some(tool => tool.category === category)).toBe(true);
     expect(referencedIssues).toHaveLength(3);
+    expect(new Set(communityTools.map(tool => toolAnchor(tool.name))).size).toBe(communityTools.length);
+    for (const tool of communityTools) expect(tools).toContain(`id="${toolAnchor(tool.name)}"`);
   });
   it('shows the incentive pool, every round and the whole timeline', () => {
     const incentives = render('incentives');
@@ -54,6 +56,6 @@ describe('Crosslink participation guide', () => {
   });
   it('is found by portal search', () => {
     expect(searchPortal('cTAZ testing', []).some(result => result.title === 'Crosslink test guide')).toBe(true);
-    expect(searchPortal('Staker Space', []).some(result => result.kind === 'Community tool')).toBe(true);
+    expect(searchPortal('Staker Space', []).find(result => result.kind === 'Community tool')?.href).toBe(`?view=projects&project=crosslink&section=participate&record=tools#${toolAnchor('Staker Space')}`);
   });
 });

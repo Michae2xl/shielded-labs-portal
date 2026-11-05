@@ -19,7 +19,9 @@
 .brand{display:inline-flex;align-items:center;gap:8px;min-height:28px;font-size:13px;color:#c2c2c2}
 .brand:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
 .brand svg{width:14px;height:14px}
-.participate .heroCopy h2{margin:8px 0 0;font-size:28px;font-weight:500;line-height:1.25;letter-spacing:-.6px;color:#f4f4f4;outline:none}
+.brand span{display:inline-flex;align-items:center;gap:8px}
+.brand img{display:block}
+.participate .heroCopy h2{margin:8px 0 0;font-size:24px;font-weight:500;line-height:1.25;letter-spacing:-.6px;color:#f4f4f4;outline:none}
 .heroActions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .primary,.secondary,.participate a.primary,.participate a.secondary{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:7px;font:inherit;font-size:14px;line-height:1.4;cursor:pointer}
 .participate a.primary{background:#f2f2f2;color:#111;border:1px solid #f2f2f2;font-weight:500}
@@ -77,10 +79,11 @@
 .operate>li>span,.rules>li>span{flex:none;width:22px;padding-top:3px;font-family:var(--font-geist-mono),monospace;font-size:11px;color:#a8a8a8}
 .operate p,.rules p{margin-top:2px!important;font-size:14px!important}
 .operate+.note{margin-top:6px!important}
-.options{display:flex;flex-direction:column;border:1px solid #343434;border-radius:12px;background:#111;overflow:hidden}
+.options{display:flex;flex-direction:column;border:1px solid #343434;border-radius:12px;background:#111}
 .options details+details{border-top:1px solid #2a2a2a}
-.options summary{min-height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:14.5px;color:#ececec;cursor:pointer}
-.options summary:hover{background:#171717}
+.participate .options details>summary{min-height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-radius:11px;font-size:14.5px;color:#ececec;cursor:pointer}
+.participate .options details>summary:hover{background:#171717}
+.participate .options details>summary:focus-visible{outline-offset:-2px}
 .options details>div{padding:0 18px 12px}
 .options p{margin-top:2px!important;font-size:14px!important}
 .explore{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:0 18px;border:1px solid #343434;border-radius:12px;background:#111;color:#ececec;font:inherit;font-size:14.5px;cursor:pointer}
@@ -98,6 +101,7 @@
 .toolGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .tool{display:flex;flex-direction:column;min-width:0;padding:16px 18px;border:1px solid #343434;border-radius:12px;background:#111}
 .tool:hover{border-color:#4a4a4a;background:#141414}
+.tool[data-found]{border-color:#9a9a9a}
 .toolTop{display:flex;align-items:center;gap:12px;min-width:0}
 .toolTop>div{min-width:0}
 .toolLogo{display:flex;align-items:center;justify-content:center;flex:none;width:40px;height:40px;border:1px solid #333;border-radius:9px;background:#1a1a1a;color:#d0d0d0;overflow:hidden}
@@ -174,9 +178,10 @@
   .ringInner{width:60px;height:60px}
   .shield img{width:30px;height:30px}
   .heroCopy{padding:18px}
-  .participate .heroCopy h2{font-size:24px}
+  .participate .heroCopy h2{font-size:22px}
   .card{padding:16px}
   .timeline>li{grid-template-columns:minmax(0,1fr)}
   .stepBody{padding-left:16px}
 }
+@media(max-width:650px){.content,.tool{scroll-margin-top:84px}}
 @media(prefers-reduced-motion:reduce){.toggle::before,.toggle::after{transition:none}}

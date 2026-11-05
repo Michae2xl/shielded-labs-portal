@@ -6,7 +6,7 @@ import type { PortalData } from '@/lib/shielded-preview/types';
 import { projectGuides } from '@/lib/shielded-preview/project-guides';
 import { officialProjectExcerpts } from '@/lib/shielded-preview/official-project-excerpts';
 import { projectPublications, projectCopyReviewedAt, publicationQuote, type PublicationExcerpt, type PublicationRecord } from '@/lib/shielded-preview/project-publications';
-import { editorialCatalog, editorialHref, opensInPortal } from '@/lib/shielded-preview/editorial/library';
+import { editorialCatalog, editorialHref, opensInPortal, sourceOpensInPortal } from '@/lib/shielded-preview/editorial/library';
 import type { EditorialEntry } from '@/lib/shielded-preview/editorial/types';
 import { projectHref, type ProjectSection } from '@/lib/shielded-preview/project-navigation';
 import { projectZips } from '@/lib/shielded-preview/project-summary';
@@ -82,15 +82,15 @@ function PublishedCopy({ excerpt, project, field, onFollow, children }: {
     {excerpt.window && <small className={s.publicationDetail}>Published window · {excerpt.window}</small>}
     {children}
     <div className={s.publicationSource}>
-      <EditorialLink href={excerpt.source} onFollow={onFollow} label={`Shielded Labs source for ${project.name} ${field}`}>Shielded Labs<Arrow external={!opensInPortal(excerpt.source)}/></EditorialLink>
+      <EditorialLink source href={excerpt.source} onFollow={onFollow} label={`Shielded Labs source for ${project.name} ${field}`}>Shielded Labs<Arrow external={!sourceOpensInPortal(excerpt.source)}/></EditorialLink>
       {field !== 'presentation' && excerpt.publishedAt && <span>Published <DateStamp date={excerpt.publishedAt}/></span>}
     </div>
   </div>;
 }
 
-export default function ProjectDetail({ project, section, record, data, glyph, onSection, onFollow }: {
+export default function ProjectDetail({ project, section, record, data, glyph, onSection, onFollow, onRecord }: {
   project: Project; section: string | null; record: string | null; data: PortalData; glyph: ReactNode;
-  onSection: (section: ProjectSection) => void; onFollow: (href: string) => void;
+  onSection: (section: ProjectSection) => void; onFollow: (href: string) => void; onRecord?: (record?: string) => void;
 }) {
   const reading = editorialCatalog.filter(entry => entry.projects.includes(project.id));
   const allResources = reading.filter(entry => entry.view === 'resources')
@@ -110,7 +110,12 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
   const title = useRef<HTMLHeadingElement>(null);
   const panelHeading = useRef<HTMLHeadingElement>(null);
   const firstRender = useRef(true);
+  const shownSection = useRef(active);
   useEffect(() => {
+    // Moving between the tabs of one section leaves focus on the tab the reader just used.
+    const sameSection = shownSection.current === active;
+    shownSection.current = active;
+    if (!firstRender.current && sameSection && active === 'participate') return;
     (firstRender.current ? title : panelHeading).current?.focus({ preventScroll: true });
     firstRender.current = false;
   }, [active, record]);
@@ -136,7 +141,7 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
       {!compact && <PublishedCopy excerpt={publication.presentation} project={project} field="presentation" onFollow={onFollow}/>}
     </header>
 
-    <nav className={s.sectionNav} aria-label="Project sections">
+    <nav className={s.sectionNav} data-tabs={sections.length} aria-label="Project sections">
       {sections.map(item => <SectionLink key={item.id} project={project} section={item.id} onSection={onSection} current={active === item.id}><SectionIcon kind={item.id}/>{item.label}</SectionLink>)}
     </nav>
 
@@ -146,14 +151,14 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
           <section className={`${s.card} ${s.purpose}`} aria-labelledby="project-panel-heading">
             <div className={s.excerptHeading}>
               <h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Why it matters</h2>
-              <EditorialLink href={excerpt.source} onFollow={onFollow} label={`Shielded Labs source for ${project.name}`} className={s.textLink}>Shielded Labs<Arrow external={!opensInPortal(excerpt.source)}/></EditorialLink>
+              <EditorialLink source href={excerpt.source} onFollow={onFollow} label={`Shielded Labs source for ${project.name}`} className={s.textLink}>Shielded Labs<Arrow external={!sourceOpensInPortal(excerpt.source)}/></EditorialLink>
             </div>
             <blockquote className={s.officialExcerpt} cite={excerpt.source}><p>“{excerpt.text}”</p></blockquote>
           </section>
           <section className={`${s.card} ${s.progressCard}`} aria-labelledby="project-progress-heading" id="project-progress">
             <h2 id="project-progress-heading">Progress</h2>
             <PublishedCopy excerpt={publication.progress} project={project} field="progress" onFollow={onFollow}>
-              {publication.summaryReferences && <div className={s.publicationChips}>{publication.records.map(item => <EditorialLink key={item.title} href={publicationHref(item)} onFollow={onFollow}>{item.title}<Arrow external/></EditorialLink>)}</div>}
+              {publication.summaryReferences && <div className={s.publicationChips}>{publication.records.map(item => <EditorialLink key={item.title} href={publicationHref(item)} onFollow={onFollow}>{item.title}<Arrow external={!opensInPortal(publicationHref(item))}/></EditorialLink>)}</div>}
             </PublishedCopy>
             <SectionLink project={project} section="progress" onSection={onSection} className={s.cardAction}>Explore progress<Arrow/></SectionLink>
           </section>
@@ -204,13 +209,13 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
 
       {active === 'development' && <ProjectDevelopment project={project} data={data} headingRef={panelHeading} onFollow={onFollow}/>}
 
-      {active === 'participate' && <CrosslinkParticipate project={project} view={record} headingRef={panelHeading} onFollow={onFollow}/>}
+      {active === 'participate' && <CrosslinkParticipate project={project} view={record} headingRef={panelHeading} onFollow={onFollow} onRecord={onRecord}/>}
     </div>
 
     {active !== 'faq' && !(active === 'resources' && document) && <><ContextNotice>{project.boundary}</ContextNotice>
     <footer className={s.sources} id="project-sources" aria-label="Project sources">
       <span>Official excerpts checked <DateStamp date={projectCopyReviewedAt}/></span>
-      <div><EditorialLink href={project.source} onFollow={onFollow}>Primary project reference<Arrow external={!opensInPortal(project.source)}/></EditorialLink>{project.id === 'ironwood' && <EditorialLink href={sources.epoch} onFollow={onFollow}>October update · NU6.3<Arrow external={!opensInPortal(sources.epoch)}/></EditorialLink>}</div>
+      <div><EditorialLink source href={project.source} onFollow={onFollow}>Primary project reference<Arrow external={!sourceOpensInPortal(project.source)}/></EditorialLink>{project.id === 'ironwood' && <EditorialLink source href={sources.epoch} onFollow={onFollow}>October update · NU6.3<Arrow external={!sourceOpensInPortal(sources.epoch)}/></EditorialLink>}</div>
     </footer></>}
   </article>;
 }

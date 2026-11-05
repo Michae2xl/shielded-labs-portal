@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
+import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import { participationGuideSections, participationRound, participationSources as sources } from '@/lib/shielded-preview/governance-participation';
 import { coinholderProposalsHref } from '@/lib/shielded-preview/coinholder-proposals';
 import GovernanceGlyph from './governance-glyph';
@@ -11,7 +12,8 @@ function Arrow({ external = false }: { external?: boolean }) {
   return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'}/></svg>;
 }
 function External({ href, children, primary = false }: { href: string; children: ReactNode; primary?: boolean }) {
-  return <a className={primary ? s.primary : s.link} href={href} target="_blank" rel="noopener noreferrer">{children}<Arrow external/></a>;
+  const target = sourceHref(href);
+  return <a className={primary ? s.primary : s.link} href={target} {...leavingLink(target)}>{children}<Arrow external={!target.startsWith('?')}/></a>;
 }
 
 export default function GovernanceProgramGuide({ onBack, onNavigate }: { onBack: () => void; onNavigate?: CollectionNavigate }) {
