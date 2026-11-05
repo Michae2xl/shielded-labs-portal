@@ -9,6 +9,7 @@ import { projectPublications, projectCopyReviewedAt, publicationQuote, type Publ
 import { editorialCatalog, editorialHref } from '@/lib/shielded-preview/editorial/library';
 import type { EditorialEntry } from '@/lib/shielded-preview/editorial/types';
 import { projectHref, type ProjectSection } from '@/lib/shielded-preview/project-navigation';
+import { projectZips } from '@/lib/shielded-preview/project-summary';
 import { EditorialLink, ProjectDocument } from './editorial';
 import ProjectFaq from './project-faq';
 import ProjectDevelopment from './project-development';
@@ -115,6 +116,7 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
   const publication = projectPublications[project.id];
   const articles = reading.filter(entry => entry.view === 'blog').sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
   const latest = articles[0];
+  const zips = projectZips(project);
 
   return <article className={s.page} aria-labelledby="project-title">
     <header className={`${s.hero}${compact ? ` ${s.compactHero}` : ''}`}>
@@ -162,6 +164,15 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
           </aside>
           {latest && <EditorialLink href={editorialHref(latest)} onFollow={onFollow} className={s.latestUpdate}><span className={s.updateLabel}>Latest project update<small><DateStamp date={latest.publishedAt}/></small></span><strong>{latest.title}</strong><Arrow/></EditorialLink>}
         </div>
+        {zips && <section className={`${s.card} ${s.zipCard}`} id="project-zips" aria-labelledby="project-zips-heading">
+          <div className={s.sectionHeading}><h2 id="project-zips-heading">ZIPs</h2><EditorialLink href="?view=governance&section=zips" onFollow={onFollow} className={s.textLink}>All ZIPs<Arrow/></EditorialLink></div>
+          <ul className={s.zipList}>{zips.rows.map(row => <li key={row.id}><EditorialLink href={row.href} onFollow={onFollow}>
+            <span className={s.zipLabel}>{row.label}</span>
+            <span className={s.zipCopy}><strong>{row.title}</strong>{row.note && <small>{row.note}</small>}</span>
+            <span className={s.zipStatus}>{row.status}</span><Arrow/>
+          </EditorialLink></li>)}</ul>
+          <p className={s.zipBasis}>{zips.basis} Status comes from each document header, as of <DateStamp date={zips.syncedAt}/>. A ZIP status is not a network activation.</p>
+        </section>}
         <details className={s.technicalContext}>
           <summary>How it works & key terms</summary>
           <div className={s.technicalBody}><div><p>{project.purpose}</p><h3>Project scope</h3><p>{project.scope}</p><ul className={s.tags} aria-label="Project focus">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul></div><dl>{guide.terms.map(item => <div key={item.term}><dt>{item.term}</dt><dd>{item.meaning}</dd></div>)}</dl></div>

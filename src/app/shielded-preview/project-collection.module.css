@@ -6,16 +6,30 @@
 .projectPicker label{min-width:0;width:200px;max-width:55%}
 .projectPicker select{width:100%;min-height:44px;padding:10px 30px 10px 12px;border:1px solid #3a3a3a;border-radius:6px;background:#141414;color:#eee;font-size:15px}
 .projectPicker button:focus-visible,.projectPicker select:focus-visible{outline:2px solid #ddd;outline-offset:3px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.card{display:flex;flex-direction:column;min-width:0;padding:16px;background:#101010;border:1px solid #2c2c2c;border-radius:8px;color:var(--ink);transition:background .15s,border-color .15s}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{position:relative;display:flex;flex-direction:column;min-width:0;padding:18px 20px;background:#111;border:1px solid #343434;border-radius:12px;color:var(--ink);transition:background .15s,border-color .15s}
 .card:hover{background:#161616;border-color:#5b5b5b}
-.card:focus-visible{outline:2px solid #ddd;outline-offset:3px}
+.cardLink{color:inherit;text-decoration:none}
+/* The whole card opens the project; the shortcuts sit above this layer. */
+.cardLink::after{content:'';position:absolute;inset:0;border-radius:inherit}
+.cardLink:focus-visible{outline:none}
+.cardLink:focus-visible::after{outline:2px solid #ddd;outline-offset:3px}
 .heading{display:flex;align-items:center;gap:12px}
 .heading>svg{width:26px;height:26px;flex-shrink:0;color:#c2c2c2}
 .heading>svg:last-child{width:18px;height:18px;margin-left:auto;color:#999}
 .collection .card h2{font-size:20px;font-weight:500;letter-spacing:-.4px;line-height:1.3;margin:0}
-.collection .card p{font-size:15px;line-height:1.55;color:#c2c2c2;margin:10px 0!important;max-width:62ch}
-.footer{display:flex;align-items:center;gap:8px;margin-top:auto;font-size:13px;line-height:1.5;color:#b0b0b0}
-.footer::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.collection .card p{font-size:15px;line-height:1.55;color:#c2c2c2;margin:10px 0 14px!important;max-width:62ch}
+.signal{display:flex;flex-direction:column;gap:3px;margin-bottom:14px;padding-top:12px;border-top:1px solid #2a2a2a;min-width:0}
+.signalLabel{font-size:13px;line-height:1.5;color:#b0b0b0;font-variant-numeric:tabular-nums}
+.signalText{font-size:15px;line-height:1.5;color:#eee;overflow-wrap:anywhere}
+.signal small{font-size:13px;line-height:1.5;color:#b0b0b0}
+.footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-top:auto;font-size:13px;line-height:1.5;color:#b0b0b0;font-variant-numeric:tabular-nums}
+.status{display:inline-flex;align-items:center;gap:8px}
+.status::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.shortcuts{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #2a2a2a}
+.shortcut{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:5px 11px;border:1px solid #383838;border-radius:6px;background:#181818;color:#ddd;font-size:13px;line-height:1.4;text-decoration:none}
+.shortcut span{color:#a8a8a8;font-variant-numeric:tabular-nums}
+.shortcut:hover{background:#242424;border-color:#666;color:#fff}
+.shortcut:focus-visible{outline:2px solid #ddd;outline-offset:2px}
 @container(min-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@container(max-width:620px){.grid{grid-template-columns:minmax(0,1fr)}.card{padding:16px}.projectPicker select{font-size:16px}.collection .collectionTitle{font-size:25px}}
+@container(max-width:620px){.grid{grid-template-columns:minmax(0,1fr)}.card{padding:16px}.shortcut{min-height:40px}.projectPicker select{font-size:16px}.collection .collectionTitle{font-size:25px}}

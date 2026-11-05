@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import { projects, sources, REVIEWED, type Project } from '@/lib/shielded-preview/content';
-import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
 import { legacyProjectResourceHref, resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import { isProjectSection, projectHref, type ProjectSection } from '@/lib/shielded-preview/project-navigation';
 import { searchPortal } from '@/lib/shielded-preview/portal-search';
@@ -13,7 +12,8 @@ import pc from './project-collection.module.css';
 import PortalNavigation, { portalNavigation as navigation, type PortalView as View } from './portal-navigation';
 import PortalFooter from './portal-footer';
 import Overview from './overview';
-import ProjectDetail, { ProjectLink } from './project-detail';
+import ProjectDetail from './project-detail';
+import ProjectCard from './project-card';
 
 const Governance = dynamic(() => import('./governance'));
 const Development = dynamic(() => import('./development'));
@@ -63,14 +63,6 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
     <div className={s.dialogTop}><button className={s.iconButton} onClick={onClose} aria-label="Close details"><Icon name="close"/></button></div>
     <h2>{title}</h2>{children}
   </dialog>;
-}
-
-function ProjectCard({ item, onSelect }: { item: Project; onSelect: (item: Project) => void }) {
-  return <ProjectLink className={pc.card} project={item} onSelect={onSelect}>
-    <div className={pc.heading}><Icon name={item.symbol} size={30}/><h2>{item.name}</h2><Icon name="arrow"/></div>
-    <p><q cite={projectPublications[item.id].presentation.source}>{publicationQuote(projectPublications[item.id].presentation)}</q></p>
-    <div className={pc.footer}><span>{projectPublications[item.id].badge?.text ?? item.category}</span></div>
-  </ProjectLink>;
 }
 
 export default function Portal({ initial, initialView = defaultView, initialProjectId, initialSection, initialRecord }: { initial: PortalData; initialView?: string; initialProjectId?: string; initialSection?: string; initialRecord?: string }) {
@@ -139,7 +131,7 @@ export default function Portal({ initial, initialView = defaultView, initialProj
             <label><span className={s.srOnly}>Choose a project</span><select value={project.id} onChange={event => { const next = projects.find(item => item.id === event.target.value); if (next) openProject(next); }}>{projects.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
           </div>}
           {project ? <ProjectDetail onFollow={followEditorial} key={project.id} project={project} section={directorySection} record={directoryRecord} data={data} glyph={<Icon name={project.symbol} size={90}/>} onSection={changeProjectSection}/> : <>
-            <div className={pc.grid}>{projects.map(p=><ProjectCard key={p.id} item={p} onSelect={openProject}/>)}</div>
+            <div className={pc.grid}>{projects.map(p=><ProjectCard key={p.id} item={p} repositories={data.repos} glyph={<Icon name={p.symbol} size={30}/>} arrow={<Icon name="arrow"/>} onSelect={openProject} onFollow={followEditorial}/>)}</div>
 
           </>}
         </div>}
