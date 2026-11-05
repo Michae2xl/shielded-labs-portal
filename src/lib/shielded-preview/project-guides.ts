@@ -5,7 +5,7 @@ export const projectGuides: Record<Project['id'], {
   terms: { term: string; meaning: string }[];
 }> = {
   crosslink: {
-    terms: [{term:'Finality',meaning:'The point at which a transaction is considered settled under the protocol’s rules.'},{term:'Staking',meaning:'Committing coins to participate in securing the network, alongside mining in this proposal.'},{term:'Feature net',meaning:'A network for testing a particular feature before any mainnet adoption.'}],
+    terms: [{term:'Finality',meaning:'The point at which a transaction is considered settled under the protocol’s rules.'},{term:'Staking',meaning:'Committing coins to take part in consensus, alongside mining in this proposal.'},{term:'Feature net',meaning:'A network for testing a particular feature before any mainnet adoption.'}],
   },
   epoch: {
     terms: [{term:'Post-quantum cryptography',meaning:'Cryptographic designs intended to resist attacks from quantum computers.'},{term:'Formal verification',meaning:'Using mathematical methods to check that a design satisfies specified properties.'}],

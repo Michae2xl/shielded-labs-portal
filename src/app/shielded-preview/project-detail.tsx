@@ -150,7 +150,7 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
         <div className={`${s.overviewGrid}${allResources.length < 2 ? ` ${s.compactReading}` : ''}`} id="project-overview">
           <section className={`${s.card} ${s.purpose}`} aria-labelledby="project-panel-heading">
             <div className={s.excerptHeading}>
-              <h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Why it matters</h2>
+              <h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Stated purpose</h2>
               <EditorialLink source href={excerpt.source} onFollow={onFollow} label={`Shielded Labs source for ${project.name}`} className={s.textLink}>Shielded Labs<Arrow external={!sourceOpensInPortal(excerpt.source)}/></EditorialLink>
             </div>
             <blockquote className={s.officialExcerpt} cite={excerpt.source}><p>“{excerpt.text}”</p></blockquote>
@@ -160,10 +160,10 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
             <PublishedCopy excerpt={publication.progress} project={project} field="progress" onFollow={onFollow}>
               {publication.summaryReferences && <div className={s.publicationChips}>{publication.records.map(item => <EditorialLink key={item.title} href={publicationHref(item)} onFollow={onFollow}>{item.title}<Arrow external={!opensInPortal(publicationHref(item))}/></EditorialLink>)}</div>}
             </PublishedCopy>
-            <SectionLink project={project} section="progress" onSection={onSection} className={s.cardAction}>Explore progress<Arrow/></SectionLink>
+            <SectionLink project={project} section="progress" onSection={onSection} className={s.cardAction}>View progress<Arrow/></SectionLink>
           </section>
           <section className={`${s.card} ${s.nextStep}`} aria-labelledby="project-next-heading">
-            <h2 id="project-next-heading">What comes next</h2><PublishedCopy excerpt={publication.next} project={project} field="next" onFollow={onFollow}/>
+            <h2 id="project-next-heading">Published next step</h2><PublishedCopy excerpt={publication.next} project={project} field="next" onFollow={onFollow}/>
           </section>
           <aside className={`${s.card} ${s.startHere}`} aria-labelledby="project-start-heading">
             <div className={s.sectionHeading}><h2 id="project-start-heading">Start here</h2></div>
@@ -197,7 +197,7 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
             <span>{item.date && <small>{item.dateLabel} <DateStamp date={item.date}/></small>}<strong>{item.title}</strong></span><Arrow external={!opensInPortal(publicationHref(item))}/>
           </EditorialLink></li>)}</ul>
         </section>
-        <aside className={`${s.card} ${s.nextCard}`}><h2>What comes next</h2><PublishedCopy excerpt={publication.next} project={project} field="next" onFollow={onFollow}/></aside>
+        <aside className={`${s.card} ${s.nextCard}`}><h2>Published next step</h2><PublishedCopy excerpt={publication.next} project={project} field="next" onFollow={onFollow}/></aside>
       </div>}
 
       {active === 'resources' && (record ? document ? <ProjectDocument key={document.id} entry={document} onFollow={onFollow}/> : <div className={s.empty}><h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Document not found</h2><SectionLink project={project} section="resources" onSection={onSection} className={s.textLink}>Back to research & guides<Arrow/></SectionLink></div> : <div className={s.resourcesGrid} id="project-resources">

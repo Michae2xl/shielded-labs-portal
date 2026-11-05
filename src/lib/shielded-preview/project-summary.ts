@@ -41,7 +41,7 @@ export type ProjectSignal = { label: string; text: string; quotedFrom: string | 
 export function projectSignal(project: Pick<Project, 'id'>): ProjectSignal | null {
   const publication = projectPublications[project.id];
   const next = publicationQuote(publication.next) ?? publication.next.steps?.[0];
-  if (next) return { label: 'What comes next', text: next, quotedFrom: publication.next.source, detail: publication.next.window ?? null, date: null };
+  if (next) return { label: 'Published next step', text: next, quotedFrom: publication.next.source, detail: publication.next.window ?? null, date: null };
   const latest = editorialCatalog.filter(entry => entry.projects.includes(project.id) && entry.view === 'blog').sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))[0];
   if (latest) return { label: 'Latest update', text: latest.title, quotedFrom: null, detail: null, date: latest.publishedAt };
   if (publication.records.length) return { label: publication.recordsHeading, text: publication.records.map(record => record.title).join(' · '), quotedFrom: null, detail: null, date: null };

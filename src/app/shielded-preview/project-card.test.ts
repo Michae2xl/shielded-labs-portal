@@ -24,7 +24,7 @@ describe('Project cards', () => {
   });
   it('shows source wording, repository dates and the fork label', () => {
     const crosslink = render('crosslink');
-    expect(crosslink).toContain('What comes next');
+    expect(crosslink).toContain('Published next step');
     expect(crosslink).toContain('Published window · Q2 2026 - Q2 2027');
     expect(crosslink).toContain('Last commit');
     expect(crosslink).not.toContain('· fork');

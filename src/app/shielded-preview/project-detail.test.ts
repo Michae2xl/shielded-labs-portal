@@ -18,6 +18,13 @@ const renderFaq = (record: string | null) => renderToStaticMarkup(createElement(
 }));
 
 describe('Official project excerpts', () => {
+  it.each(projects)('presents the published text of $name as the source’s own', project => {
+    const render = (section: string) => renderToStaticMarkup(createElement(ProjectDetail, { project, section, record: null, data, glyph: null, onSection: () => {}, onFollow: () => {} }));
+    const overview = render('overview');
+    expect(overview).toContain('Stated purpose');
+    for (const phrase of ['Why it matters', 'What comes next', 'Explore progress']) expect(`${overview} ${render('progress')}`).not.toContain(phrase);
+  });
+
   it.each(projects)('preserves the Shielded Labs quote and opens its actual source for $name', project => {
     const excerpt = officialProjectExcerpts[project.id];
     const markup = renderToStaticMarkup(createElement(ProjectDetail, {

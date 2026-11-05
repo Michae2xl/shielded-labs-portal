@@ -19,7 +19,7 @@ describe('Shielded Labs overview', () => {
   it('uses the project cards with their shortcuts, as third-level headings under Projects', () => {
     const markup = render([]);
     for (const project of projects) expect(markup).toContain(`>${project.name}</h3>`);
-    expect(markup).toContain('What comes next');
+    expect(markup).toContain('Published next step');
     expect(markup).toContain('#project-zips');
     expect(markup).toContain('section=resources');
   });

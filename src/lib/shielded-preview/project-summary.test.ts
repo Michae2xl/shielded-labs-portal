@@ -28,9 +28,9 @@ describe('Project summaries', () => {
     expect(projectZips(project('nsm'), bundledZips.entries.filter(entry => entry.number !== 234))!.rows.map(row => row.label)).toEqual(['ZIP 233', 'ZIP 235']);
   });
   it('prefers the published next step, then the latest article, then the published records', () => {
-    expect(projectSignal(project('crosslink'))).toMatchObject({ label: 'What comes next', detail: 'Q2 2026 - Q2 2027', date: null });
+    expect(projectSignal(project('crosslink'))).toMatchObject({ label: 'Published next step', detail: 'Q2 2026 - Q2 2027', date: null });
     expect(projectSignal(project('crosslink'))!.text).toContain('deploying Crosslink on a testnet');
-    expect(projectSignal(project('fees'))).toMatchObject({ label: 'What comes next', text: 'Phase 2: The Fee Estimator (z_getstandardfee)' });
+    expect(projectSignal(project('fees'))).toMatchObject({ label: 'Published next step', text: 'Phase 2: The Fee Estimator (z_getstandardfee)' });
     expect(projectSignal(project('nsm'))).toMatchObject({ label: 'Latest update', quotedFrom: null });
     expect(projectSignal(project('nsm'))!.date).toMatch(/^\d{4}-\d{2}-\d{2}/);
     expect(projectSignal(project('zero'))).toEqual({ label: 'Published repositories', text: 'Zero Software Stack · zero-indexer', quotedFrom: null, detail: null, date: null });
