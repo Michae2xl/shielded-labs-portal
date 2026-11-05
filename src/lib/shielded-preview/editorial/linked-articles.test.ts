@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { existsSync } from 'node:fs';
 import { editorialCatalog, editorialHref, resolveEditorialLink, safeEditorialUrl, searchEditorial } from './library';
 import { linkedArticles, withLinkedArticles } from './linked-articles';
 import type { ContentNode, EditorialEntry } from './types';
@@ -25,11 +26,17 @@ describe('Articles read at their source', () => {
   it('holds a short summary and the links, never the article text', () => {
     for (const article of linkedArticles) {
       expect(article.linked?.publisher).toBeTruthy();
-      expect(article.image).toBeUndefined();
       expect(article.headings).toEqual([]);
       expect(article.body.map(text).join(' ').split(/\s+/).length).toBeLessThan(80);
       expect(searchEditorial(article.title).map(entry => entry.id)).toContain(article.id);
     }
+  });
+
+  it('serves the article artwork locally, at its real size', () => {
+    const image = linkedArticles.find(article => article.id === NSM_ARTICLE)?.image;
+    expect(image).toMatchObject({ width: 1983, height: 793, source: 'https://pbs.twimg.com/media/HWY8ICYaYAABh4y.jpg' });
+    expect(image?.src).toMatch(/^\/shielded-preview\/editorial\/[a-f0-9]+\.png$/);
+    expect(existsSync(`public${image?.src}`)).toBe(true);
   });
 
   it('opens the record inside the portal and reads the article outside it', () => {

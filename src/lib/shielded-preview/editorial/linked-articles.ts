@@ -2,7 +2,7 @@ import type { EditorialDocument, EditorialEntry } from './types';
 
 /**
  * Articles published away from shieldedlabs.net. The portal keeps a short summary and the link,
- * not the text: the importer brings the full article and its artwork once the site publishes it.
+ * not the text: the importer brings the full article once the site publishes it.
  */
 export const linkedArticles: EditorialDocument[] = [
   {
@@ -19,6 +19,7 @@ export const linkedArticles: EditorialDocument[] = [
     summary: 'Jason McGee on the NSM activating with NU7: the share of fees removed from circulation, reissuance from 2031 and how coinholder sentiment shaped the design.',
     minutes: 3,
     headings: [],
+    image: { src: '/shielded-preview/editorial/80e0969bf57f5377f0ca.png', alt: 'Artwork for The Network Sustainability Mechanism (NSM) Activates with NU7', width: 1983, height: 793, source: 'https://pbs.twimg.com/media/HWY8ICYaYAABh4y.jpg' },
     linked: { publisher: 'X', also: { label: 'Also on the Zcash Community Forum', href: 'https://forum.zcashcommunity.com/t/network-sustainability-mechanism-nsm/42703/335' } },
     body: [{ tag: 'p', children: ['According to the article, activation removes 60% of transaction fees from circulation, to be reissued through block rewards from 2031 within the 21 million supply cap. It also recounts how coinholder sentiment led to a design that keeps the halvings, in place of the original proposal to replace them.'] }],
   },

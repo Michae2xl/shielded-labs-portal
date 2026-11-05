@@ -78,7 +78,7 @@ function ResourceIcon({ category }: { category: string }) {
 function EntryCard({ entry, section, query, onFollow }: { entry: EditorialEntry; section: string; query: string; onFollow: Follow }) {
   const article = entry.view === 'blog';
   if (article) return <EditorialLink className={s.articleCard} href={editorialHref(entry, section, query)} onFollow={onFollow}>
-    {entry.image ? <Image className={s.thumbnail} src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="(max-width: 620px) 96px, 160px"/> : entry.linked && <span className={`${s.thumbnail} ${s.linkedTile}`}>On {entry.linked.publisher}</span>}
+    {entry.image && <Image className={s.thumbnail} src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="(max-width: 620px) 96px, 160px"/>}
     <div className={s.articleCopy}>
       <div className={s.cardMeta}>{section === 'all' && <span>{entry.category}</span>}<DateLabel date={entry.publishedAt}/></div>
       <h2>{entry.title}</h2>

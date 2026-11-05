@@ -106,9 +106,8 @@
 .articleCard+.articleCard{border-top:1px solid #292929}
 .articleCard:hover{background:#151515}
 .articleCard:focus-visible{outline-offset:-3px}
-.articleCard .thumbnail{width:160px;aspect-ratio:16/10;height:auto;object-fit:contain;border:0;border-radius:5px}
+.articleCard .thumbnail{width:160px;aspect-ratio:16/10;height:auto;object-fit:contain;background:#000;border:0;border-radius:5px}
 .articleCard:not(:has(.thumbnail)){grid-template-columns:minmax(0,1fr) 18px}
-.articleCard .linkedTile{display:flex;align-items:center;justify-content:center;color:#a0a0a0;font-size:12px;line-height:1.4;text-align:center}
 .articleCopy{min-width:0}
 .articleCard .cardMeta{gap:8px 14px;font-size:12px}
 .articleCard .cardMeta time{margin-left:0}
