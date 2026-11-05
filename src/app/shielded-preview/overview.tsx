@@ -62,7 +62,7 @@ export default function Overview({ data, onNavigate, onProject, onFollow, projec
     </header>
 
     <section aria-labelledby="overview-projects" className={s.projects}>
-      <header className={s.sectionHeader}><h2 id="overview-projects" className={s.srOnly}>Projects</h2><PortalLink view="projects" onNavigate={onNavigate}>All projects<Arrow/></PortalLink></header>
+      <h2 id="overview-projects" className={s.srOnly}>Projects</h2>
       <div className={pc.collection}><div className={`${pc.grid} ${pc.compactNarrow}`}>{projects.map(project => <ProjectCard key={project.id} item={project} repositories={data.repos} glyph={projectGlyph(project)} arrow={<Arrow/>} heading="h3" onSelect={onProject} onFollow={onFollow}/>)}</div></div>
     </section>
 

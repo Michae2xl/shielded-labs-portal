@@ -13,9 +13,6 @@
 .shield img{width:68px;height:68px}
 .sectionHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px;margin-bottom:16px}
 .overview .sectionHeader h2{font-size:24px;font-weight:500;line-height:1.4;letter-spacing:-.45px;margin:0}
-.sectionHeader>a{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:44px;font-size:13px;color:#bcbcbc;white-space:nowrap}
-.sectionHeader>a:hover{color:#fff}
-.sectionHeader>a svg{width:16px;height:16px}
 .repository:hover h3,.milestone:hover h3,.newsCard:hover h3{text-decoration:underline;text-underline-offset:5px}
 /* The same compact bento rhythm as Governance, with activity before reading. */
 .updates{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:16px;margin-top:24px}
@@ -54,7 +51,7 @@
  .intro{gap:12px;padding:10px 0 18px;margin-bottom:16px}
  .introCopy{flex:1}.overview .intro h1{font-size:28px;line-height:1.25;letter-spacing:-.8px}.overview .tagline{font-size:14px}
  .shield,.shield>div{width:56px;height:56px}.shield img{width:48px;height:48px}
- .sectionHeader{gap:10px;margin-bottom:13px}.overview .sectionHeader h2{font-size:22px}.sectionHeader>a{font-size:12px;gap:8px}
+ .sectionHeader{gap:10px;margin-bottom:13px}.overview .sectionHeader h2{font-size:22px}
  .milestones,.code,.news,.governance{padding:16px 18px 0}
  .governance{display:grid;grid-template-columns:38px minmax(0,1fr);gap:0 16px}
  .governanceIntro{padding-bottom:16px}.governance .cardAction{grid-column:1/-1}.governance>img{margin-top:5px}
@@ -64,4 +61,3 @@
 }
 @media print{.intro{padding-top:0}.updates{display:block}.updates>section{margin-bottom:28px}.repository,.milestone,.governance{break-inside:avoid}}
 .srOnly{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-.sectionHeader>a{margin-left:auto}
