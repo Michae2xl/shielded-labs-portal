@@ -19,6 +19,22 @@ describe('Activity record context', () => {
     expect(markup).toContain(`href="${href.replaceAll('&', '&amp;')}"`);
   });
 
+  it('shows each record type with its own source link, and links a confirmed contributor to the team', () => {
+    const render = (record: string) => renderToStaticMarkup(createElement(DevelopmentRecord, { data, location: { ...readActivityLocation(new URLSearchParams()), record }, onOpen: () => {}, onBack: () => {}, onExplore: () => {} }));
+    const commit = render(`commit:${sha}`);
+    expect(commit).toContain('id="activity-record-title" tabindex="-1">A fork change</h1>');
+    expect(commit).toContain('Open on GitHub');
+    expect(commit).toContain(sha);
+    expect(render('repo:example-fork')).toContain('Explore activity');
+    const stranger = render('person:github:example');
+    expect(stranger).toContain('Explore activity');
+    expect(stranger).not.toContain('Team profile');
+    const team = { ...data, repos: data.repos.map(repo => ({ ...repo, commits: repo.commits.map(item => ({ ...item, login: 'SamHSmith', author: 'Sam H. Smith' })) })) };
+    const member = renderToStaticMarkup(createElement(DevelopmentRecord, { data: team, location: { ...readActivityLocation(new URLSearchParams()), record: 'person:github:samhsmith' }, onOpen: () => {}, onBack: () => {}, onExplore: () => {} }));
+    expect(member).toContain('Team profile');
+    expect(member).toContain('person%3Asam-smith');
+  });
+
   it('uses the link context for ordinary clicks, matching its new-tab URL', () => {
     const location = { ...readActivityLocation(new URLSearchParams()), includeForks: true, period: 84 as const, query: 'verify' };
     const onOpen = vi.fn();

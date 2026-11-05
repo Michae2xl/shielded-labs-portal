@@ -1,4 +1,4 @@
-import { sources } from './content';
+import { sources, team } from './content';
 import { activityHref } from './development-navigation';
 import { developmentCommits, developmentDays, isMergeCommit, repositoryLabels, windowCommits, type ObservedCommit } from './development-metrics';
 import { personId, type Person } from './directory';
@@ -55,6 +55,15 @@ const COMMITS_SHOWN = 3;
 function activityPeriod(commits: ObservedCommit[], checkedAt?: string) {
   if (!checkedAt) return null;
   return ACTIVITY_PERIODS.find(period => windowCommits(commits, developmentDays(checkedAt, period)).length > 0) ?? null;
+}
+
+/** The team member behind a commit identity, when the account or Git author name is a confirmed one. */
+export function teamMemberFor(identity: { login: string | null; name: string }) {
+  const login = identity.login?.toLowerCase();
+  return team.find(member => {
+    const profile = profiles[personId(member)];
+    return profile && ((login && profile.github?.toLowerCase() === login) || profile.commitNames?.includes(identity.name));
+  }) ?? null;
 }
 
 /** Open proposals first, newest first, then the merged documents in their usual order. */

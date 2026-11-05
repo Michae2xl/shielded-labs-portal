@@ -3,7 +3,7 @@ import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { team } from './content';
 import type { Person } from './directory';
-import { personProfile } from './team-profiles';
+import { personProfile, teamMemberFor } from './team-profiles';
 import type { Repository } from './types';
 import type { ZipEntry } from './zips/types';
 
@@ -80,6 +80,12 @@ describe('Team profiles', () => {
     expect(profile('2026-09-01T10:00:00Z').href).toBe('?view=activity&period=84&q=Sam+H.+Smith');
     expect(profile('2026-01-01T10:00:00Z').href).toBeNull();
     expect(profile('2026-01-01T10:00:00Z').latest).toHaveLength(1);
+  });
+  it('connect a commit identity to a team member only through a confirmed account or author name', () => {
+    expect(teamMemberFor({ login: 'SHIELDED-NATE', name: 'nate' })?.name).toBe('Nate Wilcox');
+    expect(teamMemberFor({ login: null, name: 'Sam H. Smith' })?.name).toBe('Sam Smith');
+    expect(teamMemberFor({ login: null, name: 'Andrew' })).toBeNull();
+    expect(teamMemberFor({ login: 'someone-else', name: 'Zooko Wilcox' })).toBeNull();
   });
   it('leave a person with no published records with nothing invented', () => {
     const robert = personProfile(person('Robert Fegler'));

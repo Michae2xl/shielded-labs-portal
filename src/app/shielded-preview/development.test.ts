@@ -46,6 +46,15 @@ describe('Activity selection and retained observations', () => {
     expect(markup).not.toContain('Verify a new block');
   });
 
+  it('keeps the map clean while sources are live and says so when they are not', () => {
+    const live = render();
+    expect(live).toContain('Select a cell to view its commits.');
+    expect(live).toContain('1/1 sources refreshed');
+    const saved = renderToStaticMarkup(createElement(Development, { data: { ...data, repos: data.repos.map(repo => ({ ...repo, state: 'snapshot' as const })) }, busy: false, onRefresh: () => {} }));
+    expect(saved).not.toContain('Select a cell to view its commits.');
+    expect(saved.match(/Saved GitHub data/g)).toHaveLength(2);
+  });
+
   it('reports a failed refresh even when the retained observations were previously live', () => {
     const markup = render(true);
     expect(markup).toContain('Refresh unavailable · retained observations');

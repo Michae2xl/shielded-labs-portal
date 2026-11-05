@@ -2,72 +2,102 @@
 
 import { useEffect, useRef, type ReactNode } from 'react';
 import type { PortalData } from '@/lib/shielded-preview/types';
-import { contributorKey, developmentCommits, developmentContributors, developmentDays, repositoryLabels, windowCommits } from '@/lib/shielded-preview/development-metrics';
-import { activityHref, type ActivityLocation } from '@/lib/shielded-preview/development-navigation';
+import { developmentCommits, developmentContributors, developmentDays, windowCommits, contributorKey } from '@/lib/shielded-preview/development-metrics';
+import type { ActivityLocation } from '@/lib/shielded-preview/development-navigation';
+import { directoryHref, personId } from '@/lib/shielded-preview/directory';
+import { teamMemberFor } from '@/lib/shielded-preview/team-profiles';
 import ContributorAvatar from './contributor-avatar';
-import RecordLayout from './governance-record';
+import { Arrow, CommitRow, PersonRow, personCaption, RepoIcon, repoName, RepositoryRow, type OpenRecord } from './activity-rows';
+import ui from './activity-rows.module.css';
 import s from './development-record.module.css';
 
-const date = (value: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
-const label = (name: string) => repositoryLabels[name] ?? name;
-function Arrow({ external = false }: { external?: boolean }) { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'}/></svg>; }
-function Stat({ label, children }: { label: string; children: ReactNode }) { return <div><span>{label}</span><strong>{children}</strong></div>; }
+export { ActivityLink } from './activity-rows';
 
-export function ActivityLink({ location, record, onOpen, className, children }: { location: ActivityLocation; record: string; onOpen: (record: string, context?: ActivityLocation) => void; className?: string; children: ReactNode }) {
-  return <a href={activityHref({ ...location, record })} className={className} onClick={event => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault(); onOpen(record, location);
-  }}>{children}</a>;
+const COMMITS_SHOWN = 12;
+const date = (value: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
+const exactDate = (value: string) => new Date(value).toISOString().replace('T', ' ').replace('.000Z', '');
+
+function Card({ id, title, aside, children }: { id: string; title: string; aside?: ReactNode; children: ReactNode }) {
+  return <section className={ui.card} aria-labelledby={id}><div className={ui.heading}><h2 id={id}>{title}{aside}</h2></div>{children}</section>;
+}
+function Outbound({ href, children }: { href: string; children: ReactNode }) {
+  return <a className={s.action} href={href} target="_blank" rel="noopener noreferrer">{children}<Arrow external/></a>;
 }
 
 export default function DevelopmentRecord({ data, location, onOpen, onBack, onExplore }: {
-  data: PortalData; location: ActivityLocation; onOpen: (record: string, context?: ActivityLocation) => void;
-  onBack: () => void; onExplore: (filters: Partial<ActivityLocation>) => void;
+  data: PortalData; location: ActivityLocation; onOpen: OpenRecord; onBack: () => void; onExplore: (filters: Partial<ActivityLocation>) => void;
 }) {
   const all = developmentCommits(data.repos, true);
-  const commit = all.find(c => `commit:${c.sha}` === location.record);
-  const repository = data.repos.find(r => `repo:${r.name}` === location.record);
-  const person = developmentContributors(all).find(p => `person:${p.id}` === location.record);
+  const commit = all.find(item => `commit:${item.sha}` === location.record);
+  const repository = data.repos.find(item => `repo:${item.name}` === location.record);
+  const person = developmentContributors(all).find(item => `person:${item.id}` === location.record);
   const missing = !commit && !repository && !person;
-  const missingHeading = useRef<HTMLHeadingElement>(null);
-  useEffect(() => { if (missing) missingHeading.current?.focus({ preventScroll: true }); }, [missing, location.record]);
-  if (missing) return <section className={s.empty}><h1 ref={missingHeading} tabIndex={-1}>Record not found</h1><p>This record is not available in the current data.</p><button onClick={onBack}>Back to code activity</button></section>;
+  const heading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => { heading.current?.focus({ preventScroll: true }); }, [location.record]);
+  if (missing) return <section className={s.empty}><h1 ref={heading} tabIndex={-1}>Record not found</h1><p>This record is not available in the current data.</p><button onClick={onBack}>Back to code activity</button></section>;
 
-  const includesForks = location.includeForks || Boolean(repository?.fork) || Boolean(commit && commit.repositories.every(name => data.repos.find(r => r.name === name)?.fork));
+  const includesForks = location.includeForks || Boolean(repository?.fork) || Boolean(commit && commit.repositories.every(name => data.repos.find(item => item.name === name)?.fork));
   const recordLocation = { ...location, includeForks: includesForks };
   const days = developmentDays(data.checkedAt, location.period);
   const periodCommits = windowCommits(developmentCommits(data.repos, includesForks), days);
-  const matching = person ? periodCommits.filter(c => contributorKey(c) === person.id) : repository ? periodCommits.filter(c => c.repositories.includes(repository.name)) : [commit!];
-  const repoNames = commit ? commit.repositories : repository ? [repository.name] : [...new Set(matching.flatMap(c => c.repositories))];
-  const repositories = data.repos.filter(r => repoNames.includes(r.name) && (commit || includesForks || !r.fork));
-  const title = commit?.title ?? (repository ? label(repository.name) : person!.name);
+  const matching = person ? periodCommits.filter(item => contributorKey(item) === person.id) : repository ? periodCommits.filter(item => item.repositories.includes(repository.name)) : [];
+  const repoNames = commit ? commit.repositories : repository ? [repository.name] : [...new Set(matching.flatMap(item => item.repositories))];
+  const repositories = data.repos.filter(item => repoNames.includes(item.name) && (commit || includesForks || !item.fork));
   const identity = commit ? developmentContributors([commit])[0] : person;
-  const link = (record: string, children: ReactNode, className = s.card) => <ActivityLink location={recordLocation} record={record} onOpen={onOpen} className={className}>{children}</ActivityLink>;
-  return <div className={s.record}>
-    <RecordLayout idPrefix="activity" title={title} context={commit ? 'Commit' : repository ? 'Repository' : person!.bot ? 'Automation profile' : 'Contributor profile'}
-      subtitle={repository?.description ?? (identity?.login ? `@${identity.login}` : identity ? 'Unlinked Git author' : '')}
-      portrait={identity ? <ContributorAvatar name={identity.name} login={identity.login} size={64}/> : undefined}
-      backLabel="Back to code activity" onBack={onBack}
-      sections={[{ label: commit ? 'Commit details' : 'Commits', id: 'activity-details' }, { label: 'Repositories', id: 'activity-repositories' }]}
-      metrics={commit ? <><Stat label="Authored · UTC">{date(commit.date)}</Stat><Stat label="Commit hash">{commit.sha.slice(0, 12)}</Stat><Stat label="Repository sources">{repositories.length}</Stat></> : <><Stat label="Sampled commits">{matching.length}</Stat><Stat label={repository ? 'Contributor identities' : 'Repositories'}>{repository ? developmentContributors(matching).length : repositories.length}</Stat><Stat label="Period · UTC">{date(days[0])} – {date(days.at(-1)!)}</Stat></>}
-      sources={<>
-        {commit && <a href={commit.url} target="_blank" rel="noopener noreferrer">Original commit & file changes<Arrow external/></a>}
-        {person?.profileUrl && <a href={person.profileUrl} target="_blank" rel="noopener noreferrer">GitHub profile<Arrow external/></a>}
-        <p>{commit ? 'The portal preserves the commit title, author, date and repository references. The original commit contains the file changes.' : `Up to 100 latest commits per tracked branch, filtered to ${location.period} days. This sample does not measure effort or performance.`}</p>
-        {includesForks && <p>Includes fork history, which may contain inherited work from other organizations.</p>}
-        {repositories.map(r => <div key={r.name} className={s.source}><a href={r.url} target="_blank" rel="noopener noreferrer">{r.name}<Arrow external/></a><small>{r.branch} · {r.state === 'live' ? 'Retrieved' : 'Saved record'} {date(r.fetchedAt)}{r.refreshError === 'rate-limited' ? ' · GitHub rate limit' : r.refreshError ? ' · Refresh unavailable' : ''}</small></div>)}
-        {person && <p>GitHub accounts and unlinked Git author names remain distinct; similar names do not establish the same identity.</p>}
-      </>}
-    >
-      <section id="activity-details">
-        <div className={s.heading}><h2>{commit ? 'Commit details' : 'Recent commits'}</h2>{!commit && <button onClick={() => onExplore({ repo: repository?.name ?? '', contributor: person?.id ?? '', includeForks: includesForks, selected: null, query: '' })}>Explore activity<Arrow/></button>}</div>
-        {commit ? <>
-          <dl className={s.commitFacts}><div><dt>Full hash</dt><dd><code>{commit.sha}</code></dd></div><div><dt>Author date · UTC</dt><dd>{new Date(commit.date).toISOString().replace('T', ' ').replace('.000Z', '')}</dd></div></dl>
-          {link(`person:${contributorKey(commit)}`, <><ContributorAvatar name={commit.author} login={commit.login} size={40}/><span><strong>{commit.author}</strong><small>{commit.login ? `@${commit.login}` : 'Unlinked Git author'}</small></span><Arrow/></>)}
-        </> : <div className={s.grid}>{matching.slice(0, 12).map(c => <ActivityLink key={c.sha} location={recordLocation} record={`commit:${c.sha}`} onOpen={onOpen} className={s.commitCard}><span>{c.title}</span><div><small>{date(c.date)} · {c.sha.slice(0, 7)}</small><Arrow/></div></ActivityLink>)}{!matching.length && <p>No commits in this period’s sample. Use Explore activity to change the period.</p>}</div>}
-      </section>
-      <section id="activity-repositories"><h2>{repository ? 'Repository details' : 'Repositories'}</h2>{repository ? <dl className={s.commitFacts}><div><dt>Repository</dt><dd>{repository.name}</dd></div><div><dt>Tracked branch</dt><dd>{repository.branch}</dd></div><div><dt>Language</dt><dd>{repository.language ?? 'Not specified'}</dd></div><div><dt>History</dt><dd>{repository.fork ? 'Fork · may include upstream work' : 'Non-fork repository'}</dd></div></dl> : <div className={s.grid}>{repositories.map(r => <ActivityLink key={r.name} location={recordLocation} record={`repo:${r.name}`} onOpen={onOpen} className={s.card}><span><strong>{label(r.name)}</strong><small>{r.name} · {r.fork ? 'Fork' : r.language ?? 'Source code'}</small></span><Arrow/></ActivityLink>)}</div>}</section>
-      {repository && <section><h2>Contributor identities</h2><div className={s.grid}>{developmentContributors(matching).map(p => <ActivityLink key={p.id} location={recordLocation} record={`person:${p.id}`} onOpen={onOpen} className={s.card}><ContributorAvatar name={p.name} login={p.login} size={36}/><span><strong>{p.name}</strong><small>{p.bot ? 'Automation' : p.login ? `@${p.login}` : 'Unlinked Git author'}</small></span><Arrow/></ActivityLink>)}</div></section>}
-    </RecordLayout>
-  </div>;
+  const member = person ? teamMemberFor(person) : null;
+  const rowProps = { location: recordLocation, onOpen };
+
+  const note = <section className={s.note} aria-label="Where this record comes from">
+    <p>{commit ? 'The portal preserves the commit title, author, date and repository references. The original commit contains the file changes.' : `Up to 100 latest commits per tracked branch, filtered to ${location.period} days. This sample does not measure effort or performance.`}</p>
+    {includesForks && <p>Includes fork history, which may contain inherited work from other organizations.</p>}
+    {person && <p>GitHub accounts and unlinked Git author names remain distinct; similar names do not establish the same identity.</p>}
+    {repositories.map(item => <div key={item.name} className={s.source}><a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}<Arrow external/></a><small>{item.branch} · {item.state === 'live' ? 'Retrieved' : 'Saved record'} {date(item.fetchedAt)}{item.refreshError === 'rate-limited' ? ' · GitHub rate limit' : item.refreshError ? ' · Refresh unavailable' : ''}</small></div>)}
+  </section>;
+
+  const commits = !commit && <Card id="activity-commits" title="Commits" aside={<span className={ui.count}>{matching.length}</span>}>
+    {matching.length > 0
+      ? <ul className={ui.rows}>{matching.slice(0, COMMITS_SHOWN).map(item => <li key={item.sha}><CommitRow commit={item} {...rowProps}/></li>)}</ul>
+      : <p className={s.none}>No commits in this period’s sample. Use Explore activity to change the period.</p>}
+    <div className={s.footer}><button type="button" onClick={() => onExplore({ repo: repository?.name ?? '', contributor: person?.id ?? '', includeForks: includesForks, selected: null, query: '' })}>Explore activity<Arrow/></button></div>
+  </Card>;
+
+  return <article className={s.record} aria-labelledby="activity-record-title">
+    <button type="button" className={s.back} onClick={onBack}><Arrow back/>Back to code activity</button>
+
+    <header className={s.header}>
+      {identity ? <ContributorAvatar name={identity.name} login={identity.login} size={64}/> : <span className={s.repoMark}><RepoIcon size={26}/></span>}
+      <div className={s.identity}>
+        <h1 id="activity-record-title" ref={heading} tabIndex={-1}>{commit?.title ?? (repository ? repoName(repository.name) : person!.name)}</h1>
+        <p className={s.subtitle}>{commit ? `${commit.author} · ${date(commit.date)}` : repository ? repository.description || repository.name : personCaption(person!)}</p>
+      </div>
+      <div className={s.actions}>
+        {commit && <Outbound href={commit.url}>Open on GitHub</Outbound>}
+        {repository && <Outbound href={repository.url}>Open on GitHub</Outbound>}
+        {person?.profileUrl && <Outbound href={person.profileUrl}>GitHub profile</Outbound>}
+        {member && <a className={s.action} href={directoryHref('people', 'all', `person:${personId(member)}`)}>Team profile<Arrow/></a>}
+      </div>
+    </header>
+
+    <div className={s.grid}>
+      <div className={s.column}>
+        {commit && <Card id="activity-details" title="Details"><dl className={s.facts}>
+          <div><dt>Full hash</dt><dd><code>{commit.sha}</code></dd></div>
+          <div><dt>Author date · UTC</dt><dd>{exactDate(commit.date)}</dd></div>
+        </dl></Card>}
+        {commits}
+      </div>
+      <aside className={s.column}>
+        {commit && identity && <Card id="activity-author" title="Author"><ul className={ui.rows}><li><PersonRow person={identity} {...rowProps}/></li></ul></Card>}
+        {repository && <Card id="activity-repository" title="Details"><dl className={s.facts}>
+          <div><dt>Repository</dt><dd>{repository.name}</dd></div>
+          <div><dt>Tracked branch</dt><dd>{repository.branch}</dd></div>
+          <div><dt>Language</dt><dd>{repository.language ?? 'Not specified'}</dd></div>
+          <div><dt>History</dt><dd>{repository.fork ? 'Fork · may include upstream work' : 'Non-fork repository'}</dd></div>
+        </dl></Card>}
+        {repository && <Card id="activity-identities" title="Contributors">{developmentContributors(matching).length > 0 ? <ul className={ui.rows}>{developmentContributors(matching).map(item => <li key={item.id}><PersonRow person={item} {...rowProps}/></li>)}</ul> : <p className={s.none}>No contributor identities in this period’s sample.</p>}</Card>}
+        {!repository && repositories.length > 0 && <Card id="activity-repositories" title={repositories.length === 1 ? 'Repository' : 'Repositories'}><ul className={ui.rows}>{repositories.map(item => <li key={item.name}><RepositoryRow repository={item} commits={person ? matching.filter(entry => entry.repositories.includes(item.name)).length : undefined} {...rowProps}/></li>)}</ul></Card>}
+        {note}
+      </aside>
+    </div>
+  </article>;
 }
