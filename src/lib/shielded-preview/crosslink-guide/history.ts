@@ -6,7 +6,12 @@ export const sourcesChecked = "2 Nov 2026";
 // Labs ships weekly and only recognizes the current chain for rewards, so
 // this must track the repository's latest release.
 export const releaseTag = "v16";
+export const releaseDate = "2 Nov 2026";
 export const releaseNotes = `https://github.com/ShieldedLabs/crosslink_monolith/releases/tag/${releaseTag}`;
+
+// The round running on the current network. Its reward amount and claim dates are not announced yet.
+export const currentRound = 3;
+export const allocatedZec = 500;
 
 export const paidRounds = [
   { round: 1, total: 25, earned: 11.2, discretionary: 13.8, reported: "27 Jun 2026", recipients: 22, claim: "17 Jun 2026 · 23:59 UTC", source: `${forum}/49`, claimSource: `${forum}/47`, note: "Unclaimed proportional rewards were reassigned to community contributors and active testers. Payments were reported as distributed during that week." },
@@ -14,7 +19,7 @@ export const paidRounds = [
 ] as const;
 export const reportedPaid = paidRounds.reduce((total, round) => total + round.total, 0);
 export const history = [
-  { date: "2 Apr 2026", title: "The incentive program opens", allocatedZec: 500, detail: "500 ZEC allocated to the program; 25 ZEC earmarked for the first season. Rewards are based on cTAZ earned through mining and staking, excluding faucet balances and the funding wallet.", source: `${forum}/1`, kind: "Program" },
+  { date: "2 Apr 2026", title: "The incentive program opens", allocatedZec, detail: "500 ZEC allocated to the program; 25 ZEC earmarked for the first season. Rewards are based on cTAZ earned through mining and staking, excluding faucet balances and the funding wallet.", source: `${forum}/1`, kind: "Program" },
   { date: "15 Apr 2026", title: "Feature net launches", detail: "The first public network and desktop release open community testing.", source: `${forum}/19`, kind: "Network" },
   { date: "23–27 Apr 2026", title: "Early network upgrades", detail: "The v3 upgrade includes restoring the wallet seed, followed by v4. These instructions belong to the early network, not the current release guide.", source: `${forum}/31`, kind: "Network" },
   { date: "12 May 2026", title: "Finality stalls", detail: "Participants report stalled BFT finality. Chain divergence and recovery become a focus of testing and community diagnostics.", source: `${forum}/38`, kind: "Network" },

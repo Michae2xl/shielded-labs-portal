@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type Dispatch, type ReactNode, type Ref, type SetStateAction } from 'react';
 import type { Project } from '@/lib/shielded-preview/content';
 import { FORUM, GUIDE_SOURCE, ISSUES, REPOSITORY, RELEASES, operateSteps, participationPaths, pathNotes, referencedIssues, relatedPages, rewardDetails, steps, toolAnchor, type GuidePath } from '@/lib/shielded-preview/crosslink-guide/guide';
-import { history, paidRounds, releaseNotes, releaseTag, reportedPaid, sourcesChecked } from '@/lib/shielded-preview/crosslink-guide/history';
+import { allocatedZec, currentRound, history, paidRounds, releaseDate, releaseNotes, releaseTag, reportedPaid, sourcesChecked } from '@/lib/shielded-preview/crosslink-guide/history';
 import { categories, communityTools, type ToolCategory } from '@/lib/shielded-preview/crosslink-guide/tools';
 import { editorialCatalog, editorialHref, opensInPortal } from '@/lib/shielded-preview/editorial/library';
 import { projectHref } from '@/lib/shielded-preview/project-navigation';
@@ -94,6 +94,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
     content.current?.scrollIntoView({ block: 'start' });
     content.current?.querySelector<HTMLElement>('nav button[aria-current]')?.focus({ preventScroll: true });
   });
+  const openTab = (next: string) => { show(next); moveToTabs(); };
   // Progress lasts the whole visit, including trips to other pages and back.
   useEffect(() => {
     const start = setTimeout(() => {
@@ -140,10 +141,11 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
           <Source href={`${FORUM}/39`} onFollow={onFollow} className={s.secondary}>Program rules</Source>
         </div>
       </div>
-      <div className={s.art} aria-hidden="true">
-        <span className={s.ringOuter}/><span className={s.ringInner}/><span className={s.shield}><ShieldMark size={42}/></span>
-        <span className={s.layerWork}>Proof of work</span><span className={s.layerStake}>Proof of stake</span>
-        <span className={s.caption}>One network. Two layers.</span>
+      <div className={s.glance} role="group" aria-label="Feature net at a glance">
+        <Source href={releaseNotes} onFollow={onFollow} className={s.tile}><strong>{releaseTag}</strong><small>Release · {releaseDate}</small></Source>
+        <button type="button" className={s.tile} onClick={() => openTab('incentives')}><span><strong>Round {currentRound}</strong><small>Reward amount pending</small></span><Arrow/></button>
+        <button type="button" className={s.tile} onClick={() => openTab('incentives')}><span><strong>{reportedPaid} / {allocatedZec} ZEC</strong><small>Rewards reported paid</small></span><Arrow/></button>
+        <button type="button" className={s.tile} onClick={() => { setCommunityView('tools'); openTab('tools'); }}><span><strong>{communityTools.length}</strong><small>Community tools</small></span><Arrow/></button>
       </div>
     </section>
 
@@ -223,8 +225,8 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
       {active === 'incentives' && <>
         <section className={s.card} aria-labelledby="crosslink-pool">
           <h3 id="crosslink-pool">Incentive pool</h3>
-          <div className={s.pool}><p className={s.poolTotal}><strong>{reportedPaid}</strong><span>/ 500 ZEC</span><small>reported paid</small></p><strong className={s.poolShare}>{reportedPaid / 500 * 100}<small>%</small></strong></div>
-          <div className={s.track} role="progressbar" aria-label="Reported payments from the program allocation" aria-valuemin={0} aria-valuemax={500} aria-valuenow={reportedPaid} aria-valuetext={`${reportedPaid} of 500 ZEC reported paid`}>{paidRounds.map(round => <span key={round.round} style={{ width: `${round.total / 500 * 100}%` }}/>)}</div>
+          <div className={s.pool}><p className={s.poolTotal}><strong>{reportedPaid}</strong><span>/ {allocatedZec} ZEC</span><small>reported paid</small></p><strong className={s.poolShare}>{reportedPaid / allocatedZec * 100}<small>%</small></strong></div>
+          <div className={s.track} role="progressbar" aria-label="Reported payments from the program allocation" aria-valuemin={0} aria-valuemax={allocatedZec} aria-valuenow={reportedPaid} aria-valuetext={`${reportedPaid} of ${allocatedZec} ZEC reported paid`}>{paidRounds.map(round => <span key={round.round} style={{ width: `${round.total / allocatedZec * 100}%` }}/>)}</div>
           <div className={s.legend}><span data-kind="earned">Mining & staking</span><span data-kind="discretionary">Discretionary</span></div>
           <ol className={s.rounds}>{paidRounds.map(round => <li key={round.round}>
             <div className={s.roundHead}><div><h4>Round {round.round}</h4><span>Reported {round.reported}</span></div><strong>{round.total} ZEC<span><Glyph name="check"/>Paid</span></strong></div>
@@ -235,7 +237,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
             <details><summary>Details & sources</summary><p>{round.recipients} mining and staking recipients. {round.note}</p><p>Claims closed {round.claim}.</p><div className={s.links}><Source href={round.source} onFollow={onFollow}>Payout report</Source><Source href={round.claimSource} onFollow={onFollow}>Claim announcement</Source></div></details>
           </li>)}</ol>
         </section>
-        <div className={s.roundStatus}><span><strong>Round 3</strong> · Running on the {releaseTag} network; reward amount and claim dates pending.</span><Source href={`${FORUM}/101`} onFollow={onFollow}>Follow the round</Source></div>
+        <div className={s.roundStatus}><span><strong>Round {currentRound}</strong> · Running on the {releaseTag} network; reward amount and claim dates pending.</span><Source href={`${FORUM}/101`} onFollow={onFollow}>Follow the round</Source></div>
         <div className={s.rewards}>{rewardDetails.map(item => <section className={s.card} key={item.title}><h4>{item.title}</h4><p>{item.text}</p><Source href={item.href} onFollow={onFollow}>{item.link}</Source></section>)}</div>
         <section className={s.card} aria-labelledby="crosslink-timeline">
           <div className={s.heading}><h3 id="crosslink-timeline">Timeline</h3><Source href={FORUM} onFollow={onFollow}>Forum</Source></div>

@@ -29,16 +29,15 @@
 .participate a.primary svg{color:#111}
 .secondary,.participate a.secondary,.participate button.secondary{background:#1b1b1b;color:#ececec;border:1px solid #3a3a3a;font-size:14px}
 .secondary:hover,.participate a.secondary:hover{background:#242424;border-color:#555;color:#fff}
-.art{position:relative;min-height:190px;overflow:hidden;border:1px solid #343434;border-radius:12px;background:radial-gradient(circle at 50% 46%,#1c1c1c 0,#111 62%)}
-.shield{position:absolute;left:50%;top:46%;display:block;transform:translate(-50%,-50%)}
-.shield img{display:block}
-.ringOuter,.ringInner{position:absolute;left:50%;top:46%;border-radius:50%;transform:translate(-50%,-50%)}
-.ringOuter{width:150px;height:150px;border:1px solid #4a4a4a}
-.ringInner{width:82px;height:82px;border:1px solid #d9d9d9;box-shadow:0 0 28px rgba(255,255,255,.12)}
-.layerWork,.layerStake,.caption{position:absolute;font-family:var(--font-geist-mono),monospace;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:#a8a8a8;white-space:nowrap}
-.layerWork{top:14px;left:16px}
-.layerStake{top:14px;right:16px}
-.caption{left:0;right:0;bottom:14px;text-align:center;color:#d0d0d0}
+.glance{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:1px;min-width:0;overflow:hidden;border:1px solid #343434;border-radius:12px;background:#2c2c2c}
+.tile,.participate a.tile{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;min-height:92px;padding:14px 18px;border:0;background:#111;color:#eee;font:inherit;text-align:center;cursor:pointer}
+.tile:hover,.participate a.tile:hover{background:#1a1a1a}
+.tile:focus-visible{outline:2px solid #ddd;outline-offset:-3px}
+.tile>span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile strong{font-size:22px;font-weight:500;line-height:1.25;letter-spacing:-.4px;color:#f4f4f4;font-variant-numeric:tabular-nums}
+.tile small{font-size:13px;line-height:1.4;color:#b5b5b5}
+.tile>svg{position:absolute;top:10px;right:10px;width:14px;height:14px;color:#8a8a8a}
+.tile:hover>svg{color:#eee}
 
 /* Guide */
 .guideGrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(265px,1fr);gap:16px;align-items:start}
@@ -170,13 +169,12 @@
 .participate details>summary{list-style:none;justify-content:space-between}
 .participate details>summary::-webkit-details-marker{display:none}
 .timeline summary>small{margin-left:auto}
-@media(max-width:1100px){.toolGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.guideGrid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:1100px){.toolGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.guideGrid,.hero{grid-template-columns:minmax(0,1fr)}.glance{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:760px){
   .hero,.rounds,.rewards,.toolGrid{grid-template-columns:minmax(0,1fr)}
-  .art{min-height:150px}
-  .ringOuter{width:110px;height:110px}
-  .ringInner{width:60px;height:60px}
-  .shield img{width:30px;height:30px}
+  .glance{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile,.participate a.tile{min-height:84px;padding:12px 10px}
+  .tile strong{font-size:20px}
   .heroCopy{padding:18px}
   .participate .heroCopy h2{font-size:22px}
   .card{padding:16px}

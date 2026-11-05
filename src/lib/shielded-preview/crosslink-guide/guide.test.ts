@@ -8,7 +8,7 @@ import { projects } from '../content';
 import { editorialCatalog, opensInPortal } from '../editorial/library';
 import { searchPortal } from '../portal-search';
 import { operateSteps, referencedIssues, relatedPages, rewardDetails, steps, toolAnchor } from './guide';
-import { history, paidRounds, reportedPaid, sourcesChecked } from './history';
+import { allocatedZec, currentRound, history, paidRounds, releaseDate, releaseTag, reportedPaid, sourcesChecked } from './history';
 import { categories, communityTools } from './tools';
 
 const crosslink = projects.find(project => project.id === 'crosslink')!;
@@ -16,6 +16,15 @@ const render = (view: string | null) => renderToStaticMarkup(createElement(Cross
 const text = (value: string) => renderToStaticMarkup(createElement('span', null, value)).replace(/^<span>|<\/span>$/g, '');
 
 describe('Crosslink participation guide', () => {
+  it('opens with what the feature net is running instead of decoration', () => {
+    const guide = render(null);
+    expect(guide).not.toContain('One network');
+    expect(guide).toContain(`<strong>${releaseTag}</strong><small>Release · ${releaseDate}</small>`);
+    expect(guide).toContain(`<strong>Round ${currentRound}</strong>`);
+    expect(guide).toContain(`<strong>${reportedPaid} / ${allocatedZec} ZEC</strong><small>Rewards reported paid</small>`);
+    expect(guide).toContain(`<strong>${communityTools.length}</strong><small>Community tools</small>`);
+  });
+
   it('shows the whole test guide', () => {
     const guide = render(null);
     for (const step of steps) expect(guide).toContain(text(step.title));
