@@ -133,11 +133,11 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
     <section className={s.hero} aria-labelledby="project-panel-heading">
       <div className={s.heroCopy}>
         <Source href="https://shieldedlabs.net/" onFollow={onFollow} className={s.brand}><ShieldMark size={18}/>Shielded Labs</Source>
-        <h2 id="project-panel-heading" ref={headingRef} tabIndex={-1}>Help shape the next layer of Zcash.</h2>
-        <p>A practical testing guide, community tools and incentive updates for the Crosslink feature net.</p>
+        <h2 id="project-panel-heading" ref={headingRef} tabIndex={-1}>Crosslink feature net</h2>
+        <p>Testing guide, community tools and incentive updates for a proposed consensus upgrade. Feature-net progress is not a mainnet activation.</p>
         <div className={s.heroActions}>
           <Source href={releaseNotes} onFollow={onFollow} className={s.primary}>Download {releaseTag}</Source>
-          <button type="button" className={s.secondary} onClick={() => { setPath('test'); show('guide'); moveToTabs(); }}>Start testing<Arrow/></button>
+          <button type="button" className={s.secondary} onClick={() => { setPath('test'); show('guide'); moveToTabs(); }}>Testing guide<Arrow/></button>
           <Source href={`${FORUM}/39`} onFollow={onFollow} className={s.secondary}>Program rules</Source>
         </div>
       </div>
@@ -191,7 +191,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
                 <div><p>Zingo Delegator has a mobile guide. Its linked build is from Season 1; confirm Round 3 compatibility with the team.</p><Source href={delegator.href} onFollow={onFollow}>Mobile guide</Source></div>
               </details>
             </div>}
-            <button type="button" className={s.explore} onClick={() => { setCategory('All'); setCommunityView('tools'); show('tools'); moveToTabs(); }}><span>Explore community tools</span><Arrow/></button>
+            <button type="button" className={s.explore} onClick={() => { setCategory('All'); setCommunityView('tools'); show('tools'); moveToTabs(); }}><span>Community tools</span><Arrow/></button>
             <section className={s.card}>
               <h3>Also in this portal</h3>
               <ul className={s.related}>{related.map(entry => <li key={entry.id}><EditorialLink href={editorialHref(entry)} onFollow={onFollow}><span>{entry.title}</span><Arrow/></EditorialLink></li>)}</ul>
@@ -201,7 +201,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
       </>}
 
       {active === 'tools' && <>
-        <div className={s.heading}><h3>Community tools</h3><Source href={FORUM} onFollow={onFollow}>Join the conversation</Source></div>
+        <div className={s.heading}><h3>Community tools</h3><Source href={FORUM} onFollow={onFollow}>Forum thread</Source></div>
         <SectionMenu secondary label="Community resources" value={communityView} onChange={next => setCommunityView(next as 'tools' | 'issues')} items={[{ id: 'tools', label: 'Tools', count: communityTools.length }, { id: 'issues', label: 'Issues & discussions', count: referencedIssues.length }]}/>
         {communityView === 'tools' ? <>
           <div className={s.filters} role="group" aria-label="Filter community tools">{categories.map(item => <button type="button" key={item} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</button>)}</div>

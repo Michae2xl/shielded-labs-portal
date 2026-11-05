@@ -19,10 +19,18 @@ describe('Crosslink participation guide', () => {
   it('opens with what the feature net is running instead of decoration', () => {
     const guide = render(null);
     expect(guide).not.toContain('One network');
+    expect(guide).toContain('>Crosslink feature net</h2>');
+    expect(guide).toContain('Feature-net progress is not a mainnet activation.');
     expect(guide).toContain(`<strong>${releaseTag}</strong><small>Release · ${releaseDate}</small>`);
     expect(guide).toContain(`<strong>Round ${currentRound}</strong>`);
     expect(guide).toContain(`<strong>${reportedPaid} / ${allocatedZec} ZEC</strong><small>Rewards reported paid</small>`);
     expect(guide).toContain(`<strong>${communityTools.length}</strong><small>Community tools</small>`);
+  });
+
+  it('describes Crosslink without promoting it', () => {
+    const copy = [render(null), render('tools'), render('incentives')].join(' ');
+    for (const phrase of ['Help shape', 'next layer', 'Join the conversation', 'Start testing', 'Faster finality']) expect(copy).not.toContain(phrase);
+    expect(crosslink.description).not.toMatch(/faster/i);
   });
 
   it('shows the whole test guide', () => {
