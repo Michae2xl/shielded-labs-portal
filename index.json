@@ -28,7 +28,7 @@
     "official": "https://zips.z.cash/zip-0000",
     "updatedAt": "2026-10-14T14:38:27Z",
     "summary": "A Zcash Improvement Proposal (ZIP) is a design document providing information to the Zcash community, or describing a new feature for Zcash or its processes or environment. The ZIP should provide a concise technical specification of the…",
-    "words": 6369,
+    "words": 6355,
     "digest": "0c23eae82017f532572802e2803b83ef038bbafc2a847dce1886c61ee7305561"
   },
   {
@@ -93,8 +93,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0032.rst",
     "official": "https://zips.z.cash/zip-0032",
     "updatedAt": "2026-10-22T04:50:30Z",
-    "summary": "This proposal defines a mechanism for extending hierarchical deterministic wallets, as described in BIP 32 [2], to support Zcash's shielded addresses.",
-    "words": 5264,
+    "summary": "This proposal defines a mechanism for extending hierarchical deterministic wallets, as described in BIP 32 2, to support Zcash's shielded addresses.",
+    "words": 5236,
     "digest": "bb46893739d0fd7650af0efe3ad6be6c834c83f3a2d9c34a075d70c6967ef1cb"
   },
   {
@@ -120,7 +120,7 @@
     "official": "https://zips.z.cash/zip-0048",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP defines how wallets should implement transparent multisignature addresses in the Zcash ecosystem. It specifies how to derive the necessary key material in a deterministic way, and how to create transactions spending transparent…",
-    "words": 1477,
+    "words": 1459,
     "digest": "19f029a6805981a44963ffe8812465042a705d2be3e1157935588f248db101f1"
   },
   {
@@ -143,7 +143,7 @@
     "official": "https://zips.z.cash/zip-0068",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP introduces relative lock-time (RLT) consensus-enforced semantics of the sequence number field, to enable a signed transaction input to remain invalid for a defined period of time after confirmation of its corresponding outpoint.",
-    "words": 965,
+    "words": 960,
     "digest": "3119ddd2d7605346981b5cc5349e624bdaef983b2e6347b425361cd86d213f23"
   },
   {
@@ -190,7 +190,7 @@
     "official": "https://zips.z.cash/zip-0112",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP describes a new opcode (CHECKSEQUENCEVERIFY) for the Zcash scripting system, that in combination with ZIP 68 allows execution pathways of a script to be restricted based on the age of the output being spent.",
-    "words": 1490,
+    "words": 1481,
     "digest": "9b6592ba8f70e4610258032770204a9e9970cc8418d04b5f2b14517a11f1a611"
   },
   {
@@ -213,7 +213,7 @@
     "official": "https://zips.z.cash/zip-0113",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP is a proposal to redefine the semantics used in determining a time-locked transaction's eligibility for inclusion in a block. The median of the last PoWMedianBlockSpan (11) blocks is used instead of the block's timestamp, ensuring…",
-    "words": 539,
+    "words": 534,
     "digest": "0d20465d013cdd3b8101763018eb2536f377aaa028ba6d13f43c58869ed99a7c"
   },
   {
@@ -262,7 +262,7 @@
     "official": "https://zips.z.cash/zip-0143",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines a new transaction digest algorithm for signature validation from the Overwinter network upgrade, in order to minimize redundant data hashing in validation, and to cover the input value by the signature.",
-    "words": 2059,
+    "words": 2044,
     "digest": "6258ae013b56c1faffc85d629cdc42afad9b4ec8a15458a663082372d559fe45"
   },
   {
@@ -285,7 +285,7 @@
     "official": "https://zips.z.cash/zip-0155",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This document proposes a new P2P message to gossip longer node addresses over the P2P network. This is required to support new-generation onion addresses, I2P, and potentially other networks that have longer endpoint addresses than fit in…",
-    "words": 1299,
+    "words": 1287,
     "digest": "23dcd62e0c589c0b60becaea4fda0b273ed370ba2976cd5ea870e784cce54c45"
   },
   {
@@ -308,7 +308,7 @@
     "official": "https://zips.z.cash/zip-0173",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This document proposes a checksummed base32 format, \"Bech32\", and a standard for Sapling addresses and keys using it.",
-    "words": 2247,
+    "words": 2240,
     "digest": "110adb1de75f792a182072eb38355a99c25e10538aaf6d31552b5a859beacfb4"
   },
   {
@@ -331,7 +331,7 @@
     "official": "https://zips.z.cash/zip-0200",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines a mechanism for coordinating upgrades of the Zcash network, in order to remove ambiguity about when network upgrades will activate, provide defined periods in which users should upgrade their local software, and…",
-    "words": 1464,
+    "words": 1458,
     "digest": "ba6b7c05c1d2e4e005e0a95c1fa322514c4161a3112d0ed55d1f9358d6574892"
   },
   {
@@ -353,8 +353,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0201.rst",
     "official": "https://zips.z.cash/zip-0201",
     "updatedAt": "2026-02-10T21:17:45Z",
-    "summary": "This proposal defines an upgrade to the network handshake and peer management required for network upgrades following the Network Upgrade Mechanism [3].",
-    "words": 1378,
+    "summary": "This proposal defines an upgrade to the network handshake and peer management required for network upgrades following the Network Upgrade Mechanism 3.",
+    "words": 1368,
     "digest": "072f70a6556b14f14bb7e654b61a20fcdc71bd2200480e64d7af63d6291da6bf"
   },
   {
@@ -376,8 +376,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0202.rst",
     "official": "https://zips.z.cash/zip-0202",
     "updatedAt": "2026-02-10T21:17:45Z",
-    "summary": "This proposal defines a new transaction format required for Network Upgrade Mechanism [3] and Transaction Expiry [5].",
-    "words": 1354,
+    "summary": "This proposal defines a new transaction format required for Network Upgrade Mechanism 3 and Transaction Expiry 5.",
+    "words": 1349,
     "digest": "00468ed098a6193d1fabb64c5163f0638b5e0717c147ff66f276157981d1a8d0"
   },
   {
@@ -400,7 +400,7 @@
     "official": "https://zips.z.cash/zip-0203",
     "updatedAt": "2026-09-24T13:47:28Z",
     "summary": "This is a Standards ZIP describing a new consensus rule to set an expiration time after which a transaction cannot be mined. If it is not mined within that time, the transaction will be removed from nodes' mempools.",
-    "words": 746,
+    "words": 741,
     "digest": "c5f1e18a79c5f64062f5b0a7a53600706f73a8a77888046c3c3df20c3e944f06"
   },
   {
@@ -424,7 +424,7 @@
     "official": "https://zips.z.cash/zip-0204",
     "updatedAt": "2026-07-21T20:13:32Z",
     "summary": "This ZIP specifies the Zcash peer-to-peer network protocol, including connection setup, message framing, message types, and relay behavior. It is intended to be sufficient for an implementor to build a conformant Zcash network peer.",
-    "words": 4996,
+    "words": 4973,
     "digest": "acf3efa2390cf54b96e47c1fda0f93d52445e1e7a3498535ea23b70cfe51e809"
   },
   {
@@ -447,7 +447,7 @@
     "official": "https://zips.z.cash/zip-0205",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines the deployment of the Sapling network upgrade. In addition, it describes a hard fork that occurred on Testnet to allow \"minimum-difficulty\" blocks.",
-    "words": 703,
+    "words": 694,
     "digest": "66852f932c8bde22a9204d544d5e0220efb9c093491c947d9a0cc9bec6361a89"
   },
   {
@@ -470,7 +470,7 @@
     "official": "https://zips.z.cash/zip-0206",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines the deployment of the Blossom network upgrade.",
-    "words": 559,
+    "words": 554,
     "digest": "7304210c0ea5c3ce2b4a8a14dc4112e83ad2bdca2bfa8f35e593f2f565356b89"
   },
   {
@@ -494,7 +494,7 @@
     "official": "https://zips.z.cash/zip-0207",
     "updatedAt": "2026-10-21T14:15:10Z",
     "summary": "This proposal specifies a mechanism to support funding streams, distributed from a portion of the block subsidy for a specified range of block heights.",
-    "words": 2544,
+    "words": 2484,
     "digest": "590c5b981bf0a59c001b19c7ffd90d4356b58c57807629cfdc0405ea548fbe1f"
   },
   {
@@ -516,8 +516,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0208.rst",
     "official": "https://zips.z.cash/zip-0208",
     "updatedAt": "2026-09-29T23:28:49Z",
-    "summary": "This proposal specifies a change in the block target spacing, to take effect in the Blossom network upgrade [11].",
-    "words": 2151,
+    "summary": "This proposal specifies a change in the block target spacing, to take effect in the Blossom network upgrade 11.",
+    "words": 2137,
     "digest": "82770e71df38e1078aff98f3f273d2ecbd1e99bbbc3e68c0fb5ac6d14c5c8c64"
   },
   {
@@ -541,7 +541,7 @@
     "official": "https://zips.z.cash/zip-0209",
     "updatedAt": "2026-08-12T15:06:21Z",
     "summary": "This proposal defines how the consensus rules are altered such that blocks that produce negative shielded chain value pool balances, or that cause total supply to exceed 𝖬𝖠𝖷_𝖬𝖮𝖭𝖤𝖸 zatoshi, are prohibited.",
-    "words": 651,
+    "words": 645,
     "digest": "18447c7ee47f3c6f3283bbddde633ba639b7a5735eddcad85517015cc33e74e1"
   },
   {
@@ -564,7 +564,7 @@
     "official": "https://zips.z.cash/zip-0210",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines a modification to the transaction format whereby a single Sapling anchor is used for all Sapling spends. This change removes a potential implementation fingerprint, and reduces the size of Sapling transactions within…",
-    "words": 624,
+    "words": 619,
     "digest": "100efd6a3243434a6d318dd8c59d5adf63c2852eaa3f5257dceee2a2784268f8"
   },
   {
@@ -587,7 +587,7 @@
     "official": "https://zips.z.cash/zip-0211",
     "updatedAt": "2026-07-09T10:12:54Z",
     "summary": "This proposal disables the ability to add new value to the Sprout chain value pool balance. This takes a step toward being able to remove the Sprout shielded protocol, thus reducing the overall complexity and attack surface of Zcash.",
-    "words": 824,
+    "words": 815,
     "digest": "6ef014ad85fed4e874125ddc3166d64cd671d8ed0097ade8f97db7ed33ecb4f7"
   },
   {
@@ -610,8 +610,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0212.rst",
     "official": "https://zips.z.cash/zip-0212",
     "updatedAt": "2026-10-22T04:50:30Z",
-    "summary": "Note",
-    "words": 2414,
+    "summary": "This ZIP proposes a new note plaintext format for Sapling Outputs (later extended to include Orchard Actions) in transactions. The new format allows recipients to verify that the sender of an Output or Action knows the private key…",
+    "words": 2393,
     "digest": "9aa2d0e5a3ad592d9fd7d7a35f54c3d4bbc481da21e4f1a0ed85939566daa30a"
   },
   {
@@ -634,7 +634,7 @@
     "official": "https://zips.z.cash/zip-0213",
     "updatedAt": "2026-08-12T15:06:21Z",
     "summary": "This proposal defines modifications to the Zcash consensus rules that enable coinbase funds to be mined to Sapling (and later Orchard) addresses. It does not disable the use of transparent addresses in coinbase transactions.",
-    "words": 1413,
+    "words": 1405,
     "digest": "7976f88c74ae79c7f551c4f0bac9067d74bcc4678a9369abc52e1d12e23149d1"
   },
   {
@@ -658,7 +658,7 @@
     "official": "https://zips.z.cash/zip-0214",
     "updatedAt": "2026-10-21T14:15:10Z",
     "summary": "Revision 0 of this ZIP describes consensus rule changes interpreting the proposed structure of the Zcash Development Fund, which was enacted in Network Upgrade 4 and lasted for 4 years.",
-    "words": 2485,
+    "words": 2465,
     "digest": "9b0d2f2166e7931ee9c5751e86f92bc8fb76421eceecbdeca92e92d464c3af81"
   },
   {
@@ -680,8 +680,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0215.rst",
     "official": "https://zips.z.cash/zip-0215",
     "updatedAt": "2024-11-12T19:49:29Z",
-    "summary": "Zcash uses Ed25519 signatures as part of Sprout transactions. However, Ed25519 does not clearly define criteria for signature validity, and implementations conformant to RFC 8032 [2] need not agree on whether signatures are valid. This is…",
-    "words": 616,
+    "summary": "Zcash uses Ed25519 signatures as part of Sprout transactions. However, Ed25519 does not clearly define criteria for signature validity, and implementations conformant to RFC 8032 2 need not agree on whether signatures are valid. This is…",
+    "words": 610,
     "digest": "3da675a69b64f5992b2b902df82dc78976f600f28d49bd822720644bcfc4382a"
   },
   {
@@ -705,7 +705,7 @@
     "official": "https://zips.z.cash/zip-0216",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP fixes an oversight in the implementation of the Sapling consensus rules, by rejecting all non‑canonical representations of Jubjub points.",
-    "words": 2206,
+    "words": 2174,
     "digest": "aad6bdd03ed2f935cf75b55b0ca54ce4cc87204e4878bedc05fd803bae8d0939"
   },
   {
@@ -752,7 +752,7 @@
     "official": "https://zips.z.cash/zip-0218",
     "updatedAt": "2026-10-23T16:45:16Z",
     "summary": "This proposal specifies a change in the block target spacing from 75 seconds to 25 seconds in NU7, and introduces per-pool action limits for the Sapling, Orchard, and Ironwood shielded pools.",
-    "words": 6093,
+    "words": 5872,
     "digest": "14369354b0ddd16bb1a1a8a309291244cca8dfd8b4b2b7435ef7d94f58f00780"
   },
   {
@@ -821,8 +821,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0221.rst",
     "official": "https://zips.z.cash/zip-0221",
     "updatedAt": "2026-02-10T21:17:45Z",
-    "summary": "This ZIP specifies modifications to the Zcash block header semantics and consensus rules in order to support the probabilistic verification FlyClient protocol [2]. The hashFinalSaplingRoot commitment in the block header is replaced with a…",
-    "words": 4239,
+    "summary": "This ZIP specifies modifications to the Zcash block header semantics and consensus rules in order to support the probabilistic verification FlyClient protocol 2. The hashFinalSaplingRoot commitment in the block header is replaced with a…",
+    "words": 4226,
     "digest": "e931c09613143b44adfeeaa597bd4a47938dd9a5062411132243bad929a6b40d"
   },
   {
@@ -846,7 +846,7 @@
     "official": "https://zips.z.cash/zip-0222",
     "updatedAt": "2026-03-24T07:28:53Z",
     "summary": "This proposal defines a modification to the consensus rules that enables complex forms of transparent output preconditions to be deployed in network upgrades. This in turn enables the creation of \"transparent Zcash extensions\" that augment…",
-    "words": 1748,
+    "words": 1737,
     "digest": "ca04fd46134c18ed3b6fcb2cd9fc2c8e7bad79cad5b1e61f70553d726beeeac7"
   },
   {
@@ -872,7 +872,7 @@
     "official": "https://zips.z.cash/zip-0224",
     "updatedAt": "2026-06-24T16:24:12Z",
     "summary": "This document proposes the Orchard shielded protocol, which defines a new shielded pool with spending keys and payment addresses that are amenable to future scalability improvements.",
-    "words": 1780,
+    "words": 1746,
     "digest": "179c31d846b697f3c75471533576794f27610333244dd760435447313f945632"
   },
   {
@@ -897,8 +897,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0225.rst",
     "official": "https://zips.z.cash/zip-0225",
     "updatedAt": "2026-07-09T10:09:06Z",
-    "summary": "This proposal defines an update to the Zcash peer-to-peer transaction format to include support for data elements required to support the Orchard protocol [2]. The new transaction format defines well-bounded regions of the serialized form…",
-    "words": 1414,
+    "summary": "This proposal defines an update to the Zcash peer-to-peer transaction format to include support for data elements required to support the Orchard protocol 2. The new transaction format defines well-bounded regions of the serialized form to…",
+    "words": 1406,
     "digest": "5e026434c445b0bb0a031d3271d7b8c0e4405f8107b03c16be583497b0eb333d"
   },
   {
@@ -923,8 +923,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0226.rst",
     "official": "https://zips.z.cash/zip-0226",
     "updatedAt": "2026-10-21T13:31:50Z",
-    "summary": "This ZIP (ZIP 226) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 227 [5]. The OrchardZSA protocol is an extension of the Orchard protocol that enables the issuance, transfer and burn of custom…",
-    "words": 4594,
+    "summary": "This ZIP (ZIP 226) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 227 5. The OrchardZSA protocol is an extension of the Orchard protocol that enables the issuance, transfer and burn of custom…",
+    "words": 4553,
     "digest": "855240fec37121ca110ffa001e5d0931e72f3e7c119896b123adb5d8144217b7"
   },
   {
@@ -949,8 +949,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0227.rst",
     "official": "https://zips.z.cash/zip-0227",
     "updatedAt": "2026-07-09T10:12:54Z",
-    "summary": "This ZIP (ZIP 227) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 226 [10]. This protocol is an extension of the Orchard protocol that enables the creation, transfer and burn of Custom Assets on…",
-    "words": 5342,
+    "summary": "This ZIP (ZIP 227) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 226 10. This protocol is an extension of the Orchard protocol that enables the creation, transfer and burn of Custom Assets on the…",
+    "words": 5300,
     "digest": "8cec34cccb7d8257655c60fc6cf70c0dfc810a93bcc98dfe34c3c6719a16e1ac"
   },
   {
@@ -978,8 +978,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0228.rst",
     "official": "https://zips.z.cash/zip-0228",
     "updatedAt": "2026-02-10T21:17:45Z",
-    "summary": "This ZIP introduces Asset Swaps for Zcash Shielded Assets (ZSA). It builds on top of ZIP 227 [6] and ZIP 226 [4], and uses the transaction format encoding described in ZIP 230 [8]. ZSA Swaps simplify the process of trading assets within…",
-    "words": 4142,
+    "summary": "This ZIP introduces Asset Swaps for Zcash Shielded Assets (ZSA). It builds on top of ZIP 227 6 and ZIP 226 4, and uses the transaction format encoding described in ZIP 230 8. ZSA Swaps simplify the process of trading assets within the…",
+    "words": 4123,
     "digest": "837c2614e7ee5038a2f9bb58e6c5dec382cdb66a0b50fcdaaee1bb26a111ba51"
   },
   {
@@ -1004,8 +1004,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0229.md",
     "official": "https://zips.z.cash/zip-0229",
     "updatedAt": "2026-10-22T14:45:43Z",
-    "summary": "This ZIP defines version 6 of the Zcash transaction format, to be activated at NU6.3 6.",
-    "words": 3468,
+    "summary": "This ZIP defines version 6 of the Zcash transaction format, to be activated at NU6.3 8.",
+    "words": 3503,
     "digest": "fd21c205f5c382fb25c492525e112d946522e75383b69aa5d9666280bdacf7b3"
   },
   {
@@ -1032,8 +1032,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0230.rst",
     "official": "https://zips.z.cash/zip-0230",
     "updatedAt": "2026-07-09T10:09:05Z",
-    "summary": "Warning",
-    "words": 3418,
+    "summary": "This proposal defines a new Zcash peer-to-peer transaction format, which supports the changes being deployed in Network Upgrade 7 34. It follows the same design pattern as the v5 transaction format 11.",
+    "words": 3386,
     "digest": "1dad9a575f49ed58256ac4b5e4c2934f3a1c16a77233bc17ca169d89a04a1aa4"
   },
   {
@@ -1059,7 +1059,7 @@
     "official": "https://zips.z.cash/zip-0231",
     "updatedAt": "2026-10-21T22:29:47Z",
     "summary": "Currently, the memo associated with a shielded output is fixed to 512 bytes of data.",
-    "words": 6563,
+    "words": 6407,
     "digest": "1197db76d0fabadf4acc708cc43ef7b03cf0dbf4e4fc6486142d3192d2bdccfc"
   },
   {
@@ -1087,7 +1087,7 @@
     "official": "https://zips.z.cash/zip-0233",
     "updatedAt": "2026-10-16T01:56:36Z",
     "summary": "This ZIP proposes the introduction of a mechanism to voluntarily remove funds entirely from circulation on the network. The explicit intent of this removal is that the funds will be returned to circulation through future block subsidies,…",
-    "words": 1102,
+    "words": 1105,
     "digest": "790e204072833060eae5e7cb2563acc23394a17680b6ce48eb602b713dc65d53"
   },
   {
@@ -1115,7 +1115,7 @@
     "official": "https://zips.z.cash/zip-0234",
     "updatedAt": "2026-09-29T21:04:29Z",
     "summary": "This ZIP proposes a change to how nodes calculate the block subsidy.",
-    "words": 1633,
+    "words": 1660,
     "digest": "3493e497c15834c6405c252851bdd5cac002eadbc8b6ed486cbb254e18a32656"
   },
   {
@@ -1143,7 +1143,7 @@
     "official": "https://zips.z.cash/zip-0235",
     "updatedAt": "2026-10-21T14:15:10Z",
     "summary": "This ZIP proposes to remove 60% of transaction fees from circulation, while the remaining 40% is directed as before. The intent of this removal is that the funds will be automatically and algorithmically reissued through future block…",
-    "words": 1613,
+    "words": 1602,
     "digest": "9ece3f8734f8032b55bccfdc660e07703fe9edfd4f29bbea8b98fae8de83aefa"
   },
   {
@@ -1166,7 +1166,7 @@
     "official": "https://zips.z.cash/zip-0236",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "In the current Zcash protocol, the miner of a coinbase transaction is permitted to claim up to and including the total amount of miner subsidy plus fees from other transactions in the block, but is not required to claim the full amount.",
-    "words": 778,
+    "words": 770,
     "digest": "2962f79b55392d28c7df01e444209e532b8ddd96ad30a60ebb2e43fcbdb9ff4b"
   },
   {
@@ -1189,7 +1189,7 @@
     "official": "https://zips.z.cash/zip-0237",
     "updatedAt": "2026-10-21T16:51:00Z",
     "summary": "This ZIP proposes a change to how nodes calculate the block subsidy.",
-    "words": 3065,
+    "words": 3035,
     "digest": "5b62469f703bd29bf271f8c3d692b77bd9376b4136d7b398e5f369d6a9d3a1e6"
   },
   {
@@ -1213,7 +1213,7 @@
     "official": "https://zips.z.cash/zip-0239",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP describes changes to the Zcash peer-to-peer protocol to support transaction relay based on a transaction's authorizing data commitment as well as its txid.",
-    "words": 1358,
+    "words": 1346,
     "digest": "fa47efd487b008e5a8201a65942f7a97c87981a2fd87262d0845a07206e91210"
   },
   {
@@ -1258,7 +1258,7 @@
     "official": "https://zips.z.cash/zip-0243",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines a new transaction digest algorithm for signature validation from the Sapling network upgrade, to account for the presence of Sapling shielded inputs and outputs in transactions.",
-    "words": 1729,
+    "words": 1721,
     "digest": "ebec7b044ffe8a693fa94b9abdc03f8986da78be18c55de7a5418a2956311f90"
   },
   {
@@ -1283,7 +1283,7 @@
     "official": "https://zips.z.cash/zip-0244",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines a new transaction digest algorithm for the NU5 network upgrade onward, in order to introduce non-malleable transaction identifiers that commit to all transaction data except for attestations to transaction validity.",
-    "words": 4360,
+    "words": 4346,
     "digest": "0bb48ee767bd475c83f4203d8c54f6aff87d55eafedb7350e1d3e221beb94266"
   },
   {
@@ -1306,8 +1306,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0245.rst",
     "official": "https://zips.z.cash/zip-0245",
     "updatedAt": "2026-02-10T21:17:45Z",
-    "summary": "This proposal defines changes to ZIP 244 [4] transaction id and signature digest algorithms to accommodate the inclusion of transparent Zcash extensions (TZEs) as defined in ZIP 222 [3].",
-    "words": 658,
+    "summary": "This proposal defines changes to ZIP 244 4 transaction id and signature digest algorithms to accommodate the inclusion of transparent Zcash extensions (TZEs) as defined in ZIP 222 3.",
+    "words": 654,
     "digest": "aa6951b7d3b542ae8a855af8f906b259413c5be2fb1b13deaede73034906f4cf"
   },
   {
@@ -1334,7 +1334,7 @@
     "official": "https://zips.z.cash/zip-0246",
     "updatedAt": "2026-07-09T10:09:05Z",
     "summary": "This ZIP defines the sighash algorithms associated with the v6 transaction format.",
-    "words": 2654,
+    "words": 2633,
     "digest": "8a1a03dceea6525ed686099a53cd938cf6263ef8a45f3952b03526aa66d2e582"
   },
   {
@@ -1360,7 +1360,7 @@
     "official": "https://zips.z.cash/zip-0248",
     "updatedAt": "2026-11-03T21:39:34Z",
     "summary": "This ZIP proposes an encoding for V7 Zcash transactions that is intended to reduce the impact of future changes to the Zcash transaction format on the Zcash ecosystem. It defines a new typecode-length-value encoding for a sequence of…",
-    "words": 10090,
+    "words": 10081,
     "digest": "ce1c8970cc2a49e98c390b337a586b67d3a8b5800b6e71ebf643fc934f10f771"
   },
   {
@@ -1383,7 +1383,7 @@
     "official": "https://zips.z.cash/zip-0250",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines the deployment of the Heartwood network upgrade.",
-    "words": 613,
+    "words": 606,
     "digest": "81dcbf3a6607b76fb5813bea08205eae2b4f06694b43290536e1fef500b16e90"
   },
   {
@@ -1406,7 +1406,7 @@
     "official": "https://zips.z.cash/zip-0251",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal defines the deployment of the Canopy network upgrade.",
-    "words": 731,
+    "words": 718,
     "digest": "efad0c13e60eee27379226481322af3d4d1d9e307b71207ac63435d2350d1a10"
   },
   {
@@ -1429,7 +1429,7 @@
     "official": "https://zips.z.cash/zip-0252",
     "updatedAt": "2026-07-09T10:12:54Z",
     "summary": "This proposal defines the deployment of the NU5 network upgrade.",
-    "words": 1212,
+    "words": 1191,
     "digest": "1f461a659d167f77c606ae32d4df333129ad1a98cf012b995f3a1c306842f0af"
   },
   {
@@ -1452,7 +1452,7 @@
     "official": "https://zips.z.cash/zip-0253",
     "updatedAt": "2025-11-12T04:51:37Z",
     "summary": "This proposal defines the deployment of the NU6 network upgrade.",
-    "words": 422,
+    "words": 424,
     "digest": "6f585a2a4aa4efbddf7fa685d2ee4ba411b1bddbceebddba32e5b41e9b68446c"
   },
   {
@@ -1498,7 +1498,7 @@
     "official": "https://zips.z.cash/zip-0255",
     "updatedAt": "2026-07-05T07:40:05Z",
     "summary": "This proposal defines the deployment of the NU6.1 network upgrade.",
-    "words": 334,
+    "words": 337,
     "digest": "a82220e02052ed1a30382c91723082b85a8453e152cfbb54da235515515ba7a3"
   },
   {
@@ -1521,7 +1521,7 @@
     "official": "https://zips.z.cash/zip-0256",
     "updatedAt": "2026-07-09T10:12:54Z",
     "summary": "This ZIP retrospectively documents the deployment and specification of several consensus and denial-of-service bug fixes that were applied to the Zcash node implementations, after the activation of NU6.1 5, up to but not including the…",
-    "words": 2270,
+    "words": 2257,
     "digest": "9a53da77a1d98f27f849ffe0c1fe62576865e3c5565bf530670d2f8093add299"
   },
   {
@@ -1544,7 +1544,7 @@
     "official": "https://zips.z.cash/zip-0257",
     "updatedAt": "2026-07-05T07:51:10Z",
     "summary": "This ZIP retrospectively documents the deployment of the Orchard temporary vulnerability mitigation, and the NU6.2 network upgrade.",
-    "words": 1374,
+    "words": 1366,
     "digest": "40c6dd9cf66d04a464e0e423c2dc06077d5799276c274424acd87ae3352fa79a"
   },
   {
@@ -1567,7 +1567,7 @@
     "official": "https://zips.z.cash/zip-0258",
     "updatedAt": "2026-09-29T21:04:13Z",
     "summary": "This proposal defines the deployment of the NU6.3 network upgrade, which introduces the Ironwood shielded pool. The consensus changes for NU6.3 are specified across the version 6 transaction format 5, the Orchard Action circuit update 6,…",
-    "words": 1584,
+    "words": 1594,
     "digest": "237683ea48fc1e8bae7632d0bc2dcbc0a0538176333ff9753f6df3ea5bd9701f"
   },
   {
@@ -1590,7 +1590,7 @@
     "official": "https://zips.z.cash/zip-0259",
     "updatedAt": "2026-10-21T19:46:15Z",
     "summary": "This proposal defines the deployment of the NU7 network upgrade. NU7 reduces the block target spacing from 75 seconds to 25 seconds, introduces per-pool and global shielded action limits, introduces the Network Sustainability Mechanism…",
-    "words": 1211,
+    "words": 1222,
     "digest": "75061c436cd9cd65f03842af75377f87608f4157b43b72c475e5276b7cdeebdd"
   },
   {
@@ -1662,7 +1662,7 @@
     "official": "https://zips.z.cash/zip-0271",
     "updatedAt": "2026-09-24T13:47:28Z",
     "summary": "This ZIP proposes an extension of protocol-based development funding, in the context of multiple alternatives for distributing funds that have accrued to the Deferred Dev Fund Lockbox. This proposal is intended to be evaluated in the…",
-    "words": 3273,
+    "words": 3228,
     "digest": "88141f0743e669475ee68edb74283566f81480632b29f83273323df3e8f2f733"
   },
   {
@@ -1708,7 +1708,7 @@
     "official": "https://zips.z.cash/zip-0301",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP describes the Zcash variant of the Stratum protocol, used by miners to communicate with mining pool servers.",
-    "words": 2148,
+    "words": 2138,
     "digest": "957a0176a18d7d8312becf0e08d71b7263bb175f489f4a93f2386cfa43e5c3bd"
   },
   {
@@ -1731,7 +1731,7 @@
     "official": "https://zips.z.cash/zip-0302",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP describes a proposed specification for a standardized format for clients who wish to transmit or receive content within the encrypted memo field of shielded transactions.",
-    "words": 597,
+    "words": 594,
     "digest": "a8daf4cb91f533497e7d1c0bd332108234acb08b4cf8f6dc2f1e2cef8741e87d"
   },
   {
@@ -1777,7 +1777,7 @@
     "official": "https://zips.z.cash/zip-0304",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal describes a mechanism for creating signatures with Sapling addresses, suitable for use by the signmessage and verifymessage RPC methods in zcashd.",
-    "words": 1386,
+    "words": 1371,
     "digest": "d09e62bc2ee25dccb9e69e878b8e5b1851046cfc6b062d8360c78412ac4b51c7"
   },
   {
@@ -1847,7 +1847,7 @@
     "official": "https://zips.z.cash/zip-0307",
     "updatedAt": "2026-06-24T16:24:12Z",
     "summary": "This proposal defines a protocol for a Zcash light client supporting Sapling shielded transactions.",
-    "words": 3134,
+    "words": 3123,
     "digest": "fb129ba976391e88fec5a15a072d36dc304edfdf3aa693fa3f2f72c11a76991f"
   },
   {
@@ -1870,7 +1870,7 @@
     "official": "https://zips.z.cash/zip-0308",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal describes privacy-preserving procedures to migrate funds from Sprout to Sapling z-addresses; and supporting RPC operations to enable, disable, and monitor the migration process.",
-    "words": 2170,
+    "words": 2168,
     "digest": "38851c9dc4b17b1c6799f830580ff7f3cab8898cb223b245384ed3967084ec93"
   },
   {
@@ -1918,7 +1918,7 @@
     "official": "https://zips.z.cash/zip-0310",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP documents what information an entity learns when they are given one or more Sapling viewing keys, and what guarantees they have about this information.",
-    "words": 1521,
+    "words": 1518,
     "digest": "563303b857dd6257d3cb3c22f823b301205bb73c6fa764de4c558f19180eb138"
   },
   {
@@ -1941,7 +1941,7 @@
     "official": "https://zips.z.cash/zip-0311",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP describes a mechanism and format for disclosing information about shielded spends and outputs within a transaction. In the typical case, this means enabling a sender to present a proof that they transferred funds to a recipient's…",
-    "words": 2151,
+    "words": 2140,
     "digest": "471a1cb4bbe0c111b4bc9cd5ca8526d87d579a2a52e8461c5b3fc3ee8ae8614d"
   },
   {
@@ -1965,8 +1965,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0312.rst",
     "official": "https://zips.z.cash/zip-0312",
     "updatedAt": "2024-11-12T19:49:29Z",
-    "summary": "This proposal adapts FROST [3], a threshold signature scheme, to make it unlinkable, which is a requirement for its use in the Zcash protocol. The adapted scheme generates signatures compatible with spend authorization signatures in the…",
-    "words": 2770,
+    "summary": "This proposal adapts FROST 3, a threshold signature scheme, to make it unlinkable, which is a requirement for its use in the Zcash protocol. The adapted scheme generates signatures compatible with spend authorization signatures in the…",
+    "words": 2752,
     "digest": "f9da3c12b3c55621f5ae95fd386345c0a5ad8cede57070394374ef58814edbd3"
   },
   {
@@ -1989,7 +1989,7 @@
     "official": "https://zips.z.cash/zip-0313",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "The goal of this ZIP is to gather wallet developers, miners & Zcash users for social consensus on reducing the conventional transaction fees and to get the Zcash conventional transaction fee reduced from 10,000 zatoshis to 1,000 zatoshis.",
-    "words": 1230,
+    "words": 1220,
     "digest": "a54b4c0454d00f9033f7d3666e3435bc67df2e66160f3a296bdbe4bcad3b716c"
   },
   {
@@ -2036,8 +2036,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0315.rst",
     "official": "https://zips.z.cash/zip-0315",
     "updatedAt": "2026-10-13T20:45:14Z",
-    "summary": "The key words \"MUST\", \"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", \"NOT RECOMMENDED\", and \"MAY\" in this document are to be interpreted as described in BCP 14 [1] when, and only when, they appear in all capitals.",
-    "words": 4769,
+    "summary": "The key words \"MUST\", \"SHOULD\", \"SHOULD NOT\", \"RECOMMENDED\", \"NOT RECOMMENDED\", and \"MAY\" in this document are to be interpreted as described in BCP 14 1 when, and only when, they appear in all capitals.",
+    "words": 4756,
     "digest": "638f37eefd6d60d8edad4c3d32fd98d163512ff4664a750e246c154264c61166"
   },
   {
@@ -2064,7 +2064,7 @@
     "official": "https://zips.z.cash/zip-0316",
     "updatedAt": "2026-06-24T16:24:12Z",
     "summary": "This proposal defines Unified Addresses, which bundle together Zcash Addresses of different types in a way that can be presented as a single Address Encoding. It also defines Unified Viewing Keys, which perform a similar function for Zcash…",
-    "words": 9597,
+    "words": 9565,
     "digest": "02116bf336f760360b86a4ae646bc1c084f04722a25794678b1cde63cfdfe643"
   },
   {
@@ -2089,7 +2089,7 @@
     "official": "https://zips.z.cash/zip-0317",
     "updatedAt": "2026-10-21T23:30:22Z",
     "summary": "The goal of this ZIP is to change the conventional fees for transactions by making them dependent on the number of inputs and outputs in a transaction, and to get buy-in for this change from wallet developers, miners and Zcash users.",
-    "words": 3290,
+    "words": 3258,
     "digest": "2ad4085507b8dba45723dd11866d5640cbe35f8c0b64975dd68ddcb3fd596094"
   },
   {
@@ -2113,8 +2113,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0318.md",
     "official": "https://zips.z.cash/zip-0318",
     "updatedAt": "2026-10-22T14:45:43Z",
-    "summary": "This ZIP specifies best practices for wallets migrating funds from the Orchard pool to the Ironwood pool introduced by the NU6.3 network upgrade 7. It is written with light client wallets in mind, because their reliance on a light wallet…",
-    "words": 12126,
+    "summary": "This ZIP specifies best practices for wallets migrating funds from the Orchard pool to the Ironwood pool introduced by the NU6.3 network upgrade 8. It is written with light client wallets in mind, because their reliance on a light wallet…",
+    "words": 12088,
     "digest": "2c952de7603a55e735b680200f9ab3480d5e0b311db9e15be57fc1c9bf06a2f0"
   },
   {
@@ -2162,7 +2162,7 @@
     "official": "https://zips.z.cash/zip-0320",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP defines a new encoding for transparent Zcash addresses. Wallets must ensure that no shielded notes are spent in transactions that send to a transparent address encoded in the specified fashion.",
-    "words": 1623,
+    "words": 1608,
     "digest": "9363ce263a1a85d0c3aee91f959dfed2ea7716d0e86bc7ce4a49f13d85ed36f0"
   },
   {
@@ -2186,7 +2186,7 @@
     "official": "https://zips.z.cash/zip-0321",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP proposes a standard format for payment request URIs. Wallets that recognize this format enable users to construct transactions simply by clicking links on webpages or scanning QR codes.",
-    "words": 2384,
+    "words": 2367,
     "digest": "0b45f783fadd9b1684119de265283e036cb8967c42c436771dae9e3c059a5bd2"
   },
   {
@@ -2259,7 +2259,7 @@
     "official": "https://zips.z.cash/zip-0324",
     "updatedAt": "2026-03-24T07:28:53Z",
     "summary": "This proposal specifies a mechanism for sending Zcash payments via any unmodified (secure) messaging service, e.g., Signal or WhatsApp. The sender need not know the recipient's address and the recipient need not have a Zcash wallet already…",
-    "words": 6261,
+    "words": 6253,
     "digest": "74d0ea68ce34a0953f66b68572814e6cced3d77708217d994337ebb68a546987"
   },
   {
@@ -2284,7 +2284,7 @@
     "official": "https://zips.z.cash/zip-0325",
     "updatedAt": "2026-03-24T14:21:51Z",
     "summary": "This ZIP specifies the key tree for Account Metadata Keys. These are derived from the same seed as a ZIP 32 2 account, and can be used by wallets to derive encryption keys for local / off-chain metadata.",
-    "words": 1131,
+    "words": 1110,
     "digest": "28b2fa9c137192793811b211a67532542a597a51e00310cc2c3a5460a95a36d1"
   },
   {
@@ -2307,7 +2307,7 @@
     "official": "https://zips.z.cash/zip-0326",
     "updatedAt": "2026-10-22T14:45:43Z",
     "summary": "The NU6.3 network upgrade 6 introduces the Ironwood pool, an Orchard-protocol successor to the Orchard pool, that ensures quantum recoverability (ZIP 2005 8) and has supply integrity supported from the start by formal verification efforts…",
-    "words": 3528,
+    "words": 3529,
     "digest": "7208fb48fb8928fe729929846cd53ac9b49c72d17ed57b70185dea39754e83c0"
   },
   {
@@ -2398,7 +2398,7 @@
     "official": "https://zips.z.cash/zip-0374",
     "updatedAt": "2026-10-22T14:49:14Z",
     "summary": "This ZIP proposes a binary format for transactions that are in the process of being created: it carries the information necessary for each participant in the process — constructing inputs and outputs, computing zero-knowledge proofs,…",
-    "words": 11555,
+    "words": 11748,
     "digest": "1f275f4e7e51f963c3ed2ef62d2f0a9409b53d034fe5e6a0317fec1aa9e38892"
   },
   {
@@ -2421,7 +2421,7 @@
     "official": "https://zips.z.cash/zip-0400",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "This proposal defines the current format used in zcashd for wallet persistent storage, commonly known as wallet.dat.",
-    "words": 1219,
+    "words": 1214,
     "digest": "5ebae99f25a3b50e1f1d0a6431ade25f2459c3b898868dc289012d10a26d271b"
   },
   {
@@ -2444,7 +2444,7 @@
     "official": "https://zips.z.cash/zip-0401",
     "updatedAt": "2026-09-24T13:47:28Z",
     "summary": "This proposal specifies a change to the behaviour of zcashd nodes intended to mitigate denial-of-service from transaction flooding.",
-    "words": 1660,
+    "words": 1650,
     "digest": "95d3f4e600d71d12c55f1e6aa217173c2e79b8f9bc308469876ad998ce334901"
   },
   {
@@ -2534,7 +2534,7 @@
     "official": "https://zips.z.cash/zip-1001",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "The spirit of this ZIP is to is to ensure that the Founders’ Reward ends. It is not the intention of this ZIP to stop protocol-based donations.",
-    "words": 472,
+    "words": 467,
     "digest": "8dd824dec7b14b63e6fdaa539c6411812de4d0c74d1e9933eba56f8edfa755d5"
   },
   {
@@ -2557,7 +2557,7 @@
     "official": "https://zips.z.cash/zip-1002",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "The spirit of this ZIP is:",
-    "words": 1236,
+    "words": 1232,
     "digest": "c186e7aa2e181cf99368415be153db60272b5e3ab5ea292dcabc9ecc1389eaa9"
   },
   {
@@ -2580,7 +2580,7 @@
     "official": "https://zips.z.cash/zip-1003",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "This proposal would allocate a 20% Dev Fund Percentage to be split evenly between the Electric Coin Company (ECC) and the Zcash Foundation during the 2nd Halvening period. This proposal aims to be simple to implement, without a single…",
-    "words": 1012,
+    "words": 1009,
     "digest": "6c01456530839b2837841acbee30ce8a722af4aa02d95571f5aade34ca2bf24f"
   },
   {
@@ -2603,7 +2603,7 @@
     "official": "https://zips.z.cash/zip-1004",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "This proposal reserves a portion (20%) of the newly minted coins in each block for the development fund. A fixed set of developer entities would be eligible to receive these funds. The fund would be miner-directed in the sense that the…",
-    "words": 1050,
+    "words": 1045,
     "digest": "837d69ecbd1dfd5607bfecb580d16dcbed3ac3a210bcb3221b9379615c25a91f"
   },
   {
@@ -2650,7 +2650,7 @@
     "official": "https://zips.z.cash/zip-1006",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "This proposal puts forward the financing mechanism and fundamental rules of governance for the creation of a Zcash Development Fund.",
-    "words": 2843,
+    "words": 2834,
     "digest": "7019e432cb590fe76d6d19c44535f25edfcbadbd70d3d58d5e1524a59b29edcd"
   },
   {
@@ -2674,7 +2674,7 @@
     "official": "https://zips.z.cash/zip-1007",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "A supplemental proposal to ensure feature selection and work is community-driven.",
-    "words": 1297,
+    "words": 1295,
     "digest": "13ecd3969fbabe5392dd489e83f6aceb4377f04f3c131226172837ff4e4c912f"
   },
   {
@@ -2698,7 +2698,7 @@
     "official": "https://zips.z.cash/zip-1008",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "The spirit of this proposal is to keep to the current structure of the Electric Coin Company (ECC) receiving funding from the block distribution for two years' worth of blocks after the first halving in October 2020.",
-    "words": 585,
+    "words": 581,
     "digest": "d7e8c6a18b22ad23e048988985438c3f0303e53527864b4266a0d1205397aad3"
   },
   {
@@ -2744,7 +2744,7 @@
     "official": "https://zips.z.cash/zip-1010",
     "updatedAt": "2024-07-16T18:58:05Z",
     "summary": "I try to put the best pieces of various proposals together. A 20% of the block reward for a 4-year development fund that disburses to a trust controlled by both the Electric Coin Company (ECC) and Zcash Foundation (ZF), but with stringent…",
-    "words": 2495,
+    "words": 2486,
     "digest": "5b7e198882160c4fae3625a68740cf0a460cae156ded72a15e1a42d2ef66f613"
   },
   {
@@ -2813,7 +2813,7 @@
     "official": "https://zips.z.cash/zip-1013",
     "updatedAt": "2025-04-28T18:28:46Z",
     "summary": "This ZIP proposes:",
-    "words": 610,
+    "words": 609,
     "digest": "38a3c10b5e3623a6993aec287578e3fceb214debe94bfefac5a5c0bd13b8b8c6"
   },
   {
@@ -2837,7 +2837,7 @@
     "official": "https://zips.z.cash/zip-1014",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal describes a structure for the Zcash Development Fund, to be enacted in Network Upgrade 4 and last for 4 years. This Dev Fund would consist of 20% of the block subsidies, split into 3 slices:",
-    "words": 2771,
+    "words": 2759,
     "digest": "7f00069443a5702af0dadaeb7b9c272018bfbe3a9d6c5025f4895e81f64f1806"
   },
   {
@@ -2862,7 +2862,7 @@
     "official": "https://zips.z.cash/zip-1015",
     "updatedAt": "2025-02-20T14:10:26Z",
     "summary": "This ZIP proposes the allocation of a percentage of the Zcash block subsidy, post-November 2024 halving, split between Zcash Community Grants (ZCG) and an in-protocol \"lockbox.\" The \"lockbox\" is a separate pool of issued funds tracked by…",
-    "words": 2517,
+    "words": 2512,
     "digest": "f1dc763612be7e8e8f4f0609decf3b8d2d250fb2e41ca85e73529ddba7b23df6"
   },
   {
@@ -2885,7 +2885,7 @@
     "official": "https://zips.z.cash/zip-1016",
     "updatedAt": "2026-09-24T13:47:28Z",
     "summary": "This proposal outlines a funding model that gives the community and coin holders distinct voices in determining what, if any, grants are provided to support Zcash’s development and community efforts.",
-    "words": 1769,
+    "words": 1759,
     "digest": "53b2db6f394ee2850c212e564b464127bd1b52ea39bdecfe5ba5000d3358a27a"
   },
   {
@@ -2908,7 +2908,7 @@
     "official": "https://zips.z.cash/zip-2001",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This ZIP specifies a change to the Zcash consensus protocol to define a pool of issued Zcash value to be used to fund future development efforts within the Zcash ecosystem.",
-    "words": 1310,
+    "words": 1276,
     "digest": "9bbe0ac9137f3de377b1013558063e6004f077bfe310fe66e787494879dde94c"
   },
   {
@@ -2932,8 +2932,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-2002.rst",
     "official": "https://zips.z.cash/zip-2002",
     "updatedAt": "2026-09-01T20:42:01Z",
-    "summary": "This proposal makes the transaction fee explicit in the V7 transaction format, as an entry in the transparent transaction value pool balance map defined in ZIP 248 [9]. Instead of fees being implicit in the difference between the input…",
-    "words": 732,
+    "summary": "This proposal makes the transaction fee explicit in the V7 transaction format, as an entry in the transparent transaction value pool balance map defined in ZIP 248 9. Instead of fees being implicit in the difference between the input value…",
+    "words": 723,
     "digest": "765feba958dc4ee5667e8108a4aea4274c2551188c45100ae43d72934ab7036f"
   },
   {
@@ -2955,8 +2955,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-2003.rst",
     "official": "https://zips.z.cash/zip-2003",
     "updatedAt": "2026-10-22T14:45:44Z",
-    "summary": "This proposal disallows all v4 transactions from NU7 onward. It therefore affects every workflow that creates v4 transactions, not only workflows involving Sprout. Neither the v5 transaction format [8] introduced in the NU5 network…",
-    "words": 928,
+    "summary": "This proposal disallows all v4 transactions from NU7 onward. It therefore affects every workflow that creates v4 transactions, not only workflows involving Sprout. Neither the v5 transaction format 8 introduced in the NU5 network upgrade,…",
+    "words": 913,
     "digest": "85cb55c8ea35bbc3c2468f8ce0b47ee73af4f5faefc631b7c454334bc4332635"
   },
   {
@@ -2978,8 +2978,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-2004.rst",
     "official": "https://zips.z.cash/zip-2004",
     "updatedAt": "2026-02-10T21:17:45Z",
-    "summary": "ZIP 213 [6] added the ability for coinbase outputs to be shielded. An unfortunate side effect of this was to make consensus dependent on the details of note encryption. This has unnecessarily complicated the specification and…",
-    "words": 640,
+    "summary": "ZIP 213 6 added the ability for coinbase outputs to be shielded. An unfortunate side effect of this was to make consensus dependent on the details of note encryption. This has unnecessarily complicated the specification and implementation…",
+    "words": 633,
     "digest": "77865334dcae7b11a556f8be635bd040cf1326d71a9d8bc63cfef72bf7516e01"
   },
   {
@@ -3002,8 +3002,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-2005.md",
     "official": "https://zips.z.cash/zip-2005",
     "updatedAt": "2026-10-30T01:47:42Z",
-    "summary": "This ZIP proposes a change to the construction of notes, to be deployed for the Ironwood pool 5, designed to improve Zcash's long-term resilience against a significant potential threat to its security from quantum computers. It does not by…",
-    "words": 12502,
+    "summary": "This ZIP proposes a change to the construction of notes, to be deployed for the Ironwood pool 5, designed to improve Zcash’s long-term resilience against a significant potential threat to its security from quantum computers. It does not by…",
+    "words": 11852,
     "digest": "4682104e15fbabffa3d08eb5b443293567095d1cf1e609660c4615739f166374"
   },
   {
@@ -3026,7 +3026,7 @@
     "official": "https://zips.z.cash/zip-2006",
     "updatedAt": "2026-10-30T01:47:42Z",
     "summary": "NU6.3 6 specifies two restrictions intended to limit economic activity within the Orchard pool:",
-    "words": 2283,
+    "words": 2290,
     "digest": "2ed02ab1224feb19d0a817c28181cde53514706639886cceccbd5d0aa055bbf6"
   },
   {
@@ -3072,7 +3072,7 @@
     "official": "https://zips.z.cash/zip-2008",
     "updatedAt": "2026-10-21T14:15:10Z",
     "summary": "This ZIP updates the address list for the FS_FPF_ZCG_H3 funding stream, reflecting operational changes by the recipient.",
-    "words": 676,
+    "words": 685,
     "digest": "b1ee8c72acaa1906d79bf704e44583964e37d6b9e15b2f23a9770ab0e7d7d4b9"
   },
   {
@@ -3094,8 +3094,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-2009.md",
     "official": "https://zips.z.cash/zip-2009",
     "updatedAt": "2026-10-21T23:30:22Z",
-    "summary": "This ZIP cuts ZIP 317's 2 𝑚𝑎𝑟𝑔𝑖𝑛𝑎𝑙_𝑓𝑒𝑒 from 5,000 to 1,000 zatoshis per logical action, so the minimum conventional fee drops from 10,000 to 2,000 zatoshis. It also raises 𝑤𝑒𝑖𝑔ℎ𝑡_𝑟𝑎𝑡𝑖𝑜_𝑐𝑎𝑝 in ZIP 317's block template algorithm from 4 to…",
-    "words": 1052,
+    "summary": "This ZIP cuts ZIP 317’s 2 𝑚𝑎𝑟𝑔𝑖𝑛𝑎𝑙_𝑓𝑒𝑒 from 5,000 to 1,000 zatoshis per logical action, so the minimum conventional fee drops from 10,000 to 2,000 zatoshis. It also raises 𝑤𝑒𝑖𝑔ℎ𝑡_𝑟𝑎𝑡𝑖𝑜_𝑐𝑎𝑝 in ZIP 317’s block template algorithm from 4 to…",
+    "words": 1054,
     "digest": "299ab97ad42048a4394a753015b1720eee5c3097a422d9592309869ec1c2d11b"
   },
   {
@@ -3119,7 +3119,7 @@
     "official": "https://zips.z.cash/draft-arya-dairaemma-disable-addition-of-transparent-chain-value",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal disables the ability to add new value to the transparent chain value pool balance. This takes a step toward being able to remove the transparent protocol, thus reducing the overall complexity and attack surface of Zcash and…",
-    "words": 880,
+    "words": 883,
     "digest": "50094a4fcecc32bd6c13cf24714c0dd5b0450bdf3f88ba6fd3d1ac6c9b420bcf"
   },
   {
@@ -3142,8 +3142,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/draft-arya-jvff-p2p-quic-transport.md",
     "official": "https://zips.z.cash/draft-arya-jvff-p2p-quic-transport",
     "updatedAt": "2026-08-20T20:42:40Z",
-    "summary": "This ZIP specifies version 2 of the Zcash peer-to-peer network protocol, a successor to the protocol specified in ZIP 204 5. It specifies the protocol's transport-neutral stream layer, the QUIC and Tor transports that realize it, the…",
-    "words": 16958,
+    "summary": "This ZIP specifies version 2 of the Zcash peer-to-peer network protocol, a successor to the protocol specified in ZIP 204 5. It specifies the protocol’s transport-neutral stream layer, the QUIC and Tor transports that realize it, the…",
+    "words": 17025,
     "digest": "4851d8513a76bf5f6af900f72bcd6ada8085e15be5a959e48fbf4e075cb85b67"
   },
   {
@@ -3168,7 +3168,7 @@
     "official": "https://zips.z.cash/draft-ecc-authenticated-reply-addrs",
     "updatedAt": "2026-03-24T14:21:51Z",
     "summary": "TODO",
-    "words": 660,
+    "words": 642,
     "digest": "5f560284ad0ea521b092aa8658142cd6500f78837b72a3819b705ea50d42d54a"
   },
   {
@@ -3191,7 +3191,7 @@
     "official": "https://zips.z.cash/draft-ecc-onchain-accountable-voting",
     "updatedAt": "2026-02-10T21:17:45Z",
     "summary": "This proposal specifies a mechanism for on-chain accountable voting that is available for use by Zcash governance and funding proposals.",
-    "words": 1320,
+    "words": 1315,
     "digest": "36f8deaadd2944b466f7100fa1a66e225b6c550f243d532ae4554ee4c1d6d4cd"
   },
   {
@@ -3213,7 +3213,7 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/draft-mcgee-keyholders-organizations.md",
     "official": "https://zips.z.cash/draft-mcgee-keyholders-organizations",
     "updatedAt": "2026-09-29T20:50:05Z",
-    "summary": "This ZIP updates ZIP 1016 3 and ZIP 271 4 to replace the Electric Coin Company with Zcash Open Development Lab as one of the three Key-Holder Organizations for the Coinholder-Controlled Fund, and to define the term \"Key-Holder…",
+    "summary": "This ZIP updates ZIP 1016 3 and ZIP 271 4 to replace the Electric Coin Company with Zcash Open Development Lab as one of the three Key-Holder Organizations for the Coinholder-Controlled Fund, and to define the term “Key-Holder…",
     "words": 916,
     "digest": "2f4a4c3b109c236d4970d8f2b406982cb736893e4b4b61e20b8689fff57b1ca8"
   },
@@ -3238,7 +3238,7 @@
     "official": "https://zips.z.cash/draft-str4d-orchard-balance-proof",
     "updatedAt": "2026-03-24T07:28:53Z",
     "summary": "This ZIP specifies a mechanism that effectively takes a snapshot of the state of shielded balances in the Orchard pool, and allows holders to prove that they had at least a given balance as of the snapshot, in such a way that they cannot…",
-    "words": 1128,
+    "words": 1065,
     "digest": "68aafa5d0c941719bb29feef98668a653c5f8dca043e2ce62d424568d4e336d7"
   },
   {
@@ -3262,7 +3262,7 @@
     "official": "https://zips.z.cash/zip-guide",
     "updatedAt": "2026-10-22T04:50:30Z",
     "summary": "{Describe what this proposal does, typically in a few paragraphs.",
-    "words": 1335,
+    "words": 1327,
     "digest": "b6e0df5bd77d8e102aeb73aee6590737ef3e385681288a6e949fac7c014754af"
   },
   {
@@ -3286,7 +3286,7 @@
     "official": "https://zips.z.cash/zip-guide-markdown",
     "updatedAt": "2026-10-22T04:50:30Z",
     "summary": "{Describe what this proposal does, typically in a few paragraphs.",
-    "words": 1333,
+    "words": 1334,
     "digest": "b1036d34963a95d6e95c2fca83c5e177af94f2e03df7935770ab4f93b18ab6d2"
   },
   {
@@ -3309,8 +3309,8 @@
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-template.md",
     "official": "https://zips.z.cash/zip-template",
     "updatedAt": "2026-03-02T09:46:53Z",
-    "summary": "{Edit this to reflect the key words that are actually used.} The key words \"MUST\", \"REQUIRED\", \"MUST NOT\", \"SHOULD\", and \"MAY\" in this document are to be interpreted as described in BCP 14 1 when, and only when, they appear in all capitals.",
-    "words": 167,
+    "summary": "{Edit this to reflect the key words that are actually used.} The key words “MUST”, “REQUIRED”, “MUST NOT”, “SHOULD”, and “MAY” in this document are to be interpreted as described in BCP 14 1 when, and only when, they appear in all capitals.",
+    "words": 163,
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
   },
   {
@@ -3333,7 +3333,7 @@
     "official": "https://github.com/zcash/zips/pull/1436",
     "updatedAt": "2026-11-03T23:36:52Z",
     "summary": "This ZIP defines the service flag NODE_NETWORK_LIMITED for the Zcash peer-to-peer protocol specified in ZIP 204 2. A node that sets it serves at least the most recent 2,304 blocks of its best chain, but not necessarily older blocks. It is…",
-    "words": 596,
+    "words": 597,
     "digest": "b218e67059774e98fc952480f4bf3438cf9d2500c693549d4ae96c1a113b632d",
     "base": null,
     "pull": {
@@ -3371,8 +3371,8 @@
     "source": "https://github.com/zcash/zips/blob/748171908d06861c5d0051a4f1310e43d03c71cc/zips/draft-arya-wallet-to-wallet-messaging.md",
     "official": "https://github.com/zcash/zips/pull/1435",
     "updatedAt": "2026-11-03T21:56:12Z",
-    "summary": "This ZIP specifies an off-chain channel between Zcash wallets. A Sender wallet that holds a Recipient wallet's Unified Address deposits an encrypted Envelope in a Mailbox over an anonymity network, and the Recipient wallet fetches it…",
-    "words": 3687,
+    "summary": "This ZIP specifies an off-chain channel between Zcash wallets. A Sender wallet that holds a Recipient wallet’s Unified Address deposits an encrypted Envelope in a Mailbox over an anonymity network, and the Recipient wallet fetches it…",
+    "words": 3682,
     "digest": "f540a551c331d4a2b0afda6c22159df4a60660d369a9ad1814501cc1ddaf7a8d",
     "base": null,
     "pull": {
@@ -3410,8 +3410,8 @@
     "source": "https://github.com/zcash/zips/blob/c921894d8418382a7e9495f4d6f7f4045403702e/zips/draft-arya-lock-weighted-voting.md",
     "official": "https://github.com/zcash/zips/pull/1433",
     "updatedAt": "2026-11-03T15:47:38Z",
-    "summary": "Coinholder polls count one ZEC as one vote at a snapshot height, and coins may be moved right after the snapshot. This ZIP changes only the weighting: a ballot's weight rises linearly with how long its coins stay locked past the snapshot,…",
-    "words": 2377,
+    "summary": "Coinholder polls count one ZEC as one vote at a snapshot height, and coins may be moved right after the snapshot. This ZIP changes only the weighting: a ballot’s weight rises linearly with how long its coins stay locked past the snapshot,…",
+    "words": 2384,
     "digest": "06fa5335de39bda2319c553c55417e44d2d3f2fdee14b73417563b14e30fe34e",
     "base": null,
     "pull": {
@@ -3450,8 +3450,8 @@
     "source": "https://github.com/zcash/zips/blob/f20eefc453d50ece630ba4919ae250eb78c2ed05/zips/draft-khadim-aryaethn-frost-member-backup.md",
     "official": "https://github.com/zcash/zips/pull/1432",
     "updatedAt": "2026-11-04T14:49:55Z",
-    "summary": "This ZIP defines a backup string for one member of a FROST group that spends shielded ZEC with Orchard-protocol keys (in the Orchard or Ironwood pool). The string holds the member's identifier, the threshold, the group size, the member's…",
-    "words": 3459,
+    "summary": "This ZIP defines a backup string for one member of a FROST group that spends shielded ZEC with Orchard-protocol keys (in the Orchard or Ironwood pool). The string holds the member’s identifier, the threshold, the group size, the member’s…",
+    "words": 3475,
     "digest": "bc6028674cbf9b10780701985260cf282f4440f801e83a2e9962de303eb09aaf",
     "base": null,
     "pull": {
@@ -3490,7 +3490,7 @@
     "official": "https://github.com/zcash/zips/pull/1431",
     "updatedAt": "2026-11-04T00:24:16Z",
     "summary": "Reaffirm the portion of Protocol-defined Ecosystem Funding allocated to Zcash Community Grants (ZCG), and focus on its original goal described in ZIP 1015 5 — to accelerate Zcash adoption as broadly as possible. To better reflect that…",
-    "words": 1189,
+    "words": 1191,
     "digest": "a3e51ff84ea68323f0e10cd102d7906054854334eb780f1dc7a5715992ba2f8f",
     "base": null,
     "pull": {
@@ -3529,7 +3529,7 @@
     "official": "https://github.com/zcash/zips/pull/1430",
     "updatedAt": "2026-10-31T13:11:40Z",
     "summary": "This proposal changes the block target spacing from 25 seconds to 10 seconds in NU8. The block subsidy, the block size limit, and the shielded action limits of each block are scaled by the same factor, so that issuance, block space, and…",
-    "words": 1326,
+    "words": 1281,
     "digest": "747f006bdb632373ab9971ff6da632471d9aa6804f8cb9e5c43d82202f4bea41",
     "base": null,
     "pull": {
@@ -3567,8 +3567,8 @@
     "source": "https://github.com/zcash/zips/blob/de997f89922978d5727ce7acf764a728a0050ff5/zips/draft-marek-compact-block-relay.md",
     "official": "https://github.com/zcash/zips/pull/1429",
     "updatedAt": "2026-11-04T18:36:35Z",
-    "summary": "This ZIP specifies compact block relay for the Zcash peer-to-peer network, adapted from BIP 152. 4 A compact block contains the block header, short identifiers for the block's transactions, and its coinbase transaction; the receiver…",
-    "words": 2324,
+    "summary": "This ZIP specifies compact block relay for the Zcash peer-to-peer network, adapted from BIP 152. 4 A compact block contains the block header, short identifiers for the block’s transactions, and its coinbase transaction; the receiver…",
+    "words": 2325,
     "digest": "13bdcf5b133a316bc7c468e45a5d80eed97edb2e63cd0631005dabc091f4e863",
     "base": null,
     "pull": {
@@ -3609,7 +3609,7 @@
     "official": "https://github.com/zcash/zips/pull/1428",
     "updatedAt": "2026-11-03T22:55:21Z",
     "summary": "This ZIP makes two changes.",
-    "words": 1855,
+    "words": 1856,
     "digest": "ae245e1171f9af92b09ced69ff33d614a8b8b7c8759eeb45767f4a312da5357d",
     "base": null,
     "pull": {
@@ -3648,7 +3648,7 @@
     "official": "https://github.com/zcash/zips/pull/1423",
     "updatedAt": "2026-11-03T23:48:55Z",
     "summary": "This ZIP proposes an orderly wind-down of Zcash Community Grants. At activation of the designated Mainnet network upgrade, ZCG would stop making new grants and begin winding down its operations. Existing commitments would be completed…",
-    "words": 3978,
+    "words": 3987,
     "digest": "a8e78bbf3fe609d1323bfa64e702cb24ffa1eb0e66989f423b74de8165409c61",
     "base": null,
     "pull": {
@@ -3686,8 +3686,8 @@
     "source": "https://github.com/zcash/zips/blob/d585275fa0bf197d4aee424414ac1263d24f327e/zips/draft-marek-miner-sentiment-polling.md",
     "official": "https://github.com/zcash/zips/pull/1421",
     "updatedAt": "2026-11-04T02:49:47Z",
-    "summary": "This proposal specifies a process for gauging miners' sentiment on upcoming network upgrades. For each Election, miners answer the same questions, with the same options, as the ZCAP.",
-    "words": 4164,
+    "summary": "This proposal specifies a process for gauging miners’ sentiment on upcoming network upgrades. For each Election, miners answer the same questions, with the same options, as the ZCAP.",
+    "words": 4170,
     "digest": "2ab15848838a10e11ed43d56975548b16059d54d5199e1c498b15f2273663027",
     "base": null,
     "pull": {
@@ -3725,8 +3725,8 @@
     "source": "https://github.com/zcash/zips/blob/5b7a5e49fdbfaae398ed0ccb1147b3869a72cb19/zips/zip-0221.rst",
     "official": "https://github.com/zcash/zips/pull/1420",
     "updatedAt": "2026-10-28T12:54:19Z",
-    "summary": "This ZIP specifies modifications to the Zcash block header semantics and consensus rules in order to support the probabilistic verification FlyClient protocol [2]. The hashFinalSaplingRoot commitment in the block header is replaced with a…",
-    "words": 4276,
+    "summary": "This ZIP specifies modifications to the Zcash block header semantics and consensus rules in order to support the probabilistic verification FlyClient protocol 2. The hashFinalSaplingRoot commitment in the block header is replaced with a…",
+    "words": 4263,
     "digest": "48daf75aec9787b7a1b4e42797bf2ba803672086e1d3f06c65c95f80c16af1be",
     "base": "zip-0221",
     "pull": {
@@ -3764,8 +3764,8 @@
     "source": "https://github.com/zcash/zips/blob/0a0b9179a2683202c610ef41e4c5de0abb04a794/zips/draft-valargroup-sapling-disable-deposits.md",
     "official": "https://github.com/zcash/zips/pull/1415",
     "updatedAt": "2026-10-28T17:07:19Z",
-    "summary": "This proposal disables the ability to add new value to the Sapling chain value pool balance. From NU8 activation, every transaction's Sapling value balance must be nonnegative: value may leave the Sapling pool, or move between Sapling…",
-    "words": 2275,
+    "summary": "This proposal disables the ability to add new value to the Sapling chain value pool balance. From NU8 activation, every transaction’s Sapling value balance must be nonnegative: value may leave the Sapling pool, or move between Sapling…",
+    "words": 2289,
     "digest": "c4f9d3fb70c86cd9ec760ea7b06a2070ad8f9723d77f23b8ecbca9c2353cff76",
     "base": null,
     "pull": {
@@ -3803,8 +3803,8 @@
     "source": "https://github.com/zcash/zips/blob/19db1310bdb707ae82dd0d74c45b8059f887995c/zips/zip-0221.rst",
     "official": "https://github.com/zcash/zips/pull/1410",
     "updatedAt": "2026-10-21T17:07:46Z",
-    "summary": "This ZIP specifies modifications to the Zcash block header semantics and consensus rules in order to support the probabilistic verification FlyClient protocol [2]. The hashFinalSaplingRoot commitment in the block header is replaced with a…",
-    "words": 4448,
+    "summary": "This ZIP specifies modifications to the Zcash block header semantics and consensus rules in order to support the probabilistic verification FlyClient protocol 2. The hashFinalSaplingRoot commitment in the block header is replaced with a…",
+    "words": 4434,
     "digest": "7bc84693c0614b80a5f481ab83652f6f3265d24e5557058626228f323c600f80",
     "base": "zip-0221",
     "pull": {
@@ -3844,7 +3844,7 @@
     "official": "https://github.com/zcash/zips/pull/1410",
     "updatedAt": "2026-10-21T17:07:46Z",
     "summary": "This proposal defines the deployment of the NU6.3 network upgrade, which introduces the Ironwood shielded pool. The consensus changes for NU6.3 are specified across the version 6 transaction format 5, the Orchard Action circuit update 6,…",
-    "words": 1692,
+    "words": 1702,
     "digest": "e675db01e906a83b4489d823332ec7a1b491f68c6031e6acd5a7ab7fa49b0642",
     "base": "zip-0258",
     "pull": {
@@ -3886,8 +3886,8 @@
     "source": "https://github.com/zcash/zips/blob/972214a9ff218b1dce0564a21a462bd62b809e27/zips/zip-0226.rst",
     "official": "https://github.com/zcash/zips/pull/1407",
     "updatedAt": "2026-10-22T15:43:12Z",
-    "summary": "This ZIP (ZIP 226) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 227 [5]. The OrchardZSA protocol is an extension of the Orchard protocol that enables the issuance, transfer and burn of custom…",
-    "words": 4732,
+    "summary": "This ZIP (ZIP 226) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 227 5. The OrchardZSA protocol is an extension of the Orchard protocol that enables the issuance, transfer and burn of custom…",
+    "words": 4693,
     "digest": "24bb97bc8019364d04eb4c58410c1a81469fe3bcfe299ab9f400fcdc3586b776",
     "base": "zip-0226",
     "pull": {
@@ -3930,8 +3930,8 @@
     "source": "https://github.com/zcash/zips/blob/972214a9ff218b1dce0564a21a462bd62b809e27/zips/zip-0227.rst",
     "official": "https://github.com/zcash/zips/pull/1407",
     "updatedAt": "2026-10-22T15:43:12Z",
-    "summary": "This ZIP (ZIP 227) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 226 [10]. This protocol is an extension of the Orchard protocol that enables the creation, transfer and burn of Custom Assets on…",
-    "words": 5516,
+    "summary": "This ZIP (ZIP 227) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 226 10. This protocol is an extension of the Orchard protocol that enables the creation, transfer and burn of Custom Assets on the…",
+    "words": 5478,
     "digest": "28da48d41be0db51ff4f961c887fa2a532000269ff862871e617385ff2bd2e4d",
     "base": "zip-0227",
     "pull": {
@@ -3977,8 +3977,8 @@
     "source": "https://github.com/zcash/zips/blob/972214a9ff218b1dce0564a21a462bd62b809e27/zips/zip-0228.rst",
     "official": "https://github.com/zcash/zips/pull/1407",
     "updatedAt": "2026-10-22T15:43:12Z",
-    "summary": "This ZIP introduces Asset Swaps for Zcash Shielded Assets (ZSA). It builds on top of ZIP 227 [5] and ZIP 226 [4]. ZSA Swaps simplify the process of trading assets within the Zcash ecosystem, and lower the reliance on centralized exchanges…",
-    "words": 4334,
+    "summary": "This ZIP introduces Asset Swaps for Zcash Shielded Assets (ZSA). It builds on top of ZIP 227 5 and ZIP 226 4. ZSA Swaps simplify the process of trading assets within the Zcash ecosystem, and lower the reliance on centralized exchanges for…",
+    "words": 4316,
     "digest": "d054df39f7da7c4e3c3fe2db7d24d0db197660d4d02941fd6e169d5e8e4b0884",
     "base": "zip-0228",
     "pull": {
@@ -4019,7 +4019,7 @@
     "official": "https://github.com/zcash/zips/pull/1406",
     "updatedAt": "2026-10-27T13:48:57Z",
     "summary": "This ZIP describes a mechanism and format for disclosing information about shielded spends and outputs within a transaction. In the typical case, this means enabling a sender to present a proof that they transferred funds to a recipient's…",
-    "words": 2575,
+    "words": 2559,
     "digest": "b37d0988ee0ed806422f484cfd15ac3ecaafded54f6bc1410269878172cf3059",
     "base": "zip-0311",
     "pull": {
@@ -4062,7 +4062,7 @@
     "official": "https://github.com/zcash/zips/pull/1402",
     "updatedAt": "2026-11-04T00:05:32Z",
     "summary": "This proposal defines Unified Addresses, which bundle together Zcash Addresses of different types in a way that can be presented as a single Address Encoding. It also defines Unified Viewing Keys, which perform a similar function for Zcash…",
-    "words": 10289,
+    "words": 10259,
     "digest": "c3811b48d76ea3bd2605f01e22a9e77965605e29444c6fdb9036f280aff1236a",
     "base": "zip-0316",
     "pull": {
@@ -4101,7 +4101,7 @@
     "official": "https://github.com/zcash/zips/pull/1380",
     "updatedAt": "2026-09-29T21:18:26Z",
     "summary": "This ZIP specifies how Zcash light-client wallets MAY submit newly-constructed transactions directly to a full node peer via the Zcash P2P network — using the Dandelion++ stem-phase forwarding defined in draft-zodl-dandelion (PR #1379) 3 —…",
-    "words": 1570,
+    "words": 1558,
     "digest": "fdd8ec0027413320eed7aec86fddde8017eff1393db836abfdb834ce1b627cf2",
     "base": null,
     "pull": {
@@ -4139,8 +4139,8 @@
     "source": "https://github.com/zcash/zips/blob/04f59e5f65c04c737fff284b0b31eabe7fdc186b/zips/draft-zodl-dandelion.md",
     "official": "https://github.com/zcash/zips/pull/1379",
     "updatedAt": "2026-10-31T04:13:14Z",
-    "summary": "This ZIP specifies how Zcash full nodes SHOULD implement Dandelion++ 2 transaction propagation. In Dandelion++, a newly-received transaction first travels through a randomly-selected \"stem\" of peers (unicast per epoch) before entering a…",
-    "words": 1464,
+    "summary": "This ZIP specifies how Zcash full nodes SHOULD implement Dandelion++ 2 transaction propagation. In Dandelion++, a newly-received transaction first travels through a randomly-selected “stem” of peers (unicast per epoch) before entering a…",
+    "words": 1452,
     "digest": "fa0919974e051c80a0302488d084a0d709018fac3985e1d66f0e01652621b525",
     "base": null,
     "pull": {
@@ -4179,7 +4179,7 @@
     "official": "https://github.com/zcash/zips/pull/1346",
     "updatedAt": "2026-11-04T01:44:15Z",
     "summary": "This ZIP recommends how a node synchronizes the block chain over the version 2 Zcash P2P network protocol. The v2 protocol defines the synchronization primitives and the rules that any use of them must satisfy; this ZIP recommends concrete…",
-    "words": 4772,
+    "words": 4791,
     "digest": "7d8e2f3babeb261cffcd0af5e7c2abe5ee93fad643863bdbaca9e2f8b33de50b",
     "base": null,
     "pull": {
@@ -4220,7 +4220,7 @@
     "official": "https://github.com/zcash/zips/pull/1291",
     "updatedAt": "2026-05-26T17:56:24Z",
     "summary": "This proposal defines a new transaction digest algorithm for the NU5 network upgrade onward, in order to introduce non-malleable transaction identifiers that commit to all transaction data except for attestations to transaction validity.",
-    "words": 4384,
+    "words": 4370,
     "digest": "fe662723db7022ffbe4a07fc8f5b64b9ffa47bd44d3712cc488cb99209c9372e",
     "base": "zip-0244",
     "pull": {
@@ -4264,7 +4264,7 @@
     "official": "https://github.com/zcash/zips/pull/1291",
     "updatedAt": "2026-05-26T17:56:24Z",
     "summary": "This ZIP defines the sighash algorithms associated with the v6 transaction format.",
-    "words": 2657,
+    "words": 2637,
     "digest": "b8cdbbf7c6dcb71066868a47f5421713776154a0e793e6810319b9530151f281",
     "base": "zip-0246",
     "pull": {
@@ -4304,7 +4304,7 @@
     "official": "https://github.com/zcash/zips/pull/1290",
     "updatedAt": "2026-05-26T17:56:18Z",
     "summary": "This proposal describes privacy-preserving procedures to migrate funds from Sprout to Sapling z-addresses; and supporting RPC operations to enable, disable, and monitor the migration process.",
-    "words": 2287,
+    "words": 2285,
     "digest": "5ddb02852e2761b0183c68aad6346c3b7a476bf7d8df61c0e7a8e7659a118a60",
     "base": "zip-0308",
     "pull": {
@@ -4344,7 +4344,7 @@
     "official": "https://github.com/zcash/zips/pull/1289",
     "updatedAt": "2026-05-26T17:56:13Z",
     "summary": "This ZIP proposes a standard format for payment request URIs. Wallets that recognize this format enable users to construct transactions simply by clicking links on webpages or scanning QR codes.",
-    "words": 2499,
+    "words": 2481,
     "digest": "52b02d0f6b893524722f7f0bc60844808a79ba5b14957129ccc60aaea9a93ae9",
     "base": "zip-0321",
     "pull": {
@@ -4385,7 +4385,7 @@
     "official": "https://github.com/zcash/zips/pull/1288",
     "updatedAt": "2026-05-26T17:56:07Z",
     "summary": "The goal of this ZIP is to change the conventional fees for transactions by making them dependent on the number of inputs and outputs in a transaction, and to get buy-in for this change from wallet developers, miners and Zcash users.",
-    "words": 3185,
+    "words": 3090,
     "digest": "b698abb76bd3d8875951e11050b9d363f81f3b5c3b7a50fcfdb8222f995f5bab",
     "base": "zip-0317",
     "pull": {
@@ -4425,7 +4425,7 @@
     "official": "https://github.com/zcash/zips/pull/1287",
     "updatedAt": "2026-05-26T17:56:02Z",
     "summary": "This proposal defines a new transaction digest algorithm for signature validation from the Overwinter network upgrade, in order to minimize redundant data hashing in validation, and to cover the input value by the signature.",
-    "words": 2094,
+    "words": 2079,
     "digest": "1bfd7ac3276b0c3011617f0646eaf4ad4c403ac20defba41476cae8ffdc2c337",
     "base": "zip-0143",
     "pull": {
@@ -4466,7 +4466,7 @@
     "official": "https://github.com/zcash/zips/pull/1287",
     "updatedAt": "2026-05-26T17:56:02Z",
     "summary": "This proposal defines a new transaction digest algorithm for signature validation from the Sapling network upgrade, to account for the presence of Sapling shielded inputs and outputs in transactions.",
-    "words": 1740,
+    "words": 1732,
     "digest": "22d3892e3fe7f4163b6b054e0d6259a0f073677de5e187ec6bd2a08c1bea7b4e",
     "base": "zip-0243",
     "pull": {
@@ -4508,7 +4508,7 @@
     "official": "https://github.com/zcash/zips/pull/1285",
     "updatedAt": "2026-05-20T22:10:43Z",
     "summary": "The goal of this ZIP is to change the conventional fees for transactions by making them dependent on the number of inputs and outputs in a transaction, and to get buy-in for this change from wallet developers, miners and Zcash users.",
-    "words": 3387,
+    "words": 3292,
     "digest": "3a0889ba2f198196b06f46e173b96be977f1ce9f7ee081f2a53fbf57f759d588",
     "base": "zip-0317",
     "pull": {
@@ -4550,7 +4550,7 @@
     "official": "https://github.com/zcash/zips/pull/1244",
     "updatedAt": "2026-04-22T01:09:36Z",
     "summary": "This ZIP specifies the REST API endpoints, wire formats, and discovery mechanism that wallet clients use to participate in shielded on-chain voting rounds. It covers vote round discovery via a per-vote configuration document, data query…",
-    "words": 3323,
+    "words": 3328,
     "digest": "1793b621205b0326f31406ad523309539a534c1be3336cf22102bcc941d689f1",
     "base": null,
     "pull": {
@@ -4592,7 +4592,7 @@
     "official": "https://github.com/zcash/zips/pull/1218",
     "updatedAt": "2026-04-02T16:04:22Z",
     "summary": "This ZIP specifies the submission server, a protocol participant in the Zcash shielded voting system that receives encrypted vote shares from voters and submits them to the vote chain at client-specified times. The server constructs a Vote…",
-    "words": 3559,
+    "words": 3566,
     "digest": "59df1692a9ca06d23865d90c58297c008d687489cfe30d990525e4630581677c",
     "base": null,
     "pull": {
@@ -4630,8 +4630,8 @@
     "source": "https://github.com/zcash/zips/blob/d9ac34322c27b4502cc93ebdccfc9229e448ced8/zips/draft-shieldedlabs-crosslink-construction.rst",
     "official": "https://github.com/zcash/zips/pull/1216",
     "updatedAt": "2026-06-03T18:52:34Z",
-    "summary": "This ZIP specifies CCC-SL (the Crosslink Consensus Construction from Shielded Labs), the hybrid consensus protocol at the core of Shielded Labs Crosslink v1 [5]. CCC-SL integrates the Zcash Proof-of-Work best-chain protocol with the CFP-SL…",
-    "words": 3468,
+    "summary": "This ZIP specifies CCC-SL (the Crosslink Consensus Construction from Shielded Labs), the hybrid consensus protocol at the core of Shielded Labs Crosslink v1 5. CCC-SL integrates the Zcash Proof-of-Work best-chain protocol with the CFP-SL…",
+    "words": 3457,
     "digest": "b5286349f072156e4fc30aeb6375de6ee12255f177435926645077790ce62193",
     "base": null,
     "pull": {
@@ -4673,7 +4673,7 @@
     "official": "https://github.com/zcash/zips/pull/1216",
     "updatedAt": "2026-06-03T18:52:34Z",
     "summary": "This ZIP specifies the Crosslink ledger-state changes required by RSM-SL-v1. It defines the idealized point-in-time ledger state extension, and the ledger mutation rules that update this state, including issuance distribution and roster…",
-    "words": 1065,
+    "words": 1059,
     "digest": "807e563794f06cd32bed04780acc66293ae218c0453a8aec57e6942eddbeec28",
     "base": null,
     "pull": {
@@ -4715,7 +4715,7 @@
     "official": "https://github.com/zcash/zips/pull/1216",
     "updatedAt": "2026-06-03T18:52:34Z",
     "summary": "This ZIP describes the high-level design goals, motivations, and architecture of Shielded Labs Crosslink v1, a complete protocol and implementation produced by the Shielded Labs non-profit to add Crosslink Finality to the Zcash network.",
-    "words": 4017,
+    "words": 4004,
     "digest": "18fbe73fdadf9c21efee02a1442a6b9c7216bb8e092dec5d3368a9254f044d66",
     "base": null,
     "pull": {
@@ -4757,8 +4757,8 @@
     "source": "https://github.com/zcash/zips/blob/d9ac34322c27b4502cc93ebdccfc9229e448ced8/zips/zip-CROSSLINK.md",
     "official": "https://github.com/zcash/zips/pull/1216",
     "updatedAt": "2026-06-03T18:52:34Z",
-    "summary": "{Edit this to reflect the key words that are actually used.} The key words \"MUST\", \"REQUIRED\", \"MUST NOT\", \"SHOULD\", and \"MAY\" in this document are to be interpreted as described in BCP 14 1 when, and only when, they appear in all capitals.",
-    "words": 167,
+    "summary": "{Edit this to reflect the key words that are actually used.} The key words “MUST”, “REQUIRED”, “MUST NOT”, “SHOULD”, and “MAY” in this document are to be interpreted as described in BCP 14 1 when, and only when, they appear in all capitals.",
+    "words": 163,
     "digest": "5514fc8664e97a9676e5e506c90320957990928625cee7e60d8ddaafe6692f1e",
     "base": null,
     "pull": {
@@ -4803,7 +4803,7 @@
     "official": "https://github.com/zcash/zips/pull/1209",
     "updatedAt": "2026-03-31T21:49:25Z",
     "summary": "Currently, the memo associated with a shielded output is fixed to 512 bytes of data.",
-    "words": 5909,
+    "words": 5741,
     "digest": "8f3c4ea583ef81d674f87f492cc13fd7e4b5e35fde84b6ac7b23e1425215689e",
     "base": "zip-0231",
     "pull": {
@@ -4845,7 +4845,7 @@
     "official": "https://github.com/zcash/zips/pull/1203",
     "updatedAt": "2026-04-10T20:21:09Z",
     "summary": "This ZIP specifies how to operate the infrastructure for Zcash shielded coinholder voting. It defines a purpose-built vote chain built on Cosmos SDK, three operator roles (bootstrap operator, vote manager, validator), and the lifecycle of…",
-    "words": 4216,
+    "words": 4225,
     "digest": "04abad64bc515c9a0978f739b1e9ed6b04e4f95941d7e2c378f8ae2a5ef7ca2c",
     "base": null,
     "pull": {
@@ -4884,8 +4884,8 @@
     "source": "https://github.com/zcash/zips/blob/75f1a84fc480887961659a246ecf2176f1da6923/zips/zip-0307.rst",
     "official": "https://github.com/zcash/zips/pull/1202",
     "updatedAt": "2026-04-07T19:25:18Z",
-    "summary": "This ZIP defines a protocol for Zcash light clients that enables detection of incoming payments, identification of spent notes, and maintenance of note commitment tree witnesses and nullifier sets for Sapling [13] and Orchard [15] shielded…",
-    "words": 3038,
+    "summary": "This ZIP defines a protocol for Zcash light clients that enables detection of incoming payments, identification of spent notes, and maintenance of note commitment tree witnesses and nullifier sets for Sapling 13 and Orchard 15 shielded…",
+    "words": 3018,
     "digest": "666326edb7234a2cc405966120583b4c37a91d69ca847998a4c7a1a728b7a09a",
     "base": "zip-0307",
     "pull": {
@@ -4927,7 +4927,7 @@
     "official": "https://github.com/zcash/zips/pull/1200",
     "updatedAt": "2026-08-18T21:48:09Z",
     "summary": "This ZIP specifies a shielded voting protocol that allows holders of Orchard notes to cast stake-weighted votes on proposals without revealing their identity, individual balances, or vote allocations.",
-    "words": 8605,
+    "words": 8627,
     "digest": "bf7d0592308a40ed5a135547537b5b7b63d75d424d530b989a86c00c6bcd2e2c",
     "base": null,
     "pull": {
@@ -4968,8 +4968,8 @@
     "source": "https://github.com/zcash/zips/blob/6d7d72bf80e8eb6e5260923df43a6ca4c3e86c64/zips/draft-valargroup-orchard-balance-proof.md",
     "official": "https://github.com/zcash/zips/pull/1199",
     "updatedAt": "2026-03-31T21:49:46Z",
-    "summary": "This ZIP specifies a mechanism for proving ownership of unspent Orchard notes at a snapshot of the shielded pool, without revealing the notes' standard nullifiers or linking claims to past or future on-chain spending.",
-    "words": 5632,
+    "summary": "This ZIP specifies a mechanism for proving ownership of unspent Orchard notes at a snapshot of the shielded pool, without revealing the notes’ standard nullifiers or linking claims to past or future on-chain spending.",
+    "words": 5605,
     "digest": "563029cca93b9b67911b7339ad637d40993762ab46962d5c6af985cb9fcb6a82",
     "base": null,
     "pull": {
@@ -5050,7 +5050,7 @@
     "official": "https://github.com/zcash/zips/pull/1162",
     "updatedAt": "2026-03-24T21:17:49Z",
     "summary": "This ZIP introduces a system of transparent consensus accounts for receiving newly-issued ZEC, with spending from each account being controlled by a ZIP 270 5 signing key. Consensus accounts supplement (but do not replace) shielded…",
-    "words": 2854,
+    "words": 2815,
     "digest": "e982654f88f1d720927cd06a14e461d8616603b21e70a9850ec8ad892da1cfd1",
     "base": null,
     "pull": {
@@ -5089,8 +5089,8 @@
     "source": "https://github.com/zcash/zips/blob/9e8e676cfd744441cd0284b9fd2ab9f7b343d2ff/zips/draft-ecc-quantum-recoverability.md",
     "official": "https://github.com/zcash/zips/pull/1124",
     "updatedAt": "2025-11-07T17:01:42Z",
-    "summary": "This ZIP proposes a change to the construction of Orchard[ZSA] notes starting with v6 transactions, designed to improve Zcash's long-term resilience against a significant potential threat to its security from quantum computers. It does not…",
-    "words": 7821,
+    "summary": "This ZIP proposes a change to the construction of Orchard[ZSA] notes starting with v6 transactions, designed to improve Zcash’s long-term resilience against a significant potential threat to its security from quantum computers. It does not…",
+    "words": 7666,
     "digest": "0ac8215dfb113cb412fedbd9d631fc496d0c8114f504e2b309a70d4e1fcda34f",
     "base": null,
     "pull": {
@@ -5132,7 +5132,7 @@
     "official": "https://github.com/zcash/zips/pull/1117",
     "updatedAt": "2026-03-24T08:03:56Z",
     "summary": "This ZIP describes a mechanism for users to rotate their signing keys.",
-    "words": 2122,
+    "words": 2100,
     "digest": "8b12892445195452cb6f60e66b9a8bde4c2f0589357f677f290cb2db343996b7",
     "base": "zip-0270",
     "pull": {
@@ -5172,7 +5172,7 @@
     "official": "https://github.com/zcash/zips/pull/1112",
     "updatedAt": "2026-01-23T22:41:04Z",
     "summary": "This ZIP defines how the Coinholder Grants Program established in ZIP 1016 6 operates. It specifies a retroactive funding model, Administrator responsibilities, shielded and transparent voting procedures, participation thresholds, funding…",
-    "words": 2347,
+    "words": 2294,
     "digest": "5284c621ccea98d12eb7385d83fc6e6d1af607c6b27cfce46e9906b8a4fe536b",
     "base": null,
     "pull": {
@@ -5212,7 +5212,7 @@
     "official": "https://github.com/zcash/zips/pull/1107",
     "updatedAt": "2026-03-24T07:19:04Z",
     "summary": "This ZIP defines a new Transparent Zcash Extension that verifies a bounded‑size Circle STARK 2 proof. The extension has a single type and a single mode, and exposes a compact precondition/witness interface suitable for verifying validity…",
-    "words": 1092,
+    "words": 1103,
     "digest": "198b9f30ce909e7cc87490f290998b1f451db391ce9008aaa41c68e5d42bc3de",
     "base": null,
     "pull": {
@@ -5253,7 +5253,7 @@
     "official": "https://github.com/zcash/zips/pull/1075",
     "updatedAt": "2026-03-24T12:29:15Z",
     "summary": "This document describes the process of preparing and executing a Zcash Network Upgrade, and the constraints on node implementations that affect network upgrade timelines.",
-    "words": 2473,
+    "words": 2344,
     "digest": "615d08234c8c7d0a802bb893af0251d926894e1930b9e386a69e0624190aa800",
     "base": null,
     "pull": {
@@ -5292,7 +5292,7 @@
     "official": "https://github.com/zcash/zips/pull/999",
     "updatedAt": "2025-04-01T00:28:49Z",
     "summary": "This proposal specifies a mechanism to manage a Decentralized Autonomous Organization (DAO) using Zcash shielded addresses.",
-    "words": 1139,
+    "words": 1106,
     "digest": "2d48334ac2020ead59de4a078bfd2b68d14077a91538b2caeb4f491fdf0320b7",
     "base": null,
     "pull": {
@@ -5333,7 +5333,7 @@
     "official": "https://github.com/zcash/zips/pull/992",
     "updatedAt": "2025-06-10T21:22:47Z",
     "summary": "This ZIP specifies the key tree for Account Metadata Keys. These are derived from the same seed as a ZIP 32 2 account, and can be used by wallets to derive encryption keys for local / off-chain metadata.",
-    "words": 1124,
+    "words": 1109,
     "digest": "0897a6335c7a8356bd3ca710d72d9d8c9c16caa5e47a8a825c124e393a597a09",
     "base": "zip-0325",
     "pull": {
@@ -5373,7 +5373,7 @@
     "official": "https://github.com/zcash/zips/pull/980",
     "updatedAt": "2025-07-08T08:52:21Z",
     "summary": "This ZIP specifies user controls for transactions - a mechanism allowing recipients of shielded funds to actively participate in the transfer of Assets by approving or rejecting incoming transactions.",
-    "words": 1661,
+    "words": 1646,
     "digest": "9db806ff5ac982cbd5f51d96e29ecfbc3bb2d0109ab8bbce7fc6ab10815d5685",
     "base": null,
     "pull": {
@@ -5412,7 +5412,7 @@
     "official": "https://github.com/zcash/zips/pull/968",
     "updatedAt": "2025-05-18T18:23:48Z",
     "summary": "This proposal defines the current format used in zcashd for wallet persistent storage, commonly known as wallet.dat.",
-    "words": 1247,
+    "words": 1242,
     "digest": "a5a44eba85ea01698d34aa1f6ecd079cf7711e0063c76cd88a0a325657b052e3",
     "base": "zip-0400",
     "pull": {
@@ -5451,8 +5451,8 @@
     "source": "https://github.com/zcash/zips/blob/e9a0b7cad758895e7a937c533424c0219fa0ee74/zips/draft-ecc-complete-diversifier-map-for-sapling.rst",
     "official": "https://github.com/zcash/zips/pull/965",
     "updatedAt": "2025-02-20T13:11:04Z",
-    "summary": "In the original design of the Sapling shielded protocol, the \"diversifier hash\" that maps diversifiers to curve points was an incomplete function, resulting in about half of all diversifiers being invalid. When used with ZIP 32 [19], this…",
-    "words": 1769,
+    "summary": "In the original design of the Sapling shielded protocol, the \"diversifier hash\" that maps diversifiers to curve points was an incomplete function, resulting in about half of all diversifiers being invalid. When used with ZIP 32 19, this…",
+    "words": 1696,
     "digest": "504fbf0e7edbe5a8eea12efcec7ef13dc4647076c002ffc450d9334549a635c3",
     "base": null,
     "pull": {
@@ -5490,8 +5490,8 @@
     "source": "https://github.com/zcash/zips/blob/3defc4054f832710319371ad0fa2e729f7fef453/zips/zip-tbd1.md",
     "official": "https://github.com/zcash/zips/pull/899",
     "updatedAt": "2025-01-28T20:22:38Z",
-    "summary": "In this specification we’ll define how to include an on-chain pointer to a off-chain rich media message which is larger than 512 UTF-8 characters while maintaining the confidentiality guarantees of the memos defined in [^ZIP-302].",
-    "words": 1650,
+    "summary": "In this specification we’ll define how to include an on-chain pointer to a off-chain rich media message which is larger than 512 UTF-8 characters while maintaining the confidentiality guarantees of the memos defined in.",
+    "words": 1608,
     "digest": "e83dbe961e50e347b36d3c0839edc749725b7fee9a9041e853fd8c7b8e3fa0aa",
     "base": null,
     "pull": {
@@ -5530,8 +5530,8 @@
     "source": "https://github.com/zcash/zips/blob/3defc4054f832710319371ad0fa2e729f7fef453/zips/zip-tbd2.md",
     "official": "https://github.com/zcash/zips/pull/899",
     "updatedAt": "2025-01-28T20:22:38Z",
-    "summary": "This is the first version of the [^zip-tbd1] specification. It’s intended to be a basic implementation that can be used as a first iteration to build off as well as a fallback protocol in the future. As such, there may be certain…",
-    "words": 1345,
+    "summary": "This is the first version of the specification. It’s intended to be a basic implementation that can be used as a first iteration to build off as well as a fallback protocol in the future. As such, there may be certain capabilities or…",
+    "words": 1328,
     "digest": "bfa0389432f87a38df7286a2e05f7f8e93f0850562b9314f10570471d4108423",
     "base": null,
     "pull": {
@@ -5576,7 +5576,7 @@
     "official": "https://github.com/zcash/zips/pull/895",
     "updatedAt": "2026-11-04T14:56:03Z",
     "summary": "A Zcash Improvement Proposal (ZIP) is a design document providing information to the Zcash community, or describing a new feature for Zcash or its processes or environment. The ZIP should provide a concise technical specification of the…",
-    "words": 6272,
+    "words": 6258,
     "digest": "9e597a3c8efa665ebbc50fcffd341e9ea525f6732807d7828cdab03a9c46aa69",
     "base": "zip-0000",
     "pull": {
@@ -5616,8 +5616,8 @@
     "source": "https://github.com/zcash/zips/blob/be04583c304d90ee210b99fa9cd394d56439c64e/zips/zip-0312.rst",
     "official": "https://github.com/zcash/zips/pull/895",
     "updatedAt": "2026-11-04T14:56:03Z",
-    "summary": "This proposal adapts FROST [3], a threshold signature scheme, to make it support key re-randomization as described in [19]. This is a requirement in order for it to be used to implement unlinkable spend authorization signatures in the…",
-    "words": 3849,
+    "summary": "This proposal adapts FROST 3, a threshold signature scheme, to make it support key re-randomization as described in 19. This is a requirement in order for it to be used to implement unlinkable spend authorization signatures in the Orchard…",
+    "words": 3814,
     "digest": "63683c92a4d32d97e3b46db0c641ef0f1f4a057f089f7db507601890ddd76f4c",
     "base": "zip-0312",
     "pull": {
@@ -5657,7 +5657,7 @@
     "official": "https://github.com/zcash/zips/pull/638",
     "updatedAt": "2026-03-31T21:39:09Z",
     "summary": "This ZIP describes a proposed specification for a standardized format for clients who wish to transmit or receive content within the encrypted memo field of shielded transactions.",
-    "words": 1336,
+    "words": 1331,
     "digest": "725f83176ff6a65ed9f5528e2a6a5a07c863e166ab3df5b33b86e83755a1267c",
     "base": "zip-0302",
     "pull": {
