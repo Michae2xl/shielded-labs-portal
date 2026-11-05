@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { DevFundOverviewCard, DevFundProposals, DevFundVoting } from '@/app/shielded-preview/governance-dev-fund';
 import { ProposalsCollection, VotingCollection } from '@/app/shielded-preview/governance-collections';
 import GovernanceOverview from '@/app/shielded-preview/governance-overview';
-import { devFundHref, devFundLane, devFundNextSteps, devFundPhase, devFundTimeline } from './governance-dev-fund';
+import { devFundAcceptsProposals, devFundHref, devFundLane, devFundNextSteps, devFundPhase, devFundTimeline } from './governance-dev-fund';
 import { emptyCoinholderSource } from './coinholder-proposals';
 import snapshot from './governance-data/snapshot.json';
 import record from './governance-data/record.json';
@@ -46,17 +46,26 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(markup.indexOf(devFundTimeline.title)).toBeLessThan(markup.indexOf('How to participate'));
     const card = renderToStaticMarkup(createElement(DevFundOverviewCard, { onNavigate }));
     expect(card).toContain(`href="${devFundHref('voting').replaceAll('&', '&amp;')}"`);
-    for (const step of devFundTimeline.steps) expect(card).toContain(step.dates);
+    expect(card).toContain('View details');
+    for (const step of devFundTimeline.steps) { expect(card).toContain(step.dates); expect(card).toContain(step.short); }
   });
 
   it('explains how to submit, and cites ZIP 0 inside the portal', () => {
     const markup = renderToStaticMarkup(createElement(DevFundProposals, { onNavigate }));
     expect(markup).toContain('Anyone can submit a proposal.');
-    expect(markup).toContain('Sunday, 8 Nov 2026 · 23:59 UTC');
+    expect(markup).toContain('Sunday, 8 Nov 2026<small>23:59 UTC</small>');
     expect(markup).toContain('record=zip-0000');
-    expect(markup).toContain('https://forum.zcashcommunity.com"');
+    expect(markup).toContain('href="https://forum.zcashcommunity.com/new-topic?category=governance"');
+    expect(markup).toContain('Start a forum thread');
+    expect(markup).toContain('https://forum.zcashcommunity.com/c/governance/25');
     expect(markup).toContain('zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906');
     expect(markup).toContain('https://x.com/aquietinvestor/status/2118369236636869070');
+  });
+
+  it('stops inviting new threads once the published deadline has passed', () => {
+    expect(devFundAcceptsProposals(null)).toBe(true);
+    expect(devFundAcceptsProposals(at('2026-11-08T23:58:59Z'))).toBe(true);
+    expect(devFundAcceptsProposals(at('2026-11-08T23:59:00Z'))).toBe(false);
   });
 
   it('keeps its Proposals tab apart from ZCG applications and Coinholder grants', () => {
