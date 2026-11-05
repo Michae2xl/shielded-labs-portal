@@ -8,7 +8,7 @@ import type { ContentNode } from './types';
 
 describe('Shielded Labs editorial coverage', () => {
   it('contains every public article and a resource for each project', () => {
-    expect(editorialCatalog.filter(e => e.view === 'blog')).toHaveLength(20);
+    expect(editorialCatalog.filter(e => e.view === 'blog' && !e.linked)).toHaveLength(20);
     expect(new Set(editorialCatalog.map(e => e.id)).size).toBe(editorialCatalog.length);
     for (const project of ['crosslink', 'epoch', 'nsm', 'ironwood', 'zero', 'fees']) {
       expect(editorialCatalog.some(e => e.view === 'resources' && e.projects.includes(project))).toBe(true);

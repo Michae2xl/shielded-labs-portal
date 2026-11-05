@@ -4,6 +4,7 @@ import { projects } from '../content';
 import { contentText } from './faq';
 import { institutionalDocuments } from './institutional';
 import { editorialCatalog, editorialHref, legacyProjectResourceHref, resolveEditorialLink } from './library';
+import { linkedArticles } from './linked-articles';
 import { simulatorDocuments } from './simulators';
 import type { ContentNode } from './types';
 
@@ -18,7 +19,7 @@ describe('Editorial source-to-record navigation', () => {
   const handbookLinks = links(documents.find(entry => entry.id === handbook.id)!.body);
 
   it('connects every catalog record and internal document link to an existing record in the correct view and project', () => {
-    const allDocuments = [...documents, ...institutionalDocuments, ...simulatorDocuments];
+    const allDocuments = [...documents, ...linkedArticles, ...institutionalDocuments, ...simulatorDocuments];
     const knownProjects = new Set(projects.map(project => project.id as string));
     for (const entry of editorialCatalog) {
       const document = allDocuments.find(item => item.id === entry.id)!;

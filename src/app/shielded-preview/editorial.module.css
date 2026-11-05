@@ -108,6 +108,7 @@
 .articleCard:focus-visible{outline-offset:-3px}
 .articleCard .thumbnail{width:160px;aspect-ratio:16/10;height:auto;object-fit:contain;border:0;border-radius:5px}
 .articleCard:not(:has(.thumbnail)){grid-template-columns:minmax(0,1fr) 18px}
+.articleCard .linkedTile{display:flex;align-items:center;justify-content:center;color:#a0a0a0;font-size:12px;line-height:1.4;text-align:center}
 .articleCopy{min-width:0}
 .articleCard .cardMeta{gap:8px 14px;font-size:12px}
 .articleCard .cardMeta time{margin-left:0}
@@ -122,6 +123,12 @@
 .editorial:has(>.reader:is([data-layout="article"],[data-layout="institutional"]))>nav{max-width:1240px}
 @container(max-width:900px){.reader:is([data-layout="article"],[data-layout="institutional"]){grid-template-columns:minmax(0,1fr)}}
 .featured{display:block;width:100%;height:auto;border-radius:8px;margin:0 0 28px}
+.linkedLinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.linkedLinks a{display:inline-flex;align-items:center;gap:10px;min-height:46px;padding:10px 16px;border:1px solid #333;border-radius:8px;color:var(--ink);font-size:14px;line-height:1.4}
+.linkedLinks a:hover{border-color:#666;background:#181818}
+.linkedLinks .linkedRead{border-color:#eee;background:#eee;color:#111;font-weight:550}
+.linkedLinks .linkedRead:hover{border-color:#fff;background:#fff;color:#111}
+@container(max-width:620px){.linkedLinks{flex-direction:column}.linkedLinks a{justify-content:space-between}}
 .notice{color:#c2c2c2;font-size:15px;line-height:1.7;border-left:2px solid #777;padding:0 0 0 16px;margin:0 0 24px!important}
 .prose{font-size:17px;line-height:1.75;color:#d1d1d1;overflow-wrap:anywhere}
 .prose>p{margin:0 0 18px!important}

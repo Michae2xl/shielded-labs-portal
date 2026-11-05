@@ -17,6 +17,14 @@ describe('editorial document route', () => {
     expect(doc.headings).toHaveLength(23);
     expect(response.headers.get('X-Robots-Tag')).toContain('noindex');
   });
+  it('serves the summary of an article read at its source', async () => {
+    vi.stubEnv('SHIELDED_LABS_PREVIEW', '1');
+    const response = await GET(new Request('https://local.test/api?id=the-network-sustainability-mechanism-nsm-activates-with-nu7'));
+    expect(response.status).toBe(200);
+    const doc = await response.json();
+    expect(doc.linked.publisher).toBe('X');
+    expect(doc.body).toHaveLength(1);
+  });
   it('has a real missing-document state', async () => {
     vi.stubEnv('SHIELDED_LABS_PREVIEW', '1');
     expect((await GET(new Request('https://local.test/api?id=not-real'))).status).toBe(404);

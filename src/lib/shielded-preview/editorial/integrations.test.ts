@@ -43,7 +43,7 @@ describe('Portal simulators and news artwork', () => {
     expect(link.searchParams.get('simulation')).toBe('#proposal');
   });
   it('gives all 20 articles locally served publisher artwork with dimensions', () => {
-    const articles = editorialCatalog.filter(entry => entry.view === 'blog');
+    const articles = editorialCatalog.filter(entry => entry.view === 'blog' && !entry.linked);
     expect(articles).toHaveLength(20);
     for (const article of articles) {
       expect(article.image?.source).toMatch(/^https:\/\/shieldedlabs.net\/wp-content\/uploads\//);

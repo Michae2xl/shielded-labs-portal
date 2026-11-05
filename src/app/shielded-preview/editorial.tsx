@@ -78,7 +78,7 @@ function ResourceIcon({ category }: { category: string }) {
 function EntryCard({ entry, section, query, onFollow }: { entry: EditorialEntry; section: string; query: string; onFollow: Follow }) {
   const article = entry.view === 'blog';
   if (article) return <EditorialLink className={s.articleCard} href={editorialHref(entry, section, query)} onFollow={onFollow}>
-    {entry.image && <Image className={s.thumbnail} src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="(max-width: 620px) 96px, 160px"/>}
+    {entry.image ? <Image className={s.thumbnail} src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="(max-width: 620px) 96px, 160px"/> : entry.linked && <span className={`${s.thumbnail} ${s.linkedTile}`}>On {entry.linked.publisher}</span>}
     <div className={s.articleCopy}>
       <div className={s.cardMeta}>{section === 'all' && <span>{entry.category}</span>}<DateLabel date={entry.publishedAt}/></div>
       <h2>{entry.title}</h2>
@@ -144,6 +144,7 @@ function Reader({ entry, backHref, backLabel, onFollow, embedded = false, contac
   const portrait = entry.id.startsWith('board-') ? board.find(person => `board-${person.id}` === entry.id) : null;
   const related = editorialCatalog.filter(item => item.id !== entry.id && item.view === 'blog' && item.projects.some(project => entry.projects.includes(project))).slice(0, 3);
   const source = safeEditorialUrl(entry.source);
+  const alsoAt = entry.linked?.also ? safeEditorialUrl(entry.linked.also.href) : null;
   const hasSeparateFaq = embedded && entry.category === 'Guide & FAQ';
   const headings = (hasSeparateFaq ? entry.headings.filter(heading => heading.level === 2 && heading.id !== 'frequently-asked-questions-faq') : entry.headings).filter(heading => heading.title.trim());
   const Title = embedded ? 'h2' : 'h1';
@@ -162,6 +163,10 @@ function Reader({ entry, backHref, backLabel, onFollow, embedded = false, contac
       {entry.notice && <p className={s.notice}>{entry.notice}</p>}
       {entry.id === 'organization' && result ? <OrganizationBody nodes={result.body} onFollow={onFollow}/> : entry.id === 'contact' && contactForm ? <ContactForm controller={contactForm} onPrivacy={() => onFollow('?view=about&section=privacy')}/> : <div className={s.prose} aria-busy={!result && !failed}>
         {result ? <DocumentBody nodes={hasSeparateFaq ? faqContent(result).intro : result.body} onFollow={onFollow} actions={entry.view === 'about' && entry.id !== 'privacy'} anchors={entry.view !== 'about'}/> : failed ? <div role="alert"><p>This document could not be loaded.</p><button onClick={retry}>Try again</button></div> : <p role="status">Loading article…</p>}
+      </div>}
+      {entry.linked && source && <div className={s.linkedLinks}>
+        <a className={s.linkedRead} href={source} target="_blank" rel="noopener noreferrer">Read the full article on {entry.linked.publisher}<EditorialArrow external/></a>
+        {alsoAt && <a href={alsoAt} target="_blank" rel="noopener noreferrer">{entry.linked.also?.label}<EditorialArrow external/></a>}
       </div>}
       {hasSeparateFaq && <div className={s.inlineLinks}><EditorialLink href={projectHref(entry.projects[0], 'faq', entry.id)} onFollow={onFollow}>Frequently asked questions<EditorialArrow/></EditorialLink></div>}
 

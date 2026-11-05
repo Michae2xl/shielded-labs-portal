@@ -1,5 +1,6 @@
 import importedCatalog from './catalog.json';
 import { institutionalDocuments } from './institutional';
+import { withLinkedArticles } from './linked-articles';
 import { internalSimulatorLink, simulatorDocuments } from './simulators';
 import type { EditorialEntry } from './types';
 import { projects } from '../content';
@@ -7,7 +8,7 @@ import { projectHref } from '../project-navigation';
 import { bundledZips, zipHref } from '../zips/library';
 
 export const editorialCatalog: EditorialEntry[] = [
-  ...importedCatalog as EditorialEntry[],
+  ...withLinkedArticles(importedCatalog as EditorialEntry[]),
   ...institutionalDocuments,
   ...simulatorDocuments,
 ];

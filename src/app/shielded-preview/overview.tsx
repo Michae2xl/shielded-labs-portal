@@ -81,7 +81,7 @@ export default function Overview({ data, onNavigate, onProject, onFollow, projec
     <section aria-labelledby="overview-news" className={s.news}>
       <header className={s.sectionHeader}><h2 id="overview-news">From the blog</h2></header>
       <div className={s.newsGrid}>{latestNews.map(entry => <PortalLink key={entry.id} view="blog" section="all" record={entry.id} onNavigate={onNavigate} className={s.newsCard}>
-        {entry.image && <Image src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="80px"/>}
+        {entry.image ? <Image src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="80px"/> : entry.linked && <span className={s.newsTile}>On {entry.linked.publisher}</span>}
         <div><DateStamp date={entry.publishedAt}/><h3>{entry.title}</h3></div><Arrow/>
       </PortalLink>)}</div>
       <PortalLink view="blog" onNavigate={onNavigate} className={s.cardAction}>All articles<Arrow/></PortalLink>
