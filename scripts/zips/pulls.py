@@ -16,6 +16,7 @@ from pathlib import Path
 PULL_LIMIT = 150
 FILES_PER_PULL = 20
 SOURCE_LIMIT = 1_000_000
+FILE_NAME_LIMIT = 200
 REPOSITORY = 'https://github.com/zcash/zips'
 PULL_URL = re.compile(r'^https://github\.com/zcash/zips/pull/(\d+)$')
 SHA = re.compile(r'^[0-9a-f]{40}$')
@@ -27,7 +28,7 @@ def iso_utc(value):
 
 
 def git(root, *args, strip=True):
-    result = subprocess.run(['git', '-C', str(root), *args], capture_output=True, text=True, check=False)
+    result = subprocess.run(['git', '-C', str(root), *args], capture_output=True, encoding='utf-8', check=False)
     if result.returncode != 0:
         return ''
     return result.stdout.strip() if strip else result.stdout
@@ -79,7 +80,7 @@ def changed_zip_files(root, head):
         return []
     names = git(root, 'diff', '--name-only', '--diff-filter=AMR', base, head, '--', 'zips').splitlines()
     # Guides and the template are process documents, not proposals; their edits are not previewed.
-    return [name[5:] for name in names if name.startswith('zips/') and name.endswith(('.rst', '.md')) and '/' not in name[5:] and not name[5:].startswith(('zip-guide', 'zip-template'))][:FILES_PER_PULL]
+    return [name[5:] for name in names if name.startswith('zips/') and name.endswith(('.rst', '.md')) and '/' not in name[5:] and not name[5:].startswith(('zip-guide', 'zip-template')) and len(name) <= FILE_NAME_LIMIT][:FILES_PER_PULL]
 
 
 def pull_identifier(number, name):
@@ -103,14 +104,14 @@ def import_pulls(source_root, pulls, render, image):
             continue
         files = changed_zip_files(source_root, head)
         for name in files:
-            text = git(source_root, 'show', f'{head}:zips/{name}', strip=False)
-            if not text.strip():
-                failures.append({'pull': number, 'file': name, 'error': 'Empty or unreadable source'})
-                continue
-            if len(text.encode('utf-8')) > SOURCE_LIMIT:
-                failures.append({'pull': number, 'file': name, 'error': 'Source exceeds the import size limit'})
-                continue
             try:
+                text = git(source_root, 'show', f'{head}:zips/{name}', strip=False)
+                if not text.strip():
+                    failures.append({'pull': number, 'file': name, 'error': 'Empty or unreadable source'})
+                    continue
+                if len(text.encode('utf-8')) > SOURCE_LIMIT:
+                    failures.append({'pull': number, 'file': name, 'error': 'Source exceeds the import size limit'})
+                    continue
                 record, document = render(text, Path(name), image)
             except Exception as error:  # noqa: BLE001 - one broken proposal must not stop the sync
                 failures.append({'pull': number, 'file': name, 'error': str(error)[:200]})

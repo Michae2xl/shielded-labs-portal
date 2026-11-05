@@ -8,7 +8,7 @@ refresh the bundled snapshot:
 
     python3 scripts/zips/import_zips.py --source ../zips [--pulls pulls.json]
 
-Requires docutils (reStructuredText, MathML) and Markdown; see requirements.txt.
+Requires docutils (reStructuredText, MathML) and markdown-it-py; see requirements.txt.
 """
 import argparse
 import hashlib
@@ -22,7 +22,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sanitize import clean, plain, prepare, summary  # noqa: E402
+from sanitize import DETAILS_CLOSE, DETAILS_OPEN, LINE_BREAK, clean, collect_ids, plain, prepare, summary  # noqa: E402
 from pulls import import_pulls, load_pulls  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -31,7 +31,7 @@ DEFAULT_PUBLIC = ROOT / 'public/shielded-preview/zips'
 REPOSITORY = 'https://github.com/zcash/zips'
 OFFICIAL = 'https://zips.z.cash/'
 SOURCE_LIMIT = 1_000_000
-IMAGE_LIMIT = 2_000_000
+IMAGE_LIMIT = 4_000_000
 STATUSES = ['Draft', 'Proposed', 'Active', 'Implemented', 'Final', 'Withdrawn', 'Rejected', 'Obsolete', 'Reserved', 'Deferred', 'Superseded']
 HEADER_KEY = re.compile(r'^([A-Z][A-Za-z-]*):(?:\s*(.*))?$')
 DATE = re.compile(r'\d{4}-\d{2}-\d{2}')
@@ -40,7 +40,13 @@ PNG = b'\x89PNG\r\n\x1a\n'
 RST_SETTINGS = dict(raw_enabled=False, file_insertion_enabled=False, report_level=5, halt_level=5, math_output='MathML',
                     initial_header_level=2, embed_stylesheet=False, stylesheet_path='', syntax_highlight='none',
                     smart_quotes=False, doctitle_xform=False, sectsubtitle_xform=False, input_encoding='utf-8')
-MD_EXTENSIONS = ['extra', 'toc', 'sane_lists']
+
+
+def heading_id(value):
+    """Heading ids of the multimarkdown build at zips.z.cash, which the documents' own links use."""
+    return re.sub(r'[^a-z0-9_.:-]', '', value.lower()) or 'section'
+
+
 # docutils converts LaTeX to MathML itself and knows no text-mode or sizing commands; the
 # repository's sources use a few of them for the KaTeX build. Map them to equivalents first.
 MATH_SUBSTITUTIONS = [
@@ -61,7 +67,7 @@ def portable_math(text):
 # Inside a formula only: characters docutils rejects outside text mode, and spacing-class wrappers.
 FORMULA_SUBSTITUTIONS = [
     (re.compile(r'\\mathbin\{((?:[^{}]|\{[^{}]*\})*)\}'), r'\1'), (re.compile(r'\\mathstrut'), ''), (re.compile(r'\\LaTeX\b'), r'\\text{LaTeX}'),
-    (re.compile(r'[“”"⦂]'), lambda m: '\\text{%s}' % m.group(0)), (re.compile('‐'), '-'), (re.compile('•'), r'\\bullet '),
+    (re.compile(r'[“”"⦂]'), lambda m: '\\text{%s}' % m.group(0)), (re.compile('‐'), '-'), (re.compile('•'), r'\\bullet '), (re.compile('×'), r'\\times '),
 ]
 
 
@@ -70,7 +76,16 @@ def portable_formula(tex):
         tex = pattern.sub(replacement, tex)
     return tex
 ESCAPED_DOLLAR = ''
-MATH_OPEN, MATH_CLOSE = '', ''
+RST_DETAILS_OPEN = re.compile(r'^([ \t]*)\.\. raw:: html[ \t]*\n[ \t]*\n\1[ \t]+<details>[ \t]*\n\1[ \t]+<summary>([^<\n]*)</summary>[ \t]*\n', re.M)
+RST_DETAILS_CLOSE = re.compile(r'^([ \t]*)\.\. raw:: html[ \t]*\n[ \t]*\n\1[ \t]+</details>[ \t]*\n', re.M)
+UNCONVERTED = re.compile(r'>\\[A-Za-z]')
+TRAILING_BREAK = re.compile(r'(?:\s*\\\\)+\s*$')
+LATEX_SPAN = re.compile(r'\$(?!\$)([^$\n]*\\[A-Za-z][^$\n]*)\$(?![\d$])')
+RST_BREAK = re.compile(r'^\.\. \|br\| raw:: html[ \t]*\n[ \t]*\n[ \t]+<br\s*/?>[ \t]*\n', re.M)
+UNDEFINED_FOOTNOTE = re.compile(r'[ \t]*\[\^[\w.-]+\]_?')
+HEADING_LABEL = re.compile(r'\s*\[([A-Za-z0-9_.:-]+)\]\s*$')
+RECORD_PREFIX = '?view=governance&section=zips&record='
+RECORD_LINK = re.compile(r'^\?view=governance&section=zips&record=([^#&]+)(#.*)?$')
 
 
 def parse_header(text):
@@ -141,13 +156,13 @@ def entry(meta, path):
     return {
         'id': stem,
         'number': number,
-        'title': ' '.join(meta.get('Title', [])).strip() or stem,
+        'title': (' '.join(meta.get('Title', [])).strip() or stem)[:300],
         'status': status,
-        'statusDetail': status_raw if status_raw != status else None,
-        'category': 'Not recorded' if not category or category.startswith('{') else category,
-        'owners': [name for name in (contact_name(value) for value in meta.get('Owners', [])) if name],
+        'statusDetail': status_raw[:400] if status_raw != status else None,
+        'category': 'Not recorded' if not category or category.startswith('{') else category[:120],
+        'owners': [name[:120] for name in (contact_name(value) for value in meta.get('Owners', [])) if name][:40],
         'created': created,
-        'license': ' '.join(meta.get('License', [])).strip() or None,
+        'license': ' '.join(meta.get('License', [])).strip()[:200] or None,
         'discussionsTo': first_url(meta.get('Discussions-To')),
         'pullRequest': first_url(meta.get('Pull-Request')),
         'kind': 'zip' if number is not None else 'guide' if stem.startswith(('zip-guide', 'zip-template')) else 'draft',
@@ -157,12 +172,40 @@ def entry(meta, path):
     }
 
 
+def rst_details(text):
+    """Keep the collapsible blocks of reStructuredText sources.
+
+    Raw HTML stays disabled, so the exact directives that open and close one become
+    marker paragraphs; the sanitizer builds the block from them.
+    """
+    text = RST_DETAILS_OPEN.sub(lambda m: f'{m.group(1)}{DETAILS_OPEN}{m.group(2).strip()}\n', text)
+    return RST_DETAILS_CLOSE.sub(lambda m: f'{m.group(1)}{DETAILS_CLOSE}\n', text)
+
+
+def rst_breaks(text):
+    """Keep the ``|br|`` substitution of reStructuredText sources with raw HTML disabled.
+
+    The marker keeps the width of the original, so grid tables stay aligned.
+    """
+    if not RST_BREAK.search(text):
+        return text
+    return RST_BREAK.sub('', text).replace('|br|', LINE_BREAK + '   ')
+
+
+def dollar_role(match):
+    """A role needs a boundary on each side; an escaped space gives it one next to a letter or digit."""
+    source, start, end = match.string, match.start(), match.end()
+    before = '\\ ' if start and source[start - 1].isalnum() else ''
+    after = '\\ ' if end < len(source) and source[end].isalnum() else ''
+    return f'{before}:math:`{match.group(1).strip()}`{after}'
+
+
 def rst_math(text):
     """Convert the repository's ``$...$`` extension into the standard math role."""
     out = []
     for line in text.splitlines():
         line = line.replace('\\$', ESCAPED_DOLLAR)
-        line = re.sub(r'\$([^$]+)\$', lambda m: ':math:`%s`' % m.group(1), line)
+        line = re.sub(r'\$([^$]+)\$', dollar_role, line)
         line = re.sub(r':math:`([^`]+)`', lambda m: ':math:`%s`' % portable_formula(m.group(1)), line)
         out.append(line.replace(ESCAPED_DOLLAR, '$'))
     return '\n'.join(out) + '\n'
@@ -171,48 +214,92 @@ def rst_math(text):
 def render_rst(text):
     from docutils.core import publish_parts
     settings = dict(RST_SETTINGS, warning_stream=io.StringIO())
-    return publish_parts(rst_math(text), writer='html5', settings_overrides=settings)['body']
-
-
-def protect_math(text):
-    """Replace ``$...$`` spans outside code with tokens so Markdown leaves them alone."""
-    maths = []
-
-    def token(latex, block):
-        maths.append((latex.strip(), block))
-        return f'{MATH_OPEN}{len(maths) - 1}{MATH_CLOSE}'
-    out, fenced = [], False
-    for line in text.splitlines():
-        if line.lstrip().startswith('```') or line.lstrip().startswith('~~~'):
-            fenced = not fenced
-        if fenced or line.startswith('    '):
-            out.append(line)
-            continue
-        parts = line.split('`')
-        for index in range(0, len(parts), 2):
-            part = parts[index].replace('\\$', ESCAPED_DOLLAR)
-            part = re.sub(r'\$\$([^$]+)\$\$', lambda m: token(m.group(1), True), part)
-            part = re.sub(r'\$([^$]+)\$', lambda m: token(m.group(1), False), part)
-            parts[index] = part
-        out.append('`'.join(parts))
-    return '\n'.join(out) + '\n', maths
+    return publish_parts(rst_math(rst_breaks(rst_details(text))), writer='html5', settings_overrides=settings)['body']
 
 
 def mathml(latex, block):
     from docutils.utils.math import MathError
     from docutils.utils.math.latex2mathml import tex2mathml
+    # A line break at the very end of a formula has no row to end, and the converter rejects it.
+    tex = TRAILING_BREAK.sub('', portable_formula(latex))
     try:
-        return tex2mathml(portable_formula(latex), as_block=block)
-    except (MathError, ValueError, IndexError):
+        return tex2mathml(tex, as_block=block)
+    except (MathError, ValueError, IndexError, AttributeError):
+        pass
+    # Environments such as array and commands such as \\choose need the second converter;
+    # a command it does not know comes out as visible source, which is no better than code.
+    try:
+        from latex2mathml.converter import convert
+        converted = convert(tex, display='block' if block else 'inline')
+    except Exception:  # noqa: BLE001 - one formula must not stop the document
         return '<code>' + html.escape(latex) + '</code>'
+    return '<code>' + html.escape(latex) + '</code>' if UNCONVERTED.search(converted) else converted
+
+
+def heading_labels(state):
+    """``## Title [label]`` names the heading's anchor; the label is not part of the title."""
+    items = state.tokens
+    for index, item in enumerate(items):
+        if item.type != 'heading_open':
+            continue
+        inline = items[index + 1]
+        last = inline.children[-1] if inline.children else None
+        match = HEADING_LABEL.search(last.content) if last is not None and last.type == 'text' else None
+        if match:
+            last.content = last.content[:match.start()]
+            inline.content = HEADING_LABEL.sub('', inline.content)
+            item.attrSet('id', match.group(1))
+
+
+def undefined_footnotes(state):
+    """A footnote marker with no definition stays out of the text, as on the site; the parser keeps real ones apart."""
+    for item in state.tokens:
+        if item.type == 'inline':
+            for child in item.children or []:
+                if child.type == 'text':
+                    child.content = UNDEFINED_FOOTNOTE.sub('', child.content)
+
+
+def latex_span(state, silent):
+    """A dollar span holding a LaTeX command is a formula, even with a space before its closing dollar."""
+    match = LATEX_SPAN.match(state.src, state.pos) if state.src[state.pos] == '$' else None
+    if not match:
+        return False
+    if not silent:
+        item = state.push('math_inline', 'math', 0)
+        item.markup = '$'
+        item.content = match.group(1).strip()
+    state.pos = match.end()
+    return True
+
+
+def markdown_parser():
+    """CommonMark with the extensions the ZIPs use.
+
+    Nested lists at any indent, code inside quotes and lists, and Markdown between raw
+    HTML tags all follow the rules of the site build, and formulas are read by the parser,
+    so they are recognised wherever text is and never inside code.
+    """
+    from markdown_it import MarkdownIt
+    from mdit_py_plugins.anchors import anchors_plugin
+    from mdit_py_plugins.deflist import deflist_plugin
+    from mdit_py_plugins.dollarmath import dollarmath_plugin
+    from mdit_py_plugins.footnote import footnote_plugin
+    parser = MarkdownIt('commonmark', {'html': True, 'typographer': True}).enable(['table', 'smartquotes'])
+    parser.use(footnote_plugin).use(deflist_plugin)
+    # The usual rule for dollars: a formula hugs its delimiters and no digit follows it, so prices stay text.
+    parser.use(dollarmath_plugin, allow_labels=False, allow_space=False, allow_digits=False, double_inline=True, renderer=lambda tex, options: mathml(tex, options.get('display_mode', False)))
+    parser.inline.ruler.before('math_inline', 'latex_span', latex_span)
+    parser.use(anchors_plugin, max_level=6, slug_func=heading_id)
+    parser.core.ruler.after('anchor', 'heading_labels', heading_labels)
+    parser.core.ruler.after('heading_labels', 'undefined_footnotes', undefined_footnotes)
+    # The site shows plain numbers for citations, not bracketed ones.
+    parser.add_render_rule('footnote_caption', lambda self, items, idx, options, env: str(items[idx].meta['id'] + 1))
+    return parser
 
 
 def render_markdown(text):
-    import markdown
-    protected, maths = protect_math(text)
-    rendered = markdown.markdown(protected, extensions=MD_EXTENSIONS, output_format='html5')
-    rendered = re.sub(f'{MATH_OPEN}(\\d+){MATH_CLOSE}', lambda m: mathml(*maths[int(m.group(1))]), rendered)
-    return rendered.replace(ESCAPED_DOLLAR, '$')
+    return markdown_parser().render(text)
 
 
 def image_copier(source_root, public):
@@ -264,7 +351,7 @@ def file_dates(source_root):
     return dates
 
 
-def render_document(text, path, image):
+def render_document(text, path, image, diagrams=True):
     """Render one ZIP source (merged file or pull request head) into its index record and document."""
     meta = parse_header(text)
     if 'Title' not in meta or 'Status' not in meta:
@@ -272,7 +359,7 @@ def render_document(text, path, image):
     record = entry(meta, path)
     portable = portable_math(text)
     rendered = render_rst(portable) if path.suffix == '.rst' else render_markdown(portable)
-    nodes, headings = prepare(clean(rendered, path.name, image, heading_shift=1 if path.suffix == '.md' else 0))
+    nodes, headings = prepare(clean(rendered, path.name, image, heading_shift=1 if path.suffix == '.md' else 0, diagrams=diagrams, formula=mathml))
     record.update({
         'updatedAt': None,
         'summary': summary(nodes),
@@ -291,6 +378,49 @@ def build_document(path, source_root, image, dates):
     return dict(record, **updated), dict(document, **updated)
 
 
+def link_documents(documents):
+    """Point links between documents at records that exist.
+
+    A preview may link to a draft from its own pull request. Merged documents link only to
+    merged documents, so no pull request can take over their links. A link with no record
+    keeps its words but stops being a link, and a fragment the target does not have is dropped.
+    """
+    by_id = {document['id']: document for document in documents}
+    anchors = {document['id']: collect_ids(document['body']) for document in documents}
+    previews = {}
+    for document in documents:
+        if document.get('pull'):
+            previews.setdefault(Path(document['pull']['file']).stem.lower(), []).append(document)
+
+    def target(record, source):
+        if record in by_id:
+            return record
+        same = [item for item in previews.get(record, []) if source.get('pull') and item['pull']['number'] == source['pull']['number']]
+        return same[0]['id'] if same else None
+
+    def walk(items, source):
+        result = []
+        for node in items:
+            if isinstance(node, str):
+                result.append(node)
+                continue
+            children = walk(node.get('children', []), source)
+            match = RECORD_LINK.match(node.get('href', '')) if node['tag'] == 'a' else None
+            if not match:
+                result.append(dict(node, children=children))
+                continue
+            record = target(match.group(1), source)
+            if not record:
+                result.extend(children)
+                continue
+            fragment = match.group(2) or ''
+            if fragment and fragment[1:] not in anchors[record]:
+                fragment = ''
+            result.append(dict(node, children=children, href=f'{RECORD_PREFIX}{record}{fragment}'))
+        return result
+    return [dict(document, body=walk(document['body'], document)) for document in documents]
+
+
 def write_json(path, value, compact=False):
     path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(value, ensure_ascii=False, separators=(',', ':')) if compact else json.dumps(value, ensure_ascii=False, indent=2)
@@ -307,7 +437,7 @@ def run(source_root, out, public, limit=None, pulls=None, log=print):
     rendered_at = datetime.now(timezone.utc).isoformat()
     dates = file_dates(source_root)
     image = image_copier(source_root, public)
-    index, failures = [], []
+    index, failures, documents = [], [], []
     documents_dir = out / 'documents'
     documents_dir.mkdir(parents=True, exist_ok=True)
     written = set()
@@ -318,15 +448,20 @@ def run(source_root, out, public, limit=None, pulls=None, log=print):
             failures.append({'file': path.name, 'error': str(error)[:200]})
             continue
         index.append(record)
-        write_json(documents_dir / f'{record["id"]}.json', document, compact=True)
-        written.add(f'{record["id"]}.json')
+        documents.append(document)
     pull_summary = None
     if pulls:
-        proposals, proposal_documents, pull_summary = import_pulls(source_root, load_pulls(pulls), render_document, image)
-        for record, document in zip(proposals, proposal_documents):
-            index.append(record)
-            write_json(documents_dir / f'{record["id"]}.json', document, compact=True)
-            written.add(f'{record["id"]}.json')
+        proposals, proposal_documents, pull_summary = import_pulls(source_root, load_pulls(pulls), lambda text, path, copy: render_document(text, path, copy, diagrams=False), image)
+        index.extend(proposals)
+        documents.extend(proposal_documents)
+    for document in link_documents(documents):
+        try:
+            write_json(documents_dir / f'{document["id"]}.json', document, compact=True)
+        except ValueError as error:  # one document that cannot be stored must not stop the sync
+            failures.append({'file': document['id'], 'error': str(error)[:200]})
+            index = [item for item in index if item['id'] != document['id']]
+            continue
+        written.add(f'{document["id"]}.json')
     for stale in documents_dir.glob('*.json'):
         if stale.name not in written:
             stale.unlink()

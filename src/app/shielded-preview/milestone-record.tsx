@@ -5,18 +5,20 @@ import { MILESTONES_REVIEWED, type Milestone, type Project } from '@/lib/shielde
 import { milestoneGovernanceHref, milestoneProject, milestoneYears, securityAttribution, upgradeAttribution } from '@/lib/shielded-preview/directory';
 import { officialProjectExcerpts } from '@/lib/shielded-preview/official-project-excerpts';
 import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
+import { opensInPortal } from '@/lib/shielded-preview/editorial/library';
+import { EditorialLink } from './editorial';
 import { ProjectLink } from './project-detail';
 import { Arrow, ViewLink, type Navigate } from './milestones-view';
 import s from './milestone-record.module.css';
 
 const fullDate = (date: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date));
 
-function SourceLink({ href, children }: { href: string; children: ReactNode }) {
-  return <a className={s.sourceLink} href={href} target="_blank" rel="noopener noreferrer">{children}<Arrow external/></a>;
+function SourceLink({ href, onFollow, children }: { href: string; onFollow: (href: string) => void; children: ReactNode }) {
+  return <EditorialLink className={s.sourceLink} href={href} onFollow={onFollow}>{children}<Arrow external={!opensInPortal(href)}/></EditorialLink>;
 }
 
-export default function MilestoneRecord({ milestone, group, onNavigate, onProject }: {
-  milestone: Milestone; group: string; onNavigate: Navigate; onProject: (project: Project) => void;
+export default function MilestoneRecord({ milestone, group, onNavigate, onProject, onFollow }: {
+  milestone: Milestone; group: string; onNavigate: Navigate; onProject: (project: Project) => void; onFollow: (href: string) => void;
 }) {
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { heading.current?.focus({ preventScroll: true }); }, [milestone.date]);
@@ -52,7 +54,7 @@ export default function MilestoneRecord({ milestone, group, onNavigate, onProjec
         <section className={s.card} aria-labelledby="milestone-context">
           <h2 id="milestone-context">Project context</h2>
           <blockquote cite={excerpt.source}><p>“{excerpt.text}”</p></blockquote>
-          <SourceLink href={excerpt.source}>Shielded Labs</SourceLink>
+          <SourceLink href={excerpt.source} onFollow={onFollow}>Shielded Labs</SourceLink>
         </section>
         {attribution && <section className={s.card} aria-labelledby="milestone-attribution">
           <h2 id="milestone-attribution">Who did what</h2>
@@ -73,9 +75,9 @@ export default function MilestoneRecord({ milestone, group, onNavigate, onProjec
           <h2 id="milestone-sources-title">Sources & context</h2>
           <p className={s.note}>{security ? 'The disclosure does not establish that no prior exploitation occurred. Attribution follows the published account; no estimate of funds saved is made.' : upgrade ? 'Attribution follows the Shielded Labs Ironwood guide, linked here as the project reference.' : project.boundary}</p>
           <div className={s.sourceList}>
-            <SourceLink href={milestone.source}>Primary source</SourceLink>
-            {milestone.context && <SourceLink href={milestone.context}>Proposal announcement</SourceLink>}
-            {project.source !== milestone.source && <SourceLink href={project.source}>Project reference</SourceLink>}
+            <SourceLink href={milestone.source} onFollow={onFollow}>Primary source</SourceLink>
+            {milestone.context && <SourceLink href={milestone.context} onFollow={onFollow}>Proposal announcement</SourceLink>}
+            {project.source !== milestone.source && <SourceLink href={project.source} onFollow={onFollow}>Project reference</SourceLink>}
             {governanceRecord && <a className={s.sourceLink} href={governanceRecord}>Governance record<Arrow/></a>}
           </div>
           <p className={s.reviewed}>Reviewed {fullDate(MILESTONES_REVIEWED)}</p>

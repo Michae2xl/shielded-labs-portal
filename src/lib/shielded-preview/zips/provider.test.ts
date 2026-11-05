@@ -74,6 +74,15 @@ describe('ZIP sync source boundaries', () => {
     expect(index.error).toBe(true);
     expect(index.entries).toEqual(bundledZips.entries);
   });
+  it('drops one invalid row and keeps the rest of the sync index', async () => {
+    vi.stubEnv('ZIPS_DATA_URL', 'https://raw.example/zips-data');
+    vi.stubGlobal('fetch', remote({ 'https://raw.example/zips-data/index.json': [remoteEntry, { ...remoteEntry, id: 'zip-9999', title: 'x'.repeat(301) }], 'https://raw.example/zips-data/meta.json': remoteMeta }));
+    const { getZipsIndex } = await import('./provider');
+    const index = await getZipsIndex();
+    expect(index.state).toBe('fetched');
+    expect(index.error).toBe(false);
+    expect(index.entries.map(entry => entry.id)).toEqual([remoteEntry.id]);
+  });
   it('falls back to the bundled document when the synced document is missing or does not match', async () => {
     vi.stubEnv('ZIPS_DATA_URL', 'https://raw.example/zips-data');
     const fetcher = remote({ 'https://raw.example/zips-data/documents/zip-0032.json': { ...remoteEntry, id: 'zip-0033', headings: [], body: ['x'] } });

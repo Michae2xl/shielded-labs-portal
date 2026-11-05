@@ -9,7 +9,7 @@ import import_zips as importer
 import pulls
 import sanitize
 
-HAS_RENDERERS = importlib.util.find_spec('docutils') is not None and importlib.util.find_spec('markdown') is not None
+HAS_RENDERERS = importlib.util.find_spec('docutils') is not None and importlib.util.find_spec('markdown_it') is not None
 
 RST_HEADER = """::
 
@@ -91,12 +91,6 @@ class MathTest(unittest.TestCase):
         self.assertEqual(importer.portable_formula(r'\mathtt{“Zcash\_ExpandSeed”} \;{⦂}\; a \mathbin{||} b \LaTeX'), r'\mathtt{\text{“}Zcash\_ExpandSeed\text{”}} \;{\text{⦂}}\; a || b \text{LaTeX}')
         self.assertEqual(importer.rst_math('See $x\;{⦂}\;y$ and :math:`“a”` here.'), 'See :math:`x\\;{\\text{⦂}}\\;y` and :math:`\\text{“}a\\text{”}` here.\n')
 
-        protected, maths = importer.protect_math('Inline $a_b$ and `$not$` and $$c^2$$\n```\n$code$\n```\n    $indented$\n')
-        self.assertEqual([latex for latex, _ in maths], ['a_b', 'c^2'])
-        self.assertEqual([block for _, block in maths], [False, True])
-        self.assertIn('`$not$`', protected)
-        self.assertIn('$code$', protected)
-        self.assertIn('    $indented$', protected)
 
 
 class SanitizeTest(unittest.TestCase):
@@ -108,7 +102,10 @@ class SanitizeTest(unittest.TestCase):
         resolve = lambda value: sanitize.resolve_link(value, 'zip-0317.rst')  # noqa: E731
         self.assertEqual(resolve('zip-0032.rst#key-path'), '?view=governance&section=zips&record=zip-0032#key-path')
         self.assertEqual(resolve('draft-ecc-onchain-accountable-voting.md'), '?view=governance&section=zips&record=draft-ecc-onchain-accountable-voting')
-        self.assertEqual(resolve('../rendered/zip-0244.html'), 'https://zips.z.cash/zip-0244.html')
+        self.assertEqual(resolve('../rendered/zip-0244.html'), '?view=governance&section=zips&record=zip-0244')
+        self.assertEqual(resolve('https://zips.z.cash/zip-0244#abstract'), '?view=governance&section=zips&record=zip-0244#abstract')
+        self.assertEqual(resolve('https://github.com/zcash/zips/blob/main/zips/zip-0244.rst'), '?view=governance&section=zips&record=zip-0244')
+        self.assertEqual(resolve('../rendered/assets/data.csv'), 'https://zips.z.cash/assets/data.csv')
         self.assertEqual(resolve('protocol/protocol.pdf'), 'https://zips.z.cash/protocol/protocol.pdf')
         self.assertEqual(resolve('../README.rst'), 'https://github.com/zcash/zips/blob/main/README.rst')
         self.assertEqual(resolve('#fn1'), '#fn1')
@@ -122,9 +119,9 @@ class SanitizeTest(unittest.TestCase):
                '<aside class="footnote-list brackets"><aside class="footnote brackets" id="fn" role="doc-footnote"><span class="label">[<a href="#footnote-reference-1">1</a>]</span><p>Footnote body.</p></aside></aside>')
         nodes = sanitize.clean(raw, 'zip-0001.rst')
         self.assertEqual(nodes[0], {'tag': 'h2', 'children': ['Terminology'], 'id': 'terminology'})
-        self.assertEqual(nodes[1]['children'][1], {'tag': 'a', 'children': ['[1]'], 'id': 'footnote-reference-1', 'href': '#fn'})
-        self.assertEqual(nodes[2], {'tag': 'p', 'children': [{'tag': 'strong', 'children': ['Note']}]})
-        self.assertEqual(nodes[4], {'tag': 'p', 'children': ['[1] ', 'Footnote body.'], 'id': 'fn'})
+        self.assertEqual(nodes[1]['children'][1], {'tag': 'sup', 'children': [{'tag': 'a', 'children': ['1'], 'id': 'footnote-reference-1', 'href': '#fn'}]})
+        self.assertEqual(nodes[2], {'tag': 'aside', 'attrs': {'kind': 'note'}, 'children': [{'tag': 'p', 'children': [{'tag': 'strong', 'children': ['Note']}]}, {'tag': 'p', 'children': ['Careful.']}]})
+        self.assertEqual(nodes[3], {'tag': 'ol', 'children': [{'tag': 'li', 'id': 'fn', 'children': [{'tag': 'p', 'children': ['Footnote body.']}]}]})
 
     def test_markdown_headings_tables_and_definition_lists(self):
         raw = '<h1 id="h">Top</h1><table><caption>Fees</caption><colgroup><col></colgroup><thead><tr><th>A</th></tr></thead></table><dl><dt>Term</dt><dd>Meaning</dd></dl><ol start="3"><li>c</li></ol>'
@@ -202,6 +199,210 @@ class RenderTest(unittest.TestCase):
             self.assertEqual(document['summary'], 'This proposal defines wallets.')
             self.assertEqual(document['headings'], [{'id': 'abstract', 'title': 'Abstract', 'level': 2}])
             self.assertNotIn('body', json.loads((root / 'out/index.json').read_text(encoding='utf-8'))[0])
+
+
+class LinkTest(unittest.TestCase):
+    def test_inline_and_list_anchors_survive_for_their_links(self):
+        raw = '<p><a href="#rev">see</a> and <a href="#list">list</a> and <a href="#empty">empty</a></p><p><span class="target" id="rev">Revision 2</span> <span class="plain">text</span></p><ul class="simple" id="list"><li>Item</li></ul><a id="empty"></a>'
+        nodes, _ = sanitize.prepare(sanitize.clean(raw, 'zip-0316.rst'))
+        self.assertEqual(sanitize.collect_ids(nodes), {'rev', 'list', 'empty'})
+        self.assertEqual(nodes[1]['children'][0], {'tag': 'span', 'id': 'rev', 'children': ['Revision 2']})
+        self.assertEqual([child['href'] for child in nodes[0]['children'] if isinstance(child, dict)], ['#rev', '#list', '#empty'])
+        self.assertEqual(nodes[1]['children'][-1], 'text')
+
+    def test_links_to_missing_anchors_keep_their_words_and_dead_backrefs_go(self):
+        raw = '<p>Read <a href="#gone">the section</a> and <a href="#here">this</a>.</p><h2 id="here">Here</h2><ol><li>Note <a href="#fnref:unused">\u21a9</a></li></ol>'
+        nodes, _ = sanitize.prepare(sanitize.clean(raw, 'zip-0001.md'))
+        self.assertEqual(nodes[0]['children'][0:2], ['Read ', 'the section'])
+        self.assertEqual(nodes[0]['children'][3]['href'], '#here')
+        self.assertEqual(sanitize.plain(nodes[2]).strip(), 'Note')
+
+    def test_blocks_never_end_up_inside_paragraphs_and_rows_sit_in_a_body(self):
+        nodes = sanitize.clean('<p id="note">Intro<ul><li>Item</li></ul>tail</p><table><tr><td>A</td></tr></table>', 'zip-0001.md')
+        self.assertEqual([node['tag'] for node in nodes], ['p', 'ul', 'p', 'table'])
+        self.assertEqual(nodes[0]['id'], 'note')
+        self.assertEqual(nodes[0]['children'], ['Intro'])
+        self.assertEqual(nodes[3]['children'][0]['tag'], 'tbody')
+        self.assertEqual(nodes[3]['children'][0]['children'][0]['tag'], 'tr')
+
+    def test_footnotes_keep_all_their_content(self):
+        several = '<aside class="footnote" id="a"><span class="label">[1]</span><p>First.</p><p>Second.</p></aside>'
+        nodes = sanitize.clean(several, 'zip-0001.rst')
+        self.assertEqual([sanitize.plain(node) for node in nodes], ['[1] First.', 'Second.'])
+        self.assertEqual(nodes[0]['id'], 'a')
+        cited_twice = sanitize.clean('<aside class="footnote" id="c"><span class="label">[3]</span><span class="backrefs">(<a href="#r1">1</a>,<a href="#r2">2</a>)</span><p>Text.</p></aside>', 'zip-0001.rst')
+        self.assertEqual(cited_twice, [{'tag': 'p', 'children': ['[3] ', 'Text.'], 'id': 'c'}])
+        listed = sanitize.clean('<aside class="footnote" id="b"><span class="label">[2]</span><ul><li><p>Item</p></li></ul></aside>', 'zip-0001.rst')
+        self.assertEqual([node['tag'] for node in listed], ['p', 'ul'])
+        self.assertEqual(listed[0], {'tag': 'p', 'children': ['[2] '], 'id': 'b'})
+
+    def test_links_between_documents_land_on_records_that_exist(self):
+        link = lambda record: {'tag': 'a', 'href': f'?view=governance&section=zips&record={record}', 'children': [record]}  # noqa: E731
+        pull = {'number': 7, 'file': 'draft-a-new.md'}
+        documents = [
+            {'id': 'zip-0001', 'body': [{'tag': 'h2', 'id': 'real', 'children': ['Real']}, {'tag': 'p', 'children': [link('draft-a-new'), link('draft-missing'), link('zip-0001#real'), link('zip-0001#gone')]}]},
+            {'id': 'pr-7-draft-a-new', 'pull': pull, 'body': [{'tag': 'p', 'children': [link('draft-a-other')]}]},
+            {'id': 'pr-9-draft-a-other', 'pull': {'number': 9, 'file': 'draft-a-other.md'}, 'body': []},
+            {'id': 'pr-7-draft-a-other', 'pull': {'number': 7, 'file': 'draft-a-other.md'}, 'body': []},
+        ]
+        linked = importer.link_documents(documents)
+        children = linked[0]['body'][1]['children']
+        self.assertEqual(children[0], 'draft-a-new')
+        self.assertEqual(children[1], 'draft-missing')
+        self.assertEqual(children[2]['href'], '?view=governance&section=zips&record=zip-0001#real')
+        self.assertEqual(children[3]['href'], '?view=governance&section=zips&record=zip-0001')
+        self.assertEqual(linked[1]['body'][0]['children'][0]['href'], '?view=governance&section=zips&record=pr-7-draft-a-other')
+
+    @unittest.skipUnless(HAS_RENDERERS, 'docutils and Markdown are required for rendering tests')
+    def test_markdown_headings_match_the_ids_the_documents_link_to(self):
+        html_out = importer.render_markdown('# Stream Layer\n\nSee [it](#streamlayer) and [other](#pre-signedtransactionstorage).\n\n## Pre-signed Transaction Storage\n')
+        nodes, headings = sanitize.prepare(sanitize.clean(html_out, 'draft-x.md', heading_shift=1))
+        self.assertEqual([heading['id'] for heading in headings], ['streamlayer', 'pre-signedtransactionstorage'])
+        self.assertEqual([child['href'] for child in nodes[1]['children'] if isinstance(child, dict)], ['#streamlayer', '#pre-signedtransactionstorage'])
+
+
+@unittest.skipUnless(HAS_RENDERERS, 'docutils and markdown-it-py are required for rendering tests')
+class MarkdownStructureTest(unittest.TestCase):
+    def render(self, source, **options):
+        return sanitize.prepare(sanitize.clean(importer.render_markdown(source), 'draft-x.md', heading_shift=1, formula=importer.mathml, **options))
+
+    def test_lists_nest_at_any_indent(self):
+        nodes, _ = self.render('- one\n  - two\n    - three\n')
+        self.assertEqual(nodes[0]['tag'], 'ul')
+        inner = nodes[0]['children'][0]['children']
+        self.assertEqual(inner[-1]['tag'], 'ul')
+        self.assertEqual(inner[-1]['children'][0]['children'][-1]['tag'], 'ul')
+
+    def test_code_stays_code_inside_quotes_and_lists(self):
+        nodes, _ = self.render('> ```\n> cost $x$ and $y$\n> ```\n\n- item\n\n  ```\n  $z$\n  ```\n')
+        self.assertEqual(nodes[0]['tag'], 'blockquote')
+        self.assertEqual(nodes[0]['children'][0], {'tag': 'pre', 'children': ['cost $x$ and $y$']})
+        self.assertEqual(sanitize.plain(nodes[1]['children'][0]['children'][-1]), '$z$')
+
+    def test_formulas_are_read_in_lists_and_quotes_but_prices_stay_text(self):
+        nodes, _ = self.render('- a\n\n    $x_1$ here\n\n> $y$\n\nFrom $700 to $900 a month, and $z$.\n')
+        tags = []
+
+        def collect(items):
+            for item in items:
+                if isinstance(item, dict):
+                    tags.append(item['tag'])
+                    collect(item['children'])
+        collect(nodes)
+        self.assertEqual(tags.count('math'), 3)
+        self.assertIn('$700 to $900', sanitize.plain(nodes[-1]))
+        spaced, _ = self.render('Set $\\mathsf{ok} \\leftarrow $ true.\n')
+        self.assertEqual(spaced[0]['children'][1]['tag'], 'math')
+
+    def test_formulas_the_first_converter_rejects_use_the_second(self):
+        for tex in [r'\begin{array}{rl} a & b \\ c & d \end{array}', r'{k \choose n}', r'a \\']:
+            self.assertIn('<math', importer.mathml(tex, False), tex)
+        self.assertTrue(importer.mathml(r'\nosuchcommand{x}', False).startswith('<code>'))
+
+    def test_collapsible_blocks_keep_markdown_inside(self):
+        nodes, headings = self.render('<details>\n<summary>\n\n### Why\n</summary>\n\nBody *text*.\n\n</details>\n')
+        self.assertEqual(nodes[0]['tag'], 'details')
+        self.assertEqual(nodes[0]['children'][0]['tag'], 'summary')
+        self.assertEqual(nodes[0]['children'][0]['children'][0]['tag'], 'h4')
+        self.assertEqual(nodes[0]['children'][1]['children'][1], {'tag': 'em', 'children': ['text']})
+        self.assertEqual(headings[0]['title'], 'Why')
+
+    def test_a_heading_label_names_the_anchor_and_is_not_shown(self):
+        nodes, headings = self.render('## Stale rate [stale-rate]\n\nSee [it](#stale-rate).\n')
+        self.assertEqual(headings, [{'id': 'stale-rate', 'title': 'Stale rate', 'level': 3}])
+        self.assertEqual(nodes[1]['children'][1]['href'], '#stale-rate')
+
+    def test_note_and_warning_markers_box_the_next_paragraph(self):
+        nodes, _ = self.render('<div class=warning></div>\n\nCareful.\n\n<div class="note"></div>\n\nAside.\n\nPlain.\n')
+        self.assertEqual([node['tag'] for node in nodes], ['aside', 'aside', 'p'])
+        self.assertEqual(nodes[0]['attrs'], {'kind': 'warning'})
+        self.assertEqual(sanitize.plain(nodes[1]), 'NoteAside.')
+
+    def test_footnotes_show_plain_numbers_in_citation_order(self):
+        nodes, _ = self.render('First[^b] then[^a].\n\n[^a]: Note A.\n[^b]: Note B.\n')
+        self.assertEqual(nodes[0]['children'][1], {'tag': 'sup', 'children': [{'tag': 'a', 'children': ['1'], 'href': '#fn1', 'id': 'fnref1'}]})
+        self.assertIn('Note B.', sanitize.plain(nodes[-1]['children'][0]))
+
+    def test_footnote_markers_with_no_definition_leave_the_text(self):
+        nodes, _ = self.render('Known[^a] and unknown [^missing] with `[^code]`.\n\n[^a]: Note.\n')
+        text = sanitize.plain(nodes[0])
+        self.assertNotIn('[^missing]', text)
+        self.assertIn('[^code]', text)
+
+    def test_a_figure_on_its_own_line_shows_its_description(self):
+        nodes, _ = self.render('![A graph](../rendered/assets/images/x.png)\n', image=lambda src: '/shielded-preview/zips/x.png')
+        self.assertEqual(nodes[0]['tag'], 'figure')
+        self.assertEqual(nodes[0]['children'][1], {'tag': 'figcaption', 'children': ['A graph']})
+
+    def test_diagrams_are_marked_only_when_allowed(self):
+        source = '```mermaid\nflowchart TD\n  A --> B\n```\n'
+        self.assertEqual(self.render(source)[0][0]['attrs'], {'lang': 'mermaid'})
+        self.assertNotIn('attrs', self.render(source, diagrams=False)[0][0])
+
+
+@unittest.skipUnless(HAS_RENDERERS, 'docutils and markdown-it-py are required for rendering tests')
+class RstStructureTest(unittest.TestCase):
+    def render(self, source):
+        return sanitize.prepare(sanitize.clean(importer.render_rst(source), 'zip-0001.rst', formula=importer.mathml))
+
+    def test_collapsible_blocks_survive_with_raw_html_disabled(self):
+        source = 'Before.\n\n.. raw:: html\n\n   <details>\n   <summary>Click to show/hide</summary>\n\nInside.\n\n.. raw:: html\n\n   </details>\n\n.. raw:: html\n\n   <script>alert(1)</script>\n\nAfter.\n'
+        nodes, _ = self.render(source)
+        self.assertEqual([node['tag'] for node in nodes], ['p', 'details', 'p'])
+        self.assertEqual(nodes[1]['children'], [{'tag': 'summary', 'children': ['Click to show/hide']}, {'tag': 'p', 'children': ['Inside.']}])
+        self.assertNotIn('alert', sanitize.plain(nodes))
+
+    def test_a_block_left_open_keeps_its_text_in_place(self):
+        nodes, _ = self.render('.. raw:: html\n\n   <details>\n   <summary>More</summary>\n\nInside.\n')
+        self.assertEqual(nodes, [{'tag': 'p', 'children': ['Inside.']}])
+
+    def test_notes_warnings_and_numbered_footnotes(self):
+        nodes, _ = self.render('Cited [#a]_.\n\n.. warning::\n\n   Careful.\n\n.. [#a] Source one.\n.. [#b] Source two.\n')
+        self.assertEqual(nodes[0]['children'][1]['tag'], 'sup')
+        self.assertEqual(nodes[1]['attrs'], {'kind': 'warning'})
+        self.assertEqual(nodes[2]['tag'], 'ol')
+        self.assertEqual([item['id'] for item in nodes[2]['children']], ['a', 'b'])
+
+    def test_formula_blocks_the_first_converter_rejects_become_math(self):
+        nodes, _ = self.render('.. math::\n\n   \\begin{array}{rl} a & b \\end{array}\n')
+        self.assertEqual(nodes[0]['tag'], 'math')
+
+    def test_line_break_substitutions_become_breaks(self):
+        nodes, _ = self.render('.. |br| raw:: html\n\n  <br/>\n\nFirst. |br|\nSecond.\n\n|br|\n\nAfter.\n')
+        self.assertEqual(nodes[0]['children'][1], {'tag': 'br', 'children': []})
+        self.assertEqual(sanitize.plain(nodes[0]).split(), ['First.', 'Second.'])
+        self.assertEqual([node['tag'] for node in nodes], ['p', 'p'])
+
+    def test_a_formula_next_to_a_letter_is_still_a_formula(self):
+        self.assertEqual(importer.rst_math('a$x$b'), 'a\\ :math:`x`\\ b\n')
+
+    def test_an_indented_list_is_not_a_quotation(self):
+        nodes, _ = self.render('Intro:\n\n   * item\n\nThen:\n\n   Quoted rule.\n')
+        self.assertEqual([node['tag'] for node in nodes], ['p', 'ul', 'p', 'blockquote'])
+
+
+class RobustnessTest(unittest.TestCase):
+    def test_lone_surrogates_are_dropped(self):
+        self.assertEqual(sanitize.plain(sanitize.clean('<p>a\ud800b</p>', 'zip-0001.rst')), 'ab')
+
+    def test_page_ids_stay_out_of_third_party_text(self):
+        nodes, headings = sanitize.prepare(sanitize.clean('<p id="zip-sources">x</p><h2 id="zip-sources-title">y</h2><h2>zip sources</h2>', 'draft-x.md'))
+        self.assertNotIn('id', nodes[0])
+        self.assertEqual([heading['id'] for heading in headings], ['y', 'section-zip-sources'])
+
+    def test_stray_text_in_a_table_does_not_fail_the_document(self):
+        nodes = sanitize.clean('<table>stray<tr><td>A</td></tr></table>', 'draft-x.md')
+        self.assertEqual(nodes[0]['children'][0]['tag'], 'tbody')
+
+    def test_header_fields_fit_the_portal_schema(self):
+        meta = importer.parse_header('::\n\n  ZIP: 1\n  Title: ' + 'x' * 400 + '\n  Status: Draft\n  Category: ' + 'y' * 400 + '\n')
+        record = importer.entry(meta, Path('zip-0001.rst'))
+        self.assertEqual(len(record['title']), 300)
+        self.assertEqual(len(record['category']), 120)
+
+    def test_phrasing_keeps_inner_spaces(self):
+        nodes = sanitize.clean('<p>a <em>b </em>c <span id="s">d <strong>e</strong> f</span></p>', 'draft-x.md')
+        self.assertEqual(sanitize.plain(nodes), 'a b c d e f')
 
 
 class PullRequestTest(unittest.TestCase):

@@ -1,3 +1,4 @@
+import { resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
@@ -14,7 +15,7 @@ describe('Directory cards and direct records', () => {
       const target = new URL(directoryHref('people', person.group.toLowerCase(), `person:${personId(person)}`), 'https://portal.test');
       const markup = renderToStaticMarkup(createElement(Directory, {
         view: 'people', section: target.searchParams.get('section'), record: target.searchParams.get('record'),
-        onNavigate: () => {}, onProject: () => {},
+        onNavigate: () => {}, onProject: () => {}, onFollow: () => {},
       }));
       expect(markup, person.name).toContain(`id="person-record-title" tabindex="-1">${person.name}</h1>`);
       expect(markup, person.name).toContain(`Back to ${person.group.toLowerCase()}`);
@@ -33,10 +34,10 @@ describe('Directory cards and direct records', () => {
       const target = new URL(directoryHref('impact', milestone.type.toLowerCase(), `milestone:${milestone.date}`), 'https://portal.test');
       const markup = renderToStaticMarkup(createElement(Directory, {
         view: 'impact', section: target.searchParams.get('section'), record: target.searchParams.get('record'),
-        onNavigate: () => {}, onProject: () => {},
+        onNavigate: () => {}, onProject: () => {}, onFollow: () => {},
       }));
       expect(markup, milestone.name).toContain(`id="milestone-record-title" tabindex="-1">${milestone.name}</h1>`);
-      expect(markup, milestone.name).toContain(`href="${milestone.source}"`);
+      expect(markup, milestone.name).toContain(`href="${(resolveEditorialLink(milestone.source) ?? '').replaceAll('&', '&amp;')}"`);
       expect(markup, milestone.name).toContain(`href="?view=projects&amp;project=${project.id}"`);
       if (milestone.governanceRecord) {
         const known = [...record.upgrades.map(item => `upgrade:${item.name}`), ...record.polls.map(item => `poll:${item.id}`)];
@@ -84,7 +85,7 @@ describe('Directory cards and direct records', () => {
   });
 
   it('replaces the tabs on a record with a way back, and lists its workstream with the current one marked', () => {
-    const render = (section: string, record: string) => renderToStaticMarkup(createElement(Directory, { view: 'impact', section, record, onNavigate: () => {}, onProject: () => {} }));
+    const render = (section: string, record: string) => renderToStaticMarkup(createElement(Directory, { view: 'impact', section, record, onNavigate: () => {}, onProject: () => {}, onFollow: () => {} }));
     const security = render('security', 'milestone:2026-05-29');
     expect(security).not.toContain('Milestones navigation');
     expect(security).toContain('All security milestones');
@@ -101,7 +102,7 @@ describe('Directory cards and direct records', () => {
   });
 
   it('shows a visible title, the stories only on the full list, and links every entry to its record', () => {
-    const render = (section: string) => renderToStaticMarkup(createElement(Directory, { view: 'impact', section, record: null, onNavigate: () => {}, onProject: () => {} }));
+    const render = (section: string) => renderToStaticMarkup(createElement(Directory, { view: 'impact', section, record: null, onNavigate: () => {}, onProject: () => {}, onFollow: () => {} }));
     const all = render('all');
     expect(all).toContain('>Milestones</h1>');
     expect(all).toContain('Crosslink prototype');

@@ -8,14 +8,27 @@ import GovernanceRecord from './governance-record';
 import GovernanceGlyph from './governance-glyph';
 import { Arrow, Collection, Empty, Link, Search, SourceInfo, Tabs, pageRows, visiblePage, type CollectionNavigate, type Controls } from './governance-collections';
 import a from './governance-archive.module.css';
+import ZipDiagram from './zip-diagram';
 import z from './governance-zips.module.css';
 
 const date = (value: string | null | undefined) => value ? new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value)) : 'Not recorded';
 const titles: Record<ZipLane, string> = { zips: 'Numbered ZIPs', drafts: 'Unnumbered drafts', guides: 'Writing guides', proposals: 'Open pull requests' };
 const laneIcons: Record<ZipLane, 'zips' | 'process' | 'pull'> = { zips: 'zips', drafts: 'zips', guides: 'process', proposals: 'pull' };
-// Scroll to the anchor on the first load and after a link; Back and Forward keep the browser's restored position.
-let scrollToAnchor = true;
-const elementTags = new Set('span p h2 h3 h4 h5 h6 a strong em ul ol li dl dt dd blockquote pre code table thead tbody tfoot tr th td figure figcaption img br hr sup sub'.split(' '));
+// Back and Forward keep the browser's restored position; any other arrival goes to the anchor.
+let traversedAt = Number.NEGATIVE_INFINITY;
+if (typeof window !== 'undefined') window.addEventListener('popstate', () => { traversedAt = performance.now(); });
+/** Open the collapsible blocks around an anchor, so links and the outline land on visible text. */
+function revealAnchor(id: string) {
+  let parent = globalThis.document.getElementById(id)?.parentElement ?? null;
+  for (; parent; parent = parent.parentElement) if (parent instanceof HTMLDetailsElement) parent.open = true;
+}
+function decodedAnchor(hash: string) {
+  try { return decodeURIComponent(hash.slice(1)); } catch { return hash.slice(1); }
+}
+const elementTags = new Set('span p h2 h3 h4 h5 h6 a strong em ul ol li dl dt dd blockquote pre code table thead tbody tfoot tr th td figure figcaption img br hr sup sub details summary aside'.split(' '));
+const headingTags = new Set('h2 h3 h4 h5 h6'.split(' '));
+const LONG_FORMULA = 32;
+const nodeText = (node: ZipNode): string => typeof node === 'string' ? node : node.children.map(nodeText).join('');
 const mathTags = new Set('math mrow mi mn mo msup msub msubsup mfrac msqrt mroot mtext mspace mover munder munderover mtable mtr mtd mstyle mpadded mphantom menclose semantics mmultiscripts mprescripts'.split(' '));
 const mathAttributes = new Set('display mathvariant displaystyle stretchy fence separator lspace rspace form accent accentunder width height depth voffset linethickness columnalign rowalign columnspacing rowspacing notation largeop movablelimits symmetric minsize maxsize mathsize scriptlevel'.split(' '));
 const mathValue = /^[A-Za-z0-9 .%,+-]{0,40}$/;
@@ -43,7 +56,6 @@ function ZipLink({ href, onNavigate, children }: { href: string; onNavigate: Col
       if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       onNavigate('ZIPs', id);
-      scrollToAnchor = true;
       if (target.hash) history.replaceState(null, '', `${location.search}${target.hash}`);
     };
     return <a href={href} onClick={click}>{children}</a>;
@@ -59,7 +71,11 @@ export function ZipBody({ nodes, onNavigate, math = false }: { nodes: ZipNode[];
     if (typeof node === 'string') return node;
     if (node.tag === 'math' || (math && mathTags.has(node.tag))) {
       const attributes = Object.fromEntries(Object.entries(node.attrs ?? {}).filter(([key, value]) => mathAttributes.has(key) && mathValue.test(value)));
-      return createElement(node.tag, { key: index, ...attributes, ...(node.tag === 'math' ? { xmlns: 'http://www.w3.org/1998/Math/MathML' } : {}) }, <ZipBody nodes={node.children} onNavigate={onNavigate} math/>);
+      const formula = createElement(node.tag, { key: index, ...attributes, ...(node.tag === 'math' ? { xmlns: 'http://www.w3.org/1998/Math/MathML' } : {}) }, <ZipBody nodes={node.children} onNavigate={onNavigate} math/>);
+      // A long formula cannot wrap, so it scrolls inside the text column instead of widening the page.
+      if (node.tag !== 'math') return formula;
+      if (node.attrs?.display === 'block') return <span key={index} className={z.mathBlock}>{formula}</span>;
+      return [...nodeText(node)].length > LONG_FORMULA ? <span key={index} className={z.mathScroll}>{formula}</span> : formula;
     }
     if (math || !elementTags.has(node.tag)) return null;
     const children = <ZipBody nodes={node.children} onNavigate={onNavigate}/>;
@@ -71,6 +87,9 @@ export function ZipBody({ nodes, onNavigate, math = false }: { nodes: ZipNode[];
       return <img key={index} src={node.src} alt={node.alt || 'Figure from the proposal'} loading="lazy" decoding="async"/>;
     }
     if (node.tag === 'br' || node.tag === 'hr') return createElement(node.tag, { key: index });
+    if (node.tag === 'pre' && node.attrs?.lang === 'mermaid' && typeof node.children[0] === 'string') return <ZipDiagram key={index} source={node.children[0]}/>;
+    if (node.tag === 'aside') return <aside key={index} className={z.box} data-kind={node.attrs?.kind === 'warning' ? 'warning' : 'note'}>{children}</aside>;
+    if (headingTags.has(node.tag) && node.id) return createElement(node.tag, { key: index, id: node.id }, children, <a key="anchor" className={z.anchor} href={`#${encodeURIComponent(node.id)}`} aria-label="Link to this section">#</a>);
     const props: Record<string, unknown> = { key: index, id: node.id };
     if (node.tag === 'td' || node.tag === 'th') { props.colSpan = node.colspan; props.rowSpan = node.rowspan; }
     if (node.tag === 'ol' && node.start) props.start = node.start;
@@ -119,14 +138,18 @@ export function ZipRecord({ id, index, onBack, onNavigate }: { id: string; index
   }, [id]);
   const textReady = loaded.has(id) || (state.id === id && Boolean(state.document));
   useEffect(() => {
-    if (!textReady) return;
-    const wanted = scrollToAnchor;
-    scrollToAnchor = false;
-    if (!wanted || !location.hash) return;
-    let anchor = location.hash.slice(1);
-    try { anchor = decodeURIComponent(anchor); } catch { /* Keep malformed anchors inert. */ }
-    requestAnimationFrame(() => globalThis.document.getElementById(anchor)?.scrollIntoView());
+    if (!textReady || !location.hash || performance.now() - traversedAt < 1500) return;
+    const anchor = decodedAnchor(location.hash);
+    requestAnimationFrame(() => { revealAnchor(anchor); globalThis.document.getElementById(anchor)?.scrollIntoView(); });
   }, [id, textReady]);
+  useEffect(() => {
+    const reveal = (event: globalThis.MouseEvent) => {
+      const hash = event.target instanceof Element ? event.target.closest('a[href^="#"]')?.getAttribute('href') : null;
+      if (hash) revealAnchor(decodedAnchor(hash));
+    };
+    globalThis.document.addEventListener('click', reveal, true);
+    return () => globalThis.document.removeEventListener('click', reveal, true);
+  }, []);
   const entry = index.entries.find(item => item.id === id);
   if (!entry) return <section className={z.empty}><h1 tabIndex={-1}>Record not found</h1><p>This proposal is not in the current ZIP index.</p><button onClick={onBack}>All ZIPs<Arrow/></button></section>;
   const proposalText = loaded.get(id) ?? (state.id === id ? state.document : null);

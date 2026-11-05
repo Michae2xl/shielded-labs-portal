@@ -4,12 +4,15 @@ import { describe, expect, it } from 'vitest';
 import { projects } from '@/lib/shielded-preview/content';
 import type { PortalData, Repository } from '@/lib/shielded-preview/types';
 import { activityHref } from '@/lib/shielded-preview/development-navigation';
+import { opensInPortal, resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import { officialProjectExcerpts } from '@/lib/shielded-preview/official-project-excerpts';
 import { projectPublications, publicationQuote } from '@/lib/shielded-preview/project-publications';
 import ProjectDetail from './project-detail';
 
 const data: PortalData = { repos: [], grants: [], checkedAt: '2026-10-25', grantsState: 'unavailable', grantsFetchedAt: null };
 const nsm = projects.find(project => project.id === 'nsm')!;
+// A reference with a page in the portal opens it; anything else leaves in a new tab.
+const sourceLink = (source: string) => opensInPortal(source) ? `href="${resolveEditorialLink(source)!.replaceAll('&', '&amp;')}"` : `href="${source}" target="_blank" rel="noopener noreferrer"`;
 const renderFaq = (record: string | null) => renderToStaticMarkup(createElement(ProjectDetail, {
   project: nsm, section: 'faq', record, data, glyph: null, onSection: () => {}, onFollow: () => {},
 }));
@@ -23,7 +26,8 @@ describe('Official project excerpts', () => {
     const quotedParagraph = renderToStaticMarkup(createElement('p', null, `“${excerpt.text}”`));
     expect(markup).toContain(quotedParagraph);
     expect(markup).toContain(`cite="${excerpt.source}"`);
-    expect(markup).toContain(`href="${excerpt.source}" target="_blank" rel="noopener noreferrer" aria-label="Shielded Labs source for ${project.name}"`);
+    expect(markup).toContain(sourceLink(excerpt.source));
+    expect(markup).toContain(`aria-label="Shielded Labs source for ${project.name}"`);
     expect(new URL(excerpt.source).hostname).toBe('shieldedlabs.net');
   });
 });
@@ -39,7 +43,7 @@ describe('Official presentation and progress', () => {
         const quote = publicationQuote(excerpt);
         if (quote !== null) expect(markup).toContain(renderToStaticMarkup(createElement('q', { cite: excerpt.source }, quote)));
         for (const step of excerpt.steps ?? []) expect(markup).toContain(renderToStaticMarkup(createElement('q', { cite: excerpt.source }, step)));
-        expect(markup).toContain(`href="${excerpt.source}" target="_blank" rel="noopener noreferrer"`);
+        expect(markup).toContain(sourceLink(excerpt.source));
       }
       if (copy.next.text === null && !copy.next.steps?.length) expect(markup).toContain('Not specified in this source.');
       else expect(markup).not.toContain('Not specified in this source.');

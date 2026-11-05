@@ -10,6 +10,7 @@ import record from './governance-data/record.json';
 import snapshot from './governance-data/snapshot.json';
 import type { GovernanceData } from './governance-types';
 import { participationGuideId } from './governance-participation';
+import { bundledZips } from './zips/library';
 
 const data = snapshot as unknown as GovernanceData;
 const internalLinks = (node: ReactNode) => [...renderToStaticMarkup(node).matchAll(/<a\b[^>]*\bhref="(\?[^"<>]*)"/g)]
@@ -18,6 +19,7 @@ const destinations = {
   proposals: new Set([...data.review.data.map(row => `review:${row.number}`), ...data.proposals.data.map(row => `history:${row.id}`)]),
   grants: new Set(data.grants.data.map(row => `${row.program}|${row.grant}`)),
   results: new Set(data.verification.data!.rows.map(row => `q3:${row.id}`)),
+  zips: new Set(bundledZips.entries.map(entry => entry.id)),
   voting: new Set([participationGuideId, ...record.polls.filter(row => row.kind !== 'test').map(row => `poll:${row.id}`)]),
 };
 

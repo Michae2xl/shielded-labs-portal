@@ -36,7 +36,7 @@ describe('Portal simulators and news artwork', () => {
     expect(resolveEditorialLink('https://aphelionz.github.io.evil.example/crosslink-economics-simulator/')).not.toContain('?view=resources');
   });
   it('opens the fee calculator directly and preserves approved lab sections', () => {
-    expect(simulatorSource('fees-simulator')).toBe('https://fees.shieldedinfra.net/#enter-zip-317-and-actions');
+    expect(simulatorSource('fees-simulator')).toBe('https://fees.shieldedinfra.net/');
     expect(simulatorSource('fees-simulator', '#proposal')).toBe('https://fees.shieldedinfra.net/#proposal');
     expect(simulatorSource('fees-simulator', '#')).toBe('https://fees.shieldedinfra.net/');
     const link = new URL(resolveEditorialLink('https://fees.shieldedinfra.net/#proposal')!, 'https://portal.example');

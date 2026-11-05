@@ -1,7 +1,7 @@
-export type ProjectSection = 'overview' | 'progress' | 'resources' | 'faq' | 'development';
+export type ProjectSection = 'overview' | 'progress' | 'resources' | 'faq' | 'development' | 'participate';
 
 export const projectSectionLabels: Record<ProjectSection, string> = {
-  overview: 'Overview', progress: 'Progress', resources: 'Research', faq: 'FAQ', development: 'Development',
+  overview: 'Overview', progress: 'Progress', resources: 'Research', faq: 'FAQ', development: 'Development', participate: 'Participate',
 };
 
 export function isProjectSection(value: string | null): value is ProjectSection {

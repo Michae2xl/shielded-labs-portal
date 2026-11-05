@@ -431,7 +431,7 @@ to voting records, ZIPs and the Shielded Labs essays that back its figures. `ZIP
 Network upgrade records now link their ZIP references, and the global search finds ZIPs by
 number or title. Rendering happens outside the server: `scripts/zips/import_zips.py` turns
 reStructuredText and Markdown into the same inert node shape as the editorial import (docutils
-with raw HTML and file insertion disabled, MathML for formulas, an allowlist for tags and
+with raw HTML and file insertion disabled, markdown-it-py for CommonMark, MathML for formulas, an allowlist for tags and
 attributes, PNG figures only). A scheduled GitHub Actions job (`.github/workflows/zips-sync.yml`)
 publishes the result to the `zips-data` branch every six hours; the portal reads that branch when
 `ZIPS_DATA_URL` is set and otherwise serves the bundled snapshot. Open pull requests are

@@ -21,7 +21,7 @@ const loaded = new Map<string, EditorialDocument>();
 export function EditorialArrow({ back = false, external = false }: { back?: boolean; external?: boolean }) {
   return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true" style={back ? { transform: 'rotate(180deg)' } : undefined}><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'}/></svg>;
 }
-export function EditorialLink({ href, onFollow, children, className }: { href: string; onFollow: Follow; children: ReactNode; className?: string }) {
+export function EditorialLink({ href, onFollow, children, className, label }: { href: string; onFollow: Follow; children: ReactNode; className?: string; label?: string }) {
   const safe = resolveEditorialLink(href);
   if (!safe) return <span>{children}</span>;
   const internal = safe.startsWith('?view=');
@@ -29,7 +29,7 @@ export function EditorialLink({ href, onFollow, children, className }: { href: s
     if (!internal || event.button || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
     event.preventDefault(); onFollow(safe!);
   }
-  return <a className={className} href={safe} onClick={click} {...(!internal && !safe.startsWith('#') && !safe.startsWith('mailto:') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{children}</a>;
+  return <a className={className} href={safe} aria-label={label} onClick={click} {...(!internal && !safe.startsWith('#') && !safe.startsWith('mailto:') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{children}</a>;
 }
 function DateLabel({ date }: { date: string }) {
   return <time dateTime={date}>{new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date))}</time>;

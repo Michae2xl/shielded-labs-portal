@@ -4,6 +4,7 @@ import { internalSimulatorLink, simulatorDocuments } from './simulators';
 import type { EditorialEntry } from './types';
 import { projects } from '../content';
 import { projectHref } from '../project-navigation';
+import { bundledZips, zipHref } from '../zips/library';
 
 export const editorialCatalog: EditorialEntry[] = [
   ...importedCatalog as EditorialEntry[],
@@ -80,6 +81,18 @@ const handbookChapters: Record<string, string> = {
   'implementation.html': 'crosslink-implementation',
 };
 
+/** A ZIP on the official site or in the repository opens in the portal's own library. */
+function zipLibraryHref(url: URL): string | null {
+  if (url.hostname === 'zips.z.cash' && ['', '/'].includes(url.pathname)) return '?view=governance&section=zips';
+  const official = url.hostname === 'zips.z.cash' ? /^\/(zip-\d{4}|draft-[a-z0-9-]+)(?:\.(?:html|rst|md))?\/?$/i.exec(url.pathname) : null;
+  const repository = url.hostname === 'github.com' ? /^\/zcash\/zips\/blob\/[^/]+\/zips\/(zip-\d{4}|draft-[a-z0-9-]+)\.(?:rst|md)$/i.exec(url.pathname) : null;
+  const id = (official ?? repository)?.[1].toLowerCase();
+  return id && bundledZips.entries.some(entry => entry.id === id) ? zipHref(id, url.hash) : null;
+}
+
+/** True when a reference stays inside the portal, so links can show the right arrow. */
+export const opensInPortal = (href: string) => Boolean(resolveEditorialLink(href)?.startsWith('?view='));
+
 // Resolve publisher links to the local record before rendering a document.
 export function resolveEditorialLink(value: string): string | null {
   const safe = safeEditorialUrl(value);
@@ -90,6 +103,8 @@ export function resolveEditorialLink(value: string): string | null {
   try { anchor = decodeURIComponent(url.hash.slice(1)); } catch { return safe; }
   const simulator = internalSimulatorLink(url);
   if (simulator) return simulator;
+  const zip = zipLibraryHref(url);
+  if (zip) return zip;
   const matching = editorialCatalog.find(entry => {
     // Shared board/jobs source URLs describe several entries, not a single profile.
     if (entry.id.startsWith('board-') || entry.id === 'cryptographer') return false;

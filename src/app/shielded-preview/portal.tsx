@@ -140,7 +140,7 @@ export default function Portal({ initial, initialView = defaultView, initialProj
 
         {view === 'governance' && <Governance/>}
 
-        {(view === 'impact' || view === 'people') && <Directory key={view} view={view} section={directorySection} record={directoryRecord} onNavigate={(section, record) => go(view, section, record)} onProject={openProject}/>}
+        {(view === 'impact' || view === 'people') && <Directory onFollow={followEditorial} key={view} view={view} section={directorySection} record={directoryRecord} onNavigate={(section, record) => go(view, section, record)} onProject={openProject}/>}
 
         {(view === 'blog' || view === 'resources' || view === 'about') && <Editorial key={view} view={view} section={directorySection} record={directoryRecord} onFollow={followEditorial}/>}
 

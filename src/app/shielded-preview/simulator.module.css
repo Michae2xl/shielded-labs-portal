@@ -44,3 +44,6 @@
 }
 @container(max-width:560px){.frame[data-tool="crosslink-simulator"]{height:1275px}}
 @container(max-width:420px){.frame[data-tool="crosslink-simulator"]{height:1610px}.frame[data-tool="nsm-simulator"]{height:935px}}
+.panel:fullscreen{display:flex;flex-direction:column;border:0;border-radius:0}
+.panel:fullscreen .frameWrap{flex:1;min-height:0}
+.panel:fullscreen .frame[data-tool]{height:100%}

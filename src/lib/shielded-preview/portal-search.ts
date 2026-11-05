@@ -4,6 +4,7 @@ import { editorialHref, searchEditorial } from './editorial/library';
 import { projectHref } from './project-navigation';
 import { governanceSectionSlug, governanceSections } from './governance-sections';
 import { searchZips } from './zips/library';
+import { communityTools } from './crosslink-guide/tools';
 
 export type PortalSearchResult = { title: string; kind: string; href: string };
 type SearchNavigation = { id: string; title: string; keywords?: string };
@@ -19,6 +20,8 @@ export function searchPortal(query: string, navigation: readonly SearchNavigatio
     ...navigation.filter(item => matches(`${item.title} ${item.keywords ?? ''}`)).map(item => ({ title: item.title, kind: 'Portal', href: `?view=${item.id}` })),
     ...governanceSections.filter(section => section !== 'Overview' && matches(section === 'ZIPs' ? 'ZIPs Zcash Improvement Proposals' : section === 'How it works' ? 'How it works governance process explainer' : section)).map(title => ({ title, kind: 'Governance', href: `?view=governance&section=${governanceSectionSlug(title)}` })),
     ...searchZips(query),
+    ...(matches('Crosslink test guide feature net participate finalizer stake cTAZ testing incentives') ? [{ title: 'Crosslink test guide', kind: 'Project', href: projectHref('crosslink', 'participate') }] : []),
+    ...communityTools.filter(tool => matches(`${tool.name} ${tool.author} ${tool.category} crosslink community tool`)).map(tool => ({ title: tool.name, kind: 'Community tool', href: projectHref('crosslink', 'participate', 'tools') })),
     ...milestones.filter(milestone => matches(`${milestone.name} ${milestone.type}`)).map(milestone => ({ title: milestone.name, kind: 'Milestone', href: directoryHref('impact', milestone.type.toLowerCase(), `milestone:${milestone.date}`) })),
     ...team.filter(person => matches(`${person.name} ${person.role}`)).map(person => ({ title: person.name, kind: person.role, href: directoryHref('people', person.group.toLowerCase(), `person:${personId(person)}`) })),
   ];

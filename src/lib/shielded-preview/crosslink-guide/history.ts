@@ -1,0 +1,33 @@
+const forum = "https://forum.zcashcommunity.com/t/crosslink-incentivized-feature-net/55210";
+
+// Date of the last check of every curated link, shown in the guide's footer.
+export const sourcesChecked = "2 Nov 2026";
+// Reference release the participation steps and hero CTA point at. Shielded
+// Labs ships weekly and only recognizes the current chain for rewards, so
+// this must track the repository's latest release.
+export const releaseTag = "v16";
+export const releaseNotes = `https://github.com/ShieldedLabs/crosslink_monolith/releases/tag/${releaseTag}`;
+
+export const paidRounds = [
+  { round: 1, total: 25, earned: 11.2, discretionary: 13.8, reported: "27 Jun 2026", recipients: 22, claim: "17 Jun 2026 · 23:59 UTC", source: `${forum}/49`, claimSource: `${forum}/47`, note: "Unclaimed proportional rewards were reassigned to community contributors and active testers. Payments were reported as distributed during that week." },
+  { round: 2, total: 25, earned: 19.954, discretionary: 5.046, reported: "15 Oct 2026", recipients: 17, claim: "4 Oct 2026 · 23:59 UTC", source: `${forum}/117`, claimSource: `${forum}/94`, note: "Eight contributors received discretionary awards. The claim announcement specified snapshot height 660,000. Recipient groups may overlap." },
+] as const;
+export const reportedPaid = paidRounds.reduce((total, round) => total + round.total, 0);
+export const history = [
+  { date: "2 Apr 2026", title: "The incentive program opens", allocatedZec: 500, detail: "500 ZEC allocated to the program; 25 ZEC earmarked for the first season. Rewards are based on cTAZ earned through mining and staking, excluding faucet balances and the funding wallet.", source: `${forum}/1`, kind: "Program" },
+  { date: "15 Apr 2026", title: "Feature net launches", detail: "The first public network and desktop release open community testing.", source: `${forum}/19`, kind: "Network" },
+  { date: "23–27 Apr 2026", title: "Early network upgrades", detail: "The v3 upgrade includes restoring the wallet seed, followed by v4. These instructions belong to the early network, not the current release guide.", source: `${forum}/31`, kind: "Network" },
+  { date: "12 May 2026", title: "Finality stalls", detail: "Participants report stalled BFT finality. Chain divergence and recovery become a focus of testing and community diagnostics.", source: `${forum}/38`, kind: "Network" },
+  { date: "29 May 2026", title: "Testing moves to continuous iterations", detail: "Scheduled seasonal resets give way to upgrades on the running network, with resets only when needed. A rolling six-week reward cadence is proposed; allocations and claim windows are announced separately.", source: `${forum}/39`, kind: "Program" },
+  { date: "10 Jun 2026", title: "Workshop & cTAZ walkthrough", detail: "A community workshop and explorer walkthrough help participants inspect network health and activity. The recording was shared on 12 June.", source: `${forum}/46`, kind: "Community" },
+  { date: "17 Jun 2026", title: "Round 1 claims close", detail: "Deadline: 23:59 UTC. Participants were asked to privately submit each test-wallet UFVK and a mainnet Orchard payout address, including both desktop and mobile wallets when used.", source: `${forum}/47`, kind: "Claims" },
+  { date: "27 Jun 2026", title: "Round 1 · 25 ZEC paid", detail: "Payment report: 11.2 ZEC for mining and staking; 13.8 ZEC in discretionary awards. The report says funds were distributed that week.", source: `${forum}/49`, kind: "Paid" },
+  { date: "1–3 Jul 2026", title: "Round 2 & fork diagnostics", detail: "Viewing keys must be submitted again for Round 2. Community fork monitors help compare chains; a historical reference block is shared at height 187572. It is not a checkpoint for the new network.", source: `${forum}/66`, kind: "Network" },
+  { date: "Aug–Sep 2026", title: "Community tooling expands", detail: "Local RPC utilities, explorer adaptations, Staker Space, a SQLite indexer and Nozy integration tests add visibility into staking, forks and withdrawals. Find their original posts in Community tools.", source: `${forum}/81`, kind: "Community" },
+  { date: "24 Sep 2026", title: "Round 2 claim window announced", detail: "Snapshot height: 660000, then expected on 30 September. Submission deadline: 4 October, 23:59 UTC. The post requests test-wallet UFVKs and a mainnet Ironwood address via private forum message or Signal.", source: `${forum}/94`, kind: "Claims" },
+  { date: "1–3 Oct 2026", title: "Round 3 · new network", detail: "The October workshop introduces the next round. The v14 release starts a new network, with an active roster of 12 and approximately one-day staking windows in a three-day cycle. The forum announcement follows on 3 October.", source: `${forum}/113`, kind: "Network" },
+  { date: "8 Oct 2026", title: "0scan Crosslink Tracker", detail: "A new community tracker adds finalizer voting power, stake history and funding-flow views.", source: `${forum}/114`, kind: "Community" },
+  { date: "13 Oct 2026", title: "v15 upgrade released", detail: "The release schedules activation at height 55296, expected on 15 October. It addresses a stalled-proposal edge case, finalizer rewards and power-of-ten bond amounts.", source: "https://github.com/ShieldedLabs/crosslink_monolith/releases/tag/v15", kind: "Network" },
+  { date: "15 Oct 2026", title: "Round 2 · 25 ZEC paid", detail: "Payment report: 19.954 ZEC for mining and staking across 17 participants; 5.046 ZEC in discretionary awards to eight contributors.", source: `${forum}/117`, kind: "Paid" },
+  { date: "2 Nov 2026", title: "v16 · required update", detail: "Version 16 runs on the same network as v15: replace the binary and restart, keeping existing data. It fixes crashes from malformed staking transactions, BFT proposals and vote packets, forbids staking actions in coinbase transactions, and updates the sync checkpoint. Shielded Labs recognizes only the current chain for rewards, and versions stop running two weeks after they ship.", source: "https://github.com/ShieldedLabs/crosslink_monolith/releases/tag/v16", kind: "Network" },
+] as const;

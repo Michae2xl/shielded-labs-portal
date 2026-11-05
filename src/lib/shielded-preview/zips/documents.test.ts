@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import type { ZipDocument, ZipNode } from './types';
+import { zipDocumentSchema, type ZipDocument, type ZipNode } from './types';
 
 const folder = path.join(process.cwd(), 'src/lib/shielded-preview/zips/documents');
 const documents = readdirSync(folder).filter(name => name.endsWith('.json')).map(name => JSON.parse(readFileSync(path.join(folder, name), 'utf8')) as ZipDocument);
@@ -11,7 +11,7 @@ const anchors = new Map(documents.map(document => {
   document.body.forEach(visit);
   return [document.id, found];
 }));
-const blocks = new Set('p h2 h3 h4 h5 h6 ul ol dl table blockquote pre figure hr'.split(' '));
+const blocks = new Set('p h2 h3 h4 h5 h6 ul ol dl table blockquote pre figure hr details aside'.split(' '));
 function walk(nodes: ZipNode[], visit: (node: Exclude<ZipNode, string>, parents: string[]) => void, parents: string[] = []) {
   for (const node of nodes) {
     if (typeof node === 'string') continue;
@@ -21,6 +21,10 @@ function walk(nodes: ZipNode[], visit: (node: Exclude<ZipNode, string>, parents:
 }
 
 describe('Rendered ZIP documents', () => {
+  it('all pass the schema the portal applies to synced documents', () => {
+    const invalid = documents.filter(document => !zipDocumentSchema.safeParse(document).success).map(document => document.id);
+    expect(invalid).toEqual([]);
+  });
   it('only link to anchors and records that exist', () => {
     const broken: string[] = [];
     for (const document of documents) walk(document.body, node => {
@@ -41,7 +45,30 @@ describe('Rendered ZIP documents', () => {
       if (parents.includes('p') && blocks.has(node.tag)) invalid.push(`${document.id}: ${node.tag} in p`);
       if (node.tag === 'a' && parents.includes('a')) invalid.push(`${document.id}: a in a`);
       if (node.tag === 'tr' && !['thead', 'tbody', 'tfoot'].includes(parents.at(-1) ?? '')) invalid.push(`${document.id}: tr outside a table section`);
+      if (node.tag === 'details' && (typeof node.children[0] === 'string' || node.children[0]?.tag !== 'summary')) invalid.push(`${document.id}: details without a summary first`);
     });
     expect(invalid).toEqual([]);
+  });
+  it('show formulas as math, not as LaTeX source', () => {
+    const raw: string[] = [];
+    const scan = (nodes: ZipNode[], id: string, inCode: boolean) => {
+      for (const node of nodes) {
+        if (typeof node === 'string') { if (!inCode && /\\(?:mathsf|mathbb|mathtt|frac|begin\{)/.test(node)) raw.push(`${id}: ${node.slice(0, 60)}`); continue; }
+        if (node.tag !== 'math') scan(node.children, id, inCode || node.tag === 'pre' || node.tag === 'code');
+      }
+    };
+    for (const document of documents) scan(document.body, document.id, false);
+    expect(raw).toEqual([]);
+  });
+  it('keep headings free of source labels and merged documents free of links to previews', () => {
+    const wrong: string[] = [];
+    for (const document of documents) walk(document.body, node => {
+      if (/^h[2-6]$/.test(node.tag)) {
+        const last = node.children.at(-1);
+        if (typeof last === 'string' && /\s\[[\w.:-]+\]\s*$/.test(last)) wrong.push(`${document.id}: ${last}`);
+      }
+      if (document.kind !== 'proposal' && /record=pr-/.test(node.href ?? '')) wrong.push(`${document.id}: ${node.href}`);
+    });
+    expect(wrong).toEqual([]);
   });
 });

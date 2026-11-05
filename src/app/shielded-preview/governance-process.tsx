@@ -3,12 +3,14 @@
 import type { ReactNode } from 'react';
 import { governanceProcess, type ProcessBlock, type ProcessCell, type ProcessLink } from '@/lib/shielded-preview/governance-process';
 import GovernanceRecord from './governance-record';
+import { resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import { Arrow, Link, type CollectionNavigate } from './governance-collections';
 import s from './governance-process.module.css';
 
 const date = (value: string) => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
 
-function External({ href, children }: { href: string; children: ReactNode }) {
+function External({ href: reference, children }: { href: string; children: ReactNode }) {
+  const href = resolveEditorialLink(reference) ?? reference;
   const internal = href.startsWith('?');
   return <a href={href} {...(internal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>{children}{internal ? <Arrow/> : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>}</a>;
 }

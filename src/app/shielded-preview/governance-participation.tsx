@@ -1,5 +1,6 @@
 'use client';
 
+import { resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import { useEffect, useState, type ReactNode } from 'react';
 import Image from 'next/image';
 import { participationGuideHref, participationHref, participationPhase, participationRound, participationSources as sources } from '@/lib/shielded-preview/governance-participation';
@@ -116,7 +117,7 @@ export function GovernanceReference() {
       <header className={b.header}><h3 id="governance-allocation-heading">Ecosystem funding</h3></header>
       <dl className={b.allocation}><div><dt>ZCG</dt><dd>8<span>%</span></dd></div><div><dt>Coinholder fund</dt><dd>12<span>%</span></dd></div></dl>
       <p className={b.note}>Share of block rewards</p>
-      <a className={b.footer} href={sources.funding} target="_blank" rel="noopener noreferrer">ZIP 1016<Arrow external/></a>
+      <a className={b.footer} href={resolveEditorialLink(sources.funding) ?? sources.funding}>ZIP 1016<Arrow/></a>
     </section>
   </>;
 }

@@ -28,7 +28,7 @@ function Portrait({ person, detail = false }: { person: Person; detail?: boolean
 }
 function ProjectRows({ ids, onProject }: { ids: string[]; onProject: (project: Project) => void }) { return <div className={s.projectRows}>{ids.map(id => projects.find(project => project.id === id)).filter((project): project is Project => !!project).map(project => <ProjectLink key={project.id} project={project} onSelect={onProject} className={s.projectRow}><div><h3>{project.name}</h3><p><q cite={projectPublications[project.id].presentation.source}>{publicationQuote(projectPublications[project.id].presentation)}</q></p></div><Arrow/></ProjectLink>)}</div>; }
 
-export default function Directory({ view, section, record, onNavigate, onProject }: { view: DirectoryView; section: string | null; record: string | null; onNavigate: Navigate; onProject: (project: Project) => void }) {
+export default function Directory({ view, section, record, onNavigate, onProject, onFollow }: { view: DirectoryView; section: string | null; record: string | null; onNavigate: Navigate; onProject: (project: Project) => void; onFollow: (href: string) => void }) {
   const person = view === 'people' ? team.find(person => `person:${personId(person)}` === record) : undefined;
   const milestone = view === 'impact' ? milestones.find(milestone => `milestone:${milestone.date}` === record) : undefined;
   const groups = view === 'people' ? peopleGroups : milestoneGroupItems;
@@ -46,7 +46,7 @@ export default function Directory({ view, section, record, onNavigate, onProject
 
     {!record && view === 'impact' && <MilestonesView group={activeGroup} headingRef={heading} onNavigate={onNavigate}/>}
 
-    {milestone && <MilestoneRecord milestone={milestone} group={activeGroup} onNavigate={onNavigate} onProject={onProject}/>}
+    {milestone && <MilestoneRecord milestone={milestone} group={activeGroup} onNavigate={onNavigate} onProject={onProject} onFollow={onFollow}/>}
 
     {!record && view === 'people' && <>
       <div className={s.peopleGrid}>{team.filter(person => activeGroup === 'all' || person.group.toLowerCase() === activeGroup).map(person => <EntryLink key={person.name} view="people" section={activeGroup} record={`person:${personId(person)}`} onNavigate={onNavigate} className={s.personCard}><div className={s.personIdentity}><Portrait person={person}/><div><h2>{person.name}</h2><p>{person.role}</p></div></div><Arrow/></EntryLink>)}</div>

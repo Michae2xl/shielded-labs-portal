@@ -42,7 +42,10 @@ async function readRemote(url: string, limit: number): Promise<unknown> {
 
 async function refreshIndex(base: string): Promise<ZipsIndex> {
   const [entries, meta] = await Promise.all([readRemote(`${base}/index.json`, INDEX_LIMIT), readRemote(`${base}/meta.json`, META_LIMIT)]);
-  const parsedEntries = zipEntrySchema.array().max(5000).parse(entries);
+  if (!Array.isArray(entries) || entries.length > 5000) throw new Error('The sync index is not a list of records');
+  // One bad row, say from an oversized pull request header, costs that record and not the whole index.
+  const parsedEntries = entries.flatMap(row => { const parsed = zipEntrySchema.safeParse(row); return parsed.success ? [parsed.data] : []; });
+  if (!parsedEntries.length) throw new Error('The sync index has no valid records');
   if (new Set(parsedEntries.map(entry => entry.id)).size !== parsedEntries.length) throw new Error('Duplicate records in the sync index');
   return { state: 'fetched', observedAt: new Date().toISOString(), error: false, meta: zipMetaSchema.parse(meta), entries: parsedEntries };
 }

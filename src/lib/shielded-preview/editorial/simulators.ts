@@ -11,10 +11,10 @@ export type Simulator = typeof simulators[number];
 /** The models stay isolated from the portal, but may copy a scenario link and open links in a new tab. */
 export const simulatorFrame = { sandbox: 'allow-scripts allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox', allow: 'clipboard-write', referrerPolicy: 'no-referrer' } as const;
 export const feeSections = [
+  { id: '', label: 'Full lab' },
   { id: 'enter-zip-317-and-actions', label: 'Fee calculator' },
   { id: 'proposal', label: 'Fee proposal' },
   { id: 'difficulty-as-price-oracle', label: 'Difficulty & price' },
-  { id: '', label: 'Full lab' },
 ];
 export const simulatorDocuments: EditorialDocument[] = simulators.map(tool => ({
   id: tool.id, title: tool.title, view: 'resources', category: 'Simulator', projects: [tool.project],
@@ -41,7 +41,7 @@ export function simulatorSource(id: string, scenario = ''): string | null {
   if (id === 'nsm-simulator' && /^#z=[A-Za-z0-9_-]{1,8000}$/.test(scenario)) url.hash = scenario;
   if (id === 'fees-simulator') {
     const section = scenario.startsWith('#') ? feeSections.find(item => item.id === scenario.slice(1)) : undefined;
-    url.hash = section?.id ?? feeSections[0].id;
+    url.hash = section?.id ?? '';
   }
   return url.href;
 }
