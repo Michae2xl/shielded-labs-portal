@@ -5,11 +5,12 @@ import { personId, type Person } from './directory';
 import { editorialCatalog, editorialHref, editorialListHref } from './editorial/library';
 import type { Repository } from './types';
 import { bundledZips, zipHref, zipLabel } from './zips/library';
+import type { ZipEntry } from './zips/types';
 
 type Profile = {
   /** Account linked from the person's entry on the official team page. */
   x?: string;
-  /** Account on this person's commits in Shielded Labs repositories. */
+  /** Account confirmed by this person's commits or ZIP pull requests. */
   github?: string;
   /** Author names on those commits, including commits with no linked account. */
   commitNames?: string[];
@@ -22,9 +23,9 @@ type Profile = {
 };
 
 const profiles: Record<string, Profile> = {
-  'jason-mcgee-stramaglia': { x: 'aquietinvestor', byline: 'Jason McGee', board: 'board-jason-mcgee-stramaglia' },
+  'jason-mcgee-stramaglia': { x: 'aquietinvestor', github: 'aquietinvestor', byline: 'Jason McGee', board: 'board-jason-mcgee-stramaglia' },
   'zooko-wilcox': { x: 'zooko', board: 'board-zooko-wilcox' },
-  'nate-wilcox': { x: 'nate_zec' },
+  'nate-wilcox': { x: 'nate_zec', github: 'shielded-nate' },
   'mark-henderson': { x: 'shieldedmark', github: 'sl-mrh', commitNames: ['Mark Henderson'] },
   'sam-smith': { x: 'SamHsmith2', github: 'SamHSmith', commitNames: ['Sam H. Smith'] },
   'andrew-reece': { x: 'azmreece', github: 'azmr', commitNames: ['Andrew Reece'] },
@@ -44,6 +45,8 @@ const profiles: Record<string, Profile> = {
   'robert-fegler': {},
 };
 
+/** Anyone can write a name in a ZIP header, so a proposal counts only when one of these accounts opened it. */
+const teamAccounts = new Set(Object.values(profiles).flatMap(profile => profile.github ? [profile.github.toLowerCase()] : []));
 const ACTIVITY_PERIODS = [35, 84] as const;
 const ARTICLES_SHOWN = 5;
 const COMMITS_SHOWN = 3;
@@ -54,8 +57,17 @@ function activityPeriod(commits: ObservedCommit[], checkedAt?: string) {
   return ACTIVITY_PERIODS.find(period => windowCommits(commits, developmentDays(checkedAt, period)).length > 0) ?? null;
 }
 
+/** Open proposals first, newest first, then the merged documents in their usual order. */
+function personZips(byline: string, entries: readonly ZipEntry[]) {
+  const named = entries.filter(entry => entry.owners.some(owner => owner.includes(byline)));
+  const proposals = named
+    .filter(entry => entry.kind === 'proposal' && entry.pull && teamAccounts.has(entry.pull.author.toLowerCase()))
+    .sort((a, b) => (b.pull?.createdAt ?? '').localeCompare(a.pull?.createdAt ?? ''));
+  return [...proposals, ...named.filter(entry => entry.kind !== 'proposal')];
+}
+
 /** Everything shown on a profile comes from that person's own records, and an absent record leaves no section. */
-export function personProfile(person: Person, repositories: Repository[] = [], checkedAt?: string) {
+export function personProfile(person: Person, repositories: Repository[] = [], checkedAt?: string, zips: readonly ZipEntry[] = bundledZips.entries) {
   const profile = profiles[personId(person)] ?? {};
   const byline = profile.byline ?? person.name;
   const articles = editorialCatalog
@@ -72,7 +84,7 @@ export function personProfile(person: Person, repositories: Repository[] = [], c
     ],
     sourceNote: [
       `Name, role${profile.x ? ', photo and X account' : ' and photo'} come from the official team page.`,
-      ...(profile.github ? ['The GitHub account comes from commits in Shielded Labs repositories.'] : []),
+      ...(profile.github ? ['The GitHub account comes from their commits or pull requests.'] : []),
     ].join(' '),
     boardHref: profile.board ? `?view=about&section=board&record=${profile.board}` : null,
     bio: profile.bio ? { text: profile.bio, source: sources.epoch, project: 'epoch' } : null,
@@ -81,9 +93,7 @@ export function personProfile(person: Person, repositories: Repository[] = [], c
       total: articles.length,
       allHref: editorialListHref('blog', 'all', byline),
     },
-    zips: bundledZips.entries
-      .filter(entry => entry.kind !== 'proposal' && entry.owners.some(owner => owner.includes(byline)))
-      .map(entry => ({ id: entry.id, label: zipLabel(entry), title: entry.title, status: entry.status, href: zipHref(entry.id) })),
+    zips: personZips(byline, zips).map(entry => ({ id: entry.id, label: zipLabel(entry), title: entry.title, status: entry.status, opened: entry.pull?.createdAt ?? null, href: zipHref(entry.id) })),
     // The commit data is a sample of each repository, so a profile lists dated commits rather than a total.
     activity: commits.length ? {
       latest: commits.slice(0, COMMITS_SHOWN).map(commit => ({

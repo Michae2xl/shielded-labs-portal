@@ -5,6 +5,7 @@ import { team } from './content';
 import type { Person } from './directory';
 import { personProfile } from './team-profiles';
 import type { Repository } from './types';
+import type { ZipEntry } from './zips/types';
 
 const documents = JSON.parse(readFileSync(path.join(process.cwd(), 'src/lib/shielded-preview/editorial/documents.json'), 'utf8')) as { id: string; body: unknown }[];
 const text = (node: unknown): string => typeof node === 'string' ? node : Array.isArray(node) ? node.map(text).join('') : text((node as { children?: unknown } | null)?.children ?? '');
@@ -30,14 +31,34 @@ describe('Team profiles', () => {
     expect(withBio.map(member => member.name).sort()).toEqual(['Luke Edwards', 'Suyash Bagad', 'Ulrich Haböck']);
     for (const member of withBio) expect(announcement, member.name).toContain(personProfile(member).bio!.text);
   });
-  it('list only articles and merged ZIPs the person is named on', () => {
+  it('list only articles and ZIPs the person is named on', () => {
     const jason = personProfile(person('Jason McGee Stramaglia'));
     expect(jason.articles.total).toBeGreaterThan(5);
     expect(jason.articles.latest).toHaveLength(5);
     expect(jason.articles.latest.map(article => article.date)).toEqual([...jason.articles.latest.map(article => article.date)].sort().reverse());
     expect(jason.zips.map(zip => zip.id)).toContain('zip-1015');
-    expect(jason.zips.every(zip => !zip.id.startsWith('pr-'))).toBe(true);
-    expect(personProfile(person('Nate Wilcox')).zips).toEqual([]);
+    expect(personProfile(person('Luke Edwards')).zips).toEqual([]);
+  });
+  it('list an open proposal only when a team account opened it, newest first and ahead of merged documents', () => {
+    const zip = (id: string, owners: string[], pull?: { number: number; author: string; createdAt: string }) => ({ id, number: null, title: id, status: 'Draft', owners, kind: pull ? 'proposal' : 'zip', pull }) as unknown as ZipEntry;
+    const entries = [
+      zip('merged', ['Jason McGee']),
+      zip('older', ['Jason McGee', 'Mark Henderson'], { number: 1, author: 'aquietinvestor', createdAt: '2025-10-21T00:00:00Z' }),
+      zip('newer', ['Zooko Wilcox (Shielded Labs)', 'Jason McGee (Shielded Labs)'], { number: 2, author: 'AQuietInvestor', createdAt: '2026-10-30T00:00:00Z' }),
+      zip('outsider', ['Jason McGee', 'Mark Henderson'], { number: 3, author: 'someone-else', createdAt: '2026-11-01T00:00:00Z' }),
+    ];
+    const jason = personProfile(person('Jason McGee Stramaglia'), [], undefined, entries).zips;
+    expect(jason.map(item => item.id)).toEqual(['newer', 'older', 'merged']);
+    expect(jason[0]).toMatchObject({ label: 'PR 2', opened: '2026-10-30T00:00:00Z' });
+    expect(jason[2].opened).toBeNull();
+    expect(personProfile(person('Zooko Wilcox'), [], undefined, entries).zips.map(item => item.id)).toEqual(['newer']);
+    expect(personProfile(person('Mark Henderson'), [], undefined, entries).zips.map(item => item.id)).toEqual(['older']);
+  });
+  it('link GitHub only where the account is confirmed', () => {
+    const github = (name: string) => personProfile(person(name)).accounts.find(account => account.label === 'GitHub')?.handle;
+    expect(github('Jason McGee Stramaglia')).toBe('aquietinvestor');
+    expect(github('Nate Wilcox')).toBe('shielded-nate');
+    expect(github('Zooko Wilcox')).toBeUndefined();
   });
   it('list the latest commits by account and by author name, leaving out merges and other people', () => {
     const repos = [repository([

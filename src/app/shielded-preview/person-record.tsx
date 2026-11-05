@@ -80,7 +80,7 @@ export default function PersonRecord({ person, group, repositories, checkedAt, o
         </section>}
         {profile.zips.length > 0 && <section className={s.card} aria-labelledby="person-zips">
           <div className={s.cardHeading}><h2 id="person-zips">ZIPs</h2><span>{profile.zips.length}</span></div>
-          <ul className={s.rows}>{profile.zips.map(zip => <li key={zip.id}><EditorialLink href={zip.href} onFollow={onFollow} className={s.row}><span className={s.rowKey}>{zip.label}</span><span className={s.rowTitle}>{zip.title}{zip.status !== zip.label && <small>{zip.status}</small>}</span><Arrow/></EditorialLink></li>)}</ul>
+          <ul className={s.rows}>{profile.zips.map(zip => <li key={zip.id}><EditorialLink href={zip.href} onFollow={onFollow} className={s.row}><span className={s.rowKey}>{zip.label}</span><span className={s.rowTitle}>{zip.title}{zip.opened ? <small>Open pull request · {fullDate(zip.opened)}</small> : zip.status !== zip.label && <small>{zip.status}</small>}</span><Arrow/></EditorialLink></li>)}</ul>
         </section>}
       </div>}
 
