@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type ReactNode, type MouseEvent } from 'react';
 import dynamic from 'next/dynamic';
-import { projects, sources, REVIEWED, MILESTONES_REVIEWED, type Project } from '@/lib/shielded-preview/content';
+import { projects, sources, REVIEWED, MILESTONES_REVIEWED, TEAM_REVIEWED, type Project } from '@/lib/shielded-preview/content';
 import { legacyProjectResourceHref, resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import { isProjectSection, projectHref, type ProjectSection } from '@/lib/shielded-preview/project-navigation';
 import { searchPortal } from '@/lib/shielded-preview/portal-search';
@@ -154,7 +154,7 @@ export default function Portal({ initial, initialView = defaultView, initialProj
 
         {view === 'governance' && <Governance/>}
 
-        {(view === 'impact' || view === 'people') && <Directory onFollow={followEditorial} key={view} view={view} section={directorySection} record={directoryRecord} onNavigate={(section, record) => go(view, section, record)} onProject={openProject}/>}
+        {(view === 'impact' || view === 'people') && <Directory onFollow={followEditorial} repositories={data.repos} checkedAt={data.checkedAt} key={view} view={view} section={directorySection} record={directoryRecord} onNavigate={(section, record) => go(view, section, record)} onProject={openProject}/>}
 
         {(view === 'blog' || view === 'resources' || view === 'about') && <Editorial key={view} view={view} section={directorySection} record={directoryRecord} onFollow={followEditorial}/>}
 
@@ -164,6 +164,6 @@ export default function Portal({ initial, initialView = defaultView, initialProj
     </div>
 
 
-    {showSources && <Modal title="Sources & methodology" onClose={()=>setShowSources(false)}><p className={s.dialogLead}>Coverage, verification dates and primary sources.</p><div className={s.sourceRow}><strong>Engineering observations</strong><p>Six selected repositories, up to 100 latest commits per tracked branch. Core counts exclude forks and deduplicate commit hashes. Author identities are not an employee count.</p><small>{liveCount}/6 sources refreshed · Last check <DateLabel value={data.checkedAt}/>{error?' · Refresh failed; retaining prior observations.':''}</small></div><div className={s.sourceRow}><strong>Grant records</strong><p>Grant records come from OpenZcash. Each dataset keeps its source and observation date.</p><External href="https://openzcash.org/zcg/methodology">OpenZcash methodology</External></div><div className={s.sourceRow}><strong>Content review</strong><p>Project summaries and team roles reviewed on {REVIEWED}; historical milestones reviewed on {MILESTONES_REVIEWED}. Organizational statements are attributed; governance guidance is kept distinct from advocacy.</p></div><div className={s.resourceList}>{Object.entries(sources).map(([label,url])=><External key={label} href={url}>{label.charAt(0).toUpperCase()+label.slice(1)}</External>)}</div></Modal>}
+    {showSources && <Modal title="Sources & methodology" onClose={()=>setShowSources(false)}><p className={s.dialogLead}>Coverage, verification dates and primary sources.</p><div className={s.sourceRow}><strong>Engineering observations</strong><p>Six selected repositories, up to 100 latest commits per tracked branch. Core counts exclude forks and deduplicate commit hashes. Author identities are not an employee count.</p><small>{liveCount}/6 sources refreshed · Last check <DateLabel value={data.checkedAt}/>{error?' · Refresh failed; retaining prior observations.':''}</small></div><div className={s.sourceRow}><strong>Grant records</strong><p>Grant records come from OpenZcash. Each dataset keeps its source and observation date.</p><External href="https://openzcash.org/zcg/methodology">OpenZcash methodology</External></div><div className={s.sourceRow}><strong>Content review</strong><p>Project summaries reviewed on {REVIEWED}; team names, roles and photos on {TEAM_REVIEWED}; historical milestones on {MILESTONES_REVIEWED}. Organizational statements are attributed; governance guidance is kept distinct from advocacy.</p></div><div className={s.resourceList}>{Object.entries(sources).map(([label,url])=><External key={label} href={url}>{label.charAt(0).toUpperCase()+label.slice(1)}</External>)}</div></Modal>}
   </div>;
 }

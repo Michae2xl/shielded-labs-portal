@@ -24,6 +24,8 @@ export type Milestone = {
   project: string; source: string; recordType: string; step?: string; governanceRecord?: string; context?: string;
 };
 export const MILESTONES_REVIEWED = '2026-11-04';
+/** Last comparison of names, roles and photos with the official team page. */
+export const TEAM_REVIEWED = '2026-11-05';
 export const milestones: Milestone[] = [
   { date: '2024-12-08', name: 'Coinholders polled on the NSM', detail: 'A non-binding coinholder poll asks whether to include the NSM in NU7.', type: 'Governance', project: 'nsm', source: 'https://forum.zcashcommunity.com/t/coinholder-poll-nsm/49310/28', recordType: 'Coinholder poll', governanceRecord: 'poll:2024-12-nsm-coinholder-poll' },
   { date: '2025-03-21', name: 'Foundation in place', detail: 'Code structure and minimal functionality are in place, with no consensus changes.', type: 'Engineering', project: 'crosslink', source: sources.roadmap, recordType: 'Prototype milestone', step: 'Milestone 1' },

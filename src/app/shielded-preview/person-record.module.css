@@ -1,0 +1,73 @@
+.page{display:flex;flex-direction:column;gap:16px;min-width:0}
+.page a{color:inherit;text-decoration:none}
+.back.back{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;min-height:44px;font-size:14px;color:var(--secondary-ink,#c2c2c2)}
+.back.back:hover{color:#fff}
+
+.portrait,.initials{display:block;flex-shrink:0;border-radius:50%;object-fit:cover;background:#1a1a1a}
+.initials{display:flex;align-items:center;justify-content:center;color:var(--secondary-ink,#c2c2c2);font-size:20px}
+
+/* Who this is, and where to find them */
+.header{display:flex;align-items:center;gap:22px;min-width:0;padding:22px 24px;background:#111;border:1px solid #343434;border-radius:12px}
+.identity{flex:1;min-width:0}
+.page .header h1{margin:0;font-size:30px;font-weight:500;letter-spacing:-.8px;line-height:1.2;overflow-wrap:anywhere}
+.page .header h1:focus{outline:none}
+.page .header .role{margin:6px 0 0!important;font-size:17px;line-height:1.5;color:#d6d6d6}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.page .tag{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border:1px solid #3a3a3a;border-radius:14px;background:#181818;font-size:13px;line-height:1;color:#d0d0d0}
+.page .tag:hover{border-color:#666;color:#fff}
+.accounts{display:flex;flex-direction:column;gap:8px;flex-shrink:0;min-width:210px}
+.page .account{display:grid;grid-template-columns:auto minmax(0,1fr) 16px;align-items:center;column-gap:10px;min-height:42px;padding:0 12px;border:1px solid #3a3a3a;border-radius:8px;background:#181818;font-size:14px;line-height:1.3;color:#e6e6e6}
+.page .account:hover{background:#222;border-color:#666;color:#fff}
+.accounts[data-paired] .account{grid-template-columns:50px minmax(0,1fr) 16px}
+.account strong{font-weight:600}
+.account span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#b8b8b8}
+.account svg{color:#aaa}
+
+/* What this person has published */
+.grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:16px;align-items:start}
+.grid[data-single]{grid-template-columns:minmax(0,1fr)}
+.grid[data-single] .colleagues{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0 28px}
+.grid[data-single] .colleagues>li+li{border-top:0}
+.grid[data-single] .colleagues .colleague{padding:2px 0}
+.column{display:flex;flex-direction:column;gap:16px;min-width:0}
+.card{min-width:0;padding:20px 22px;background:#111;border:1px solid #343434;border-radius:12px}
+.page .card h2{margin:0 0 12px;font-size:20px;font-weight:500;letter-spacing:-.3px;line-height:1.4}
+.cardHeading{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.cardHeading>span{font-size:14px;color:#b0b0b0;font-variant-numeric:tabular-nums}
+.card blockquote{margin:0}
+.page .card blockquote p{margin:0!important;font-size:16px;line-height:1.7;color:#d6d6d6;white-space:normal}
+.cardLinks{display:flex;flex-wrap:wrap;gap:0 20px;margin-top:10px;padding-top:6px;border-top:1px solid #2a2a2a}
+.page .cardLink{display:inline-flex;align-items:center;gap:8px;min-height:40px;font-size:14px;color:#e6e6e6}
+.page .cardLink:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.cardLink svg{color:#aaa}
+.rows,.colleagues{margin:0;padding:0;list-style:none}
+.rows>li+li,.colleagues>li+li{border-top:1px solid #2a2a2a}
+.page .row{display:grid;grid-template-columns:96px minmax(0,1fr) 16px;align-items:baseline;gap:12px;padding:11px 0;font-size:15px;line-height:1.5;color:#e6e6e6}
+.rows>li:first-child .row{padding-top:2px}
+.rowKey{font-size:13px;color:#b0b0b0;font-variant-numeric:tabular-nums;white-space:nowrap}
+.row svg{align-self:center;color:#aaa}
+.page .row:hover .rowTitle{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.row small{display:block;margin-top:2px;font-size:13px;color:#b0b0b0}
+.page .colleague{display:grid;grid-template-columns:40px minmax(0,1fr) 16px;align-items:center;gap:12px;padding:10px 0;color:#e6e6e6}
+.colleagues>li:first-child .colleague{padding-top:2px}
+.colleagues>li:last-child .colleague{padding-bottom:2px}
+.colleague strong{display:block;font-size:15px;font-weight:500;line-height:1.4}
+.colleague small{display:block;margin-top:1px;font-size:13px;line-height:1.4;color:#b0b0b0}
+.colleague>svg{color:#aaa}
+.page .colleague:hover strong{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.note{padding:0 2px}
+.page .note p{margin:0!important;font-size:13px;line-height:1.6;color:#b0b0b0}
+.page .note a{display:inline-flex;align-items:center;gap:8px;min-height:36px;font-size:13px;color:#d6d6d6}
+.page .note a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.note svg{width:14px;height:14px;color:#aaa}
+
+@container(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+@container(max-width:620px){
+  .header{flex-wrap:wrap;gap:16px;padding:18px}
+  .identity{flex:1 1 180px}
+  .page .header h1{font-size:25px}
+  .accounts{flex-basis:100%;min-width:0}
+  .card{padding:16px 18px}
+  .page .row{grid-template-columns:minmax(0,1fr) 16px;gap:2px 12px}
+  .rowKey{grid-column:1/-1}
+}

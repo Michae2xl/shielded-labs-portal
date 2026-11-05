@@ -2,14 +2,14 @@ import { sourceHref } from '@/lib/shielded-preview/editorial/library';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { milestones, projects, sources, team } from '@/lib/shielded-preview/content';
-import { directoryHref, milestoneGovernanceHref, milestoneGroupItems, milestoneProject, milestoneStories, milestoneYears, personId, teamContext } from '@/lib/shielded-preview/directory';
+import { milestones, sources, team } from '@/lib/shielded-preview/content';
+import { directoryHref, milestoneGovernanceHref, milestoneGroupItems, milestoneProject, milestoneStories, milestoneYears, personId } from '@/lib/shielded-preview/directory';
 import { editorialCatalog } from '@/lib/shielded-preview/editorial/library';
 import record from '@/lib/shielded-preview/governance-data/record.json';
 import Directory from './directory';
 
 describe('Directory cards and direct records', () => {
-  it('opens every team card as the correct person, retains its group, and connects existing project context', () => {
+  it('opens every team card as the correct person, retains its group, and keeps the source of the profile', () => {
     expect(new Set(team.map(personId)).size).toBe(team.length);
     for (const person of team) {
       const target = new URL(directoryHref('people', person.group.toLowerCase(), `person:${personId(person)}`), 'https://portal.test');
@@ -18,13 +18,31 @@ describe('Directory cards and direct records', () => {
         onNavigate: () => {}, onProject: () => {}, onFollow: () => {},
       }));
       expect(markup, person.name).toContain(`id="person-record-title" tabindex="-1">${person.name}</h1>`);
-      expect(markup, person.name).toContain(`Back to ${person.group.toLowerCase()}`);
+      expect(markup, person.name).toContain(`All ${person.group.toLowerCase()} team members`);
       expect(markup, person.name).toContain(`href="${sources.team}"`);
-      for (const id of teamContext[person.group].projects) {
-        expect(projects.some(project => project.id === id), person.name).toBe(true);
-        expect(markup, person.name).toContain(`href="?view=projects&amp;project=${id}"`);
-      }
+      expect(markup, person.name).not.toContain('Team navigation');
+      expect(markup, person.name).not.toContain('Reviewed');
     }
+  });
+
+  it('shows only the records a person has', () => {
+    const render = (name: string) => {
+      const person = team.find(member => member.name === name)!;
+      return renderToStaticMarkup(createElement(Directory, { view: 'people', section: 'all', record: `person:${personId(person)}`, onNavigate: () => {}, onProject: () => {}, onFollow: () => {} }));
+    };
+    const jason = render('Jason McGee Stramaglia');
+    expect(jason).toContain('https://x.com/aquietinvestor');
+    expect(jason).toContain('?view=about&amp;section=board&amp;record=board-jason-mcgee-stramaglia');
+    expect(jason).toContain('id="person-articles"');
+    expect(jason).toContain('id="person-zips"');
+    expect(jason).not.toContain('id="person-about"');
+    const ulrich = render('Ulrich Haböck');
+    expect(ulrich).toContain('id="person-about"');
+    expect(ulrich).toContain('href="?view=blog&amp;section=all&amp;record=epoch-future-proof-cryptography-for-zcash"');
+    const robert = render('Robert Fegler');
+    for (const id of ['person-about', 'person-code', 'person-articles', 'person-zips']) expect(robert).not.toContain(`id="${id}"`);
+    expect(robert).toContain('Name, role and photo come from the official team page.');
+    expect(robert).not.toContain('https://x.com/');
   });
 
   it('opens every milestone with its own source and the project supported by that source', () => {

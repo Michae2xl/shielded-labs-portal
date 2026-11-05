@@ -91,13 +91,6 @@ export function milestoneStories(): MilestoneStory[] {
   ];
 }
 
-export const teamContext: Record<string, { title: string; text: string; projects: string[] }> = {
-  Leadership: { title: 'Research & strategy', text: 'Shielded Labs’ leadership supports its research, engineering and governance initiatives.', projects: ['crosslink', 'epoch', 'nsm'] },
-  Engineering: { title: 'Engineering', text: 'Consensus research, protocol development and the infrastructure that supports Zcash.', projects: ['crosslink', 'zero', 'fees'] },
-  Cryptography: { title: 'Epoch research', text: 'Ulrich Haböck, Luke Edwards and Suyash Bagad form the Epoch cryptography team, researching future designs and formal verification.', projects: ['epoch'] },
-  Operations: { title: 'Operations', text: 'Supporting the organization and coordinating its work across the Zcash ecosystem.', projects: ['crosslink', 'epoch', 'ironwood'] },
-};
-
 export const upgradeAttribution = [
   { name: 'Project Tachyon, Valar Group and ZODL', action: 'Helped define Ironwood’s architecture, implemented the new consensus rules and carried out the formal verification work.' },
   { name: 'Zcash Foundation', action: 'Implemented Ironwood in Zebra and supported the ecosystem-wide transition from zcashd to Zebra.' },
