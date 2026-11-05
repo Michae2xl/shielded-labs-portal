@@ -6,7 +6,6 @@ import { developmentDays, isMergeCommit, repositoryLabels, windowCommits, develo
 import type { PortalData } from '@/lib/shielded-preview/types';
 import ContributorAvatar from './contributor-avatar';
 import ProjectCard from './project-card';
-import { ShieldSculpture } from './shield';
 import { editorialCatalog } from '@/lib/shielded-preview/editorial/library';
 import Image from 'next/image';
 import s from './overview.module.css';
@@ -53,13 +52,7 @@ export default function Overview({ data, onNavigate, onProject, onFollow, projec
   const latestNews = editorialCatalog.filter(entry => entry.view === 'blog').slice(0, 3);
 
   return <div className={s.overview}>
-    <header className={s.intro}>
-      <div className={s.introCopy}>
-        <h1 ref={heading} tabIndex={-1}>Shielded Labs</h1>
-        <p className={s.tagline}>Independent. For Zcash.</p>
-      </div>
-      <div className={s.shield}><ShieldSculpture/></div>
-    </header>
+    <h1 ref={heading} tabIndex={-1} className={s.srOnly}>Shielded Labs</h1>
 
     <section aria-labelledby="overview-projects" className={s.projects}>
       <h2 id="overview-projects" className={s.srOnly}>Projects</h2>
