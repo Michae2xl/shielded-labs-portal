@@ -1475,11 +1475,11 @@
     ],
     "author": "Shielded Labs",
     "publishedAt": "2024-11-10T15:58:48Z",
-    "updatedAt": "2026-08-27T21:50:33Z",
-    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "updatedAt": "2026-11-05T12:53:32Z",
+    "observedAt": "2026-11-06T03:15:21.913996+00:00",
     "source": "https://shieldedlabs.net/nsm/",
-    "summary": "How the NSM works, its proposed mechanisms, ZIP references and 11 common questions.",
-    "minutes": 11,
+    "summary": "How the NSM works, the version approved for NU7, ZIP references and 12 common questions.",
+    "minutes": 12,
     "headings": [
       {
         "id": "summary",
@@ -1529,6 +1529,11 @@
       {
         "id": "why-aren-t-we-talking-about-fees-and-other-long-term-burning-use-cases-now",
         "title": "Why aren’t we talking about fees and other long-term burning use cases now?",
+        "level": 3
+      },
+      {
+        "id": "why-did-the-original-nsm-design-call-for-smoothing-the-issuance-curve",
+        "title": "Why did the original NSM design call for smoothing the issuance curve?",
         "level": 3
       },
       {

@@ -175,7 +175,7 @@ export default function Governance(){
    title={upgrade.name} context="Network upgrade" subtitle="Protocol decision record"
    metrics={<><Stat name="Recorded stage" value={upgrade.height?'Activated':'Protocol work'}/><Stat name="Activation block" value={upgrade.height?number(upgrade.height):'Not recorded'}/><Stat name="Activation date" value={date(upgrade.time)}/></>}
    sections={[{label:'Decision process',id:'governance-process'}]} backLabel="All votes" onBack={()=>go('Voting')}
-   sources={<><p>Compiled OpenZcash record reviewed {date(record.checkedAt)}. A poll result is distinct from a release or mainnet activation.</p><SourceLink url={upgrade.source}>Protocol reference</SourceLink></>}
+   sources={<><p>Compiled OpenZcash record reviewed {date('checkedAt' in upgrade && upgrade.checkedAt ? upgrade.checkedAt : record.checkedAt)}. A poll result is distinct from a release or mainnet activation.</p><SourceLink url={upgrade.source}>Protocol reference</SourceLink></>}
   ><section id="governance-process"><h2>Decision process</h2><p>{upgrade.governance}</p><dl className={g.facts}><div><dt>ZIP references</dt><dd>{upgrade.zips.length?upgrade.zips.map((zip,i)=>{const reference=zipReference(Number(zip));return <span key={zip}>{i>0?', ':''}{reference?<Link section="ZIPs" id={reference.id} onNavigate={go}>ZIP {zip}</Link>:`ZIP ${zip}`}</span>}):'Not recorded'}</dd></div></dl></section></GovernanceRecord>}
 
   {section==='ZCAP'&&<GovernanceZcap source={data.members} selected={selected} lane={lane} filter={filter} search={search} page={page} basis={basis} onNavigate={go} onSearch={find} onFilter={chooseFilter} onPage={choosePage} onBasis={chooseBasis}/>}

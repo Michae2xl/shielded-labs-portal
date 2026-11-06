@@ -11,7 +11,7 @@ type ZipReference = { zip: number; note?: string } | { pull: number; note?: stri
 /** Reviewed by hand: a keyword match on titles links unrelated ZIPs. Each basis names the source of the association. */
 const curatedZips: Partial<Record<Project['id'], { basis: string; references: ZipReference[] }>> = {
   crosslink: { basis: 'Crosslink specification proposed by Shielded Labs contributors in an open pull request.', references: [{ pull: 1216 }] },
-  nsm: { basis: 'The three ZIPs the Shielded Labs NSM page associates with the mechanism.', references: [{ zip: 233 }, { zip: 234 }, { zip: 235 }] },
+  nsm: { basis: 'The ZIPs the Shielded Labs NSM page lists, with their NU7 deployment as stated in ZIP 259.', references: [{ zip: 235, note: 'Deployed by NU7' }, { zip: 237, note: 'Deployed by NU7' }, { zip: 233, note: 'Not deployed by NU7' }, { zip: 234, note: 'Not deployed by NU7' }] },
   ironwood: { basis: 'ZIPs listed in the NU6.3 network upgrade record.', references: [{ zip: 258 }, { zip: 2006 }, { zip: 2005 }, { zip: 229 }] },
   fees: { basis: 'The fee mechanism the project roadmap works within, and the marginal-fee change it describes.', references: [{ zip: 317, note: 'Parameters cited by the project roadmap' }, { zip: 2009, note: 'Marginal fee of 1,000 zatoshi, as in the roadmap' }] },
 };

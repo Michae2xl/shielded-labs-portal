@@ -35,6 +35,7 @@ export const faqTopics: Record<string, FaqTopic[]> = {
     ] },
     { id: 'issuance', label: 'Issuance & miners', questions: [
       'how-and-when-will-burned-zec-be-reintroduced-as-future-block-rewards',
+      'why-did-the-original-nsm-design-call-for-smoothing-the-issuance-curve',
       'what-is-the-reason-for-smoothing-the-issuance-curve', 'how-will-burning-transaction-fees-impact-miners',
     ] },
   ],

@@ -131,6 +131,7 @@
 .notice{color:#c2c2c2;font-size:15px;line-height:1.7;border-left:2px solid #777;padding:0 0 0 16px;margin:0 0 24px!important}
 .prose{font-size:17px;line-height:1.75;color:#d1d1d1;overflow-wrap:anywhere}
 .prose>p{margin:0 0 18px!important}
+.prose del{color:#9a9a9a}
 .prose p>br:last-child{display:none}
 .prose h2{font-size:24px;font-weight:500;line-height:1.3;letter-spacing:-.4px;margin:44px 0 16px!important;padding-top:26px;border-top:1px solid #2a2a2a;color:var(--ink)}
 .prose>h2:first-child{margin-top:0!important;padding-top:0;border-top:0}

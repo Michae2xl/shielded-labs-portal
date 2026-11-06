@@ -9,7 +9,7 @@ const repository = (name: string, fork: boolean, dates: string[]) => ({ name, fo
 
 describe('Project summaries', () => {
   it('links only reviewed ZIPs, to records that exist', () => {
-    expect(projectZips(project('nsm'))!.rows.map(row => row.label)).toEqual(['ZIP 233', 'ZIP 234', 'ZIP 235']);
+    expect(projectZips(project('nsm'))!.rows.map(row => [row.label, row.note])).toEqual([['ZIP 235', 'Deployed by NU7'], ['ZIP 237', 'Deployed by NU7'], ['ZIP 233', 'Not deployed by NU7'], ['ZIP 234', 'Not deployed by NU7']]);
     expect(projectZips(project('ironwood'))!.rows.map(row => row.label)).toEqual(['ZIP 258', 'ZIP 2006', 'ZIP 2005', 'ZIP 229']);
     expect(projectZips(project('fees'))!.rows.map(row => row.label)).toEqual(['ZIP 317', 'ZIP 2009']);
     expect(projectZips(project('epoch'))).toBeNull();
@@ -25,7 +25,7 @@ describe('Project summaries', () => {
     expect(rows.length).toBeGreaterThan(0);
     expect(rows.every(row => row.label === 'PR 1216' && row.note === 'Open pull request · unofficial preview')).toBe(true);
     expect(projectZips(project('crosslink'), bundledZips.entries.filter(entry => entry.pull?.number !== 1216))).toBeNull();
-    expect(projectZips(project('nsm'), bundledZips.entries.filter(entry => entry.number !== 234))!.rows.map(row => row.label)).toEqual(['ZIP 233', 'ZIP 235']);
+    expect(projectZips(project('nsm'), bundledZips.entries.filter(entry => entry.number !== 234))!.rows.map(row => row.label)).toEqual(['ZIP 235', 'ZIP 237', 'ZIP 233']);
   });
   it('prefers the published next step, then the latest article, then the published records', () => {
     expect(projectSignal(project('crosslink'))).toMatchObject({ label: 'Published next step', detail: 'Q2 2026 - Q2 2027', date: null });
@@ -53,7 +53,7 @@ describe('Project summaries', () => {
       expect(shortcut.count === null || shortcut.count > 0).toBe(true);
       expect(new URL(shortcut.href, 'https://portal.example').searchParams.get('project')).toBe(item.id);
     }
-    expect(projectShortcuts(project('nsm')).find(item => item.label === 'ZIPs')).toEqual({ label: 'ZIPs', count: 3, href: '?view=projects&project=nsm#project-zips' });
+    expect(projectShortcuts(project('nsm')).find(item => item.label === 'ZIPs')).toEqual({ label: 'ZIPs', count: 4, href: '?view=projects&project=nsm#project-zips' });
     expect(new URL(projectShortcuts(project('fees')).find(item => item.label === 'Simulator')!.href, 'https://portal.example').searchParams.get('record')).toBe('fees-simulator');
   });
 });

@@ -725,12 +725,18 @@
     },
     {
       "name": "NU7",
-      "height": null,
-      "time": null,
+      "height": 3543405,
+      "time": "2026-11-06T02:34:02Z",
+      "checkedAt": "2026-11-06",
       "zips": [
         259,
+        207,
+        214,
         218,
-        2003
+        235,
+        237,
+        2003,
+        2008
       ],
       "governance": "Scope set by Aug-Sep 2026 coinholder vote plus ZCAP/community polls; orgs aligned on Feb 2031 reissuance.",
       "source": "https://zips.z.cash/zip-0259"

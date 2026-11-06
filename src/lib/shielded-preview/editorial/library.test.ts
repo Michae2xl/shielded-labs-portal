@@ -16,7 +16,7 @@ describe('Shielded Labs editorial coverage', () => {
     }
     expect(board).toHaveLength(5);
     expect(documents.find(e => e.id === 'crosslink-faq')!.headings.filter(h => h.level === 3)).toHaveLength(23);
-    expect(documents.find(e => e.id === 'nsm-guide')!.headings.filter(h => h.level === 3)).toHaveLength(11);
+    expect(documents.find(e => e.id === 'nsm-guide')!.headings.filter(h => h.level === 3)).toHaveLength(12);
   });
 
   it('preserves coauthors, source dates, and expired vacancy status', () => {
@@ -42,7 +42,7 @@ describe('Shielded Labs editorial coverage', () => {
   });
 
   it('only serves inert text and verified local media', () => {
-    const tags = new Set('p h2 h3 h4 h5 h6 a strong em ul ol li blockquote pre code table thead tbody tr th td figure figcaption img br hr sup sub'.split(' '));
+    const tags = new Set('p h2 h3 h4 h5 h6 a strong em del ul ol li blockquote pre code table thead tbody tr th td figure figcaption img br hr sup sub'.split(' '));
     const walk = (node: ContentNode) => {
       if (typeof node === 'string') { expect(node).not.toMatch(/\[\/?(?:vc_|ut_)/); return; }
       expect(tags.has(node.tag), node.tag).toBe(true);

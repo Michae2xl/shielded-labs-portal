@@ -36,7 +36,7 @@ describe('Project-owned research and FAQs', () => {
     expect(legacyProjectResourceHref('?view=blog&record=example')).toBeNull();
   });
 
-  it('retains all 34 published answers and assigns each question to exactly one topic', () => {
+  it('retains all 35 published answers and assigns each question to exactly one topic', () => {
     let total = 0;
     for (const id of Object.keys(faqTopics)) {
       const doc = documents.find(item => item.id === id)! as EditorialDocument;
@@ -49,7 +49,7 @@ describe('Project-owned research and FAQs', () => {
       expect([...categorized].sort()).toEqual(content.questions.map(item => item.id).sort());
       expect(content.questions.every(item => item.title && item.body.length)).toBe(true);
     }
-    expect(total).toBe(34);
+    expect(total).toBe(35);
   });
 
   it('searches both questions and full answers without losing the NSM introduction', () => {
@@ -60,5 +60,6 @@ describe('Project-owned research and FAQs', () => {
     const nsm = faqContent(documents.find(item => item.id === 'nsm-guide')! as EditorialDocument);
     expect(nsm.intro.some(item => typeof item !== 'string' && item.id === 'summary')).toBe(true);
     expect(nsm.intro.some(item => typeof item !== 'string' && item.id === 'frequently-asked-questions-faq')).toBe(false);
+    expect(nsm.questions.find(item => item.id === 'why-did-the-original-nsm-design-call-for-smoothing-the-issuance-curve')?.body.length).toBeGreaterThan(0);
   });
 });

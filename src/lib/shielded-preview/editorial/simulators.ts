@@ -4,7 +4,7 @@ import { projectHref } from '../project-navigation';
 const observedAt = '2026-10-28T00:00:00Z';
 export const simulators = [
   { id: 'crosslink-simulator', project: 'crosslink', title: 'Crosslink economics', source: 'https://aphelionz.github.io/crosslink-economics-simulator/', model: 'Crosslink Economics Simulator', summary: 'Explore how staking participation, delegation and commission affect the model.', guide: 'crosslink-faq', guideLabel: 'Staking & security FAQ', linksLeaveFrame: false },
-  { id: 'nsm-simulator', project: 'nsm', title: 'NSM issuance & supply', source: 'https://zooko.github.io/zcash-network-sustainability-simulator/', model: 'Zcash Network Sustainability Simulator', summary: 'Compare supply and issuance paths under different sustainability scenarios.', guide: 'nsm-guide', guideLabel: 'How the NSM works', linksLeaveFrame: true },
+  { id: 'nsm-simulator', project: 'nsm', title: 'NSM issuance & supply · original design', source: 'https://zooko.github.io/zcash-network-sustainability-simulator/', model: 'Zcash Network Sustainability Simulator', summary: 'The simulator for the original NSM design, which smoothed the issuance curve. NU7 keeps the halving schedule.', guide: 'nsm-guide', guideLabel: 'How the NSM works', linksLeaveFrame: true },
   { id: 'fees-simulator', project: 'fees', title: 'Dynamic Fees lab', source: 'https://fees.shieldedinfra.net/', model: 'Dynamic Fees Simulator', summary: 'Explore how fee rules and network demand affect transactions and the mempool.', guide: 'fees-guide', guideLabel: 'Dynamic Fees overview', linksLeaveFrame: true },
 ] as const;
 export type Simulator = typeof simulators[number];

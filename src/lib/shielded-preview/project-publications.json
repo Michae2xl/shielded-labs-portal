@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-11-01",
+  "reviewedAt": "2026-11-06",
   "projects": {
     "crosslink": {
       "presentation": {
@@ -125,8 +125,7 @@
       "progress": {
         "source": "https://shieldedlabs.net/nsm/",
         "documentId": "nsm-guide",
-        "anchor": "summary",
-        "text": "There are three ZIPs associated with the NSM:"
+        "text": "The version approved for NU7 preserves the existing four-year halving schedule."
       },
       "next": {
         "source": "https://shieldedlabs.net/nsm/",
@@ -148,13 +147,24 @@
           "documentId": "nsm-guide"
         },
         {
+          "title": "ZIP 237",
+          "href": "https://zips.z.cash/zip-0237",
+          "source": "https://shieldedlabs.net/nsm/",
+          "documentId": "nsm-guide"
+        },
+        {
           "title": "ZIP 235",
           "href": "https://zips.z.cash/zip-0235",
           "source": "https://shieldedlabs.net/nsm/",
           "documentId": "nsm-guide"
         }
       ],
-      "summaryReferences": true
+      "summaryReferences": true,
+      "badge": {
+        "source": "https://shieldedlabs.net/nsm/",
+        "documentId": "nsm-guide",
+        "text": "NU7"
+      }
     },
     "ironwood": {
       "presentation": {

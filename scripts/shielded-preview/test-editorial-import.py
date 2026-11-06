@@ -21,6 +21,12 @@ class EditorialImportTest(unittest.TestCase):
         nodes = module.clean('<script>alert(1)</script><style>x{}</style><iframe src="https://bad.test"></iframe><form><p>hidden form</p></form><p onclick="bad()">Visible <a href="jav&#97;script:alert(1)">safe text</a></p>', download=False)
         self.assertEqual(nodes, [{'tag': 'p', 'children': ['Visible ', 'safe text']}])
 
+    def test_struck_through_words_stay_marked(self):
+        nodes = module.clean('<p><del><a href="https://zips.z.cash/zip-0234">ZIP 234</a> old wording</del> new wording</p>', download=False)
+        struck = nodes[0]['children'][0]
+        self.assertEqual(struck['tag'], 'del')
+        self.assertEqual(struck['children'][0]['href'], 'https://zips.z.cash/zip-0234')
+
     def test_shortcodes_removed_but_words_and_markup_preserved(self):
         nodes = module.clean('[vc_row css="x"]<h3>Question?</h3><p>A <strong>complete</strong> answer.</p>[/vc_row]', download=False)
         self.assertEqual(module.plain(nodes), 'Question? A  complete  answer.')

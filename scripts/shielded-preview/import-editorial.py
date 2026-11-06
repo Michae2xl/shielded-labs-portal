@@ -21,7 +21,7 @@ OUT = ROOT / 'src/lib/shielded-preview/editorial'
 MEDIA = ROOT / 'public/shielded-preview/editorial'
 ORIGIN = 'https://shieldedlabs.net/'
 MEDIA_ISSUES = []
-ALLOWED = set('p h2 h3 h4 h5 h6 a strong em ul ol li blockquote pre code table thead tbody tr th td figure figcaption img br hr sup sub'.split())
+ALLOWED = set('p h2 h3 h4 h5 h6 a strong em del ul ol li blockquote pre code table thead tbody tr th td figure figcaption img br hr sup sub'.split())
 DROP = set('script style iframe object embed form input button select textarea svg noscript template'.split())
 VOID = set('img br hr input meta link source area wbr'.split())
 BLOCK = set('div section article header footer p h1 h2 h3 h4 h5 h6 ul ol li blockquote table figure pre'.split())
@@ -162,7 +162,7 @@ def clean(raw, base=ORIGIN, download=True):
         if tag in DROP:
             return []
         children = [child for x in node['children'] for child in walk(x)]
-        tag = {'b': 'strong', 'i': 'em', 'h1': 'h2', 'summary': 'h3'}.get(tag, tag)
+        tag = {'b': 'strong', 'i': 'em', 'h1': 'h2', 'summary': 'h3', 's': 'del', 'strike': 'del'}.get(tag, tag)
         if tag not in ALLOWED:
             return children
         if tag == 'img':
@@ -239,6 +239,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--input', type=Path)
     ap.add_argument('--featured-only', action='store_true', help='Add publisher artwork without reimporting article bodies')
+    ap.add_argument('--only', metavar='ID', help='Refresh one reviewed document and leave every other record as it is')
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     MEDIA.mkdir(parents=True, exist_ok=True)
@@ -284,7 +285,7 @@ def main():
                 'crosslink-guide': 'The proposed finality upgrade, its goals and the paths to participate.',
                 'crosslink-faq': '23 questions about finality, staking, privacy, security and governance.',
                 'crosslink-roadmap': 'Completed prototype milestones and the published production roadmap.',
-                'nsm-guide': 'How the NSM works, its proposed mechanisms, ZIP references and 11 common questions.',
+                'nsm-guide': 'How the NSM works, the version approved for NU7, ZIP references and 12 common questions.',
                 'ironwood-guide': 'The original upgrade guide: supply soundness, user guidance and audit references.',
                 'zero-guide': 'Infrastructure software, supported deployments and repositories.',
                 'fees-guide': 'The fee mechanism initiative and its experimental resources.',
@@ -339,6 +340,14 @@ def main():
         else:
             for child in node.get('children', []): board_walk(child)
     board_walk(tree.root)
+    if args.only:
+        fresh = next(d for d in documents if d['id'] == args.only)
+        summary_only = {k: v for k, v in fresh.items() if k != 'body'}
+        for filename, replacement in (('documents.json', fresh), ('catalog.json', summary_only)):
+            docs = json.loads((OUT/filename).read_text())
+            (OUT/filename).write_text(json.dumps([replacement if d['id'] == args.only else d for d in docs], ensure_ascii=False, indent=2)+'\n')
+        print(json.dumps({'refreshed': args.only, 'headings': len(fresh['headings']), 'issues': MEDIA_ISSUES}))
+        return
     (OUT/'documents.json').write_text(json.dumps(documents,ensure_ascii=False,indent=2)+'\n')
     (OUT/'catalog.json').write_text(json.dumps([{k:v for k,v in d.items() if k!='body'} for d in documents],ensure_ascii=False,indent=2)+'\n')
     (ROOT/'reports/shielded-preview/editorial-media-issues.json').write_text(json.dumps(MEDIA_ISSUES,indent=2)+'\n')

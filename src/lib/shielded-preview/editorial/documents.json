@@ -8996,11 +8996,11 @@
     ],
     "author": "Shielded Labs",
     "publishedAt": "2024-11-10T15:58:48Z",
-    "updatedAt": "2026-08-27T21:50:33Z",
-    "observedAt": "2026-10-28T17:15:30.161553+00:00",
+    "updatedAt": "2026-11-05T12:53:32Z",
+    "observedAt": "2026-11-06T03:15:21.913996+00:00",
     "source": "https://shieldedlabs.net/nsm/",
-    "summary": "How the NSM works, its proposed mechanisms, ZIP references and 11 common questions.",
-    "minutes": 11,
+    "summary": "How the NSM works, the version approved for NU7, ZIP references and 12 common questions.",
+    "minutes": 12,
     "headings": [
       {
         "id": "summary",
@@ -9053,6 +9053,11 @@
         "level": 3
       },
       {
+        "id": "why-did-the-original-nsm-design-call-for-smoothing-the-issuance-curve",
+        "title": "Why did the original NSM design call for smoothing the issuance curve?",
+        "level": 3
+      },
+      {
         "id": "what-is-the-reason-for-smoothing-the-issuance-curve",
         "title": "What is the reason for smoothing the issuance curve?",
         "level": 3
@@ -9070,6 +9075,26 @@
     ],
     "body": [
       {
+        "tag": "p",
+        "children": [
+          {
+            "tag": "strong",
+            "children": [
+              "Please note:"
+            ]
+          },
+          " Our original NSM design called for smoothing the Zcash issuance curve. The version approved for NU7 preserves the existing four-year halving schedule. We’ve kept the original language in strikethrough and added ",
+          {
+            "tag": "a",
+            "children": [
+              "ZIP 237"
+            ],
+            "href": "https://zips.z.cash/zip-0237"
+          },
+          " below."
+        ]
+      },
+      {
         "tag": "h2",
         "children": [
           {
@@ -9077,10 +9102,6 @@
             "children": [
               "Summary"
             ]
-          },
-          {
-            "tag": "br",
-            "children": []
           }
         ],
         "id": "summary"
@@ -9123,7 +9144,7 @@
       {
         "tag": "p",
         "children": [
-          "There are three ZIPs associated with the NSM:"
+          "The following ZIPs describe the NSM and its original design:"
         ]
       },
       {
@@ -9143,13 +9164,31 @@
         "tag": "p",
         "children": [
           {
+            "tag": "del",
+            "children": [
+              {
+                "tag": "a",
+                "children": [
+                  "ZIP 234"
+                ],
+                "href": "https://zips.z.cash/zip-0234"
+              },
+              " smooths the issuance curve and enables burned coins to be reintroduced into circulation in a straightforward manner. The primary objective of the NSM is to create an automated mechanism that enables users to contribute to the sustainability of the network. As part of this process, burned ZEC can be reintroduced into future block rewards. Smoothing the issuance curve with an exponential decay model offers a relatively predictable way to reintroduce burned coins back into circulation. For example, burning 1 ZEC now causes 0.5 additional ZEC to be issued in the next 4 years, 0.25 additional ZEC to be issued in the following 4 years, and so on. The issuance mechanism is intentionally designed to approximate a four-year half-life, similar to what exists with current halvings. This approach allocates coins at a steady, declining rate, while preventing sudden changes that could disrupt the network."
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
             "tag": "a",
             "children": [
-              "ZIP 234"
+              "ZIP 237"
             ],
-            "href": "https://zips.z.cash/zip-0234"
+            "href": "https://zips.z.cash/zip-0237"
           },
-          " smooths the issuance curve and enables burned coins to be reintroduced into circulation in a straightforward manner. The primary objective of the NSM is to create an automated mechanism that enables users to contribute to the sustainability of the network. As part of this process, burned ZEC can be reintroduced into future block rewards. Smoothing the issuance curve with an exponential decay model offers a relatively predictable way to reintroduce burned coins back into circulation. For example, burning 1 ZEC now causes 0.5 additional ZEC to be issued in the next 4 years, 0.25 additional ZEC to be issued in the following 4 years, and so on. The issuance mechanism is intentionally designed to approximate a four-year half-life, similar to what exists with current halvings. This approach allocates coins at a steady, declining rate, while preventing sudden changes that could disrupt the network."
+          " preserves Zcash’s four-year halving schedule. Beginning in 2031, a small portion of the remaining NSM balance will be reissued with each block, on top of the scheduled block subsidy. This allows ZEC removed from circulation to help fund future block rewards while preserving the 21 million ZEC supply cap."
         ]
       },
       {
@@ -9169,18 +9208,10 @@
         "tag": "h2",
         "children": [
           {
-            "tag": "br",
-            "children": []
-          },
-          {
             "tag": "strong",
             "children": [
               "Frequently Asked Questions (FAQ)"
             ]
-          },
-          {
-            "tag": "br",
-            "children": []
           }
         ],
         "id": "frequently-asked-questions-faq"
@@ -9206,7 +9237,7 @@
       {
         "tag": "p",
         "children": [
-          "There are three ZIPs associated with the implementation of the NSM:"
+          "The following ZIPs describe the NSM and its original design:"
         ]
       },
       {
@@ -9229,13 +9260,31 @@
             "tag": "li",
             "children": [
               {
+                "tag": "del",
+                "children": [
+                  {
+                    "tag": "a",
+                    "children": [
+                      "ZIP 234"
+                    ],
+                    "href": "https://zips.z.cash/zip-0234"
+                  },
+                  " smooths the issuance curve, which enables burned coins to be reintroduced into circulation in a straightforward and predictable manner."
+                ]
+              }
+            ]
+          },
+          {
+            "tag": "li",
+            "children": [
+              {
                 "tag": "a",
                 "children": [
-                  "ZIP 234"
+                  "ZIP 237"
                 ],
-                "href": "https://zips.z.cash/zip-0234"
+                "href": "https://zips.z.cash/zip-0237"
               },
-              " smooths the issuance curve, which enables burned coins to be reintroduced into circulation in a straightforward and predictable manner."
+              " preserves the four-year halving schedule and gradually reissues ZEC from the NSM balance through future block rewards."
             ]
           },
           {
@@ -9423,7 +9472,14 @@
       {
         "tag": "p",
         "children": [
-          "Removing ZEC from circulation provides an increased rate of coin creation over the long term further along the emissions curve. This approach ensures that there will be more ZEC available for future block rewards further along the emissions curve, all while adhering to the 21 million coin cap. One way to think of this is that burning 1 ZEC now causes 0.5 additional ZEC to be issued in the next 4 years, 0.25 additional ZEC to be issued in the following 4 years, and so on."
+          "Removing ZEC from circulation provides an increased rate of coin creation over the long term further along the emissions curve. This approach ensures that there will be more ZEC available for future block rewards further along the emissions curve, all while adhering to the 21 million coin cap. ",
+          {
+            "tag": "del",
+            "children": [
+              "One way to think of this is that burning 1 ZEC now causes 0.5 additional ZEC to be issued in the next 4 years, 0.25 additional ZEC to be issued in the following 4 years, and so on."
+            ]
+          },
+          " Reissuance begins in 2031. From then on, each block reissues a small fraction of the remaining NSM balance. If no additional ZEC is removed from circulation, about half of the balance will be reissued over four years."
         ]
       },
       {
@@ -9480,7 +9536,14 @@
       {
         "tag": "p",
         "children": [
-          "From the beginning, Shielded Labs’ goal has been to develop a modest version of the NSM that modifies the issuance schedule while keeping the 21 million supply cap and approximate halving rate, in order to issue more ZEC in the future to compensate for ZEC that has been burned, and to leave the conversation about future changes to fee burning mechanisms for the community to decide at a later point in time after the NSM is up and running."
+          "From the beginning, Shielded Labs’ goal has been to develop a modest version of the NSM that modifies the issuance schedule while keeping the 21 million supply cap and ",
+          {
+            "tag": "del",
+            "children": [
+              "approximate halving rate"
+            ]
+          },
+          " existing four-year halving schedule, in order to issue more ZEC in the future to compensate for ZEC that has been burned, and to leave the conversation about future changes to fee burning mechanisms for the community to decide at a later point in time after the NSM is up and running."
         ]
       },
       {
@@ -9501,7 +9564,49 @@
           {
             "tag": "strong",
             "children": [
-              "What is the reason for smoothing the issuance curve?"
+              "Why did the original NSM design call for smoothing the issuance curve?"
+            ]
+          }
+        ],
+        "id": "why-did-the-original-nsm-design-call-for-smoothing-the-issuance-curve"
+      },
+      {
+        "tag": "p",
+        "children": [
+          "We originally proposed using one gradually declining issuance curve for both the scheduled subsidy and recycled ZEC. We thought that was the simplest way to return ZEC to circulation through future block rewards. Community panels supported that approach, but coinholders preferred to keep halvings. We developed ",
+          {
+            "tag": "a",
+            "children": [
+              "ZIP 237"
+            ],
+            "href": "https://zips.z.cash/zip-0237"
+          },
+          " in response, and that version received broad support."
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "tag": "strong",
+            "children": [
+              "Original explanation and simulator"
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "h3",
+        "children": [
+          {
+            "tag": "del",
+            "children": [
+              {
+                "tag": "strong",
+                "children": [
+                  "What is the reason for smoothing the issuance curve?"
+                ]
+              }
             ]
           }
         ],
@@ -9510,28 +9615,39 @@
       {
         "tag": "p",
         "children": [
-          "The primary objective of the NSM is to create an automated mechanism that enables users to contribute to the long-term sustainability of the Zcash network. As part of this process, burned ZEC can be reintroduced into future block rewards. Smoothing the issuance curve with an exponential decay model offers a straightforward and dependable way to reintroduce burned coins back into circulation. This approach allocates the necessary coins at a steady, declining rate, allowing for predictable issuance while preventing sudden changes that could disrupt the network. The issuance mechanism is designed to approximate a four-year half-life, and future protocol upgrades may not increase the payout rate beyond this four-year constraint."
-        ]
-      },
-      {
-        "tag": "p",
-        "children": [
-          "We’ve developed a simulator that allows you to visualize the impact of smoothing the issuance curve:"
+          {
+            "tag": "del",
+            "children": [
+              "The primary objective of the NSM is to create an automated mechanism that enables users to contribute to the long-term sustainability of the Zcash network. As part of this process, burned ZEC can be reintroduced into future block rewards. Smoothing the issuance curve with an exponential decay model offers a straightforward and dependable way to reintroduce burned coins back into circulation. This approach allocates the necessary coins at a steady, declining rate, allowing for predictable issuance while preventing sudden changes that could disrupt the network. The issuance mechanism is designed to approximate a four-year half-life, and future protocol upgrades may not increase the payout rate beyond this four-year constraint."
+            ]
+          }
         ]
       },
       {
         "tag": "p",
         "children": [
           {
-            "tag": "a",
+            "tag": "del",
             "children": [
-              "Zcash Network Sustainability Simulator",
+              "We’ve developed a simulator that allows you to visualize the impact of smoothing the issuance curve:"
+            ]
+          }
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          {
+            "tag": "del",
+            "children": [
               {
-                "tag": "br",
-                "children": []
+                "tag": "a",
+                "children": [
+                  "Zcash Network Sustainability Simulator"
+                ],
+                "href": "https://zooko.github.io/zcash-network-sustainability-simulator/#z=CKUB677ZydUziMKxuqlA04XhAQW949oBgODu4uSGEQKy5NcBgLCiyqj9AwKz-f8BgKzH8DcD64ypAoDg7uLkhhEC9cvkAoC4yeWuBAMAgICG1Lac9AOAiKWpowcAJXJldHVybiAoTUFYX1NVUFBMWSAtIHMpIC8gMl80MjNfNzI4bjs"
               }
-            ],
-            "href": "https://zooko.github.io/zcash-network-sustainability-simulator/#z=CKUB677ZydUziMKxuqlA04XhAQW949oBgODu4uSGEQKy5NcBgLCiyqj9AwKz-f8BgKzH8DcD64ypAoDg7uLkhhEC9cvkAoC4yeWuBAMAgICG1Lac9AOAiKWpowcAJXJldHVybiAoTUFYX1NVUFBMWSAtIHMpIC8gMl80MjNfNzI4bjs"
+            ]
           }
         ]
       },
@@ -9580,7 +9696,14 @@
       {
         "tag": "p",
         "children": [
-          "With ZIP 235, we establish the precedent of burning a portion of transaction fees. If subsequent changes to fees enable Zcash to effectively handle demand spikes with increased fees before achieving the necessary scalability, then a silver lining is that these fee spikes will contribute to future issuance. Once those subsequent fee improvements are implemented, Zcash’s monetary policy will resemble Ethereum’s current monetary approach, except Zcash would limit issuance by the four-year decay rule and would impose a 21 million supply cap."
+          "With ZIP 235, we establish the precedent of burning a portion of transaction fees. If subsequent changes to fees enable Zcash to effectively handle demand spikes with increased fees before achieving the necessary scalability, then a silver lining is that these fee spikes will contribute to future issuance. ",
+          {
+            "tag": "del",
+            "children": [
+              "Once those subsequent fee improvements are implemented, Zcash’s monetary policy will resemble Ethereum’s current monetary approach, except Zcash would limit issuance by the four-year decay rule and would impose a 21 million supply cap."
+            ]
+          },
+          " Under ZIP 237, the four-year decay rule applies to the NSM balance. The scheduled block subsidy follows the existing halving schedule."
         ]
       },
       {

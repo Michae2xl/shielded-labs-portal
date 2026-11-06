@@ -74,6 +74,12 @@ describe('Directory cards and direct records', () => {
     expect(upgrade.time!.slice(0, 10)).toBe(nu63.date);
     expect(nu63.detail).toContain(upgrade.height!.toLocaleString('en-US'));
     expect(nu63.source).toBe(upgrade.source);
+    const nu7 = milestones.find(item => item.governanceRecord === 'upgrade:NU7')!;
+    const activated = record.upgrades.find(item => item.name === 'NU7')!;
+    expect(activated).toMatchObject({ height: 3543405, time: '2026-11-06T02:34:02Z', checkedAt: '2026-11-06', zips: [259, 207, 214, 218, 235, 237, 2003, 2008] });
+    expect(activated.time!.slice(0, 10)).toBe(nu7.date);
+    expect(nu7.detail).toContain(activated.height!.toLocaleString('en-US'));
+    expect(nu7.source).toBe(activated.source);
     const poll = record.polls.find(item => item.id === '2024-12-nsm-coinholder-poll')!;
     const nsm = milestones.find(item => item.governanceRecord === `poll:${poll.id}`)!;
     expect(nsm.date).toBe(poll.date);
@@ -87,8 +93,8 @@ describe('Directory cards and direct records', () => {
     expect(dates).toEqual([...dates].sort().reverse());
     expect(dates).toHaveLength(milestones.length);
     expect(milestoneYears('research').map(year => year.year)).toEqual(['2026']);
-    expect(milestoneYears('governance').map(year => year.year)).toEqual(['2024']);
-    expect(Object.fromEntries(milestoneGroupItems.map(group => [group.id, group.count]))).toEqual({ all: 10, engineering: 5, security: 3, research: 1, governance: 1 });
+    expect(milestoneYears('governance').map(year => year.year)).toEqual(['2026', '2024']);
+    expect(Object.fromEntries(milestoneGroupItems.map(group => [group.id, group.count]))).toEqual({ all: 11, engineering: 5, security: 3, research: 1, governance: 2 });
   });
 
   it('derives the three stories from the records and quotes what comes next', () => {
@@ -111,6 +117,15 @@ describe('Directory cards and direct records', () => {
     expect(security).toContain('aria-current="page"');
     expect(security).toContain('NU6.3 activates Ironwood');
     expect(security).toContain('href="?view=impact&amp;section=security"');
+    const nu7 = render('all', 'milestone:2026-11-06');
+    expect(nu7).toContain('NU7 activates the NSM');
+    expect(nu7).toContain('Coinholders polled on the NSM');
+    expect(nu7).not.toContain('Who did what');
+    expect(nu7).not.toContain('Ironwood guide');
+    expect(nu7).not.toContain('Proposal announcement');
+    const ironwood = render('all', 'milestone:2026-07-28');
+    expect(ironwood).toContain('Who did what');
+    expect(ironwood).toContain('Proposal announcement');
     const epoch = render('all', 'milestone:2026-10-01');
     expect(epoch).toContain('All milestones');
     expect(epoch).not.toContain('In this workstream');

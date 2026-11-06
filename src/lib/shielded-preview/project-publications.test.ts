@@ -8,6 +8,12 @@ const plain = (node: ContentNode): string => typeof node === 'string' ? node : n
 const documentFor = (id: string) => documents.find(document => document.id === id)!;
 
 describe('Official project publication provenance', () => {
+  it('shows the NSM as the source now describes it', () => {
+    expect(projectPublications.nsm.badge?.text).toBe('NU7');
+    expect(projectPublications.nsm.progress.text).toContain('approved for NU7');
+    expect(projectPublications.nsm.records.map(record => record.title)).toEqual(['ZIP 233', 'ZIP 234', 'ZIP 237', 'ZIP 235']);
+  });
+
   it.each(projects)('preserves imported wording and valid source anchors for $name', project => {
     const copy = projectPublications[project.id];
     for (const excerpt of [copy.presentation, copy.progress, copy.next, ...(copy.badge ? [copy.badge] : [])]) {

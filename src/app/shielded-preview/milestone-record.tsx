@@ -29,7 +29,9 @@ export default function MilestoneRecord({ milestone, group, onNavigate, onProjec
   const workstream = milestoneYears(milestone.type.toLowerCase()).flatMap(year => year.entries);
   const upgrade = milestone.recordType === 'Network upgrade';
   const security = milestone.type === 'Security' && !upgrade;
-  const attribution = upgrade ? upgradeAttribution : security ? securityAttribution : null;
+  // The published attribution covers the Ironwood upgrade; another upgrade cites its own sources.
+  const ironwoodUpgrade = upgrade && project.id === 'ironwood';
+  const attribution = ironwoodUpgrade ? upgradeAttribution : security ? securityAttribution : null;
 
   return <article className={s.page} aria-labelledby="milestone-record-title">
     <ViewLink section={group} onNavigate={onNavigate} className={s.back}><Arrow back/>{group === 'all' ? 'All milestones' : `All ${group} milestones`}</ViewLink>
@@ -73,10 +75,10 @@ export default function MilestoneRecord({ milestone, group, onNavigate, onProjec
       <div className={s.column}>
         <aside className={s.card} id="milestone-sources" aria-labelledby="milestone-sources-title">
           <h2 id="milestone-sources-title">Sources & context</h2>
-          <p className={s.note}>{security ? 'The disclosure does not establish that no prior exploitation occurred. Attribution follows the published account; no estimate of funds saved is made.' : upgrade ? 'Attribution follows the Shielded Labs Ironwood guide, linked here as the project reference.' : project.boundary}</p>
+          <p className={s.note}>{security ? 'The disclosure does not establish that no prior exploitation occurred. Attribution follows the published account; no estimate of funds saved is made.' : ironwoodUpgrade ? 'Attribution follows the Shielded Labs Ironwood guide, linked here as the project reference.' : project.boundary}</p>
           <div className={s.sourceList}>
             <SourceLink href={milestone.source} onFollow={onFollow}>Primary source</SourceLink>
-            {milestone.context && <SourceLink href={milestone.context} onFollow={onFollow}>Proposal announcement</SourceLink>}
+            {milestone.context && <SourceLink href={milestone.context} onFollow={onFollow}>{ironwoodUpgrade ? 'Proposal announcement' : 'Announcement'}</SourceLink>}
             {project.source !== milestone.source && <SourceLink href={project.source} onFollow={onFollow}>Project reference</SourceLink>}
             {governanceRecord && <a className={s.sourceLink} href={governanceRecord}>Governance record<Arrow/></a>}
           </div>

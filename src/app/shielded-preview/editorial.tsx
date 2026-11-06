@@ -16,7 +16,7 @@ import SimulatorView from './simulator';
 import s from './editorial.module.css';
 
 type Follow = (href: string) => void;
-const allowedTags = new Set('p h2 h3 h4 h5 h6 a strong em ul ol li blockquote pre code table thead tbody tr th td figure figcaption img br hr sup sub'.split(' '));
+const allowedTags = new Set('p h2 h3 h4 h5 h6 a strong em del ul ol li blockquote pre code table thead tbody tr th td figure figcaption img br hr sup sub'.split(' '));
 const headingTags = new Set('h2 h3 h4 h5 h6'.split(' '));
 // The handbook's print edition numbers its footnotes; their targets are rendered in the same page.
 const HANDBOOK_NOTE = /^https:\/\/shieldedlabs\.github\.io\/zebra-crosslink\/print\.html#(footnote-|fr-)(.+?)(-\d+)?$/;
