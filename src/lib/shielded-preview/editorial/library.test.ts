@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { editorialCatalog, editorialHref, resolveEditorialLink, safeEditorialUrl, searchEditorial, leavingLink, sourceHref } from './library';
+import { linkedArticles } from './linked-articles';
 import documents from './documents.json';
 import { board, institutionalDocuments } from './institutional';
 import type { ContentNode } from './types';
@@ -52,7 +53,7 @@ describe('Shielded Labs editorial coverage', () => {
       }
       node.children.forEach(walk);
     };
-    for (const doc of documents) doc.body.forEach(walk);
+    for (const doc of [...documents, ...linkedArticles]) doc.body.forEach(walk);
   });
 
   it('rejects active or credential-bearing links', () => {

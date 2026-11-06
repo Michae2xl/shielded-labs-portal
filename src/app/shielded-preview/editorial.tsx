@@ -164,7 +164,7 @@ function Reader({ entry, backHref, backLabel, onFollow, embedded = false, contac
       {entry.id === 'organization' && result ? <OrganizationBody nodes={result.body} onFollow={onFollow}/> : entry.id === 'contact' && contactForm ? <ContactForm controller={contactForm} onPrivacy={() => onFollow('?view=about&section=privacy')}/> : <div className={s.prose} aria-busy={!result && !failed}>
         {result ? <DocumentBody nodes={hasSeparateFaq ? faqContent(result).intro : result.body} onFollow={onFollow} actions={entry.view === 'about' && entry.id !== 'privacy'} anchors={entry.view !== 'about'}/> : failed ? <div role="alert"><p>This document could not be loaded.</p><button onClick={retry}>Try again</button></div> : <p role="status">Loading article…</p>}
       </div>}
-      {entry.linked && source && <div className={s.linkedLinks}>
+      {entry.linked && !entry.linked.fullText && source && <div className={s.linkedLinks}>
         <a className={s.linkedRead} href={source} target="_blank" rel="noopener noreferrer">Read the full article on {entry.linked.publisher}<EditorialArrow external/></a>
         {alsoAt && <a href={alsoAt} target="_blank" rel="noopener noreferrer">{entry.linked.also?.label}<EditorialArrow external/></a>}
       </div>}

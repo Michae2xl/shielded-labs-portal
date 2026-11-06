@@ -26,7 +26,7 @@ export type EditorialEntry = {
   dateKind?: 'retrieved';
   notice?: string;
   image?: { src: string; alt: string; width: number; height: number; source: string };
-  /** Read at its source: the portal holds a short summary and the links. */
-  linked?: { publisher: string; also?: { label: string; href: string } };
+  /** Published away from shieldedlabs.net: a short summary and the links, until its full text is supplied. */
+  linked?: { publisher: string; also?: { label: string; href: string }; fullText?: boolean };
 };
 export type EditorialDocument = EditorialEntry & { body: ContentNode[] };

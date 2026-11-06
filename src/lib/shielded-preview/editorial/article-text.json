@@ -1,0 +1,135 @@
+{
+  "the-network-sustainability-mechanism-nsm-activates-with-nu7": {
+    "body": [
+      {
+        "tag": "p",
+        "children": [
+          "The Network Sustainability Mechanism (NSM) will activate later today as part of NU7. This is a huge milestone for Shielded Labs. The NSM was our first project and is our first major mainnet deployment. It builds on an idea ",
+          {
+            "tag": "a",
+            "children": [
+              "Nate Wilcox"
+            ],
+            "href": "https://x.com/nate_zec"
+          },
+          " proposed years ago to help sustain the network over the long term. At the time, it was called the ",
+          {
+            "tag": "a",
+            "children": [
+              "Zcash Posterity Fund"
+            ],
+            "href": "https://zodl.com/long-term-sustainability-with-the-zcash-posterity-fund/"
+          },
+          "."
+        ]
+      },
+      {
+        "tag": "h2",
+        "children": [
+          "Protecting Zcash’s Long-Term Security"
+        ],
+        "id": "protecting-zcash-s-long-term-security"
+      },
+      {
+        "tag": "p",
+        "children": [
+          "The NSM addresses a long-term challenge Zcash inherited from Bitcoin: as block subsidies decline, will transaction fees be enough to pay for adequate network security? It allows ZEC to be removed from circulation and gradually reissued through future block rewards while preserving the 21 million supply cap. Reissuance will begin in 2031, with recycled funds distributed along a smooth curve on top of the existing halving schedule."
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          "Upon activation, 60% of transaction fees will be removed from circulation through the NSM to be gradually reissued through future block rewards. A separate proposal under consideration would require Zcash Community Grants (ZCG) to contribute 50,000 ZEC from its treasury to the NSM. That would be a substantial contribution to Zcash’s long-term security, helping fund future block rewards as the existing subsidy declines."
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          "The NSM may not generate as much excitement as other protocol upgrades, but it addresses an important challenge that is central to the work we do. Shielded Labs’ mission is to protect the long-term security of Zcash. That mission guides our work on the NSM, Crosslink, and Epoch and is why we brought on Taylor Hornby, who used AI tools to uncover the Orchard counterfeiting bug. We want to anticipate risks and address them early, and being forward-looking is central to how we protect Zcash."
+        ]
+      },
+      {
+        "tag": "h2",
+        "children": [
+          "How Governance Shaped the NSM"
+        ],
+        "id": "how-governance-shaped-the-nsm"
+      },
+      {
+        "tag": "p",
+        "children": [
+          "Our conviction that a change would benefit Zcash doesn’t give us the authority to make that change to the protocol. Our original NSM design would have replaced halvings with a smooth issuance curve. When that proposal went through the governance process, community panels supported the change, but coinholders did not. In response to coinholder sentiment, an alternative design was developed to preserve halvings, which received broad support. We still think the original design was simpler and better, but we respect the process that led us here."
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          "Even though it wasn’t our preferred design, I'm happy with the outcome. It should be difficult to change the protocol, and the process should resist capture by any single organization, group, or influential individual. Having Zooko at Shielded Labs doesn’t give us special authority to change the issuance curve. We have to build consensus through public debate and gauge sentiment across a diverse set of stakeholders. The burden is on us to demonstrate support."
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          "This is why I call ",
+          {
+            "tag": "a",
+            "children": [
+              "Zcash governance a superpower"
+            ],
+            "href": "https://x.com/aquietinvestor/status/2101048107350008292"
+          },
+          ". Community panels and coinholders bring different perspectives, and each acts as a check on the other’s influence. Neither large holders nor the people closest to development can dictate changes on their own. Without broad support, the default is no change. But the process also gives us room to work through disagreements, find compromises, and coordinate upgrades once we reach consensus, whether that happens quickly or takes years."
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          "The NSM demonstrates how Zcash improves on Bitcoin’s design, both technically and through governance. It helps fund future network security as block subsidies decline while preserving the 21 million supply cap. Zcash’s governance process gives us a way to debate proposed changes, build broad support, and turn that consensus into a coordinated network upgrade. For Zcash to succeed over the long term, it needs to resist capture while still being able to address problems before they threaten the network."
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          "Thank you to everyone who helped design, implement, review, test, and bring the NSM to mainnet. Its impact may take years to develop, but that’s the point of doing this work now. Zcash is money for an infinite civilization, and we’re building for a network that remains secure and sustainable for centuries to come."
+        ]
+      },
+      {
+        "tag": "p",
+        "children": [
+          "To learn more about the NSM, please visit our ",
+          {
+            "tag": "a",
+            "children": [
+              "webpage"
+            ],
+            "href": "https://shieldedlabs.net/nsm/"
+          },
+          "."
+        ]
+      },
+      {
+        "tag": "hr",
+        "children": []
+      },
+      {
+        "tag": "p",
+        "children": [
+          "A special thanks to @nate_zec, @zooko, @shieldedmark, @shieldedjudah, and @olliten and his team at @equilibrium_co for their work on the NSM."
+        ]
+      }
+    ],
+    "headings": [
+      {
+        "id": "protecting-zcash-s-long-term-security",
+        "title": "Protecting Zcash’s Long-Term Security",
+        "level": 2
+      },
+      {
+        "id": "how-governance-shaped-the-nsm",
+        "title": "How Governance Shaped the NSM",
+        "level": 2
+      }
+    ],
+    "minutes": 3
+  }
+}

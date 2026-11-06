@@ -18,6 +18,7 @@
     "test:importer": "python3 scripts/shielded-preview/test-editorial-import.py",
     "test:zips": "python3 scripts/zips/test_import_zips.py",
     "import:zips": "python3 scripts/zips/import_zips.py --source ../zips",
+    "import:article-text": "python3 scripts/shielded-preview/import-article-text.py",
     "check:isolation": "node scripts/check-isolation.mjs"
   },
   "dependencies": {

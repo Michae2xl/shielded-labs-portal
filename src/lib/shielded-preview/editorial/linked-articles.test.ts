@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { existsSync } from 'node:fs';
 import { editorialCatalog, editorialHref, resolveEditorialLink, safeEditorialUrl, searchEditorial } from './library';
-import { linkedArticles, withLinkedArticles } from './linked-articles';
+import articleText from './article-text.json';
+import { linkedArticles, withArticleText, withLinkedArticles } from './linked-articles';
 import type { ContentNode, EditorialEntry } from './types';
 
 const NSM_ARTICLE = 'the-network-sustainability-mechanism-nsm-activates-with-nu7';
@@ -23,13 +24,29 @@ describe('Articles read at their source', () => {
     });
   });
 
-  it('holds a short summary and the links, never the article text', () => {
+  it('keeps a short summary until the text is supplied by hand', () => {
     for (const article of linkedArticles) {
+      const supplied = Object.keys(articleText).includes(article.id);
       expect(article.linked?.publisher).toBeTruthy();
-      expect(article.headings).toEqual([]);
-      expect(article.body.map(text).join(' ').split(/\s+/).length).toBeLessThan(80);
+      expect(Boolean(article.linked?.fullText)).toBe(supplied);
+      if (!supplied) {
+        expect(article.headings).toEqual([]);
+        expect(article.body.map(text).join(' ').split(/\s+/).length).toBeLessThan(80);
+      }
       expect(searchEditorial(article.title).map(entry => entry.id)).toContain(article.id);
     }
+  });
+
+  it('only holds supplied text for articles it lists', () => {
+    for (const id of Object.keys(articleText)) expect(linkedArticles.map(article => article.id)).toContain(id);
+  });
+
+  it('replaces the summary with the supplied text, its headings and reading time', () => {
+    const [article] = linkedArticles;
+    const supplied = { body: [{ tag: 'h2', id: 'a', children: ['A'] }, { tag: 'p', children: ['Words'] }], headings: [{ id: 'a', title: 'A', level: 2 }], minutes: 4 };
+    const result = withArticleText(article, { [article.id]: supplied });
+    expect(result).toMatchObject({ ...supplied, id: article.id, title: article.title, linked: { publisher: article.linked?.publisher, fullText: true } });
+    expect(withArticleText(article, {})).toBe(article);
   });
 
   it('serves the article artwork locally, at its real size', () => {

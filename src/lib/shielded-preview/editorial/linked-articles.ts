@@ -1,10 +1,19 @@
+import articleText from './article-text.json';
 import type { EditorialDocument, EditorialEntry } from './types';
 
+type ArticleText = Pick<EditorialDocument, 'body' | 'headings' | 'minutes'>;
+
+/** Text supplied by hand (scripts/shielded-preview/import-article-text.py) replaces the summary. */
+export function withArticleText(article: EditorialDocument, texts: Record<string, ArticleText>): EditorialDocument {
+  const text = texts[article.id];
+  return text && article.linked ? { ...article, ...text, linked: { ...article.linked, fullText: true } } : article;
+}
+
 /**
- * Articles published away from shieldedlabs.net. The portal keeps a short summary and the link,
- * not the text: the importer brings the full article once the site publishes it.
+ * Articles published away from shieldedlabs.net. Each keeps a short summary and the links until
+ * its text is supplied by hand; the importer brings the full article once the site publishes it.
  */
-export const linkedArticles: EditorialDocument[] = [
+const summaries: EditorialDocument[] = [
   {
     id: 'the-network-sustainability-mechanism-nsm-activates-with-nu7',
     title: 'The Network Sustainability Mechanism (NSM) Activates with NU7',
@@ -24,6 +33,8 @@ export const linkedArticles: EditorialDocument[] = [
     body: [{ tag: 'p', children: ['According to the article, activation removes 60% of transaction fees from circulation, to be reissued through block rewards from 2031 within the 21 million supply cap. It also recounts how coinholder sentiment led to a design that keeps the halvings, in place of the original proposal to replace them.'] }],
   },
 ];
+
+export const linkedArticles = summaries.map(article => withArticleText(article, articleText as Record<string, ArticleText>));
 
 const titleKey = (title: string) => title.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
