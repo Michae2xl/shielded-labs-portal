@@ -1,11 +1,11 @@
 /* Live NSM balance: the project page card and the project card signal. */
-.card { display: grid; justify-items: center; gap: 4px; margin-bottom: 16px; border: 1px solid #343434; border-radius: 12px; background: #111; padding: 26px 24px 20px; text-align: center; }
+.card { display: grid; justify-items: center; gap: 4px; margin-bottom: 16px; border: 1px solid #343434; border-radius: 12px; background: #111; padding: 22px 24px 18px; text-align: center; }
 .card .heading { display: flex; align-items: center; justify-content: center; gap: 14px; }
 .card .heading h2 { margin: 0; color: #d6d6d6; font-size: 17px; font-weight: 500; letter-spacing: -.2px; }
-.card .reading { margin-top: 10px; min-width: 0; max-width: 100%; }
-.card .value { margin: 0; color: #fafafa; font-size: clamp(54px, 5.6vw, 96px); font-weight: 500; line-height: 1.02; letter-spacing: -.035em; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: geometricPrecision; overflow-wrap: anywhere; }
-.card .meta { margin: 12px 0 0; color: #c2c2c2; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
-.card .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; margin: 24px 0 0; }
+.card .reading { margin-top: 6px; min-width: 0; max-width: 100%; }
+.card .value { margin: 0; color: #fafafa; font-size: clamp(44px, 3.4vw, 64px); font-weight: 500; line-height: 1.02; letter-spacing: -.035em; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: geometricPrecision; overflow-wrap: anywhere; }
+.card .meta { margin: 8px 0 0; color: #c2c2c2; font-size: 15px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.card .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; margin: 20px 0 0; }
 .card .tile { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; padding: 14px 16px; border: 1px solid #2c2c2c; border-radius: 10px; background: #0d0d0d; }
 .card .tile dt { color: #b4b4b4; font-size: 13px; line-height: 1.45; }
 .card .tile dd { margin: 0; color: #fafafa; font-size: 19px; font-weight: 500; line-height: 1.35; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; overflow-wrap: anywhere; }
