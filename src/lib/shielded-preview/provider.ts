@@ -1,10 +1,14 @@
 import 'server-only';
 import { z } from 'zod';
 import snapshot from './github-snapshot.json';
-import type { Commit, Grant, PortalData, Repository, RepositoryRefreshError } from './types';
+import type { Commit, CrosslinkRelease, Grant, PortalData, Repository, RepositoryRefreshError } from './types';
 
 const TTL = 300_000;
 const SAMPLE_LIMIT = 100;
+const LATEST_RELEASE = 'https://api.github.com/repos/ShieldedLabs/crosslink_monolith/releases/latest';
+const snapshotRelease: CrosslinkRelease = { ...snapshot.crosslinkRelease, state: 'snapshot' };
+// GitHub does not count a 304 answer to a conditional request against its rate limit.
+const conditional = new Map<string, { etag: string; body: unknown }>();
 let cache: { at: number; data: PortalData } | undefined;
 let pending: Promise<PortalData> | undefined;
 
@@ -56,13 +60,28 @@ function sourceCommits(raw: unknown, repo: Pick<Repository, 'url'>): Commit[] {
 }
 
 async function json(url: string) {
-  const response = await fetch(url, { headers: { Accept: 'application/json', 'User-Agent': 'Shielded-Labs-Portal' }, signal: AbortSignal.timeout(8000), cache: 'no-store' });
+  const known = conditional.get(url);
+  const response = await fetch(url, { headers: { Accept: 'application/json', 'User-Agent': 'Shielded-Labs-Portal', ...(known ? { 'If-None-Match': known.etag } : {}) }, signal: AbortSignal.timeout(8000), cache: 'no-store' });
+  if (response.status === 304 && known) return known.body;
   if (!response.ok) throw new SourceError(response.status === 429 || (response.status === 403 && response.headers.get('x-ratelimit-remaining') === '0') ? 'rate-limited' : 'unavailable');
-  try { return await response.json(); } catch { throw new SourceError('invalid-response'); }
+  let body: unknown;
+  try { body = await response.json(); } catch { throw new SourceError('invalid-response'); }
+  const etag = response.headers.get('etag');
+  if (etag) conditional.set(url, { etag, body });
+  return body;
+}
+
+const releaseSchema = z.object({ tag_name: z.string().regex(/^[A-Za-z0-9._-]{1,40}$/), published_at: z.iso.datetime({ offset: true }), html_url: z.string() });
+/** The latest stable release; its link must be the release page of that tag. */
+function sourceRelease(raw: unknown): CrosslinkRelease {
+  const release = releaseSchema.parse(raw);
+  const url = `https://github.com/ShieldedLabs/crosslink_monolith/releases/tag/${release.tag_name}`;
+  if (release.html_url !== url) throw new Error('Release source does not match its tag');
+  return { tag: release.tag_name, publishedAt: new Date(release.published_at).toISOString(), url, state: 'live' };
 }
 
 async function refresh(): Promise<PortalData> {
-  const [repos, ledger] = await Promise.all([
+  const [repos, ledger, release] = await Promise.all([
     Promise.all(snapshot.repos.map(async (repo): Promise<Repository> => {
       let failure: RepositoryRefreshError = 'unavailable';
       try {
@@ -78,11 +97,14 @@ async function refresh(): Promise<PortalData> {
       }
     })),
     json('https://openzcash.org/api/zcg/data/grants').then(value => {
-      if (!Array.isArray(value.data)) throw new Error('Invalid ledger');
-      return value.data as Grant[];
+      const data = (value as { data?: unknown } | null)?.data;
+      if (!Array.isArray(data)) throw new Error('Invalid ledger');
+      return data as Grant[];
     }).catch(() => null),
+    json(LATEST_RELEASE).then(sourceRelease).catch(() => null),
   ]);
-  return { repos, checkedAt: new Date().toISOString(), grants: ledger ?? [], grantsState: ledger ? 'live' : 'unavailable', grantsFetchedAt: ledger ? new Date().toISOString() : null };
+  const crosslinkRelease = release ?? { ...(cache?.data.crosslinkRelease ?? snapshotRelease), state: 'snapshot' as const };
+  return { repos, checkedAt: new Date().toISOString(), grants: ledger ?? [], grantsState: ledger ? 'live' : 'unavailable', grantsFetchedAt: ledger ? new Date().toISOString() : null, crosslinkRelease };
 }
 
 export async function getPortalData(): Promise<PortalData> {
@@ -92,5 +114,5 @@ export async function getPortalData(): Promise<PortalData> {
 }
 
 export function initialPortalData(): PortalData {
-  return { repos: snapshot.repos.map(repo => ({ ...repo, state: 'snapshot' })), checkedAt: snapshot.capturedAt, grants: [], grantsState: 'unavailable', grantsFetchedAt: null };
+  return { repos: snapshot.repos.map(repo => ({ ...repo, state: 'snapshot' })), checkedAt: snapshot.capturedAt, grants: [], grantsState: 'unavailable', grantsFetchedAt: null, crosslinkRelease: snapshotRelease };
 }

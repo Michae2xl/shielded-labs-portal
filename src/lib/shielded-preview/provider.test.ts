@@ -38,9 +38,10 @@ describe('Internal preview source and access boundaries', () => {
     vi.stubGlobal('fetch', fetcher);
     const { getPortalData } = await import('./provider');
     const [first, concurrent] = await Promise.all([getPortalData(), getPortalData()]);
-    expect(first).toBe(concurrent); expect(fetcher).toHaveBeenCalledTimes(7);
+    // Every tracked repository, the latest Crosslink release and the grants ledger, once each.
+    expect(first).toBe(concurrent); expect(fetcher).toHaveBeenCalledTimes(12);
     expect(first.repos[0].commits[0]).toMatchObject({ login: 'example', avatarUrl: 'https://avatars.githubusercontent.com/u/1?v=4', profileUrl: 'https://github.com/example', authorType: 'User' });
-    expect(fetcher.mock.calls.filter(([url]) => url.includes('api.github.com')).every(([url]) => url.includes('per_page=100'))).toBe(true);
+    expect(fetcher.mock.calls.filter(([url]) => url.includes('/commits?')).every(([url]) => url.includes('per_page=100'))).toBe(true);
     now += 300001; fetcher.mockRejectedValue(new Error('offline'));
     const second = await getPortalData();
     expect(second.repos[0].commits[0].sha).toBe(currentSha);
@@ -76,6 +77,42 @@ describe('Internal preview source and access boundaries', () => {
       expect((await getPortalData()).repos.every(repo => repo.state === 'snapshot')).toBe(true);
     },
   );
+
+  it('reads the latest Crosslink release and keeps the last one when GitHub is unavailable', async () => {
+    let now = 2000000; vi.spyOn(Date, 'now').mockImplementation(() => now);
+    const release = { tag_name: 'v17', published_at: '2026-11-09T10:00:00Z', html_url: 'https://github.com/ShieldedLabs/crosslink_monolith/releases/tag/v17' };
+    const fetcher = vi.fn(async (url: string) => Response.json(url.includes('openzcash.org') ? { data: [] } : url.endsWith('/releases/latest') ? release : [githubCommit(repositoryName(url))]));
+    vi.stubGlobal('fetch', fetcher);
+    const { getPortalData, initialPortalData } = await import('./provider');
+    expect(initialPortalData().crosslinkRelease).toMatchObject({ tag: 'v16', state: 'snapshot' });
+    expect((await getPortalData()).crosslinkRelease).toEqual({ tag: 'v17', publishedAt: '2026-11-09T10:00:00.000Z', url: release.html_url, state: 'live' });
+    now += 300001; fetcher.mockRejectedValue(new Error('offline'));
+    expect((await getPortalData()).crosslinkRelease).toMatchObject({ tag: 'v17', state: 'snapshot' });
+  });
+
+  it('rejects a release whose link does not match its tag', async () => {
+    const release = { tag_name: 'v17', published_at: '2026-11-09T10:00:00Z', html_url: 'https://example.org/v17' };
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => Response.json(url.includes('openzcash.org') ? { data: [] } : url.endsWith('/releases/latest') ? release : [githubCommit(repositoryName(url))])));
+    const { getPortalData } = await import('./provider');
+    expect((await getPortalData()).crosslinkRelease).toMatchObject({ tag: 'v16', state: 'snapshot' });
+  });
+
+  it('asks GitHub only for changes and reuses the answer it already has', async () => {
+    let now = 3000000; vi.spyOn(Date, 'now').mockImplementation(() => now);
+    const tags = new Map<string, string | null>();
+    const fetcher = vi.fn(async (url: string, init?: RequestInit) => {
+      tags.set(url, new Headers(init?.headers).get('If-None-Match'));
+      if (tags.get(url) === 'W/"same"') return new Response(null, { status: 304 });
+      return Response.json(url.includes('openzcash.org') ? { data: [] } : [githubCommit(repositoryName(url))], { headers: { ETag: 'W/"same"' } });
+    });
+    vi.stubGlobal('fetch', fetcher);
+    const { getPortalData } = await import('./provider');
+    const first = await getPortalData();
+    now += 300001;
+    const second = await getPortalData();
+    expect([...tags.values()].every(tag => tag === 'W/"same"')).toBe(true);
+    expect(second.repos[0]).toMatchObject({ state: 'live', commits: first.repos[0].commits });
+  });
 
   it('normalizes source author dates to UTC while preserving GitHub app identities', async () => {
     vi.stubGlobal('fetch', vi.fn(async (url: string) => {

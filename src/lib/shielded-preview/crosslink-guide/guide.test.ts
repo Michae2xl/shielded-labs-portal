@@ -27,6 +27,16 @@ describe('Crosslink participation guide', () => {
     expect(guide).toContain(`<strong>${communityTools.length}</strong><small>Community tools</small>`);
   });
 
+  it('points downloads at the current release and says when the steps were written for an older one', () => {
+    const release = { tag: 'v17', publishedAt: '2026-11-09T10:00:00.000Z', url: 'https://github.com/ShieldedLabs/crosslink_monolith/releases/tag/v17', state: 'live' as const };
+    const guide = renderToStaticMarkup(createElement(CrosslinkParticipate, { project: crosslink, view: null, headingRef: null, onFollow: () => {}, release }));
+    expect(guide).toContain('<strong>v17</strong><small>Release · 9 Nov 2026</small>');
+    expect(guide).toContain('Download v17');
+    expect(guide).toContain(`The current release is v17; check its notes for changes.`);
+    expect(guide).toContain(`The guide summarizes the ${releaseTag} instructions.`);
+    expect(render(null)).not.toContain('The current release is');
+  });
+
   it('describes Crosslink without promoting it', () => {
     const copy = [render(null), render('tools'), render('incentives')].join(' ');
     for (const phrase of ['Help shape', 'next layer', 'Join the conversation', 'Start testing', 'Faster finality']) expect(copy).not.toContain(phrase);

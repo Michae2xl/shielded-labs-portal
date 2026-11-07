@@ -15,6 +15,7 @@ import ProjectFaq from './project-faq';
 import ProjectDevelopment from './project-development';
 import CrosslinkParticipate from './crosslink-participate';
 import ContextNotice from './context-notice';
+import NsmBalance from './nsm-balance';
 import s from './project-detail.module.css';
 
 export function ProjectLink({ project, onSelect, children, className }: {
@@ -147,6 +148,7 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
 
     <div className={s.panel} key={active}>
       {active === 'overview' && <>
+        {project.id === 'nsm' && <NsmBalance/>}
         <div className={`${s.overviewGrid}${allResources.length < 2 ? ` ${s.compactReading}` : ''}`} id="project-overview">
           <section className={`${s.card} ${s.purpose}`} aria-labelledby="project-panel-heading">
             <div className={s.excerptHeading}>
@@ -209,7 +211,7 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
 
       {active === 'development' && <ProjectDevelopment project={project} data={data} headingRef={panelHeading} onFollow={onFollow}/>}
 
-      {active === 'participate' && <CrosslinkParticipate project={project} view={record} headingRef={panelHeading} onFollow={onFollow} onRecord={onRecord}/>}
+      {active === 'participate' && <CrosslinkParticipate project={project} view={record} headingRef={panelHeading} onFollow={onFollow} onRecord={onRecord} release={data.crosslinkRelease}/>}
     </div>
 
     {active !== 'faq' && !(active === 'resources' && document) && <><ContextNotice>{project.boundary}</ContextNotice>

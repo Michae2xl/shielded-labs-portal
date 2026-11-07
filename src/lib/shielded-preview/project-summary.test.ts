@@ -48,7 +48,7 @@ describe('Project summaries', () => {
     expect(labels('crosslink')).toEqual(['Research', 'FAQ', 'ZIPs', 'Simulator', 'Code']);
     expect(labels('epoch')).toEqual(['Research']);
     expect(labels('zero')).toEqual(['Research', 'Code']);
-    expect(labels('nsm')).toEqual(['Research', 'FAQ', 'ZIPs', 'Simulator']);
+    expect(labels('nsm')).toEqual(['Research', 'FAQ', 'ZIPs', 'Simulator', 'Code']);
     for (const item of projects) for (const shortcut of projectShortcuts(item)) {
       expect(shortcut.count === null || shortcut.count > 0).toBe(true);
       expect(new URL(shortcut.href, 'https://portal.example').searchParams.get('project')).toBe(item.id);

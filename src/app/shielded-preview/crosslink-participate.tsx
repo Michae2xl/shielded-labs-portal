@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type Dispatch, type ReactNode, type Ref, type SetStateAction } from 'react';
 import type { Project } from '@/lib/shielded-preview/content';
+import type { CrosslinkRelease } from '@/lib/shielded-preview/types';
 import { FORUM, GUIDE_SOURCE, ISSUES, REPOSITORY, RELEASES, operateSteps, participationPaths, pathNotes, referencedIssues, relatedPages, rewardDetails, steps, toolAnchor, type GuidePath } from '@/lib/shielded-preview/crosslink-guide/guide';
 import { allocatedZec, currentRound, history, paidRounds, releaseDate, releaseNotes, releaseTag, reportedPaid, sourcesChecked } from '@/lib/shielded-preview/crosslink-guide/history';
 import { categories, communityTools, type ToolCategory } from '@/lib/shielded-preview/crosslink-guide/tools';
@@ -78,7 +79,9 @@ function Checklist({ done, setDone, open, setOpen, onFollow }: { done: number[];
   </>;
 }
 
-export default function CrosslinkParticipate({ project, view, headingRef, onFollow, onRecord }: { project: Project; view: string | null; headingRef: Ref<HTMLHeadingElement>; onFollow: Follow; onRecord?: (record?: string) => void }) {
+const releaseDay = (iso: string) => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(iso));
+
+export default function CrosslinkParticipate({ project, view, headingRef, onFollow, onRecord, release }: { project: Project; view: string | null; headingRef: Ref<HTMLHeadingElement>; onFollow: Follow; release?: CrosslinkRelease; onRecord?: (record?: string) => void }) {
   const [path, setPath] = useState<GuidePath>('test');
   const [done, setDone] = useState<number[]>([]);
   const [open, setOpen] = useState<number | null>(0);
@@ -128,6 +131,8 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
   const notes = pathNotes[path];
   const related = relatedPages.flatMap(id => editorialCatalog.filter(entry => entry.id === id));
   const delegator = communityTools.find(tool => tool.name === 'Zingo Delegator')!;
+  // The steps summarize one release; downloads follow the latest one GitHub reports.
+  const current = release ? { tag: release.tag, date: releaseDay(release.publishedAt), url: release.url } : { tag: releaseTag, date: releaseDate, url: releaseNotes };
 
   return <div className={s.participate}>
     <section className={s.hero} aria-labelledby="project-panel-heading">
@@ -136,13 +141,14 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
         <h2 id="project-panel-heading" ref={headingRef} tabIndex={-1}>Crosslink feature net</h2>
         <p>Testing guide, community tools and incentive updates for a proposed consensus upgrade. Feature-net progress is not a mainnet activation.</p>
         <div className={s.heroActions}>
-          <Source href={releaseNotes} onFollow={onFollow} className={s.primary}>Download {releaseTag}</Source>
+          <Source href={current.url} onFollow={onFollow} className={s.primary}>Download {current.tag}</Source>
           <button type="button" className={s.secondary} onClick={() => { setPath('test'); show('guide'); moveToTabs(); }}>Testing guide<Arrow/></button>
           <Source href={`${FORUM}/39`} onFollow={onFollow} className={s.secondary}>Program rules</Source>
         </div>
+        {current.tag !== releaseTag && <p className={s.note}>The guide summarizes the {releaseTag} instructions. The current release is {current.tag}; check its notes for changes.</p>}
       </div>
       <div className={s.glance} role="group" aria-label="Feature net at a glance">
-        <Source href={releaseNotes} onFollow={onFollow} className={s.tile}><strong>{releaseTag}</strong><small>Release · {releaseDate}</small></Source>
+        <Source href={current.url} onFollow={onFollow} className={s.tile}><strong>{current.tag}</strong><small>Release · {current.date}</small></Source>
         <button type="button" className={s.tile} onClick={() => openTab('incentives')}><span><strong>Round {currentRound}</strong><small>Reward amount pending</small></span><Arrow/></button>
         <button type="button" className={s.tile} onClick={() => openTab('incentives')}><span><strong>{reportedPaid} / {allocatedZec} ZEC</strong><small>Rewards reported paid</small></span><Arrow/></button>
         <button type="button" className={s.tile} onClick={() => { setCommunityView('tools'); openTab('tools'); }}><span><strong>{communityTools.length}</strong><small>Community tools</small></span><Arrow/></button>
@@ -172,7 +178,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
               <h3>Prepare your finalizer.</h3>
               <p>Use the release instructions for your network. Keep your node online and verify its participation.</p>
               <ol className={s.operate}>{operateSteps.map((step, index) => <li key={step.title}><span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><div><h4>{step.title}</h4><p>{step.text}</p><Source href={step.href} onFollow={onFollow}>{step.link}</Source></div></li>)}</ol>
-              <p className={s.note}>OpenZcash summary of the linked {releaseTag} instructions. Follow the documentation for the release you run.</p>
+              <p className={s.note}>OpenZcash summary of the linked {releaseTag} instructions.{current.tag !== releaseTag && ` The current release is ${current.tag}; check its notes for changes.`} Follow the documentation for the release you run.</p>
             </>}
           </section>
           <aside className={s.aside}>
@@ -237,7 +243,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
             <details><summary>Details & sources</summary><p>{round.recipients} mining and staking recipients. {round.note}</p><p>Claims closed {round.claim}.</p><div className={s.links}><Source href={round.source} onFollow={onFollow}>Payout report</Source><Source href={round.claimSource} onFollow={onFollow}>Claim announcement</Source></div></details>
           </li>)}</ol>
         </section>
-        <div className={s.roundStatus}><span><strong>Round {currentRound}</strong> · Running on the {releaseTag} network; reward amount and claim dates pending.</span><Source href={`${FORUM}/101`} onFollow={onFollow}>Follow the round</Source></div>
+        <div className={s.roundStatus}><span><strong>Round {currentRound}</strong> · Running on the {current.tag} network; reward amount and claim dates pending.</span><Source href={`${FORUM}/101`} onFollow={onFollow}>Follow the round</Source></div>
         <div className={s.rewards}>{rewardDetails.map(item => <section className={s.card} key={item.title}><h4>{item.title}</h4><p>{item.text}</p><Source href={item.href} onFollow={onFollow}>{item.link}</Source></section>)}</div>
         <section className={s.card} aria-labelledby="crosslink-timeline">
           <div className={s.heading}><h3 id="crosslink-timeline">Timeline</h3><Source href={FORUM} onFollow={onFollow}>Forum</Source></div>

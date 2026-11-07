@@ -60,5 +60,5 @@ export function filterDevelopment(commits: ObservedCommit[], filters: { repo?: s
 export function heatLevel(count: number): number { return count === 0 ? 0 : count === 1 ? 1 : count <= 4 ? 2 : count <= 9 ? 3 : 4; }
 
 export const repositoryLabels: Record<string, string> = {
-  crosslink_monolith: 'Crosslink', zero: 'Zero', shielded_transport_pigeon: 'Shielded transport', crosslink_book: 'Crosslink docs', 'zebra-dynamic-fees': 'Dynamic fees', 'sl-orchard': 'Orchard',
+  crosslink_monolith: 'Crosslink', zero: 'Zero', shielded_transport_pigeon: 'Shielded transport', crosslink_book: 'Crosslink docs', 'zebra-dynamic-fees': 'Dynamic fees', 'sl-orchard': 'Orchard', nsm: 'NSM balance page', 'fees-monolith': 'Dynamic fees monolith',
 };

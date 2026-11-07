@@ -2,9 +2,9 @@ const forum = "https://forum.zcashcommunity.com/t/crosslink-incentivized-feature
 
 // Date of the last check of every curated link, shown in the guide's footer.
 export const sourcesChecked = "2 Nov 2026";
-// Reference release the participation steps and hero CTA point at. Shielded
-// Labs ships weekly and only recognizes the current chain for rewards, so
-// this must track the repository's latest release.
+// Release the participation steps were summarized from. Downloads and the
+// network tile follow the latest release GitHub reports (provider.ts); when it
+// moves past this one, the guide says so until the steps are reviewed.
 export const releaseTag = "v16";
 export const releaseDate = "2 Nov 2026";
 export const releaseNotes = `https://github.com/ShieldedLabs/crosslink_monolith/releases/tag/${releaseTag}`;
