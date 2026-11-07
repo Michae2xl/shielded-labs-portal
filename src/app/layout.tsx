@@ -3,7 +3,7 @@ import './globals.css';
 import { TapFeedback } from '@/components/tap-feedback';
 
 export const metadata: Metadata = {
-  title: 'Shielded Labs · Governance & Research',
+  title: 'Shielded Labs',
   description: 'Zcash governance, Shielded Labs projects, research and community resources.',
   applicationName: 'Shielded Labs Portal',
   robots: { index: false, follow: false },

@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { governanceSections, governanceSectionSlug } from './governance-sections';
 import { shareCard, shareMetadata, shareOrigin, SUBTITLE_MAX, type ShareParams } from './share';
+import { bundledZips } from './zips/library';
 
 describe('Share previews', () => {
   it('describes the portal when no page is selected', () => {
-    expect(shareCard({})).toMatchObject({ chip: 'Governance & Research', title: 'Shielded Labs', subtitle: 'Zcash governance, projects and research' });
+    expect(shareCard({})).toMatchObject({ title: 'Shielded Labs', subtitle: 'Zcash governance, projects and research', brand: true });
+    expect(shareCard({}).chip).toBeUndefined();
+    expect(shareMetadata({}, 'https://portal.example').title).toBe('Shielded Labs');
     expect(shareCard({ view: 'unknown' }).title).toBe('Shielded Labs');
   });
 
@@ -57,6 +60,13 @@ describe('Share previews', () => {
     const article = shareMetadata({ view: 'blog', record: 'the-network-sustainability-mechanism-nsm-activates-with-nu7' }, 'https://portal.example');
     expect(article.openGraph.images[0].url).toMatch(/^https:\/\/portal\.example\/shielded-preview\/editorial\/[a-f0-9]+\.png$/);
     expect(meta.description.length).toBeLessThanOrEqual(160);
+  });
+
+  it('keeps a ZIP’s number in the link title, as the ZIP library lists it', () => {
+    expect(shareMetadata({ view: 'governance', section: 'zips', record: 'zip-0237' }, 'https://portal.example').title).toBe('ZIP 237: Network Sustainability Mechanism: Halving-Preserving Issuance · Shielded Labs');
+    const pull = bundledZips.entries.find(entry => entry.kind === 'proposal' && entry.pull);
+    expect(pull).toBeDefined();
+    expect(shareMetadata({ view: 'governance', section: 'zips', record: pull!.id }, 'https://portal.example').title).toBe(`PR ${pull!.pull!.number}: ${pull!.title} · Shielded Labs`);
   });
 
   it('only trusts hosts the portal is served from', () => {

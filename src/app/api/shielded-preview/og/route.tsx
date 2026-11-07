@@ -59,12 +59,10 @@ function Balance({ reading }: { reading: NsmReading }) {
   </div>;
 }
 
-function Brand({ card, shield }: { card: ShareCard; shield: string }) {
+function Brand({ shield }: { shield: string }) {
   return <Frame>
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 44 }}>
+    <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Mark shield={shield} size="large"/>
-      <div style={{ display: 'flex', width: 64, height: 1.5, background: '#3a3a3a' }}/>
-      <div style={{ display: 'flex', fontSize: 22, letterSpacing: 7, paddingLeft: 7, color: MUTED, textTransform: 'uppercase' }}>{card.chip}</div>
     </div>
   </Frame>;
 }
@@ -88,6 +86,6 @@ export async function GET(request: Request) {
   if(process.env.SHIELDED_LABS_PREVIEW!=='1')return new Response('Not found',{status:404});
   const card = shareCard(Object.fromEntries(new URL(request.url).searchParams));
   const [{ fonts, shield }, reading] = await Promise.all([loadAssets(), card.live === 'nsm' ? getNsmBalance().then(result => result.reading) : null]);
-  const image = card.brand ? <Brand card={card} shield={shield}/> : <Card card={card} reading={reading} shield={shield}/>;
+  const image = card.brand ? <Brand shield={shield}/> : <Card card={card} reading={reading} shield={shield}/>;
   return new ImageResponse(image, { width: 1200, height: 630, fonts, headers: { 'Cache-Control': 'public, max-age=300', 'X-Robots-Tag': 'noindex' } });
 }

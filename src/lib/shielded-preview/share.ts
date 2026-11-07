@@ -5,7 +5,7 @@ import type { EditorialEntry } from './editorial/types';
 import { devFundLane, devFundTimeline } from './governance-dev-fund';
 import record from './governance-data/record.json';
 import { governanceSectionFromSlug, type GovernanceSection } from './governance-sections';
-import { bundledZips, proposalChange, zipLabel, zipSummary } from './zips/library';
+import { bundledZips, proposalChange, zipLabel, zipSummary, zipTitle } from './zips/library';
 
 /**
  * What a shared link shows, from the same records the portal renders: a chip and one short line
@@ -13,13 +13,14 @@ import { bundledZips, proposalChange, zipLabel, zipSummary } from './zips/librar
  */
 export type ShareParams = Partial<Record<'view' | 'project' | 'section' | 'record' | 'lane' | 'q', string>>;
 export type ShareImage = { src: string; width: number; height: number; alt: string };
-export type ShareCard = { chip?: string; title: string; subtitle: string; description: string; image?: ShareImage; live?: 'nsm'; brand?: true };
+// `linkTitle` names the page in the link text when the image shows its identifier elsewhere, as a ZIP's number.
+export type ShareCard = { chip?: string; title: string; linkTitle?: string; subtitle: string; description: string; image?: ShareImage; live?: 'nsm'; brand?: true };
 
 export const SUBTITLE_MAX = 72;
 const DESCRIPTION_MAX = 160;
 const PUBLIC_ORIGIN = 'https://shielded-labs-portal-preview.up.railway.app';
 const TRUSTED_HOST = /^(?:(?:127\.0\.0\.1|localhost)(?::\d+)?|[a-z0-9-]+\.up\.railway\.app|(?:[a-z0-9-]+\.)*shieldedlabs\.net)$/i;
-const SITE: ShareCard = { chip: 'Governance & Research', title: 'Shielded Labs', subtitle: 'Zcash governance, projects and research', description: 'Zcash governance, Shielded Labs projects, research and community resources.', brand: true };
+const SITE: ShareCard = { title: 'Shielded Labs', subtitle: 'Zcash governance, projects and research', description: 'Zcash governance, Shielded Labs projects, research and community resources.', brand: true };
 const SECTIONS: Record<string, ShareCard> = {
   projects: { title: 'Projects', subtitle: 'Shielded Labs projects and their progress', description: 'Shielded Labs projects, their progress and published references.' },
   impact: { title: 'Milestones', subtitle: 'Dated milestones, each with its source', description: 'Dated milestones from Shielded Labs projects, each with its source.' },
@@ -55,7 +56,7 @@ function governanceCard(params: ShareParams): ShareCard | null {
   const zip = bundledZips.entries.find(entry => entry.id === id);
   if (zip) {
     const chip = zip.kind === 'zip' ? 'ZIP' : zip.kind === 'proposal' ? 'ZIP pull request' : zip.kind === 'guide' ? 'ZIP guide' : 'ZIP draft';
-    return { chip, title: zip.title, subtitle: line(zipLabel(zip), zip.kind === 'proposal' ? proposalChange(zip) : zip.status), description: clip(zipSummary(zip), DESCRIPTION_MAX) };
+    return { chip, title: zip.title, linkTitle: zip.kind === 'proposal' ? `${zipLabel(zip)}: ${zip.title}` : zipTitle(zip), subtitle: line(zipLabel(zip), zip.kind === 'proposal' ? proposalChange(zip) : zip.status), description: clip(zipSummary(zip), DESCRIPTION_MAX) };
   }
   const upgrade = record.upgrades.find(item => `upgrade:${item.name}` === id);
   if (upgrade) {
@@ -111,7 +112,7 @@ export function shareOrigin(host: string | null, protocol: string | null) {
 
 export function shareMetadata(params: ShareParams, origin: string) {
   const card = shareCard(params);
-  const title = card.brand ? 'Shielded Labs · Governance & Research' : `${card.title} · Shielded Labs`;
+  const title = card.brand ? card.title : `${card.linkTitle ?? card.title} · Shielded Labs`;
   const query = new URLSearchParams((['view', 'project', 'section', 'record', 'lane'] as const).flatMap(key => params[key] ? [[key, params[key]!]] : []));
   const image = card.image
     ? { url: new URL(card.image.src, origin).href, width: card.image.width, height: card.image.height, alt: card.image.alt }
