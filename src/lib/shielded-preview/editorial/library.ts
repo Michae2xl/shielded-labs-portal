@@ -83,6 +83,11 @@ const handbookChapters: Record<string, string> = {
   'design/analysis/cl2-security-analysis.html': 'security-analysis-of-crosslink-2',
   'design/security-analysis.html': 'security-analysis-of-crosslink-2',
 };
+// Book pages that return 404 at the source and are absent from the print edition (checked 2026-11-07);
+// they stay plain text rather than sending readers to an error page.
+const handbookRemoved = new Set(['design/notes-on-snap-and-chat.html', 'design/potential-changes.html', 'design/the-arguments-for-bounded-availability-and-finality-overrides.html', 'design/analysis/the-arguments-for-bounded-availability-and-finality-overrides.html', 'user/crosslink-testnet.html']);
+// Repository files the book links to by relative path.
+const handbookRepositoryFiles = new Set(['LICENSE-APACHE', 'LICENSE-MIT']);
 const SOURCE_FOOTNOTE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /** A ZIP on the official site or in the repository opens in the portal's own library. */
@@ -139,6 +144,8 @@ export function resolveEditorialLink(value: string): string | null {
     const book = editorialCatalog.find(item => item.id === 'crosslink-handbook');
     if (book) {
       const chapter = url.pathname.replace(/^\/(?:zebra-crosslink\/)?/, '');
+      if (handbookRepositoryFiles.has(chapter)) return `https://github.com/ShieldedLabs/zebra-crosslink/blob/main/${chapter}`;
+      if (handbookRemoved.has(chapter)) return null;
       // An anchor the print edition lacks still opens its chapter, which holds the rule it names.
       const heading = book.headings.find(item => item.id === anchor) ?? book.headings.find(item => item.id === handbookChapters[chapter]);
       if (heading) return `${editorialHref(book)}#${encodeURIComponent(heading.id)}`;

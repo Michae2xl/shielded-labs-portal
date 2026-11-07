@@ -1,0 +1,39 @@
+# Checks every change before it reaches main: lint, types, unit tests, the
+# Python importers and a production build. Deploys stay manual (docs/MAINTAINING.md).
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: python3 -m pip install --quiet -r scripts/zips/requirements.txt
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run test:importer
+      - run: npm run test:sources
+      - run: npm run test:zips
+      - run: npm run check:isolation
+      - run: npm run build

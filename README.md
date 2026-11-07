@@ -34,11 +34,14 @@ For independently hosted feedback, configure the Railway service to build with `
 npm run check:isolation
 npm test
 npm run test:importer
+npm run test:sources
 npm run test:zips
 npm run lint
 npm run build
 npm run typecheck
 ```
+
+CI runs the same checks on every pull request. What updates itself, what needs a person, the daily source alerts and the deploy steps are in [docs/MAINTAINING.md](docs/MAINTAINING.md).
 
 ## ZIP library
 

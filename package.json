@@ -19,6 +19,9 @@
     "test:zips": "python3 scripts/zips/test_import_zips.py",
     "import:zips": "python3 scripts/zips/import_zips.py --source ../zips",
     "import:article-text": "python3 scripts/shielded-preview/import-article-text.py",
+    "snapshot:github": "python3 scripts/shielded-preview/refresh-github-snapshot.py",
+    "check:sources": "python3 scripts/shielded-preview/check-sources.py",
+    "test:sources": "python3 scripts/shielded-preview/test-check-sources.py",
     "check:isolation": "node scripts/check-isolation.mjs"
   },
   "dependencies": {

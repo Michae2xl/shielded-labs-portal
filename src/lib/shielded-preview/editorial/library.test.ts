@@ -71,6 +71,12 @@ describe('Shielded Labs editorial coverage', () => {
     expect(resolveEditorialLink(pinned)).toBe(pinned);
     expect(resolveEditorialLink('https://github.com/zcash/zips/blob/main/zips/zip-0316.rst')).toBe('?view=governance&section=zips&record=zip-0316');
   });
+  it('sends handbook license links to the repository and keeps pages the book no longer publishes as text', () => {
+    expect(resolveEditorialLink('https://shieldedlabs.github.io/zebra-crosslink/LICENSE-MIT')).toBe('https://github.com/ShieldedLabs/zebra-crosslink/blob/main/LICENSE-MIT');
+    expect(resolveEditorialLink('https://shieldedlabs.github.io/zebra-crosslink/design/potential-changes.html#what-about-making-the-bcblockproducer-the-bftproposer')).toBeNull();
+    expect(resolveEditorialLink('https://shieldedlabs.github.io/zebra-crosslink/user/crosslink-testnet.html')).toBeNull();
+    expect(resolveEditorialLink('https://shieldedlabs.github.io/zebra-crosslink/design.html')).toContain('record=crosslink-handbook');
+  });
   it('leaves footnote markers with no target as text', () => {
     expect(resolveEditorialLink('https://shieldedlabs.net/crosslink-incentivized-feature-nets/#55387e82-e104-405d-a208-028cc523224b')).toBeNull();
   });

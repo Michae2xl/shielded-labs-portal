@@ -68,10 +68,10 @@ describe('Editorial source-to-record navigation', () => {
   });
 
   it('does not replace absent source files with the book opening', () => {
+    // License files live in the repository; a page the book no longer publishes stays text.
+    expect(resolveEditorialLink('https://shieldedlabs.github.io/zebra-crosslink/LICENSE-APACHE')).toBe('https://github.com/ShieldedLabs/zebra-crosslink/blob/main/LICENSE-APACHE');
+    expect(resolveEditorialLink('https://shieldedlabs.github.io/zebra-crosslink/user/crosslink-testnet.html')).toBeNull();
     for (const source of [
-      'https://shieldedlabs.github.io/zebra-crosslink/LICENSE-MIT',
-      'https://shieldedlabs.github.io/zebra-crosslink/LICENSE-APACHE',
-      'https://shieldedlabs.github.io/zebra-crosslink/user/crosslink-testnet.html',
       'https://github.com/ShieldedLabs/zebra-crosslink/blob/main/README.md',
       'https://shieldedlabs.net/crosslink-faq/#missing-answer',
     ]) expect(resolveEditorialLink(source)).toBe(source);
@@ -79,8 +79,8 @@ describe('Editorial source-to-record navigation', () => {
 
   it('only internalizes handbook deep links whose target exists in the imported record', () => {
     for (const link of handbookLinks.filter(node => node.href?.startsWith('https://shieldedlabs.github.io/zebra-crosslink/'))) {
-      const resolved = resolveEditorialLink(link.href!)!;
-      if (!resolved.startsWith('?view=')) continue;
+      const resolved = resolveEditorialLink(link.href!);
+      if (!resolved?.startsWith('?view=')) continue;
       const target = new URL(resolved, 'https://portal.test');
       expect(target.searchParams.get('record')).toBe(handbook.id);
       expect(handbook.headings.some(heading => heading.id === decodeURIComponent(target.hash.slice(1))), link.href).toBe(true);
