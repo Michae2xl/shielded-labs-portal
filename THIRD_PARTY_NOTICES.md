@@ -7,6 +7,7 @@ Shielded Labs names, logos, editorial text, portraits and project material retai
 Inter and Geist Mono font files are unchanged copies of the Google Fonts assets already used by the source application. They are served locally so installing/building the portal does not require a font download. Their SIL Open Font License notices are in `public/fonts/Inter-OFL.txt` and `public/fonts/GeistMono-OFL.txt`.
 
 - [Inter license](https://github.com/google/fonts/blob/main/ofl/inter/OFL.txt)
+- `public/fonts/og/inter-latin-{400,500}-normal.woff` are unchanged copies from `@fontsource/inter` 5.2.6 (same license), used only to draw share images.
 - [Geist Mono license](https://github.com/google/fonts/blob/main/ofl/geistmono/OFL.txt)
 
 Simulator applications are embedded from their original publishers and have not been copied or relicensed. Dependencies retain their respective licenses in their packages.
