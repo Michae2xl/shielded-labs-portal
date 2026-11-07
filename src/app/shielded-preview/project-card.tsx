@@ -7,6 +7,7 @@ import { projectLastCommit, projectShortcuts, projectSignal } from '@/lib/shield
 import type { Repository } from '@/lib/shielded-preview/types';
 import { EditorialLink } from './editorial';
 import { ProjectLink } from './project-detail';
+import { NsmCardSignal } from './nsm-balance';
 import s from './project-collection.module.css';
 
 function DateStamp({ date }: { date: string }) {
@@ -26,7 +27,7 @@ export default function ProjectCard({ item, repositories, glyph, arrow, onSelect
       <div className={s.heading}>{glyph}<Heading>{item.name}</Heading>{arrow}</div>
     </ProjectLink>
     <p className={s.quote}><q cite={publication.presentation.source}>{publicationQuote(publication.presentation)}</q></p>
-    {signal && <div className={s.signal}>
+    {item.id === 'nsm' ? <NsmCardSignal/> : signal && <div className={s.signal}>
       <span className={s.signalLabel}>{signal.label}{signal.date && <> · <DateStamp date={signal.date}/></>}</span>
       <span className={s.signalText}>{signal.quotedFrom ? <q cite={signal.quotedFrom}>{signal.text}</q> : signal.text}</span>
       {signal.detail && <small>Published window · {signal.detail}</small>}

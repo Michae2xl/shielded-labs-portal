@@ -55,6 +55,15 @@ describe('Live NSM balance', () => {
     expect((await (await import('./provider')).getNsmBalance(1_000)).state).toBe('unavailable');
   });
 
+  it('tries again sooner while it has no reading at all', async () => {
+    const fetch = source([new Error('cold start'), stats(3_543_404), block(3_543_404)]);
+    const { getNsmBalance } = await import('./provider');
+    expect((await getNsmBalance(1_000)).state).toBe('unavailable');
+    expect((await getNsmBalance(10_000)).state).toBe('unavailable');
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect((await getNsmBalance(17_000)).state).toBe('fetched');
+  });
+
   it('keeps the last reading, marked as such, when the source fails', async () => {
     source([stats(3_543_404), block(3_543_404), new Error('rate limited')]);
     const { getNsmBalance } = await import('./provider');

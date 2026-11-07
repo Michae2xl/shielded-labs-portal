@@ -6,6 +6,8 @@ export const NSM_SOURCE = 'https://api.blockchair.com/zcash';
 // Blocks arrive every 25 seconds and the public API caches for about a minute; one reading a
 // minute keeps within its free request allowance.
 const TTL = 60_000;
+// Without any reading yet, a failed attempt is retried sooner.
+const RETRY = 15_000;
 const POOLS = ['transparent', 'sprout', 'sapling', 'orchard', 'ironwood', 'lockbox'];
 const statsSchema = z.object({ data: z.object({ best_block_height: z.number().int().positive() }) });
 const blockSchema = z.object({
@@ -51,6 +53,8 @@ async function refresh(now: number): Promise<NsmSource> {
     cache = { state: 'fetched', observedAt: new Date(now).toISOString(), reading: await readTip(cache.reading), source: NSM_SOURCE };
   } catch {
     cache = { ...cache, state: cache.reading ? 'stale' : 'unavailable' };
+    refreshedAt = cache.reading ? now : now - TTL + RETRY;
+    return cache;
   }
   refreshedAt = now;
   return cache;

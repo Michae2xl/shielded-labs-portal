@@ -1,24 +1,39 @@
-.card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 380px); grid-template-areas: 'heading heading' 'reading facts' 'note note'; gap: 6px 40px; margin-bottom: 16px; border: 1px solid #343434; border-radius: 12px; background: #111; padding: 18px 20px; }
-.card .heading { grid-area: heading; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.card .heading h2 { margin: 0; font-size: 20px; font-weight: 500; }
-.card .status { display: inline-flex; align-items: center; gap: 8px; color: #b0b0b0; font-size: 13px; line-height: 1.5; }
-.card .dot { width: 8px; height: 8px; border-radius: 50%; background: #5c5c5c; }
-.card[data-state="fetched"] .dot { background: #f1f1f1; box-shadow: 0 0 0 3px rgba(241, 241, 241, .14); }
-.card[data-state="stale"] .dot { background: transparent; box-shadow: inset 0 0 0 1.5px #9a9a9a; }
-.card .reading { grid-area: reading; align-self: center; min-width: 0; }
-.card .value { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: 8px 0 0; font-size: 46px; font-weight: 500; line-height: 1.1; letter-spacing: -.6px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-.card .unit { color: #b0b0b0; font-size: 18px; letter-spacing: 0; }
-.card .placeholder { color: #6b6b6b; }
+/* Live NSM balance: the project page card and the project card signal. */
+.card { display: grid; gap: 4px; margin-bottom: 16px; border: 1px solid #343434; border-radius: 12px; background: #111; padding: 18px 20px 16px; }
+.card .heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card .heading h2 { margin: 0; font-size: 20px; font-weight: 500; letter-spacing: -.3px; }
+.card .reading { margin-top: 6px; min-width: 0; }
+.card .value { margin: 0; font-size: 52px; font-weight: 500; line-height: 1.08; letter-spacing: -1.2px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .card .meta { margin: 6px 0 0; color: #b0b0b0; font-size: 14px; line-height: 1.5; font-variant-numeric: tabular-nums; }
-.card .facts { grid-area: facts; align-self: center; display: grid; gap: 0; margin: 0; }
-.card .facts div { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 11px 0; border-top: 1px solid #282828; }
-.card .facts div:last-child { border-bottom: 1px solid #282828; }
-.card .facts dt { color: #b0b0b0; font-size: 13px; line-height: 1.5; }
-.card .facts dd { margin: 0; white-space: nowrap; font-size: 14px; line-height: 1.5; text-align: right; font-variant-numeric: tabular-nums; }
-.card .note { grid-area: note; margin: 12px 0 0; color: #9a9a9a; font-size: 13px; line-height: 1.6; }
+.card .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 18px 0 0; }
+.card .tile { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 12px 14px; border: 1px solid #2c2c2c; border-radius: 10px; background: #0d0d0d; }
+.card .tile dt { color: #a8a8a8; font-size: 12.5px; line-height: 1.45; }
+.card .tile dd { margin: 0; color: #f1f1f1; font-size: 17px; line-height: 1.4; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.card .tile small { color: #8f8f8f; font-size: 12.5px; line-height: 1.45; }
+.card .note { margin: 14px 0 0; color: #9a9a9a; font-size: 13px; line-height: 1.6; }
 .card .note a { color: #dcdcdc; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Amount: whole ZEC at full weight, decimals and unit lighter. */
+.fraction { color: #8c8c8c; }
+.unit { margin-left: .18em; color: #9a9a9a; font-size: .4em; letter-spacing: 0; vertical-align: .55em; }
+.placeholder { color: #5f5f5f; }
+
+/* Live state chip. */
+.state { display: inline-flex; align-items: center; gap: 7px; color: #b0b0b0; font-size: 13px; line-height: 1.5; font-weight: 400; letter-spacing: 0; white-space: nowrap; }
+.dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #5c5c5c; }
+.state[data-state="fetched"] .dot { background: #f1f1f1; }
+.state[data-state="fetched"] .dot::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 1px solid rgba(241, 241, 241, .35); animation: pulse 2.4s ease-out infinite; }
+.state[data-state="stale"] .dot { background: transparent; box-shadow: inset 0 0 0 1.5px #9a9a9a; }
+@keyframes pulse { from { transform: scale(.6); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .state[data-state="fetched"] .dot::after { animation: none; } }
+
+/* Project card slot, matching the card's latest-update block. */
+.signal { display: flex; flex-direction: column; gap: 2px; margin-bottom: 14px; padding-top: 12px; border-top: 1px solid #2a2a2a; min-width: 0; }
+.signalLabel { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #b0b0b0; font-size: 13px; line-height: 1.5; }
+.signalValue { color: #f1f1f1; font-size: 26px; font-weight: 500; line-height: 1.25; letter-spacing: -.5px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.signal small { color: #b0b0b0; font-size: 13px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+
 @media (max-width: 760px) {
-  .card { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'heading' 'reading' 'facts' 'note'; gap: 6px; }
-  .card .value { font-size: 34px; }
-  .card .facts { margin-top: 12px; }
+  .card .value { font-size: 38px; letter-spacing: -.8px; }
+  .card .tiles { grid-template-columns: minmax(0, 1fr); }
 }
