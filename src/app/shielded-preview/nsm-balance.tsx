@@ -73,13 +73,16 @@ export function NsmBalanceCard({ source, now }: { source: NsmSource | null; now:
   </section>;
 }
 
-/** The project card's slot for the latest update, holding the live balance instead. */
+/** The project card's slot for the latest update: a readout with the live balance and what moved it. */
 export function NsmCardSignalView({ source, now }: { source: NsmSource | null; now: number }) {
   const reading = source?.reading ?? null;
-  return <div className={s.signal}>
-    <span className={s.signalLabel}>NSM balance<State source={source}/></span>
-    {reading ? <ZecAmount zatoshi={reading.balanceZat} className={s.signalValue}/> : <span className={s.signalValue}><span className={s.placeholder}>—</span></span>}
-    <small>{reading ? `Block ${count(reading.height)} · ${age(reading.time, now)} · +${formatZec(reading.removedSinceActivationZat)} ZEC since NU7` : source ? 'Chain data unavailable' : 'Reading the chain tip'}</small>
+  return <div className={s.readout}>
+    <div className={s.readoutTop}><span>NSM balance</span><State source={source}/></div>
+    {reading ? <ZecAmount zatoshi={reading.balanceZat} className={s.readoutValue}/> : <span className={s.readoutValue}><span className={s.placeholder}>—</span></span>}
+    <dl className={s.readoutFacts}>
+      <div><dt>Since NU7</dt><dd>{reading ? `+${formatZec(reading.removedSinceActivationZat)} ZEC` : '—'}</dd></div>
+      <div><dt>Block</dt><dd>{reading ? `${count(reading.height)} · ${age(reading.time, now)}` : source ? 'Chain data unavailable' : 'Reading the chain tip'}</dd></div>
+    </dl>
   </div>;
 }
 

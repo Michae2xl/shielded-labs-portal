@@ -35,12 +35,12 @@ describe('NSM balance card', () => {
 });
 
 describe('NSM project card signal', () => {
-  it('puts the live balance where other projects show their latest update', () => {
+  it('puts the live balance in a readout where other projects show their latest update', () => {
     const html = signal(live);
     expect(html).toContain('NSM balance');
     expect(html).toContain('value="36870000000"');
-    expect(html).toContain('Block 3,548,884');
-    expect(html).toContain('+0.11554480 ZEC since NU7');
+    expect(html).toContain('<dt>Since NU7</dt><dd>+0.11554480 ZEC</dd>');
+    expect(html).toContain('<dt>Block</dt><dd>3,548,884 · 30 s ago</dd>');
   });
   it('waits for the first reading without inventing a number', () => {
     expect(signal(null)).toContain('Reading the chain tip');
