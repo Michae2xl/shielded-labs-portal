@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-06T19:28:24.621461+00:00",
+  "syncedAt": "2026-11-07T06:06:12.790228+00:00",
   "upstream": {
     "repository": "https://github.com/zcash/zips",
     "branch": "main",
@@ -7,17 +7,17 @@
     "committedAt": "2026-11-06T04:30:56Z"
   },
   "counts": {
-    "documents": 211,
+    "documents": 216,
     "zips": 130,
     "drafts": 6,
     "guides": 3,
-    "proposals": 72,
+    "proposals": 77,
     "images": 15
   },
   "failures": [],
   "pulls": {
-    "listed": 74,
-    "rendered": 72,
+    "listed": 76,
+    "rendered": 77,
     "failures": [
       {
         "pull": 1337,
