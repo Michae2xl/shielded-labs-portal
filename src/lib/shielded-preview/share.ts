@@ -39,6 +39,7 @@ const GOVERNANCE_SECTIONS: Record<Exclude<GovernanceSection, 'Overview'>, string
   ZCAP: 'The Zcash Community Advisory Panel',
   ZIPs: 'Zcash Improvement Proposals',
   Insights: 'Trends across the governance record',
+  Transparency: 'How this portal separates facts from positions',
 };
 const day = (date: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date));
 export const clip = (text: string, max: number) => text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text;

@@ -6,7 +6,7 @@ import { governanceSectionSlug, governanceSections, type GovernanceSection } fro
 
 export { governanceSections };
 export type { GovernanceSection };
-const glyphs: Record<GovernanceSection, GovernanceGlyphKind> = { Overview: 'overview', 'How it works': 'process', Proposals: 'proposals', Grants: 'grants', Voting: 'voting', Results: 'results', ZCAP: 'zcap', ZIPs: 'zips', Insights: 'insights' };
+const glyphs: Record<GovernanceSection, GovernanceGlyphKind> = { Overview: 'overview', 'How it works': 'process', Proposals: 'proposals', Grants: 'grants', Voting: 'voting', Results: 'results', ZCAP: 'zcap', ZIPs: 'zips', Insights: 'insights', Transparency: 'transparency' };
 
 export default function GovernanceNavigation({ value, onChange }: {
   value: GovernanceSection; onChange: (section: GovernanceSection) => void;

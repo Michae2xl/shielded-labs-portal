@@ -236,3 +236,4 @@
   .zipCopy { grid-column: 1 / -1; grid-row: 2; }
   .zipList a > svg { display: none; }
 }
+.debateLink { margin-top: 16px; }

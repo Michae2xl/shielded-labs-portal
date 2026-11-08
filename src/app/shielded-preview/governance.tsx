@@ -24,6 +24,7 @@ import GovernanceProgramGuide from './governance-program-guide';
 import CoinholderProposalRecord from './coinholder-proposal-record';
 import GovernanceInsights from './governance-insights';
 import GovernanceZcap from './governance-zcap';
+import GovernanceTransparency from './governance-transparency';
 import GovernanceReferences, { GovernanceReferenceProvider } from './governance-references';
 import { GrantsCollection, Link, ProposalsCollection, ResultsCollection, VotingCollection, type ProposalListItem } from './governance-collections';
 import g from './governance.module.css';
@@ -199,7 +200,8 @@ export default function Governance(){
   ><section id="governance-elected"><h2>Elected members</h2><div className={g.checkRows}>{election.elected.map(p=><span key={p.name}>{p.name}<strong>{p.approvals??'Not recorded'} approvals</strong></span>)}</div><p className={g.recordNote}>Approval voting can support multiple candidates. Candidate approvals are not added to infer unique voters.</p></section></GovernanceRecord>}
 
   {!selected&&section==='Insights'&&<GovernanceInsights data={data} lane={lane} onLane={chooseLane} onNavigate={go}/>}
-  {selected&&!title&&!loadingCoinholder&&section!=='ZCAP'&&section!=='ZIPs'&&section!=='How it works'&&<section className={g.empty}><h1 ref={heading} tabIndex={-1}>Record not found</h1><p>This record is unavailable.</p><button className={g.secondary} onClick={()=>go(section)}>Back to {section.toLowerCase()}</button></section>}
+  {section==='Transparency'&&<GovernanceTransparency data={data}/>}
+  {selected&&!title&&!loadingCoinholder&&section!=='ZCAP'&&section!=='ZIPs'&&section!=='How it works'&&section!=='Transparency'&&<section className={g.empty}><h1 ref={heading} tabIndex={-1}>Record not found</h1><p>This record is unavailable.</p><button className={g.secondary} onClick={()=>go(section)}>Back to {section.toLowerCase()}</button></section>}
   {!selected&&section==='Overview'&&<div className={g.overviewReferences}><GovernanceReferences/></div>}
 
  </div></GovernanceReferenceProvider>;

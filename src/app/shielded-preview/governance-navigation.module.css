@@ -1,6 +1,6 @@
 .navigation {
   display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
+  grid-template-columns: repeat(10, minmax(0, 1fr));
   gap: 8px;
   margin: 0 0 20px;
   padding-bottom: 10px;
@@ -48,6 +48,10 @@
   .navigation a { padding: 10px 4px; font-size: 14px; }
   .navigation a svg { display: none; }
 }
+@media (max-width: 1100px) and (min-width: 651px) {
+  /* Ten sections no longer fit one row: two rows of five. */
+  .navigation { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 4px; }
+}
 @media (max-width: 900px) {
   .navigation a { white-space: normal; line-height: 18px; text-align: center; }
 }
@@ -69,6 +73,8 @@
     line-height: 18px;
   }
   .navigation a svg { display: none; }
+  /* A section left alone on the last row takes the full width. */
+  .navigation a:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
 }
 
 @media (prefers-reduced-motion: reduce) { .navigation a, .navigation a svg { transition: none; } .navigation a:hover svg { transform: none; } }

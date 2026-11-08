@@ -1,4 +1,4 @@
-export const governanceSections = ['Overview', 'How it works', 'Proposals', 'Grants', 'Voting', 'Results', 'ZCAP', 'ZIPs', 'Insights'] as const;
+export const governanceSections = ['Overview', 'How it works', 'Proposals', 'Grants', 'Voting', 'Results', 'ZCAP', 'ZIPs', 'Insights', 'Transparency'] as const;
 export type GovernanceSection = typeof governanceSections[number];
 
 /** URL form of a section name: `?view=governance&section=how-it-works`. */

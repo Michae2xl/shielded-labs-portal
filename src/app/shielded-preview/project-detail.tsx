@@ -16,6 +16,8 @@ import ProjectDevelopment from './project-development';
 import CrosslinkParticipate from './crosslink-participate';
 import ContextNotice from './context-notice';
 import NsmBalance from './nsm-balance';
+import { DebateLink, PositionSeal } from './transparency';
+import { debatesForProject } from '@/lib/shielded-preview/transparency/debates';
 import s from './project-detail.module.css';
 
 export function ProjectLink({ project, onSelect, children, className }: {
@@ -152,7 +154,7 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
         <div className={`${s.overviewGrid}${allResources.length < 2 ? ` ${s.compactReading}` : ''}`} id="project-overview">
           <section className={`${s.card} ${s.purpose}`} aria-labelledby="project-panel-heading">
             <div className={s.excerptHeading}>
-              <h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Stated purpose</h2>
+              <h2 id="project-panel-heading" ref={panelHeading} tabIndex={-1}>Stated purpose</h2><PositionSeal/>
               <EditorialLink source href={excerpt.source} onFollow={onFollow} label={`Shielded Labs source for ${project.name}`} className={s.textLink}>Shielded Labs<Arrow external={!sourceOpensInPortal(excerpt.source)}/></EditorialLink>
             </div>
             <blockquote className={s.officialExcerpt} cite={excerpt.source}><p>“{excerpt.text}”</p></blockquote>
@@ -184,6 +186,7 @@ export default function ProjectDetail({ project, section, record, data, glyph, o
           </EditorialLink></li>)}</ul>
           <p className={s.zipBasis}>{zips.basis} Status comes from each document header, as of <DateStamp date={zips.syncedAt}/>. A ZIP status is not a network activation.</p>
         </section>}
+        {debatesForProject(project.id).map(debate => <div key={debate.id} className={s.debateLink}><DebateLink debate={debate}/></div>)}
         <details className={s.technicalContext}>
           <summary>How it works & key terms</summary>
           <div className={s.technicalBody}><div><p>{project.purpose}</p><h3>Project scope</h3><p>{project.scope}</p><ul className={s.tags} aria-label="Project focus">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul></div><dl>{guide.terms.map(item => <div key={item.term}><dt>{item.term}</dt><dd>{item.meaning}</dd></div>)}</dl></div>

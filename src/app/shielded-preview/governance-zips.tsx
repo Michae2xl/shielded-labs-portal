@@ -5,6 +5,9 @@ import { bundledZips, filterZips, laneForRecord, proposalChange, zipLabel, zipLa
 import type { ZipDocument, ZipNode, ZipsIndex } from '@/lib/shielded-preview/zips/types';
 import type { Source } from '@/lib/shielded-preview/governance-types';
 import GovernanceRecord from './governance-record';
+import { DebateLink, ZipDisclosure } from './transparency';
+import { zipDisclosure } from '@/lib/shielded-preview/transparency/involvement';
+import { debatesForZip } from '@/lib/shielded-preview/transparency/debates';
 import GovernanceGlyph from './governance-glyph';
 import { Arrow, Collection, Empty, Link, Search, SourceInfo, Tabs, pageRows, visiblePage, type CollectionNavigate, type Controls } from './governance-collections';
 import a from './governance-archive.module.css';
@@ -170,6 +173,8 @@ export function ZipRecord({ id, index, onBack, onNavigate }: { id: string; index
   const outline = (proposalText?.headings ?? []).filter(heading => heading.level <= 3).slice(0, 60).map(heading => ({ id: heading.id, label: heading.title, level: heading.level }));
   const owners = entry.owners.length > 4 ? `${entry.owners.slice(0, 4).join(', ')} and ${entry.owners.length - 4} more` : entry.owners.join(', ');
   const pull = entry.pull;
+  const disclosure = zipDisclosure(entry);
+  const debates = debatesForZip(entry.id);
   return <GovernanceRecord title={zipTitle(entry)} context={pull ? 'Open pull request · unofficial preview' : entry.kind === 'guide' ? 'ZIP writing guide' : entry.kind === 'draft' ? 'Draft Zcash Improvement Proposal' : 'Zcash Improvement Proposal'} subtitle={pull ? pull.title : entry.category}
     metrics={pull ? <><Stat name="Header status" value={entry.status} note={entry.statusDetail}/><Stat name="Change" value={proposalChange(entry)}/><Stat name="Author" value={pull.author} note={pull.draft ? 'Draft pull request' : null}/><Stat name="Last activity" value={date(pull.updatedAt)}/></> : <><Stat name="Status" value={entry.status} note={entry.statusDetail}/><Stat name="Created" value={date(entry.created)}/><Stat name="Last change" value={date(entry.updatedAt)}/><Stat name={entry.owners.length === 1 ? 'Owner' : 'Owners'} value={owners || 'Not recorded'}/></>}
     sections={[]} outline={outline} backLabel={titles[zipLane(entry)]} onBack={onBack} idPrefix="zip"
@@ -180,6 +185,8 @@ export function ZipRecord({ id, index, onBack, onNavigate }: { id: string; index
       {!pull && entry.pullRequest && <External href={entry.pullRequest}>Pull request</External>}
     </>}
   >
+    {disclosure && <ZipDisclosure disclosure={disclosure}/>}
+    {debates.map(debate => <div key={debate.id} className={z.debateLink}><DebateLink debate={debate}/></div>)}
     {pull && <div className={z.preview} role="note"><strong>Unofficial preview.</strong> Rendered from pull request #{pull.number} at commit {pull.headSha.slice(0, 7)}; not part of the ZIPs until merged. {pull.files.length > 1 && <>The pull request also changes {pull.files.filter(file => file !== pull.file).join(', ')}. </>}{entry.base && <Link section="ZIPs" id={entry.base} onNavigate={onNavigate}>Read the current {entry.number === null ? 'document' : `ZIP ${entry.number}`}<Arrow/></Link>}</div>}
     <section id="zip-document" className={z.document}>{pull && <div className={z.previewTag} role="note">Unofficial preview · Pull request #{pull.number}</div>}{proposalText ? <ZipBody nodes={proposalText.body} onNavigate={onNavigate}/> : <p className={z.status} role="status">{failed ? 'The proposal text could not be loaded. Try again or read it at the source.' : 'Loading the proposal text…'}</p>}</section>
   </GovernanceRecord>;
