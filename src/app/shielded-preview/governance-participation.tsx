@@ -1,7 +1,7 @@
 'use client';
 
 import type { Source } from '@/lib/shielded-preview/governance-types';
-import { valueInUsd, type Treasury, type TreasuryBalance, type TreasuryPrice } from '@/lib/shielded-preview/treasury';
+import { valueInUsd, type Treasury, type TreasuryPrice } from '@/lib/shielded-preview/treasury';
 import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import { useEffect, useState, type ReactNode } from 'react';
 import Image from 'next/image';
@@ -110,18 +110,40 @@ export default function GovernanceParticipation() {
 
 const zecHeld = (value: number) => `${Math.round(value).toLocaleString('en-US')} ZEC`;
 const usdShort = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact', maximumFractionDigits: 1 }).format(value);
+/** Current values keep one decimal on both sides, so $126.0M sits evenly beside $182.3M. */
+const usdValue = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact', minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
 const usdExact = (value: number) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
 const sheetDay = (value: string) => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
 const quoteTime = (value: string) => `${new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC' }).format(new Date(value))} UTC`;
 
-/** One side of the Dev Fund: what it holds, what it paid out and, with a price, what that is worth now. */
-function Holding({ label, balance, price, fund = false }: { label: string; balance: TreasuryBalance; price: TreasuryPrice | null; fund?: boolean }) {
-  return <div className={fund ? b.holdingFund : undefined}>
-    <dt>{label}</dt>
-    <dd><strong>{zecHeld(balance.zec)}</strong>{balance.usdCash ? <>{' '}<span className={b.cash}>{`+ ${usdShort(balance.usdCash)}`}</span></> : null}</dd>
-    {balance.paidOutZec ? <dd className={b.paid}>{`${zecHeld(balance.paidOutZec)} paid out`}</dd> : null}
-    {price && <dd className={b.value}><span>{price.source === 'CoinGecko' ? 'Current value' : 'Value'}</span><strong>{`≈ ${usdShort(valueInUsd(balance, price))}`}</strong></dd>}
-  </div>;
+type LedgerRow = { label: string; zcg: string | null; fund: string | null; lead?: boolean };
+
+/** Both treasuries in one table: the bar's two slices head the columns, so every figure sits under its own side. */
+function TreasuryLedger({ held, price }: { held: Treasury; price: TreasuryPrice | null }) {
+  const zec = (value: number | null | undefined) => value == null ? null : zecHeld(value);
+  const usd = (value: number | null | undefined) => value == null ? null : usdShort(value);
+  const { zcg, coinholder: fund } = held;
+  const rows: LedgerRow[] = [
+    { label: 'ZEC held', zcg: zecHeld(zcg.zec), fund: zecHeld(fund.zec), lead: true },
+    { label: 'USD held', zcg: usd(zcg.usdCash), fund: usd(fund.usdCash) },
+    ...(price ? [{ label: price.source === 'CoinGecko' ? 'Current value' : 'Value', zcg: `≈ ${usdValue(valueInUsd(zcg, price))}`, fund: `≈ ${usdValue(valueInUsd(fund, price))}`, lead: true }] : []),
+    { label: 'Accrued to date', zcg: zec(zcg.accruedZec), fund: zec(fund.accruedZec) },
+    { label: 'Paid to grants', zcg: zec(zcg.paidOutZec), fund: zec(fund.paidOutZec) },
+    { label: 'Grant liabilities', zcg: usd(zcg.liabilitiesUsd), fund: usd(fund.liabilitiesUsd) },
+    { label: 'Receivable to Nov 2028', zcg: zec(zcg.receivableZec), fund: zec(fund.receivableZec) },
+  ].filter(row => row.zcg || row.fund);
+  return <table className={b.ledger}>
+    <caption className={b.srOnly}>Dev Fund treasuries: ZCG and the coinholder fund</caption>
+    <colgroup><col className={b.ledgerLabel}/><col className={b.ledgerZcg}/><col className={b.ledgerFund}/></colgroup>
+    <thead><tr>
+      <td>Share</td>
+      <th scope="col"><span className={b.splitZcg}><span>ZCG</span><strong>8%</strong></span></th>
+      <th scope="col"><span className={b.splitFund}><span>Coinholder fund</span><strong>12%</strong></span></th>
+    </tr></thead>
+    <tbody>{rows.map(row => <tr key={row.label} className={row.lead ? b.lead : undefined}>
+      <th scope="row">{row.label}</th><td>{row.zcg ?? '—'}</td><td>{row.fund ?? '—'}</td>
+    </tr>)}</tbody>
+  </table>;
 }
 
 /** Protocol decisions and the Dev Fund split; with the ZCG treasury sheet loaded, each share also shows what it holds and is worth. */
@@ -137,14 +159,10 @@ export function GovernanceReference({ treasury }: { treasury?: Source<Treasury |
     </section>
     <section className={`${b.card} ${b.funding}`} aria-labelledby="governance-allocation-heading">
       <header className={b.header}><h3 id="governance-allocation-heading">Ecosystem funding</h3><span className={b.meta}>20% of block rewards</span></header>
-      <div className={b.split} role="img" aria-label="Dev Fund split: 8% of block rewards to ZCG and 12% to the coinholder fund">
+      {held ? <TreasuryLedger held={held} price={price}/> : <div className={b.split} role="img" aria-label="Dev Fund split: 8% of block rewards to ZCG and 12% to the coinholder fund">
         <span className={b.splitZcg}><span>ZCG</span><strong>8%</strong></span>
         <span className={b.splitFund}><span>Coinholder fund</span><strong>12%</strong></span>
-      </div>
-      {held && <dl className={b.holdings}>
-        <Holding label="ZCG holds" balance={held.zcg} price={price}/>
-        <Holding label="Coinholder fund holds" balance={held.coinholder} price={price} fund/>
-      </dl>}
+      </div>}
       <p className={b.note}>{held
         ? <>Holdings from the <a href={held.zcg.source} target="_blank" rel="noopener noreferrer" title={`Blocks ${held.zcg.height.toLocaleString('en-US')} and ${held.coinholder.height.toLocaleString('en-US')}`}>ZCG treasury sheet</a>{`, ${sheetDay(held.zcg.blockTime)}.`}
           {price?.source === 'CoinGecko' && <>{` Valued at ${usdExact(price.usd)} per ZEC (`}<a href={price.url} target="_blank" rel="noopener noreferrer">CoinGecko</a>{`, ${quoteTime(price.observedAt)}).`}</>}

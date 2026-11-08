@@ -14,6 +14,7 @@ export const zecPricePage = 'https://www.coingecko.com/en/coins/zcash';
 const balanceSchema = z.object({
   zec: z.number().nonnegative(), usdCash: z.number().nullable(), paidOutZec: z.number().nonnegative().nullable(),
   zecUsd: z.number().positive().nullable(),
+  accruedZec: z.number().nonnegative().nullable(), liabilitiesUsd: z.number().nonnegative().nullable(), receivableZec: z.number().nonnegative().nullable(),
   height: z.number().int().positive(), blockTime: z.iso.datetime(), current: z.boolean(), source: z.url(),
 });
 export type TreasuryBalance = z.infer<typeof balanceSchema>;
@@ -26,6 +27,8 @@ const amount = (value: string | undefined): number | null => {
   const number = Number(value.replace(/[$,\s]/g, ''));
   return Number.isFinite(number) ? number : null;
 };
+const unsigned = (value: number | null) => value === null ? null : Math.abs(value);
+const count = (value: number | null) => value !== null && value >= 0 ? value : null;
 
 /** One balance tab, read by its row labels so a moved row does not break it; throws when the essentials are missing. */
 export function parseBalanceTab(csv: string, source: string): TreasuryBalance {
@@ -38,7 +41,10 @@ export function parseBalanceTab(csv: string, source: string): TreasuryBalance {
   if (height === null || zec === null || !Number.isFinite(time)) throw new Error('Unreadable treasury tab');
   return balanceSchema.parse({
     zec, usdCash: amount(cell(/^current usd balance/i)), paidOutZec: amount(cell(/^total zec paid to grant recipients/i)),
-    zecUsd: zecUsd && zecUsd > 0 ? zecUsd : null, height, blockTime: new Date(time).toISOString(), current: /^ok\b/i.test(cell(/^status/i) ?? ''), source,
+    zecUsd: zecUsd && zecUsd > 0 ? zecUsd : null,
+    // The sheet signs liabilities as negative dollars; a negative ZEC count would be a sheet error, so it is dropped.
+    accruedZec: count(amount(cell(/^total zec accrued to date/i))), liabilitiesUsd: unsigned(amount(cell(/^future grant liabilities \(total in usd\)/i))),
+    receivableZec: count(amount(cell(/^total zec receivables/i))), height, blockTime: new Date(time).toISOString(), current: /^ok\b/i.test(cell(/^status/i) ?? ''), source,
   });
 }
 
