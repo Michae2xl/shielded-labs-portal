@@ -25,6 +25,7 @@ import CoinholderProposalRecord from './coinholder-proposal-record';
 import GovernanceInsights from './governance-insights';
 import GovernanceZcap from './governance-zcap';
 import GovernanceTransparency from './governance-transparency';
+import ZcgProposalRecord from './zcg-proposal-record';
 import GovernanceReferences, { GovernanceReferenceProvider } from './governance-references';
 import { GrantsCollection, Link, ProposalsCollection, ResultsCollection, VotingCollection, type ProposalListItem } from './governance-collections';
 import g from './governance.module.css';
@@ -55,7 +56,7 @@ function State({children}:{children:ReactNode}){return <span className={g.state}
 function SourceNote({source,name}:{source:Source<unknown>;name:string}){return <div className={g.sourceNote}><strong>{name}</strong><span>{source.state==='unavailable'?'Source unavailable':source.state==='mirror'?'Published record':source.state==='fetched'?'Retrieved':'Saved record'}{source.observedAt?` · ${date(source.observedAt)}`:''}{source.error?' · Refresh unavailable':''}</span><SourceLink url={source.url}>Source</SourceLink></div>}
 function Stat({value,name,note}:{value:ReactNode;name:string;note?:string}){return <div><span>{name}</span><strong>{value}</strong>{note&&<small>{note}</small>}</div>}
 function Tally({row}:{row:VoteResult}){return <div className={g.tally}>{[['Accept',row.accept],['Reject',row.reject],['Reject at a lower amount',row.lower],['Abstain',row.abstain]].map(([name,value])=><div key={String(name)}><div><span>{name}</span><strong>{number(Number(value))} ZEC</strong></div><div className={g.track}><span style={{width:`${row.total>0?Number(value)/row.total*100:0}%`}}/></div></div>)}</div>}
-type ProposalView=ProposalListItem & {program:string};
+type ProposalView=ProposalListItem & {program:string;forumUrl?:string|null};
 export function ProposalGrantLinks({proposal,source,onNavigate}:{proposal:Pick<ProposalView,'title'|'program'>;source:GovernanceData['grants'];onNavigate:(section:'Grants',id:string)=>void}){
  const grants=grantsWithSameTitle(proposal,source.data);
  if(!grants.length)return null;
@@ -101,7 +102,7 @@ export default function Governance(){
  const collectionControls={search,onSearch:find,filter,onFilter:chooseFilter,page,onPage:choosePage,onNavigate:go};
  const verification=data.verification.data;const results=verification?.rows??[];
  const review:ProposalView[]=data.review.data.map(p=>({id:`review:${p.number}`,title:p.title,program:'zcg',applicant:p.applicant,amount:p.amount,status:'under_review',summary:p.summary,submitted:p.createdAt,decided:null,url:p.url,sourceUrl:data.review.url,origin:'Published OpenZcash review queue'}));
- const historyProposals:ProposalView[]=data.proposals.data.map(p=>({id:`history:${p.id}`,title:p.title,program:p.program,applicant:p.applicant,amount:p.requestedUsd,status:p.status,summary:p.summary,submitted:p.submitted,decided:p.decided,url:p.applicationUrl??p.forumUrl,sourceUrl:p.sourceUrl,origin:'OpenZcash ZCG decision archive'}));
+ const historyProposals:ProposalView[]=data.proposals.data.map(p=>({id:`history:${p.id}`,title:p.title,program:p.program,applicant:p.applicant,amount:p.requestedUsd,status:p.status,summary:p.summary,submitted:p.submitted,decided:p.decided,url:p.applicationUrl??p.forumUrl,forumUrl:p.forumUrl,sourceUrl:p.sourceUrl,origin:'OpenZcash ZCG decision archive'}));
  const roundProposals:ProposalView[]=ROUND_PROPOSALS.map(p=>{const id=p.githubUrl.split('/').pop()!;const result=results.find(r=>r.id===id);return {id:`q3:${id}`,title:p.project,program:'coinholder',applicant:p.org,amount:p.requestedUsdCents/100,status:result?.published??'Result unavailable',summary:p.summary,submitted:'2026-08-14',decided:result?'2026-09-29':null,url:p.githubUrl,sourceUrl:p.threadUrl,origin:'Q3 2026 · archived application summary',roundId:id}});
  const proposal=[...review,...historyProposals,...roundProposals].find(p=>p.id===selected);
  const proposalSource=proposal?.id.startsWith('history:')?data.proposals:proposal?.id.startsWith('review:')?data.review:data.verification;
@@ -135,17 +136,14 @@ export default function Governance(){
 
   {!selected&&section==='Proposals'&&<ProposalsCollection {...collectionControls} datasets={{review,history:historyProposals}} coinholderSource={coinholderSource} lane={lane} onLane={chooseLane} round={round} onRound={chooseRound} busy={busy} source={lane==='history'?data.proposals:data.review}/>}
   {selected&&section==='Proposals'&&coinholderProposal&&<CoinholderProposalRecord proposal={coinholderProposal} source={coinholderSource} backLabel="All Coinholder proposals" onBack={()=>go('Proposals')} related={coinholderProposal.rounds.includes('q3-2026')&&<button className={g.secondary} onClick={()=>go('Results',`q3:${coinholderProposal.number}`)}>Ballot & result<Arrow/></button>}/>}
-  {selected&&section==='Proposals'&&proposal&&<GovernanceRecord
+  {selected&&section==='Proposals'&&proposal&&<ZcgProposalRecord key={proposal.id}
    title={proposal.title} context={proposal.roundId?'Coinholder grants · Q3 2026':'Zcash Community Grants'} subtitle={proposal.applicant}
    metrics={<><Stat name="Recorded status" value={label(proposal.status)}/><Stat name="Requested amount" value={dollars(proposal.amount)}/><Stat name={proposal.roundId?'Review announcement':'Submitted'} value={date(proposal.submitted)}/></>}
-   sections={[{label:'Summary',id:'governance-summary'}]} backLabel="All proposals" onBack={()=>go('Proposals')}
+   backLabel="All proposals" onBack={()=>go('Proposals')}
    sources={<><p>Requested amounts are not payments. The source status does not certify delivery.</p><SourceLink url={proposal.url}>Original application</SourceLink>{proposal.sourceUrl!==proposalSource.url&&proposal.sourceUrl!==proposal.url&&<SourceLink url={proposal.sourceUrl}>Source record</SourceLink>}<SourceNote name={proposal.origin} source={proposalSource}/></>}
-  >
-   <section id="governance-summary"><h2>Application summary</h2><p>{proposal.summary||'A summary is unavailable. See the original application under Sources.'}</p><dl className={g.facts}><div><dt>Recorded decision</dt><dd>{date(proposal.decided)}</dd></div></dl>
-   {proposal.roundId&&<div className={g.relatedRecords}><h3>Related records</h3><button className={g.secondary} onClick={()=>go('Results',`q3:${proposal.roundId}`)}>Ballot & result<Arrow/></button></div>}
-   <ProposalGrantLinks proposal={proposal} source={data.grants} onNavigate={go}/>
-   </section>
-  </GovernanceRecord>}
+   urls={[proposal.url,proposal.forumUrl]} summary={proposal.summary}
+   extras={<><dl className={g.facts}><div><dt>Recorded decision</dt><dd>{date(proposal.decided)}</dd></div></dl>{proposal.roundId&&<div className={g.relatedRecords}><h3>Related records</h3><button className={g.secondary} onClick={()=>go('Results',`q3:${proposal.roundId}`)}>Ballot & result<Arrow/></button></div>}<ProposalGrantLinks proposal={proposal} source={data.grants} onNavigate={go}/></>}
+  />}
 
   {!selected&&section==='Grants'&&<GrantsCollection {...collectionControls} source={data.grants}/>}
   {selected&&section==='Grants'&&grant&&<GovernanceRecord

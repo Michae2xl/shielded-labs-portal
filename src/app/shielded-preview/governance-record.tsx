@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import s from './governance-record.module.css';
 
 type RecordLayoutProps = {
@@ -21,13 +21,33 @@ type RecordLayoutProps = {
 
 export default function GovernanceRecord({ title, context, subtitle, metrics, children, sources, sections, outline, backLabel, onBack, idPrefix = 'governance', portrait }: RecordLayoutProps) {
   const heading = useRef<HTMLHeadingElement>(null);
+  const bar = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState<string | null>(null);
   useEffect(() => { heading.current?.focus({ preventScroll: true }); }, [title]);
+  const ids = sections.map(section => section.id).join(' ');
+  // The tab of the section being read stays highlighted while the page scrolls under the sticky bar.
+  useEffect(() => {
+    const list = ids ? ids.split(' ') : [];
+    if (!list.length) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      // A section counts as read once its top passes just below the sticky bars.
+      const line = (bar.current?.getBoundingClientRect().bottom ?? 0) + 32;
+      setCurrent(list.reduce((active, id) => (document.getElementById(id)?.getBoundingClientRect().top ?? Infinity) <= line ? id : active, list[0]));
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    schedule();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener('scroll', schedule); window.removeEventListener('resize', schedule); };
+  }, [ids]);
 
   return <article className={s.page} aria-label={`${context}: ${title}`}>
-    <div className={s.recordNav}>
-      <button onClick={onBack}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg>{backLabel}</button>
+    <div className={s.recordNav} ref={bar}>
+      <button onClick={onBack}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg><span className={s.backLabel}>{backLabel}</span></button>
       {sections.length > 0 && <nav className={s.sectionNav} aria-label="Record sections">
-        {sections.map(section => <a key={section.id} href={`#${section.id}`}>{section.label}</a>)}
+        {sections.map(section => <a key={section.id} href={`#${section.id}`} aria-current={current === section.id ? 'location' : undefined}>{section.label}</a>)}
         <a href={`#${idPrefix}-sources`}>Sources</a>
       </nav>}
     </div>

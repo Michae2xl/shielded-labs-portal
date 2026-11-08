@@ -22,3 +22,11 @@ The ZIP library under `src/lib/shielded-preview/zips` and the figures under
 (see its `COPYING.rst`). Individual documents state their own license in the
 header shown on each record. The repository remains the canonical text; the
 portal shows a rendered copy with attribution and a link to the source file.
+
+## Grant applications
+
+Application texts on proposal records are read from their public sources, the
+ZcashCommunityGrants and Financial-Privacy-Foundation GitHub issues or the Zcash
+Community Forum, and are shown with a link to the original. Applicants retain
+ownership of their text. The Markdown is parsed with
+[marked](https://github.com/markedjs/marked) (MIT) and rendered without raw HTML.

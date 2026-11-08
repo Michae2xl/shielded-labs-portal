@@ -1,0 +1,31 @@
+/* Application text inside a record body; the record already gives paragraphs their size and spacing. */
+.markdown { min-width: 0; overflow-wrap: anywhere; }
+.markdown > :last-child, .markdown li > :last-child { margin-bottom: 0 !important; }
+.markdown h4, .markdown h5, .markdown h6 { margin: 26px 0 10px; color: #ececec; font-size: 16px; font-weight: 600; line-height: 1.5; }
+.markdown h5, .markdown h6 { font-size: 15px; color: #dcdcdc; }
+.markdown > h4:first-child, .markdown > h5:first-child, .markdown > h6:first-child { margin-top: 0; }
+.markdown ul, .markdown ol { display: grid; gap: 10px; margin: 0 0 18px; padding-left: 24px; color: var(--secondary-ink, #c2c2c2); font-size: 16px; line-height: 1.7; }
+/* Line breaks inside a list item are kept, as GitHub shows them. */
+.markdown li { padding-left: 4px; white-space: pre-line; }
+.markdown li ul, .markdown li ol { gap: 6px; margin: 10px 0 2px; white-space: normal; }
+/* The portal resets list markers; application lists keep theirs. */
+div.markdown ul { list-style: disc; }
+div.markdown li ul { list-style: circle; }
+div.markdown ol { list-style: decimal; }
+.markdown li::marker { color: #8a8a8a; }
+.markdown li > p { margin: 0 0 8px !important; }
+.markdown a { color: #f0f0f0; text-decoration: underline; text-decoration-color: #666; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.markdown a:hover { text-decoration-color: #ddd; }
+.markdown strong { color: #ececec; font-weight: 600; }
+.markdown code { padding: 1px 6px; border: 1px solid #2e2e2e; border-radius: 6px; background: #151515; color: #e6e6e6; font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: .86em; }
+.markdown pre { margin: 0 0 18px; padding: 12px 14px; overflow-x: auto; border: 1px solid #2a2a2a; border-radius: 10px; background: #0d0d0d; }
+.markdown pre code { padding: 0; border: 0; background: none; font-size: 13.5px; line-height: 1.6; white-space: pre; }
+.markdown blockquote { margin: 0 0 18px; padding-left: 14px; border-left: 2px solid #3a3a3a; }
+.markdown hr { margin: 22px 0; border: 0; border-top: 1px solid #2a2a2a; }
+.tableScroll { max-width: 100%; margin: 0 0 18px; overflow-x: auto; border: 1px solid #2a2a2a; border-radius: 10px; }
+.tableScroll table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.55; }
+.tableScroll th, .tableScroll td { padding: 9px 12px; border-bottom: 1px solid #222; color: #d2d2d2; text-align: left; vertical-align: top; }
+.tableScroll th { background: #121212; color: #ededed; font-weight: 600; }
+.tableScroll tr:last-child td { border-bottom: 0; }
+.tableScroll:focus-visible, .markdown a:focus-visible { outline: 2px solid #eee; outline-offset: 3px; }
+.check { margin-right: 8px; color: #cfcfcf; }

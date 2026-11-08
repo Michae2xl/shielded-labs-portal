@@ -51,6 +51,14 @@ describe('Current Coinholder intake', () => {
     const [proof] = applicationFields('### Proof\nhttps://example.com/~team?x=1&y=2\nhttps://user:password@example.com/private');
     expect(proof.links).toEqual([{ label: 'https://example.com/~team?x=1&y=2', url: 'https://example.com/~team?x=1&y=2' }]);
   });
+  it('reads headings written in bold or code as plain headings', () => {
+    expect(applicationFields('### **Project Summary**\nA tool.\n## `Budget`\n100').map(field => field.heading)).toEqual(['Project Summary', 'Budget']);
+  });
+  it('keeps each field as Markdown, without comments, for the record to render', () => {
+    const [budget] = applicationFields('### Budget Breakdown\n<!-- template hint -->\n- Compensation:\n  - $(USD): 1500\n  - Justification: [log](https://example.com/log)\n- Total $(USD): 1500');
+    expect(budget.markdown).toBe('- Compensation:\n  - $(USD): 1500\n  - Justification: [log](https://example.com/log)\n- Total $(USD): 1500');
+    expect(budget.text).toContain('Justification: log');
+  });
   it('trims prose punctuation around bare URLs without duplicating Markdown or autolink evidence', () => {
     const previous = 'https://github.com/Financial-Privacy-Foundation/ZcashCoinholderGrantsProgram/issues/19';
     const balanced = 'https://example.com/release_(final)';

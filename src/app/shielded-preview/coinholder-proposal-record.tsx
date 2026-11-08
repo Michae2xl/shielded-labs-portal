@@ -1,19 +1,17 @@
 'use client';
 
 import type { CoinholderProposal, ApplicationField } from '@/lib/shielded-preview/coinholder-proposals';
-import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import type { ReactNode } from 'react';
 import { coinholderRoundLabel, coinholderRounds } from '@/lib/shielded-preview/coinholder-rounds';
 import type { Source } from '@/lib/shielded-preview/governance-types';
 import { participationGuideHref } from '@/lib/shielded-preview/governance-participation';
 import GovernanceRecord from './governance-record';
+import { Markdown } from './markdown';
 import s from './coinholder-proposals.module.css';
 
 const date = (value: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
 function ApplicationText({ field }: { field: ApplicationField }) {
-  return <div className={s.applicationField}><h3>{field.heading}</h3>{field.text.split(/\n\s*\n/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-    {field.links.length > 0 && <div className={s.sourceLinks}>{field.links.map(link => { const target = sourceHref(link.url); return <a key={link.url} href={target} {...leavingLink(target)}>{link.label}<span>{target.startsWith('?') ? 'In this portal →' : `${new URL(link.url).hostname.replace(/^www\./, '')} ↗`}</span></a>; })}</div>}
-  </div>;
+  return <div className={s.applicationField}><h3>{field.heading}</h3><Markdown text={field.markdown}/></div>;
 }
 
 export default function CoinholderProposalRecord({ proposal, source, onBack, backLabel = 'Current proposals', related }: {
@@ -32,7 +30,7 @@ export default function CoinholderProposalRecord({ proposal, source, onBack, bac
     sections={[{ id: 'coinholder-summary', label: 'Summary' }, ...groups.map(group => ({ id: `coinholder-${group.id}`, label: group.label }))]}
     sources={<><p>Application text and status labels come from the FPF repository. Closed does not mean rejected; approval does not establish payment.</p><dl className={s.recordMeta}><div><dt>Category</dt><dd>{proposal.category ?? 'Not recorded'}</dd></div><div><dt>Last edited</dt><dd>{date(proposal.updatedAt)}</dd></div>{source.observedAt && <div><dt>{source.error ? 'Saved record' : 'Retrieved'}</dt><dd>{date(source.observedAt)}</dd></div>}</dl>{source.error && <p>Refresh unavailable. Showing the last saved application.</p>}<a href={proposal.url} target="_blank" rel="noopener noreferrer">Original application · FPF GitHub ↗</a>{coinholderRounds.filter(round => proposal.rounds.includes(round.id) && round.source).map(round => <a key={round.id} href={round.source!} target="_blank" rel="noopener noreferrer">{round.label} · round source ↗</a>)}<a href={participationGuideHref()}>Program guide →</a></>}
   >
-    <section id="coinholder-summary"><h2>Project summary</h2><p>{proposal.summary || 'No summary provided.'}</p>{summary && summary.links.length > 0 && <div className={s.sourceLinks}>{summary.links.map(link => <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}</div>}{related}</section>
+    <section id="coinholder-summary"><h2>Project summary</h2>{summary ? <Markdown text={summary.markdown}/> : <p>{proposal.summary || 'No summary provided.'}</p>}{related}</section>
     {groups.map(group => <section key={group.id} id={`coinholder-${group.id}`}><h2>{group.label}</h2>{group.fields.map((field, index) => <ApplicationText key={`${field.heading}:${index}`} field={field}/>)}</section>)}
   </GovernanceRecord>;
 }

@@ -25,6 +25,7 @@
     "check:isolation": "node scripts/check-isolation.mjs"
   },
   "dependencies": {
+    "marked": "18.1.1",
     "mermaid": "11.17.2",
     "next": "16.4.3",
     "react": "19.2.4",

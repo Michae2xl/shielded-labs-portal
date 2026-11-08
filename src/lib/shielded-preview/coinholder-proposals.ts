@@ -20,7 +20,8 @@ export const coinholderIssueSchema = z.object({
   user: z.object({ login: z.string() }).nullable().optional(), pull_request: z.unknown().optional(),
 });
 export type CoinholderIssue = z.infer<typeof coinholderIssueSchema>;
-export type ApplicationField = { heading: string; text: string; links: { label: string; url: string }[] };
+/** `text` is plain, for amounts and summaries; `markdown` is the field as written, for the record to render. */
+export type ApplicationField = { heading: string; text: string; markdown: string; links: { label: string; url: string }[] };
 export type CoinholderProposal = {
   number: number; round: string; title: string; applicant: string; category: string | null;
   requestedUsdCents: number | null; summary: string; createdAt: string; updatedAt: string;
@@ -70,13 +71,14 @@ export function applicationFields(body: string): ApplicationField[] {
       addLink(url, url);
     }
     if (text && !/^_*no response\.?_*$/i.test(text) && !/^(terms and conditions|community forum posting|application owners)/i.test(heading)) {
-      fields.push({ heading: heading || 'Application', text, links: [...links].map(([url, label]) => ({ label, url })) });
+      fields.push({ heading: heading || 'Application', text, markdown: lines.join('\n').replace(/<!--[\s\S]*?-->/g, '').trim(), links: [...links].map(([url, label]) => ({ label, url })) });
     }
     lines = [];
   };
   for (const line of body.split(/\r?\n/)) {
     const match = line.match(/^#{2,3}\s+(.+?)\s*#*$/);
-    if (match) { flush(); heading = match[1]; } else lines.push(line);
+    // Forum mirrors often bold their headings; the field name is the words alone.
+    if (match) { flush(); heading = match[1].replace(/[*_`]+/g, '').trim(); } else lines.push(line);
   }
   flush();
   return fields;
