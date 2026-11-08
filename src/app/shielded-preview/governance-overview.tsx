@@ -145,7 +145,7 @@ export default function GovernanceOverview({ data, pollCount, onNavigate }: {
       </section>
 
       <NetworkComparison onNavigate={onNavigate}/>
-      <GovernanceReference/>
+      <GovernanceReference treasury={data.treasury}/>
       </div>
       <p className={b.reviewed}>Reviewed <time dateTime={participationRound.reviewedAt}>1 Nov 2026</time> · Rules vary by poll.</p>
     </section>

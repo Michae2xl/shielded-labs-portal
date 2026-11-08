@@ -4,10 +4,12 @@ import { parseCsv } from '@/lib/zcg/csv';
 import snapshot from './governance-data/snapshot.json';
 import { emptyCoinholderSource } from './coinholder-proposals';
 import { fetchCoinholderProposals } from './coinholder-provider';
+import { emptyTreasurySource, parseBalanceTab, treasuryCsvUrl, treasuryPrice, treasurySheetUrl, treasuryTabs } from './treasury';
+import { liveZecPrice } from './zec-price';
 import { reviewSchema, paymentSchema, grantSchema, memberSchema, verificationSchema, type GovernanceData, type Source } from './governance-types';
 
 const TTL=300_000;
-const seed={...snapshot,coinholder:emptyCoinholderSource} as unknown as GovernanceData;
+const seed={...snapshot,coinholder:emptyCoinholderSource,treasury:emptyTreasurySource} as unknown as GovernanceData;
 let cache:GovernanceData|undefined;
 let refreshedAt=0;
 let pending:Promise<GovernanceData>|undefined;
@@ -25,7 +27,7 @@ async function refresh():Promise<GovernanceData>{
  const old=cache??seed;
  // Historical proposals stay a dated snapshot until an independent published history API is available.
  const proposals = { ...seed.proposals, state: 'snapshot' as const };
- const [review,grants,payments,members,verification,coinholder]=await Promise.all([
+ const [review,grants,payments,members,verification,coinholder,treasury]=await Promise.all([
   update(old.review,async()=>reviewSchema.array().parse((await (await read(old.review.url)).json()).proposals)),
   update(old.grants,async()=>grantSchema.array().parse((await (await read(old.grants.url)).json()).data)),
   update(old.payments,async()=>{
@@ -43,8 +45,15 @@ async function refresh():Promise<GovernanceData>{
   }),
   update(old.verification,async()=>verificationSchema.parse(await(await read(old.verification.url)).json())),
   update(old.coinholder,fetchCoinholderProposals),
+  // ZCG's treasury sheet: its own holdings and the coinholder fund, each tab dated by the block it reports,
+  // valued at the live ZEC price, or at the sheet's own price when the feed has never answered.
+  update(old.treasury??emptyTreasurySource,async()=>{
+   const tab=async(gid:string)=>parseBalanceTab(await(await read(treasuryCsvUrl(gid))).text(),treasurySheetUrl(gid));
+   const [zcg,coinholder,live]=await Promise.all([tab(treasuryTabs.zcg),tab(treasuryTabs.coinholder),liveZecPrice()]);
+   return {zcg,coinholder,price:treasuryPrice(live,zcg)};
+  }),
  ]);
- return {checkedAt:new Date().toISOString(),proposals,review,grants,payments,members,verification,coinholder};
+ return {checkedAt:new Date().toISOString(),proposals,review,grants,payments,members,verification,coinholder,treasury};
 }
 export async function getGovernanceData(){
  if(cache&&Date.now()-refreshedAt<TTL)return cache;

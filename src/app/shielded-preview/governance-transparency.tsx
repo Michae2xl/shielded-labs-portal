@@ -8,6 +8,7 @@ import { bundledZips } from '@/lib/shielded-preview/zips/library';
 import { disclosedDocuments } from '@/lib/shielded-preview/transparency/involvement';
 import { editorialPolicy } from '@/lib/shielded-preview/transparency/policy';
 import { ageLabel, DAY, freshness, MINUTE, type Freshness } from '@/lib/shielded-preview/transparency/thermometer';
+import { treasurySheetUrl, treasuryTabs, zecPricePage } from '@/lib/shielded-preview/treasury';
 import { EvidenceKey, EvidenceTag, ExternalMark, day } from './transparency';
 import { DebateExplorer } from './transparency-debates';
 import { InvolvementCard } from './transparency-involvement';
@@ -57,7 +58,7 @@ export default function GovernanceTransparency({ data }: { data: GovernanceData 
 
   const readings: Reading[] = [
     { id: 'nsm', label: 'NSM balance', checkedAt: live.nsm, every: MINUTE, cadence: 'Every minute', detail: 'Computed from node pool values (ZIP 237), via Blockchair.' },
-    { id: 'governance', label: 'Grants, proposals, votes and ZCAP', checkedAt: data.checkedAt, every: 5 * MINUTE, cadence: 'Every 5 minutes', detail: 'OpenZcash ledger, FPF applications and the ZCAP roster.' },
+    { id: 'governance', label: 'Grants, proposals, votes and ZCAP', checkedAt: data.checkedAt, every: 5 * MINUTE, cadence: 'Every 5 minutes', detail: 'OpenZcash ledger, FPF applications, ZCAP roster, ZCG treasury sheet and CoinGecko price.' },
     { id: 'github', label: 'Code activity', checkedAt: live.github, every: 5 * MINUTE, cadence: 'Every 5 minutes', detail: 'Shielded Labs repositories on GitHub.' },
     { id: 'zips', label: 'ZIP index', checkedAt: bundledZips.meta.syncedAt, every: DAY, cadence: 'Bundled with each release', detail: 'Read from the zcash/zips repository; a live feed needs a read token.' },
     { id: 'editorial', label: 'Blog and site pages', checkedAt: latest((catalog as { observedAt?: string }[]).map(entry => entry.observedAt)), every: 7 * DAY, cadence: 'Weekly import', detail: 'Imported from shieldedlabs.net.' },
@@ -73,6 +74,7 @@ export default function GovernanceTransparency({ data }: { data: GovernanceData 
     ...(lastPoll ? [{ kind: 'record' as const, claim: `Most recent vote in the archive: ${lastPoll.name}`, checked: record.checkedAt, sources: lastPoll.sources.slice(0, 1).map(url => ({ label: 'Published result', url })) }] : []),
     { kind: 'record', claim: 'Each ZIP’s status is read from its own header', checked: bundledZips.meta.syncedAt, sources: [{ label: commit ? `zcash/zips at ${commit.slice(0, 7)}` : 'zcash/zips', url: commit ? `https://github.com/zcash/zips/commit/${commit}` : 'https://github.com/zcash/zips' }] },
     { kind: 'record', claim: 'Grant budgets and payments are ledger entries, not on-chain proof of delivery', checked: data.grants.observedAt, sources: [{ label: 'OpenZcash ledger', url: data.grants.url }] },
+    { kind: 'record', claim: 'Treasury holdings are the ZCG sheet’s figures; dollar values use the live ZEC price, or the sheet’s if the feed is down', checked: data.treasury.observedAt, sources: [{ label: 'ZCG treasury sheet', url: treasurySheetUrl(treasuryTabs.zcg) }, { label: 'CoinGecko', url: zecPricePage }] },
   ];
   const ledgerSpans = spans(evidence.length);
 

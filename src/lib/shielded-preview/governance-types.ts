@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { Treasury } from './treasury';
 import type { CoinholderProposal } from './coinholder-proposals';
 const text = z.string();
 const amount = z.number().finite();
@@ -17,4 +18,4 @@ export type Member = z.infer<typeof memberSchema>;
 export type VoteResult = z.infer<typeof resultSchema>;
 export type Verification = z.infer<typeof verificationSchema>;
 export type Source<T> = {data:T;state:'snapshot'|'fetched'|'mirror'|'unavailable';observedAt:string|null;url:string;total?:number;error?:boolean};
-export type GovernanceData = {checkedAt:string;proposals:Source<Proposal[]>;review:Source<ReviewProposal[]>;grants:Source<GrantRecord[]>;payments:Source<Payment[]>;members:Source<Member[]>;verification:Source<Verification|null>;coinholder:Source<CoinholderProposal[]|null>};
+export type GovernanceData = {checkedAt:string;proposals:Source<Proposal[]>;review:Source<ReviewProposal[]>;grants:Source<GrantRecord[]>;payments:Source<Payment[]>;members:Source<Member[]>;verification:Source<Verification|null>;coinholder:Source<CoinholderProposal[]|null>;treasury:Source<Treasury|null>};

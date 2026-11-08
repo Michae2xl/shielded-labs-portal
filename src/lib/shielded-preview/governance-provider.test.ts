@@ -11,13 +11,14 @@ describe('Governance refresh boundaries',()=>{
  it('retains dated records on failure and coalesces concurrent refreshes',async()=>{
   const fetcher=vi.fn().mockRejectedValue(new Error('offline'));vi.stubGlobal('fetch',fetcher);
   const {getGovernanceData}=await import('./governance-provider');
-  const [a,b]=await Promise.all([getGovernanceData(),getGovernanceData()]);expect(a).toBe(b);expect(fetcher).toHaveBeenCalledTimes(6);
+  const [a,b]=await Promise.all([getGovernanceData(),getGovernanceData()]);expect(a).toBe(b);expect(fetcher).toHaveBeenCalledTimes(9);
   expect(a.payments.data).toEqual(snapshot.payments.data);expect(a.payments.observedAt).toBe(snapshot.payments.observedAt);expect(a.payments.error).toBe(true);
   expect(a.verification.data?.rows).toHaveLength(37);
   expect(a.proposals.data).toEqual(snapshot.proposals.data);
   expect(a.proposals.observedAt).toBe(snapshot.proposals.observedAt);
   expect(a.proposals.state).toBe('snapshot');
   expect(a.coinholder.data).toBeNull();expect(a.coinholder.state).toBe('unavailable');
+  expect(a.treasury.data).toBeNull();expect(a.treasury.state).toBe('unavailable');
  });
  it('rejects truncated ledgers without replacing the complete saved observation',async()=>{
   vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,json:async()=>({data:[],count:0,total:1088}),text:async()=>'<html>error</html>'})));
@@ -31,6 +32,8 @@ describe('Governance refresh boundaries',()=>{
    if(url===snapshot.payments.url)return Response.json({data:snapshot.payments.data,count:snapshot.payments.data.length,total:snapshot.payments.data.length});
    if(url===snapshot.verification.url)return Response.json(snapshot.verification.data);
    if(url.startsWith('https://api.github.com/repos/Financial-Privacy-Foundation/'))return Response.json([]);
+   if(/gid=(135980745|808560406)$/.test(url))return new Response('Status:,OK ✅\nCoinholder Grants balance as of block height:,"3,548,854"\nBlock time (UTC):,7 Nov 2026 17:32:00\nCurrent ZEC balance:,"145,641.94"');
+   if(url.startsWith('https://api.coingecko.com/'))return Response.json({zcash:{usd:1248.46,last_updated_at:1794000000}});
    if(url.startsWith('https://docs.google.com/spreadsheets/'))return new Response('Name,Handle,Joined\nExample member,example,2026-01-01');
    throw new Error('Unexpected source');
   }));
@@ -39,7 +42,8 @@ describe('Governance refresh boundaries',()=>{
   expect(data.proposals.state).toBe('snapshot');
   expect(data.proposals.observedAt).toBe(snapshot.proposals.observedAt);
   expect(data.proposals.data).toEqual(snapshot.proposals.data);
-  for(const name of ['review','grants','payments','members','verification','coinholder'] as const){
+  expect(data.treasury.data?.price).toEqual({usd:1248.46,observedAt:'2026-11-06T21:20:00.000Z',source:'CoinGecko',url:'https://www.coingecko.com/en/coins/zcash'});
+  for(const name of ['review','grants','payments','members','verification','coinholder','treasury'] as const){
    expect(data[name].state).toBe('fetched');
    expect(data[name].error).toBe(false);
   }

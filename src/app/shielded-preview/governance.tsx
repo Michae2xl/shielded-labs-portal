@@ -26,6 +26,7 @@ import GovernanceInsights from './governance-insights';
 import GovernanceZcap from './governance-zcap';
 import GovernanceTransparency from './governance-transparency';
 import ZcgProposalRecord from './zcg-proposal-record';
+import { emptyTreasurySource } from '@/lib/shielded-preview/treasury';
 import GovernanceReferences, { GovernanceReferenceProvider } from './governance-references';
 import { GrantsCollection, Link, ProposalsCollection, ResultsCollection, VotingCollection, type ProposalListItem } from './governance-collections';
 import g from './governance.module.css';
@@ -63,7 +64,7 @@ export function ProposalGrantLinks({proposal,source,onNavigate}:{proposal:Pick<P
  return <div className={g.relatedRecords}><h3>Grants with the same title</h3><p className={g.recordNote}>These records share the title and program. The ledger does not identify the application, so this does not confirm funding for this request.</p>{grants.map(grant=><button key={`${grant.program}|${grant.grant}`} className={g.secondary} onClick={()=>onNavigate('Grants',`${grant.program}|${grant.grant}`)}>Open grant record<Arrow/></button>)}<SourceLink url={source.url}>Grant ledger source</SourceLink></div>;
 }
 export default function Governance(){
- const [data,setData]=useState({...snapshot,coinholder:emptyCoinholderSource} as unknown as GovernanceData);const [section,setSection]=useState<Section>('Overview');const [selected,setSelected]=useState<string|null>(null);
+ const [data,setData]=useState({...snapshot,coinholder:emptyCoinholderSource,treasury:emptyTreasurySource} as unknown as GovernanceData);const [section,setSection]=useState<Section>('Overview');const [selected,setSelected]=useState<string|null>(null);
  const [search,setSearch]=useState('');const [filter,setFilter]=useState('all');const [lane,setLane]=useState('review');const [page,setPage]=useState(1);const [busy,setBusy]=useState(false);const [failed,setFailed]=useState(false);const active=useRef(false);const heading=useRef<HTMLHeadingElement>(null);
  const [basis,setBasis]=useState<'include'|'exclude'>('include');
  const [round,setRound]=useState('all');
