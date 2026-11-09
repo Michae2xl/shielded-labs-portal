@@ -1,0 +1,223 @@
+[
+  {
+    "id": "miner-original",
+    "title": "Miner Sentiment Polling",
+    "short": "Earlier miner polling",
+    "authors": [
+      "Marek"
+    ],
+    "group": "Voting",
+    "stage": "Earlier draft",
+    "pr": 1421,
+    "record": "pr-1421-draft-marek-miner-sentiment-polling",
+    "revision": "d585275fa0bf197d4aee424414ac1263d24f327e",
+    "source": "https://github.com/zcash/zips/blob/d585275fa0bf197d4aee424414ac1263d24f327e/zips/draft-marek-miner-sentiment-polling.md",
+    "discussion": "https://github.com/zcash/zips/pull/1421",
+    "summary": "An earlier design using coinbase data or memos, reworked by PR #1447; the earlier PR remains open.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "Changes polling rules; see proposal focus.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "An earlier design using coinbase data or memos, reworked by PR #1447; the earlier PR remains open."
+  },
+  {
+    "id": "lock-weighted",
+    "title": "Lock-weighted Coinholder Polling",
+    "short": "Lock-weighted polling",
+    "authors": [
+      "Arya"
+    ],
+    "group": "Voting",
+    "stage": "Open draft",
+    "pr": 1433,
+    "record": "pr-1433-draft-arya-lock-weighted-voting",
+    "revision": "c921894d8418382a7e9495f4d6f7f4045403702e",
+    "source": "https://github.com/zcash/zips/blob/c921894d8418382a7e9495f4d6f7f4045403702e/zips/draft-arya-lock-weighted-voting.md",
+    "discussion": "https://forum.zcashcommunity.com/t/58813/1",
+    "summary": "Weight ballots by how long ZEC remains locked; retain participation thresholds in unweighted ZEC.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "Changes polling rules; see proposal focus.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "Weight ballots by how long ZEC remains locked; retain participation thresholds in unweighted ZEC."
+  },
+  {
+    "id": "ecosystem-grants",
+    "title": "Coinholder Grants for Ecosystem Work",
+    "short": "Ecosystem work grants",
+    "authors": [
+      "Giacomo Barbieri"
+    ],
+    "group": "Funding",
+    "stage": "Open draft",
+    "pr": 1439,
+    "record": "pr-1439-draft-ijaack-coinholder-ecosystem-grants",
+    "revision": "a2038976223bd4e77a337a73f4b3880c2134b025",
+    "source": "https://github.com/zcash/zips/blob/a2038976223bd4e77a337a73f4b3880c2134b025/zips/draft-ijaack-coinholder-ecosystem-grants.md",
+    "discussion": "https://forum.zcashcommunity.com/t/coinholder-grants-need-to-fund-ecosystem-work/58764",
+    "summary": "Add prospective grants alongside retroactive grants, with payment after verified delivery and USD-denominated compensation.",
+    "stream": "No block-subsidy allocation change proposed.",
+    "coinholder": "Adds a prospective grant process.",
+    "treasury": "Backing remains an open question; existing custody and veto rules retained.",
+    "implementation": "Add prospective grants alongside retroactive grants, with payment after verified delivery and USD-denominated compensation."
+  },
+  {
+    "id": "miner-signals",
+    "title": "Miner Sentiment Polling",
+    "short": "Miner signalling · ZIP 248",
+    "authors": [
+      "Marek",
+      "Kris Nuttycombe"
+    ],
+    "group": "Voting",
+    "stage": "Open draft",
+    "pr": 1447,
+    "record": "pr-1447-draft-marek-miner-sentiment-polling",
+    "revision": "150b0de3bd834b5960019082cdf89b30bc7481b3",
+    "source": "https://github.com/zcash/zips/blob/150b0de3bd834b5960019082cdf89b30bc7481b3/zips/draft-marek-miner-sentiment-polling.md",
+    "discussion": "https://github.com/zcash/zips/pull/1447",
+    "summary": "Define miner polls using the ZIP 248 coinbase bundle and a published poll definition; do not prescribe the weight of the results.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "Changes polling rules; see proposal focus.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "Define miner polls using the ZIP 248 coinbase bundle and a published poll definition; do not prescribe the weight of the results."
+  },
+  {
+    "id": "coin-quorum",
+    "title": "Update to ZIP 1016: Raise the Coinholder Vote Threshold to 1,000,000 ZEC",
+    "short": "1M ZEC threshold",
+    "authors": [
+      "Blake Benthall (emersonian)"
+    ],
+    "group": "Voting",
+    "stage": "Open draft",
+    "pr": 1449,
+    "record": "pr-1449-draft-emersonian-coinholder-vote-quorum",
+    "revision": "98df3bafc09bbb67b17e84c08ee85d5b6cfd0c67",
+    "source": "https://github.com/zcash/zips/blob/98df3bafc09bbb67b17e84c08ee85d5b6cfd0c67/zips/draft-emersonian-coinholder-vote-quorum.md",
+    "discussion": "https://forum.zcashcommunity.com/t/zip-raise-the-coinholder-vote-threshold/59044",
+    "summary": "Raise the ZIP 1016 participation threshold to 1,000,000 ZEC and specify how abstentions count.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "Changes polling rules; see proposal focus.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "Raise the ZIP 1016 participation threshold to 1,000,000 ZEC and specify how abstentions count."
+  },
+  {
+    "id": "human-minimum",
+    "title": "Update to ZIP 1016: Minimum Human Participation and Published Proof-of-Personhood for Coinholder Votes",
+    "short": "Human participation",
+    "authors": [
+      "Blake Benthall (emersonian)"
+    ],
+    "group": "Voting",
+    "stage": "Open draft",
+    "pr": 1450,
+    "record": "pr-1450-draft-emersonian-coinholder-vote-human-minimum",
+    "revision": "880c6ca52d50f6b76791ad7fafe2136037673dd0",
+    "source": "https://github.com/zcash/zips/blob/880c6ca52d50f6b76791ad7fafe2136037673dd0/zips/draft-emersonian-coinholder-vote-human-minimum.md",
+    "discussion": "https://forum.zcashcommunity.com/t/zip-minimum-human-participation-in-coinholder-votes/59045",
+    "summary": "Require at least 50 verified participants and a published privacy-preserving verification methodology; retain ZEC-weighted ballots.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "Changes polling rules; see proposal focus.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "Require at least 50 verified participants and a published privacy-preserving verification methodology; retain ZEC-weighted ballots."
+  },
+  {
+    "id": "member-grants",
+    "title": "Update to ZIP 1015: ZCG Committee Members May Not Apply for Grants During Their Term",
+    "short": "Member grant restrictions",
+    "authors": [
+      "Blake Benthall (emersonian)"
+    ],
+    "group": "Governance",
+    "stage": "Open draft",
+    "pr": 1451,
+    "record": "pr-1451-draft-emersonian-zcg-member-grant-bar",
+    "revision": "6be42b82d4dc2456bd8033d32e534317757bd92c",
+    "source": "https://github.com/zcash/zips/blob/6be42b82d4dc2456bd8033d32e534317757bd92c/zips/draft-emersonian-zcg-member-grant-bar.md",
+    "discussion": "https://forum.zcashcommunity.com/t/zip-restriction-of-zcg-member-grant-applications/59046",
+    "summary": "Bar sitting ZCG members and associated applicants from new grants during their term, with rules for existing commitments.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "No allocation change specified.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "Bar sitting ZCG members and associated applicants from new grants during their term, with rules for existing commitments."
+  },
+  {
+    "id": "seven-seats",
+    "title": "Update to ZIP 1015: Expand the ZCG Committee to Seven Seats",
+    "short": "Seven-seat committee",
+    "authors": [
+      "Blake Benthall (emersonian)"
+    ],
+    "group": "Governance",
+    "stage": "Open draft",
+    "pr": 1452,
+    "record": "pr-1452-draft-emersonian-zcg-seven-seats",
+    "revision": "12afbb048e88f93d573fe615ec3bc44af6f7d209",
+    "source": "https://github.com/zcash/zips/blob/12afbb048e88f93d573fe615ec3bc44af6f7d209/zips/draft-emersonian-zcg-seven-seats.md",
+    "discussion": "https://forum.zcashcommunity.com/t/zip-expand-zcg-to-seven-seats-adjust-limits/59047",
+    "summary": "Expand ZCG to seven seats, introduce a five-member quorum and require four approvals for grants above US$500,000.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "No allocation change specified.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "Expand ZCG to seven seats, introduce a five-member quorum and require four approvals for grants above US$500,000."
+  },
+  {
+    "id": "treasury-committee",
+    "title": "ZCG Treasury Committee, Budget, and Hedging Plan",
+    "short": "Treasury committee",
+    "authors": [
+      "Blake Benthall (emersonian)"
+    ],
+    "group": "Governance",
+    "stage": "Open draft",
+    "pr": 1453,
+    "record": "pr-1453-draft-emersonian-zcg-treasury-committee",
+    "revision": "4cefd3de18a667e7ba923cbbe63facae690334af",
+    "source": "https://github.com/zcash/zips/blob/4cefd3de18a667e7ba923cbbe63facae690334af/zips/draft-emersonian-zcg-treasury-committee.md",
+    "discussion": "https://forum.zcashcommunity.com/t/zip-establish-the-zcg-treasury-committee/59048",
+    "summary": "Separate grant decisions from treasury decisions, with a ten-year budget, treasury plan and hedging strategy.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "No allocation change specified.",
+    "treasury": "Separate committee; publish a ten-year budget and hedging plan.",
+    "implementation": "Separate grant decisions from treasury decisions, with a ten-year budget, treasury plan and hedging strategy."
+  },
+  {
+    "id": "town-square",
+    "title": "The Zcash Town Square: Official Discussion and Announcement Cross-Posting",
+    "short": "Zcash Town Square",
+    "authors": [
+      "Blake Benthall (emersonian)"
+    ],
+    "group": "Governance",
+    "stage": "Open draft",
+    "pr": 1454,
+    "record": "pr-1454-draft-emersonian-zcash-town-square",
+    "revision": "df8b7a04745c89b41d209bd3f187d180f9ea8671",
+    "source": "https://github.com/zcash/zips/blob/df8b7a04745c89b41d209bd3f187d180f9ea8671/zips/draft-emersonian-zcash-town-square.md",
+    "discussion": "https://forum.zcashcommunity.com/t/zip-the-zcash-town-square/59049",
+    "summary": "Make the forum the official discussion venue and require funded organizations to cross-post announcements within 24 hours.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "No allocation change specified.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "Make the forum the official discussion venue and require funded organizations to cross-post announcements within 24 hours."
+  },
+  {
+    "id": "coinholder-elections",
+    "title": "Coinholder Elections for Zcash Community Grants",
+    "short": "Coinholder elections",
+    "authors": [
+      "Tom Howard"
+    ],
+    "group": "Governance",
+    "stage": "Open draft",
+    "pr": 1455,
+    "record": "pr-1455-draft-howard-zcg-coinholder-elections",
+    "revision": "77e9149c6a2a2dbdae83a31908562a7a6d7438d4",
+    "source": "https://github.com/zcash/zips/blob/77e9149c6a2a2dbdae83a31908562a7a6d7438d4/zips/draft-howard-zcg-coinholder-elections.md",
+    "discussion": "https://forum.zcashcommunity.com/t/proposal-to-switch-zcg-elections-to-token-holder-voting/53533",
+    "summary": "Replace ZCAP selection of the ZCG committee with private, ZEC-weighted approval voting; preserve its existing grants mandate.",
+    "stream": "Not an allocation proposal.",
+    "coinholder": "No allocation change specified.",
+    "treasury": "See the reviewed draft for program and administration rules.",
+    "implementation": "Replace ZCAP selection of the ZCG committee with private, ZEC-weighted approval voting; preserve its existing grants mandate."
+  }
+]

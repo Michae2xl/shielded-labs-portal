@@ -3392,45 +3392,6 @@
     }
   },
   {
-    "id": "pr-1433-draft-arya-lock-weighted-voting",
-    "number": null,
-    "title": "Lock-weighted Coinholder Polling",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Process",
-    "owners": [
-      "Arya"
-    ],
-    "created": "2026-11-03",
-    "license": "MIT",
-    "discussionsTo": null,
-    "pullRequest": null,
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/c921894d8418382a7e9495f4d6f7f4045403702e/zips/draft-arya-lock-weighted-voting.md",
-    "official": "https://github.com/zcash/zips/pull/1433",
-    "updatedAt": "2026-11-03T15:47:38Z",
-    "summary": "Coinholder polls count one ZEC as one vote at a snapshot height, and coins may be moved right after the snapshot. This ZIP changes only the weighting: a ballot’s weight rises linearly with how long its coins stay locked past the snapshot,…",
-    "words": 2384,
-    "digest": "06fa5335de39bda2319c553c55417e44d2d3f2fdee14b73417563b14e30fe34e",
-    "base": null,
-    "pull": {
-      "number": 1433,
-      "title": "Add draft ZIP: Lock-weighted Coinholder Polling",
-      "author": "arya2",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1433",
-      "headSha": "c921894d8418382a7e9495f4d6f7f4045403702e",
-      "createdAt": "2026-11-03T15:47:38Z",
-      "updatedAt": "2026-11-03T15:47:38Z",
-      "change": "new",
-      "file": "draft-arya-lock-weighted-voting.md",
-      "files": [
-        "draft-arya-lock-weighted-voting.md"
-      ]
-    }
-  },
-  {
     "id": "pr-1432-draft-khadim-aryaethn-frost-member-backup",
     "number": null,
     "title": "FROST Member Backup Strings for Shielded Zcash",
@@ -3664,45 +3625,6 @@
       "file": "draft-howard-wind-down-zcg.md",
       "files": [
         "draft-howard-wind-down-zcg.md"
-      ]
-    }
-  },
-  {
-    "id": "pr-1421-draft-marek-miner-sentiment-polling",
-    "number": null,
-    "title": "Miner Sentiment Polling",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Process / Ecosystem",
-    "owners": [
-      "Marek"
-    ],
-    "created": "2026-10-27",
-    "license": "MIT",
-    "discussionsTo": null,
-    "pullRequest": null,
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/d585275fa0bf197d4aee424414ac1263d24f327e/zips/draft-marek-miner-sentiment-polling.md",
-    "official": "https://github.com/zcash/zips/pull/1421",
-    "updatedAt": "2026-11-04T02:49:47Z",
-    "summary": "This proposal specifies a process for gauging miners’ sentiment on upcoming network upgrades. For each Election, miners answer the same questions, with the same options, as the ZCAP.",
-    "words": 4170,
-    "digest": "2ab15848838a10e11ed43d56975548b16059d54d5199e1c498b15f2273663027",
-    "base": null,
-    "pull": {
-      "number": 1421,
-      "title": "Add draft ZIP: Miner Sentiment Polling",
-      "author": "upbqdn",
-      "draft": true,
-      "url": "https://github.com/zcash/zips/pull/1421",
-      "headSha": "d585275fa0bf197d4aee424414ac1263d24f327e",
-      "createdAt": "2026-10-28T20:47:12Z",
-      "updatedAt": "2026-11-04T02:49:47Z",
-      "change": "new",
-      "file": "draft-marek-miner-sentiment-polling.md",
-      "files": [
-        "draft-marek-miner-sentiment-polling.md"
       ]
     }
   },
@@ -5673,6 +5595,436 @@
       "file": "zip-0302.rst",
       "files": [
         "zip-0302.rst"
+      ]
+    }
+  },
+  {
+    "id": "pr-1454-draft-emersonian-zcash-town-square",
+    "number": null,
+    "title": "The Zcash Town Square: Official Discussion and Announcement Cross-Posting",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Blake Benthall (emersonian)"
+    ],
+    "created": "2026-11-08",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/zip-the-zcash-town-square/59049",
+    "pullRequest": "https://github.com/zcash/zips/pull/1454",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/df8b7a04745c89b41d209bd3f187d180f9ea8671/zips/draft-emersonian-zcash-town-square.md",
+    "official": "https://github.com/zcash/zips/pull/1454",
+    "updatedAt": "2026-11-09T14:33:23Z",
+    "summary": "This ZIP affirms that the Zcash Community Forum is the Zcash Town Square: the one official venue for discussion of Zcash governance, funding, and protocol direction, and the canonical public record of announcements made by organizations…",
+    "words": 4188,
+    "digest": "d1836ec970927efde06f0984d83fbb3505c9e6c4164b5742863e2d47e81fd652",
+    "base": null,
+    "pull": {
+      "number": 1454,
+      "title": "ZIP: The Zcash Town Square",
+      "author": "emersonian",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1454",
+      "headSha": "df8b7a04745c89b41d209bd3f187d180f9ea8671",
+      "createdAt": "2026-11-09T01:15:53Z",
+      "updatedAt": "2026-11-09T14:33:23Z",
+      "change": "new",
+      "file": "draft-emersonian-zcash-town-square.md",
+      "files": [
+        "draft-emersonian-zcash-town-square.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1455-draft-howard-zcg-coinholder-elections",
+    "number": null,
+    "title": "Coinholder Elections for Zcash Community Grants",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus Process",
+    "owners": [
+      "Tom Howard"
+    ],
+    "created": "2026-10-29",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/proposal-to-switch-zcg-elections-to-token-holder-voting/53533",
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/77e9149c6a2a2dbdae83a31908562a7a6d7438d4/zips/draft-howard-zcg-coinholder-elections.md",
+    "official": "https://github.com/zcash/zips/pull/1455",
+    "updatedAt": "2026-11-09T04:11:22Z",
+    "summary": "This ZIP changes the electorate that selects the Zcash Community Grants Committee. ZEC holders would elect committee members through private, ZEC-weighted approval voting, replacing elections by the Zcash Community Advisory Panel. The…",
+    "words": 2469,
+    "digest": "34cf25e833643dd2b8f99c766a3123133666b6bbcdf825851e741fd3a0da9fc3",
+    "base": null,
+    "pull": {
+      "number": 1455,
+      "title": "Add draft ZIP for coinholder elections to Zcash Community Grants",
+      "author": "thowar2",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1455",
+      "headSha": "77e9149c6a2a2dbdae83a31908562a7a6d7438d4",
+      "createdAt": "2026-11-09T04:11:22Z",
+      "updatedAt": "2026-11-09T04:11:22Z",
+      "change": "new",
+      "file": "draft-howard-zcg-coinholder-elections.md",
+      "files": [
+        "draft-howard-zcg-coinholder-elections.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1452-draft-emersonian-zcg-seven-seats",
+    "number": null,
+    "title": "Update to ZIP 1015: Expand the ZCG Committee to Seven Seats",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Blake Benthall (emersonian)"
+    ],
+    "created": "2026-11-08",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/zip-expand-zcg-to-seven-seats-adjust-limits/59047",
+    "pullRequest": "https://github.com/zcash/zips/pull/1452",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/12afbb048e88f93d573fe615ec3bc44af6f7d209/zips/draft-emersonian-zcg-seven-seats.md",
+    "official": "https://github.com/zcash/zips/pull/1452",
+    "updatedAt": "2026-11-09T01:32:14Z",
+    "summary": "This ZIP increases the ZCG Committee from five seats to seven.",
+    "words": 2079,
+    "digest": "c3e2362029df9e6d222cfb4541d0247916e9af76cee7b308429ae913e1e8e9de",
+    "base": null,
+    "pull": {
+      "number": 1452,
+      "title": "Draft ZIP: Expand the ZCG Committee to Seven Seats",
+      "author": "emersonian",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1452",
+      "headSha": "12afbb048e88f93d573fe615ec3bc44af6f7d209",
+      "createdAt": "2026-11-09T01:04:46Z",
+      "updatedAt": "2026-11-09T01:32:14Z",
+      "change": "new",
+      "file": "draft-emersonian-zcg-seven-seats.md",
+      "files": [
+        "draft-emersonian-zcg-seven-seats.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1451-draft-emersonian-zcg-member-grant-bar",
+    "number": null,
+    "title": "Update to ZIP 1015: ZCG Committee Members May Not Apply for Grants During Their Term",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Blake Benthall (emersonian)"
+    ],
+    "created": "2026-11-08",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/zip-restriction-of-zcg-member-grant-applications/59046",
+    "pullRequest": "https://github.com/zcash/zips/pull/1451",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/6be42b82d4dc2456bd8033d32e534317757bd92c/zips/draft-emersonian-zcg-member-grant-bar.md",
+    "official": "https://github.com/zcash/zips/pull/1451",
+    "updatedAt": "2026-11-09T01:31:11Z",
+    "summary": "This ZIP bars members of the ZCG Committee from applying for, or receiving, Zcash Community Grants while they sit on the Committee. The bar covers the member personally, organizations they lead, work for full-time, or have a financial…",
+    "words": 2042,
+    "digest": "e66d2024034a36ab3fbde5b6c43f93a345965fbee2d4c4bbba729f113f2f0ca9",
+    "base": null,
+    "pull": {
+      "number": 1451,
+      "title": "Draft ZIP: Restriction of ZCG Member Grant Applications",
+      "author": "emersonian",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1451",
+      "headSha": "6be42b82d4dc2456bd8033d32e534317757bd92c",
+      "createdAt": "2026-11-09T00:59:18Z",
+      "updatedAt": "2026-11-09T01:31:11Z",
+      "change": "new",
+      "file": "draft-emersonian-zcg-member-grant-bar.md",
+      "files": [
+        "draft-emersonian-zcg-member-grant-bar.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1453-draft-emersonian-zcg-treasury-committee",
+    "number": null,
+    "title": "ZCG Treasury Committee, Budget, and Hedging Plan",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Blake Benthall (emersonian)"
+    ],
+    "created": "2026-11-08",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/zip-establish-the-zcg-treasury-committee/59048",
+    "pullRequest": "https://github.com/zcash/zips/pull/1453",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/4cefd3de18a667e7ba923cbbe63facae690334af/zips/draft-emersonian-zcg-treasury-committee.md",
+    "official": "https://github.com/zcash/zips/pull/1453",
+    "updatedAt": "2026-11-09T01:21:08Z",
+    "summary": "This ZIP changes how Zcash Community Grants (ZCG) manages its funds.",
+    "words": 4104,
+    "digest": "6c983b27ce674932e701eddc847ddf88ee480e6ed403abd714a478d4dc7cdcbb",
+    "base": null,
+    "pull": {
+      "number": 1453,
+      "title": "Draft ZIP: Establish the ZCG Treasury Committee",
+      "author": "emersonian",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1453",
+      "headSha": "4cefd3de18a667e7ba923cbbe63facae690334af",
+      "createdAt": "2026-11-09T01:09:56Z",
+      "updatedAt": "2026-11-09T01:21:08Z",
+      "change": "new",
+      "file": "draft-emersonian-zcg-treasury-committee.md",
+      "files": [
+        "draft-emersonian-zcg-treasury-committee.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1450-draft-emersonian-coinholder-vote-human-minimum",
+    "number": null,
+    "title": "Update to ZIP 1016: Minimum Human Participation and Published Proof-of-Personhood for Coinholder Votes",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Blake Benthall (emersonian)"
+    ],
+    "created": "2026-11-08",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/zip-minimum-human-participation-in-coinholder-votes/59045",
+    "pullRequest": "https://github.com/zcash/zips/pull/1450",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/880c6ca52d50f6b76791ad7fafe2136037673dd0/zips/draft-emersonian-coinholder-vote-human-minimum.md",
+    "official": "https://github.com/zcash/zips/pull/1450",
+    "updatedAt": "2026-11-09T00:56:59Z",
+    "summary": "This ZIP updates ZIP 1016 3 so that a coinholder-amount voting round can only approve a grant, or otherwise bind the Key-Holder Organizations, if:",
+    "words": 2791,
+    "digest": "45ce6bf6ae23e6e41ad42d8dc563aaa7798199b9f29656001e4441f729558dd9",
+    "base": null,
+    "pull": {
+      "number": 1450,
+      "title": "Draft ZIP: Minimum Human Participation in Coinholder Votes",
+      "author": "emersonian",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1450",
+      "headSha": "880c6ca52d50f6b76791ad7fafe2136037673dd0",
+      "createdAt": "2026-11-09T00:51:16Z",
+      "updatedAt": "2026-11-09T00:56:59Z",
+      "change": "new",
+      "file": "draft-emersonian-coinholder-vote-human-minimum.md",
+      "files": [
+        "draft-emersonian-coinholder-vote-human-minimum.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1449-draft-emersonian-coinholder-vote-quorum",
+    "number": null,
+    "title": "Update to ZIP 1016: Raise the Coinholder Vote Threshold to 1,000,000 ZEC",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Blake Benthall (emersonian)"
+    ],
+    "created": "2026-11-08",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/zip-raise-the-coinholder-vote-threshold/59044",
+    "pullRequest": "https://github.com/zcash/zips/pull/1449",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/98df3bafc09bbb67b17e84c08ee85d5b6cfd0c67/zips/draft-emersonian-coinholder-vote-quorum.md",
+    "official": "https://github.com/zcash/zips/pull/1449",
+    "updatedAt": "2026-11-09T00:46:42Z",
+    "summary": "This ZIP raises the minimum amount of ZEC that must be voted for a coinholder-amount voting round under ZIP 1016 3 to approve a grant, from 420,000 ZEC to 1,000,000 ZEC. At current holdings, this means that no single publicly known holder…",
+    "words": 1379,
+    "digest": "9ff514749763b5f56dfb8b2b82d35e91634894f38ebb2b933812093596a55feb",
+    "base": null,
+    "pull": {
+      "number": 1449,
+      "title": "Draft ZIP: Raise the Coinholder Vote Threshold to 1,000,000 ZEC",
+      "author": "emersonian",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1449",
+      "headSha": "98df3bafc09bbb67b17e84c08ee85d5b6cfd0c67",
+      "createdAt": "2026-11-09T00:38:01Z",
+      "updatedAt": "2026-11-09T00:46:42Z",
+      "change": "new",
+      "file": "draft-emersonian-coinholder-vote-quorum.md",
+      "files": [
+        "draft-emersonian-coinholder-vote-quorum.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1439-draft-ijaack-coinholder-ecosystem-grants",
+    "number": null,
+    "title": "Coinholder Grants for Ecosystem Work",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Giacomo Barbieri"
+    ],
+    "created": "2026-11-05",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/coinholder-grants-need-to-fund-ecosystem-work/58764",
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/a2038976223bd4e77a337a73f4b3880c2134b025/zips/draft-ijaack-coinholder-ecosystem-grants.md",
+    "official": "https://github.com/zcash/zips/pull/1439",
+    "updatedAt": "2026-11-05T16:55:11Z",
+    "summary": "This ZIP adds prospective grants alongside the coinholder program’s retroactive grants. Coinholders can approve defined work before delivery; payment follows verified completion of the work or its milestones. It makes eligibility for…",
+    "words": 2326,
+    "digest": "2a8b07cf894c415854cecaca8c936e8fb8b124e24e5c18b53ea0e779721a8898",
+    "base": null,
+    "pull": {
+      "number": 1439,
+      "title": "Add draft ZIP: Coinholder Grants for Ecosystem Work",
+      "author": "iJaack",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1439",
+      "headSha": "a2038976223bd4e77a337a73f4b3880c2134b025",
+      "createdAt": "2026-11-05T16:55:11Z",
+      "updatedAt": "2026-11-05T16:55:11Z",
+      "change": "new",
+      "file": "draft-ijaack-coinholder-ecosystem-grants.md",
+      "files": [
+        "draft-ijaack-coinholder-ecosystem-grants.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1433-draft-arya-lock-weighted-voting",
+    "number": null,
+    "title": "Lock-weighted Coinholder Polling",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Arya"
+    ],
+    "created": "2026-11-03",
+    "license": "MIT",
+    "discussionsTo": null,
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/c921894d8418382a7e9495f4d6f7f4045403702e/zips/draft-arya-lock-weighted-voting.md",
+    "official": "https://github.com/zcash/zips/pull/1433",
+    "updatedAt": "2026-11-03T15:47:38Z",
+    "summary": "Coinholder polls count one ZEC as one vote at a snapshot height, and coins may be moved right after the snapshot. This ZIP changes only the weighting: a ballot’s weight rises linearly with how long its coins stay locked past the snapshot,…",
+    "words": 2384,
+    "digest": "06fa5335de39bda2319c553c55417e44d2d3f2fdee14b73417563b14e30fe34e",
+    "base": null,
+    "pull": {
+      "number": 1433,
+      "title": "Add draft ZIP: Lock-weighted Coinholder Polling",
+      "author": "arya2",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1433",
+      "headSha": "c921894d8418382a7e9495f4d6f7f4045403702e",
+      "createdAt": "2026-11-03T15:47:38Z",
+      "updatedAt": "2026-11-03T15:47:38Z",
+      "change": "new",
+      "file": "draft-arya-lock-weighted-voting.md",
+      "files": [
+        "draft-arya-lock-weighted-voting.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1447-draft-marek-miner-sentiment-polling",
+    "number": null,
+    "title": "Miner Sentiment Polling",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Standards / Ecosystem",
+    "owners": [
+      "Marek",
+      "Kris Nuttycombe"
+    ],
+    "created": "2026-10-27",
+    "license": "MIT",
+    "discussionsTo": null,
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/150b0de3bd834b5960019082cdf89b30bc7481b3/zips/draft-marek-miner-sentiment-polling.md",
+    "official": "https://github.com/zcash/zips/pull/1447",
+    "updatedAt": "2026-11-07T06:48:30Z",
+    "summary": "This proposal specifies a mechanism for polling miners. A Poll Definition is a JSON document that gives a set of questions, an Option Code for each option, a Voting Period fixed in block heights, and the method by which the responses to…",
+    "words": 5557,
+    "digest": "789c761111f67f10612eb9b8a5dc11dd15e1e4e0548e08b43270faebc1244079",
+    "base": null,
+    "pull": {
+      "number": 1447,
+      "title": "ZIP 248 miner signalling fields; Miner Sentiment Polling draft",
+      "author": "nuttycom",
+      "draft": true,
+      "url": "https://github.com/zcash/zips/pull/1447",
+      "headSha": "150b0de3bd834b5960019082cdf89b30bc7481b3",
+      "createdAt": "2026-11-06T22:00:35Z",
+      "updatedAt": "2026-11-07T06:48:30Z",
+      "change": "new",
+      "file": "draft-marek-miner-sentiment-polling.md",
+      "files": [
+        "draft-marek-miner-sentiment-polling.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1421-draft-marek-miner-sentiment-polling",
+    "number": null,
+    "title": "Miner Sentiment Polling",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process / Ecosystem",
+    "owners": [
+      "Marek"
+    ],
+    "created": "2026-10-27",
+    "license": "MIT",
+    "discussionsTo": null,
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/d585275fa0bf197d4aee424414ac1263d24f327e/zips/draft-marek-miner-sentiment-polling.md",
+    "official": "https://github.com/zcash/zips/pull/1421",
+    "updatedAt": "2026-11-04T02:49:47Z",
+    "summary": "This proposal specifies a process for gauging miners’ sentiment on upcoming network upgrades. For each Election, miners answer the same questions, with the same options, as the ZCAP.",
+    "words": 4170,
+    "digest": "2ab15848838a10e11ed43d56975548b16059d54d5199e1c498b15f2273663027",
+    "base": null,
+    "pull": {
+      "number": 1421,
+      "title": "Add draft ZIP: Miner Sentiment Polling",
+      "author": "upbqdn",
+      "draft": true,
+      "url": "https://github.com/zcash/zips/pull/1421",
+      "headSha": "d585275fa0bf197d4aee424414ac1263d24f327e",
+      "createdAt": "2026-10-28T20:47:12Z",
+      "updatedAt": "2026-11-04T02:49:47Z",
+      "change": "new",
+      "file": "draft-marek-miner-sentiment-polling.md",
+      "files": [
+        "draft-marek-miner-sentiment-polling.md"
       ]
     }
   }

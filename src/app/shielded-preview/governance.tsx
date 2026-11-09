@@ -17,6 +17,7 @@ import GovernanceRecord from './governance-record';
 import GovernanceNavigation, { type GovernanceSection } from './governance-navigation';
 import { governanceSectionFromSlug, governanceSectionSlug } from '@/lib/shielded-preview/governance-sections';
 import { isZipLane, laneForRecord, zipReference } from '@/lib/shielded-preview/zips/library';
+import { copyExplorerParams } from '@/lib/shielded-preview/zips/dev-fund';
 import GovernanceProcess from './governance-process';
 import GovernanceZips from './governance-zips';
 import GovernanceOverview from './governance-overview';
@@ -36,6 +37,10 @@ const recordLane=(section:Section,id:string|null)=>section==='ZIPs'?laneForRecor
 type ListingState={lane:string;filter:string;search:string;page:number;basis:'include'|'exclude';round:string};
 function listingParams(section:Section,id:string|null,state:ListingState){
  const params=new URLSearchParams({view:'governance',section:governanceSectionSlug(section)});
+ if(section==='ZIPs'&&typeof location!=='undefined'){
+  const current=new URLSearchParams(location.search);
+  copyExplorerParams(current,params);
+ }
  if(id)params.set('record',id);
  if((section==='Voting'||section==='Proposals'||section==='Results'||section==='Insights'||section==='ZCAP'||section==='ZIPs')&&state.lane!==recordLane(section,null))params.set('lane',state.lane);
  if(state.filter!=='all')params.set('filter',state.filter);

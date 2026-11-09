@@ -7,17 +7,17 @@
     "committedAt": "2026-11-03T23:18:54Z"
   },
   "counts": {
-    "documents": 197,
+    "documents": 206,
     "zips": 130,
     "drafts": 6,
     "guides": 3,
-    "proposals": 58,
+    "proposals": 67,
     "images": 15
   },
   "failures": [],
   "pulls": {
     "listed": 70,
-    "rendered": 58,
+    "rendered": 67,
     "failures": [
       {
         "pull": 1337,

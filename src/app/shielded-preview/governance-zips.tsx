@@ -14,6 +14,7 @@ import a from './governance-archive.module.css';
 import { resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import ZipDiagram from './zip-diagram';
 import z from './governance-zips.module.css';
+import ZipExplorer from './zip-explorer';
 
 const date = (value: string | null | undefined) => value ? new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value)) : 'Not recorded';
 const titles: Record<ZipLane, string> = { zips: 'Numbered ZIPs', drafts: 'Unnumbered drafts', guides: 'Writing guides', proposals: 'Open pull requests' };
@@ -177,7 +178,7 @@ export function ZipRecord({ id, index, onBack, onNavigate }: { id: string; index
   const debates = debatesForZip(entry.id);
   return <GovernanceRecord title={zipTitle(entry)} context={pull ? 'Open pull request · unofficial preview' : entry.kind === 'guide' ? 'ZIP writing guide' : entry.kind === 'draft' ? 'Draft Zcash Improvement Proposal' : 'Zcash Improvement Proposal'} subtitle={pull ? pull.title : entry.category}
     metrics={pull ? <><Stat name="Header status" value={entry.status} note={entry.statusDetail}/><Stat name="Change" value={proposalChange(entry)}/><Stat name="Author" value={pull.author} note={pull.draft ? 'Draft pull request' : null}/><Stat name="Last activity" value={date(pull.updatedAt)}/></> : <><Stat name="Status" value={entry.status} note={entry.statusDetail}/><Stat name="Created" value={date(entry.created)}/><Stat name="Last change" value={date(entry.updatedAt)}/><Stat name={entry.owners.length === 1 ? 'Owner' : 'Owners'} value={owners || 'Not recorded'}/></>}
-    sections={[]} outline={outline} backLabel={titles[zipLane(entry)]} onBack={onBack} idPrefix="zip"
+    sections={[]} outline={outline} backLabel={typeof location !== 'undefined' && new URLSearchParams(location.search).get('topic') === 'dev-fund' ? 'Proposal explorer' : titles[zipLane(entry)]} onBack={onBack} idPrefix="zip"
     sources={<>
       {pull ? <p>Unofficial preview rendered from the pull request head, commit {pull.headSha.slice(0, 7)}, with its original wording. The pull request is the canonical text until the editors merge it. {syncLabel(index)}.</p> : <p>Text rendered from the repository with its original wording; the repository remains the canonical version. {syncLabel(index)}.{entry.license ? ` License: ${entry.license}.` : ''}</p>}
       {pull ? <><External href={pull.url}>Pull request #{pull.number} on GitHub</External><External href={entry.source}>File at this commit</External></> : <><External href={entry.source}>Source file on GitHub</External><External href={entry.official}>Official rendering · zips.z.cash</External></>}
@@ -209,5 +210,5 @@ export default function GovernanceZips({ selected, lane, filter, search, page, o
     return () => { active = false; };
   }, []);
   if (selected) return <ZipRecord id={selected} index={index} onBack={() => onNavigate('ZIPs', null, { lane: laneForRecord(selected, index.entries) })} onNavigate={onNavigate}/>;
-  return <ZipsCollection index={index} lane={lane} onLane={onLane} search={search} onSearch={onSearch} filter={filter} onFilter={onFilter} page={page} onPage={onPage} onNavigate={onNavigate}/>;
+  return <ZipExplorer index={index}><ZipsCollection index={index} lane={lane} onLane={onLane} search={search} onSearch={onSearch} filter={filter} onFilter={onFilter} page={page} onPage={onPage} onNavigate={onNavigate}/></ZipExplorer>;
 }
