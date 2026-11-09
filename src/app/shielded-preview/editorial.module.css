@@ -115,7 +115,19 @@
 .articleCard:hover h2{text-decoration:underline;text-underline-offset:4px}
 .articleByline{display:flex;align-items:center;flex-wrap:wrap;gap:5px 9px;font-size:13px;line-height:1.5;color:var(--text-muted);margin:0!important}
 .articleCard>svg{color:#999}
-@container(max-width:620px){.articleCard{grid-template-columns:88px minmax(0,1fr);align-items:start;gap:12px;padding:16px}.articleCard .thumbnail{width:88px;margin-top:4px}.articleCard>svg{display:none}.editorial .articleCard h2{font-size:17px}.articleByline{font-size:12px}.articleCard:not(:has(.thumbnail)){grid-template-columns:minmax(0,1fr)}.articleCard .cardMeta{gap:4px 10px}}
+@container(max-width:620px){
+ .editorial .blogTools nav{display:flex;flex-wrap:wrap;overflow:visible;gap:4px}
+ .editorial .blogTools nav>button{flex:1 1 auto;min-width:0;min-height:40px;padding:8px 10px;white-space:normal;line-height:1.4}
+ .articleCard{grid-template-columns:48px minmax(0,1fr);align-items:start;gap:10px 12px;padding:16px}
+ .articleCard .thumbnail{width:48px;height:36px;margin:0;grid-column:1;grid-row:1;align-self:center}
+ .articleCopy{display:contents}
+ .articleCard .cardMeta{grid-column:2;grid-row:1;gap:4px 10px;align-self:center}
+ .editorial .articleCard h2{grid-column:1/-1;font-size:17px;margin:0;line-height:1.45}
+ .editorial .articleByline{grid-column:1/-1;font-size:13px;line-height:1.5}
+ .articleCard>svg{display:none}
+ .articleCard:not(:has(.thumbnail)){grid-template-columns:minmax(0,1fr)}
+ .articleCard:not(:has(.thumbnail)) .cardMeta{grid-column:1}
+}
 
 /* Reading column: the cover, the text, tables and figures all share the same two edges. */
 .reader:is([data-layout="article"],[data-layout="institutional"]){grid-template-columns:minmax(0,800px) minmax(260px,1fr);column-gap:56px;max-width:1240px}

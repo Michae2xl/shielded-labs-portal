@@ -413,3 +413,16 @@
 }
 
 .explorer .sector>header p,.explorer .historySector>header p{font-size:12px;color:#bcbcbc}
+
+/* Keep navigation and search readable on the narrowest phones. */
+@media(max-width:360px){
+ .topbar{flex-wrap:wrap;gap:8px}
+ .topbar .scopes{flex:1 1 100%;min-width:0}
+ .topbar>a{margin-left:auto}
+ .explorer .filters{grid-template-columns:minmax(0,1fr)}
+ .filters .search{grid-column:1;grid-row:1}
+ .statusFilter{grid-column:1;grid-row:3}
+ .statusFilter select{flex:1;min-width:0}
+ .topicFilters{grid-column:1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}
+ .topicFilters button{justify-content:center}
+}
