@@ -3370,7 +3370,7 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/df8b7a04745c89b41d209bd3f187d180f9ea8671/zips/draft-emersonian-zcash-town-square.md",
     "official": "https://github.com/zcash/zips/pull/1454",
-    "updatedAt": "2026-11-09T01:23:41Z",
+    "updatedAt": "2026-11-09T21:45:41Z",
     "summary": "This ZIP affirms that the Zcash Community Forum is the Zcash Town Square: the one official venue for discussion of Zcash governance, funding, and protocol direction, and the canonical public record of announcements made by organizations…",
     "words": 4188,
     "digest": "d1836ec970927efde06f0984d83fbb3505c9e6c4164b5742863e2d47e81fd652",
@@ -3383,7 +3383,7 @@
       "url": "https://github.com/zcash/zips/pull/1454",
       "headSha": "df8b7a04745c89b41d209bd3f187d180f9ea8671",
       "createdAt": "2026-11-09T01:15:53Z",
-      "updatedAt": "2026-11-09T01:23:41Z",
+      "updatedAt": "2026-11-09T21:45:41Z",
       "change": "new",
       "file": "draft-emersonian-zcash-town-square.md",
       "files": [
