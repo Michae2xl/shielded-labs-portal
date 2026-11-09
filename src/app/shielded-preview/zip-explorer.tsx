@@ -138,20 +138,21 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
         <button aria-pressed={state.topic === 'dev-fund'} onClick={() => update({ topic: 'dev-fund' })}>Proposals<span>2026</span></button>
         <button aria-pressed={state.topic === 'library'} onClick={() => update({ topic: 'library' })}>ZIP library</button>
       </nav>
-      {state.topic === 'dev-fund' && <nav aria-label="ZIP display" className={s.modes}>
-        {(['list', 'map', 'compare'] as const).map((mode, i) => <button key={mode} aria-pressed={state.layout === mode} onClick={() => update({ layout: mode })}><span aria-hidden="true">{['☰', '◇', '◫'][i]}</span>{['List', 'Map', 'Compare'][i]}</button>)}
-      </nav>}
+      {state.topic === 'dev-fund' && <External href={devFundSources.timeline}>Key dates</External>}
     </div>
     {state.topic === 'library' ? children : <>
-      <header className={s.intro}><div><h2>Zcash proposals</h2><p>Explore funding, governance and voting changes.</p></div><External href={devFundSources.timeline}>Key dates</External></header>
-      <div className={s.filters}>
-        <div className={s.toolbar}>
-          <label className={s.search}><span aria-hidden="true">⌕</span><input type="search" aria-label="Search ZIP proposals" placeholder="Search title, author or PR number" value={state.query} onChange={e => update({ dq: e.target.value || null }, true)}/></label>
-          <label className={s.statusFilter}><span>Status</span><select aria-label="Proposal status" value={state.status} onChange={e => update({status:e.target.value === 'all' ? null : e.target.value, past:null})}><option value="all">All proposals</option><option value="current">Current proposals</option><option value="historical">Earlier & withdrawn</option></select></label>
-        </div>
-        <div className={s.filterRow}><nav aria-label="Proposal topics">{(['all', 'Funding', 'Governance', 'Voting'] as const).map(group => <button key={group} aria-pressed={state.group === group} style={group === 'all' ? undefined : {'--topic':proposalTopics[group].color} as CSSProperties} onClick={() => update({group: group === 'all' ? null : group})}>{group !== 'all' && <i aria-hidden="true"/>}{group === 'all' ? 'All topics' : group}</button>)}</nav>{filtered && <button className={s.clearFilters} onClick={resetFilters}>Clear filters</button>}</div>
+      <header className={s.intro}><div><h2>Zcash proposals</h2><p>Explore funding, governance and voting changes.</p></div></header>
+      <div className={s.filters} aria-label="Filter proposals" role="group">
+        <label className={s.search}><span aria-hidden="true">⌕</span><input type="search" aria-label="Search ZIP proposals" placeholder="Search proposals…" value={state.query} onChange={e => update({ dq: e.target.value || null }, true)}/></label>
+        <nav aria-label="Proposal topics" className={s.topicFilters}>{(['all', 'Funding', 'Governance', 'Voting'] as const).map(group => <button key={group} aria-pressed={state.group === group} style={group === 'all' ? undefined : {'--topic':proposalTopics[group].color} as CSSProperties} onClick={() => update({group: group === 'all' ? null : group})}>{group !== 'all' && <i aria-hidden="true"/>}{group === 'all' ? 'All topics' : group}</button>)}</nav>
+        <label className={s.statusFilter}><span className={s.srOnly}>Status</span><select aria-label="Proposal status" value={state.status} onChange={e => update({status:e.target.value === 'all' ? null : e.target.value, past:null})}><option value="all">All statuses</option><option value="current">Current proposals</option><option value="historical">Earlier & withdrawn</option></select></label>
       </div>
-      <div className={s.resultSummary}><span role="status">{rows.length} {state.layout === 'compare' ? 'available to choose' : rows.length === 1 ? 'proposal' : 'proposals'}</span><span>{state.layout === 'compare' ? compared.some(p => !rows.some(row => row.id === p.id)) ? 'Selections stay when filtering' : 'Choose up to 3 to compare' : state.layout === 'list' ? 'Open a proposal or select it to compare' : 'Explore the map or read public positions'}</span></div>
+      <div ref={browsingPanel} tabIndex={-1} className={s.resultsToolbar}>
+        <div className={s.resultSummary}><span role="status">{rows.length} {state.layout === 'compare' ? 'available to compare' : rows.length === 1 ? 'proposal' : 'proposals'}</span>{filtered && <button className={s.clearFilters} onClick={resetFilters}>Clear filters</button>}</div>
+        <nav aria-label="ZIP display" className={s.modes}>
+          {(['list', 'map', 'compare'] as const).map((mode, i) => <button key={mode} aria-pressed={state.layout === mode} onClick={() => update({ layout: mode })}><span aria-hidden="true">{['☰', '◇', '◫'][i]}</span>{['List', 'Map', 'Compare'][i]}{mode === 'compare' && compared.length > 0 && <small>{compared.length}</small>}</button>)}
+        </nav>
+      </div>
       {!rows.length && <div className={s.empty}><p>No proposals match these filters. Try a different search or clear the filters above.</p></div>}
       {state.layout === 'list' && <div className={s.cards}>{rows.map(p => <article className={s.card} style={accent(p.id)} key={p.id}>
         <header><Badge proposal={p}/><People names={p.authors}/></header>
@@ -159,7 +160,7 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
         <div className={s.cardFoot}><button onClick={() => select(p.id,'network')}>View proposal<span aria-hidden="true">→</span></button><label><input type="checkbox" checked={state.compared.includes(p.id)} disabled={!state.compared.includes(p.id) && state.compared.length >= 3} onChange={() => toggle(p.id)}/>Compare</label></div>
       </article>)}</div>}
       {state.layout === 'map' && selected && <>
-        <div ref={browsingPanel} className={s.workspaceBar} tabIndex={-1}><nav aria-label="Map views">{[['network','Overview'],['signals','Public positions'],['timeline','Timeline']].map(([panel,label]) => <button key={panel} aria-pressed={state.panel === panel} onClick={() => update({panel})}>{label}</button>)}</nav>{state.panel !== 'network' && sourceFilter}</div>
+        <div className={s.workspaceBar}><nav aria-label="Map views">{[['network','Overview'],['signals','Public positions'],['timeline','Timeline']].map(([panel,label]) => <button key={panel} aria-pressed={state.panel === panel} onClick={() => update({panel})}>{label}</button>)}</nav>{state.panel !== 'network' && sourceFilter}</div>
         {state.panel === 'signals' && <section className={s.signals} aria-label="Documented support bars">
           <header className={s.signalsHeader}><div><h3>Documented support</h3><p>Most recorded positions first. Open a count to see participants and sources.</p></div><span className={s.sampleBadge}>Partial coverage</span></header>
           <div className={s.signalLegend}><span data-kind="Support">Support</span><span data-kind="Concern">Concern</span><span data-kind="Opposition">Opposition</span><small>Partial sample · accounts, not votes · contributors excluded</small></div>
