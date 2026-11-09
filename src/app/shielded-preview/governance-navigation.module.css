@@ -43,7 +43,7 @@
 .navigation a[aria-current]::after { background: #f0f0f0; }
 .navigation a:focus-visible { outline: 2px solid #ddd; outline-offset: 3px; }
 
-@media (max-width: 1250px) {
+@media (max-width: 1350px) {
   .navigation { gap: 4px; }
   .navigation a { padding: 10px 4px; font-size: 14px; }
   .navigation a svg { display: none; }

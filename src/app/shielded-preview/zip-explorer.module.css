@@ -1,4 +1,4 @@
-.explorer{--line:#303030;--muted:#aaa;--surface:#111;color:#eee;min-width:0;font-size:14px;line-height:1.5}
+.explorer{--line:#303030;--muted:#bcbcbc;--surface:#111;color:#eee;min-width:0;font-size:14px;line-height:1.5}
 .explorer *{box-sizing:border-box}
 .explorer h2,.explorer h3,.explorer h4,.explorer p{margin:0}
 .explorer button,.explorer a,.explorer input{font:inherit}
@@ -397,3 +397,19 @@
 .versionNote{flex-basis:100%;font-size:11px;line-height:1.5;color:#aaa}
 
 .table th>small{display:block;margin-top:7px;line-height:1.5;font-weight:400;color:#aaa}
+
+/* Readable metadata and compact controls for the typography preview. */
+.explorer .intro p{font-size:14px;color:#cecece}
+.explorer :is(.topicFilters button,.workspaceBar nav button){font-size:13px;color:#c6c6c6}
+.explorer :is(.statusFilter,.sourceFilter,.resultSummary,.topbar>a){font-size:13px;color:#bcbcbc}
+.explorer .sourceFilter select{font-size:12px}
+.explorer :is(.nodeTop,.structure,.statementContext,.evidenceHeader p){font-size:12px;color:#bcbcbc}
+.landscape .mapNode strong{font-family:var(--font-display);font-size:15px;font-weight:500;line-height:1.35}
+.explorer .clearFilters{font-size:12px}
+@media(max-width:700px){
+ .explorer .filters{grid-template-columns:minmax(0,1fr) 148px}
+ .explorer .statusFilter select{font-size:12px}
+ .explorer .sourceFilter{font-size:12px}
+}
+
+.explorer .sector>header p,.explorer .historySector>header p{font-size:12px;color:#bcbcbc}

@@ -8,6 +8,7 @@ import { isProjectSection, projectHref, type ProjectSection } from '@/lib/shield
 import { searchPortal } from '@/lib/shielded-preview/portal-search';
 import type { PortalData } from '@/lib/shielded-preview/types';
 import s from './portal.module.css';
+import typography from './typography.module.css';
 import pc from './project-collection.module.css';
 import PortalNavigation, { portalNavigation as navigation, type PortalView as View } from './portal-navigation';
 import PortalFooter from './portal-footer';
@@ -130,7 +131,7 @@ export default function Portal({ initial, initialView = defaultView, initialProj
 
 
 
-  return <div className={s.portal} onClick={followPortalLink}>
+  return <div className={`${s.portal} ${typography.readable}`} onClick={followPortalLink}>
     <a className={s.skip} href="#portal-main">Skip to content</a>
     <PortalNavigation view={view} onNavigate={go} search={{ query, onChange: setQuery, results: searchResults }}/>
 

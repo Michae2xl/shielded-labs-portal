@@ -2,6 +2,8 @@
 
 Independent local repository for the Shielded Labs governance, research and community portal. Extracted from the OpenZcash working directory on 1 November 2026, including the latest local interface work from 29 October.
 
+Typography uses self-hosted Jost for headings and navigation, Inter for body text and data, and Geist Mono for code. Jost's variable font (weights 100–900) comes from [Google Fonts](https://github.com/google/fonts/tree/main/ofl/jost), converted to WOFF2 without changing its glyphs; its SIL Open Font License is included at `public/fonts/Jost-OFL.txt`. The portal does not require a locally installed Futura font or third-party font requests.
+
 ## Run locally
 
 Requires Node.js 20.9 or later, npm and Python 3 for importer tests.
