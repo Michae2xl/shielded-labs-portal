@@ -1,7 +1,7 @@
 'use client';
 
 import { createElement, useEffect, useState, type MouseEvent, type ReactNode } from 'react';
-import { bundledZips, filterZips, laneForRecord, proposalChange, zipLabel, zipLane, zipLanes, zipStatuses, zipTitle, zipsRepository, type ZipLane } from '@/lib/shielded-preview/zips/library';
+import { ZIP_NEW_DAYS, bundledZips, filterZips, isNewZip, laneForRecord, proposalChange, zipFacets, zipIndexTime, zipLabel, zipLane, zipLanes, zipTitle, zipsRepository, type ZipActivity, type ZipLane } from '@/lib/shielded-preview/zips/library';
 import type { ZipDocument, ZipNode, ZipsIndex } from '@/lib/shielded-preview/zips/types';
 import type { Source } from '@/lib/shielded-preview/governance-types';
 import GovernanceRecord from './governance-record';
@@ -115,25 +115,34 @@ export function ZipBody({ nodes, onNavigate, math = false }: { nodes: ZipNode[];
   });
 }
 
-export function ZipsCollection({ index, lane, onLane, ...controls }: Controls & { index: ZipsIndex; lane: ZipLane; onLane: (value: string) => void }) {
+export function ZipsCollection({ index, lane, onLane, activity, onActivity, ...controls }: Controls & { index: ZipsIndex; lane: ZipLane; onLane: (value: string) => void; activity: ZipActivity; onActivity: (value: string) => void }) {
   const { search, onSearch, filter, onFilter, page, onPage, onNavigate } = controls;
-  const rows = filterZips(index.entries, { lane, status: filter, query: search });
-  const statuses = zipStatuses(index.entries, lane);
+  const now = zipIndexTime(index);
+  const query = { lane, status: filter, query: search, activity, now };
+  const rows = filterZips(index.entries, query);
+  const facets = zipFacets(index.entries, query);
   const count = (id: ZipLane) => index.entries.filter(entry => zipLane(entry) === id).length;
+  const opened = lane === 'proposals' ? 'Opened' : 'Created';
+  // Click filters: status and recent activity, each chip counting what it would show.
+  const filters = <div className={z.filterBar}>
+    {facets.statuses.length > 2 && <div className={z.chips} role="group" aria-label="Filter by status"><span>Status</span>{facets.statuses.map(item => <button key={item.id} type="button" aria-pressed={filter === item.id} onClick={() => onFilter(item.id)}>{item.id === 'all' ? 'All' : item.id}<strong>{item.count}</strong></button>)}</div>}
+    <div className={z.chips} role="group" aria-label="Filter by activity"><span>Activity</span>{facets.activity.map(item => <button key={item.id} type="button" aria-pressed={activity === item.id} onClick={() => onActivity(item.id)}>{item.id === 'all' ? 'Any time' : `${item.id} days`}<strong>{item.count}</strong></button>)}</div>
+  </div>;
   return <Collection archive id="zips" title={titles[lane]} context="Zcash Improvement Proposals"
     tabs={<Tabs label="ZIP collections" value={lane} onChange={onLane} items={zipLanes.map(item => ({ id: item.id, name: item.name, count: count(item.id), icon: laneIcons[item.id] }))}/>}
-    toolbar={<><Search name="Search ZIPs" value={search} onChange={onSearch}/>{statuses.length > 1 && <select aria-label="Filter ZIP status" value={filter} onChange={event => onFilter(event.target.value)}><option value="all">All statuses</option>{statuses.map(status => <option key={status} value={status}>{status}</option>)}</select>}</>}
+    toolbar={<Search name="Search ZIPs" value={search} onChange={onSearch}/>}
+    summary={filters}
     total={rows.length} page={page} onPage={onPage}
     notice={lane === 'proposals' ? 'Unofficial previews rendered from open pull requests. Anyone can open a pull request; nothing here is part of the ZIPs until the editors merge it.' : 'A ZIP is a specification, not a decision. Its status comes from the document header; activation on the network is a separate milestone recorded under Voting.'}
-    aside={<><div><h3>Reading these records</h3><p>Rendered from the zcash/zips repository with its wording, links and formulas. Status follows the latest revision listed in the header.</p><p>{syncLabel(index)}</p></div><SourceInfo name="zcash/zips repository" source={repositorySource(index)}/></>}
+    aside={<><div><h3>Reading these records</h3><p>Rendered from the zcash/zips repository with its wording, links and formulas. Status follows the latest revision listed in the header.</p><p>Activity windows count back from the index’s latest update. New marks a pull request opened, or a ZIP created, in the last {ZIP_NEW_DAYS} days.</p><p>{syncLabel(index)}</p></div><SourceInfo name="zcash/zips repository" source={repositorySource(index)}/></>}
   >
-    <div className={a.columns} aria-hidden="true"><span>{lane === 'proposals' ? 'Pull request' : 'Proposal'}</span><div className={a.measures}><span>Status</span><span>{lane === 'proposals' ? 'Activity' : 'Last change'}</span></div><span/></div>
-    <ul className={a.rows} aria-label={titles[lane]}>{pageRows(rows, page).map(entry => <li key={entry.id}><Link section="ZIPs" id={entry.id} selection={{ lane, filter, search, page: visiblePage(page, rows.length) }} onNavigate={onNavigate} className={a.record}>
+    <div className={`${a.columns} ${z.zipColumns}`} aria-hidden="true"><span>{lane === 'proposals' ? 'Pull request' : 'Proposal'}</span><div className={a.measures}><span>Status</span><span>{lane === 'proposals' ? 'Activity' : 'Last change'}</span></div><span/></div>
+    <ul className={a.rows} aria-label={titles[lane]}>{pageRows(rows, page).map(entry => <li key={entry.id}><Link section="ZIPs" id={entry.id} selection={{ lane, filter, search, page: visiblePage(page, rows.length), activity }} onNavigate={onNavigate} className={`${a.record} ${z.zipRecord}`}>
       {entry.pull ? <span className={a.ballotNumber}><span className={z.srOnly}>Pull request </span>#{entry.pull.number}</span> : entry.number === null ? <span className={a.symbol} aria-hidden="true"><GovernanceGlyph kind={entry.kind === 'guide' ? 'process' : 'zips'} size={23}/></span> : <span className={a.ballotNumber}><span className={z.srOnly}>ZIP </span>{entry.number}</span>}
       <div className={a.identity}><h3>{entry.title}</h3><div className={a.meta}>{entry.pull ? <><span>{proposalChange(entry)}</span><span>{entry.pull.author}</span>{entry.pull.draft && <span>Draft pull request</span>}</> : <><span>{zipLabel(entry)}</span><span>{entry.category}</span></>}{!entry.pull && entry.owners.length > 0 && <span>{entry.owners.slice(0, 2).join(', ')}{entry.owners.length > 2 ? ` +${entry.owners.length - 2}` : ''}</span>}</div></div>
-      <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Status</span><span className={a.status}>{entry.status}</span></span><span className={a.measure}><span className={a.mobileLabel}>{entry.pull ? 'Activity' : 'Last change'}</span>{entry.updatedAt ? <time dateTime={entry.updatedAt}>{date(entry.updatedAt)}</time> : <small>Not recorded</small>}</span></div><Arrow/>
+      <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Status</span><span className={a.status}>{entry.status}</span></span><span className={a.measure}><span className={a.mobileLabel}>{entry.pull ? 'Activity' : 'Last change'}</span>{entry.updatedAt ? <time dateTime={entry.updatedAt}>{date(entry.updatedAt)}</time> : <small>Not recorded</small>}{isNewZip(entry, now) && <span className={z.newTag} title={`${opened} in the last ${ZIP_NEW_DAYS} days`}>New</span>}</span></div><Arrow/>
     </Link></li>)}</ul>
-    {!rows.length && <Empty onReset={() => { onSearch(''); onFilter('all'); }}/>}
+    {!rows.length && <Empty onReset={() => { onSearch(''); onFilter('all'); onActivity('all'); }}/>}
   </Collection>;
 }
 
@@ -193,9 +202,9 @@ export function ZipRecord({ id, index, onBack, onNavigate }: { id: string; index
   </GovernanceRecord>;
 }
 
-export default function GovernanceZips({ selected, lane, filter, search, page, onNavigate, onSearch, onFilter, onPage, onLane }: {
-  selected: string | null; lane: ZipLane; filter: string; search: string; page: number; onNavigate: CollectionNavigate;
-  onSearch: (value: string) => void; onFilter: (value: string) => void; onPage: (value: number) => void; onLane: (value: string) => void;
+export default function GovernanceZips({ selected, lane, filter, search, page, activity, onNavigate, onSearch, onFilter, onPage, onLane, onActivity }: {
+  selected: string | null; lane: ZipLane; filter: string; search: string; page: number; activity: ZipActivity; onNavigate: CollectionNavigate;
+  onSearch: (value: string) => void; onFilter: (value: string) => void; onPage: (value: number) => void; onLane: (value: string) => void; onActivity: (value: string) => void;
 }) {
   const [index, setIndex] = useState<ZipsIndex>(bundledZips);
   useEffect(() => {
@@ -210,5 +219,5 @@ export default function GovernanceZips({ selected, lane, filter, search, page, o
     return () => { active = false; };
   }, []);
   if (selected) return <ZipRecord id={selected} index={index} onBack={() => onNavigate('ZIPs', null, { lane: laneForRecord(selected, index.entries) })} onNavigate={onNavigate}/>;
-  return <ZipExplorer index={index}><ZipsCollection index={index} lane={lane} onLane={onLane} search={search} onSearch={onSearch} filter={filter} onFilter={onFilter} page={page} onPage={onPage} onNavigate={onNavigate}/></ZipExplorer>;
+  return <ZipExplorer index={index}><ZipsCollection index={index} lane={lane} onLane={onLane} activity={activity} onActivity={onActivity} search={search} onSearch={onSearch} filter={filter} onFilter={onFilter} page={page} onPage={onPage} onNavigate={onNavigate}/></ZipExplorer>;
 }

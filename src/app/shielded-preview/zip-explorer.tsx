@@ -132,15 +132,18 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
   const timeline = fundStatements.filter(item => rows.some(p => p.id === item.proposal) && (state.channel === 'all' || (item.platform ?? 'Forum') === state.channel)).sort((a,b) => b.date.localeCompare(a.date));
   const timelineDays = [...new Set(timeline.map(item => item.date.slice(0,10)))];
   const select = (id: string, panel?: string) => { update({focus:id, layout:'map', ...(panel ? {panel} : {})}); requestAnimationFrame(() => { focusPanel.current?.scrollIntoView({behavior: 'instant', block: 'start'}); focusPanel.current?.focus({preventScroll: true}); }); };
+  const topbar = <div className={s.topbar}>
+    <nav aria-label="ZIP scope" className={s.scopes}>
+      <button aria-pressed={state.topic === 'dev-fund'} onClick={() => update({ topic: 'dev-fund' })}>Proposals<span>2026</span></button>
+      <button aria-pressed={state.topic === 'library'} onClick={() => update({ topic: 'library' })}>ZIP library</button>
+    </nav>
+    {state.topic === 'dev-fund' && <External href={devFundSources.timeline}>Key dates</External>}
+  </div>;
+  // The library keeps its own archive styles: the explorer's element rules (links, buttons, headings) stay out of it.
+  if (state.topic === 'library') return <><section className={s.explorer} aria-label="ZIP explorer">{topbar}</section>{children}</>;
   return <section className={s.explorer} aria-label="ZIP explorer">
-    <div className={s.topbar}>
-      <nav aria-label="ZIP scope" className={s.scopes}>
-        <button aria-pressed={state.topic === 'dev-fund'} onClick={() => update({ topic: 'dev-fund' })}>Proposals<span>2026</span></button>
-        <button aria-pressed={state.topic === 'library'} onClick={() => update({ topic: 'library' })}>ZIP library</button>
-      </nav>
-      {state.topic === 'dev-fund' && <External href={devFundSources.timeline}>Key dates</External>}
-    </div>
-    {state.topic === 'library' ? children : <>
+    {topbar}
+    <>
       <header className={s.intro}><div><h2>Zcash proposals</h2><p>Explore funding, governance and voting changes.</p></div></header>
       <div className={s.filters} aria-label="Filter proposals" role="group">
         <label className={s.search}><span aria-hidden="true">⌕</span><input type="search" aria-label="Search ZIP proposals" placeholder="Search proposals…" value={state.query} onChange={e => update({ dq: e.target.value || null }, true)}/></label>
@@ -219,6 +222,6 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
         <p>Source review is manual and does not update automatically with the ZIP library. Each comparison links its reviewed version. The X sample is partial, collected from publicly visible author posts and replies, not a full conversation crawl. Profile images come from the linked public accounts; initials are used when unavailable. Read the discussion for later changes.</p>
         <div className={s.sourceRow}><External href={devFundSources.zip0}>ZIP process</External><External href={devFundSources.timeline}>Dev Fund process</External></div>
       </div></details>
-    </>}
+    </>
   </section>;
 }

@@ -16,7 +16,7 @@ import type { GovernanceData, Source, VoteResult } from '@/lib/shielded-preview/
 import GovernanceRecord from './governance-record';
 import GovernanceNavigation, { type GovernanceSection } from './governance-navigation';
 import { governanceSectionFromSlug, governanceSectionSlug } from '@/lib/shielded-preview/governance-sections';
-import { isZipLane, laneForRecord, zipReference } from '@/lib/shielded-preview/zips/library';
+import { isZipActivity, isZipLane, laneForRecord, zipReference, type ZipActivity } from '@/lib/shielded-preview/zips/library';
 import { copyExplorerParams } from '@/lib/shielded-preview/zips/dev-fund';
 import GovernanceProcess from './governance-process';
 import GovernanceZips from './governance-zips';
@@ -34,7 +34,7 @@ import g from './governance.module.css';
 
 type Section = GovernanceSection;
 const recordLane=(section:Section,id:string|null)=>section==='ZIPs'?laneForRecord(id):section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
-type ListingState={lane:string;filter:string;search:string;page:number;basis:'include'|'exclude';round:string};
+type ListingState={lane:string;filter:string;search:string;page:number;basis:'include'|'exclude';round:string;activity?:string};
 function listingParams(section:Section,id:string|null,state:ListingState){
  const params=new URLSearchParams({view:'governance',section:governanceSectionSlug(section)});
  if(section==='ZIPs'&&typeof location!=='undefined'){
@@ -48,6 +48,7 @@ function listingParams(section:Section,id:string|null,state:ListingState){
  if(state.page>1)params.set('page',String(state.page));
  if(section==='ZCAP'&&state.lane!=='members'&&state.basis==='exclude')params.set('basis','exclude');
  if(section==='Proposals'&&(state.lane==='coinholder'||state.lane==='q3')&&state.round!=='all')params.set('round',state.round);
+ if(section==='ZIPs'&&state.activity&&state.activity!=='all')params.set('activity',state.activity);
  return params;
 }
 const dollars=(n:number|null)=>n===null?'Not recorded':new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(n);
@@ -73,6 +74,7 @@ export default function Governance(){
  const [search,setSearch]=useState('');const [filter,setFilter]=useState('all');const [lane,setLane]=useState('review');const [page,setPage]=useState(1);const [busy,setBusy]=useState(false);const [failed,setFailed]=useState(false);const active=useRef(false);const heading=useRef<HTMLHeadingElement>(null);
  const [basis,setBasis]=useState<'include'|'exclude'>('include');
  const [round,setRound]=useState('all');
+ const [activity,setActivity]=useState<ZipActivity>('all');
  const refresh=useCallback(async()=>{if(active.current)return;active.current=true;setBusy(true);try{const r=await fetch('/api/shielded-preview/governance',{signal:AbortSignal.timeout(20000)});if(!r.ok)throw new Error();setData(await r.json());setFailed(false)}catch{setFailed(true)}finally{active.current=false;setBusy(false)}},[]);
  useEffect(()=>{const read=()=>{
   const p=new URLSearchParams(location.search);const next=governanceSectionFromSlug(p.get('section'))??'Overview';
@@ -82,27 +84,29 @@ export default function Governance(){
   setSection(next);setLane(next==='Proposals'&&nextLane==='q3'?'coinholder':nextLane);setSelected(p.get('record'));
   setRound(coinholderRounds.some(item=>item.id===p.get('round'))?p.get('round')!:'all');
   setBasis(p.get('basis')==='exclude'?'exclude':'include');
+  setActivity(next==='ZIPs'&&isZipActivity(p.get('activity'))?p.get('activity') as ZipActivity:'all');
   setSearch(p.get('q')??'');setFilter(p.get('filter')??'all');setPage(Number.isSafeInteger(nextPage)&&nextPage>0?nextPage:1);
  };const start=setTimeout(()=>{read();void refresh()},0);window.addEventListener('popstate',read);window.addEventListener('shielded:navigate',read);const timer=setInterval(()=>{if(!document.hidden)void refresh()},300000);return()=>{clearTimeout(start);clearInterval(timer);window.removeEventListener('popstate',read);window.removeEventListener('shielded:navigate',read)}},[refresh]);
  useEffect(()=>{heading.current?.focus({preventScroll:true})},[section,selected]);
 
  function go(next:Section,id:string|null=null,overrides:Partial<ListingState>={}){
   const keep=next===section&&(id!==null||selected!==null);
-  const state:ListingState={lane:keep?lane:recordLane(next,id),filter:keep?filter:'all',search:keep?search:'',page:keep?page:1,basis:keep?basis:'include',round:keep?round:'all',...overrides};
+  const state:ListingState={lane:keep?lane:recordLane(next,id),filter:keep?filter:'all',search:keep?search:'',page:keep?page:1,basis:keep?basis:'include',round:keep?round:'all',activity:keep?activity:'all',...overrides};
   if(next==='Voting'&&id===null&&selected?.startsWith('upgrade:'))state.lane='upgrades';
   if(next==='ZIPs'&&id)state.lane=laneForRecord(id);
-  setSection(next);setSelected(id);setLane(state.lane);setSearch(state.search);setFilter(state.filter);setPage(state.page);setBasis(state.basis);setRound(state.round);
+  setSection(next);setSelected(id);setLane(state.lane);setSearch(state.search);setFilter(state.filter);setPage(state.page);setBasis(state.basis);setRound(state.round);setActivity(isZipActivity(state.activity)?state.activity:'all');
   history.pushState(null,'',`?${listingParams(next,id,state)}`);window.dispatchEvent(new Event('shielded:navigate'));window.scrollTo({top:0,behavior:'instant'});
  }
  function rememberListing(overrides:Partial<ListingState>){
   const current=new URLSearchParams(location.search);
-  const state:ListingState={lane:current.get('lane')??recordLane(section,selected),filter:current.get('filter')??'all',search:current.get('q')??'',page:Number(current.get('page')??1),basis:current.get('basis')==='exclude'?'exclude':'include',round:current.get('round')??'all',...overrides};
+  const state:ListingState={lane:current.get('lane')??recordLane(section,selected),filter:current.get('filter')??'all',search:current.get('q')??'',page:Number(current.get('page')??1),basis:current.get('basis')==='exclude'?'exclude':'include',round:current.get('round')??'all',activity:current.get('activity')??'all',...overrides};
   history.replaceState(null,'',`?${listingParams(section,selected,state)}`);
  }
  function find(value:string){setSearch(value);setPage(1);rememberListing({search:value,page:1})}
  function chooseFilter(value:string){setFilter(value);setPage(1);rememberListing({filter:value,page:1})}
  function chooseLane(value:string){setLane(value);setFilter('all');setSearch('');setPage(1);setRound('all');rememberListing({lane:value,filter:'all',search:'',page:1,round:'all'})}
  function chooseRound(value:string){setRound(value);setPage(1);rememberListing({round:value,page:1})}
+ function chooseActivity(value:string){const next=isZipActivity(value)?value:'all';setActivity(next);setPage(1);rememberListing({activity:next,page:1})}
  function chooseBasis(value:'include'|'exclude'){setBasis(value);rememberListing({basis:value})}
  function choosePage(value:number){setPage(value);rememberListing({page:value})}
  const collectionControls={search,onSearch:find,filter,onFilter:chooseFilter,page,onPage:choosePage,onNavigate:go};
@@ -136,7 +140,7 @@ export default function Governance(){
   {!selected&&section!=='How it works'&&<h1 ref={heading} tabIndex={-1} className={g.srOnly}>Governance · {section}</h1>}
 
   {section==='How it works'&&<GovernanceProcess onBack={()=>go('Overview')} onNavigate={go}/>}
-  {section==='ZIPs'&&<GovernanceZips selected={selected} lane={isZipLane(lane)?lane:'zips'} filter={filter} search={search} page={page} onNavigate={go} onSearch={find} onFilter={chooseFilter} onPage={choosePage} onLane={chooseLane}/>}
+  {section==='ZIPs'&&<GovernanceZips selected={selected} lane={isZipLane(lane)?lane:'zips'} filter={filter} search={search} page={page} activity={activity} onNavigate={go} onSearch={find} onFilter={chooseFilter} onPage={choosePage} onLane={chooseLane} onActivity={chooseActivity}/>}
 
   {!selected&&section==='Overview'&&<GovernanceOverview data={data} pollCount={polls.length} onNavigate={go}/>}
 

@@ -43,11 +43,49 @@ function compare(lane: ZipLane, a: ZipEntry, b: ZipEntry) {
   if (lane === 'proposals') return (b.pull?.updatedAt ?? '').localeCompare(a.pull?.updatedAt ?? '') || (b.pull?.number ?? 0) - (a.pull?.number ?? 0) || a.title.localeCompare(b.title);
   return a.title.localeCompare(b.title);
 }
-export function filterZips(entries: readonly ZipEntry[], { lane, status = 'all', query = '' }: { lane: ZipLane; status?: string; query?: string }) {
+const DAY = 86_400_000;
+/** Activity windows offered as filters, counted back from when the index was read. */
+export const zipActivityWindows = [{ id: '7', days: 7, name: '7 days' }, { id: '30', days: 30, name: '30 days' }, { id: '90', days: 90, name: '90 days' }] as const;
+export type ZipActivity = 'all' | typeof zipActivityWindows[number]['id'];
+export const isZipActivity = (value: string | null | undefined): value is ZipActivity => value === 'all' || zipActivityWindows.some(window => window.id === value);
+/** Opened or created within this many days counts as new. */
+export const ZIP_NEW_DAYS = 7;
+/** Last movement: the pull request's update, or the file's last change in the repository. */
+export const zipActivityAt = (entry: Pick<ZipEntry, 'pull' | 'updatedAt'>) => entry.pull?.updatedAt ?? entry.updatedAt ?? null;
+/** When it first appeared: the pull request's opening, or the Created date in the ZIP header. */
+export const zipOpenedAt = (entry: Pick<ZipEntry, 'pull' | 'created'>) => entry.pull?.createdAt ?? entry.created ?? null;
+/** The reference time for windows: when the index was read, or its newest record if later, so nothing listed sits in the future. */
+export function zipIndexTime(index: Pick<ZipsIndex, 'observedAt' | 'meta' | 'entries'>) {
+  const read = Date.parse(index.observedAt ?? index.meta.syncedAt);
+  const newest = Math.max(...index.entries.map(entry => Date.parse(zipActivityAt(entry) ?? '')).filter(Number.isFinite));
+  return Math.max(Number.isFinite(read) ? read : Number.NEGATIVE_INFINITY, newest);
+}
+export function withinDays(value: string | null | undefined, days: number, now: number) {
+  const time = value ? Date.parse(value) : Number.NaN;
+  return Number.isFinite(time) && Number.isFinite(now) && time <= now + DAY && now - time <= days * DAY;
+}
+export const isNewZip = (entry: Pick<ZipEntry, 'pull' | 'created'>, now: number) => withinDays(zipOpenedAt(entry), ZIP_NEW_DAYS, now);
+const activeWithin = (entry: ZipEntry, activity: ZipActivity, now: number) => activity === 'all' || withinDays(zipActivityAt(entry), Number(activity), now);
+const byActivity = (a: ZipEntry, b: ZipEntry) => (zipActivityAt(b) ?? '').localeCompare(zipActivityAt(a) ?? '');
+
+type ZipQuery = { lane: ZipLane; status?: string; query?: string; activity?: ZipActivity; now?: number };
+export function filterZips(entries: readonly ZipEntry[], { lane, status = 'all', query = '', activity = 'all', now = Number.NaN }: ZipQuery) {
   const words = tokens(query);
   return entries
-    .filter(entry => zipLane(entry) === lane && (status === 'all' || entry.status === status) && words.every(word => searchText(entry).includes(word)))
-    .sort((a, b) => compare(lane, a, b));
+    .filter(entry => zipLane(entry) === lane && (status === 'all' || entry.status === status) && activeWithin(entry, activity, now) && words.every(word => searchText(entry).includes(word)))
+    // A window asks what moved, so the latest movement leads; otherwise each lane keeps its own order.
+    .sort((a, b) => activity === 'all' ? compare(lane, a, b) : byActivity(a, b) || compare(lane, a, b));
+}
+/** Chip counts: each group counts what the other filters leave, so the numbers always match the list a click would show. */
+export function zipFacets(entries: readonly ZipEntry[], { lane, status = 'all', query = '', activity = 'all', now = Number.NaN }: ZipQuery) {
+  const words = tokens(query);
+  const base = entries.filter(entry => zipLane(entry) === lane && words.every(word => searchText(entry).includes(word)));
+  const inWindow = base.filter(entry => activeWithin(entry, activity, now));
+  const withStatus = base.filter(entry => status === 'all' || entry.status === status);
+  return {
+    statuses: [{ id: 'all', count: inWindow.length }, ...zipStatuses(entries, lane).map(id => ({ id, count: inWindow.filter(entry => entry.status === id).length }))],
+    activity: [{ id: 'all' as ZipActivity, count: withStatus.length }, ...zipActivityWindows.map(window => ({ id: window.id as ZipActivity, count: withStatus.filter(entry => activeWithin(entry, window.id, now)).length }))],
+  };
 }
 /** Global search rows for proposals, drafts and guides; numbered ZIPs match their number too. */
 export function searchZips(query: string, entries: readonly ZipEntry[] = bundledZips.entries) {

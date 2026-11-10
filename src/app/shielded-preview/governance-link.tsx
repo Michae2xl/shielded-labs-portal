@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import { governanceSectionSlug, type GovernanceSection } from '@/lib/shielded-preview/governance-sections';
 
-export type CollectionSelection = { lane?: string; filter?: string; search?: string; page?: number; basis?: 'include' | 'exclude'; round?: string };
+export type CollectionSelection = { lane?: string; filter?: string; search?: string; page?: number; basis?: 'include' | 'exclude'; round?: string; activity?: string };
 export type CollectionNavigate = (section: GovernanceSection, id?: string | null, selection?: CollectionSelection) => void;
 
 export function Arrow() {
@@ -21,6 +21,7 @@ export function Link({ section, id, selection, onNavigate, children, className }
   if (selection?.page && selection.page > 1) params.set('page', String(selection.page));
   if (selection?.basis === 'exclude') params.set('basis', 'exclude');
   if (selection?.round && selection.round !== 'all') params.set('round', selection.round);
+  if (selection?.activity && selection.activity !== 'all') params.set('activity', selection.activity);
   return <a href={`?${params}`} className={className} onClick={event => {
     if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { bundledZips, filterZips, laneForRecord, proposalChange, searchZips, zipHref, zipLabel, zipRecordId, zipReference, zipStatuses, zipSummary, zipTitle } from './library';
+import { bundledZips, filterZips, isNewZip, isZipActivity, laneForRecord, proposalChange, searchZips, withinDays, zipFacets, zipHref, zipIndexTime, zipLabel, zipRecordId, zipReference, zipStatuses, zipSummary, zipTitle } from './library';
 import { zipEntrySchema, zipMetaSchema, type ZipEntry } from './types';
 
 describe('Bundled ZIP snapshot', () => {
@@ -59,5 +59,29 @@ describe('Bundled ZIP snapshot', () => {
     expect(searchZips('  Hierarchical  ')).toContainEqual({ title: 'ZIP 32: Shielded Hierarchical Deterministic Wallets', kind: 'ZIP', href: '?view=governance&section=zips&record=zip-0032' });
     expect(searchZips('')).toEqual([]);
     expect(searchZips('zip').length).toBeLessThanOrEqual(12);
+  });
+
+  it('filters by activity window, counts each chip against the other filters and marks what opened this week', () => {
+    const base = bundledZips.entries.find(entry => entry.kind === 'proposal')!;
+    const pr = (number: number, opened: string, updated: string, status = 'Draft'): ZipEntry => ({ ...base, id: `pr-${number}`, status, pull: { ...base.pull!, number, createdAt: opened, updatedAt: updated } });
+    const rows = [pr(3, '2026-01-01T00:00:00Z', '2026-03-01T00:00:00Z'), pr(2, '2026-09-01T00:00:00Z', '2026-10-20T00:00:00Z', 'Active'), pr(1, '2026-11-08T00:00:00Z', '2026-11-09T00:00:00Z')];
+    const now = Date.parse('2026-11-09T12:00:00Z');
+    expect(filterZips(rows, { lane: 'proposals', activity: '7', now }).map(entry => entry.id)).toEqual(['pr-1']);
+    // A window lists the latest movement first.
+    expect(filterZips(rows, { lane: 'proposals', activity: '30', now }).map(entry => entry.id)).toEqual(['pr-1', 'pr-2']);
+    expect(filterZips(rows, { lane: 'proposals', now }).map(entry => entry.id)).toEqual(['pr-1', 'pr-2', 'pr-3']);
+    const counts = (list: { id: string; count: number }[]) => Object.fromEntries(list.map(item => [item.id, item.count]));
+    expect(counts(zipFacets(rows, { lane: 'proposals', now }).activity)).toEqual({ all: 3, 7: 1, 30: 2, 90: 2 });
+    expect(zipFacets(rows, { lane: 'proposals', now }).statuses).toEqual([{ id: 'all', count: 3 }, { id: 'Draft', count: 2 }, { id: 'Active', count: 1 }]);
+    expect(counts(zipFacets(rows, { lane: 'proposals', activity: '30', now }).statuses)).toEqual({ all: 2, Draft: 1, Active: 1 });
+    expect(counts(zipFacets(rows, { lane: 'proposals', status: 'Draft', now }).activity)).toEqual({ all: 2, 7: 1, 30: 1, 90: 1 });
+    expect(rows.map(entry => isNewZip(entry, now))).toEqual([false, false, true]);
+    expect([withinDays(null, 7, now), withinDays('2026-11-20T00:00:00Z', 7, now), withinDays('not a date', 7, now)]).toEqual([false, false, false]);
+    expect([isZipActivity('30'), isZipActivity('all'), isZipActivity('5'), isZipActivity(null)]).toEqual([true, true, false, false]);
+    // Windows count back from when the index was read, or from its newest record when that is later; never the viewer's clock.
+    const newest = Math.max(...bundledZips.entries.map(entry => Date.parse(entry.pull?.updatedAt ?? entry.updatedAt ?? '')).filter(Number.isFinite));
+    expect(zipIndexTime(bundledZips)).toBe(Math.max(Date.parse(bundledZips.meta.syncedAt), newest));
+    expect(zipIndexTime({ ...bundledZips, entries: rows, observedAt: '2026-11-10T00:00:00Z' })).toBe(Date.parse('2026-11-10T00:00:00Z'));
+    expect(zipIndexTime({ ...bundledZips, entries: rows, observedAt: '2026-11-01T00:00:00Z' })).toBe(Date.parse('2026-11-09T00:00:00Z'));
   });
 });
