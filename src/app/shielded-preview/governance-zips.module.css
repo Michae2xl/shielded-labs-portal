@@ -103,7 +103,8 @@
 .filterBar{display:flex;flex:1;flex-wrap:wrap;align-items:center;gap:8px 26px;min-width:0}
 .chips{display:flex;align-items:center;gap:10px;min-width:0}
 .chips>span{flex:none;width:64px;color:#8c8c8c;font-size:10.5px;font-weight:500;letter-spacing:1.3px;line-height:1;text-transform:uppercase}
-.chips>div{display:flex;align-items:center;gap:2px;min-width:0;padding:3px;border:1px solid #282828;border-radius:10px;background:#0c0c0c}
+/* A track wider than the panel wraps its chips onto a second line instead of pushing the page sideways. */
+.chips>div{display:flex;flex-wrap:wrap;align-items:center;gap:2px;min-width:0;padding:3px;border:1px solid #282828;border-radius:10px;background:#0c0c0c}
 .filterBar .chips button{display:inline-flex;align-items:center;flex:none;gap:7px;min-height:30px;padding:0 10px;border:1px solid transparent;border-radius:7px;background:transparent;color:#a9a9a9;font-family:var(--font-display,inherit);font-size:13px;font-weight:500;letter-spacing:.01em;line-height:1;white-space:nowrap;cursor:pointer;transition:color 140ms ease,background-color 140ms ease}
 .filterBar .chips button strong{min-width:20px;padding:3px 6px;border-radius:999px;background:#1b1b1b;color:#9a9a9a;font-family:var(--font-inter,inherit);font-size:10.5px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:0;line-height:1;text-align:center}
 .filterBar .chips button:hover{color:#f2f2f2}
@@ -116,7 +117,7 @@
 /* New: a pull request opened, or a ZIP created, in the last week. */
 .newTag{padding:1px 7px;border-radius:4px;background:#e9e9e9;color:#111;font-size:11.5px;font-weight:600;letter-spacing:.2px;line-height:1.5}
 /* Narrow lists: each group keeps one row and scrolls sideways instead of stacking chips. */
-@container(max-width:600px){.filterBar{flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:8px}.chips>div{flex:1;overflow-x:auto;scrollbar-width:none}.chips>div::-webkit-scrollbar{display:none}.filterBar .chips button{min-height:34px}}
+@container(max-width:600px){.filterBar{flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:8px}.chips>div{flex:1;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.chips>div::-webkit-scrollbar{display:none}.filterBar .chips button{min-height:34px}}
 /* ZIP and pull request numbers run to four digits plus a hash: the number column is wider than the archive default. */
 a.zipRecord,div.zipColumns{grid-template-columns:44px minmax(0,1fr) 340px 18px}
 @container(max-width:1050px){a.zipRecord,div.zipColumns{grid-template-columns:44px minmax(0,1fr) 300px 18px}}
