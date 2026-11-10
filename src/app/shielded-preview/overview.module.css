@@ -3,7 +3,6 @@
 .overview a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 .overview svg{display:block;flex-shrink:0;color:var(--text-muted,#b0b0b0)}
 .overview section,.projects,.recentCode{min-width:0}
-.overview .kicker{font-size:12px;font-weight:550;line-height:1.5;letter-spacing:1.3px;text-transform:uppercase;color:#b6b6b6;margin:0 0 9px}
 .overview h1:focus{outline:none}
 /* Opening band. The art is a field of dots; those inside the shield are lit, and a slow sheen crosses them. */
 .hero{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-bottom:24px;padding:22px 24px 20px;border:1px solid #2e2e2e;border-radius:14px;background:radial-gradient(90% 150% at 0 0,#1c1c1c 0,#0e0e0e 60%);box-shadow:inset 0 1px 0 #ffffff0d}
@@ -57,17 +56,19 @@
 .newsCard>img{width:80px;height:60px;object-fit:contain;border-radius:6px;background:#000}
 .newsCard time{font-size:12px;color:#aaa;line-height:1.6}
 .overview .newsCard h3{font-size:16px;font-weight:500;line-height:1.5;letter-spacing:-.2px;margin:4px 0 0}
-.governance>img{width:38px;height:38px;margin:3px 0 16px}
-.governanceIntro{padding-bottom:20px}
-.overview .governance .kicker{font-size:11px;letter-spacing:1px;color:#aaa;margin:0 0 7px}
-.overview .governance h2{font-size:23px;line-height:1.35;letter-spacing:-.3px;font-weight:500;margin:0}
-.overview .governanceIntro>p:last-child{font-size:15px;line-height:1.65;color:#bbb;max-width:38ch;margin:10px 0 0}
+/* The mark and the name form one lockup, at the size of the neighbouring card titles. */
+.governanceHead{display:flex;align-items:center;gap:11px;min-height:32px;margin-bottom:12px}
+.governanceHead>img{width:30px;height:30px;flex-shrink:0}
+.overview .governance h2{line-height:1.35;font-weight:500;margin:0}
+.overview .governanceIntro{font-size:15px;line-height:1.65;color:#bbb;max-width:38ch;margin:0 0 20px}
+/* The figure sits in the free space between the introduction and the action, so the card never looks hollow. */
+.governanceFigure{margin:auto 0;padding-bottom:20px}
+.governance .cardAction{margin-top:0}
 @container overview (max-width:680px){
  .updates{grid-template-columns:minmax(0,1fr)}
  .sectionHeader{gap:10px;margin-bottom:13px}.overview .sectionHeader h2{font-size:22px}
  .milestones,.code,.news,.governance{padding:16px 18px 0}
- .governance{display:grid;grid-template-columns:38px minmax(0,1fr);gap:0 16px}
- .governanceIntro{padding-bottom:16px}.governance .cardAction{grid-column:1/-1}.governance>img{margin-top:5px}
+ .overview .governanceIntro{margin-bottom:16px}
 }
 @container overview (max-width:440px){
  .updates{margin-top:20px;gap:12px}.newsCard{grid-template-columns:64px minmax(0,1fr) 16px;gap:10px}.newsCard>img{width:64px;height:52px}

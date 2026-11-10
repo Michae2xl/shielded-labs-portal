@@ -1,0 +1,24 @@
+/* Miners stay neutral; the two Dev Fund parts share the Zcash gold, a deep step and the brand step,
+   checked for separation under colour-vision deficiency. Text on a block is ink, never the series colour. */
+.figure { --miners: #4a4a4a; --fund: #a87408; --zcg: #f4b728; margin: 0; min-width: 0; }
+
+.figure figcaption { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; margin-bottom: 10px; }
+.figure figcaption strong { font-size: 13px; font-weight: 550; line-height: 1.5; color: #e4e4e4; }
+.figure figcaption span { font-size: 12px; line-height: 1.5; color: #9c9c9c; }
+
+.bar { display: flex; gap: 2px; height: 28px; }
+.bar span { display: flex; flex: 0 1 0; align-items: center; justify-content: center; min-width: 0; overflow: hidden; border-radius: 4px; font-size: 11px; font-weight: 600; line-height: 1; color: #111; cursor: default; transition: filter 160ms ease; }
+.bar span:hover { filter: brightness(1.12); }
+.bar [data-part=miners] { justify-content: flex-start; padding-left: 9px; background: var(--miners); color: #f2f2f2; }
+.bar [data-part=fund] { background: var(--fund); }
+.bar [data-part=zcg] { background: var(--zcg); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 10px 0 0; padding: 0; list-style: none; font-size: 12px; line-height: 1.5; color: #b8b8b8; }
+.legend li { display: flex; align-items: center; gap: 7px; margin: 0; padding: 0; white-space: nowrap; }
+.legend li::before { content: ''; width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+.legend [data-part=miners]::before { background: var(--miners); }
+.legend [data-part=fund]::before { background: var(--fund); }
+.legend [data-part=zcg]::before { background: var(--zcg); }
+
+@media (prefers-reduced-motion: reduce) { .bar span { transition: none; } }
+@media (forced-colors: active) { .bar span, .legend li::before { forced-color-adjust: none; } }

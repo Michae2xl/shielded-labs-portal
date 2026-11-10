@@ -6,6 +6,7 @@ import { developmentDays, isMergeCommit, repositoryLabels, windowCommits, develo
 import type { PortalData } from '@/lib/shielded-preview/types';
 import ContributorAvatar from './contributor-avatar';
 import ProjectCard from './project-card';
+import BlockRewardSplit from './block-reward-split';
 import { editorialCatalog } from '@/lib/shielded-preview/editorial/library';
 import Image from 'next/image';
 import s from './overview.module.css';
@@ -101,12 +102,9 @@ export default function Overview({ data, onNavigate, onProject, onFollow, projec
     </section>
 
     <section aria-labelledby="overview-governance" className={s.governance}>
-      <Image src="/logos/zcash.svg" width={38} height={38} alt=""/>
-      <div className={s.governanceIntro}>
-        <p className={s.kicker}>Zcash ecosystem</p>
-        <h2 id="overview-governance">Zcash Governance</h2>
-        <p>Follow proposals, funding, voting and published outcomes across the Zcash ecosystem.</p>
-      </div>
+      <header className={s.governanceHead}><Image src="/logos/zcash.svg" width={30} height={30} alt=""/><h2 id="overview-governance">Zcash Governance</h2></header>
+      <p className={s.governanceIntro}>Follow proposals, funding, voting and published outcomes across the Zcash ecosystem.</p>
+      <div className={s.governanceFigure}><BlockRewardSplit/></div>
       <PortalLink view="governance" section="overview" onNavigate={onNavigate} className={s.cardAction}>Open governance<Arrow/></PortalLink>
     </section>
     </div>
