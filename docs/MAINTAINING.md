@@ -55,6 +55,7 @@ npm run test:sources
 npm run test:zips      # needs: python3 -m pip install -r scripts/zips/requirements.txt
 npm run check:isolation
 npm run build
+npm run test:e2e       # after the build; needs Google Chrome installed
 ```
 
 ## Deploy

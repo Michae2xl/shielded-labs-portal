@@ -1,5 +1,5 @@
 # Checks every change before it reaches main: lint, types, unit tests, the
-# Python importers and a production build. Deploys stay manual (docs/MAINTAINING.md).
+# Python importers, a production build and its screens in a browser. Deploys stay manual (docs/MAINTAINING.md).
 name: CI
 
 on:
@@ -37,3 +37,5 @@ jobs:
       - run: npm run test:zips
       - run: npm run check:isolation
       - run: npm run build
+      # Opens every screen of the build in the runner's Chrome: no uncaught errors, no sideways scroll, list columns aligned.
+      - run: npm run test:e2e

@@ -41,6 +41,7 @@ npm run test:zips
 npm run lint
 npm run build
 npm run typecheck
+npm run test:e2e   # after the build: opens every screen in the installed Chrome
 ```
 
 CI runs the same checks on every pull request. What updates itself, what needs a person, the daily source alerts and the deploy steps are in [docs/MAINTAINING.md](docs/MAINTAINING.md).

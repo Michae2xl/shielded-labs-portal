@@ -30,3 +30,8 @@ ZcashCommunityGrants and Financial-Privacy-Foundation GitHub issues or the Zcash
 Community Forum, and are shown with a link to the original. Applicants retain
 ownership of their text. The Markdown is parsed with
 [marked](https://github.com/markedjs/marked) (MIT) and rendered without raw HTML.
+
+## Development tools
+
+The screen checks under `tests/e2e` run with [Playwright](https://github.com/microsoft/playwright) (Apache-2.0),
+a development dependency that drives an installed browser. It is not part of the deployed portal.
