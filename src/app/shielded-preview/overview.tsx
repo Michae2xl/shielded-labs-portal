@@ -48,14 +48,27 @@ export default function Overview({ data, onNavigate, onProject, onFollow, projec
     const latest = commits.find(commit => commit.repositories.includes(repo.name));
     return latest ? [{ repo, latest }] : [];
   }).sort((a, b) => b.latest.date.localeCompare(a.latest.date)).slice(0, 3);
+  const repositories = data.repos.filter(repo => !repo.fork).length;
   const recentMilestones = [...milestones].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
   const latestNews = editorialCatalog.filter(entry => entry.view === 'blog').slice(0, 3);
 
   return <div className={s.overview}>
-    <h1 ref={heading} tabIndex={-1} className={s.srOnly}>Shielded Labs</h1>
+    <header className={s.hero}>
+      <div className={s.heroArt} aria-hidden="true"/>
+      <div className={s.heroCopy}>
+        <h1 ref={heading} tabIndex={-1}><Image src="/logos/shielded-labs-horizontal.png" alt="Shielded Labs" width={800} height={200} priority sizes="(max-width: 700px) 190px, 240px"/></h1>
+        <p>Projects, milestones, code activity and Zcash governance in one place.</p>
+      </div>
+      <ul className={s.facts} aria-label="At a glance">
+        <li><PortalLink view="projects" onNavigate={onNavigate}><span>Projects</span><strong>{projects.length}</strong></PortalLink></li>
+        <li><PortalLink view="activity" onNavigate={onNavigate}><span>Repositories</span><strong>{repositories}</strong></PortalLink></li>
+        <li><PortalLink view="activity" onNavigate={onNavigate}><span>Commits · 35 days</span><strong>{commits.length}</strong></PortalLink></li>
+        {recentMilestones[0] && <li><PortalLink view="impact" onNavigate={onNavigate}><span>Latest milestone</span><strong><DateStamp date={recentMilestones[0].date}/></strong></PortalLink></li>}
+      </ul>
+    </header>
 
     <section aria-labelledby="overview-projects" className={s.projects}>
-      <h2 id="overview-projects" className={s.srOnly}>Projects</h2>
+      <header className={s.sectionHeader}><h2 id="overview-projects">Projects</h2></header>
       <div className={pc.collection}><div className={`${pc.grid} ${pc.compactNarrow}`}>{projects.map(project => <ProjectCard key={project.id} item={project} repositories={data.repos} glyph={projectGlyph(project)} arrow={<Arrow/>} heading="h3" onSelect={onProject} onFollow={onFollow}/>)}</div></div>
     </section>
 
