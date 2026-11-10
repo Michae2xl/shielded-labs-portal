@@ -391,7 +391,7 @@
 .proposalAim p{font-size:13px;line-height:1.5;color:#ddd;margin:4px 0 5px}
 .proposalAim>a{font-size:11px!important;color:#aaa;display:inline-flex!important;gap:6px;margin:0!important}
 .focusPanel>.proposalAim{padding:12px 0;border-top:1px solid #333;margin:12px 0}
-.table .proposalAim>span{display:none}
+.proposalAim>p:first-child{margin-top:0}
 @media(max-width:700px){.signalRow{grid-template-columns:minmax(0,1fr) 22px;gap:12px;padding:16px}.positionBody{grid-column:1/-1;grid-row:2}.comparePick{grid-row:1;grid-column:2}.participantList{max-height:320px}.participantList li>div{display:block}.signalTitle strong{font-size:15px}}
 
 .versionNote{flex-basis:100%;font-size:11px;line-height:1.5;color:#aaa}
@@ -426,3 +426,6 @@
  .topicFilters{grid-column:1;grid-row:2;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}
  .topicFilters button{justify-content:center}
 }
+/* Map nodes: current drafts carry no status line (the footnote says it once), so a node is as tall as its title needs. */
+.landscape .mapNode{min-height:0}
+.landscape .mapNode strong:last-child{margin-bottom:0}

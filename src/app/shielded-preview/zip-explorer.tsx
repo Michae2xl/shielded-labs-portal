@@ -46,8 +46,9 @@ function SignalBar({ id, channel = 'all' }: { id: string; channel?: string }) {
     {other.length > 0 && <details><summary>{other.length} other contributions</summary><small>Context from the discussion; not counted as ZIP endorsements.</small><ParticipantList items={other}/></details>}</div>
   </div>;
 }
-function ProposalAim({ proposal }: { proposal: FundProposal }) {
-  return <div className={s.proposalAim}><span>{proposal.stage === 'Baseline' ? 'Stated aim' : 'Proposed benefit'}</span><p>{proposalAims[proposal.id]}</p><External href={proposal.source}>{proposal.stage === 'Baseline' ? 'Requestor’s source' : 'Authors’ rationale'}</External></div>;
+/** The aim as its authors state it. Lists and the comparison name it once in their own header, so only a lone panel passes `label`. */
+function ProposalAim({ proposal, label = false }: { proposal: FundProposal; label?: boolean }) {
+  return <div className={s.proposalAim}>{label && <span>{proposal.stage === 'Baseline' ? 'Stated aim' : 'Proposed benefit'}</span>}<p>{proposalAims[proposal.id]}</p><External href={proposal.source}>{proposal.stage === 'Baseline' ? 'Requestor’s source' : 'Authors’ rationale'}</External></div>;
 }
 function MapBoard({ rows, selected, select }: { rows: FundProposal[]; selected: string; select: (id: string) => void }) {
   const groups = (['Funding', 'Governance', 'Voting'] as const).filter(group => rows.some(p => proposalGroup(p) === group && !isHistorical(p)));
@@ -55,7 +56,7 @@ function MapBoard({ rows, selected, select }: { rows: FundProposal[]; selected: 
   function node(p: FundProposal) {
     return <button className={s.mapNode} key={p.id} style={accent(p.id)} data-historical={isHistorical(p)} data-baseline={p.stage === 'Baseline'} aria-pressed={p.id === selected} onClick={() => select(p.id)}>
       <span className={s.nodeTop}><People names={p.authors}/><small>{p.pr ? `PR #${p.pr}` : p.stage === 'Baseline' ? 'ZIP 1016 reference' : 'Forum draft'}</small></span>
-      <strong>{p.short}</strong><span className={s.structure}>{p.stage === 'Baseline' ? 'Current rules reference' : isHistorical(p) ? p.stage : 'Draft proposal'}</span>
+      <strong>{p.short}</strong>{isHistorical(p) && <span className={s.structure}>{p.stage}</span>}
     </button>;
   }
   return <section className={s.atlas} aria-label="General proposal map">
@@ -165,8 +166,8 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
       {state.layout === 'map' && selected && <>
         <div className={s.workspaceBar}><nav aria-label="Map views">{[['network','Overview'],['signals','Public positions'],['timeline','Timeline']].map(([panel,label]) => <button key={panel} aria-pressed={state.panel === panel} onClick={() => update({panel})}>{label}</button>)}</nav>{state.panel !== 'network' && sourceFilter}</div>
         {state.panel === 'signals' && <section className={s.signals} aria-label="Documented support bars">
-          <header className={s.signalsHeader}><div><h3>Documented support</h3><p>Most recorded positions first. Open a count to see participants and sources.</p></div><span className={s.sampleBadge}>Partial coverage</span></header>
-          <div className={s.signalLegend}><span data-kind="Support">Support</span><span data-kind="Concern">Concern</span><span data-kind="Opposition">Opposition</span><small>Partial sample · accounts, not votes · contributors excluded</small></div>
+          <header className={s.signalsHeader}><div><h3>Documented support</h3><p>Most recorded positions first, each with its authors’ stated aim. Open a count to see participants and sources.</p></div><span className={s.sampleBadge}>Partial coverage</span></header>
+          <div className={s.signalLegend}><span data-kind="Support">Support</span><span data-kind="Concern">Concern</span><span data-kind="Opposition">Opposition</span><small>Accounts, not votes · contributors excluded</small></div>
           {signalRows.map(p => <div key={p.id} className={s.signalRow} data-selected={selected.id === p.id} style={accent(p.id)}>
             <button className={s.signalTitle} aria-pressed={selected.id === p.id} onClick={() => select(p.id)}><span><strong>{p.short}</strong><small>{p.pr ? `#${p.pr} · ` : ''}{p.stage}</small></span></button>
             <div className={s.positionBody}><ProposalAim proposal={p}/><SignalBar id={p.id} channel={state.channel}/></div>
@@ -193,7 +194,7 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
         {state.panel !== 'timeline' && <>
         <section ref={focusPanel} tabIndex={-1} className={s.focusPanel} aria-label={`Selected proposal: ${selected.short}`} style={accent(selected.id)}>
           <button className={s.backToBrowse} onClick={() => { browsingPanel.current?.scrollIntoView({behavior:'instant',block:'start'}); browsingPanel.current?.focus({preventScroll:true}); }}>↑ Back to proposals</button><header><div><span className={s.eyebrow}>{proposalGroup(selected)}</span><h3>{selected.short}</h3><span className={s.focusAuthors}><People names={selected.authors}/>{selected.authors.join(' · ')}</span></div><Badge proposal={selected}/></header>
-          <p>{selected.summary}</p><ProposalAim proposal={selected}/><div className={s.sourceRow}><External href={selected.source}>Proposal source</External><External href={selected.discussion}>{isHistorical(selected) ? 'Status source' : 'Public discussion'}</External><button onClick={() => {const ids = state.compared.includes(selected.id) ? state.compared : [...state.compared.slice(0,2), selected.id];update({layout:'compare',compare:ids.join(',')});}}>Compare this proposal →</button></div>
+          <p>{selected.summary}</p><ProposalAim proposal={selected} label/><div className={s.sourceRow}><External href={selected.source}>Proposal source</External><External href={selected.discussion}>{isHistorical(selected) ? 'Status source' : 'Public discussion'}</External><button onClick={() => {const ids = state.compared.includes(selected.id) ? state.compared : [...state.compared.slice(0,2), selected.id];update({layout:'compare',compare:ids.join(',')});}}>Compare this proposal →</button></div>
           <details className={s.proposalDetails} key={selected.id}><summary>Details & full proposal</summary><Details proposal={selected} index={index}/></details>
         </section>
         {fundRelations.some(r => r.from === selected.id || r.to === selected.id) && <div className={s.relations}>{fundRelations.filter(r => r.from === selected.id || r.to === selected.id).map(r => { const other = fundProposals.find(p => p.id === (r.from === selected.id ? r.to : r.from))!; return <div key={`${r.from}-${r.to}`}><span>{r.label}</span><button onClick={() => update({ focus: other.id, past: '1', status: null, dq: null, group: null })}>{other.short} →</button><External href={r.source}>Basis</External></div>; })}</div>}
