@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import record from '@/lib/shielded-preview/governance-data/record.json';
 import catalog from '@/lib/shielded-preview/editorial/catalog.json';
 import type { GovernanceData } from '@/lib/shielded-preview/governance-types';
@@ -9,6 +9,9 @@ import { disclosedDocuments } from '@/lib/shielded-preview/transparency/involvem
 import { editorialPolicy } from '@/lib/shielded-preview/transparency/policy';
 import { ageLabel, DAY, freshness, MINUTE, type Freshness } from '@/lib/shielded-preview/transparency/thermometer';
 import { treasurySheetUrl, treasuryTabs, zecPricePage } from '@/lib/shielded-preview/treasury';
+import { laneForAnchor, transparencyLane, transparencyLanes } from '@/lib/shielded-preview/transparency/lanes';
+import { Tabs } from './governance-collections';
+import c from './governance-collections.module.css';
 import { EvidenceKey, EvidenceTag, ExternalMark, day } from './transparency';
 import { DebateExplorer } from './transparency-debates';
 import { InvolvementCard } from './transparency-involvement';
@@ -44,17 +47,30 @@ function useLiveTimes() {
   return times;
 }
 
-export default function GovernanceTransparency({ data }: { data: GovernanceData }) {
+export default function GovernanceTransparency({ data, lane, onLane }: { data: GovernanceData; lane: string; onLane: (value: string) => void }) {
+  const view = transparencyLane(lane);
   const live = useLiveTimes();
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => { const timer = setInterval(() => setNow(Date.now()), 30000); return () => clearInterval(timer); }, []);
+  // An anchor opens the tab that holds it, then scrolls to it once that tab is on screen.
+  const choose = useRef(onLane);
+  const pending = useRef<string | null>(null);
+  useEffect(() => { choose.current = onLane; });
   useEffect(() => {
-    const reveal = () => { const id = decodeURIComponent(location.hash.slice(1)); if (id) requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView()); };
+    const scrollTo = (id: string) => requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+    // Changing tab rewrites the address without its anchor: put it back and tell the tab's own listeners.
+    if (pending.current) { history.replaceState(null, '', `${location.search}#${pending.current}`); pending.current = null; window.dispatchEvent(new Event('hashchange')); }
+    const reveal = () => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      if (!id) return;
+      const target = laneForAnchor(id);
+      if (target && target !== view) { pending.current = id; choose.current(target); } else scrollTo(id);
+    };
     reveal();
     window.addEventListener('shielded:navigate', reveal);
     window.addEventListener('hashchange', reveal);
     return () => { window.removeEventListener('shielded:navigate', reveal); window.removeEventListener('hashchange', reveal); };
-  }, []);
+  }, [view]);
 
   const readings: Reading[] = [
     { id: 'nsm', label: 'NSM balance', checkedAt: live.nsm, every: MINUTE, cadence: 'Every minute', detail: 'Computed from node pool values (ZIP 237), via Blockchair.' },
@@ -80,10 +96,11 @@ export default function GovernanceTransparency({ data }: { data: GovernanceData 
 
   return <div className={t.page}>
     <h2 className={t.srOnly}>Transparency</h2>
-    <DebateExplorer/>
-    <InvolvementCard rows={disclosed}/>
+    <div className={`${c.collection} ${t.lanes}`}><Tabs label="Transparency views" value={view} items={transparencyLanes} onChange={onLane}/></div>
+    {view === 'debates' && <DebateExplorer/>}
+    {view === 'involvement' && <InvolvementCard rows={disclosed}/>}
 
-    <section className={`${t.card} ${t.keyCard}`} aria-labelledby="evidence-key-title">
+    {view === 'method' && <><section className={`${t.card} ${t.keyCard}`} aria-labelledby="evidence-key-title">
       <div className={t.cardHead}><h3 id="evidence-key-title">How content is marked</h3><span className={t.meta}>Every claim carries one of these marks</span></div>
       <EvidenceKey/>
     </section>
@@ -92,9 +109,9 @@ export default function GovernanceTransparency({ data }: { data: GovernanceData 
       <div className={t.cardHead}><h3 id="editorial-policy-title">Editorial policy</h3></div>
       <dl className={t.policy}>{editorialPolicy.map(item => <div key={item.title}><dt>{item.title}</dt><dd>{item.text}</dd></div>)}</dl>
       <p className={t.note}>Anything without the Shielded Labs mark is reported from its source, with the date it was checked.</p>
-    </section>
+    </section></>}
 
-    <section className={t.card} id="evidence" aria-labelledby="evidence-title">
+    {view === 'evidence' && <><section className={t.card} id="evidence" aria-labelledby="evidence-title">
       <div className={t.cardHead}><h3 id="evidence-title">Evidence ledger</h3><span className={t.meta}>Claims and what proves them</span></div>
       <ul className={t.ledger}>{evidence.map((row, index) => <li key={row.claim} data-kind={row.kind} style={{ '--span': ledgerSpans[index] } as CSSProperties}>
         <div className={t.ledgerTop}><EvidenceTag kind={row.kind} small/><span>{row.checked ? `Checked ${ageLabel(row.checked, now).toLowerCase()}` : live.loaded ? 'Unavailable now' : 'Checking…'}</span></div>
@@ -111,6 +128,6 @@ export default function GovernanceTransparency({ data }: { data: GovernanceData 
         return <li key={reading.id}><span className={`${t.dot} ${dots[level]}`} aria-hidden="true"/><strong>{reading.label}</strong><span>{state}</span><small>{reading.cadence}. {reading.detail}</small></li>;
       })}</ul>
       <div className={t.legend}><span><i className={`${t.dot} ${t.fresh}`}/>Within its cadence</span><span><i className={`${t.dot} ${t.aging}`}/>Late</span><span><i className={`${t.dot} ${t.stale}`}/>Overdue</span></div>
-    </section>
+    </section></>}
   </div>;
 }

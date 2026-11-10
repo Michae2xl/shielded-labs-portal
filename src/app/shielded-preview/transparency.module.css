@@ -46,14 +46,14 @@
 .voicesLabel { margin-right: 4px; color: #8c8c8c; font-size: 12px; }
 .controls .voices button { display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 0 11px 0 10px; border: 1px solid #343434; border-radius: 999px; background: #121212; color: #cdcdcd; font-size: 12.5px; font-weight: 550; line-height: 1.2; white-space: nowrap; }
 .controls .voices button:hover { border-color: #5c5c5c; color: #fff; }
-.controls .voices button[aria-pressed='true'] { border-color: #efefef; background: #efefef; color: #111; }
+.controls .voices button[aria-pressed='true'] { border-color: #777; background: #242424; color: #fff; }
 .voices svg { width: 13px; height: 13px; }
 .voices [data-kind='position'] svg { color: #fafafa; }
 .voices [data-kind='community'] svg { color: #bdbdbd; }
 .voices [data-kind='press'] svg { color: #efd283; }
 .voices [aria-pressed='true'] svg { color: currentColor; }
 .voices button span { color: #8b8b8b; font-variant-numeric: tabular-nums; }
-.voices [aria-pressed='true'] span { color: #5a5a5a; }
+.voices [aria-pressed='true'] span { color: #bdbdbd; }
 
 .debateHead { display: grid; gap: 12px; padding: 18px 22px 0; }
 .debateHead .question { margin: 0; max-width: 980px; color: #f0f0f0; font-size: 17px; line-height: 1.5; }
@@ -67,13 +67,13 @@
 .directionRow { display: grid; grid-template-columns: repeat(var(--tiles, 4), minmax(0, 1fr)); gap: 8px; padding: 12px 16px 0; }
 .comments .directionRow button { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 10px 12px; border: 1px solid #2c2c2c; border-radius: 9px; background: #111; color: #d6d6d6; text-align: left; }
 .comments .directionRow button:hover { border-color: #565656; color: #fff; }
-.comments .directionRow button[aria-pressed='true'] { border-color: #efefef; background: #efefef; color: #111; }
+.comments .directionRow button[aria-pressed='true'] { border-color: #777; background: #242424; color: #fff; }
 .directionRow button > span:first-child { display: grid; gap: 2px; min-width: 0; }
 .directionRow strong { font-size: 13.5px; font-weight: 550; line-height: 1.4; }
 .directionRow small { color: #8f8f8f; font-size: 11.5px; line-height: 1.4; }
-.directionRow [aria-pressed='true'] small { color: #555; }
+.directionRow [aria-pressed='true'] small { color: #a9a9a9; }
 .directionCount { flex: none; min-width: 30px; padding: 0 8px; border-radius: 999px; background: #1d1d1d; color: #cfcfcf; font-size: 12.5px; line-height: 22px; text-align: center; font-variant-numeric: tabular-nums; }
-.directionRow [aria-pressed='true'] .directionCount { background: #d4d4d4; color: #111; }
+.directionRow [aria-pressed='true'] .directionCount { background: #3a3a3a; color: #fff; }
 
 .votes { margin: 16px 20px 0; }
 .votesBody { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 0 28px; padding: 12px 16px 16px; }
@@ -122,18 +122,33 @@
 .table tr[data-kind='press'] td:first-child { box-shadow: inset 2px 0 0 rgba(236, 201, 106, .75); }
 .cDate time { color: #9a9a9a; font-size: 12.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .cWho { overflow-wrap: anywhere; }
-.table .cWho { display: grid; gap: 5px; justify-items: start; }
+/* The cell stays a table cell so its rule lines up with the row; the mark drops under the name. */
+.table .cWho > span:first-child { display: block; }
+.table .cWho .tag { margin-top: 5px; }
 .cWho > span:first-child { color: #ececec; font-weight: 550; }
-.cSide span { display: inline-block; padding: 1px 8px; border: 1px solid #333; border-radius: 6px; color: #cfcfcf; font-size: 12px; line-height: 1.5; }
+.cSide span { color: #b4b4b4; font-size: 13px; line-height: 1.5; }
 .cText { color: #d9d9d9; }
 .cSource a { font-size: 12.5px; white-space: nowrap; }
+/* Most rows are community posts, so that mark stays plain; only Shielded Labs and press rows carry a framed one. */
+.table .cWho .tag[data-kind='community'] { padding: 0; border-color: transparent; background: none; color: #8f8f8f; font-weight: 500; }
+.table .cSource a { color: #a8a8a8; text-decoration-color: transparent; }
+.table .cSource a:hover { color: #fff; text-decoration-color: #ddd; }
 .pager { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; border-top: 1px solid #222; }
 .pager ol { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin: 0; padding: 0; list-style: none; }
 .comments .pager button { min-width: 34px; min-height: 32px; padding: 0 10px; border: 1px solid #303030; border-radius: 8px; background: #111; color: #cfcfcf; font-size: 13px; font-weight: 550; font-variant-numeric: tabular-nums; }
 .comments .pager button:hover:not(:disabled) { border-color: #5a5a5a; color: #fff; }
-.comments .pager button[aria-current='page'] { border-color: #efefef; background: #efefef; color: #111; }
+.comments .pager button[aria-current='page'] { border-color: #777; background: #242424; color: #fff; }
 .comments .pager button:disabled { cursor: default; opacity: .35; }
 .card .checked { margin: 0; padding: 0 22px 18px; color: #8c8c8c; font-size: 12.5px; line-height: 1.5; }
+
+/* In its own tab the debate explorer needs no outer frame: its blocks sit straight on the page. */
+.lanes nav { margin-bottom: 0; }
+.explorer { display: flex; flex-direction: column; min-width: 0; color: #eee; scroll-margin-top: 24px; }
+.explorer .controls { margin-top: 0; padding: 0; border-bottom: 0; }
+.explorer .debateHead { padding: 16px 0 0; }
+.explorer .votes { margin: 16px 0 0; }
+.explorer .comments { margin: 12px 0; }
+.explorer .checked { margin: 0; padding: 0; color: #8c8c8c; font-size: 12.5px; line-height: 1.5; }
 
 .debateLink { display: grid; grid-template-columns: minmax(0, 1fr) 18px; align-items: center; gap: 2px 12px; padding: 14px 18px; border: 1px solid #3a3a3a; border-radius: 12px; background: linear-gradient(180deg, #151515, #111); color: #eee; text-decoration: none; }
 .debateLink:hover { border-color: #6c6c6c; background: #1b1b1b; }
@@ -224,6 +239,7 @@
   .table tr[data-kind] td:first-child { box-shadow: none; }
   .table tbody tr:hover td { background: none; }
   .table .cWho { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; grid-area: who; }
+  .table .cWho .tag { margin-top: 0; }
   .cDate { grid-area: date; justify-self: end; }
   .cText { grid-area: text; }
   .cSide { grid-area: side; align-self: center; }

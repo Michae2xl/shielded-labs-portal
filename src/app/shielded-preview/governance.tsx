@@ -26,6 +26,7 @@ import CoinholderProposalRecord from './coinholder-proposal-record';
 import GovernanceInsights from './governance-insights';
 import GovernanceZcap from './governance-zcap';
 import GovernanceTransparency from './governance-transparency';
+import { transparencyLaneIds } from '@/lib/shielded-preview/transparency/lanes';
 import ZcgProposalRecord from './zcg-proposal-record';
 import { emptyTreasurySource } from '@/lib/shielded-preview/treasury';
 import GovernanceReferences, { GovernanceReferenceProvider } from './governance-references';
@@ -33,7 +34,7 @@ import { GrantsCollection, Link, ProposalsCollection, ResultsCollection, VotingC
 import g from './governance.module.css';
 
 type Section = GovernanceSection;
-const recordLane=(section:Section,id:string|null)=>section==='ZIPs'?laneForRecord(id):section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
+const recordLane=(section:Section,id:string|null)=>section==='Transparency'?'debates':section==='ZIPs'?laneForRecord(id):section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
 type ListingState={lane:string;filter:string;search:string;page:number;basis:'include'|'exclude';round:string;activity?:string};
 function listingParams(section:Section,id:string|null,state:ListingState){
  const params=new URLSearchParams({view:'governance',section:governanceSectionSlug(section)});
@@ -42,7 +43,7 @@ function listingParams(section:Section,id:string|null,state:ListingState){
   copyExplorerParams(current,params);
  }
  if(id)params.set('record',id);
- if((section==='Voting'||section==='Proposals'||section==='Results'||section==='Insights'||section==='ZCAP'||section==='ZIPs')&&state.lane!==recordLane(section,null))params.set('lane',state.lane);
+ if((section==='Voting'||section==='Proposals'||section==='Results'||section==='Insights'||section==='ZCAP'||section==='ZIPs'||section==='Transparency')&&state.lane!==recordLane(section,null))params.set('lane',state.lane);
  if(state.filter!=='all')params.set('filter',state.filter);
  if(state.search)params.set('q',state.search);
  if(state.page>1)params.set('page',String(state.page));
@@ -78,7 +79,7 @@ export default function Governance(){
  const refresh=useCallback(async()=>{if(active.current)return;active.current=true;setBusy(true);try{const r=await fetch('/api/shielded-preview/governance',{signal:AbortSignal.timeout(20000)});if(!r.ok)throw new Error();setData(await r.json());setFailed(false)}catch{setFailed(true)}finally{active.current=false;setBusy(false)}},[]);
  useEffect(()=>{const read=()=>{
   const p=new URLSearchParams(location.search);const next=governanceSectionFromSlug(p.get('section'))??'Overview';
-  const lanes=next==='ZIPs'?['zips','drafts','guides','proposals']:next==='Voting'?['current','archive','upgrades',devFundLane]:next==='Proposals'?['review','history','coinholder','q3',devFundLane]:next==='Results'?['q3','elections']:next==='Insights'?['decisions','payments','outcomes','panels']:next==='ZCAP'?['comparison','members']:[];
+  const lanes=next==='ZIPs'?['zips','drafts','guides','proposals']:next==='Voting'?['current','archive','upgrades',devFundLane]:next==='Proposals'?['review','history','coinholder','q3',devFundLane]:next==='Results'?['q3','elections']:next==='Insights'?['decisions','payments','outcomes','panels']:next==='ZCAP'?['comparison','members']:next==='Transparency'?transparencyLaneIds:[];
   const nextPage=Number(p.get('page')??1);
   const nextLane=lanes.includes(p.get('lane')??'')?p.get('lane')!:next==='Voting'&&p.get('filter')==='upgrades'?'upgrades':recordLane(next,p.get('record'));
   setSection(next);setLane(next==='Proposals'&&nextLane==='q3'?'coinholder':nextLane);setSelected(p.get('record'));
@@ -208,7 +209,7 @@ export default function Governance(){
   ><section id="governance-elected"><h2>Elected members</h2><div className={g.checkRows}>{election.elected.map(p=><span key={p.name}>{p.name}<strong>{p.approvals??'Not recorded'} approvals</strong></span>)}</div><p className={g.recordNote}>Approval voting can support multiple candidates. Candidate approvals are not added to infer unique voters.</p></section></GovernanceRecord>}
 
   {!selected&&section==='Insights'&&<GovernanceInsights data={data} lane={lane} onLane={chooseLane} onNavigate={go}/>}
-  {section==='Transparency'&&<GovernanceTransparency data={data}/>}
+  {section==='Transparency'&&<GovernanceTransparency data={data} lane={lane} onLane={chooseLane}/>}
   {selected&&!title&&!loadingCoinholder&&section!=='ZCAP'&&section!=='ZIPs'&&section!=='How it works'&&section!=='Transparency'&&<section className={g.empty}><h1 ref={heading} tabIndex={-1}>Record not found</h1><p>This record is unavailable.</p><button className={g.secondary} onClick={()=>go(section)}>Back to {section.toLowerCase()}</button></section>}
   {!selected&&section==='Overview'&&<div className={g.overviewReferences}><GovernanceReferences/></div>}
 

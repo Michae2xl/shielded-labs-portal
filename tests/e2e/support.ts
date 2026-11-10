@@ -42,6 +42,9 @@ export const screens = [
   { name: 'proposal comparison', path: explorer('&layout=compare&compare=zap,lockbox') },
   { name: 'insights', path: governance('&section=insights') },
   { name: 'transparency', path: governance('&section=transparency') },
+  { name: 'transparency involvement', path: governance('&section=transparency&lane=involvement') },
+  { name: 'transparency evidence', path: governance('&section=transparency&lane=evidence') },
+  { name: 'transparency policy', path: governance('&section=transparency&lane=method') },
 ] as const;
 
 /** Lists drawn with the shared archive grid: a label, then fixed measure columns. */

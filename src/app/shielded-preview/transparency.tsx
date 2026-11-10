@@ -6,7 +6,7 @@ import { evidenceKinds, evidenceLabel, type EvidenceKind } from '@/lib/shielded-
 import type { Disclosure } from '@/lib/shielded-preview/transparency/involvement';
 import t from './transparency.module.css';
 
-export const POLICY_HREF = '?view=governance&section=transparency#editorial-policy';
+export const POLICY_HREF = '?view=governance&section=transparency&lane=method#editorial-policy';
 export const day = (value: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
 
 const icons: Record<EvidenceKind, ReactNode> = {

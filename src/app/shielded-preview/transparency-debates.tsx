@@ -45,9 +45,9 @@ export function DebateExplorer() {
     tabs.current[moves[event.key]]?.focus();
   };
 
-  return <section className={t.card} aria-labelledby="debated-topics-title">
+  return <section className={t.explorer} aria-labelledby="debated-topics-title">
     {debates.map(item => <span key={item.id} id={`debate-${item.id}`} className={t.anchor} aria-hidden="true"/>)}
-    <div className={t.cardHead}><h3 id="debated-topics-title">Debated topics</h3></div>
+    <h3 id="debated-topics-title" className={t.srOnly}>Debated topics</h3>
     <div className={t.controls}>
       <div className={t.tabs} role="tablist" aria-label="Debated topics">
         {debates.map((item, index) => <button key={item.id} ref={element => { tabs.current[index] = element; }} type="button" role="tab" id={`debate-tab-${item.id}`} aria-selected={item.id === debate.id} aria-controls="debate-panel" tabIndex={item.id === debate.id ? 0 : -1} title={item.title === item.tab ? undefined : item.title} onClick={() => select(item)} onKeyDown={event => onKey(event, index)}>
