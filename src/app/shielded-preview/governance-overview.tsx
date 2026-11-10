@@ -8,6 +8,8 @@ import { Arrow, Link, type CollectionNavigate } from './governance-collections';
 import ContextNotice from './context-notice';
 import GovernanceParticipation, { GovernanceReference } from './governance-participation';
 import { DevFundOverviewCard } from './governance-dev-fund';
+import GrantRounds from './governance-grant-rounds';
+import { coinholderGrantRounds } from '@/lib/shielded-preview/coinholder-grant-rounds';
 import s from './governance-overview.module.css';
 import b from './governance-bento.module.css';
 
@@ -78,8 +80,8 @@ export default function GovernanceOverview({ data, pollCount, onNavigate }: {
   const review = [...data.review.data].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 3);
   const results = data.verification.data?.rows ?? [];
   const funded = results.filter(result => result.published === 'Funded').length;
-  const rejected = results.filter(result => result.published === 'Rejected').length;
-  const other = results.length - funded - rejected;
+  // The live result counts for its own round; the earlier rounds come from the poll archive.
+  const grantRounds = coinholderGrantRounds(results.length && data.verification.data ? { label: data.verification.data.round.label, proposals: results.length, approved: funded } : undefined);
   const grants = data.grants.data.filter(grant => grant.lastPaid).sort((a, b) => b.lastPaid.localeCompare(a.lastPaid)).slice(0, 3);
 
   return <div className={s.overview}>
@@ -130,16 +132,11 @@ export default function GovernanceOverview({ data, pollCount, onNavigate }: {
       <div className={b.grid}>
       <section className={`${b.card} ${b.grants}`} aria-labelledby="governance-results-heading">
         <header className={b.header}>
-          <div><h3 id="governance-results-heading">Coinholder grants</h3>{results.length > 0 && <p className={b.meta}>{results.length} proposal ballots{other > 0 && ` · ${other} other outcomes`}</p>}</div>
-          <span className={b.meta}>{data.verification.data?.round.label ?? 'Past round'}</span>
+          <div><h3 id="governance-results-heading">Coinholder grants</h3><p className={b.meta}>Proposals approved by coinholder vote, per round</p></div>
+          <span className={b.meta}>Newest first</span>
         </header>
-        {results.length > 0 ? <>
-          <div className={b.outcomes} aria-label="Published voting outcomes">
-            <Link section="Results" selection={{ filter: 'Funded' }} onNavigate={onNavigate}><strong>{funded}</strong>{' '}<span>Funded</span><Arrow/></Link>
-            <Link section="Results" selection={{ filter: 'Rejected' }} onNavigate={onNavigate}><strong>{rejected}</strong>{' '}<span>Rejected</span><Arrow/></Link>
-          </div>
-          <p className={b.note}>Voting results · payment records are under Grants.</p>
-        </> : <p className={s.empty}>Voting results are currently unavailable.</p>}
+        <GrantRounds rounds={grantRounds} onNavigate={onNavigate}/>
+        <p className={b.note}>Voting results · payment records are under Grants.</p>
         <Link section="Results" onNavigate={onNavigate} className={b.footer}>View results & rules<Arrow/></Link>
         <SourceStamp source={data.verification}/>
       </section>

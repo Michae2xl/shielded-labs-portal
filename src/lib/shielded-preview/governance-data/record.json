@@ -463,6 +463,7 @@
     },
     {
       "id": "2025-11-cdrgp-q4-round",
+      "grantRound": { "label": "Q4 2025", "proposals": 9, "approved": 5, "note": "One approved grant was later vetoed by key-holders" },
       "name": "Coinholder-Directed Retroactive Grants Program, Q4 2025 round (first grants poll)",
       "status": "closed",
       "informal": false,
@@ -499,6 +500,7 @@
     },
     {
       "id": "2026-04-cdrgp-q1-round",
+      "grantRound": { "label": "Q1 2026", "proposals": 6, "approved": 1, "note": "Plus a separate question on rescinding a Q4 2025 grant" },
       "name": "Coinholder-Directed Grants Program, Q1 2026 round",
       "status": "closed",
       "informal": false,
@@ -533,6 +535,7 @@
     },
     {
       "id": "2026-q2-cdrgp-round",
+      "grantRound": { "label": "Q2 2026", "proposals": null, "approved": null, "note": "Submissions carried into Q3" },
       "name": "Coinholder-Directed Retroactive Grants Program, Q2 2026 poll",
       "status": "postponed_merged_into_q3",
       "informal": false,
@@ -567,6 +570,7 @@
     },
     {
       "id": "2026-09-cdrgp-q3-round",
+      "grantRound": { "label": "Q3 2026", "proposals": 37, "approved": 17, "note": null },
       "name": "Coinholder-Directed Retroactive Grants Program, Q3 2026 round (37 proposals)",
       "status": "closed",
       "informal": false,

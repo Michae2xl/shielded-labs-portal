@@ -1,0 +1,26 @@
+/* A meter per round: each bar is that round's approved share of its own proposals, so the bars line up for comparison. */
+.rounds { display: grid; margin: 10px 20px 8px; padding: 0; list-style: none; container: rounds / inline-size; }
+.rounds li { margin: 0; padding: 0; border-top: 1px solid #262626; }
+.rounds li:first-child { border-top: 0; }
+.rounds .row { display: grid; grid-template-columns: 132px minmax(0, 1fr) 18px; align-items: center; column-gap: 20px; min-height: 60px; margin: 0 -8px; padding: 10px 8px; border-radius: 8px; color: inherit; text-decoration: none; }
+.rounds .row:hover { background: #1b1b1b; }
+.row > svg { width: 18px; height: 18px; color: #9a9a9a; transition: transform 160ms ease, color 160ms ease; }
+.row:hover > svg { color: #fff; transform: translateX(3px); }
+.name { display: grid; gap: 2px; min-width: 0; }
+.name strong { color: #f2f2f2; font-size: 15px; font-weight: 550; line-height: 1.4; }
+.name small { color: #8f8f8f; font-size: 12px; line-height: 1.4; white-space: nowrap; }
+.meter { display: grid; grid-template-columns: minmax(0, 1fr) 126px; align-items: center; gap: 3px 16px; min-width: 0; }
+.track { height: 8px; overflow: hidden; border-radius: 999px; background: #232323; }
+.track i { display: block; height: 100%; min-width: 4px; border-radius: inherit; background: #d6d6d6; }
+.figure { color: #a9a9a9; font-size: 13px; line-height: 1.4; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.figure b { color: #fff; font-size: 14px; font-weight: 600; }
+.caveat { grid-column: 1 / -1; color: #8f8f8f; font-size: 12px; line-height: 1.45; }
+.plain { grid-column: 1 / -1; color: #b5b5b5; font-size: 13px; line-height: 1.5; }
+
+@container rounds (max-width: 520px) {
+  .rounds .row { grid-template-columns: minmax(0, 1fr) 18px; row-gap: 8px; }
+  .name { grid-template-columns: auto auto; align-items: baseline; justify-content: space-between; gap: 2px 12px; }
+  /* The figure keeps one width so every bar starts and ends on the same lines. */
+  .meter { grid-column: 1 / -1; grid-row: 2; grid-template-columns: minmax(0, 1fr) 122px; }
+}
+@media (prefers-reduced-motion: reduce) { .row > svg { transition: none; } .row:hover > svg { transform: none; } }
