@@ -36,7 +36,7 @@ const originalProposals: FundProposal[] = [
     implementation: 'Requires legal instruments and approvals; does not itself change consensus rules.' },
   { id: 'no-change', short: 'Keep existing arrangements', title: 'Keep existing arrangements', authors: ['vaspholdings'],
     stage: 'Baseline', record: 'zip-1016', revision: 'Forum post 10 · 7 Nov 2026', source: forum(58906, 10), discussion: forum(58906, 10),
-    summary: 'A requested no-change answer choice, distinct from abstaining. Not a new ZIP or confirmed ballot option.',
+    summary: 'A requested no-change option, distinct from abstaining. Not a new ZIP; it is Question 4 of the draft poll published on 10 Nov.',
     stream: 'Retain the 8% ZCG stream until its scheduled expiry.', coinholder: 'Retain the 12% stream until its scheduled expiry.',
     treasury: 'No reallocation requested.', implementation: 'No new change requested.' },
   { id: 'nsm-stream', short: 'Redirect stream to NSM', title: 'Ending the ZCG Funding Stream in Favor of the NSM', authors: ['Sean Bowe'],

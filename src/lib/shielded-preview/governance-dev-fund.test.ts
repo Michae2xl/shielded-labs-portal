@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { DevFundOverviewCard, DevFundProposals, DevFundVoting } from '@/app/shielded-preview/governance-dev-fund';
 import { ProposalsCollection, VotingCollection } from '@/app/shielded-preview/governance-collections';
 import GovernanceOverview from '@/app/shielded-preview/governance-overview';
-import { devFundAcceptsProposals, devFundHref, devFundLane, devFundNextSteps, devFundNotices, devFundPhase, devFundTimeline } from './governance-dev-fund';
+import { devFundAcceptsProposals, devFundHref, devFundLane, devFundNextSteps, devFundNotices, devFundPhase, devFundPublished, devFundStepState, devFundTimeline } from './governance-dev-fund';
 import { emptyCoinholderSource } from './coinholder-proposals';
 import snapshot from './governance-data/snapshot.json';
 import record from './governance-data/record.json';
@@ -85,7 +85,7 @@ describe('ZCG / Dev Fund published timeline', () => {
   });
 
   it('shows questions, answers and results only once they are published', () => {
-    const empty = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate }));
+    const empty = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate, published: { questions: null, results: null } }));
     expect(empty).toContain('Not published yet. Publication is planned for 9 Nov.');
     expect(empty).not.toContain('Published questions');
     expect(empty).not.toContain('Published results');
@@ -95,6 +95,7 @@ describe('ZCG / Dev Fund published timeline', () => {
     } }));
     expect(published).toContain('An example question?');
     expect(published).toContain('Second answer');
+    expect(published).toContain('Published questions');
     expect(published).toContain('Published results');
     expect(published).not.toContain('Not published');
   });
@@ -109,7 +110,7 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(devFundNotices.lateProposals.url).toContain(post);
     expect(devFundNotices.questions.url).toContain(post);
     // Server markup has no clock yet: it must read as the published timeline, without the later notices.
-    const early = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate }));
+    const early = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate, published: { questions: null, results: null } }));
     expect(early).toContain('How to submit');
     expect(early).not.toContain('not part of this round');
     expect(early).toContain('Not published yet. Publication is planned for 9 Nov.');
@@ -120,5 +121,33 @@ describe('ZCG / Dev Fund published timeline', () => {
       expect(devFundPhase(Date.now()).label).toBe('Discussion period');
       expect(Date.parse(devFundNotices.questions.checkedAt)).toBeLessThanOrEqual(Date.now());
     } finally { vi.useRealTimers(); }
+  });
+
+  it('shows progress along the timeline without calling unpublished questions done', () => {
+    const [proposals, questions, discussion, polling] = devFundTimeline.steps;
+    const states = (now: number | null, published = { questions: null, results: null } as Parameters<typeof devFundStepState>[2]) => [proposals, questions, discussion, polling].map(step => devFundStepState(step, now, published));
+    expect(states(null)).toEqual(['next', 'next', 'next', 'next']);
+    expect(states(at('2026-11-06T00:00:00Z'))).toEqual(['current', 'next', 'next', 'next']);
+    expect(states(at('2026-11-09T12:00:00Z'))).toEqual(['done', 'next', 'current', 'next']);
+    // The date passed and nothing was published: awaited, never done.
+    expect(states(at('2026-11-10T03:00:00Z'))).toEqual(['done', 'awaited', 'current', 'next']);
+    expect(states(at('2026-11-10T03:00:00Z'), { questions: { publishedAt: '2026-11-10', url: 'https://forum.zcashcommunity.com/t/1', items: [] }, results: null })).toEqual(['done', 'done', 'current', 'next']);
+    expect(states(at('2026-11-20T00:00:00Z'))).toEqual(['done', 'awaited', 'done', 'current']);
+    expect(states(at('2026-12-01T00:00:00Z'))[3]).toBe('done');
+  });
+
+  it('shows the draft poll as a draft, with the organizers’ instructions and its post', () => {
+    const questions = devFundPublished.questions!;
+    expect(questions.draft).toBe(true);
+    expect(questions.url).toContain('/58906/47');
+    expect(questions.items).toHaveLength(5);
+    expect(new Set(questions.items.flatMap(item => item.answers))).toEqual(new Set(['Support', 'Oppose', 'Abstain']));
+    const markup = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate }));
+    expect(markup).toContain('Draft poll questions');
+    expect(markup).toContain('the organizers may adjust it before polling opens');
+    expect(markup).toContain('You may support more than one proposal');
+    expect(markup).toContain('Do you support maintaining ZCG’s existing funding and operations?');
+    expect(markup).not.toContain('None had been posted');
+    expect(devFundStepState(devFundTimeline.steps[1], at('2026-11-10T21:00:00Z'))).toBe('done');
   });
 });

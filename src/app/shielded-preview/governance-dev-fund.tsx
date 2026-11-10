@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
-import { devFundAcceptsProposals, devFundLane, devFundNextSteps, devFundNotices as notices, devFundPhase, devFundPublished, devFundSources as sources, devFundTimeline as timeline, type DevFundPublication } from '@/lib/shielded-preview/governance-dev-fund';
+import { devFundAcceptsProposals, devFundLane, devFundNextSteps, devFundNotices as notices, devFundPhase, devFundPublished, devFundStepState, devFundSources as sources, devFundTimeline as timeline, type DevFundPublication } from '@/lib/shielded-preview/governance-dev-fund';
 import { Arrow, Link, type CollectionNavigate } from './governance-link';
 import b from './governance-bento.module.css';
 import p from './governance-participation.module.css';
@@ -45,7 +45,7 @@ export function DevFundOverviewCard({ onNavigate }: { onNavigate: CollectionNavi
   return <section className={`${b.card} ${s.overviewCard}`} aria-labelledby="dev-fund-heading">
     <header className={`${b.header} ${s.centered}`}><h2 id="dev-fund-heading">{timeline.title}</h2><Phase now={now}/></header>
     {steps.length > 0
-      ? <ol className={s.stepper} aria-label="Next dates">{steps.map(step => <li key={step.id} aria-current={current === step.id ? 'step' : undefined}><Stamp step={step}/><span>{step.short}</span></li>)}</ol>
+      ? <ol className={s.stepper} aria-label="Timeline">{timeline.steps.map(step => { const state = devFundStepState(step, now); return <li key={step.id} data-state={state} aria-current={current === step.id ? 'step' : undefined}><Stamp step={step}/><span>{step.short}</span>{state === 'awaited' && <em>Awaited</em>}{step.id === 'questions' && state === 'done' && devFundPublished.questions?.draft && <em>Draft out</em>}{state === 'done' && <em className={s.srOnly}>Done</em>}</li>; })}</ol>
       : <p className={s.closed}>Polling was planned to close on 30 Nov at 23:59 UTC.</p>}
     <Link section="Voting" selection={{ lane: devFundLane }} onNavigate={onNavigate} className={`${b.footer} ${s.details}`}>View details<Arrow/></Link>
   </section>;
@@ -104,7 +104,7 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
   return <div className={s.lane}>
     <section className={b.card} aria-labelledby="dev-fund-timeline-heading">
       <header className={`${b.header} ${s.centered}`}><h3 id="dev-fund-timeline-heading">Published timeline</h3><Phase now={now}/></header>
-      <ol className={`${s.stepper} ${s.detailed}`}>{timeline.steps.map(step => <li key={step.id} aria-current={current === step.id ? 'step' : undefined}>
+      <ol className={`${s.stepper} ${s.detailed}`}>{timeline.steps.map(step => <li key={step.id} data-state={devFundStepState(step, now, published)} aria-current={current === step.id ? 'step' : undefined}>
         <Stamp step={step}/>
         <span>{step.label}</span>
         <p className={s.stepText}>{step.summary}</p>
@@ -117,9 +117,9 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
     <div className={s.pair}>
       <div className={s.column}>
       <section className={b.card} aria-labelledby="dev-fund-poll-heading">
-        <header className={b.header}><h3 id="dev-fund-poll-heading">Poll questions and answers</h3>{published.questions && <time className={b.meta} dateTime={published.questions.publishedAt}>{date(published.questions.publishedAt)}</time>}</header>
+        <header className={b.header}><h3 id="dev-fund-poll-heading">{published.questions?.draft ? 'Draft poll questions' : 'Poll questions and answers'}</h3>{published.questions && <time className={b.meta} dateTime={published.questions.publishedAt}>{date(published.questions.publishedAt)}</time>}</header>
         {published.questions
-          ? <><ol className={s.questions}>{published.questions.items.map(item => <li key={item.question}><strong>{item.question}</strong><ul>{item.answers.map(answer => <li key={answer}>{answer}</li>)}</ul></li>)}</ol><Cited href={published.questions.url} className={b.footer}>Published questions</Cited></>
+          ? <>{published.questions.draft && <p className={`${s.text} ${s.cardText}`}>Published for feedback; the organizers may adjust it before polling opens.</p>}{published.questions.instructions && <blockquote className={s.quote} cite={published.questions.url}>{`“${published.questions.instructions}”`}</blockquote>}<ol className={s.questions}>{published.questions.items.map(item => <li key={item.question}><strong>{item.question}</strong><ul>{item.answers.map(answer => <li key={answer}>{answer}</li>)}</ul></li>)}</ol><Cited href={published.questions.url} className={b.footer}>{published.questions.draft ? 'Full draft, with each proposal’s description' : 'Published questions'}</Cited></>
           : questionsDue
             ? <><p className={`${s.text} ${s.cardText}`}>{`None had been posted in the timeline thread when it was last checked, ${checked(notices.questions.checkedAt)}. ${notices.questions.text}`}</p><Cited href={notices.questions.url} className={b.footer}>Organizers’ post, 9 Nov</Cited></>
             : <p className={`${s.text} ${s.cardText}`}>Not published yet. Publication is planned for 9 Nov.</p>}

@@ -13,10 +13,28 @@ export const devFundLane = 'dev-fund';
 export const devFundHref = (section: 'proposals' | 'voting') => `?view=governance&section=${section}&lane=${devFundLane}`;
 
 export type DevFundPublication = {
-  questions: { publishedAt: string; url: string; items: { question: string; answers: string[] }[] } | null;
+  /** `draft`: published for feedback and still open to changes; `instructions`: the organizers' own wording. */
+  questions: { publishedAt: string; url: string; draft?: boolean; instructions?: string; items: { question: string; answers: string[] }[] } | null;
   results: { publishedAt: string; url: string } | null;
 };
-export const devFundPublished: DevFundPublication = { questions: null, results: null };
+const draftAnswers = ['Support', 'Oppose', 'Abstain'];
+// Draft NU7.1 poll, post 47 of the timeline thread (10 Nov 2026, 18:16 UTC), copied as posted.
+// The organizers asked for feedback before 15 Nov and said they may adjust it: re-read the thread before polling opens.
+export const devFundPublished: DevFundPublication = {
+  questions: {
+    publishedAt: '2026-11-10', draft: true,
+    url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/47',
+    instructions: 'Please consider each proposal independently. You may support more than one proposal, including proposals that conflict with each other, if you would find any of those outcomes acceptable. The results will help us assess which proposals have broad support.',
+    items: [
+      { question: 'Do you support the Wind Down Zcash Community Grants proposal?', answers: draftAnswers },
+      { question: 'Do you support the Future Dev and Legal Defense Fund proposal?', answers: draftAnswers },
+      { question: 'Do you support the Zcash Adoption Pool (ZAP) proposal?', answers: draftAnswers },
+      { question: 'Do you support maintaining ZCG’s existing funding and operations?', answers: draftAnswers },
+      { question: 'Do you support reducing Zcash’s target block time from 25 seconds to 20 seconds as part of NU7.1, as described in this proposal?', answers: draftAnswers },
+    ],
+  },
+  results: null,
+};
 
 // Posted by the coordinating organizations after the timeline (post 39 of its thread, 9 Nov 2026).
 // `checkedAt` is when the thread was last read for the proposed questions; update it with each review.
@@ -52,3 +70,12 @@ export const devFundAcceptsProposals = (now: number | null) => now === null || !
 
 /** Steps still ahead; before the clock is known, every published step. */
 export const devFundNextSteps = (now: number | null) => devFundTimeline.steps.filter(step => now === null || !Number.isFinite(now) || now < Date.parse(step.endsAt));
+
+export type DevFundStepState = 'done' | 'current' | 'awaited' | 'next';
+/** Where a step stands. A passed date is done, except the poll questions: they are only done once published. */
+export function devFundStepState(step: { id: string; endsAt: string }, now: number | null, published: DevFundPublication = devFundPublished): DevFundStepState {
+  if (now === null || !Number.isFinite(now)) return 'next';
+  if (devFundPhase(now).id === step.id) return 'current';
+  if (now < Date.parse(step.endsAt)) return 'next';
+  return step.id === 'questions' && !published.questions ? 'awaited' : 'done';
+}
