@@ -10,7 +10,7 @@ vi.mock('react', async importOriginal => ({
   useEffect: () => {},
 }));
 
-type Element = ReactElement<{ children?: ReactNode; ref?: RefObject<HTMLInputElement | null>; onClick?: () => void; 'aria-label'?: string }>;
+type Element = ReactElement<{ children?: ReactNode; ref?: RefObject<HTMLInputElement | null>; onClick?: () => void; 'aria-label'?: string; href?: string }>;
 function elements(node: ReactNode): Element[] {
   if (Array.isArray(node)) return node.flatMap(elements);
   if (!isValidElement(node)) return [];
@@ -41,5 +41,16 @@ describe('Sidebar search actions', () => {
     expect(controls.setOpen).toHaveBeenCalledWith(false);
     expect(run).toHaveBeenCalledOnce();
     expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+  });
+});
+
+describe('Sidebar menu', () => {
+  it('lists Zcash governance and the Labs pages as one menu, without a separate brand block', () => {
+    const tree = elements(PortalNavigation({ view: 'overview', onNavigate: () => {} }));
+    const lists = tree.filter(node => node.type === 'ul');
+    expect(lists).toHaveLength(1);
+    expect(elements(lists[0]).filter(node => node.type === 'a').map(node => node.props.href)).toEqual(
+      ['governance', 'overview', 'projects', 'impact', 'activity', 'people', 'blog', 'about'].map(view => `?view=${view}`));
+    expect(tree.some(node => node.props['aria-label'] === 'Shielded Labs overview')).toBe(false);
   });
 });

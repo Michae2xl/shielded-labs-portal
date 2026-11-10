@@ -2,20 +2,19 @@
 
 import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import Image from 'next/image';
-import { ShieldMark } from './shield';
 import s from './portal-navigation.module.css';
 
 export type PortalView = 'overview' | 'governance' | 'projects' | 'activity' | 'impact' | 'people' | 'blog' | 'resources' | 'about' | 'website';
 type NavigationView = Exclude<PortalView, 'website' | 'resources'>;
-export const portalNavigation: { id: NavigationView; title: string; group: 'governance' | 'labs'; keywords?: string }[] = [
-  { id: 'governance', title: 'Zcash governance', group: 'governance', keywords: 'grants funding proposals votes polls panels' },
-  { id: 'overview', title: 'Overview', group: 'labs' },
-  { id: 'projects', title: 'Projects', group: 'labs', keywords: 'research faq guides documentation questions resources roadmap' },
-  { id: 'impact', title: 'Milestones', group: 'labs' },
-  { id: 'activity', title: 'Code activity', group: 'labs', keywords: 'development commits developers repositories' },
-  { id: 'people', title: 'Team', group: 'labs', keywords: 'people contributors' },
-  { id: 'blog', title: 'Blog', group: 'labs', keywords: 'articles news announcements updates' },
-  { id: 'about', title: 'About', group: 'labs', keywords: 'mission values board careers jobs contact privacy' },
+export const portalNavigation: { id: NavigationView; title: string; keywords?: string }[] = [
+  { id: 'governance', title: 'Zcash governance', keywords: 'grants funding proposals votes polls panels' },
+  { id: 'overview', title: 'Overview' },
+  { id: 'projects', title: 'Projects', keywords: 'research faq guides documentation questions resources roadmap' },
+  { id: 'impact', title: 'Milestones' },
+  { id: 'activity', title: 'Code activity', keywords: 'development commits developers repositories' },
+  { id: 'people', title: 'Team', keywords: 'people contributors' },
+  { id: 'blog', title: 'Blog', keywords: 'articles news announcements updates' },
+  { id: 'about', title: 'About', keywords: 'mission values board careers jobs contact privacy' },
 ];
 
 function NavigationIcon({ view }: { view: NavigationView }) {
@@ -72,14 +71,6 @@ export default function PortalNavigation({ view, onNavigate, search }: { view: P
     document.getElementById('portal-main')?.focus({ preventScroll: true });
   }
 
-  function items(group: 'governance' | 'labs') {
-    return <ul>{portalNavigation.filter(item => item.group === group).map(item => <li key={item.id}>
-      <a href={`?view=${item.id}`} className={s.item} aria-current={view === item.id ? 'page' : undefined} onClick={event => navigate(event, item.id)}>
-        <NavigationIcon view={item.id}/>{item.id === 'governance' ? <GovernanceLabel/> : <span>{item.title}</span>}
-      </a>
-    </li>)}</ul>;
-  }
-
   return <aside className={s.sidebar} ref={aside} aria-label="Portal sidebar">
     <div className={s.header}>
       <a className={s.mobileGovernance} href="?view=governance" onClick={event => navigate(event, 'governance')} aria-current={view === 'governance' ? 'page' : undefined}><NavigationIcon view="governance"/><GovernanceLabel/></a>
@@ -89,11 +80,11 @@ export default function PortalNavigation({ view, onNavigate, search }: { view: P
     </div>
     <div id="portal-navigation" className={`${s.panel} ${open ? s.open : ''}`}>
       <nav aria-label="Portal navigation" className={s.navigation}>
-        <div className={s.governanceGroup}>{items('governance')}</div>
-        <section className={s.labsGroup} aria-label="Shielded Labs">
-          <a className={`${s.brand} ${s.sectionBrand}`} href="?view=overview" onClick={event => navigate(event, 'overview')} aria-label="Shielded Labs overview"><ShieldMark/><span>SHIELDED<span>LABS</span></span></a>
-          {items('labs')}
-        </section>
+        <ul>{portalNavigation.map(item => <li key={item.id} className={item.id === 'governance' ? s.governanceItem : undefined}>
+          <a href={`?view=${item.id}`} className={s.item} aria-current={view === item.id ? 'page' : undefined} onClick={event => navigate(event, item.id)}>
+            <NavigationIcon view={item.id}/>{item.id === 'governance' ? <GovernanceLabel/> : <span>{item.title}</span>}
+          </a>
+        </li>)}</ul>
       </nav>
       {search && <div className={s.searchArea} role="search" aria-label="Portal search">
         <div className={s.searchField}>

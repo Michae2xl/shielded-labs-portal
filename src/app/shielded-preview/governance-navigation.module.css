@@ -1,58 +1,49 @@
+/* Ten separate buttons, sized by their label, so the row reads as distinct sections. */
 .navigation {
-  display: grid;
-  grid-template-columns: repeat(10, minmax(0, 1fr));
+  display: flex;
   gap: 8px;
   margin: 0 0 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border, #292929);
 }
 
 .navigation a {
-  position: relative;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  min-height: 48px;
-  padding: 10px 6px;
-  border-radius: 8px;
-  color: var(--secondary-ink, #c2c2c2);
-  font-size: 14px;
+  gap: 8px;
+  min-width: 0;
+  min-height: 52px;
+  padding: 12px 14px;
+  border: 1px solid #333;
+  border-radius: 7px;
+  background: #101010;
+  color: #cfcfcf;
+  font-size: 15px;
   font-weight: 500;
   line-height: 24px;
   text-decoration: none;
   white-space: nowrap;
-  transition: color 160ms ease, background-color 160ms ease;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
 
-.navigation a::after {
-  content: '';
-  position: absolute;
-  inset: auto 18% -11px;
-  height: 2px;
-  border-radius: 2px;
-  background: transparent;
-}
-
-.navigation a svg { width: 20px; height: 20px; color: #aaa; transition: color 160ms ease; }
-.navigation a:hover { background: #111; color: #fff; }
+.navigation a svg { flex-shrink: 0; width: 20px; height: 20px; color: #aaa; transition: color 160ms ease; }
+.navigation a:hover { border-color: #686868; background: #1a1a1a; color: #fff; }
 .navigation a:hover svg { color: #eee; }
-.navigation a[aria-current] { color: #fff; font-weight: 600; }
+.navigation a[aria-current] { border-color: #777; background: #242424; color: #fff; font-weight: 600; }
 .navigation a[aria-current] svg { color: #f0f0f0; }
-.navigation a[aria-current]::after { background: #f0f0f0; }
 .navigation a:focus-visible { outline: 2px solid #ddd; outline-offset: 3px; }
 
-@media (max-width: 1350px) {
-  .navigation { gap: 4px; }
-  .navigation a { padding: 10px 4px; font-size: 14px; }
+@media (max-width: 1640px) {
   .navigation a svg { display: none; }
 }
-/* In wrapped layouts the underline stays inside its own tab. */
-@media (max-width: 1100px) { .navigation a::after { inset: auto 25% 0; } }
+@media (max-width: 1350px) {
+  .navigation { gap: 6px; }
+  .navigation a { padding: 12px 8px; }
+}
 @media (max-width: 1100px) and (min-width: 651px) {
   /* Ten sections no longer fit one row: two rows of five. */
-  .navigation { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 4px; }
+  .navigation { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
 }
 @media (max-width: 900px) {
   .navigation a { white-space: normal; line-height: 18px; text-align: center; }
@@ -64,7 +55,6 @@
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 6px 4px;
     margin-bottom: 16px;
-    padding-bottom: 10px;
   }
   .navigation a {
     grid-column: span 4;
