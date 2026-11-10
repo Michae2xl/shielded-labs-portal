@@ -11,7 +11,10 @@
 .topbar{padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:24px;flex-wrap:wrap}
 .scopes,.modes{display:flex;align-items:center;gap:4px}
 .scopes button,.modes button{background:none;border:1px solid transparent;border-radius:7px;padding:8px 12px;color:var(--muted);display:flex;gap:9px;align-items:center;white-space:nowrap}
-.scopes button[aria-pressed=true]{color:white;background:#191919;border-color:#333}
+.scopes{gap:8px}
+.scopes button{min-height:44px;padding:10px 14px;border-color:#333;background:#101010;font-family:var(--font-display);font-size:14px;font-weight:500}
+.scopes button:hover{color:#fff;border-color:#686868;background:#1a1a1a}
+.scopes button[aria-pressed=true]{color:#fff;background:#242424;border-color:#777}
 .scopes button>span{font-size:11px;color:#bdbdbd;padding:1px 5px;border:1px solid #444;border-radius:4px}
 .modes{padding:3px;background:#141414;border:1px solid #282828;border-radius:9px}
 .modes button{padding:6px 12px}

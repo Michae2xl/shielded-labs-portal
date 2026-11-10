@@ -10,12 +10,12 @@
 .editorial .searchField input:focus-visible{outline:none}
 .searchField input::placeholder{color:var(--text-muted)}
 .searchStatus{margin:0 0 12px!important;color:var(--text-muted);font-size:14px;font-variant-numeric:tabular-nums}
-.blogTools{display:flex;align-items:center;gap:8px;margin:0 0 16px;padding:4px;background:#111;border:1px solid #292929;border-radius:7px;min-width:0}
+.blogTools{display:flex;align-items:stretch;gap:8px;margin:0 0 16px;min-width:0}
 .editorial .blogTools nav{flex:1 1 auto;min-width:0;margin:0;padding:0;border:0;background:none;overflow:visible}
 .editorial .blogTools nav>button{flex:1 1 auto;min-width:0;font-size:14px;padding:10px 12px}
-.blogTools .searchField{flex:0 0 clamp(210px,25%,280px);max-width:none;width:auto;margin:0;background:transparent;border:0;border-left:1px solid #353535;border-radius:0;padding:0 14px}
-.blogTools .searchField:focus-within{outline-offset:-2px;border-radius:4px;background:#171717}
-@container(max-width:820px){.blogTools{flex-direction:column;align-items:stretch;gap:4px}.editorial .blogTools nav{flex-wrap:nowrap;overflow-x:auto}.editorial .blogTools nav>button{flex:1 0 auto;min-width:max-content}.blogTools .searchField{flex:auto;width:100%;border-left:0;border-top:1px solid #292929;padding-top:4px}}
+.blogTools .searchField{flex:0 0 clamp(210px,25%,280px);max-width:none;width:auto;margin:1px 0;background:#101010;border:1px solid #333;border-radius:7px;padding:0 14px}
+.blogTools .searchField:focus-within{border-color:#aaa;background:#151515}
+@container(max-width:820px){.blogTools{flex-direction:column;align-items:stretch;gap:8px}.editorial .blogTools nav{flex-wrap:nowrap;overflow-x:auto}.editorial .blogTools nav>button{flex:1 0 auto;min-width:max-content}.blogTools .searchField{flex:auto;width:100%}}
 .list,.board{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .card{display:flex;flex-direction:column;min-width:0;border:1px solid #2c2c2c;border-radius:8px;overflow:hidden;background:#101010;color:var(--ink);transition:background .15s,border-color .15s}
 .card:hover,.boardMember:hover{background:#161616;border-color:#555}

@@ -1,10 +1,14 @@
-.menu{display:flex;align-items:stretch;gap:4px;min-width:0;max-width:100%;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#444 transparent;overscroll-behavior-x:contain}
-.primary{padding:4px;margin:0 0 18px;background:var(--surface,#111);border:1px solid var(--border,#292929);border-radius:var(--radius,7px)}
-.menu.primary button,.menu.secondary button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--control-height,44px);padding:10px 14px;border:0;border-radius:4px;background:transparent;color:var(--secondary-ink,#aaa);font:inherit;font-size:15px;font-weight:450;line-height:22px;white-space:nowrap;transition:background .15s,color .15s}
+.menu{display:flex;align-items:stretch;gap:8px;min-width:0;max-width:100%;overflow-x:auto;scrollbar-width:thin;scrollbar-color:#444 transparent;overscroll-behavior-x:contain}
+/* Primary menus are separate bordered buttons, the same as the governance collection tabs. */
+.primary{margin:0 0 18px;padding:1px}
+.menu.primary button,.menu.secondary button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--control-height,44px);padding:10px 14px;border:0;border-radius:4px;background:transparent;color:var(--secondary-ink,#aaa);font:inherit;font-size:15px;font-weight:450;line-height:22px;white-space:nowrap;transition:background .15s,color .15s,border-color .15s}
+.menu.primary button{border:1px solid #333;border-radius:7px;background:#101010;color:#bfbfbf;font-size:14px;font-weight:500}
 .menu.primary button{flex:1 0 0;min-width:max-content}
 .menu.secondary button{flex:0 0 auto;padding:10px 12px}
 .menu button:hover{background:#202020;color:#fff}
 .menu button[aria-current]{background:#303030;color:#fff}
+.menu.primary button:hover{border-color:#686868;background:#1a1a1a}
+.menu.primary button[aria-current]{border-color:#777;background:#242424}
 .menu button:focus-visible{outline:2px solid #ddd;outline-offset:-2px}
 .menu button>span{display:inline-flex;align-items:center;justify-content:center;min-width:1.5ch;font-size:13px;line-height:22px;font-variant-numeric:lining-nums tabular-nums;color:var(--secondary-ink,#c2c2c2)}
 .secondary{margin:0 0 20px;padding:0 0 8px;border-bottom:1px solid var(--border,#292929)}
