@@ -3,7 +3,7 @@
 .content>nav{margin-bottom:0}
 .srOnly{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .card{display:flex;flex-direction:column;min-width:0;padding:18px 20px;border:1px solid #343434;border-radius:12px;background:#111}
-.participate h3{margin:0;font-size:20px;font-weight:500;line-height:1.35;letter-spacing:-.2px}
+.participate h3{margin:0;font-size:var(--title-card);font-weight:500;line-height:1.35;letter-spacing:-.2px}
 .participate h4{margin:0;font-size:15px;font-weight:500;line-height:1.45;color:#f0f0f0}
 .participate p{margin:8px 0 0;font-size:15px;line-height:1.6;color:#c2c2c2}
 .note{font-size:13.5px!important;line-height:1.55!important;color:#b0b0b0!important;margin:0!important}

@@ -37,7 +37,7 @@
 .card{display:flex;flex-direction:column;width:100%;min-width:0;padding:21px 22px 18px;border:1px solid #2c2c2c;border-radius:8px;background:#101010;gap:22px}
 .card:hover{border-color:#555;background:#141414}
 .identity{min-width:0}
-.collection .identity h3{font-size:18px;font-weight:500;line-height:1.5;letter-spacing:-.15px;margin:0;overflow-wrap:anywhere;text-wrap:pretty}
+.collection .identity h3{font-size:var(--title-row);font-weight:500;line-height:1.5;letter-spacing:-.15px;margin:0;overflow-wrap:anywhere;text-wrap:pretty}
 .card:hover .identity h3{color:white}
 .cardMetrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) 18px;align-items:start;gap:16px;border-top:1px solid #2d2d2d;padding-top:15px;margin-top:auto}
 .cardMetrics:has(> :nth-child(2):last-child){grid-template-columns:minmax(0,1fr) 18px}
@@ -74,7 +74,7 @@
 .pager button:hover:not(:disabled){background:#222;border-color:#777}
 .previous{display:flex;transform:rotate(180deg)}
 .empty{padding:36px 0;border-bottom:1px solid #292929}
-.collection .empty h3{font-size:19px;margin:0 0 9px}
+.collection .empty h3{font-size:var(--title-card);margin:0 0 9px}
 .collection .empty p{font-size:15px;color:var(--text-muted,#b0b0b0);margin:0 0 16px}
 .collection .empty button{display:flex;align-items:center;gap:12px;min-height:44px;background:transparent;border:0;padding:0;color:#ddd;font-size:15px}
 .help{margin-top:14px}

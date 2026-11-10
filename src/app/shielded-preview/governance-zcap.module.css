@@ -25,7 +25,7 @@
 .mobileQuestion{display:none}
 .votePanel,.memberPanel{min-width:0;padding:0 22px;border:1px solid #303030;border-radius:9px;background:#101010}
 .comparisonHeader{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;padding:22px 0 14px}
-.zcap .comparisonHeader h2{font-size:23px;line-height:1.4;font-weight:500;letter-spacing:-.4px;margin:0;text-wrap:pretty}
+.zcap .comparisonHeader h2{font-size:var(--title-section);line-height:1.4;font-weight:500;letter-spacing:-.4px;margin:0;text-wrap:pretty}
 .comparisonHeader h2:focus{outline:none}
 .basis{width:max-content;display:flex;align-items:stretch;gap:3px;padding:3px;border:1px solid #353535;border-radius:6px;background:#161616;max-width:100%}
 .zcap .basis button{flex:0 0 auto;min-width:0;border:0;background:transparent;color:#bfbfbf;font-size:13px;line-height:20px;white-space:nowrap;padding:8px 9px;border-radius:4px;min-height:44px}
@@ -43,7 +43,7 @@
 .bodyTotal>span{font-size:12px;line-height:1.5;color:#bcbcbc;margin-top:5px}
 .voteRow{border-top:1px solid #303030;min-height:84px;padding:14px 0}
 .option{display:flex;justify-content:center;flex-direction:column;padding-right:15px}
-.zcap .option h3{font-size:17px;line-height:1.5;font-weight:500;letter-spacing:-.1px;overflow-wrap:anywhere;margin:0}
+.zcap .option h3{font-size:var(--title-row);line-height:1.5;font-weight:500;letter-spacing:-.1px;overflow-wrap:anywhere;margin:0}
 .option>span{display:block;font-size:12px;line-height:1.6;color:#aaa;margin-top:5px}
 .voteValue{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:0 10px;text-align:center}
 .voteValue>strong{font-size:28px;font-weight:450;line-height:1.15;letter-spacing:-.5px;font-variant-numeric:tabular-nums;color:#f1f1f1}
@@ -65,7 +65,7 @@
 .memberRow{display:grid;grid-template-columns:minmax(0,1fr) 122px 18px;align-items:center;gap:14px;width:100%;min-width:0;min-height:76px;padding:12px 0}
 .memberIdentity{display:flex;align-items:center;gap:12px;min-width:0}
 .memberIdentity>div{min-width:0}
-.zcap .memberIdentity h3{font-size:17px;font-weight:500;line-height:1.5;margin:0;overflow-wrap:anywhere;letter-spacing:-.1px}
+.zcap .memberIdentity h3{font-size:var(--title-row);font-weight:500;line-height:1.5;margin:0;overflow-wrap:anywhere;letter-spacing:-.1px}
 .zcap .memberIdentity p{font-size:13px;line-height:1.6;color:#bcbcbc;margin:3px 0 0;overflow-wrap:anywhere}
 .avatar{display:flex;align-items:center;justify-content:center;width:40px;height:40px;flex-shrink:0;border:1px solid #3b3b3b;background:#202020;border-radius:50%;color:#d0d0d0;font-size:13px;font-weight:500;letter-spacing:.4px}
 .zcap>article .avatar{width:88px;height:88px;font-size:25px}

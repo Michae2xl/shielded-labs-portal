@@ -1,6 +1,6 @@
 .guide { min-width: 0; color: #eee; container: participationGuide / inline-size; scroll-margin-top: 24px; }
 .guideHeader { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 18px; }
-.guide .guideHeader h2 { margin: 0; font-size: 24px; font-weight: 550; line-height: 1.4; letter-spacing: -.4px; }
+.guide .guideHeader h2 { margin: 0; font-size: var(--title-section); font-weight: 550; line-height: 1.4; letter-spacing: -.4px; }
 .guideHeader > a { min-height: 42px; padding: 8px 13px; border: 1px solid #383838; border-radius: 6px; background: #161616; }
 .paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .round { grid-column: span 2; }

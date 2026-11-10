@@ -1,6 +1,6 @@
 /* Shared centered header */
 .overviewCard .centered, .lane .centered { justify-content: center; gap: 4px 14px; text-align: center; }
-.overviewCard .centered h2 { margin: 0; font-size: 20px; font-weight: 550; line-height: 1.4; letter-spacing: -.3px; }
+.overviewCard .centered h2 { margin: 0; font-size: var(--title-card); font-weight: 550; line-height: 1.4; letter-spacing: -.3px; }
 
 /* The dates, in order, on one line */
 .stepper { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); margin: 0; padding: 16px 20px 20px; list-style: none; }

@@ -8,7 +8,7 @@
 .overview a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
 .group { margin-top: 28px; }
 .groupHeader { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 18px; }
-.overview .groupHeader h2 { margin: 0; font-size: 24px; line-height: 1.4; font-weight: 550; letter-spacing: -.4px; scroll-margin-top: 24px; }
+.overview .groupHeader h2 { margin: 0; font-size: var(--title-section); line-height: 1.4; font-weight: 550; letter-spacing: -.4px; scroll-margin-top: 24px; }
 .groupLinks { display: flex; flex-wrap: wrap; gap: 10px; }
 .groupHeader > a, .groupLinks > a { display: inline-flex; align-items: center; gap: 12px; min-height: 42px; padding: 8px 13px; border: 1px solid #383838; border-radius: 6px; background: #161616; font-size: 14px; color: var(--accent-secondary); }
 .activityGrid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; align-items: stretch; }

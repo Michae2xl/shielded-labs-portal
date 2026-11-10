@@ -38,7 +38,7 @@
 .symbol>svg{width:23px;height:23px;color:#bcbcbc}
 .ballotNumber{color:#b4b4b4;font-size:13px;font-weight:500;text-align:center;font-variant-numeric:tabular-nums}
 .identity{min-width:0}
-.archive .identity h3{margin:0;font-size:17px;font-weight:500;line-height:1.5;letter-spacing:-.15px;overflow-wrap:anywhere;text-wrap:pretty}
+.archive .identity h3{margin:0;font-size:var(--title-row);font-weight:500;line-height:1.5;letter-spacing:-.15px;overflow-wrap:anywhere;text-wrap:pretty}
 .meta{display:flex;align-items:center;flex-wrap:wrap;gap:7px 10px;margin-top:5px;color:#bcbcbc;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
 .meta>span:empty{display:none}
 .archive .winners{margin:7px 0 0;color:#bcbcbc;font-size:13px;line-height:1.65;overflow-wrap:anywhere}

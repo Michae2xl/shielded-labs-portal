@@ -7,7 +7,7 @@
 .detailPanel{grid-area:detail}
 .panel{display:flex;flex-direction:column;min-width:0;padding:18px 20px 0;border:1px solid #343434;border-radius:12px;background:#111}
 .panelHeading{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 12px;min-height:30px;margin-bottom:12px}
-.insights .panelHeading h2{font-size:21px;line-height:1.4;letter-spacing:-.4px;font-weight:500;margin:0;text-wrap:balance}
+.insights .panelHeading h2{font-size:var(--title-card);line-height:1.4;letter-spacing:-.4px;font-weight:500;margin:0;text-wrap:balance}
 .panelMeta{font-size:12px;line-height:1.6;color:#bcbcbc}
 .distribution{display:grid;grid-template-columns:112px minmax(0,1fr);gap:20px;align-items:center;padding:4px 0 18px}
 .ring{position:relative;aspect-ratio:1;width:100%;max-width:132px;margin:auto}
@@ -36,7 +36,7 @@
 .records>li:first-child>.record{padding-top:4px;border-top:0}
 .records>li:last-child>.record{padding-bottom:18px}
 .identity{min-width:0}
-.insights .identity h3{font-size:16px;line-height:1.5;letter-spacing:-.12px;font-weight:500;margin:0;overflow-wrap:anywhere;text-wrap:pretty}
+.insights .identity h3{font-size:var(--title-row);line-height:1.5;letter-spacing:-.12px;font-weight:500;margin:0;overflow-wrap:anywhere;text-wrap:pretty}
 .record:hover h3,.program:hover h3{color:#fff;text-decoration:underline;text-underline-offset:4px}
 .record>svg{display:block;justify-self:end;width:17px;height:17px;color:#aaa}
 .meta{display:flex;align-items:center;flex-wrap:wrap;gap:5px 10px;margin-top:7px;font-size:12px;color:#bcbcbc;line-height:1.6;overflow-wrap:anywhere}
@@ -79,7 +79,7 @@
 .questionRow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;height:100%;padding:18px 20px 0;border:1px solid #343434;border-radius:12px;background:#111}
 .questionName{grid-column:1/-1;display:flex;align-items:baseline;gap:12px;min-width:0}
 .questionNumber{flex-shrink:0;font-size:12px;color:#aaa;font-variant-numeric:tabular-nums}
-.insights .questionName h3{font-size:19px;line-height:1.45;letter-spacing:-.2px;font-weight:500;margin:0;text-wrap:pretty;overflow-wrap:anywhere}
+.insights .questionName h3{font-size:var(--title-card);line-height:1.45;letter-spacing:-.2px;font-weight:500;margin:0;text-wrap:pretty;overflow-wrap:anywhere}
 .questionRow:hover h3{color:white}
 .panelResult{display:flex;flex-direction:column;gap:9px;min-width:0;padding-bottom:2px}
 .panelResult:nth-of-type(2){padding-left:20px;border-left:1px solid #343434}

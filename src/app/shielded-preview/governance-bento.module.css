@@ -21,7 +21,7 @@
 .protocol { grid-area: protocol; }
 .funding { grid-area: funding; }
 .header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px 12px; padding: 18px 20px 0; }
-.card .header h3 { margin: 0; font-size: 20px; line-height: 1.4; font-weight: 550; letter-spacing: -.3px; }
+.card .header h3 { margin: 0; font-size: var(--title-card); line-height: 1.4; font-weight: 550; letter-spacing: -.3px; }
 .card .meta { margin: 3px 0 0; color: #b5b5b5; font-size: 13px; line-height: 1.5; font-variant-numeric: tabular-nums; }
 .header > .meta { margin: 0; white-space: nowrap; }
 .card .note { margin: 0; padding: 0 20px 16px; color: #b8b8b8; font-size: 13px; line-height: 1.5; }

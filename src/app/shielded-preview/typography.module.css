@@ -9,6 +9,10 @@
 
 .readable.readable {
   --font-display: "Jost", var(--font-inter);
+  /* One scale for titles by role: above a group of cards, on a card, on a list row. */
+  --title-section: 23px;
+  --title-card: 20px;
+  --title-row: 17px;
   --secondary-ink: #cecece;
   --text-muted: #bcbcbc;
   font-family: var(--font-inter);
