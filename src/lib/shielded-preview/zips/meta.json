@@ -1,24 +1,29 @@
 {
-  "syncedAt": "2026-11-05T05:25:18.138133+00:00",
+  "syncedAt": "2026-11-10T02:44:23.008103+00:00",
   "upstream": {
     "repository": "https://github.com/zcash/zips",
     "branch": "main",
-    "commit": "d97c23e77eacdb7cd17cf63bca6440d66fb152db",
-    "committedAt": "2026-11-03T23:18:54Z"
+    "commit": "4699a8d518c4c409db3f486c7917e649369c41c9",
+    "committedAt": "2026-11-06T04:30:56Z"
   },
   "counts": {
-    "documents": 206,
+    "documents": 223,
     "zips": 130,
     "drafts": 6,
     "guides": 3,
-    "proposals": 67,
+    "proposals": 84,
     "images": 15
   },
   "failures": [],
   "pulls": {
-    "listed": 70,
-    "rendered": 67,
+    "listed": 83,
+    "rendered": 84,
     "failures": [
+      {
+        "pull": 1447,
+        "file": "zip-2002.rst",
+        "error": "Empty or unreadable source"
+      },
       {
         "pull": 1337,
         "file": "draft-nuttycom-zewif.md",
@@ -28,6 +33,11 @@
         "pull": 1243,
         "file": "draft-frontiercompute-zap1.md",
         "error": "draft-frontiercompute-zap1.md has no ZIP header"
+      },
+      {
+        "pull": 1107,
+        "file": "draft-stark-verify-nu.md",
+        "error": "Empty or unreadable source"
       },
       {
         "pull": 986,
