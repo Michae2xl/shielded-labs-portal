@@ -3,7 +3,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ProposalsCollection, VotingCollection } from '@/app/shielded-preview/governance-collections';
 import CoinholderProposalRecord from '@/app/shielded-preview/coinholder-proposal-record';
-import { allCoinholderProposals, applicationFields, coinholderTotals, currentCoinholderProposals, emptyCoinholderSource, readyForVoteLabel, requestedCents, type CoinholderIssue } from './coinholder-proposals';
+import { allCoinholderProposals, applicationFields, coinholderSnapshotSource, coinholderTotals, currentCoinholderProposals, emptyCoinholderSource, readyForVoteLabel, requestedCents, type CoinholderIssue } from './coinholder-proposals';
 import { coinholderRoundLabel } from './coinholder-rounds';
 import { fetchCoinholderProposals } from './coinholder-provider';
 
@@ -202,5 +202,18 @@ describe('Complete Coinholder application history', () => {
       const [row] = allCoinholderProposals([{ ...historical, body: `## ${heading}\n${value}\n## Total Budget\n$900,000` }]);
       expect(row.requestedUsdCents).toBe(cents);
     }
+  });
+});
+
+describe('Saved Coinholder record', () => {
+  const observedAt = '2026-11-10T23:00:00Z';
+  it('seeds the applications from a dated copy so a failed read never empties the list', () => {
+    const source = coinholderSnapshotSource({ observedAt, issues: [issue] });
+    expect(source).toMatchObject({ state: 'snapshot', observedAt, total: 1 });
+    expect(source.data?.map(row => row.number)).toEqual([70]);
+  });
+  it('stays unavailable when the saved copy is missing, malformed or empty', () => {
+    for (const saved of [null, {}, { observedAt: 'yesterday', issues: [issue] }, { observedAt, issues: [{ number: 'x' }] }, { observedAt, issues: [] }])
+      expect(coinholderSnapshotSource(saved)).toBe(emptyCoinholderSource);
   });
 });

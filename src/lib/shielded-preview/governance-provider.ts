@@ -2,14 +2,15 @@ import 'server-only';
 import { z } from 'zod';
 import { parseCsv } from '@/lib/zcg/csv';
 import snapshot from './governance-data/snapshot.json';
-import { emptyCoinholderSource } from './coinholder-proposals';
+import savedCoinholder from './governance-data/coinholder-issues.json';
+import { coinholderSnapshotSource } from './coinholder-proposals';
 import { fetchCoinholderProposals } from './coinholder-provider';
 import { emptyTreasurySource, parseBalanceTab, treasuryCsvUrl, treasuryPrice, treasurySheetUrl, treasuryTabs } from './treasury';
 import { liveZecPrice } from './zec-price';
 import { reviewSchema, paymentSchema, grantSchema, memberSchema, verificationSchema, type GovernanceData, type Source } from './governance-types';
 
 const TTL=300_000;
-const seed={...snapshot,coinholder:emptyCoinholderSource,treasury:emptyTreasurySource} as unknown as GovernanceData;
+const seed={...snapshot,coinholder:coinholderSnapshotSource(savedCoinholder),treasury:emptyTreasurySource} as unknown as GovernanceData;
 let cache:GovernanceData|undefined;
 let refreshedAt=0;
 let pending:Promise<GovernanceData>|undefined;

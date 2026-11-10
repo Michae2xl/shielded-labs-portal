@@ -17,7 +17,7 @@ describe('Governance refresh boundaries',()=>{
   expect(a.proposals.data).toEqual(snapshot.proposals.data);
   expect(a.proposals.observedAt).toBe(snapshot.proposals.observedAt);
   expect(a.proposals.state).toBe('snapshot');
-  expect(a.coinholder.data).toBeNull();expect(a.coinholder.state).toBe('unavailable');
+  expect(a.coinholder.data?.length).toBeGreaterThan(0);expect(a.coinholder.state).toBe('snapshot');expect(a.coinholder.error).toBe(true);
   expect(a.treasury.data).toBeNull();expect(a.treasury.state).toBe('unavailable');
  });
  it('rejects truncated ledgers without replacing the complete saved observation',async()=>{

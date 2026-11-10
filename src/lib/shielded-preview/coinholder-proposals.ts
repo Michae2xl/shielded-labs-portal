@@ -31,6 +31,14 @@ export type CoinholderProposal = {
 export const emptyCoinholderSource: Source<CoinholderProposal[] | null> = {
   data: null, state: 'unavailable', observedAt: null, url: coinholderIssuesUrl,
 };
+const savedCoinholderSchema = z.object({ observedAt: z.iso.datetime(), issues: coinholderIssueSchema.array().min(1) });
+/** The dated copy bundled with the portal, shown until a live read succeeds. An unreadable or empty copy never implies zero applications. */
+export function coinholderSnapshotSource(saved: unknown): Source<CoinholderProposal[] | null> {
+  const parsed = savedCoinholderSchema.safeParse(saved);
+  if (!parsed.success) return emptyCoinholderSource;
+  const data = allCoinholderProposals(parsed.data.issues);
+  return { data, total: data.length, state: 'snapshot', observedAt: parsed.data.observedAt, url: coinholderIssuesUrl };
+}
 
 export function requestedCents(value: string | undefined): number | null {
   const match = value?.trim().match(/^(?:US\$|\$|USD\s+)?\s*(\d{1,3}(?:,\d{3})+|\d{1,3}(?:['’]\d{3})+|\d+)(?:\.(\d{1,2}))?\s*(?:USD)?$/i);
