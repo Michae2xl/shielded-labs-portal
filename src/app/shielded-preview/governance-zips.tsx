@@ -124,9 +124,11 @@ export function ZipsCollection({ index, lane, onLane, activity, onActivity, ...c
   const count = (id: ZipLane) => index.entries.filter(entry => zipLane(entry) === id).length;
   const opened = lane === 'proposals' ? 'Opened' : 'Created';
   // Click filters: status and recent activity, each chip counting what it would show.
+  const chip = (item: { id: string; count: number }, pressed: boolean, name: string, choose: (id: string) => void) =>
+    <button key={item.id} type="button" aria-pressed={pressed} data-empty={item.count === 0} onClick={() => choose(item.id)}>{name}<strong>{item.count}</strong></button>;
   const filters = <div className={z.filterBar}>
-    {facets.statuses.length > 2 && <div className={z.chips} role="group" aria-label="Filter by status"><span>Status</span>{facets.statuses.map(item => <button key={item.id} type="button" aria-pressed={filter === item.id} onClick={() => onFilter(item.id)}>{item.id === 'all' ? 'All' : item.id}<strong>{item.count}</strong></button>)}</div>}
-    <div className={z.chips} role="group" aria-label="Filter by activity"><span>Activity</span>{facets.activity.map(item => <button key={item.id} type="button" aria-pressed={activity === item.id} onClick={() => onActivity(item.id)}>{item.id === 'all' ? 'Any time' : `${item.id} days`}<strong>{item.count}</strong></button>)}</div>
+    {facets.statuses.length > 2 && <div className={z.chips} role="group" aria-label="Filter by status"><span>Status</span><div>{facets.statuses.map(item => chip(item, filter === item.id, item.id === 'all' ? 'All' : item.id, onFilter))}</div></div>}
+    <div className={z.chips} role="group" aria-label="Filter by activity"><span>Activity</span><div>{facets.activity.map(item => chip(item, activity === item.id, item.id === 'all' ? 'Any time' : `${item.id} days`, onActivity))}</div></div>
   </div>;
   return <Collection archive id="zips" title={titles[lane]} context="Zcash Improvement Proposals"
     tabs={<Tabs label="ZIP collections" value={lane} onChange={onLane} items={zipLanes.map(item => ({ id: item.id, name: item.name, count: count(item.id), icon: laneIcons[item.id] }))}/>}
