@@ -18,6 +18,14 @@ export type DevFundPublication = {
 };
 export const devFundPublished: DevFundPublication = { questions: null, results: null };
 
+// Posted by the coordinating organizations after the timeline (post 39 of its thread, 9 Nov 2026).
+// `checkedAt` is when the thread was last read for the proposed questions; update it with each review.
+const organizersPost = 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/39';
+export const devFundNotices = {
+  lateProposals: { postedAt: '2026-11-09', url: organizersPost, text: 'Proposals submitted after the deadline are not part of this round of polling: the coordinating organizations decided to uphold it.' },
+  questions: { postedAt: '2026-11-09', url: organizersPost, checkedAt: '2026-11-10T02:58:00Z', text: 'On 9 Nov the organizers said the proposed questions and answer choices would follow.' },
+} as const;
+
 export const devFundTimeline = {
   title: 'ZCG / Dev Fund: proposals and polling',
   publishedAt: '2026-11-05',

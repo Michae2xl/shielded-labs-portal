@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { bundledZips } from './library';
-import { proposalCoverage, proposalsBySignals, proposalAims, relatedXDiscussion, proposalStructure, independentPositions, proposalGroup, copyExplorerParams, explorerState, fundProposals, fundRelations, fundStatements, matchingProposals, proposalStatements } from './dev-fund';
+import { proposalCoverage, proposalsBySignals, proposalAims, relatedXDiscussion, proposalStructure, independentPositions, proposalGroup, copyExplorerParams, explorerState, fundProposals, fundRelations, fundStatements, matchingProposals, outsidePollRound, pollRound, proposalStatements } from './dev-fund';
 
 describe('Dev Fund evidence boundaries', () => {
   it('keeps withdrawn and closed proposals out of the default set, but searchable in history', () => {
@@ -174,4 +174,17 @@ it('records review coverage for every proposal without turning missing statement
       expect(positions.every(p=>!p.author && p.kind!=='Discussion')).toBe(true);
     }
   }
+
+});
+
+it('marks as outside the November poll exactly the open drafts whose pull request opened after the deadline', () => {
+  const opened = (record: string | undefined) => bundledZips.entries.find(entry => entry.id === record)?.pull?.createdAt ?? null;
+  const drafts = fundProposals.filter(proposal => proposal.stage === 'Open draft');
+  const late = drafts.filter(proposal => { const at = opened(proposal.record); return at !== null && Date.parse(at) > Date.parse(pollRound.deadline); });
+  expect(late.map(proposal => proposal.id).sort()).toEqual([...pollRound.late].sort());
+  expect(fundProposals.filter(outsidePollRound).map(proposal => proposal.pr).sort()).toEqual([1449, 1450, 1451, 1452, 1453, 1454, 1455]);
+  // The decision is the organizers' own post; nothing is marked as included.
+  expect(pollRound.source).toBe('https://forum.zcashcommunity.com/t/58906/39');
+  expect(outsidePollRound(fundProposals.find(proposal => proposal.id === 'lockbox')!)).toBe(false);
+  expect(outsidePollRound(fundProposals.find(proposal => proposal.id === 'no-change')!)).toBe(false);
 });

@@ -53,6 +53,13 @@ const originalProposals: FundProposal[] = [
 ];
 export const fundProposals: FundProposal[] = [...originalProposals, ...additional as FundProposal[]];
 export const proposalGroup = (proposal: FundProposal) => proposal.group ?? 'Funding';
+/** The November 2026 poll: the organizers left out the proposals submitted after the 8 Nov 23:59 UTC deadline (their post of 9 Nov). */
+export const pollRound = {
+  deadline: '2026-11-08T23:59:00Z', decidedAt: '2026-11-09', source: forum(58906, 39),
+  late: ['coin-quorum', 'human-minimum', 'member-grants', 'seven-seats', 'treasury-committee', 'town-square', 'coinholder-elections'],
+};
+/** Only exclusions are recorded: no proposal is confirmed as a ballot option until the poll questions are published. */
+export const outsidePollRound = (proposal: FundProposal) => pollRound.late.includes(proposal.id);
 export const proposalTopics = {
   Funding: { color: '#f4b728', description: 'Streams, grants & treasury' },
   Governance: { color: '#ededed', description: 'Mandates, committees & accountability' },

@@ -2,13 +2,14 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
-import { devFundAcceptsProposals, devFundLane, devFundNextSteps, devFundPhase, devFundPublished, devFundSources as sources, devFundTimeline as timeline, type DevFundPublication } from '@/lib/shielded-preview/governance-dev-fund';
+import { devFundAcceptsProposals, devFundLane, devFundNextSteps, devFundNotices as notices, devFundPhase, devFundPublished, devFundSources as sources, devFundTimeline as timeline, type DevFundPublication } from '@/lib/shielded-preview/governance-dev-fund';
 import { Arrow, Link, type CollectionNavigate } from './governance-link';
 import b from './governance-bento.module.css';
 import p from './governance-participation.module.css';
 import s from './governance-dev-fund.module.css';
 
 const date = (value: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(value));
+const checked = (value: string) => `${new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC' }).format(new Date(value))} UTC`;
 
 function useNow() {
   const [now, setNow] = useState<number | null>(null);
@@ -66,10 +67,11 @@ export function DevFundProposals({ onNavigate }: { onNavigate: CollectionNavigat
       <header className={`${b.header} ${s.centered}`}><h3 id="dev-fund-submit-heading">Submit a proposal</h3><Phase now={now}/></header>
       <div className={s.submit}>
         <dl className={s.deadline}><dt>{deadline.label}</dt><dd>Sunday, 8 Nov 2026<small>{deadline.time}</small></dd></dl>
-        <p className={s.text}>{accepting ? 'Anyone can submit a proposal. Ideally it follows the ZIP 0 format and has its own thread on the Zcash Community Forum.' : 'The published deadline has passed.'}</p>
+        <p className={s.text}>{accepting ? 'Anyone can submit a proposal. Ideally it follows the ZIP 0 format and has its own thread on the Zcash Community Forum.' : `The published deadline has passed. ${notices.lateProposals.text}`}</p>
       </div>
       <div className={s.actions}>
         {accepting && <Cited href={sources.newThread} className={`${s.action} ${s.primary}`}>Start a forum thread</Cited>}
+        {!accepting && <Cited href={notices.lateProposals.url} className={s.action}>Organizers’ post, 9 Nov</Cited>}
         <Cited href={sources.zip0} className={s.action}>Read ZIP 0</Cited>
         <Cited href={sources.governance} className={s.action}>Browse Governance threads</Cited>
       </div>
@@ -106,7 +108,9 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
         <Stamp step={step}/>
         <span>{step.label}</span>
         <p className={s.stepText}>{step.summary}</p>
-        {step.id === 'proposals' && <Link section="Proposals" selection={{ lane: devFundLane }} onNavigate={onNavigate} className={s.link}>How to submit<Arrow/></Link>}
+        {step.id === 'proposals' && (devFundAcceptsProposals(now)
+          ? <Link section="Proposals" selection={{ lane: devFundLane }} onNavigate={onNavigate} className={s.link}>How to submit<Arrow/></Link>
+          : <><p className={s.stepText}>{notices.lateProposals.text}</p><Cited href={notices.lateProposals.url}>Organizers’ post, 9 Nov</Cited></>)}
       </li>)}</ol>
     </section>
 
@@ -116,7 +120,9 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
         <header className={b.header}><h3 id="dev-fund-poll-heading">Poll questions and answers</h3>{published.questions && <time className={b.meta} dateTime={published.questions.publishedAt}>{date(published.questions.publishedAt)}</time>}</header>
         {published.questions
           ? <><ol className={s.questions}>{published.questions.items.map(item => <li key={item.question}><strong>{item.question}</strong><ul>{item.answers.map(answer => <li key={answer}>{answer}</li>)}</ul></li>)}</ol><Cited href={published.questions.url} className={b.footer}>Published questions</Cited></>
-          : <p className={`${s.text} ${s.cardText}`}>{questionsDue ? 'Not recorded here yet. Publication was planned for 9 Nov; check the timeline thread.' : 'Not published yet. Publication is planned for 9 Nov.'}</p>}
+          : questionsDue
+            ? <><p className={`${s.text} ${s.cardText}`}>{`None had been posted in the timeline thread when it was last checked, ${checked(notices.questions.checkedAt)}. ${notices.questions.text}`}</p><Cited href={notices.questions.url} className={b.footer}>Organizers’ post, 9 Nov</Cited></>
+            : <p className={`${s.text} ${s.cardText}`}>Not published yet. Publication is planned for 9 Nov.</p>}
       </section>
       <section className={b.card} aria-labelledby="dev-fund-results-heading">
         <header className={b.header}><h3 id="dev-fund-results-heading">Results</h3>{published.results && <time className={b.meta} dateTime={published.results.publishedAt}>{date(published.results.publishedAt)}</time>}</header>

@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore, useState, useRef, type CSSProperties, type ReactNode } from 'react';
 import Image from 'next/image';
-import { proposalCoverage, proposalsBySignals, proposalAims, proposalTopics, independentPositions, profileImages, proposalColor, proposalGroup, fundStatements, relatedXDiscussion, xCoverage, devFundReviewed, explorerState, fundProposals, fundRelations, isHistorical, matchingProposals, proposalStatements, type FundProposal, type FundStatement } from '@/lib/shielded-preview/zips/dev-fund';
+import { outsidePollRound, pollRound, proposalCoverage, proposalsBySignals, proposalAims, proposalTopics, independentPositions, profileImages, proposalColor, proposalGroup, fundStatements, relatedXDiscussion, xCoverage, devFundReviewed, explorerState, fundProposals, fundRelations, isHistorical, matchingProposals, proposalStatements, type FundProposal, type FundStatement } from '@/lib/shielded-preview/zips/dev-fund';
 import { devFundSources } from '@/lib/shielded-preview/governance-dev-fund';
 import type { ZipsIndex } from '@/lib/shielded-preview/zips/types';
 import s from './zip-explorer.module.css';
@@ -18,7 +18,10 @@ const date = (value: string) => new Intl.DateTimeFormat('en-GB', { day: 'numeric
 function External({ href, children }: { href: string; children: ReactNode }) {
   return <a href={href} target="_blank" rel="noopener noreferrer">{children}<span aria-hidden="true">↗</span><span className={s.srOnly}> (external source)</span></a>;
 }
-function Badge({ proposal }: { proposal: FundProposal }) { return <span className={s.badge} data-muted={isHistorical(proposal)}>{proposal.stage}{proposal.pr ? ` · #${proposal.pr}` : ''}</span>; }
+const outOfPoll = 'Not in Nov poll';
+function Badge({ proposal }: { proposal: FundProposal }) {
+  return <span className={s.badges}><span className={s.badge} data-muted={isHistorical(proposal)}>{proposal.stage}{proposal.pr ? ` · #${proposal.pr}` : ''}</span>{outsidePollRound(proposal) && <span className={s.badge} data-muted="true">{outOfPoll}</span>}</span>;
+}
 function Portrait({ name }: { name: string }) {
   const [failed, setFailed] = useState(false);
   const src = profileImages[name];
@@ -56,7 +59,7 @@ function MapBoard({ rows, selected, select }: { rows: FundProposal[]; selected: 
   function node(p: FundProposal) {
     return <button className={s.mapNode} key={p.id} style={accent(p.id)} data-historical={isHistorical(p)} data-baseline={p.stage === 'Baseline'} aria-pressed={p.id === selected} onClick={() => select(p.id)}>
       <span className={s.nodeTop}><People names={p.authors}/><small>{p.pr ? `PR #${p.pr}` : p.stage === 'Baseline' ? 'ZIP 1016 reference' : 'Forum draft'}</small></span>
-      <strong>{p.short}</strong>{isHistorical(p) && <span className={s.structure}>{p.stage}</span>}
+      <strong>{p.short}</strong>{(isHistorical(p) || outsidePollRound(p)) && <span className={s.structure}>{isHistorical(p) ? p.stage : outOfPoll}</span>}
     </button>;
   }
   return <section className={s.atlas} aria-label="General proposal map">
@@ -169,7 +172,7 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
           <header className={s.signalsHeader}><div><h3>Documented support</h3><p>Most recorded positions first, each with its authors’ stated aim. Open a count to see participants and sources.</p></div><span className={s.sampleBadge}>Partial coverage</span></header>
           <div className={s.signalLegend}><span data-kind="Support">Support</span><span data-kind="Concern">Concern</span><span data-kind="Opposition">Opposition</span><small>Accounts, not votes · contributors excluded</small></div>
           {signalRows.map(p => <div key={p.id} className={s.signalRow} data-selected={selected.id === p.id} style={accent(p.id)}>
-            <button className={s.signalTitle} aria-pressed={selected.id === p.id} onClick={() => select(p.id)}><span><strong>{p.short}</strong><small>{p.pr ? `#${p.pr} · ` : ''}{p.stage}</small></span></button>
+            <button className={s.signalTitle} aria-pressed={selected.id === p.id} onClick={() => select(p.id)}><span><strong>{p.short}</strong><small>{p.pr ? `#${p.pr} · ` : ''}{p.stage}{outsidePollRound(p) ? ' · not in Nov poll' : ''}</small></span></button>
             <div className={s.positionBody}><ProposalAim proposal={p}/><SignalBar id={p.id} channel={state.channel}/></div>
             <label className={s.comparePick}><input type="checkbox" checked={state.compared.includes(p.id)} disabled={!state.compared.includes(p.id) && state.compared.length >= 3} onChange={() => toggle(p.id)}/><span className={s.srOnly}>Compare {p.short}</span></label>
           </div>)}
@@ -194,7 +197,7 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
         {state.panel !== 'timeline' && <>
         <section ref={focusPanel} tabIndex={-1} className={s.focusPanel} aria-label={`Selected proposal: ${selected.short}`} style={accent(selected.id)}>
           <button className={s.backToBrowse} onClick={() => { browsingPanel.current?.scrollIntoView({behavior:'instant',block:'start'}); browsingPanel.current?.focus({preventScroll:true}); }}>↑ Back to proposals</button><header><div><span className={s.eyebrow}>{proposalGroup(selected)}</span><h3>{selected.short}</h3><span className={s.focusAuthors}><People names={selected.authors}/>{selected.authors.join(' · ')}</span></div><Badge proposal={selected}/></header>
-          <p>{selected.summary}</p><ProposalAim proposal={selected} label/><div className={s.sourceRow}><External href={selected.source}>Proposal source</External><External href={selected.discussion}>{isHistorical(selected) ? 'Status source' : 'Public discussion'}</External><button onClick={() => {const ids = state.compared.includes(selected.id) ? state.compared : [...state.compared.slice(0,2), selected.id];update({layout:'compare',compare:ids.join(',')});}}>Compare this proposal →</button></div>
+          <p>{selected.summary}</p>{outsidePollRound(selected) && <p className={s.pollNote}>Submitted after the 8 Nov deadline; the coordinating organizations left it out of this round of polling. <External href={pollRound.source}>Organizers’ post, 9 Nov</External></p>}<ProposalAim proposal={selected} label/><div className={s.sourceRow}><External href={selected.source}>Proposal source</External><External href={selected.discussion}>{isHistorical(selected) ? 'Status source' : 'Public discussion'}</External><button onClick={() => {const ids = state.compared.includes(selected.id) ? state.compared : [...state.compared.slice(0,2), selected.id];update({layout:'compare',compare:ids.join(',')});}}>Compare this proposal →</button></div>
           <details className={s.proposalDetails} key={selected.id}><summary>Details & full proposal</summary><Details proposal={selected} index={index}/></details>
         </section>
         {fundRelations.some(r => r.from === selected.id || r.to === selected.id) && <div className={s.relations}>{fundRelations.filter(r => r.from === selected.id || r.to === selected.id).map(r => { const other = fundProposals.find(p => p.id === (r.from === selected.id ? r.to : r.from))!; return <div key={`${r.from}-${r.to}`}><span>{r.label}</span><button onClick={() => update({ focus: other.id, past: '1', status: null, dq: null, group: null })}>{other.short} →</button><External href={r.source}>Basis</External></div>; })}</div>}

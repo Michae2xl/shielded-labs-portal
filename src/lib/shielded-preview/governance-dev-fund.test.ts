@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { DevFundOverviewCard, DevFundProposals, DevFundVoting } from '@/app/shielded-preview/governance-dev-fund';
 import { ProposalsCollection, VotingCollection } from '@/app/shielded-preview/governance-collections';
 import GovernanceOverview from '@/app/shielded-preview/governance-overview';
-import { devFundAcceptsProposals, devFundHref, devFundLane, devFundNextSteps, devFundPhase, devFundTimeline } from './governance-dev-fund';
+import { devFundAcceptsProposals, devFundHref, devFundLane, devFundNextSteps, devFundNotices, devFundPhase, devFundTimeline } from './governance-dev-fund';
 import { emptyCoinholderSource } from './coinholder-proposals';
 import snapshot from './governance-data/snapshot.json';
 import record from './governance-data/record.json';
@@ -102,5 +102,23 @@ describe('ZCG / Dev Fund published timeline', () => {
   it('can be found through the portal search', () => {
     expect(searchPortal('dev fund polling', [])).toContainEqual({ title: devFundTimeline.title, kind: 'Governance', href: devFundHref('voting') });
     expect(searchPortal('NU 7.1', []).map(result => result.href)).toContain(devFundHref('voting'));
+  });
+
+  it('reports the organizers’ notices after the deadline, each with its post, and never before', () => {
+    const post = 'zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/39';
+    expect(devFundNotices.lateProposals.url).toContain(post);
+    expect(devFundNotices.questions.url).toContain(post);
+    // Server markup has no clock yet: it must read as the published timeline, without the later notices.
+    const early = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate }));
+    expect(early).toContain('How to submit');
+    expect(early).not.toContain('not part of this round');
+    expect(early).toContain('Not published yet. Publication is planned for 9 Nov.');
+    vi.useFakeTimers({ now: at('2026-11-10T03:00:00Z') });
+    try {
+      // useNow reads the clock in an effect, which static rendering never runs; the data still has to carry the facts.
+      expect(devFundAcceptsProposals(Date.now())).toBe(false);
+      expect(devFundPhase(Date.now()).label).toBe('Discussion period');
+      expect(Date.parse(devFundNotices.questions.checkedAt)).toBeLessThanOrEqual(Date.now());
+    } finally { vi.useRealTimers(); }
   });
 });
