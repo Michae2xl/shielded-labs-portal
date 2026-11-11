@@ -14,6 +14,8 @@ for (const viewport of viewports) {
     for (const list of archiveLists) {
       test(`${list.name} keeps every row on one grid`, async ({ page }) => {
         await open(page, list.path);
+        // Rows arrive after the data does; on a busy machine that can be after the page settles.
+        await page.locator('main ul[class*="_rows"] > li > a[class*="_record"]').first().waitFor({ state: 'visible', timeout: 20_000 });
         const rows = await rowGeometry(page);
         expect(rows.length, 'rows in the list').toBeGreaterThan(0);
         // A row that stops being a grid lets its columns float: the 9 Nov 2026 regression.
