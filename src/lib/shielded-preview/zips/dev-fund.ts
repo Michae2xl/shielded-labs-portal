@@ -7,6 +7,8 @@ export type FundProposal = {
   stage: 'Open draft' | 'Closed PR' | 'Withdrawn' | 'Baseline' | 'Earlier draft';
   group?: 'Funding' | 'Governance' | 'Voting';
   record?: string; pr?: number; revision: string; source: string; discussion: string;
+  /** Set when the author changed what the draft proposes after people had already responded to it. */
+  revised?: { on: string; text: string; source: string };
   summary: string; stream: string; coinholder: string; treasury: string; implementation: string;
 };
 const forum = (topic: number, post = 1) => `https://forum.zcashcommunity.com/t/${topic}/${post}`;
@@ -14,26 +16,29 @@ const blob = (sha: string, file: string) => `https://github.com/zcash/zips/blob/
 const originalProposals: FundProposal[] = [
   { id: 'lockbox', short: 'Future Dev & Legal Defense', title: 'Future Dev and Legal Defense Fund Lockbox',
     authors: ['Sean Bowe', 'Zooko Wilcox', 'Jason McGee'], stage: 'Open draft', pr: 1428,
-    record: 'pr-1428-draft-mcgee-future-dev-legal-defense-fund', revision: 'e2c7c3d5f83d60a468b5291759262cfa4c456df4',
-    source: blob('e2c7c3d5f83d60a468b5291759262cfa4c456df4', 'draft-mcgee-future-dev-legal-defense-fund.md'), discussion: forum(58611),
-    summary: 'Redirect ZCG’s stream to a new lockbox and contribute 50,000 ZEC from its treasury to the NSM.',
+    record: 'pr-1428-draft-mcgee-future-dev-legal-defense-fund', revision: 'abf8567c6b0b385a7c2a1af4655cb5bacadfc729',
+    source: blob('abf8567c6b0b385a7c2a1af4655cb5bacadfc729', 'draft-mcgee-future-dev-legal-defense-fund.md'), discussion: forum(58611),
+    summary: 'Redirect ZCG’s stream to a new lockbox and remove 50,000 ZEC of its treasury from circulation, credited to the NSM.',
     stream: '8% to a new lockbox for the remaining stream term.', coinholder: '12% stream unchanged.',
-    treasury: '50,000 ZEC to the NSM; ZCG retains the remainder and its grants program.',
+    treasury: '50,000 ZEC removed from circulation and credited to the NSM; ZCG keeps the rest of its treasury and its grants program.',
     implementation: 'Network upgrade required. Spending from the new lockbox needs a future ZIP.' },
   { id: 'zap', short: 'Zcash Adoption Pool', title: 'Zcash Adoption Pool (ZAP)', authors: ['Daira-Emma Hopwood'],
-    stage: 'Open draft', pr: 1431, record: 'pr-1431-draft-dairaemma-governance-zap', revision: 'e0677267f46c4de9dec28146132cba4668161cb2',
-    source: blob('e0677267f46c4de9dec28146132cba4668161cb2', 'draft-dairaemma-governance-zap.md'), discussion: forum(58656),
+    stage: 'Open draft', pr: 1431, record: 'pr-1431-draft-dairaemma-governance-zap', revision: 'ad90f2e5b7318338ac9490702c3b0f653a5643a8',
+    source: blob('ad90f2e5b7318338ac9490702c3b0f653a5643a8', 'draft-dairaemma-governance-zap.md'), discussion: forum(58656),
     summary: 'Keep ZCG’s funding stream and refocus the grants program on broader ownership and use of ZEC.',
     stream: 'Existing value and duration retained under ZIP 214 Revision 3.', coinholder: 'No change specified.',
     treasury: 'ZCG assets become ZAP assets; existing administration requirements remain.',
     implementation: 'Changes the grants mandate and assessment requirements.' },
   { id: 'wind-down', short: 'Wind down ZCG', title: 'Winding Down Zcash Community Grants', authors: ['Tom Howard'],
-    stage: 'Open draft', pr: 1423, record: 'pr-1423-draft-howard-wind-down-zcg', revision: '425f849ff7008b55cfc7a4441215d51167535ab6',
-    source: blob('425f849ff7008b55cfc7a4441215d51167535ab6', 'draft-howard-wind-down-zcg.md'), discussion: forum(58515,120),
-    summary: 'Stop new grants, honor existing commitments, and contribute residual ZCG funds to the NSM.',
-    stream: 'Separate decision; this draft addresses the existing program and treasury.', coinholder: 'Unchanged.',
-    treasury: 'Reserve approved commitments and limited closure costs; residual funds go to the NSM.',
-    implementation: 'Requires legal instruments and approvals; does not itself change consensus rules.' },
+    stage: 'Open draft', pr: 1423, record: 'pr-1423-draft-howard-wind-down-zcg', revision: '0f0e440bcdc52152d16046463ca04cbcbfec22bc',
+    source: blob('0f0e440bcdc52152d16046463ca04cbcbfec22bc', 'draft-howard-wind-down-zcg.md'), discussion: forum(58515,120),
+    // Read at the revision above on 11 Nov 2026. Earlier statements cite the first revision through `versionSource`.
+    revised: { on: '2026-11-10', source: forum(58515, 145),
+      text: 'the draft now also ends ZCG’s 8% stream and redirects it, and sends residual funds to the Future Dev and Legal Defense Fund Lockbox instead of the NSM. The statements below were made about the earlier version.' },
+    summary: 'Stop new grants, honor existing commitments, redirect the rest of ZCG’s 8% stream to the Future Dev and Legal Defense Fund Lockbox, and send residual ZCG funds to that Lockbox’s administrator.',
+    stream: 'If still active at activation, it ends and the same 8% goes to the Future Dev and Legal Defense Fund Lockbox for the rest of its scheduled term.', coinholder: 'Unchanged.',
+    treasury: 'Reserve existing commitments and limited closure costs; the surplus goes to the Lockbox administrator once a future ZIP designates it. An NSM donation separately authorized before activation stays outside.',
+    implementation: 'Takes effect at a Mainnet network upgrade; amends ZIPs 1015 and 1016 and requires legal instruments and approvals.' },
   { id: 'no-change', short: 'Keep existing arrangements', title: 'Keep existing arrangements', authors: ['vaspholdings'],
     stage: 'Baseline', record: 'zip-1016', revision: 'Forum post 10 · 7 Nov 2026', source: forum(58906, 10), discussion: forum(58906, 10),
     summary: 'A requested no-change option, distinct from abstaining. Not a new ZIP; it is Question 4 of the draft poll published on 10 Nov.',
@@ -105,8 +110,8 @@ export const fundStatements: FundStatement[] = [
 ];
 export const fundRelations = [
   { from: 'lockbox', to: 'nsm-stream', label: 'Alternative for the funding stream', source: fundProposals[0].source },
-  { from: 'lockbox', to: 'wind-down', label: 'Alternative where the proposals overlap', source: fundProposals[0].source },
-  { from: 'wind-down', to: 'nsm-stream', label: 'Complementary treasury and stream decisions', source: fundProposals[2].source },
+  { from: 'lockbox', to: 'wind-down', label: 'Wind-down sends the stream and residual funds to the Lockbox', source: fundProposals[2].source },
+  { from: 'wind-down', to: 'nsm-stream', label: 'Now carries the stream redirection of the withdrawn draft', source: forum(58515, 145) },
   { from: 'miner-signals', to: 'miner-original', label: 'Reworks the earlier miner-polling draft', source: 'https://github.com/zcash/zips/pull/1447' },
   { from: 'human-minimum', to: 'coin-quorum', label: 'Companion proposals; separately adoptable', source: additional.find(p => p.id === 'human-minimum')!.source },
 ];
@@ -201,7 +206,7 @@ export const profileImages: Record<string, string> = {
 export const proposalAims: Record<string, string> = {
   'lockbox': 'Reserve funding for future development and legal defense while contributing treasury funds to the NSM.',
   'zap': 'Broaden ZEC ownership and use through an adoption-focused grants mandate.',
-  'wind-down': 'Honor existing commitments while transitioning away from ZCG and contributing residual funds to the NSM.',
+  'wind-down': 'Honor existing commitments while winding down ZCG, and direct its remaining stream and residual funds to future development and legal defense.',
   'no-change': 'Preserve the existing funding arrangements as an explicit answer choice.',
   'nsm-stream': 'Redirect the remaining stream toward long-term network sustainability through the NSM.',
   'taper': 'Provide a gradual transition by reducing funding streams over time.',

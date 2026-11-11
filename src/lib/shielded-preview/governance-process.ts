@@ -83,7 +83,7 @@ export const governanceProcess: {
       { kind: 'p', lead: 'How it works today.', text: 'The Dev Fund is a protocol rule that sets aside 20% of each block: 8% to ZCG and 12% to the coinholder-controlled fund (ZIPs 1015 and 1016). The streams end at block 4,406,400, the third halving. The Dev Fund and the grant programs are different things: if the Dev Fund ended tomorrow, ZCG and the coinholder program would keep the balances they already hold.' },
       { kind: 'table', caption: 'Proposals on the table, all drafts in open pull requests and readable under ZIPs in this portal', columns: ['Proposal', 'Author', 'What it does'], rows: [
         [{ label: 'Future Dev and Legal Defense Fund Lockbox (PR 1428)', href: 'https://github.com/zcash/zips/pull/1428' }, 'aquietinvestor', 'Ends the ZCG stream, moves part of the balance ZCG holds into a future development and legal defense lockbox, and donates 50,000 ZEC to the NSM'],
-        [{ label: 'Winding Down Zcash Community Grants (PR 1423)', href: 'https://github.com/zcash/zips/pull/1423' }, 'thowar2', 'Winds ZCG down gradually'],
+        [{ label: 'Winding Down Zcash Community Grants (PR 1423)', href: 'https://github.com/zcash/zips/pull/1423' }, 'thowar2', 'Winds ZCG down gradually; since a 10 Nov revision, also redirects its 8% stream and residual funds to the Future Dev and Legal Defense Fund Lockbox'],
         [{ label: 'Zcash Adoption Pool, ZAP (PR 1431)', href: 'https://github.com/zcash/zips/pull/1431' }, 'daira', 'An alternative design for development funding'],
         ['Other drafts', 'Several authors', 'Reduce the Dev Fund over time, or end both streams while keeping the existing balances'],
       ] },

@@ -30,7 +30,7 @@ describe('Dev Fund evidence boundaries', () => {
     expect(fundProposals.find(p => p.id === 'no-change')?.stage).toBe('Baseline');
   });
   it('keeps complementary decisions distinct from alternatives', () => {
-    expect(fundRelations.find(r => r.from === 'wind-down' && r.to === 'nsm-stream')?.label).toContain('Complementary');
+    expect(fundRelations.find(r => r.from === 'wind-down' && r.to === 'nsm-stream')?.label).toContain('withdrawn draft');
     for (const r of fundRelations) {
       expect(fundProposals.some(p => p.id === r.from)).toBe(true);
       expect(fundProposals.some(p => p.id === r.to)).toBe(true);
@@ -204,5 +204,25 @@ describe('A short preview of the statements', () => {
     const few = proposalStatements('lockbox').slice(0, 4);
     expect(statementPreview(few, 6)).toEqual(new Set(few.map(item => item.id)));
     expect(statementPreview([], 6).size).toBe(0);
+  });
+});
+
+describe('Wind-down draft as its author revised it on 10 Nov 2026', () => {
+  const draft = fundProposals.find(proposal => proposal.id === 'wind-down')!;
+  it('describes the revision the pull request now points to', () => {
+    expect(draft.revision).toBe('0f0e440bcdc52152d16046463ca04cbcbfec22bc');
+    expect(draft.source).toContain(draft.revision);
+    expect(`${draft.summary} ${draft.stream} ${draft.treasury}`).toContain('Lockbox');
+    expect(`${draft.summary} ${draft.treasury}`).not.toMatch(/funds (go )?to the NSM/);
+    expect(draft.revised).toMatchObject({ on: '2026-11-10' });
+    expect(draft.revised!.source).toContain('/58515/145');
+  });
+  it('ties the earlier statements to the revision they were about', () => {
+    const earlier = proposalStatements('wind-down').filter(item => item.date < '2026-11-10');
+    expect(earlier.length).toBeGreaterThan(0);
+    for (const item of earlier) expect(item.versionSource, item.id).toContain('425f849ff7008b55cfc7a4441215d51167535ab6');
+  });
+  it('links it to the Lockbox it now pays into', () => {
+    expect(fundRelations.find(relation => relation.from === 'lockbox' && relation.to === 'wind-down')?.label).toContain('Lockbox');
   });
 });

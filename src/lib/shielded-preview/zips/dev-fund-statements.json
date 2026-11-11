@@ -587,7 +587,8 @@
     "url": "https://forum.zcashcommunity.com/t/58515/129",
     "text": "Supports ending ZCG while retaining retroactive grants for developer incentives.",
     "context": "Posted after PR #1423 was introduced in the same discussion; not an endorsement of every implementation detail.",
-    "platform": "Forum"
+    "platform": "Forum",
+    "versionSource": "https://github.com/zcash/zips/blob/425f849ff7008b55cfc7a4441215d51167535ab6/zips/draft-howard-wind-down-zcg.md"
   },
   {
     "id": "wind-down-forum-58515-135",
@@ -599,7 +600,8 @@
     "url": "https://forum.zcashcommunity.com/t/58515/135",
     "text": "Would stop future deposits but opposes transferring the existing treasury.",
     "context": "Distinguishes the treasury wind-down from ending the funding stream; personal view.",
-    "platform": "Forum"
+    "platform": "Forum",
+    "versionSource": "https://github.com/zcash/zips/blob/425f849ff7008b55cfc7a4441215d51167535ab6/zips/draft-howard-wind-down-zcg.md"
   },
   {
     "id": "wind-down-forum-58515-134",
@@ -611,7 +613,8 @@
     "url": "https://forum.zcashcommunity.com/t/58515/134",
     "text": "Requests clearer timing and evidence for replacing the existing grant selection process.",
     "context": "Position on the draft discussed at the time; later revisions may differ.",
-    "platform": "Forum"
+    "platform": "Forum",
+    "versionSource": "https://github.com/zcash/zips/blob/425f849ff7008b55cfc7a4441215d51167535ab6/zips/draft-howard-wind-down-zcg.md"
   },
   {
     "id": "wind-down-forum-58515-132",
@@ -623,7 +626,8 @@
     "url": "https://forum.zcashcommunity.com/t/58515/132",
     "text": "Asks that development funding remain secured through adverse market conditions.",
     "context": "Position on the draft discussed at the time; later revisions may differ.",
-    "platform": "Forum"
+    "platform": "Forum",
+    "versionSource": "https://github.com/zcash/zips/blob/425f849ff7008b55cfc7a4441215d51167535ab6/zips/draft-howard-wind-down-zcg.md"
   },
   {
     "id": "nsm-stream-forum-58515-12",

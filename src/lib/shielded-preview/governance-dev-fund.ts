@@ -14,7 +14,7 @@ export const devFundHref = (section: 'proposals' | 'voting') => `?view=governanc
 
 export type DevFundPublication = {
   /** `draft`: published for feedback and still open to changes; `instructions`: the organizers' own wording. */
-  questions: { publishedAt: string; url: string; draft?: boolean; instructions?: string; items: { question: string; answers: string[] }[] } | null;
+  questions: { publishedAt: string; url: string; draft?: boolean; instructions?: string; items: { question: string; answers: string[]; note?: { text: string; url: string } }[] } | null;
   results: { publishedAt: string; url: string } | null;
 };
 const draftAnswers = ['Support', 'Oppose', 'Abstain'];
@@ -26,7 +26,10 @@ export const devFundPublished: DevFundPublication = {
     url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/47',
     instructions: 'Please consider each proposal independently. You may support more than one proposal, including proposals that conflict with each other, if you would find any of those outcomes acceptable. The results will help us assess which proposals have broad support.',
     items: [
-      { question: 'Do you support the Wind Down Zcash Community Grants proposal?', answers: draftAnswers },
+      // The draft's own description of this proposal predates the author's revision of 10 Nov.
+      { question: 'Do you support the Wind Down Zcash Community Grants proposal?', answers: draftAnswers, note: {
+        text: 'The proposal was revised on 10 Nov, after this draft was posted: it now also redirects ZCG’s 8% stream, and residual funds would go to the Future Dev and Legal Defense Fund Lockbox rather than the NSM.',
+        url: 'https://forum.zcashcommunity.com/t/end-zcg-and-send-its-funds-to-the-nsm/58515/145' } },
       { question: 'Do you support the Future Dev and Legal Defense Fund proposal?', answers: draftAnswers },
       { question: 'Do you support the Zcash Adoption Pool (ZAP) proposal?', answers: draftAnswers },
       { question: 'Do you support maintaining ZCG’s existing funding and operations?', answers: draftAnswers },

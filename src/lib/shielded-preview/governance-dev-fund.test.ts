@@ -151,3 +151,15 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(devFundStepState(devFundTimeline.steps[1], at('2026-11-10T21:00:00Z'))).toBe('done');
   });
 });
+
+describe('Draft question about a proposal revised after the draft', () => {
+  it('says the Wind Down proposal changed, with the author’s update as the source', () => {
+    const [windDown, ...others] = devFundPublished.questions!.items;
+    expect(windDown.question).toContain('Wind Down');
+    expect(windDown.note?.text).toMatch(/revised/i);
+    expect(windDown.note?.url).toContain('/58515/145');
+    for (const item of others) expect(item.note).toBeUndefined();
+    const html = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate: () => {}, published: devFundPublished }));
+    expect(html).toContain(windDown.note!.text);
+  });
+});
