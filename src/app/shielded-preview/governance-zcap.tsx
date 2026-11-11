@@ -102,15 +102,18 @@ export default function GovernanceZcap({ source, selected, lane, filter, search,
               <h2 id="zcap-heading" ref={heading} tabIndex={-1}>{questionPrompts[question.id] ?? question.title}</h2>
               <div className={s.basis} role="group" aria-label="Percentage basis"><button aria-pressed={basis === 'include'} onClick={() => onBasis('include')}>All responses</button><button aria-pressed={basis === 'exclude'} onClick={() => onBasis('exclude')}>Exclude abstentions</button></div>
             </header>
+            <p className={s.leading}>{totals.filter(({ result }) => result.leaders.length > 0).map(({ body, result }, side) => <span key={body.id} data-side={side === 0 ? 'left' : 'right'}>
+              <i aria-hidden="true"/>{`${body.name} leading response: `}<strong>{result.options.filter(option => result.leaders.includes(option.id)).map(option => `${option.label} (${formatVoteShare(option.percent, option.weight, result.denominator)})`).join(' / ')}</strong>
+            </span>)}</p>
             <div className={s.comparison} id="zcap-comparison">
-              <div className={`${s.voteHeader} ${s.voteGrid}`}><div className={s.responseHeading}><span>Response</span></div>{totals.map(({ body, result }) => <div className={s.bodyTotal} key={body.id}>
+              <div className={`${s.voteHeader} ${s.voteGrid}`}><div className={s.responseHeading}><span>Response</span></div>{totals.map(({ body, result }, side) => <div className={s.bodyTotal} key={body.id} data-side={side === 0 ? 'left' : 'right'}>
                 <h3>{body.name}</h3><strong data-long={formatVotingWeight(result.denominator, body.decimals).length > 10 || undefined}>{formatVotingWeight(result.denominator, body.decimals)}</strong><span>{body.unit === 'votes' ? 'member ballots' : 'ZEC voting weight'}</span>
               </div>)}</div>
               <div role="list" aria-label="Responses by voting body">{question.options.map((option, index) => <div className={`${s.voteGrid} ${s.voteRow}`} key={option.id} role="listitem">
                 <div className={s.option}><h3>{option.label}</h3>{option.abstention && basis === 'exclude' && <span>Excluded from percentages</span>}</div>
-                {totals.map(({ body, result }) => {
+                {totals.map(({ body, result }, side) => {
                   const item = result.options[index];
-                  return <div className={s.voteValue} key={body.id} data-excluded={!item.included || undefined}><span className={s.bodyName}>{body.name}</span><strong>{formatVoteShare(item.percent, item.weight, result.denominator)}</strong><span className={s.bar} aria-hidden="true"><span style={{ width: `${item.percent ?? 0}%` }}/></span><span className={s.raw}>{formatVotingWeight(item.weight, body.decimals)} {body.unit}</span></div>;
+                  return <div className={s.voteValue} key={body.id} data-side={side === 0 ? 'left' : 'right'} data-leader={result.leaders.includes(option.id) || undefined} data-excluded={!item.included || undefined}><span className={s.bodyName}>{body.name}</span><strong>{formatVoteShare(item.percent, item.weight, result.denominator)}</strong><span className={s.bar} aria-hidden="true"><span style={{ width: `${item.percent ?? 0}%` }}/></span><span className={s.raw}>{formatVotingWeight(item.weight, body.decimals)} {body.unit}</span></div>;
                 })}
               </div>)}</div>
             </div>
