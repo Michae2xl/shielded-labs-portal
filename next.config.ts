@@ -10,6 +10,10 @@ const csp = [
 ].join('; ');
 const config: NextConfig = {
   poweredByHeader: false,
+  // The landing proposal is a static page in public/landing; this gives it a short address.
+  async redirects() {
+    return [{ source: '/landing', destination: '/landing/index.html', permanent: false }];
+  },
   async headers() {
     return [{ source: '/:path*', headers: [
       { key: 'Content-Security-Policy', value: csp },
