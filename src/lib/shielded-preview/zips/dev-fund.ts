@@ -4,20 +4,24 @@ import communityStatements from './dev-fund-statements.json';
 export const devFundReviewed = '2026-11-09';
 export type FundProposal = {
   id: string; title: string; short: string; authors: string[];
-  stage: 'Open draft' | 'Closed PR' | 'Withdrawn' | 'Baseline' | 'Earlier draft';
+  stage: 'Open draft' | 'Merged draft' | 'Closed PR' | 'Withdrawn' | 'Baseline' | 'Earlier draft';
   group?: 'Funding' | 'Governance' | 'Voting';
   record?: string; pr?: number; revision: string; source: string; discussion: string;
   /** Set when the author changed what the draft proposes after people had already responded to it. */
   revised?: { on: string; text: string; source: string };
+  /** Set when the editors merged the pull request: the text is then a Draft in the ZIPs repository, which is not an approval. */
+  merged?: { on: string; source: string };
   summary: string; stream: string; coinholder: string; treasury: string; implementation: string;
 };
 const forum = (topic: number, post = 1) => `https://forum.zcashcommunity.com/t/${topic}/${post}`;
 const blob = (sha: string, file: string) => `https://github.com/zcash/zips/blob/${sha}/zips/${file}`;
 const originalProposals: FundProposal[] = [
   { id: 'lockbox', short: 'Future Dev & Legal Defense', title: 'Future Dev and Legal Defense Fund Lockbox',
-    authors: ['Sean Bowe', 'Zooko Wilcox', 'Jason McGee'], stage: 'Open draft', pr: 1428,
-    record: 'pr-1428-draft-mcgee-future-dev-legal-defense-fund', revision: 'abf8567c6b0b385a7c2a1af4655cb5bacadfc729',
-    source: blob('abf8567c6b0b385a7c2a1af4655cb5bacadfc729', 'draft-mcgee-future-dev-legal-defense-fund.md'), discussion: forum(58611),
+    authors: ['Sean Bowe', 'Zooko Wilcox', 'Jason McGee'], stage: 'Merged draft', pr: 1428,
+    // Merged by the ZIP editors on 11 Nov 2026, 03:34 UTC, with the same text as the last revision of the pull request.
+    record: 'draft-mcgee-future-dev-legal-defense-fund', revision: 'de3d909ac99c5ff1f3cd84134f90cb017cb54b78',
+    source: blob('de3d909ac99c5ff1f3cd84134f90cb017cb54b78', 'draft-mcgee-future-dev-legal-defense-fund.md'), discussion: forum(58611),
+    merged: { on: '2026-11-11', source: 'https://github.com/zcash/zips/pull/1428' },
     summary: 'Redirect ZCG’s stream to a new lockbox and remove 50,000 ZEC of its treasury from circulation, credited to the NSM.',
     stream: '8% to a new lockbox for the remaining stream term.', coinholder: '12% stream unchanged.',
     treasury: '50,000 ZEC removed from circulation and credited to the NSM; ZCG keeps the rest of its treasury and its grants program.',

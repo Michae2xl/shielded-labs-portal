@@ -3195,6 +3195,31 @@
     "digest": "36f8deaadd2944b466f7100fa1a66e225b6c550f243d532ae4554ee4c1d6d4cd"
   },
   {
+    "id": "draft-mcgee-future-dev-legal-defense-fund",
+    "number": null,
+    "title": "Future Dev and Legal Defense Fund Lockbox, and Removal of ZCG Funds to the Network Sustainability Mechanism",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus / Process",
+    "owners": [
+      "Sean Bowe (Tachyon Group)",
+      "Zooko Wilcox (Shielded Labs)",
+      "Jason McGee (Shielded Labs)"
+    ],
+    "created": "2026-10-29",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/future-dev-and-legal-defense-fund-zip/58611",
+    "pullRequest": "https://github.com/zcash/zips/pull/1428",
+    "kind": "draft",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/main/zips/draft-mcgee-future-dev-legal-defense-fund.md",
+    "official": "https://zips.z.cash/draft-mcgee-future-dev-legal-defense-fund",
+    "updatedAt": "2026-11-11T03:06:07Z",
+    "summary": "This ZIP makes two changes.",
+    "words": 2653,
+    "digest": "827e6706f8552cdc62e465c1163cbc5df753186b1b1fd717d79fff34f2f5403f"
+  },
+  {
     "id": "draft-mcgee-keyholders-organizations",
     "number": null,
     "title": "Update to ZIP 1016 & ZIP 271: Key-Holder Organizations",
@@ -4509,47 +4534,6 @@
       "file": "draft-marek-compact-block-relay.md",
       "files": [
         "draft-marek-compact-block-relay.md"
-      ]
-    }
-  },
-  {
-    "id": "pr-1428-draft-mcgee-future-dev-legal-defense-fund",
-    "number": null,
-    "title": "Future Dev and Legal Defense Fund Lockbox, and Removal of ZCG Funds to the Network Sustainability Mechanism",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus / Process",
-    "owners": [
-      "Sean Bowe (Tachyon Group)",
-      "Zooko Wilcox (Shielded Labs)",
-      "Jason McGee (Shielded Labs)"
-    ],
-    "created": "2026-10-29",
-    "license": "MIT",
-    "discussionsTo": "https://forum.zcashcommunity.com/t/future-dev-and-legal-defense-fund-zip/58611",
-    "pullRequest": "https://github.com/zcash/zips/pull/1428",
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/abf8567c6b0b385a7c2a1af4655cb5bacadfc729/zips/draft-mcgee-future-dev-legal-defense-fund.md",
-    "official": "https://github.com/zcash/zips/pull/1428",
-    "updatedAt": "2026-11-11T03:15:15Z",
-    "summary": "This ZIP makes two changes.",
-    "words": 2653,
-    "digest": "827e6706f8552cdc62e465c1163cbc5df753186b1b1fd717d79fff34f2f5403f",
-    "base": null,
-    "pull": {
-      "number": 1428,
-      "title": "Draft ZIP: Future Dev and Legal Defense Fund Lockbox, and a 50,000 ZEC donation to the NSM",
-      "author": "aquietinvestor",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1428",
-      "headSha": "abf8567c6b0b385a7c2a1af4655cb5bacadfc729",
-      "createdAt": "2026-10-30T14:44:33Z",
-      "updatedAt": "2026-11-11T03:15:15Z",
-      "change": "new",
-      "file": "draft-mcgee-future-dev-legal-defense-fund.md",
-      "files": [
-        "draft-mcgee-future-dev-legal-defense-fund.md"
       ]
     }
   },

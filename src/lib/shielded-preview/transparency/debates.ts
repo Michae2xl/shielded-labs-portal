@@ -106,11 +106,11 @@ export const debates: Debate[] = [
     ],
   },
   {
-    id: 'dev-fund', tab: 'Dev Fund', title: 'ZCG and the Dev Fund', verifiedOn: '2026-11-07', projects: [], zips: ['pr-1428-'],
+    id: 'dev-fund', tab: 'Dev Fund', title: 'ZCG and the Dev Fund', verifiedOn: '2026-11-07', projects: [], zips: ['draft-mcgee-future-dev-legal-defense-fund'],
     // No vote on this question yet; these earlier votes set the Dev Fund that ZCG's share comes from.
     polls: ['2025-05-devfund-funding-model-poll', '2024-07-ywallet-devfund-runoff'],
     question: 'What should happen to Zcash Community Grants’ share of the Dev Fund before its scheduled expiry?',
-    status: 'Proposals and polling are under way on the forum, on the timeline posted on 5 Nov 2026. ZIP pull request #1428 is an open draft.',
+    status: 'Proposals and polling are under way on the forum, on the timeline posted on 5 Nov 2026. ZIP pull request #1428 was merged on 11 Nov 2026 with Draft status, the status of every initial submission under ZIP 0.',
     sides: [
       { label: 'Redirect ZCG’s share to a Future Dev and Legal Defense lockbox', short: 'Lockbox', points: [
         { text: 'Asks the community to back a ZIP that ends ZCG’s funding stream and accrues the share in a new fund.', author: 'zooko', date: '2026-10-30', url: forum('future-dev-and-legal-defense-fund-zip/58611/1'), shieldedLabs: true },

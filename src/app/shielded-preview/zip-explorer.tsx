@@ -60,7 +60,7 @@ function MapBoard({ rows, selected, select }: { rows: FundProposal[]; selected: 
   function node(p: FundProposal) {
     return <button className={m.node} key={p.id} style={accent(p.id)} data-muted={isHistorical(p) || outsidePollRound(p) || undefined} aria-pressed={p.id === selected} onClick={() => select(p.id)}>
       <People names={p.authors}/><strong>{p.short}</strong>
-      <small>{isHistorical(p) ? p.stage : p.pr ? `PR #${p.pr}` : p.stage === 'Baseline' ? 'ZIP 1016 reference' : 'Forum draft'}</small>
+      <small>{isHistorical(p) || p.stage === 'Merged draft' ? p.stage : p.pr ? `PR #${p.pr}` : p.stage === 'Baseline' ? 'ZIP 1016 reference' : 'Forum draft'}</small>
     </button>;
   }
   return <section className={`${s.atlas} ${m.map}`} aria-label="General proposal map">
@@ -94,7 +94,7 @@ function Details({ proposal, index }: { proposal: FundProposal; index: ZipsIndex
   const changed = current?.pull && current.pull.headSha !== proposal.revision;
   const params = new URLSearchParams(typeof location === 'undefined' ? '' : location.search);
   params.set('view', 'governance'); params.set('section', 'zips'); params.set('record', proposal.record ?? '');
-  params.set('lane', proposal.pr ? 'proposals' : 'zips');
+  params.set('lane', proposal.stage === 'Merged draft' ? 'drafts' : proposal.pr ? 'proposals' : 'zips');
   return <div className={s.detail}>
     <header><div><span className={s.eyebrow}>Proposal detail</span><h3>{proposal.title}</h3></div><Badge proposal={proposal}/></header>
     <p>{proposal.summary}</p>
@@ -210,7 +210,7 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
         {state.panel !== 'timeline' && <>
         <section ref={focusPanel} tabIndex={-1} className={s.focusPanel} aria-label={`Selected proposal: ${selected.short}`} style={accent(selected.id)}>
           <button className={s.backToBrowse} onClick={() => { browsingPanel.current?.scrollIntoView({behavior:'instant',block:'start'}); browsingPanel.current?.focus({preventScroll:true}); }}>↑ Back to proposals</button><header><div><span className={s.eyebrow}>{proposalGroup(selected)}</span><h3>{selected.short}</h3><span className={s.focusAuthors}><People names={selected.authors}/>{selected.authors.join(' · ')}</span></div><Badge proposal={selected}/></header>
-          <p>{selected.summary}</p>{selected.revised && <p className={s.pollNote}>Revised on {date(selected.revised.on)}: {selected.revised.text} <External href={selected.revised.source}>Author’s update</External></p>}{outsidePollRound(selected) && <p className={s.pollNote}>Submitted after the 8 Nov deadline; the coordinating organizations left it out of this round of polling. <External href={pollRound.source}>Organizers’ post, 9 Nov</External></p>}<ProposalAim proposal={selected} label/><div className={s.sourceRow}><External href={selected.source}>Proposal source</External><External href={selected.discussion}>{isHistorical(selected) ? 'Status source' : 'Public discussion'}</External><button onClick={() => {const ids = state.compared.includes(selected.id) ? state.compared : [...state.compared.slice(0,2), selected.id];update({layout:'compare',compare:ids.join(',')});}}>Compare this proposal →</button></div>
+          <p>{selected.summary}</p>{selected.revised && <p className={s.pollNote}>Revised on {date(selected.revised.on)}: {selected.revised.text} <External href={selected.revised.source}>Author’s update</External></p>}{selected.merged && <p className={s.pollNote}>Merged into the ZIPs repository on {date(selected.merged.on)}, with Draft status. Under ZIP 0, every initial submission has Draft status; Proposed comes after consideration, feedback and rough consensus. <External href={selected.merged.source}>Pull request</External></p>}{outsidePollRound(selected) && <p className={s.pollNote}>Submitted after the 8 Nov deadline; the coordinating organizations left it out of this round of polling. <External href={pollRound.source}>Organizers’ post, 9 Nov</External></p>}<ProposalAim proposal={selected} label/><div className={s.sourceRow}><External href={selected.source}>Proposal source</External><External href={selected.discussion}>{isHistorical(selected) ? 'Status source' : 'Public discussion'}</External><button onClick={() => {const ids = state.compared.includes(selected.id) ? state.compared : [...state.compared.slice(0,2), selected.id];update({layout:'compare',compare:ids.join(',')});}}>Compare this proposal →</button></div>
           <details className={s.proposalDetails} key={selected.id}><summary>Details & full proposal</summary><Details proposal={selected} index={index}/></details>
         </section>
         {fundRelations.some(r => r.from === selected.id || r.to === selected.id) && <div className={s.relations}>{fundRelations.filter(r => r.from === selected.id || r.to === selected.id).map(r => { const other = fundProposals.find(p => p.id === (r.from === selected.id ? r.to : r.from))!; return <div key={`${r.from}-${r.to}`}><span>{r.label}</span><button onClick={() => update({ focus: other.id, past: '1', status: null, dq: null, group: null })}>{other.short} →</button><External href={r.source}>Basis</External></div>; })}</div>}

@@ -16,7 +16,7 @@ describe('Transparency', () => {
     expect(zipDisclosure(zip('zip-0235'))).toMatchObject({ people: ['Jason McGee', 'Zooko Wilcox', 'Mark Henderson'], namedInHeader: false, projects: [{ id: 'nsm' }] });
     expect(zipDisclosure(zip('zip-0237'))).toMatchObject({ people: [], projects: [{ id: 'nsm' }] });
     expect(zipDisclosure(zip('zip-1014'))).toMatchObject({ people: ['Zooko Wilcox'], created: '2019-11-10' });
-    expect(zipDisclosure(zip('pr-1428-draft-mcgee-future-dev-legal-defense-fund'))).toMatchObject({ namedInHeader: true });
+    expect(zipDisclosure(zip('draft-mcgee-future-dev-legal-defense-fund'))).toMatchObject({ namedInHeader: true });
     expect(zipDisclosure(zip('zip-0032'))).toBeNull();
     expect(shieldedLabsOwner('Zooko Wilcox (Shielded Labs)')).toBe('Zooko Wilcox');
     expect(shieldedLabsOwner('Sean Bowe (Tachyon Group)')).toBeNull();

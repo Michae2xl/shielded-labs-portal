@@ -18,6 +18,17 @@ describe('Dev Fund evidence boundaries', () => {
       expect(p.authors.map(name => name.replace(/ \(.+\)$/, ''))).toEqual(entry.owners.map(name => name.replace(/ \(.+\)$/, '')));
     }
   });
+  it('records a pull request the editors merged as a draft in the ZIPs repository, not as an open pull request or an approval', () => {
+    const lockbox = fundProposals.find(p => p.id === 'lockbox')!;
+    const entry = bundledZips.entries.find(e => e.id === lockbox.record)!;
+    expect(lockbox.stage).toBe('Merged draft');
+    expect(entry).toMatchObject({ kind: 'draft', status: 'Draft', pullRequest: 'https://github.com/zcash/zips/pull/1428' });
+    expect(entry.pull).toBeUndefined();
+    expect(lockbox.source).toContain(`/blob/${lockbox.revision}/`);
+    expect(lockbox.merged).toEqual({ on: '2026-11-11', source: 'https://github.com/zcash/zips/pull/1428' });
+    expect(lockbox.authors.map(name => name.replace(/ \(.+\)$/, ''))).toEqual(entry.owners.map(name => name.replace(/ \(.+\)$/, '')));
+    expect(proposalStructure(lockbox)).toBe('Proposed change');
+  });
   it('requires identifiable, dated sources for statements and does not count co-authorship as independent support', () => {
     for (const item of fundStatements) {
       expect(fundProposals.some(p => p.id === item.proposal)).toBe(true);
