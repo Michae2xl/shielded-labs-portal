@@ -7,10 +7,14 @@ import { coinholderSnapshotSource } from './coinholder-proposals';
 import { fetchCoinholderProposals } from './coinholder-provider';
 import { emptyTreasurySource, parseBalanceTab, treasuryCsvUrl, treasuryPrice, treasurySheetUrl, treasuryTabs } from './treasury';
 import { liveZecPrice } from './zec-price';
+import savedSchedule from './governance-data/zcg-schedule.json';
+import savedMinutes from './governance-data/zcg-minutes.json';
+import { parseSchedule, scheduleCsvUrl, scheduleSnapshotSource } from './zcg-schedule';
+import { mergeMinutes, minutesFeedUrl, minutesFromTopics, minutesSnapshotSource } from './zcg-minutes';
 import { reviewSchema, paymentSchema, grantSchema, memberSchema, verificationSchema, type GovernanceData, type Source } from './governance-types';
 
 const TTL=300_000;
-const seed={...snapshot,coinholder:coinholderSnapshotSource(savedCoinholder),treasury:emptyTreasurySource} as unknown as GovernanceData;
+const seed={...snapshot,coinholder:coinholderSnapshotSource(savedCoinholder),treasury:emptyTreasurySource,schedule:scheduleSnapshotSource(savedSchedule),minutes:minutesSnapshotSource(savedMinutes)} as unknown as GovernanceData;
 let cache:GovernanceData|undefined;
 let refreshedAt=0;
 let pending:Promise<GovernanceData>|undefined;
@@ -28,7 +32,7 @@ async function refresh():Promise<GovernanceData>{
  const old=cache??seed;
  // Historical proposals stay a dated snapshot until an independent published history API is available.
  const proposals = { ...seed.proposals, state: 'snapshot' as const };
- const [review,grants,payments,members,verification,coinholder,treasury]=await Promise.all([
+ const [review,grants,payments,members,verification,coinholder,treasury,schedule,minutes]=await Promise.all([
   update(old.review,async()=>reviewSchema.array().parse((await (await read(old.review.url)).json()).proposals)),
   update(old.grants,async()=>grantSchema.array().parse((await (await read(old.grants.url)).json()).data)),
   update(old.payments,async()=>{
@@ -53,8 +57,12 @@ async function refresh():Promise<GovernanceData>{
    const [zcg,coinholder,live]=await Promise.all([tab(treasuryTabs.zcg),tab(treasuryTabs.coinholder),liveZecPrice()]);
    return {zcg,coinholder,price:treasuryPrice(live,zcg)};
   }),
+  // The grants tab of the same sheet: open milestones, their estimates and whether a payment is recorded.
+  update(old.schedule??seed.schedule,async()=>parseSchedule(await(await read(scheduleCsvUrl)).text())),
+  // Only the first page of the forum category is read; what it brings is added to the archive already held.
+  update(old.minutes??seed.minutes,async()=>mergeMinutes((old.minutes??seed.minutes).data??[],minutesFromTopics(await(await read(minutesFeedUrl)).json()))),
  ]);
- return {checkedAt:new Date().toISOString(),proposals,review,grants,payments,members,verification,coinholder,treasury};
+ return {checkedAt:new Date().toISOString(),proposals,review,grants,payments,members,verification,coinholder,treasury,schedule,minutes};
 }
 export async function getGovernanceData(){
  if(cache&&Date.now()-refreshedAt<TTL)return cache;

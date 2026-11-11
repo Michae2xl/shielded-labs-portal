@@ -176,11 +176,20 @@ export function ProposalsCollection({ datasets, coinholderSource, lane, onLane, 
   </Collection>;
 }
 
-export function GrantsCollection({ source, ...controls }: Controls & { source: Source<GrantRecord[]> }) {
+/** The three program tabs of the funding ledger, with their counts. */
+export const grantProgramTabs = (rows: readonly GrantRecord[]) => [
+  { id: 'all', name: 'All programs', count: rows.length, icon: 'overview' as const },
+  { id: 'zcg_regular', name: 'ZCG', count: rows.filter(row => row.program === 'zcg_regular').length, icon: 'zcap' as const },
+  { id: 'coinholder', name: 'Coinholder', count: rows.filter(row => row.program === 'coinholder').length, icon: 'grants' as const },
+];
+/** A record shown beside the ledger, such as the payment schedule; it opens from the same row of tabs. */
+export type GrantLaneTab = { id: string; name: string; count?: number; icon?: GovernanceGlyphKind };
+
+export function GrantsCollection({ source, lanes = [], onLane, ...controls }: Controls & { source: Source<GrantRecord[]>; lanes?: readonly GrantLaneTab[]; onLane?: (lane: string) => void }) {
   const { search, onSearch, filter, onFilter, page, onPage, onNavigate } = controls;
   const filtered = source.data.filter(row => matches(`${row.grant} ${row.grantee}`, search) && (filter === 'all' || row.program === filter));
   return <Collection archive id="grants" title="Funding ledger" context={filter === 'coinholder' ? 'Coinholder grants' : filter === 'zcg_regular' ? 'Zcash Community Grants' : 'ZCG & coinholder programs'}
-    tabs={<Tabs label="Grant programs" value={filter} onChange={onFilter} items={[{ id: 'all', name: 'All programs', count: source.data.length, icon: 'overview' }, { id: 'zcg_regular', name: 'ZCG', count: source.data.filter(row => row.program === 'zcg_regular').length, icon: 'zcap' }, { id: 'coinholder', name: 'Coinholder', count: source.data.filter(row => row.program === 'coinholder').length, icon: 'grants' }]}/>}
+    tabs={<Tabs label="Grant programs and ZCG records" value={filter} onChange={id => lanes.some(lane => lane.id === id) ? onLane?.(id) : onFilter(id)} items={[...grantProgramTabs(source.data), ...lanes]}/>}
     toolbar={<Search name="Search grants" value={search} onChange={onSearch}/>}
     total={filtered.length} page={page} onPage={onPage}
     notice="“Paid” is a ledger status, not independent verification of a transaction or project delivery. Budget values reflect the source record, not a current ZEC conversion."

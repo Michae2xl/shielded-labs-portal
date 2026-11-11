@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import snapshot from './governance-data/snapshot.json';
+import savedSchedule from './governance-data/zcg-schedule.json';
+import savedMinutes from './governance-data/zcg-minutes.json';
 vi.mock('server-only',()=>({}));
 afterEach(()=>{vi.unstubAllGlobals();vi.unstubAllEnvs();vi.restoreAllMocks();vi.resetModules()});
 describe('Governance refresh boundaries',()=>{
@@ -11,7 +13,7 @@ describe('Governance refresh boundaries',()=>{
  it('retains dated records on failure and coalesces concurrent refreshes',async()=>{
   const fetcher=vi.fn().mockRejectedValue(new Error('offline'));vi.stubGlobal('fetch',fetcher);
   const {getGovernanceData}=await import('./governance-provider');
-  const [a,b]=await Promise.all([getGovernanceData(),getGovernanceData()]);expect(a).toBe(b);expect(fetcher).toHaveBeenCalledTimes(9);
+  const [a,b]=await Promise.all([getGovernanceData(),getGovernanceData()]);expect(a).toBe(b);expect(fetcher).toHaveBeenCalledTimes(11);
   expect(a.payments.data).toEqual(snapshot.payments.data);expect(a.payments.observedAt).toBe(snapshot.payments.observedAt);expect(a.payments.error).toBe(true);
   expect(a.verification.data?.rows).toHaveLength(37);
   expect(a.proposals.data).toEqual(snapshot.proposals.data);
@@ -19,11 +21,16 @@ describe('Governance refresh boundaries',()=>{
   expect(a.proposals.state).toBe('snapshot');
   expect(a.coinholder.data?.length).toBeGreaterThan(0);expect(a.coinholder.state).toBe('snapshot');expect(a.coinholder.error).toBe(true);
   expect(a.treasury.data).toBeNull();expect(a.treasury.state).toBe('unavailable');
+  expect(a.schedule.data?.length).toBeGreaterThan(0);expect(a.schedule.state).toBe('snapshot');expect(a.schedule.observedAt).toBe(savedSchedule.observedAt);expect(a.schedule.error).toBe(true);
+  expect(a.minutes.data).toHaveLength(savedMinutes.topics.length);expect(a.minutes.state).toBe('snapshot');expect(a.minutes.error).toBe(true);
  });
  it('rejects truncated ledgers without replacing the complete saved observation',async()=>{
   vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,json:async()=>({data:[],count:0,total:1088}),text:async()=>'<html>error</html>'})));
   const {getGovernanceData}=await import('./governance-provider');const data=await getGovernanceData();
   expect(data.payments.error).toBe(true);expect(data.payments.data).toHaveLength(913);expect(data.members.data).toHaveLength(202);
+  // An error page in place of the sheet, or a payload that is not a topic list, leaves the saved copies in place.
+  expect(data.schedule.error).toBe(true);expect(data.schedule.data?.length).toBeGreaterThan(0);
+  expect(data.minutes.error).toBe(true);expect(data.minutes.data).toHaveLength(savedMinutes.topics.length);
  });
  it('refreshes public datasets without relabeling historical proposals as current',async()=>{
   vi.stubGlobal('fetch',vi.fn(async(url:string)=>{
@@ -34,6 +41,8 @@ describe('Governance refresh boundaries',()=>{
    if(url.startsWith('https://api.github.com/repos/Financial-Privacy-Foundation/'))return Response.json([]);
    if(/gid=(135980745|808560406)$/.test(url))return new Response('Status:,OK ✅\nCoinholder Grants balance as of block height:,"3,548,854"\nBlock time (UTC):,7 Nov 2026 17:32:00\nCurrent ZEC balance:,"145,641.94"');
    if(url.startsWith('https://api.coingecko.com/'))return Response.json({zcash:{usd:1248.46,last_updated_at:1794000000}});
+   if(/gid=803214474$/.test(url))return new Response(savedSchedule.csv);
+   if(url==='https://forum.zcashcommunity.com/c/grants/zomg-updates/34.json')return Response.json({topic_list:{topics:[{id:59999,title:'Zcash Community Grants Meeting Minutes 11/9/2026',slug:'zcash-community-grants-meeting-minutes-11-9-2026',created_at:'2026-11-10T15:00:00.000Z',posts_count:1},{id:59998,title:'ZCG Communication Guidelines',slug:'zcg-communication-guidelines',created_at:'2026-11-10T16:00:00.000Z',posts_count:4}]}});
    if(url.startsWith('https://docs.google.com/spreadsheets/'))return new Response('Name,Handle,Joined\nExample member,example,2026-01-01');
    throw new Error('Unexpected source');
   }));
@@ -43,7 +52,10 @@ describe('Governance refresh boundaries',()=>{
   expect(data.proposals.observedAt).toBe(snapshot.proposals.observedAt);
   expect(data.proposals.data).toEqual(snapshot.proposals.data);
   expect(data.treasury.data?.price).toEqual({usd:1248.46,observedAt:'2026-11-06T21:20:00.000Z',source:'CoinGecko',url:'https://www.coingecko.com/en/coins/zcash'});
-  for(const name of ['review','grants','payments','members','verification','coinholder','treasury'] as const){
+  // New minutes are added on top of the saved archive; the first page of the forum category never replaces it.
+  expect(data.minutes.data).toHaveLength(savedMinutes.topics.length+1);expect(data.minutes.data?.[0]).toMatchObject({id:59999,meeting:'2026-11-09',replies:0});
+  expect(data.schedule.data?.length).toBeGreaterThan(40);
+  for(const name of ['review','grants','payments','members','verification','coinholder','treasury','schedule','minutes'] as const){
    expect(data[name].state).toBe('fetched');
    expect(data[name].error).toBe(false);
   }

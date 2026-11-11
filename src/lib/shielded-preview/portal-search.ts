@@ -22,6 +22,8 @@ export function searchPortal(query: string, navigation: readonly SearchNavigatio
     ...navigation.filter(item => matches(`${item.title} ${item.keywords ?? ''}`)).map(item => ({ title: item.title, kind: 'Portal', href: `?view=${item.id}` })),
     ...governanceSections.filter(section => section !== 'Overview' && matches(section === 'ZIPs' ? 'ZIPs Zcash Improvement Proposals' : section === 'How it works' ? 'How it works governance process explainer' : section)).map(title => ({ title, kind: 'Governance', href: `?view=governance&section=${governanceSectionSlug(title)}` })),
     ...(matches('ZCG Dev Fund proposals polling poll timeline NU 7.1 rough consensus') ? [{ title: devFundTimeline.title, kind: 'Governance', href: devFundHref('voting') }] : []),
+    ...(matches('ZCG scheduled payments upcoming milestones estimates payment schedule grants') ? [{ title: 'ZCG scheduled payments', kind: 'Governance', href: '?view=governance&section=grants&lane=schedule' }] : []),
+    ...(matches('ZCG committee meeting minutes Zcash Community Grants decisions') ? [{ title: 'ZCG meeting minutes', kind: 'Governance', href: '?view=governance&section=grants&lane=minutes' }] : []),
     ...searchZips(query),
     ...(matches('Crosslink test guide feature net participate finalizer stake cTAZ testing incentives') ? [{ title: 'Crosslink test guide', kind: 'Project', href: projectHref('crosslink', 'participate') }] : []),
     ...(matches('Crosslink videos workshop recordings YouTube Discord sessions milestone demo installation') ? [{ title: 'Crosslink videos and workshop recordings', kind: 'Project', href: projectHref('crosslink', 'participate', 'videos') }] : []),

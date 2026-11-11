@@ -31,13 +31,16 @@ import { transparencyLaneIds } from '@/lib/shielded-preview/transparency/lanes';
 import ZcgProposalRecord from './zcg-proposal-record';
 import UpcomingUpgradeSections from './upcoming-upgrade-sections';
 import { findUpcomingUpgrade } from '@/lib/shielded-preview/upcoming-upgrades';
+import { minutesLane, scheduleLane, ZcgMinutesCollection, ZcgScheduleCollection } from './governance-zcg';
+import { emptyScheduleSource, scheduledRows, scheduleGroups } from '@/lib/shielded-preview/zcg-schedule';
+import { emptyMinutesSource } from '@/lib/shielded-preview/zcg-minutes';
 import { emptyTreasurySource } from '@/lib/shielded-preview/treasury';
 import GovernanceReferences, { GovernanceReferenceProvider } from './governance-references';
 import { GrantsCollection, Link, ProposalsCollection, ResultsCollection, VotingCollection, type ProposalListItem } from './governance-collections';
 import g from './governance.module.css';
 
 type Section = GovernanceSection;
-const recordLane=(section:Section,id:string|null)=>section==='Transparency'?'debates':section==='ZIPs'?laneForRecord(id):section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
+const recordLane=(section:Section,id:string|null)=>section==='Grants'?'ledger':section==='Transparency'?'debates':section==='ZIPs'?laneForRecord(id):section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
 const baseRound=(section:Section,lane:string)=>section==='Proposals'?defaultProposalRound(lane):'all';
 type ListingState={lane:string;filter:string;search:string;page:number;basis:'include'|'exclude';round:string;activity?:string};
 function listingParams(section:Section,id:string|null,state:ListingState){
@@ -47,7 +50,7 @@ function listingParams(section:Section,id:string|null,state:ListingState){
   copyExplorerParams(current,params);
  }
  if(id)params.set('record',id);
- if((section==='Voting'||section==='Proposals'||section==='Results'||section==='Insights'||section==='ZCAP'||section==='ZIPs'||section==='Transparency')&&state.lane!==recordLane(section,null))params.set('lane',state.lane);
+ if((section==='Grants'||section==='Voting'||section==='Proposals'||section==='Results'||section==='Insights'||section==='ZCAP'||section==='ZIPs'||section==='Transparency')&&state.lane!==recordLane(section,null))params.set('lane',state.lane);
  if(state.filter!=='all')params.set('filter',state.filter);
  if(state.search)params.set('q',state.search);
  if(state.page>1)params.set('page',String(state.page));
@@ -75,7 +78,7 @@ export function ProposalGrantLinks({proposal,source,onNavigate}:{proposal:Pick<P
  return <div className={g.relatedRecords}><h3>Grants with the same title</h3><p className={g.recordNote}>These records share the title and program. The ledger does not identify the application, so this does not confirm funding for this request.</p>{grants.map(grant=><button key={`${grant.program}|${grant.grant}`} className={g.secondary} onClick={()=>onNavigate('Grants',`${grant.program}|${grant.grant}`)}>Open grant record<Arrow/></button>)}<SourceLink url={source.url}>Grant ledger source</SourceLink></div>;
 }
 export default function Governance(){
- const [data,setData]=useState({...snapshot,coinholder:emptyCoinholderSource,treasury:emptyTreasurySource} as unknown as GovernanceData);const [section,setSection]=useState<Section>('Overview');const [selected,setSelected]=useState<string|null>(null);
+ const [data,setData]=useState({...snapshot,coinholder:emptyCoinholderSource,treasury:emptyTreasurySource,schedule:emptyScheduleSource,minutes:emptyMinutesSource} as unknown as GovernanceData);const [section,setSection]=useState<Section>('Overview');const [selected,setSelected]=useState<string|null>(null);
  const [search,setSearch]=useState('');const [filter,setFilter]=useState('all');const [lane,setLane]=useState('review');const [page,setPage]=useState(1);const [busy,setBusy]=useState(false);const [failed,setFailed]=useState(false);const active=useRef(false);const heading=useRef<HTMLHeadingElement>(null);
  const [basis,setBasis]=useState<'include'|'exclude'>('include');
  const [round,setRound]=useState('all');
@@ -83,7 +86,7 @@ export default function Governance(){
  const refresh=useCallback(async()=>{if(active.current)return;active.current=true;setBusy(true);try{const r=await fetch('/api/shielded-preview/governance',{signal:AbortSignal.timeout(20000)});if(!r.ok)throw new Error();setData(await r.json());setFailed(false)}catch{setFailed(true)}finally{active.current=false;setBusy(false)}},[]);
  useEffect(()=>{const read=()=>{
   const p=new URLSearchParams(location.search);const next=governanceSectionFromSlug(p.get('section'))??'Overview';
-  const lanes=next==='ZIPs'?['zips','drafts','guides','proposals']:next==='Voting'?['current','archive','upgrades',devFundLane]:next==='Proposals'?['review','history','coinholder','q3',devFundLane]:next==='Results'?['q3','elections']:next==='Insights'?['decisions','payments','outcomes','panels']:next==='ZCAP'?['comparison','members']:next==='Transparency'?transparencyLaneIds:[];
+  const lanes=next==='ZIPs'?['zips','drafts','guides','proposals']:next==='Voting'?['current','archive','upgrades',devFundLane]:next==='Proposals'?['review','history','coinholder','q3',devFundLane]:next==='Results'?['q3','elections']:next==='Insights'?['decisions','payments','outcomes','panels']:next==='ZCAP'?['comparison','members']:next==='Transparency'?transparencyLaneIds:next==='Grants'?[scheduleLane,minutesLane]:[];
   const nextPage=Number(p.get('page')??1);
   const nextLane=lanes.includes(p.get('lane')??'')?p.get('lane')!:next==='Voting'&&p.get('filter')==='upgrades'?'upgrades':recordLane(next,p.get('record'));
   setSection(next);setLane(next==='Proposals'&&nextLane==='q3'?'coinholder':nextLane);setSelected(p.get('record'));
@@ -115,6 +118,11 @@ export default function Governance(){
  function chooseBasis(value:'include'|'exclude'){setBasis(value);rememberListing({basis:value})}
  function choosePage(value:number){setPage(value);rememberListing({page:value})}
  const collectionControls={search,onSearch:find,filter,onFilter:chooseFilter,page,onPage:choosePage,onNavigate:go};
+ // The payment schedule and the committee's minutes open from the same row of tabs as the funding ledger.
+ const schedule=data.schedule??emptyScheduleSource;const minutes=data.minutes??emptyMinutesSource;
+ const grantLanes=[{id:scheduleLane,name:'Scheduled',count:schedule.data&&schedule.observedAt?scheduledRows(scheduleGroups(schedule.data,schedule.observedAt.slice(0,10))).length:undefined,icon:'insights' as const},{id:minutesLane,name:'Minutes',count:minutes.data?.length,icon:'history' as const}];
+ function openLedger(program:string){setLane('ledger');setFilter(program);setSearch('');setPage(1);rememberListing({lane:'ledger',filter:program,search:'',page:1})}
+ const grantLaneControls={grants:data.grants,lanes:grantLanes,onLane:chooseLane,onLedger:openLedger,busy};
  const verification=data.verification.data;const results=verification?.rows??[];
  const review:ProposalView[]=data.review.data.map(p=>({id:`review:${p.number}`,title:p.title,program:'zcg',applicant:p.applicant,amount:p.amount,status:'under_review',summary:p.summary,submitted:p.createdAt,decided:null,url:p.url,sourceUrl:data.review.url,origin:'Published OpenZcash review queue'}));
  const historyProposals:ProposalView[]=data.proposals.data.map(p=>({id:`history:${p.id}`,title:p.title,program:p.program,applicant:p.applicant,amount:p.requestedUsd,status:p.status,summary:p.summary,submitted:p.submitted,decided:p.decided,url:p.applicationUrl??p.forumUrl,forumUrl:p.forumUrl,sourceUrl:p.sourceUrl,origin:'OpenZcash ZCG decision archive'}));
@@ -138,7 +146,7 @@ export default function Governance(){
 
  return <GovernanceReferenceProvider checkedAt={data.checkedAt} checkedLabel={date(data.checkedAt)} busy={busy} failed={failed} onRefresh={()=>void refresh()} catalog={<>
   <p>Each source keeps its own observation date. A source update may be newer than the records it contains.</p>
-  <div className={g.sourceCatalog}><SourceNote name="FPF Coinholder application history" source={coinholderSource}/><SourceNote name="ZCG decision archive" source={data.proposals}/><SourceNote name="ZCG review queue" source={data.review}/><SourceNote name="Grants" source={data.grants}/><SourceNote name="Grant payments" source={data.payments}/><SourceNote name="ZCAP roster" source={data.members}/><SourceNote name="Q3 results" source={data.verification}/></div>
+  <div className={g.sourceCatalog}><SourceNote name="FPF Coinholder application history" source={coinholderSource}/><SourceNote name="ZCG decision archive" source={data.proposals}/><SourceNote name="ZCG review queue" source={data.review}/><SourceNote name="Grants" source={data.grants}/><SourceNote name="Grant payments" source={data.payments}/><SourceNote name="ZCG payment schedule" source={schedule}/><SourceNote name="ZCG meeting minutes" source={minutes}/><SourceNote name="ZCAP roster" source={data.members}/><SourceNote name="Q3 results" source={data.verification}/></div>
   <p>Poll archive reviewed {date(record.checkedAt)}; NU7 comparison reviewed {date(comparisons.checkedAt)}. Sources refresh every five minutes. Unavailable sources retain their last dated record.</p>
   <div className={g.sourceGuides}><SourceLink url="https://zcashcommunitygrants.org/selection/">ZCG review process</SourceLink><SourceLink url="https://zfnd.org/zcash-community-advisory-panel/">ZCAP role and membership</SourceLink></div>
  </>}><div className={g.governance}>
@@ -161,7 +169,9 @@ export default function Governance(){
    extras={<><dl className={g.facts}><div><dt>Recorded decision</dt><dd>{date(proposal.decided)}</dd></div></dl>{proposal.roundId&&<div className={g.relatedRecords}><h3>Related records</h3><button className={g.secondary} onClick={()=>go('Results',`q3:${proposal.roundId}`)}>Ballot & result<Arrow/></button></div>}<ProposalGrantLinks proposal={proposal} source={data.grants} onNavigate={go}/></>}
   />}
 
-  {!selected&&section==='Grants'&&<GrantsCollection {...collectionControls} source={data.grants}/>}
+  {!selected&&section==='Grants'&&lane===scheduleLane&&<ZcgScheduleCollection {...collectionControls} {...grantLaneControls} source={schedule}/>}
+  {!selected&&section==='Grants'&&lane===minutesLane&&<ZcgMinutesCollection {...collectionControls} {...grantLaneControls} source={minutes}/>}
+  {!selected&&section==='Grants'&&lane!==scheduleLane&&lane!==minutesLane&&<GrantsCollection {...collectionControls} source={data.grants} lanes={grantLanes} onLane={chooseLane}/>}
   {selected&&section==='Grants'&&grant&&<GovernanceRecord
    title={grant.grant} context={grant.program==='coinholder'?'Coinholder grants':'Zcash Community Grants'} subtitle={grant.grantee}
    metrics={<><Stat name="Recorded status" value={label(grant.status)}/><Stat name="Recorded budget" value={dollars(grant.usd)}/><Stat name="Milestones marked paid" value={`${grant.milestonesPaid} / ${grant.milestones}`}/></>}

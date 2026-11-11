@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import type { Treasury } from './treasury';
 import type { CoinholderProposal } from './coinholder-proposals';
+import type { ScheduledPayment } from './zcg-schedule';
+import type { MeetingMinutes } from './zcg-minutes';
 const text = z.string();
 const amount = z.number().finite();
 export const proposalSchema = z.object({id:text,title:text,program:text,status:text,applicant:text,requestedUsd:amount.nullable(),submitted:text.nullable(),decided:text.nullable(),summary:text,applicationUrl:text.nullable(),forumUrl:text.nullable(),importedAt:text,sourceUrl:text.nullable(),sourceRow:z.number().nullable()});
@@ -18,4 +20,4 @@ export type Member = z.infer<typeof memberSchema>;
 export type VoteResult = z.infer<typeof resultSchema>;
 export type Verification = z.infer<typeof verificationSchema>;
 export type Source<T> = {data:T;state:'snapshot'|'fetched'|'mirror'|'unavailable';observedAt:string|null;url:string;total?:number;error?:boolean};
-export type GovernanceData = {checkedAt:string;proposals:Source<Proposal[]>;review:Source<ReviewProposal[]>;grants:Source<GrantRecord[]>;payments:Source<Payment[]>;members:Source<Member[]>;verification:Source<Verification|null>;coinholder:Source<CoinholderProposal[]|null>;treasury:Source<Treasury|null>};
+export type GovernanceData = {checkedAt:string;proposals:Source<Proposal[]>;review:Source<ReviewProposal[]>;grants:Source<GrantRecord[]>;payments:Source<Payment[]>;members:Source<Member[]>;verification:Source<Verification|null>;coinholder:Source<CoinholderProposal[]|null>;treasury:Source<Treasury|null>;schedule:Source<ScheduledPayment[]|null>;minutes:Source<MeetingMinutes[]|null>};

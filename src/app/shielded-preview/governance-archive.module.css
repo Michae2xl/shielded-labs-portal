@@ -80,3 +80,5 @@
 @container(max-width:850px){.record>.fundingMeasures{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.fundingMeasures>.measure{align-items:flex-start;text-align:left}.fundingMeasures>.money{align-items:flex-end;text-align:right}}
 @media(prefers-reduced-motion:reduce){.record{transition:none}}
 @media print{.collectionTools,.tools,.pagination{display:none}.record{break-inside:avoid}.panel{border:0;padding:0}}
+/* Five tabs do not fit one row on a phone: three and two. */
+@container(max-width:600px){.archive .collectionTools>nav:has(>button:nth-child(5)){flex-wrap:wrap}.archive .collectionTools>nav:has(>button:nth-child(5))>button{flex:1 1 calc(33.333% - 6px);justify-content:center;text-align:center}}
