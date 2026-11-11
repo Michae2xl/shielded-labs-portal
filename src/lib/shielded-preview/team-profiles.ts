@@ -1,4 +1,4 @@
-import { sources, team } from './content';
+import { sources, team, TEAM_REVIEWED } from './content';
 import { activityHref } from './development-navigation';
 import { developmentCommits, developmentDays, isMergeCommit, repositoryLabels, windowCommits, type ObservedCommit } from './development-metrics';
 import { personId, type Person } from './directory';
@@ -8,9 +8,9 @@ import { bundledZips, zipHref, zipLabel } from './zips/library';
 import type { ZipEntry } from './zips/types';
 
 type Profile = {
-  /** Account linked from the person's entry on the official team page. */
+  /** Account linked from the person's entry on the official team page, or from the announcement of their arrival. */
   x?: string;
-  /** Account confirmed by this person's commits or ZIP pull requests. */
+  /** Account confirmed by this person's commits or ZIP pull requests, or linked from the announcement of their arrival. */
   github?: string;
   /** Author names on those commits, including commits with no linked account. */
   commitNames?: string[];
@@ -20,6 +20,8 @@ type Profile = {
   board?: string;
   /** Published biography, word for word, from the Epoch announcement. */
   bio?: string;
+  /** For someone announced but not yet on the team page: where each linked account comes from. */
+  accountsNote?: string;
 };
 
 const profiles: Record<string, Profile> = {
@@ -31,6 +33,10 @@ const profiles: Record<string, Profile> = {
   'andrew-reece': { x: 'azmreece', github: 'azmr', commitNames: ['Andrew Reece'] },
   'phillip-trudeau-tavara': { github: 'pmttavara', commitNames: ['Phillip Trudeau-Tavara'] },
   'shoaib-ahmed': { x: 'sufialhussaini', github: 'hu55a1n1', commitNames: ['Shoaib Ahmed'] },
+  // From the forum announcements of 2 and 9 Nov 2026. The first links a repository of this GitHub account, whose profile
+  // names the X account (read 11 Nov 2026); the second links this X account.
+  'aayush-giri': { x: 'AayushStack', github: 'Giri-Aayush', accountsNote: 'The announcement links the GitHub account, whose profile lists the X account.' },
+  'wei-jie-koh': { x: 'weijie_eth', accountsNote: 'The announcement links the X account.' },
   'ulrich-habock': {
     x: 'UHaboeck',
     bio: 'Ulrich is a leading expert at the forefront of current research in zero-knowledge proofs and post-quantum cryptography. He joins from StarkWare, where he worked as a cryptographer, following earlier work as an applied cryptographer at Polygon Labs (Polygon Zero). He is the author of logUp, the logarithmic-derivative lookup argument now used widely across the STARK ecosystem, and a co-author of the Circle STARKs paper with StarkWare’s Shahar Papini and David Levit, which introduced an efficient approach to STARKs over the Mersenne-31 field. His work on FRI, Brakedown, and zero-knowledge techniques for STARKs is also widely referenced by practitioners. Before moving into applied cryptography, Ulrich worked in academia and teaching. He studied at the University of Vienna and is currently based in Europe.',
@@ -75,6 +81,8 @@ function personZips(byline: string, entries: readonly ZipEntry[]) {
   return [...proposals, ...named.filter(entry => entry.kind !== 'proposal')];
 }
 
+const day = (date: string) => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date));
+
 /** Everything shown on a profile comes from that person's own records, and an absent record leaves no section. */
 export function personProfile(person: Person, repositories: Repository[] = [], checkedAt?: string, zips: readonly ZipEntry[] = bundledZips.entries) {
   const profile = profiles[personId(person)] ?? {};
@@ -91,10 +99,16 @@ export function personProfile(person: Person, repositories: Repository[] = [], c
       ...(profile.x ? [{ label: 'X', handle: `@${profile.x}`, href: `https://x.com/${profile.x}` }] : []),
       ...(profile.github ? [{ label: 'GitHub', handle: profile.github, href: `https://github.com/${profile.github}` }] : []),
     ],
-    sourceNote: [
+    sourceNote: person.announced ? [
+      `Name and role come from the announcement of ${day(person.announced.on)} on the Zcash Community Forum.`,
+      ...(profile.accountsNote ? [profile.accountsNote] : []),
+      ...(person.announced.photo ? [`The photo is the profile picture of ${person.announced.photo.startsWith('https://x.com/') ? 'that X account' : 'the linked account'}.`] : []),
+      `The official team page did not list this person when read on ${day(TEAM_REVIEWED)}.`,
+    ].join(' ') : [
       `Name, role${profile.x ? ', photo and X account' : ' and photo'} come from the official team page.`,
       ...(profile.github ? ['The GitHub account comes from their commits or pull requests.'] : []),
     ].join(' '),
+    announcement: person.announced ?? null,
     boardHref: profile.board ? `?view=about&section=board&record=${profile.board}` : null,
     bio: profile.bio ? { text: profile.bio, source: sources.epoch, project: 'epoch' } : null,
     articles: {

@@ -25,6 +25,12 @@ describe('Directory cards and direct records', () => {
     }
   });
 
+  it('says which names come from an announcement instead of the official team page', () => {
+    const markup = renderToStaticMarkup(createElement(Directory, { view: 'people', section: null, record: null, onNavigate: () => {}, onProject: () => {}, onFollow: () => {} }));
+    expect(markup).toContain('checked 11 Nov 2026. Aayush Giri and Wei Jie Koh come from forum announcements and are not on that page yet.');
+    expect(markup).toContain('Forward Deployed Engineer');
+  });
+
   it('shows only the records a person has', () => {
     const render = (name: string) => {
       const person = team.find(member => member.name === name)!;

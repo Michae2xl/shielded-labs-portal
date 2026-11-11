@@ -91,6 +91,7 @@ export default function PersonRecord({ person, group, repositories, checkedAt, o
         </section>}
         <section className={s.note} aria-label="Where this profile comes from">
           <p>{profile.sourceNote}</p>
+          {profile.announcement && <a href={profile.announcement.source} target="_blank" rel="noopener noreferrer">Announcement<Arrow external/></a>}
           <a href={sources.team} target="_blank" rel="noopener noreferrer">Official team<Arrow external/></a>
         </section>
       </aside>

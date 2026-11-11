@@ -25,7 +25,7 @@ export type Milestone = {
 };
 export const MILESTONES_REVIEWED = '2026-11-06';
 /** Last comparison of names, roles and photos with the official team page. */
-export const TEAM_REVIEWED = '2026-11-05';
+export const TEAM_REVIEWED = '2026-11-11';
 export const milestones: Milestone[] = [
   { date: '2024-12-08', name: 'Coinholders polled on the NSM', detail: 'A non-binding coinholder poll asks whether to include the NSM in NU7.', type: 'Governance', project: 'nsm', source: 'https://forum.zcashcommunity.com/t/coinholder-poll-nsm/49310/28', recordType: 'Coinholder poll', governanceRecord: 'poll:2024-12-nsm-coinholder-poll' },
   { date: '2025-03-21', name: 'Foundation in place', detail: 'Code structure and minimal functionality are in place, with no consensus changes.', type: 'Engineering', project: 'crosslink', source: sources.roadmap, recordType: 'Prototype milestone', step: 'Milestone 1' },
@@ -49,6 +49,10 @@ export const team = [
   { name: 'Andrew Reece', role: 'Engineer', group: 'Engineering' },
   { name: 'Phillip Trudeau-Tavara', role: 'Engineer', group: 'Engineering' },
   { name: 'Shoaib Ahmed', role: 'Engineer', group: 'Engineering' },
+  // Announced by Shielded Labs on the Zcash Community Forum. The official team page did not list them when read on `TEAM_REVIEWED`:
+  // drop `announced` once it does, and take the portrait and accounts it shows. `photo` is where a portrait used meanwhile was published.
+  { name: 'Aayush Giri', role: 'Forward Deployed Engineer', group: 'Engineering', announced: { on: '2026-11-02', source: 'https://forum.zcashcommunity.com/t/43855/131', photo: 'https://x.com/AayushStack' } },
+  { name: 'Wei Jie Koh', role: 'Engineer', group: 'Engineering', announced: { on: '2026-11-09', source: 'https://forum.zcashcommunity.com/t/43855/136', photo: 'https://x.com/weijie_eth' } },
   { name: 'Ulrich Haböck', role: 'Chief Cryptographer', group: 'Cryptography' },
   { name: 'Luke Edwards', role: 'Cryptography Engineer', group: 'Cryptography' },
   { name: 'Suyash Bagad', role: 'Cryptography Engineer', group: 'Cryptography' },

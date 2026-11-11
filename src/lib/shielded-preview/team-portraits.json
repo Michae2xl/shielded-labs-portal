@@ -1,6 +1,6 @@
 {
   "source": "https://shieldedlabs.net/team/",
-  "reviewedAt": "2026-11-05",
+  "reviewedAt": "2026-11-11",
   "portraits": {
     "jason-mcgee-stramaglia": {
       "alt": "Jason_Headshot",
@@ -61,6 +61,16 @@
       "alt": "Robert_Headshot",
       "source": "https://shieldedlabs.net/wp-content/uploads/2025/04/Robert_Headshot-400x400.png",
       "src": "/shielded-preview/team/robert-fegler.png"
+    },
+    "wei-jie-koh": {
+      "alt": "Wei Jie Koh, profile picture on X",
+      "source": "https://x.com/weijie_eth",
+      "src": "/shielded-preview/team/wei-jie-koh.png"
+    },
+    "aayush-giri": {
+      "alt": "Aayush Giri, profile picture on X",
+      "source": "https://x.com/AayushStack",
+      "src": "/shielded-preview/team/aayush-giri.png"
     }
   }
 }

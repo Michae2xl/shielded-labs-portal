@@ -11,6 +11,10 @@ import MilestoneRecord from './milestone-record';
 import PersonRecord, { Portrait } from './person-record';
 import s from './directory.module.css';
 
+// People announced by Shielded Labs whom the official team page does not list yet.
+const announced = team.filter(person => person.announced);
+const names = new Intl.ListFormat('en', { style: 'long', type: 'conjunction' });
+
 type Navigate = (section: string, record?: string) => void;
 const dateLabel = (date: string) => new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(date));
 function Arrow({ external = false }: { external?: boolean }) { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" aria-hidden="true"><path d={external ? 'M6 18 18 6M6 6h12v12' : 'M4 12h16m-6-6 6 6-6 6'}/></svg>; }
@@ -42,7 +46,7 @@ export default function Directory({ view, section, record, onNavigate, onProject
 
     {!record && view === 'people' && <>
       <div className={s.peopleGrid}>{team.filter(person => activeGroup === 'all' || person.group.toLowerCase() === activeGroup).map(person => <EntryLink key={person.name} view="people" section={activeGroup} record={`person:${personId(person)}`} onNavigate={onNavigate} className={s.personCard}><div className={s.personIdentity}><Portrait person={person}/><div><h2>{person.name}</h2><p>{person.role}</p></div></div><Arrow/></EntryLink>)}</div>
-      <div className={s.directoryFooter}><p>Names, roles and photos match the official team page, checked {dateLabel(TEAM_REVIEWED)}</p><SourceLink href={sources.team}>Official team</SourceLink><a className={s.sourceLink} href="?view=about&section=careers">Careers<Arrow/></a></div>
+      <div className={s.directoryFooter}><p>Names, roles and photos match the official team page, checked {dateLabel(TEAM_REVIEWED)}{announced.length > 0 && `. ${names.format(announced.map(person => person.name))} ${announced.length === 1 ? 'comes from a forum announcement and is' : 'come from forum announcements and are'} not on that page yet.`}</p><SourceLink href={sources.team}>Official team</SourceLink><a className={s.sourceLink} href="?view=about&section=careers">Careers<Arrow/></a></div>
     </>}
 
     {person && <PersonRecord person={person} group={activeGroup} repositories={repositories} checkedAt={checkedAt} onNavigate={onNavigate} onFollow={onFollow}/>}
