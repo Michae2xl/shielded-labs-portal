@@ -6,6 +6,7 @@ import { devFundLane, devFundTimeline } from './governance-dev-fund';
 import record from './governance-data/record.json';
 import { governanceSectionFromSlug, type GovernanceSection } from './governance-sections';
 import { bundledZips, proposalChange, zipLabel, zipSummary, zipTitle } from './zips/library';
+import { findUpcomingUpgrade } from './upcoming-upgrades';
 
 /**
  * What a shared link shows, from the same records the portal renders: a chip and one short line
@@ -64,6 +65,8 @@ function governanceCard(params: ShareParams): ShareCard | null {
     const activated = upgrade.height && upgrade.time ? `Activated at block ${upgrade.height.toLocaleString('en-US')}` : null;
     return { chip: 'Network upgrade', title: upgrade.name, subtitle: activated ? line(activated, day(upgrade.time)) : line(upgrade.governance), description: clip(upgrade.governance, DESCRIPTION_MAX) };
   }
+  const upcoming = findUpcomingUpgrade(id);
+  if (upcoming) return { chip: 'Network upgrade', title: upcoming.name, subtitle: line(upcoming.stage, `${upcoming.fact.name}: ${upcoming.fact.value}`), description: clip(upcoming.summary, DESCRIPTION_MAX) };
   const poll = record.polls.find(item => `poll:${item.id}` === id);
   if (poll) return { chip: 'Poll', title: poll.name, subtitle: line(day(poll.date)), description: clip(poll.outcome ?? poll.status ?? 'Zcash community poll.', DESCRIPTION_MAX) };
   if (params.lane === devFundLane) return { chip: 'Governance', title: devFundTimeline.title, subtitle: 'Published calendar for proposals and polling', description: 'The published calendar for proposals, poll questions and polling.' };

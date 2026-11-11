@@ -14,6 +14,7 @@ import { coinholderRoundLabel, coinholderRounds } from '@/lib/shielded-preview/c
 import c from './coinholder-proposals.module.css';
 
 import { devFundLane, devFundSources, devFundTimeline } from '@/lib/shielded-preview/governance-dev-fund';
+import { upcomingUpgradeId, upcomingUpgrades, type UpcomingUpgrade } from '@/lib/shielded-preview/upcoming-upgrades';
 import { DevFundProposals, DevFundVoting } from './governance-dev-fund';
 import { Arrow, Link, type CollectionNavigate, type CollectionSelection } from './governance-link';
 
@@ -207,6 +208,15 @@ function pollStatus(status: string) {
   return names[status] ?? label(status);
 }
 
+/** An upgrade still under discussion, drawn in the same row as an activated one so the columns line up. */
+function UpcomingUpgradeRow({ row, selection, onNavigate }: { row: UpcomingUpgrade; selection: CollectionSelection; onNavigate: Navigate }) {
+  return <li><Link section="Voting" id={upcomingUpgradeId(row)} selection={selection} onNavigate={onNavigate} className={a.record}>
+    <span className={a.symbol} aria-hidden="true"><GovernanceGlyph kind="network" size={23}/></span>
+    <div className={a.identity}><h3>{row.name}</h3><div className={a.meta}>{row.brief}</div></div>
+    <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Stage</span><span className={a.status}>{row.stage}</span></span><span className={a.measure}><span className={a.mobileLabel}>Activation</span><small>Not scheduled</small></span></div><Arrow/>
+  </Link></li>;
+}
+
 export function VotingCollection({ source, lane, onLane, busy, ...controls }: Controls & {
   source: Source<CoinholderProposal[] | null>; lane: string; onLane: (value: string) => void; busy: boolean;
 }) {
@@ -247,15 +257,18 @@ export function VotingCollection({ source, lane, onLane, busy, ...controls }: Co
   }
   const filteredPolls = polls.filter(row => matches(`${row.name} ${pollTitles[row.id] ?? ''}`, search));
   const upgrades = [...record.upgrades].reverse().filter(row => matches(`${row.name} ${row.zips.join(' ')}`, search));
+  // Upgrades still under discussion come first: they have proposals to show, not an activation.
+  const upcoming = upcomingUpgrades.filter(row => matches(`${row.name} ${row.brief} ${row.candidates.map(candidate => candidate.title).join(' ')}`, search));
+  const upgradeRows = [...upcoming.map(row => ({ upcoming: row, activated: null })), ...upgrades.map(row => ({ upcoming: null, activated: row }))];
   return <><CurrentParticipationRound compact/><Collection archive id="voting" title={isUpgrade ? 'Network upgrades' : 'Poll archive'} context={isUpgrade ? 'Protocol decisions' : 'Coinholder participation'}
     tabs={tabs}
     toolbar={<Search name={isUpgrade ? 'Search network upgrades' : 'Search voting archive'} value={search} onChange={onSearch}/>}
-    total={isUpgrade ? upgrades.length : filteredPolls.length} page={page} onPage={onPage}
+    total={isUpgrade ? upgradeRows.length : filteredPolls.length} page={page} onPage={onPage}
     notice="Polls inform decisions. ZIP status, node releases and network activation remain separate milestones."
     aside={<SourceInfo name="OpenZcash governance archive" reviewedAt={record.checkedAt}/>}
   >
     <div className={a.columns} aria-hidden="true"><span>{isUpgrade ? 'Network upgrade' : 'Poll'}</span><div className={a.measures}><span>{isUpgrade ? 'Stage' : 'Status'}</span><span>{isUpgrade ? 'Activation' : 'Recorded date'}</span></div><span/></div>
-    <ul className={a.rows} aria-label={isUpgrade ? 'Network upgrades' : 'Coinholder polls'}>{isUpgrade ? pageRows(upgrades, page).map(row => <li key={row.name}><Link section="Voting" id={`upgrade:${row.name}`} selection={{ lane: 'upgrades', filter, search, page: visiblePage(page, upgrades.length) }} onNavigate={onNavigate} className={a.record}>
+    <ul className={a.rows} aria-label={isUpgrade ? 'Network upgrades' : 'Coinholder polls'}>{isUpgrade ? pageRows(upgradeRows, page).map(({ upcoming: discussed, activated: row }) => discussed ? <UpcomingUpgradeRow key={discussed.id} row={discussed} selection={{ lane: 'upgrades', filter, search, page: visiblePage(page, upgradeRows.length) }} onNavigate={onNavigate}/> : row && <li key={row.name}><Link section="Voting" id={`upgrade:${row.name}`} selection={{ lane: 'upgrades', filter, search, page: visiblePage(page, upgradeRows.length) }} onNavigate={onNavigate} className={a.record}>
       <span className={a.symbol} aria-hidden="true"><GovernanceGlyph kind="network" size={23}/></span>
       <div className={a.identity}><h3>{row.name}</h3><div className={a.meta}>{row.zips.map(zip => `ZIP ${zip}`).join(' · ') || 'No ZIP listed'}</div></div>
       <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Stage</span><span className={a.status}>{row.height ? 'Activated' : 'Protocol work'}</span></span><span className={a.measure}><span className={a.mobileLabel}>Activation</span>{row.time ? <time dateTime={row.time}>{date(row.time)}</time> : <small>Not recorded</small>}{row.height !== null && <small>Block {number(row.height)}</small>}</span></div><Arrow/>
@@ -264,7 +277,7 @@ export function VotingCollection({ source, lane, onLane, busy, ...controls }: Co
       <div className={a.identity}><h3>{pollTitles[row.id] ?? row.name}</h3><div className={a.meta}><span>{row.scope === 'fund' ? 'Funding' : 'Protocol & funding model'}</span>{row.informal && <span>Informal</span>}{row.kind === 'sentiment' && <span>Advisory</span>}</div></div>
       <div className={a.measures}><span className={a.measure}><span className={a.mobileLabel}>Status</span><span className={a.status}>{pollStatus(row.status)}</span></span><span className={a.measure}><span className={a.mobileLabel}>Recorded date</span>{row.date ? <time dateTime={row.date}>{date(row.date)}</time> : <small>Not recorded</small>}</span></div><Arrow/>
     </Link></li>)}</ul>
-    {!(isUpgrade ? upgrades.length : filteredPolls.length) && <Empty onReset={() => onSearch('')}/>}
+    {!(isUpgrade ? upgradeRows.length : filteredPolls.length) && <Empty onReset={() => onSearch('')}/>}
   </Collection></>;
 }
 

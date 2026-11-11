@@ -14,6 +14,7 @@ export const library = (query = '') => governance(`&section=zips&topic=library${
 export const screens = [
   { name: 'overview', path: '/shielded-preview' },
   { name: 'projects', path: '/shielded-preview?view=projects' },
+  { name: 'crosslink videos', path: '/shielded-preview?view=projects&project=crosslink&section=participate&record=videos' },
   { name: 'milestones', path: '/shielded-preview?view=impact' },
   { name: 'code activity', path: '/shielded-preview?view=activity' },
   { name: 'team', path: '/shielded-preview?view=people' },
@@ -28,6 +29,8 @@ export const screens = [
   { name: 'voting', path: governance('&section=voting') },
   { name: 'poll archive', path: governance('&section=voting&lane=archive') },
   { name: 'network upgrades', path: governance('&section=voting&lane=upgrades') },
+  { name: 'upgrade under discussion', path: governance('&section=voting&lane=upgrades&record=upgrade:NU8') },
+  { name: 'upgrade tied to a poll', path: governance('&section=voting&lane=upgrades&record=upgrade:NU7.1') },
   { name: 'dev fund calendar', path: governance('&section=voting&lane=dev-fund') },
   { name: 'results', path: governance('&section=results') },
   { name: 'elections', path: governance('&section=results&lane=elections') },

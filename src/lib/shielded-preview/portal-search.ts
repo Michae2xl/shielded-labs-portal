@@ -24,6 +24,7 @@ export function searchPortal(query: string, navigation: readonly SearchNavigatio
     ...(matches('ZCG Dev Fund proposals polling poll timeline NU 7.1 rough consensus') ? [{ title: devFundTimeline.title, kind: 'Governance', href: devFundHref('voting') }] : []),
     ...searchZips(query),
     ...(matches('Crosslink test guide feature net participate finalizer stake cTAZ testing incentives') ? [{ title: 'Crosslink test guide', kind: 'Project', href: projectHref('crosslink', 'participate') }] : []),
+    ...(matches('Crosslink videos workshop recordings YouTube Discord sessions milestone demo installation') ? [{ title: 'Crosslink videos and workshop recordings', kind: 'Project', href: projectHref('crosslink', 'participate', 'videos') }] : []),
     ...communityTools.filter(tool => matches(`${tool.name} ${tool.author} ${tool.category} crosslink community tool`)).map(tool => ({ title: tool.name, kind: 'Community tool', href: `${projectHref('crosslink', 'participate', 'tools')}#${toolAnchor(tool.name)}` })),
     ...milestones.filter(milestone => matches(`${milestone.name} ${milestone.type}`)).map(milestone => ({ title: milestone.name, kind: 'Milestone', href: directoryHref('impact', milestone.type.toLowerCase(), `milestone:${milestone.date}`) })),
     ...team.filter(person => matches(`${person.name} ${person.role}`)).map(person => ({ title: person.name, kind: person.role, href: directoryHref('people', person.group.toLowerCase(), `person:${personId(person)}`) })),

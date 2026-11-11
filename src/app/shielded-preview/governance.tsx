@@ -29,6 +29,8 @@ import GovernanceZcap from './governance-zcap';
 import GovernanceTransparency from './governance-transparency';
 import { transparencyLaneIds } from '@/lib/shielded-preview/transparency/lanes';
 import ZcgProposalRecord from './zcg-proposal-record';
+import UpcomingUpgradeSections from './upcoming-upgrade-sections';
+import { findUpcomingUpgrade } from '@/lib/shielded-preview/upcoming-upgrades';
 import { emptyTreasurySource } from '@/lib/shielded-preview/treasury';
 import GovernanceReferences, { GovernanceReferenceProvider } from './governance-references';
 import { GrantsCollection, Link, ProposalsCollection, ResultsCollection, VotingCollection, type ProposalListItem } from './governance-collections';
@@ -124,13 +126,14 @@ export default function Governance(){
  const poll=polls.find(p=>`poll:${p.id}`===selected);
  const election=elections.find(e=>`election:${e.id}`===selected);
  const upgrade=record.upgrades.find(u=>`upgrade:${u.name}`===selected);
+ const upcoming=findUpcomingUpgrade(selected);
  const grantRows=grant?paymentsForGrant(grant,data.payments.data):[];
  const grantPaid=paymentTotals(grantRows);
  const programGuide=section==='Voting'&&selected===participationGuideId;
  const coinholderSource=data.coinholder??emptyCoinholderSource;
  const coinholderProposal=coinholderSource.data?.find(row=>`coinholder:${row.number}`===selected||`proposal:${row.round}:${row.number}`===selected);
  const loadingCoinholder=(section==='Voting'||section==='Proposals')&&(selected?.startsWith('proposal:')||selected?.startsWith('coinholder:'))&&coinholderSource.data===null;
- const title=programGuide?'Program guide':selected?(section==='Proposals'?coinholderProposal?.title??proposal?.title:section==='Grants'?grant?.grant:section==='Results'?vote?.title??election?.label:section==='Voting'?coinholderProposal?.title??poll?.name??upgrade?.name:undefined):undefined;
+ const title=programGuide?'Program guide':selected?(section==='Proposals'?coinholderProposal?.title??proposal?.title:section==='Grants'?grant?.grant:section==='Results'?vote?.title??election?.label:section==='Voting'?coinholderProposal?.title??poll?.name??upgrade?.name??upcoming?.name:undefined):undefined;
 
 
  return <GovernanceReferenceProvider checkedAt={data.checkedAt} checkedLabel={date(data.checkedAt)} busy={busy} failed={failed} onRefresh={()=>void refresh()} catalog={<>
@@ -183,6 +186,12 @@ export default function Governance(){
    <section id="governance-outcome"><h2>Recorded outcome</h2><p>{poll.outcome??'An outcome is unavailable in the source archive.'}</p>{poll.id==='2026-09-nu7-scope-coinholder-vote'&&<button className={g.secondary} onClick={()=>go('ZCAP')}>Compare with ZCAP<Arrow/></button>}{poll.id==='2026-09-cdrgp-q3-round'&&<button className={g.secondary} onClick={()=>go('Results')}>All 37 proposal results<Arrow/></button>}</section>
    <section id="governance-rules"><h2>Voting rules & scope</h2><p>{poll.quorum??'No threshold recorded here. Consult the published process for this poll.'}</p><p className={g.recordNote}>ZEC weight is not a count of voters. Weights across questions must not be added.</p></section>
   </GovernanceRecord>}
+  {selected&&section==='Voting'&&upcoming&&<GovernanceRecord
+   title={upcoming.name} context="Network upgrade" subtitle="Proposals under discussion"
+   metrics={<><Stat name="Recorded stage" value={upcoming.stage}/><Stat name="Activation" value="Not scheduled"/><Stat name={upcoming.fact.name} value={upcoming.fact.value}/></>}
+   sections={[{label:'Proposed',id:'governance-proposed'},{label:'Decided',id:'governance-decided'},...(upcoming.views.length?[{label:'Views',id:'governance-views'}]:[])]} backLabel="All votes" onBack={()=>go('Voting')}
+   sources={<><p>Sources read on {date(upcoming.checkedAt)}. Forum posts and drafts can change after that date. A proposal or a poll is distinct from a release or mainnet activation.</p>{upcoming.sources.map(item=><SourceLink key={item.url} url={item.url}>{item.label}</SourceLink>)}</>}
+  ><UpcomingUpgradeSections upgrade={upcoming} onNavigate={go}/></GovernanceRecord>}
   {selected&&section==='Voting'&&upgrade&&<GovernanceRecord
    title={upgrade.name} context="Network upgrade" subtitle="Protocol decision record"
    metrics={<><Stat name="Recorded stage" value={upgrade.height?'Activated':'Protocol work'}/><Stat name="Activation block" value={upgrade.height?number(upgrade.height):'Not recorded'}/><Stat name="Activation date" value={date(upgrade.time)}/></>}

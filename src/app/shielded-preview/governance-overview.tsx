@@ -128,7 +128,7 @@ export default function GovernanceOverview({ data, pollCount, onNavigate }: {
     </section>
 
     <section className={s.group} aria-labelledby="governance-outcomes-heading">
-      <header className={s.groupHeader}><h2 id="governance-outcomes-heading">Voting & governance</h2><div className={s.groupLinks}><Link section="How it works" onNavigate={onNavigate}>How it works<Arrow/></Link><Link section="ZIPs" onNavigate={onNavigate}>ZIP library<Arrow/></Link><Link section="Voting" selection={{lane:'archive'}} onNavigate={onNavigate}>{pollCount} archived polls<Arrow/></Link></div></header>
+      <header className={s.groupHeader}><h2 id="governance-outcomes-heading">Voting & governance</h2><div className={s.groupLinks}><Link section="How it works" onNavigate={onNavigate}>How it works<Arrow/></Link><Link section="ZIPs" onNavigate={onNavigate}>ZIP library<Arrow/></Link><Link section="Voting" selection={{lane:'upgrades'}} onNavigate={onNavigate}>Upcoming upgrades<Arrow/></Link><Link section="Voting" selection={{lane:'archive'}} onNavigate={onNavigate}>{pollCount} archived polls<Arrow/></Link></div></header>
       <div className={b.grid}>
       <section className={`${b.card} ${b.grants}`} aria-labelledby="governance-results-heading">
         <header className={b.header}>

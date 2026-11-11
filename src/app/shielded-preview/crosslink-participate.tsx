@@ -6,6 +6,7 @@ import type { CrosslinkRelease } from '@/lib/shielded-preview/types';
 import { FORUM, GUIDE_SOURCE, ISSUES, REPOSITORY, RELEASES, operateSteps, participationPaths, pathNotes, referencedIssues, relatedPages, rewardDetails, steps, toolAnchor, type GuidePath } from '@/lib/shielded-preview/crosslink-guide/guide';
 import { allocatedZec, currentRound, history, paidRounds, releaseDate, releaseNotes, releaseTag, reportedPaid, sourcesChecked } from '@/lib/shielded-preview/crosslink-guide/history';
 import { categories, communityTools, type ToolCategory } from '@/lib/shielded-preview/crosslink-guide/tools';
+import { crosslinkVideoCount, earlierSetupVideos, milestoneVideos, workshopChannel, workshops, workshopsChecked, type ChannelVideo } from '@/lib/shielded-preview/crosslink-guide/workshops';
 import { editorialCatalog, editorialHref, opensInPortal } from '@/lib/shielded-preview/editorial/library';
 import { projectHref } from '@/lib/shielded-preview/project-navigation';
 import { EditorialLink } from './editorial';
@@ -81,6 +82,14 @@ function Checklist({ done, setDone, open, setOpen, onFollow }: { done: number[];
 
 const releaseDay = (iso: string) => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(iso));
 
+function VideoList({ items, onFollow }: { items: ChannelVideo[]; onFollow: Follow }) {
+  return <ol className={s.videos}>{items.map(item => <li key={item.url}>
+    <time dateTime={item.published}>{releaseDay(item.published)}</time>
+    <div><h4>{item.title}</h4></div>
+    <div className={s.links}><Source href={item.url} onFollow={onFollow}>Watch video</Source></div>
+  </li>)}</ol>;
+}
+
 export default function CrosslinkParticipate({ project, view, headingRef, onFollow, onRecord, release }: { project: Project; view: string | null; headingRef: Ref<HTMLHeadingElement>; onFollow: Follow; release?: CrosslinkRelease; onRecord?: (record?: string) => void }) {
   const [path, setPath] = useState<GuidePath>('test');
   const [done, setDone] = useState<number[]>([]);
@@ -90,7 +99,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
   const [foundTool, setFoundTool] = useState<string | null>(null);
   const restored = useRef(false);
   const content = useRef<HTMLDivElement>(null);
-  const active = view === 'tools' || view === 'incentives' ? view : 'guide';
+  const active = view === 'tools' || view === 'incentives' || view === 'videos' ? view : 'guide';
   // Tabs change in place, so the reader stays where the menu is and focus stays on the tab.
   const show = (next: string) => { if (next !== active) onRecord?.(next === 'guide' ? undefined : next); };
   const moveToTabs = () => requestAnimationFrame(() => {
@@ -156,7 +165,7 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
     </section>
 
     <div ref={content} className={s.content}>
-      <SectionMenu label="Crosslink test guide" value={active} onChange={show} items={[{ id: 'guide', label: 'Guide' }, { id: 'tools', label: 'Community tools', count: communityTools.length }, { id: 'incentives', label: 'Incentives' }]}/>
+      <SectionMenu label="Crosslink test guide" value={active} onChange={show} items={[{ id: 'guide', label: 'Guide' }, { id: 'tools', label: 'Community tools', count: communityTools.length }, { id: 'incentives', label: 'Incentives' }, { id: 'videos', label: 'Videos', count: crosslinkVideoCount }]}/>
 
       {active === 'guide' && <>
         <p className={s.note}>Guide curated by OpenZcash · Instructions linked below.</p>
@@ -249,6 +258,23 @@ export default function CrosslinkParticipate({ project, view, headingRef, onFoll
           <div className={s.heading}><h3 id="crosslink-timeline">Timeline</h3><Source href={FORUM} onFollow={onFollow}>Forum</Source></div>
           <ol className={s.timeline}>{history.map(event => <li key={event.title} data-kind={event.kind}><time>{event.date}</time><details><summary><span>{event.title}</span><small>{event.kind}</small></summary><p>{event.detail}</p><Source href={event.source} onFollow={onFollow}>Original source</Source></details></li>)}</ol>
         </section>
+      </>}
+
+      {active === 'videos' && <>
+        <div className={s.heading}><h3>Workshop recordings</h3><Source href={workshopChannel} onFollow={onFollow}>Shielded Labs on YouTube</Source></div>
+        <p className={s.note}>{workshops.length} recorded sessions, newest first · Titles as published on YouTube.</p>
+        <ol className={s.videos}>{workshops.map(item => <li key={item.recording}>
+          <time dateTime={item.date}>{releaseDay(item.date)}</time>
+          <div><h4>{item.title}</h4><span className={s.author}>Held on {item.venue}{item.note ? ` · ${item.note}` : ''}</span></div>
+          <div className={s.links}><Source href={item.recording} onFollow={onFollow}>Watch recording</Source><Source href={item.announcement} onFollow={onFollow}>Announcement</Source></div>
+        </li>)}</ol>
+        <div className={s.heading}><h3>Milestone videos</h3></div>
+        <p className={s.note}>{milestoneVideos.length} videos titled by development milestone · Dates of publication on YouTube.</p>
+        <VideoList items={milestoneVideos} onFollow={onFollow}/>
+        <div className={s.heading}><h3>Setup videos for earlier releases</h3></div>
+        <p className={s.note}>Made for the January 2026 workshop and for Season 1 of the feature net. For the current release, follow the testing guide.</p>
+        <VideoList items={earlierSetupVideos} onFollow={onFollow}/>
+        <p className={s.note}>Videos are on YouTube and open in a new tab · Sources checked {workshopsChecked}.</p>
       </>}
     </div>
 
