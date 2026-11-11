@@ -3339,6 +3339,47 @@
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
   },
   {
+    "id": "pr-1458-zip-0318",
+    "number": 318,
+    "title": "Orchard to Ironwood Migration",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Wallet",
+    "owners": [
+      "Schell Carl Scivally",
+      "Pacu Gindre",
+      "Kris Nuttycombe"
+    ],
+    "created": "2026-06-16",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/1315",
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/61b2702261139304c88a6c8c65eedf884cf2fc96/zips/zip-0318.md",
+    "official": "https://github.com/zcash/zips/pull/1458",
+    "updatedAt": "2026-11-11T19:07:56Z",
+    "summary": "This ZIP specifies best practices for wallets migrating funds from the Orchard pool to the Ironwood pool introduced by the NU6.3 network upgrade 11. It is written with light client wallets in mind, because their reliance on a light wallet…",
+    "words": 12295,
+    "digest": "d2fe2d2bca3824fd7d96395d9c5eec01c67bee043281cd16820a62628b45cd1a",
+    "base": "zip-0318",
+    "pull": {
+      "number": 1458,
+      "title": "ZIP 318: Define the canonical fee in terms of ZIP 317 Revision 2",
+      "author": "pacu",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1458",
+      "headSha": "61b2702261139304c88a6c8c65eedf884cf2fc96",
+      "createdAt": "2026-11-11T19:07:56Z",
+      "updatedAt": "2026-11-11T19:07:56Z",
+      "change": "update",
+      "file": "zip-0318.md",
+      "files": [
+        "zip-0318.md"
+      ]
+    }
+  },
+  {
     "id": "pr-1455-draft-howard-zcg-coinholder-elections",
     "number": null,
     "title": "Coinholder Elections for Zcash Community Grants",
@@ -4201,7 +4242,7 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/69f2175f41735c849bcd6cc41bb62226a2f48474/zips/draft-ijaack-zsv.md",
     "official": "https://github.com/zcash/zips/pull/1438",
-    "updatedAt": "2026-11-05T17:08:20Z",
+    "updatedAt": "2026-11-11T15:29:01Z",
     "summary": "This proposal adds native ZEC vaults and one protocol-defined stablecoin to Zcash. Borrowing against sufficient collateral creates zUSD; repayment and liquidation destroy existing zUSD and reduce the corresponding liability. Zcash…",
     "words": 7736,
     "digest": "db86247df30503817f67ee8dd94573cff55eb84f236fb73260faa26bb2377c9e",
@@ -4214,7 +4255,7 @@
       "url": "https://github.com/zcash/zips/pull/1438",
       "headSha": "69f2175f41735c849bcd6cc41bb62226a2f48474",
       "createdAt": "2026-11-05T16:54:31Z",
-      "updatedAt": "2026-11-05T17:08:20Z",
+      "updatedAt": "2026-11-11T15:29:01Z",
       "change": "new",
       "file": "draft-ijaack-zsv.md",
       "files": [
@@ -4428,7 +4469,8 @@
     "statusDetail": null,
     "category": "Consensus Process",
     "owners": [
-      "Daira-Emma Hopwood"
+      "Daira-Emma Hopwood",
+      "Violet Rollergirl"
     ],
     "created": "2026-10-30",
     "license": "MIT",
@@ -4436,12 +4478,12 @@
     "pullRequest": "https://github.com/zcash/zips/pull/1431",
     "kind": "proposal",
     "format": "md",
-    "source": "https://github.com/zcash/zips/blob/ad90f2e5b7318338ac9490702c3b0f653a5643a8/zips/draft-dairaemma-governance-zap.md",
+    "source": "https://github.com/zcash/zips/blob/28d7618d21971c747c4db3680755d816110acaf1/zips/draft-dairaemma-governance-zap.md",
     "official": "https://github.com/zcash/zips/pull/1431",
-    "updatedAt": "2026-11-11T02:36:07Z",
+    "updatedAt": "2026-11-11T19:18:33Z",
     "summary": "The portion of Protocol-defined Ecosystem Funding allocated to Zcash Community Grants (ZCG) is reaffirmed and bound to its stated objective in ZIP 1015 5: increasing adoption as broadly as possible.",
-    "words": 1746,
-    "digest": "f26a86d1cbe63979962e2000cfad107303da516f61212f6f866bd4297815edb5",
+    "words": 2036,
+    "digest": "ac4ea2a4aa59a55bbccb2e3e096346a72b4ab2b47fbefacab7686ebf8cc83d84",
     "base": null,
     "pull": {
       "number": 1431,
@@ -4449,9 +4491,9 @@
       "author": "daira",
       "draft": false,
       "url": "https://github.com/zcash/zips/pull/1431",
-      "headSha": "ad90f2e5b7318338ac9490702c3b0f653a5643a8",
+      "headSha": "28d7618d21971c747c4db3680755d816110acaf1",
       "createdAt": "2026-10-31T17:52:35Z",
-      "updatedAt": "2026-11-11T02:36:07Z",
+      "updatedAt": "2026-11-11T19:18:33Z",
       "change": "new",
       "file": "draft-dairaemma-governance-zap.md",
       "files": [
