@@ -217,3 +217,14 @@ export const proposalAims: Record<string, string> = {
   'town-square': 'Keep a durable, searchable public record of funded organizations’ announcements.',
   'coinholder-elections': 'Allow coinholders to elect committee members without joining a membership panel.',
 };
+
+/** A first handful of statements that takes every stance in turn, so a short preview is never a one-sided sample. */
+export function statementPreview(statements: FundStatement[], limit: number): Set<string> {
+  const byStance = new Map<string, FundStatement[]>();
+  for (const item of statements) byStance.set(item.kind, [...(byStance.get(item.kind) ?? []), item]);
+  const picked = new Set<string>(), target = Math.min(limit, statements.length);
+  for (let round = 0; picked.size < target; round++) for (const group of byStance.values()) {
+    if (group[round] && picked.size < target) picked.add(group[round].id);
+  }
+  return picked;
+}

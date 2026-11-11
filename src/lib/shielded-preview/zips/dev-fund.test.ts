@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { bundledZips } from './library';
-import { proposalCoverage, proposalsBySignals, proposalAims, relatedXDiscussion, proposalStructure, independentPositions, proposalGroup, copyExplorerParams, explorerState, fundProposals, fundRelations, fundStatements, matchingProposals, outsidePollRound, pollRound, proposalStatements } from './dev-fund';
+import { statementPreview, proposalCoverage, proposalsBySignals, proposalAims, relatedXDiscussion, proposalStructure, independentPositions, proposalGroup, copyExplorerParams, explorerState, fundProposals, fundRelations, fundStatements, matchingProposals, outsidePollRound, pollRound, proposalStatements } from './dev-fund';
 
 describe('Dev Fund evidence boundaries', () => {
   it('keeps withdrawn and closed proposals out of the default set, but searchable in history', () => {
@@ -187,4 +187,22 @@ it('marks as outside the November poll exactly the open drafts whose pull reques
   expect(pollRound.source).toBe('https://forum.zcashcommunity.com/t/58906/39');
   expect(outsidePollRound(fundProposals.find(proposal => proposal.id === 'lockbox')!)).toBe(false);
   expect(outsidePollRound(fundProposals.find(proposal => proposal.id === 'no-change')!)).toBe(false);
+});
+
+describe('A short preview of the statements', () => {
+  it('takes every stance in turn, so six statements are not a one-sided sample', () => {
+    const statements = proposalStatements('lockbox');
+    const preview = statementPreview(statements, 6);
+    expect(preview.size).toBe(6);
+    const shown = statements.filter(item => preview.has(item.id));
+    const stances = [...new Set(statements.map(item => item.kind))];
+    for (const stance of stances) expect(shown.some(item => item.kind === stance), stance).toBe(true);
+    const counts = stances.map(stance => shown.filter(item => item.kind === stance).length);
+    expect(Math.max(...counts) - Math.min(...counts)).toBeLessThanOrEqual(1);
+  });
+  it('shows everything when there is no more than the preview holds', () => {
+    const few = proposalStatements('lockbox').slice(0, 4);
+    expect(statementPreview(few, 6)).toEqual(new Set(few.map(item => item.id)));
+    expect(statementPreview([], 6).size).toBe(0);
+  });
 });

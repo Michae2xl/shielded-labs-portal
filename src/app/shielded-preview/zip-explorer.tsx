@@ -2,10 +2,11 @@
 
 import { useSyncExternalStore, useState, useRef, type CSSProperties, type ReactNode } from 'react';
 import Image from 'next/image';
-import { outsidePollRound, pollRound, proposalCoverage, proposalsBySignals, proposalAims, proposalTopics, independentPositions, profileImages, proposalColor, proposalGroup, fundStatements, relatedXDiscussion, xCoverage, devFundReviewed, explorerState, fundProposals, fundRelations, isHistorical, matchingProposals, proposalStatements, type FundProposal, type FundStatement } from '@/lib/shielded-preview/zips/dev-fund';
+import { outsidePollRound, pollRound, proposalCoverage, proposalsBySignals, proposalAims, proposalTopics, independentPositions, profileImages, proposalColor, proposalGroup, fundStatements, relatedXDiscussion, xCoverage, devFundReviewed, explorerState, fundProposals, fundRelations, isHistorical, matchingProposals, proposalStatements, statementPreview, type FundProposal, type FundStatement } from '@/lib/shielded-preview/zips/dev-fund';
 import { devFundSources } from '@/lib/shielded-preview/governance-dev-fund';
 import type { ZipsIndex } from '@/lib/shielded-preview/zips/types';
 import s from './zip-explorer.module.css';
+import m from './proposal-map.module.css';
 
 const subscribe = (notify: () => void) => {
   window.addEventListener('popstate', notify);
@@ -54,24 +55,29 @@ function ProposalAim({ proposal, label = false }: { proposal: FundProposal; labe
   return <div className={s.proposalAim}>{label && <span>{proposal.stage === 'Baseline' ? 'Stated aim' : 'Proposed benefit'}</span>}<p>{proposalAims[proposal.id]}</p><External href={proposal.source}>{proposal.stage === 'Baseline' ? 'Requestor’s source' : 'Authors’ rationale'}</External></div>;
 }
 function MapBoard({ rows, selected, select }: { rows: FundProposal[]; selected: string; select: (id: string) => void }) {
-  const groups = (['Funding', 'Governance', 'Voting'] as const).filter(group => rows.some(p => proposalGroup(p) === group && !isHistorical(p)));
   const historical = rows.filter(isHistorical);
+  const topics = (['Funding', 'Governance', 'Voting'] as const).map(group => ({ id: group, color: proposalTopics[group].color, items: rows.filter(p => proposalGroup(p) === group && !isHistorical(p)) }));
   function node(p: FundProposal) {
-    return <button className={s.mapNode} key={p.id} style={accent(p.id)} data-historical={isHistorical(p)} data-baseline={p.stage === 'Baseline'} aria-pressed={p.id === selected} onClick={() => select(p.id)}>
-      <span className={s.nodeTop}><People names={p.authors}/><small>{p.pr ? `PR #${p.pr}` : p.stage === 'Baseline' ? 'ZIP 1016 reference' : 'Forum draft'}</small></span>
-      <strong>{p.short}</strong>{(isHistorical(p) || outsidePollRound(p)) && <span className={s.structure}>{isHistorical(p) ? p.stage : outOfPoll}</span>}
+    return <button className={m.node} key={p.id} style={accent(p.id)} data-muted={isHistorical(p) || outsidePollRound(p) || undefined} aria-pressed={p.id === selected} onClick={() => select(p.id)}>
+      <People names={p.authors}/><strong>{p.short}</strong>
+      <small>{isHistorical(p) ? p.stage : p.pr ? `PR #${p.pr}` : p.stage === 'Baseline' ? 'ZIP 1016 reference' : 'Forum draft'}</small>
     </button>;
   }
-  return <section className={s.atlas} aria-label="General proposal map">
+  return <section className={`${s.atlas} ${m.map}`} aria-label="General proposal map">
     <div className={s.mapHeader}><h3>Explore by topic</h3><span>Select a proposal to see its details</span></div>
-    <div className={s.landscape} data-focused={groups.length === 1} data-history-only={groups.length === 0}>
-      <div className={s.zcashHub}><Image src="/logos/zcash.svg" alt="Zcash" width={70} height={70}/></div>
-      {groups.map(group => { const items = rows.filter(p => proposalGroup(p) === group && !isHistorical(p));return <section className={s.sector} key={group} data-topic={group} style={{'--accent':proposalTopics[group].color} as CSSProperties} aria-label={`${group} proposals`}>
-        <header><div><h4>{group}</h4><p>{proposalTopics[group].description}</p></div><span>{items.length}</span></header>
-        <div className={s.sectorNodes}>{items.length ? items.map(node) : <p className={s.sectorEmpty}>No current records in this selection.</p>}</div>
-      </section>;})}
-      {historical.length > 0 && <section className={s.historySector} aria-label="Historical proposals"><header><div><h4>Earlier proposals</h4><p>Withdrawn and earlier drafts</p></div><span>{historical.length}</span></header><div className={s.sectorNodes}>{historical.map(node)}</div></section>}
+    <div className={m.board}>
+      <div className={m.lanes}>{topics.map(({ id, color, items }) => {
+        const inPoll = items.filter(p => !outsidePollRound(p)), outside = items.filter(outsidePollRound);
+        return <section className={m.lane} key={id} style={{ '--topic': color } as CSSProperties} aria-label={`${id} proposals`}>
+          <header><h4>{id}</h4><span>{items.length}</span><p>{proposalTopics[id].description}</p></header>
+          {inPoll.map(node)}
+          {/* Said once for the lane, not on every row. */}
+          {outside.length > 0 && <><p className={m.laneNote}>{outOfPoll}</p>{outside.map(node)}</>}
+          {!items.length && <p className={m.laneEmpty}>No current records in this selection.</p>}
+        </section>;
+      })}</div>
     </div>
+    {historical.length > 0 && <section className={m.earlier} aria-label="Historical proposals"><header><h4>Earlier proposals</h4><p>Withdrawn and earlier drafts</p></header><div>{historical.map(node)}</div></section>}
     <div className={s.atlasFoot}>Draft proposals are not adopted rules.</div>
   </section>;
 }
@@ -109,7 +115,10 @@ function Details({ proposal, index }: { proposal: FundProposal; index: ZipsIndex
   </div>;
 }
 
+const STATEMENT_PREVIEW = 6;
+
 export default function ZipExplorer({ index, children }: { index: ZipsIndex; children: ReactNode }) {
+  const [openStatements, setOpenStatements] = useState<string | null>(null);
   const focusPanel = useRef<HTMLElement>(null);
   const browsingPanel = useRef<HTMLDivElement>(null);
   const url = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
@@ -133,6 +142,9 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
     update({ compare: next.join(',') });
   }
   const statements = (selected ? proposalStatements(selected.id) : []).filter(item => state.channel === 'all' || (item.platform ?? 'Forum') === state.channel);
+  // The overview shows a first handful of statements; the reader opens the rest, and a linked statement always shows.
+  const briefStatements = state.panel === 'network' && statements.length > STATEMENT_PREVIEW && openStatements !== selected?.id;
+  const previewed = statementPreview(statements, STATEMENT_PREVIEW);
   const timeline = fundStatements.filter(item => rows.some(p => p.id === item.proposal) && (state.channel === 'all' || (item.platform ?? 'Forum') === state.channel)).sort((a,b) => b.date.localeCompare(a.date));
   const timelineDays = [...new Set(timeline.map(item => item.date.slice(0,10)))];
   const select = (id: string, panel?: string) => { update({focus:id, layout:'map', ...(panel ? {panel} : {})}); requestAnimationFrame(() => { focusPanel.current?.scrollIntoView({behavior: 'instant', block: 'start'}); focusPanel.current?.focus({preventScroll: true}); }); };
@@ -148,7 +160,11 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
   return <section className={s.explorer} aria-label="ZIP explorer">
     {topbar}
     <>
-      <header className={s.intro}><div><h2>Zcash proposals</h2><p>Explore funding, governance and voting changes.</p></div></header>
+      <header className={s.intro}><div><h2>Zcash proposals</h2><p>Explore funding, governance and voting changes.</p></div>
+        <nav aria-label="ZIP display" className={s.modes}>
+          {(['list', 'map', 'compare'] as const).map((mode, i) => <button key={mode} aria-pressed={state.layout === mode} onClick={() => update({ layout: mode })}><span aria-hidden="true">{['☰', '◇', '◫'][i]}</span>{['List', 'Map', 'Compare'][i]}{mode === 'compare' && compared.length > 0 && <small>{compared.length}</small>}</button>)}
+        </nav>
+      </header>
       <div className={s.filters} aria-label="Filter proposals" role="group">
         <label className={s.search}><span aria-hidden="true">⌕</span><input type="search" aria-label="Search ZIP proposals" placeholder="Search proposals…" value={state.query} onChange={e => update({ dq: e.target.value || null }, true)}/></label>
         <nav aria-label="Proposal topics" className={s.topicFilters}>{(['all', 'Funding', 'Governance', 'Voting'] as const).map(group => <button key={group} aria-pressed={state.group === group} style={group === 'all' ? undefined : {'--topic':proposalTopics[group].color} as CSSProperties} onClick={() => update({group: group === 'all' ? null : group})}>{group !== 'all' && <i aria-hidden="true"/>}{group === 'all' ? 'All topics' : group}</button>)}</nav>
@@ -156,9 +172,6 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
       </div>
       <div ref={browsingPanel} tabIndex={-1} className={s.resultsToolbar}>
         <div className={s.resultSummary}><span role="status">{rows.length} {state.layout === 'compare' ? 'available to compare' : rows.length === 1 ? 'proposal' : 'proposals'}</span>{filtered && <button className={s.clearFilters} onClick={resetFilters}>Clear filters</button>}</div>
-        <nav aria-label="ZIP display" className={s.modes}>
-          {(['list', 'map', 'compare'] as const).map((mode, i) => <button key={mode} aria-pressed={state.layout === mode} onClick={() => update({ layout: mode })}><span aria-hidden="true">{['☰', '◇', '◫'][i]}</span>{['List', 'Map', 'Compare'][i]}{mode === 'compare' && compared.length > 0 && <small>{compared.length}</small>}</button>)}
-        </nav>
       </div>
       {!rows.length && <div className={s.empty}><p>No proposals match these filters. Try a different search or clear the filters above.</p></div>}
       {state.layout === 'list' && <div className={s.cards}>{rows.map(p => <article className={s.card} style={accent(p.id)} key={p.id}>
@@ -202,7 +215,7 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
         </section>
         {fundRelations.some(r => r.from === selected.id || r.to === selected.id) && <div className={s.relations}>{fundRelations.filter(r => r.from === selected.id || r.to === selected.id).map(r => { const other = fundProposals.find(p => p.id === (r.from === selected.id ? r.to : r.from))!; return <div key={`${r.from}-${r.to}`}><span>{r.label}</span><button onClick={() => update({ focus: other.id, past: '1', status: null, dq: null, group: null })}>{other.short} →</button><External href={r.source}>Basis</External></div>; })}</div>}
         <details className={s.reach}><summary>Source coverage <span>Partial · {date(proposalCoverage[selected.id].reviewedOn)}</span></summary><div><p><strong>Forum.</strong> {proposalCoverage[selected.id].forum}</p><p><strong>X.</strong> {proposalCoverage[selected.id].x}</p><p>Missing records mean evidence is not documented here, not that nobody supports the proposal.</p></div></details>
-        {state.panel !== 'timeline' && <section aria-label="Source statements" className={s.evidence}><header className={s.evidenceHeader}><div><h3>Who said what</h3><p>Reviewed statements · contributors labelled</p></div>{state.panel === 'network' && sourceFilter}</header>{statements.length ? <div className={s.statements}>{statements.map(item => <div key={item.id} id={`statement-${item.id}`} tabIndex={-1}><Statement item={item}/></div>)}</div> : <div className={s.empty}>No statements reviewed for this selection. This does not mean no support.</div>}</section>}
+        {state.panel !== 'timeline' && <section aria-label="Source statements" className={s.evidence}><header className={s.evidenceHeader}><div><h3>Who said what</h3><p>{statements.length} reviewed {statements.length === 1 ? 'statement' : 'statements'} · contributors labelled</p></div>{state.panel === 'network' && sourceFilter}</header>{statements.length ? <><div className={s.statements} data-collapsed={briefStatements || undefined}>{statements.map(item => <div key={item.id} id={`statement-${item.id}`} tabIndex={-1} data-preview={previewed.has(item.id) || undefined}><Statement item={item}/></div>)}</div>{state.panel === 'network' && statements.length > STATEMENT_PREVIEW && <button type="button" className={s.moreStatements} aria-expanded={!briefStatements} onClick={() => setOpenStatements(briefStatements ? selected.id : null)}>{briefStatements ? `Show all ${statements.length} statements` : 'Show fewer statements'}</button>}</> : <div className={s.empty}>No statements reviewed for this selection. This does not mean no support.</div>}</section>}
         {selected.id === 'lockbox' && state.channel !== 'Forum' && <details className={s.reach}><summary>Related discussion <span>Outside this proposal’s count</span></summary><div><span className={s.statementPerson}><Portrait name={relatedXDiscussion.name}/><strong>{relatedXDiscussion.name}</strong></span><p>{relatedXDiscussion.text}</p><External href={relatedXDiscussion.url}>Read original post · {date(relatedXDiscussion.date)}</External></div></details>}
         {selected.id === 'lockbox' && state.channel !== 'Forum' && <details className={s.reach}><summary>X conversation · reach snapshot <span>Not support counts</span></summary><div><External href={xCoverage.authorPost}>Sean Bowe’s announcement</External><dl>{[['Replies', xCoverage.replies],['Reposts',xCoverage.reposts],['Likes',xCoverage.likes],['Views',xCoverage.views]].map(([label,value]) => <div key={label}><dt>{label}</dt><dd>{Number(value).toLocaleString('en-US')}</dd></div>)}</dl><p>Observed {date(xCoverage.reviewedOn)}. Only explicitly reviewed replies enter the statement sample; engagement does not enter the bars.</p></div></details>}
         </>}

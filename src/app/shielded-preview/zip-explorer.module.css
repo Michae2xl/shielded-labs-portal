@@ -18,7 +18,7 @@
 .scopes button>span{font-size:11px;color:#bdbdbd;padding:1px 5px;border:1px solid #444;border-radius:4px}
 .modes{padding:3px;background:#141414;border:1px solid #282828;border-radius:9px}
 .modes button{padding:6px 12px}
-.modes button[aria-pressed=true]{color:#101010;background:#e7e7e7}
+.modes button[aria-pressed=true]{color:#fff;background:#242424;border-color:#777}
 .explorer button:hover:not(:disabled){border-color:#666}
 .intro{margin-bottom:20px;align-items:flex-start}
 .eyebrow{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1.8px;color:var(--muted);margin-bottom:7px}
@@ -94,6 +94,10 @@
 .statements{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .statements>div{scroll-margin-top:24px;border-radius:8px}
 .statements>div:target{outline:2px solid #ccc;outline-offset:3px}
+/* A first handful of statements covering every stance, the rest on request; a statement someone linked to is never hidden. */
+.statements[data-collapsed]>div:not([data-preview]):not(:target){display:none}
+.explorer .moreStatements{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;margin-top:10px;border:1px solid #333;border-radius:7px;background:#101010;color:#e6e6e6;font-family:var(--font-display);font-size:14px;font-weight:500}
+.explorer .moreStatements:hover{border-color:#686868;background:#1a1a1a;color:#fff}
 .statement{border:1px solid var(--line);border-radius:8px;padding:14px;background:#111;height:100%;display:flex;flex-direction:column}
 .statement header{font-size:12px;gap:8px;flex-wrap:wrap}
 .statement header>span{font-size:10px;color:#aaa}
@@ -265,7 +269,7 @@
 .explorer select:focus-visible{outline:2px solid #eee;outline-offset:3px}
 .intro{align-items:center;margin-bottom:18px}.intro>a{font-size:12px;color:#aaa;white-space:nowrap}
 .topbar>a{font-size:12px;color:#aaa;white-space:nowrap}
-.filters{display:grid;grid-template-columns:minmax(180px,1fr) auto auto;align-items:center;gap:16px;border-bottom:1px solid var(--line);padding:0 0 18px}
+.filters{display:grid;grid-template-columns:minmax(180px,1fr) auto auto;align-items:center;gap:16px;padding:0}
 .filters .search{width:100%;min-width:0;background:#111;min-height:42px}
 .filters .search input{font-size:13px}
 .statusFilter,.sourceFilter{display:flex;align-items:center;gap:9px;font-size:12px;color:#aaa}
@@ -275,11 +279,11 @@
 .topicFilters button[aria-pressed=true]{color:#fff;background:#222;border-color:#444}
 .topicFilters button i{display:block;width:6px;height:6px;border-radius:50%;background:var(--topic)}
 .clearFilters{background:none;border:0;padding:4px;color:#ccc;font-size:11px;white-space:nowrap;text-decoration:underline;text-underline-offset:3px}
-.resultsToolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;scroll-margin-top:24px}
+.resultsToolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0 12px;scroll-margin-top:24px}
 .resultSummary{display:flex;align-items:center;gap:12px;color:#aaa;font-size:12px;min-width:0}
 .resultSummary>span{white-space:nowrap}
 .modes button small{display:grid;place-items:center;min-width:19px;height:19px;padding:0 4px;border-radius:4px;background:#303030;color:#ddd;font-size:10px;font-variant-numeric:tabular-nums}
-.modes button[aria-pressed=true] small{background:#ccc;color:#222}
+.modes button[aria-pressed=true] small{background:#3a3a3a;color:#fff}
 .workspaceBar{padding:0;margin:0 0 14px;min-height:42px;gap:12px}
 .workspaceBar nav:first-child{display:flex;gap:18px}
 .explorer .workspaceBar nav button{padding:10px 0;font-size:12px;border:0;border-bottom:2px solid transparent;border-radius:0;color:#aaa}
