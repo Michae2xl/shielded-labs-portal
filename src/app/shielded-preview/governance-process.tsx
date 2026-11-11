@@ -1,5 +1,6 @@
 'use client';
 
+import GovernanceFilters from './governance-filters';
 import type { ReactNode } from 'react';
 import { governanceProcess, type ProcessBlock, type ProcessCell, type ProcessLink } from '@/lib/shielded-preview/governance-process';
 import GovernanceRecord from './governance-record';
@@ -23,6 +24,7 @@ function Cell({ cell, onNavigate }: { cell: ProcessCell; onNavigate: CollectionN
 }
 function Block({ block, onNavigate }: { block: ProcessBlock; onNavigate: CollectionNavigate }) {
   if (block.kind === 'p') return <p>{block.lead && <strong>{block.lead} </strong>}{block.text}</p>;
+  if (block.kind === 'filters') return <GovernanceFilters><ul className={s.points}>{block.items.map((item, index) => <li key={index}>{item.title && <strong>{item.title} </strong>}{item.text}</li>)}</ul></GovernanceFilters>;
   if (block.kind === 'list') {
     const items = block.items.map((item, index) => <li key={index}>{item.title && <strong>{item.title} </strong>}{item.text}</li>);
     return block.ordered ? <ol className={s.steps}>{items}</ol> : <ul className={s.points}>{items}</ul>;
