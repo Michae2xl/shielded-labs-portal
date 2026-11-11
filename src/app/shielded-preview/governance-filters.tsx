@@ -5,10 +5,12 @@ import s from './governance-filters.module.css';
 const { pieces } = trianglePieces();
 const summary = `A change to Zcash passes three filters: ${governanceFilters.map(filter => `${filter.who.toLowerCase()} ${filter.verb}`).join(', then ')}.`;
 
-/** The three filters as three pieces that lock around the Zcash mark; the page's own steps sit beside the art as its caption. */
-export default function GovernanceFilters({ children }: { children?: ReactNode }) {
+/** The three filters as three pieces that lock around the Zcash mark. The page's opening paragraph and its steps form one
+ *  text column; the art stands beside it. */
+export default function GovernanceFilters({ lead, children }: { lead?: string; children?: ReactNode }) {
   const [cx, cy] = triangle.centre;
-  return <figure className={s.figure}>
+  return <div className={s.figure}>
+    {lead && <p className={s.lead}>{lead}</p>}
     <svg className={s.art} viewBox={`0 0 ${triangle.width} ${triangle.height}`} role="img" aria-label={summary}>
       <defs>
         <pattern id="filter-cells" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#101010"/><rect x=".5" y=".5" width="6" height="6" rx=".7" fill="#272727"/></pattern>
@@ -23,6 +25,6 @@ export default function GovernanceFilters({ children }: { children?: ReactNode }
       <g className={s.gaps}>{pieces.map(piece => <path key={piece.id} d={piece.path}/>)}</g>
       <g className={s.mark}><circle cx={cx} cy={cy} r={triangle.hole - 7}/><image href="/logos/zcash.svg" x={cx - 30} y={cy - 30} width="60" height="60"/></g>
     </svg>
-    {children && <figcaption>{children}</figcaption>}
-  </figure>;
+    {children && <div className={s.steps}>{children}</div>}
+  </div>;
 }

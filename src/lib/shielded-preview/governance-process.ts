@@ -8,7 +8,7 @@ export type ProcessBlock =
   | { kind: 'list'; ordered?: boolean; items: { title?: string; text: string }[] }
   | { kind: 'table'; caption: string; columns: string[]; rows: ProcessCell[][] }
   | { kind: 'links'; items: ProcessLink[] }
-  | { kind: 'filters'; items: { title?: string; text: string }[] };
+  | { kind: 'filters'; lead: string; items: { title?: string; text: string }[] };
 export type ProcessSection = { id: string; title: string; blocks: ProcessBlock[] };
 
 const zip = (number: number, label = `ZIP ${number}`): ProcessLink => ({ label, section: 'ZIPs', record: `zip-${String(number).padStart(4, '0')}` });
@@ -23,8 +23,7 @@ export const governanceProcess: {
   facts: [{ name: 'Decision basis', value: 'Rough consensus' }, { name: 'Proposal format', value: 'ZIP' }, { name: 'Final say', value: 'Whoever runs the software' }],
   sections: [
     { id: 'in-one-minute', title: 'In one minute', blocks: [
-      { kind: 'p', text: 'No single organization runs Zcash. A change becomes real only after three filters: the community reaches rough consensus, development organizations implement it, and the people who run the network, including miners, exchanges, node operators and wallets, choose to install the new version.' },
-      { kind: 'filters', items: [
+      { kind: 'filters', lead: 'No single organization runs Zcash. A change becomes real only after three filters: the community reaches rough consensus, development organizations implement it, and the people who run the network, including miners, exchanges, node operators and wallets, choose to install the new version.', items: [
         { title: 'Anyone can propose', text: 'a change by writing a ZIP (Zcash Improvement Proposal) and opening a public discussion on the Zcash Forum.' },
         { title: 'The community signals', text: 'its view through discussion and polls: community panels such as ZCAP, and ZEC-weighted coinholder votes. Polls are signals, not binding decisions.' },
         { title: 'Development organizations interpret', text: 'the result. Without rough consensus nothing changes and the protocol stays as it is.' },

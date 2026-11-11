@@ -7,14 +7,15 @@
 .page .intro h1{max-width:38ch;font-size:clamp(28px,2.7vw,34px);font-weight:450;line-height:1.24;letter-spacing:-1.2px;margin:0;overflow-wrap:anywhere;text-wrap:pretty}
 .page .intro h1:focus,.page .intro h1:focus-visible{outline:none!important;box-shadow:none!important}
 .page .subtitle{font-size:17px;line-height:1.6;color:var(--secondary-ink,#c2c2c2);margin:10px 0 0!important;overflow-wrap:anywhere}
-.recordNav{grid-area:navigation;position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:10px 24px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid #292929;background:var(--bg,#070707)}.recordNav button{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0;border:0;background:transparent;color:var(--secondary-ink,#c2c2c2);font-size:14px!important}.recordNav button:hover{color:white}.recordNav button>svg{width:18px;height:18px;flex-shrink:0}.sectionNav{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;max-width:100%;margin:0;padding:4px;overflow-x:auto;scrollbar-width:none;border:1px solid #2c2c2c;border-radius:12px;background:#0b0b0b}
+.recordNav{grid-area:navigation;position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:10px 24px;flex-wrap:wrap;padding:10px 0 12px;border-bottom:1px solid #292929;background:var(--bg,#070707)}.recordNav button{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0;border:0;background:transparent;color:var(--secondary-ink,#c2c2c2);font-size:14px!important}.recordNav button:hover{color:white}.recordNav button>svg{width:18px;height:18px;flex-shrink:0}/* The same separate, bordered buttons as the section menus across the portal. */
+.sectionNav{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;max-width:100%;margin:0;padding:1px;overflow-x:auto;scrollbar-width:none}
 .sectionNav::-webkit-scrollbar{display:none}
-.sectionNav a{display:inline-flex;align-items:center;flex:none;min-height:36px;padding:0 14px;border:1px solid transparent;border-radius:9px;color:#a9a9a9;font-size:14px;font-weight:550;line-height:1.2;white-space:nowrap;text-decoration:none}
-.sectionNav a:hover{color:#f2f2f2}
-.sectionNav a[aria-current=location]{border-color:#474747;background:linear-gradient(180deg,#262626,#1b1b1b);color:#fff}
+.sectionNav a{display:inline-flex;align-items:center;flex:none;min-height:40px;padding:0 12px;border:1px solid #333;border-radius:7px;background:#101010;color:#bfbfbf;font-family:var(--font-display);font-size:14px;font-weight:500;line-height:1.2;white-space:nowrap;text-decoration:none;transition:background-color 160ms ease,border-color 160ms ease,color 160ms ease}
+.sectionNav a:hover{border-color:#686868;background:#1a1a1a;color:#fff}
+.sectionNav a[aria-current=location]{border-color:#777;background:#242424;color:#fff}
 .statusPanel{grid-area:status;align-self:start;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:18px;padding:16px 20px;background:#111;border:1px solid #2c2c2c;border-radius:8px}
-.statusPanel>div{display:flex;align-items:flex-start;flex-direction:column;gap:6px;padding:0}
-.statusPanel>div+div{border-left:1px solid #303030;padding-left:24px}
+.statusPanel>div{display:flex;align-items:center;flex-direction:column;gap:6px;padding:0;text-align:center}
+.statusPanel>div+div{border-left:1px solid #303030;padding-left:18px}
 .statusPanel>div>span{color:var(--text-muted,#b0b0b0);font-size:13px;line-height:1.6}
 .statusPanel strong{font-size:22px;line-height:1.35;font-weight:450;color:#e1e1e1;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .statusPanel small{font-size:13px;color:var(--text-muted,#b0b0b0);line-height:1.6}
@@ -55,3 +56,11 @@
 /* Up to 900px the portal bar is sticky at the top (73-77px), so the record bar sits right below it; on phones it is one row, the back arrow beside the tabs. */
 @media(max-width:900px){.page{--record-bar:156px}.recordNav{top:76px;flex-wrap:nowrap;gap:8px;padding:8px 0 10px}.recordNav button{min-height:40px;padding:0 4px 0 0}.backLabel{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.sectionNav{flex:1 1 auto;min-width:0;width:auto}}
 @media(max-width:650px){.page{--record-bar:150px}.recordNav{top:72px}.sectionNav{width:auto}}
+/* A guide at full width: one column, and its sources folded into the strip at the end. */
+.page[data-wide]{grid-template-columns:minmax(0,1fr);grid-template-areas:"navigation" "intro" "status" "body" "sources"}
+.sourcesEnd{grid-area:sources;min-width:0;scroll-margin-top:var(--record-bar)}
+.page .sourceList p{max-width:78ch;margin:0 0 14px;color:var(--secondary-ink,#c2c2c2);font-size:15px;line-height:1.7}
+.sourceList>a{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:640px;min-height:40px;border-top:1px solid #242424;color:#e6e6e6;font-size:14px;line-height:1.5;text-decoration:none}
+.sourceList>a:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}
+.sourceList>a>svg{width:18px;height:18px;flex-shrink:0}
+@media(prefers-reduced-motion:reduce){.sectionNav a{transition:none}}

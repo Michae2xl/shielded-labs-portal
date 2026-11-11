@@ -24,7 +24,7 @@ function Cell({ cell, onNavigate }: { cell: ProcessCell; onNavigate: CollectionN
 }
 function Block({ block, onNavigate }: { block: ProcessBlock; onNavigate: CollectionNavigate }) {
   if (block.kind === 'p') return <p>{block.lead && <strong>{block.lead} </strong>}{block.text}</p>;
-  if (block.kind === 'filters') return <GovernanceFilters><ul className={s.points}>{block.items.map((item, index) => <li key={index}>{item.title && <strong>{item.title} </strong>}{item.text}</li>)}</ul></GovernanceFilters>;
+  if (block.kind === 'filters') return <GovernanceFilters lead={block.lead}><ul className={s.points}>{block.items.map((item, index) => <li key={index}>{item.title && <strong>{item.title} </strong>}{item.text}</li>)}</ul></GovernanceFilters>;
   if (block.kind === 'list') {
     const items = block.items.map((item, index) => <li key={index}>{item.title && <strong>{item.title} </strong>}{item.text}</li>);
     return block.ordered ? <ol className={s.steps}>{items}</ol> : <ul className={s.points}>{items}</ul>;
@@ -33,11 +33,14 @@ function Block({ block, onNavigate }: { block: ProcessBlock; onNavigate: Collect
   return <div className={s.links}>{block.items.map(link => <ProcessAnchor key={link.label} link={link} onNavigate={onNavigate} className={s.link}/>)}</div>;
 }
 
+// Short names for the bar that stays on screen while reading; the headings keep their full titles.
+const barNames: Record<string, string> = { 'from-idea-to-activation': 'Idea to activation', 'what-a-zip-is': 'Reading a ZIP', 'dev-fund-and-zcg': 'Dev Fund and ZCG', 'chain-fork': 'Chain fork?' };
+
 export default function GovernanceProcess({ onBack, onNavigate }: { onBack: () => void; onNavigate: CollectionNavigate }) {
   const guide = governanceProcess;
   return <GovernanceRecord title={guide.title} context="Guide" subtitle={guide.summary}
     metrics={<>{guide.facts.map(fact => <div key={fact.name}><span>{fact.name}</span><strong>{fact.value}</strong></div>)}</>}
-    sections={[]} outline={guide.sections.map(section => ({ id: `process-${section.id}`, label: section.title }))} backLabel="Governance overview" onBack={onBack} idPrefix="process"
+    sections={guide.sections.map(section => ({ id: `process-${section.id}`, label: barNames[section.id] ?? section.title }))} backLabel="Governance overview" onBack={onBack} idPrefix="process" sourcesAtEnd
     sources={<>
       <p>Neutral description reviewed on {date(guide.reviewedAt)}. Dated statements name their date; the forum and repository links below are the primary sources. Essays published by Shielded Labs are linked where they are the source of a figure.</p>
       {guide.sources.map(source => <External key={source.href} href={source.href}>{source.label}</External>)}
