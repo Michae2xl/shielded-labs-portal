@@ -11,6 +11,8 @@ export const coinholderIntake = {
   startsAt: participationRound.phases[0].startsAt,
   endsAt: '2027-01-01T00:00:00Z',
 };
+/** The Coinholder list opens on the round in progress; the other proposal lists have no round. */
+export const defaultProposalRound = (lane: string) => lane === 'coinholder' || lane === 'q3' ? coinholderIntake.id : 'all';
 export const coinholderIssuesUrl = `https://github.com/${coinholderRepository}/issues`;
 export const coinholderProposalsHref = '?view=governance&section=voting';
 export const coinholderIssueSchema = z.object({
@@ -41,7 +43,8 @@ export function coinholderSnapshotSource(saved: unknown): Source<CoinholderPropo
 }
 
 export function requestedCents(value: string | undefined): number | null {
-  const match = value?.trim().match(/^(?:US\$|\$|USD\s+)?\s*(\d{1,3}(?:,\d{3})+|\d{1,3}(?:['’]\d{3})+|\d+)(?:\.(\d{1,2}))?\s*(?:USD)?$/i);
+  // The amount must lead the field; a note in brackets may follow it, anything else leaves the amount unread.
+  const match = value?.trim().match(/^(?:US\$|\$|USD\s+)?\s*(\d{1,3}(?:,\d{3})+|\d{1,3}(?:['’]\d{3})+|\d+)(?:\.(\d{1,2}))?\s*(?:USD)?(?:\s*\([^()]*\))?$/i);
   if (!match) return null;
   const cents = Number(match[1].replace(/[,‘’']/g, '')) * 100 + Number((match[2] ?? '').padEnd(2, '0'));
   return Number.isSafeInteger(cents) && cents > 0 ? cents : null;
@@ -110,7 +113,10 @@ export function allCoinholderProposals(issues: CoinholderIssue[]): CoinholderPro
       labels.includes(readyForVoteLabel) ? 'Steps completed' : 'Submitted';
     const readyForCurrentVote = inCurrentIntake && issue.state === 'open' && labels.includes(readyForVoteLabel) &&
       !has(/approved by coinholders|rejected by coinholders|funds disbursed|withdrawn|cancelled|veto/i);
-    const rounds = inCurrentIntake ? [coinholderIntake.id] : recordedCoinholderRounds(issue.number);
+    // The round in progress has no published list yet: it is the applications still open in its intake, and later the
+    // ones coinholders decided. One closed before the vote stays in the history, outside any round.
+    const inCurrentRound = inCurrentIntake && (issue.state === 'open' || has(/approved by coinholders|rejected by coinholders|funds disbursed|veto/i));
+    const rounds = inCurrentRound ? [coinholderIntake.id] : inCurrentIntake ? ['unassigned'] : recordedCoinholderRounds(issue.number);
     const requested = field('Requested Grant Amount (USD)') ?? field('Requested Grant Amount');
     proposals.set(issue.number, {
       number: issue.number, round: rounds[0], rounds, status, readyForCurrentVote,

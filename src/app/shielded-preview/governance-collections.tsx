@@ -140,10 +140,22 @@ export function ProposalsCollection({ datasets, coinholderSource, lane, onLane, 
   })) : datasets[selected];
   const statuses = [...new Set(rows.map(row => row.status))].sort();
   const filtered = rows.filter(row => matches(`${row.title} ${row.applicant}`, search) && (filter === 'all' || row.status === filter) && (!isCoinholder || round === 'all' || row.rounds?.includes(round)));
+  // The selected round at a glance: how many applications, where they stand and what they request.
+  const roundRows = isCoinholder ? rows.filter(row => round === 'all' || row.rounds?.includes(round)) : [];
+  const standing = (...statuses: string[]) => roundRows.filter(row => statuses.includes(row.status)).length;
+  const [ready, approved, vetoed, rejected] = [standing('Steps completed'), standing('Approved', 'Vetoed'), standing('Vetoed'), standing('Rejected')];
+  const withoutAmount = roundRows.filter(row => row.amount === null).length;
+  const roundSummary = isCoinholder && !unavailable ? <div className={`${c.summary} ${c.roundSummary}`}><dl>
+    <div><dt>Applications</dt><dd>{roundRows.length}</dd></div>
+    {ready > 0 && <div><dt>Ready for vote</dt><dd>{ready}</dd></div>}
+    {approved + rejected > 0 && <><div><dt>Approved</dt><dd>{approved}</dd></div><div><dt>Rejected</dt><dd>{rejected}</dd></div></>}
+    {vetoed > 0 && <div><dt>Later vetoed</dt><dd>{vetoed}</dd></div>}
+    <div><dt>{withoutAmount ? 'Known requests · USD' : 'Total requested · USD'}</dt><dd>{roundRows.length > 0 && withoutAmount === roundRows.length ? '—' : money(roundRows.reduce((sum, row) => sum + (row.amount ?? 0), 0))}</dd></div>
+  </dl>{withoutAmount > 0 && <div className={c.sourceState}><span>{withoutAmount} without a specified amount</span></div>}</div> : undefined;
   const titles = { review: 'Under review', history: 'Application history', coinholder: 'Coinholder applications' };
   const statusHeading = selected === 'review' ? 'Submitted' : 'Status';
   return <Collection archive id="proposals" title={titles[selected]} context={isCoinholder ? 'Coinholder grants' : 'Zcash Community Grants'}
-    tabs={tabs}
+    tabs={tabs} summary={roundSummary}
     toolbar={<><Search name="Search proposals" value={search} onChange={onSearch}/>{isCoinholder && <select aria-label="Filter Coinholder round" value={round} onChange={event => onRound(event.target.value)}><option value="all">All rounds</option>{coinholderRounds.map(item => <option key={item.id} value={item.id}>{item.label}</option>)}</select>}{statuses.length > 1 && <select aria-label="Filter proposal status" value={filter} onChange={event => onFilter(event.target.value)}><option value="all">All statuses</option>{statuses.map(status => <option key={status} value={status}>{label(status)}</option>)}</select>}</>}
     total={unavailable ? null : filtered.length} page={page} onPage={onPage}
     notice={isCoinholder ? 'All submitted applications, including closed records and resubmissions. Amounts are requests; approval and payment are separate.' : 'Amounts are funding requests. Decisions, payments and delivery are tracked separately.'}

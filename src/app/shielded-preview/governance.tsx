@@ -12,6 +12,7 @@ import { participationGuideId } from '@/lib/shielded-preview/governance-particip
 import { devFundLane } from '@/lib/shielded-preview/governance-dev-fund';
 import { emptyCoinholderSource } from '@/lib/shielded-preview/coinholder-proposals';
 import { coinholderRounds } from '@/lib/shielded-preview/coinholder-rounds';
+import { defaultProposalRound } from '@/lib/shielded-preview/coinholder-proposals';
 import type { GovernanceData, Source, VoteResult } from '@/lib/shielded-preview/governance-types';
 import GovernanceRecord from './governance-record';
 import GovernanceNavigation, { type GovernanceSection } from './governance-navigation';
@@ -35,6 +36,7 @@ import g from './governance.module.css';
 
 type Section = GovernanceSection;
 const recordLane=(section:Section,id:string|null)=>section==='Transparency'?'debates':section==='ZIPs'?laneForRecord(id):section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
+const baseRound=(section:Section,lane:string)=>section==='Proposals'?defaultProposalRound(lane):'all';
 type ListingState={lane:string;filter:string;search:string;page:number;basis:'include'|'exclude';round:string;activity?:string};
 function listingParams(section:Section,id:string|null,state:ListingState){
  const params=new URLSearchParams({view:'governance',section:governanceSectionSlug(section)});
@@ -48,7 +50,7 @@ function listingParams(section:Section,id:string|null,state:ListingState){
  if(state.search)params.set('q',state.search);
  if(state.page>1)params.set('page',String(state.page));
  if(section==='ZCAP'&&state.lane!=='members'&&state.basis==='exclude')params.set('basis','exclude');
- if(section==='Proposals'&&(state.lane==='coinholder'||state.lane==='q3')&&state.round!=='all')params.set('round',state.round);
+ if(state.round!==baseRound(section,state.lane))params.set('round',state.round);
  if(section==='ZIPs'&&state.activity&&state.activity!=='all')params.set('activity',state.activity);
  return params;
 }
@@ -83,7 +85,7 @@ export default function Governance(){
   const nextPage=Number(p.get('page')??1);
   const nextLane=lanes.includes(p.get('lane')??'')?p.get('lane')!:next==='Voting'&&p.get('filter')==='upgrades'?'upgrades':recordLane(next,p.get('record'));
   setSection(next);setLane(next==='Proposals'&&nextLane==='q3'?'coinholder':nextLane);setSelected(p.get('record'));
-  setRound(coinholderRounds.some(item=>item.id===p.get('round'))?p.get('round')!:'all');
+  setRound(coinholderRounds.some(item=>item.id===p.get('round'))?p.get('round')!:p.get('round')==='all'?'all':baseRound(next,nextLane));
   setBasis(p.get('basis')==='exclude'?'exclude':'include');
   setActivity(next==='ZIPs'&&isZipActivity(p.get('activity'))?p.get('activity') as ZipActivity:'all');
   setSearch(p.get('q')??'');setFilter(p.get('filter')??'all');setPage(Number.isSafeInteger(nextPage)&&nextPage>0?nextPage:1);
@@ -92,7 +94,7 @@ export default function Governance(){
 
  function go(next:Section,id:string|null=null,overrides:Partial<ListingState>={}){
   const keep=next===section&&(id!==null||selected!==null);
-  const state:ListingState={lane:keep?lane:recordLane(next,id),filter:keep?filter:'all',search:keep?search:'',page:keep?page:1,basis:keep?basis:'include',round:keep?round:'all',activity:keep?activity:'all',...overrides};
+  const state:ListingState={lane:keep?lane:recordLane(next,id),filter:keep?filter:'all',search:keep?search:'',page:keep?page:1,basis:keep?basis:'include',round:keep?round:baseRound(next,overrides.lane??recordLane(next,id)),activity:keep?activity:'all',...overrides};
   if(next==='Voting'&&id===null&&selected?.startsWith('upgrade:'))state.lane='upgrades';
   if(next==='ZIPs'&&id)state.lane=laneForRecord(id);
   setSection(next);setSelected(id);setLane(state.lane);setSearch(state.search);setFilter(state.filter);setPage(state.page);setBasis(state.basis);setRound(state.round);setActivity(isZipActivity(state.activity)?state.activity:'all');
@@ -100,12 +102,12 @@ export default function Governance(){
  }
  function rememberListing(overrides:Partial<ListingState>){
   const current=new URLSearchParams(location.search);
-  const state:ListingState={lane:current.get('lane')??recordLane(section,selected),filter:current.get('filter')??'all',search:current.get('q')??'',page:Number(current.get('page')??1),basis:current.get('basis')==='exclude'?'exclude':'include',round:current.get('round')??'all',activity:current.get('activity')??'all',...overrides};
+  const state:ListingState={lane:current.get('lane')??recordLane(section,selected),filter:current.get('filter')??'all',search:current.get('q')??'',page:Number(current.get('page')??1),basis:current.get('basis')==='exclude'?'exclude':'include',round:current.get('round')??baseRound(section,overrides.lane??current.get('lane')??recordLane(section,selected)),activity:current.get('activity')??'all',...overrides};
   history.replaceState(null,'',`?${listingParams(section,selected,state)}`);
  }
  function find(value:string){setSearch(value);setPage(1);rememberListing({search:value,page:1})}
  function chooseFilter(value:string){setFilter(value);setPage(1);rememberListing({filter:value,page:1})}
- function chooseLane(value:string){setLane(value);setFilter('all');setSearch('');setPage(1);setRound('all');rememberListing({lane:value,filter:'all',search:'',page:1,round:'all'})}
+ function chooseLane(value:string){const first=baseRound(section,value);setLane(value);setFilter('all');setSearch('');setPage(1);setRound(first);rememberListing({lane:value,filter:'all',search:'',page:1,round:first})}
  function chooseRound(value:string){setRound(value);setPage(1);rememberListing({round:value,page:1})}
  function chooseActivity(value:string){const next=isZipActivity(value)?value:'all';setActivity(next);setPage(1);rememberListing({activity:next,page:1})}
  function chooseBasis(value:'include'|'exclude'){setBasis(value);rememberListing({basis:value})}

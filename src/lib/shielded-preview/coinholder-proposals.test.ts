@@ -3,7 +3,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ProposalsCollection, VotingCollection } from '@/app/shielded-preview/governance-collections';
 import CoinholderProposalRecord from '@/app/shielded-preview/coinholder-proposal-record';
-import { allCoinholderProposals, applicationFields, coinholderSnapshotSource, coinholderTotals, currentCoinholderProposals, emptyCoinholderSource, readyForVoteLabel, requestedCents, type CoinholderIssue } from './coinholder-proposals';
+import { allCoinholderProposals, applicationFields, coinholderSnapshotSource, coinholderTotals, defaultProposalRound, currentCoinholderProposals, emptyCoinholderSource, readyForVoteLabel, requestedCents, type CoinholderIssue } from './coinholder-proposals';
 import { coinholderRoundLabel } from './coinholder-rounds';
 import { fetchCoinholderProposals } from './coinholder-provider';
 
@@ -28,6 +28,9 @@ describe('Current Coinholder intake', () => {
   it('uses only the explicit requested amount, without substituting the project budget', () => {
     expect(requestedCents('US$ 1,250.50')).toBe(125050);
     expect(requestedCents('$150,000 USD')).toBe(15000000);
+    // An explicit amount may carry a note in brackets, as in application 76 of the Q4 2026 round.
+    expect(requestedCents('$1,690 (reduced from $2,000 on 2026-11-02, see Other Funding Sources)')).toBe(169000);
+    expect(requestedCents('(about) $1,690')).toBeNull();
     for (const value of ['About $50,000', '$0 in costs', '50 ZEC', '$1.234', '$1,25', '-5']) expect(requestedCents(value)).toBeNull();
     const [row] = currentCoinholderProposals([{ ...issue, body: issue.body!.replace('$50,000', 'Not specified') }]);
     expect(row.requestedUsdCents).toBeNull();
@@ -215,5 +218,42 @@ describe('Saved Coinholder record', () => {
   it('stays unavailable when the saved copy is missing, malformed or empty', () => {
     for (const saved of [null, {}, { observedAt: 'yesterday', issues: [issue] }, { observedAt, issues: [{ number: 'x' }] }, { observedAt, issues: [] }])
       expect(coinholderSnapshotSource(saved)).toBe(emptyCoinholderSource);
+  });
+});
+
+describe('Current Coinholder round in the application list', () => {
+  const closedInIntake = { ...issue, number: 100, state: 'closed' as const };
+  const decidedInIntake = { ...issue, number: 101, state: 'closed' as const, labels: [readyForVoteLabel, 'Approved by Coinholders'] };
+  const approved = { ...issue, number: 3, created_at: '2025-09-13T00:00:00Z', state: 'closed' as const, labels: ['Approved by Coinholders'] };
+  const rejected = { ...issue, number: 4, created_at: '2025-09-13T00:00:00Z', state: 'closed' as const, labels: ['Rejected by Coinholders'] };
+  const render = (data: ReturnType<typeof allCoinholderProposals>, round: string) => renderToStaticMarkup(createElement(ProposalsCollection, {
+    datasets: { review: [], history: [] }, coinholderSource: { ...emptyCoinholderSource, data },
+    source: emptyCoinholderSource, lane: 'coinholder', onLane: vi.fn(), round, onRound: vi.fn(), busy: false,
+    search: '', onSearch: vi.fn(), filter: 'all', onFilter: vi.fn(), page: 1, onPage: vi.fn(), onNavigate: vi.fn(),
+  }));
+  it('keeps an application closed before the vote out of the current round, and a decided one in it', () => {
+    const rows = allCoinholderProposals([issue, closedInIntake, decidedInIntake]);
+    expect(rows.find(row => row.number === 70)?.rounds).toEqual(['q4-2026']);
+    expect(rows.find(row => row.number === 100)).toMatchObject({ status: 'Closed', rounds: ['unassigned'], readyForCurrentVote: false });
+    expect(rows.find(row => row.number === 101)).toMatchObject({ status: 'Approved', rounds: ['q4-2026'] });
+  });
+  it('opens the Coinholder list on the current round and every other list on all rounds', () => {
+    expect(defaultProposalRound('coinholder')).toBe('q4-2026');
+    expect(defaultProposalRound('q3')).toBe('q4-2026');
+    for (const lane of ['review', 'history', '']) expect(defaultProposalRound(lane)).toBe('all');
+  });
+  it('summarises the selected round: how many applications, where they stand and what they request', () => {
+    const rows = allCoinholderProposals([issue, { ...issue, number: 71 }, closedInIntake, approved, rejected]);
+    const current = render(rows, 'q4-2026');
+    expect(current).toContain('<dt>Applications</dt><dd>2</dd>');
+    expect(current).toContain('<dt>Ready for vote</dt><dd>2</dd>');
+    expect(current).toContain('<dt>Total requested · USD</dt><dd>$100,000.00</dd>');
+    expect(current).not.toContain('record=coinholder%3A100');
+    const past = render(rows, 'q4-2025');
+    expect(past).toContain('<dt>Applications</dt><dd>2</dd>');
+    expect(past).toContain('<dt>Approved</dt><dd>1</dd>');
+    expect(past).toContain('<dt>Rejected</dt><dd>1</dd>');
+    expect(past).not.toContain('Ready for vote');
+    expect(render(rows, 'all')).toContain('round=all');
   });
 });

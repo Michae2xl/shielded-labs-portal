@@ -1,6 +1,6 @@
 .historyApplicant{max-width:min(100%,48ch);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .summary{display:flex;align-items:center;justify-content:space-between;gap:20px;width:100%;padding:12px 2px}
-.summary dl{display:flex;gap:40px;margin:0}
+.summary dl{display:flex;flex-wrap:wrap;gap:12px 40px;margin:0;min-width:0}
 .summary dt,.sourceState{font-size:13px;line-height:1.5;color:#bcbcbc}
 .summary dd{margin:5px 0 0;color:#f1f1f1;font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.3}
 .sourceState{display:flex;flex-direction:column;gap:4px;text-align:right}
@@ -26,6 +26,11 @@
 .recordMeta>div{display:grid;grid-template-columns:100px 1fr;gap:12px}
 .recordMeta dt{color:#aaa;font-size:13px}
 .recordMeta dd{margin:0;font-size:14px;color:#ddd}
-@container(max-width:640px){.summary{align-items:flex-start;flex-direction:column;gap:10px}.summary dl{gap:28px}.summary dd{font-size:23px}.sourceState{font-size:12px;text-align:left}.row{grid-template-columns:minmax(0,1fr);gap:16px}.amount{padding:14px 0 0;border-left:0;border-top:1px solid #292929;display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 12px}.amount>span:first-child{grid-column:1}.amount>strong{grid-column:1;grid-row:2;font-size:22px}.amount>.view{grid-column:2;grid-row:1/3;margin:0}.identity h3{font-size:18px!important}.identity .excerpt{-webkit-line-clamp:3}}
+@container(max-width:640px){.summary{align-items:flex-start;flex-direction:column;gap:10px}.summary dl{gap:10px 28px}.summary dd{font-size:23px}.sourceState{font-size:12px;text-align:left}.row{grid-template-columns:minmax(0,1fr);gap:16px}.amount{padding:14px 0 0;border-left:0;border-top:1px solid #292929;display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 12px}.amount>span:first-child{grid-column:1}.amount>strong{grid-column:1;grid-row:2;font-size:22px}.amount>.view{grid-column:2;grid-row:1/3;margin:0}.identity h3{font-size:18px!important}.identity .excerpt{-webkit-line-clamp:3}}
 .bodyState{margin:14px 0 0!important;padding:10px 14px;border:1px solid #2c2c2c;border-radius:10px;background:#111;color:#b8b8b8!important;font-size:14px!important;line-height:1.6!important}
 .applicationField+.applicationField{margin-top:32px}
+/* The round at a glance sits at the right edge, each figure centred under its label; a note about missing amounts stays on the left. */
+.roundSummary,.roundSummary dl{justify-content:flex-end}
+.roundSummary dl>div{text-align:center}
+.roundSummary .sourceState{order:-1;margin-right:auto}
+@container(max-width:640px){.roundSummary{align-items:stretch}.roundSummary dl{justify-content:center}.roundSummary .sourceState{order:0;margin-right:0;text-align:center}}
