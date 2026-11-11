@@ -213,6 +213,8 @@
 .main:focus{outline:none}
 @media(max-width:1100px){.portal .workspace{margin-left:224px}}
 @media(max-width:900px){.portal .workspace{margin-left:0}.portal .skip{left:20px}}
+/* Beside the sidebar the content needs little inset of its own: the sidebar's padding already separates them. */
+@media(min-width:901px){.portal .main,.portal .topbar{padding-left:12px}}
 @media print{.portal .workspace{margin-left:0}}
 
 /* Compact catalog: one action per card, shared content edges. */
