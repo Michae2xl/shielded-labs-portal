@@ -55,7 +55,9 @@ export default function Overview({ data, onNavigate, onProject, onFollow, projec
 
   return <div className={s.overview}>
     <header className={s.hero}>
-      <div className={s.heroArt} aria-hidden="true"/>
+      {/* The mark built in cells, as in the "2 years of code" film: decorative, and an asset so it stays out of the script bundle. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className={s.heroArt} src="/logos/shielded-labs-cells.svg" alt="" width={520} height={204} decoding="async"/>
       <div className={s.heroCopy}>
         <h1 ref={heading} tabIndex={-1}><Image src="/logos/shielded-labs-horizontal.png" alt="Shielded Labs" width={800} height={200} priority sizes="(max-width: 700px) 190px, 240px"/></h1>
         <p>Projects, milestones, code activity and Zcash governance in one place.</p>

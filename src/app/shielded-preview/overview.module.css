@@ -5,12 +5,10 @@
 .overview section,.projects,.recentCode{min-width:0}
 .overview h1:focus{outline:none}
 /* Opening band. The art is a field of dots; those inside the shield are lit, and a slow sheen crosses them. */
-.hero{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-bottom:24px;padding:22px 24px 20px;border:1px solid #2e2e2e;border-radius:14px;background:radial-gradient(90% 150% at 0 0,#1c1c1c 0,#0e0e0e 60%);box-shadow:inset 0 1px 0 #ffffff0d}
-.heroArt{position:absolute;z-index:-1;inset:0 0 0 auto;width:56%;pointer-events:none;background:radial-gradient(42% 78% at 72% 50%,#ffffff12 0,transparent 100%)}
-.heroArt::before,.heroArt::after{content:'';position:absolute;inset:0}
-.heroArt::before{background:radial-gradient(circle,#ffffff17 1px,transparent 1.7px) 0 0/13px 13px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 42%);mask-image:linear-gradient(90deg,transparent,#000 42%)}
-.heroArt::after{background:linear-gradient(115deg,#bdbdbd 36%,#fff 50%,#bdbdbd 64%) 100% 0/280% 100%;-webkit-mask-image:url(/logos/shielded-labs-shield-600.png),radial-gradient(circle,#000 2.1px,transparent 2.8px);mask-image:url(/logos/shielded-labs-shield-600.png),radial-gradient(circle,#000 2.1px,transparent 2.8px);-webkit-mask-size:auto 90%,13px 13px;mask-size:auto 90%,13px 13px;-webkit-mask-repeat:no-repeat,repeat;mask-repeat:no-repeat,repeat;-webkit-mask-position:right 12% center,0 0;mask-position:right 12% center,0 0;-webkit-mask-composite:source-in;mask-composite:intersect;animation:heroSheen 8s ease-in-out infinite}
-@keyframes heroSheen{0%,12%{background-position:100% 0}62%,100%{background-position:0 0}}
+.hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin-bottom:24px;padding:22px 24px 20px}
+/* The card surface is its own layer so it can dissolve: toward the mark its fill and border fade out and a dotted trail takes over, ending in the official shield. */
+.hero::before{content:'';position:absolute;z-index:-2;inset:0;border:1px solid #2e2e2e;border-radius:14px;background:radial-gradient(90% 150% at 0 0,#1c1c1c 0,#0e0e0e 60%);box-shadow:inset 0 1px 0 #ffffff0d;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 480px),transparent calc(100% - 350px));mask-image:linear-gradient(90deg,#000 calc(100% - 480px),transparent calc(100% - 350px))}
+.overview .hero .heroArt{position:absolute;z-index:-1;right:0;top:0;width:auto;height:100%;max-width:none;pointer-events:none}
 .heroCopy{min-width:0}
 .overview .hero h1{margin:0;line-height:0}
 .overview .hero h1 img{display:block;width:auto;height:clamp(38px,3.6vw,48px);margin-left:-4px}
@@ -22,10 +20,12 @@
 .facts span{color:#a9a9a9;font-size:12px;line-height:1.4;white-space:nowrap}
 .facts strong{color:#f2f2f2;font-family:var(--font-display);font-size:20px;font-weight:500;letter-spacing:-.3px;line-height:1.25;font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
 .projects>.sectionHeader{margin-bottom:12px}
-@container overview (max-width:900px){.hero{padding:24px 20px 20px}.heroArt{width:100%;opacity:.55}.heroArt::after{-webkit-mask-size:auto 96%,13px 13px;mask-size:auto 96%,13px 13px;-webkit-mask-position:right -30px top -20px,0 0;mask-position:right -30px top -20px,0 0}}
+/* Without room beside the figures the card closes again and the wordmark carries the brand alone. */
+@container overview (max-width:980px){.hero::before{-webkit-mask-image:none;mask-image:none}.overview .hero .heroArt{display:none}}
+@container overview (max-width:900px){.hero{padding:24px 20px 20px}}
 @container overview (max-width:520px){.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.facts a{min-width:0}}
-@media(prefers-reduced-motion:reduce){.facts a{transition:none}.heroArt::after{animation:none;background-position:50% 0}}
-@media print{.heroArt{display:none}}
+@media(prefers-reduced-motion:reduce){.facts a{transition:none}}
+@media print{.overview .hero .heroArt{display:none}.hero::before{-webkit-mask-image:none;mask-image:none}}
 .sectionHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px;margin-bottom:16px}
 .overview .sectionHeader h2{font-size:24px;font-weight:500;line-height:1.4;letter-spacing:-.45px;margin:0}
 .repository:hover h3,.milestone:hover h3,.newsCard:hover h3{text-decoration:underline;text-underline-offset:5px}
