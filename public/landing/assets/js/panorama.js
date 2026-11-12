@@ -1,6 +1,8 @@
 /* Swiss panorama in cells. Three ridgelines drift past at different speeds, the way a valley
-   moves past a train window; a train crosses the viaduct and a gondola rides its cable.
-   The scene is generated here: no image files, no libraries, and it takes its color from the theme. */
+   moves past a train window; a train crosses the viaduct, a gondola rides its cable and a coin
+   with the Zcash mark rolls along the middle ridge.
+   The scene is generated here: no image files, no libraries, and it takes its color from the theme.
+   The one color of its own is the flag in the village. */
 (function () {
   "use strict";
 
@@ -75,20 +77,53 @@
     "#######",
     "...#...",
   ];
+  /* The Swiss flag is a square, and the arms of its cross are a sixth longer than they are wide:
+     five cells give that almost exactly. r is the red field, w the white cross, # the pole. */
   var FLAG = [
-    "######",
-    "###.##",
-    "##...#",
-    "###.##",
-    "######",
+    "#rrrrr",
+    "#rrwrr",
+    "#rwwwr",
+    "#rrwrr",
+    "#rrrrr",
     "#.....",
     "#.....",
     "#.....",
     "#.....",
   ];
+  var TINTS = { r: "#ff0000", w: "#ffffff" };
   var BOAT = ["...#...", "...##..", "...###.", "#######", ".#####."];
   var GONDOLA = [".#.", "###", "#.#", "###"];
   var TRAIN = ["##..................", "####.###.###.###.###"];
+  /* The Zcash mark as a coin: a disc with the Z and its two ticks cut out. These are the corners of
+     the glyph in the official mark, where the disc has radius 270 around 540,540. The coin keeps that
+     outline exactly and is filled with cells like the rest of the scene. */
+  var MARK = {
+    center: 540,
+    radius: 270,
+    glyph: [
+      [636.31, 414.7],
+      [636.31, 455.79],
+      [522.03, 610.79],
+      [636.31, 610.79],
+      [636.31, 665.29],
+      [562.64, 665.29],
+      [562.64, 710.45],
+      [517.36, 710.45],
+      [517.36, 665.29],
+      [443.69, 665.29],
+      [443.69, 624.2],
+      [557.85, 469.2],
+      [443.69, 469.2],
+      [443.69, 414.7],
+      [517.36, 414.7],
+      [517.36, 369.42],
+      [562.64, 369.42],
+      [562.64, 414.7],
+    ],
+  };
+  var COIN_CELLS = 9; // the coin is this many cells across
+  var COIN_PACE = 24; // CSS pixels per scene second, to the right on screen
+  var COIN_FROM = 0.14; // where the coin stands at the start, as a share of the width
 
   /* Two skylines people know: the Matterhorn, and the Eiger, Mönch and Jungfrau.
      Column offset from the summit, height as a share of the canvas. */
@@ -243,10 +278,10 @@
     this.chunks = [];
     for (var i = 0; i < WORLD / CHUNK; i++) this.chunks.push({});
   }
-  Layer.prototype.cell = function (column, row, size, alpha) {
+  Layer.prototype.cell = function (column, row, size, alpha, tint) {
     if (column < 0 || column >= WORLD) return;
     var groups = this.chunks[Math.floor(column / CHUNK)];
-    var key = alpha.toFixed(2);
+    var key = tint || alpha.toFixed(2);
     var path = groups[key] || (groups[key] = new Path2D());
     var side = size * pitch;
     path.rect(
@@ -260,8 +295,15 @@
     var left = Math.round(center - (shape[0].length - 1) / 2);
     for (var r = 0; r < shape.length; r++) {
       for (var c = 0; c < shape[r].length; c++) {
-        if (shape[r].charAt(c) === "#")
-          this.cell(left + c, base + shape.length - 1 - r, size, alpha);
+        var mark = shape[r].charAt(c);
+        if (mark !== ".")
+          this.cell(
+            left + c,
+            base + shape.length - 1 - r,
+            size,
+            alpha,
+            TINTS[mark],
+          );
       }
     }
   };
@@ -445,6 +487,111 @@
     }
   }
 
+  /* The coin rolls on the middle ridge and over the viaduct. Its centre keeps one radius from the
+     nearest ground, so it rides over a crest instead of sinking into it. The turn follows the distance
+     rolled, with a whole number of turns per loop of the world, so the mark never snaps round. */
+  function roll(layer) {
+    var radius = COIN_CELLS / 2;
+    var step = 0.25;
+    var count = WORLD / step;
+    var heights = [];
+    var turns = [0];
+    var i;
+    var d;
+    function ground(x) {
+      var w = ((x % WORLD) + WORLD) % WORLD;
+      if (w >= GORGE.from && w <= GORGE.to + 1) return layer.deck + 1;
+      var at = Math.floor(w - 0.5);
+      var a = layer.tops[(at + WORLD) % WORLD];
+      var b = layer.tops[(at + 1) % WORLD];
+      return a + (b - a) * (w - 0.5 - at);
+    }
+    for (i = 0; i < count; i++) {
+      var best = 0;
+      for (d = -radius; d <= radius; d += step)
+        best = Math.max(
+          best,
+          ground(i * step + d) +
+            Math.sqrt(Math.max(0, radius * radius - d * d)),
+        );
+      heights.push(best);
+    }
+    for (i = 1; i <= count; i++) {
+      var rise = heights[i % count] - heights[i - 1];
+      turns.push(turns[i - 1] + Math.sqrt(step * step + rise * rise));
+    }
+    return {
+      radius: radius,
+      step: step,
+      heights: heights,
+      turns: turns,
+      laps: Math.max(1, Math.round(turns[count] / (2 * Math.PI * radius))),
+    };
+  }
+  function rolled(path, column) {
+    var count = path.heights.length;
+    var at = (((column % WORLD) + WORLD) % WORLD) / path.step;
+    var i = Math.floor(at) % count;
+    var f = at - Math.floor(at);
+    var next = (i + 1) % count;
+    return {
+      height: path.heights[i] + (path.heights[next] - path.heights[i]) * f,
+      turn:
+        ((path.turns[i] + (path.turns[i + 1] - path.turns[i]) * f) /
+          path.turns[count]) *
+        path.laps *
+        2 *
+        Math.PI,
+    };
+  }
+  function liveCoin(layer, t) {
+    var path = layer.roll;
+    var reach = (path.radius + 1) * pitch; // it enters and leaves whole
+    var lap = width + 2 * reach;
+    var x = ((COIN_FROM * width + reach + COIN_PACE * t) % lap) - reach;
+    var drift = (t * layer.speed) % (WORLD * pitch);
+    var here = rolled(path, (x + drift) / pitch);
+    var y = height - here.height * pitch;
+    var turn = here.turn - rolled(path, (COIN_FROM * width) / pitch).turn;
+    var size = path.radius * pitch;
+    var side = 0.86 * pitch;
+    var span = Math.ceil(path.radius);
+    var i;
+    var r;
+    var c;
+    ctx.save();
+    ctx.translate(x, y);
+    // The coin is solid: the range behind it does not show through the Z.
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.fillStyle = "#000";
+    ctx.beginPath();
+    ctx.arc(0, 0, size + 1.5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+    ctx.rotate(turn);
+    ctx.beginPath();
+    ctx.arc(0, 0, size, 0, 2 * Math.PI);
+    for (i = 0; i < MARK.glyph.length; i++) {
+      var px = ((MARK.glyph[i][0] - MARK.center) / MARK.radius) * size;
+      var py = ((MARK.glyph[i][1] - MARK.center) / MARK.radius) * size;
+      if (i) ctx.lineTo(px, py);
+      else ctx.moveTo(px, py);
+    }
+    ctx.closePath();
+    ctx.clip("evenodd");
+    // Only the outline turns: the cells stay square to the screen and on whole pixels, as in the layers.
+    ctx.rotate(-turn);
+    ctx.translate(Math.round(x * dpr) / dpr - x, Math.round(y * dpr) / dpr - y);
+    ctx.fillStyle = "rgba(" + ink + ",0.96)";
+    for (r = -span; r <= span; r++) {
+      for (c = -span; c <= span; c++)
+        ctx.fillRect(c * pitch - side / 2, r * pitch - side / 2, side, side);
+    }
+    ctx.restore();
+    // Where the coin is, in CSS pixels: read by the screen checks.
+    host.coin = { x: x, y: y, turn: turn, radius: path.radius * pitch };
+  }
+
   function build() {
     var box = host.getBoundingClientRect();
     width = Math.max(1, Math.round(box.width));
@@ -477,6 +624,8 @@
     });
     dressMid(middle);
     middle.live = liveMid;
+    middle.roll = roll(middle);
+    middle.after = liveCoin;
     terrain(front, {
       shape: near,
       cell: 0.84,
@@ -514,13 +663,15 @@
           if (left > width + pitch || left + edge < -pitch) continue;
           var groups = layer.chunks[k];
           for (var key in groups) {
-            ctx.fillStyle = "rgba(" + ink + "," + key + ")";
+            ctx.fillStyle =
+              key.charAt(0) === "#" ? key : "rgba(" + ink + "," + key + ")";
             ctx.fill(groups[key]);
           }
         }
         ctx.restore();
         if (layer.live) layer.live(layer, x0, still.matches ? 9 : t);
       }
+      if (layer.after) layer.after(layer, t);
     }
   }
 
