@@ -31,8 +31,6 @@
 .panorama canvas{display:block;width:100%;height:100%}
 
 /* 3. The mission, then the projects that carry it out: an index of six, from data/projects.yaml. */
-.work{margin-top:64px}
-.work__head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;padding-bottom:16px}
 .work__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--gap)}
 .work__item{position:relative;border-top:1px solid var(--rule);padding:22px 0 30px;display:grid;gap:10px;align-content:start;transition:border-color .18s ease}
 .work__item:hover{border-top-color:var(--rule-ink)}
@@ -82,7 +80,7 @@
 .proof__figure{font-family:var(--serif);font-weight:380;font-size:clamp(1.625rem, 2.3vw, 2.125rem);line-height:1.1;letter-spacing:-.015em;color:var(--ink);white-space:nowrap}
 .proof__label{font-size:.875rem;line-height:1.4;color:var(--ink-2)}
 .proof__link:hover .proof__figure{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.14em}
-.section--page-head .proof{max-width:47.25rem}
+.section--page-head .proof{max-width:calc((100% + var(--gap)) * 8 / 12 - var(--gap))}
 /* Support is the call in the menu; it fills while you are on that page. */
 .nav-list .nav-cta a[aria-current]{background:var(--ink);color:var(--paper)}
 /* Results that are complete, each with the page that documents it. */
@@ -113,8 +111,11 @@
     --band:#070707; --band-ink:#F5F5F5; --band-muted:#AAAAAA; --band-rule:#262626; --band-edge:#8A8A8A;
     --qr-paper:#F5F5F5; --qr-ink:#070707;
   }
+  /* The tinted band of the homepage ("Funded by donations") is black too, with the spacing of an ordinary section. */
+  :root:not([data-theme="light"]) .independence{background:var(--paper);padding-top:0;padding-bottom:0}
 }
 @media screen{
+  :root[data-theme="dark"] .independence{background:var(--paper);padding-top:0;padding-bottom:0}
   :root[data-theme="dark"]{
     --paper:#070707; --paper-2:#141414; --hover:rgba(255,255,255,.05);
     --ink:#F5F5F5; --ink-2:#CECECE; --muted:#AAAAAA;
@@ -126,6 +127,67 @@
   }
 }
 
+/* 8. Values: the six icons are drawn in cells, like the shield and the valley, and take the ink colour. */
+.value{padding-top:24px}
+.value__icon--cells{display:block;width:60px;height:60px;color:var(--ink)}
+.value__icon--cells + .value__name{margin-top:16px}
+
+/* 9. Two halves, after the pattern of protocolguild.org. Below the hero every section opens on the left half
+   (label, title, text, link) and shows its content on the right half, which starts on the centre axis of the page.
+   Narrower than 1180 px the two halves stack: the head on top with the title at the left edge, the content below. */
+/* Values and projects are the same tile: a hairline, the same padding, 16 px text. */
+.halves .values{row-gap:0}
+.halves .value{padding:22px 0 30px}
+.halves .value__desc{font-size:var(--fs-small);line-height:1.55}
+.halves .work__list{margin-top:44px}
+.proof--panel{margin:0;padding:0;border-top:0}
+.proof--panel .proof__figure{font-size:clamp(2rem, 3vw, 2.625rem)}
+.funding .resource-list{margin-top:36px}
+.feature{display:grid;gap:14px}
+.feature__cover{display:block;border-radius:4px;overflow:hidden;background:var(--paper-2)}
+.feature__cover img{display:block;width:100%;height:auto}
+.feature__title{margin:0;font-family:var(--serif);font-weight:400;font-size:var(--fs-h3);line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
+.feature__title a{text-decoration:none}
+.feature__title a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.15em}
+.posts--rows{list-style:none;margin:32px 0 0;padding:0}
+.posts--rows .post{display:grid;grid-template-columns:minmax(9rem,30%) minmax(0,1fr);column-gap:var(--gap);align-items:baseline;border-top:1px solid var(--rule);padding:18px 0}
+.posts--rows .post-meta{flex-direction:column;gap:4px}
+.posts--rows .post h3{grid-column:auto;margin-top:0;max-width:none;font-size:1.4375rem;line-height:1.3}
+@media (min-width:1180px){
+  .halves > .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:start}
+  /* The section rule spans the content width, inside the page margins, as on the rest of the site. */
+  .halves > .wrap::before{content:"";grid-column:1 / -1;border-top:1px solid var(--rule-ink);margin-bottom:28px}
+  .halves .sec-head{grid-column:1 / span 5;display:block;border-top:0;padding-top:0;margin-bottom:0;position:sticky;top:28px}
+  .halves .sec-label{padding-top:0;margin-bottom:22px}
+  .halves .sec-title p{margin-top:20px}
+  .halves .sec-link{margin-top:28px}
+  .halves__content{grid-column:7 / -1}
+  .halves .value:nth-child(-n+2),.halves .work__item:nth-child(-n+2){border-top:0;padding-top:0}
+  .halves .work__list{margin-top:0;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .proof--panel{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px var(--gap)}
+}
+@media (max-width:1179px){
+  /* Stacked, the featured post keeps a readable width: the cover does not span the whole page. */
+  .halves__content.writing{max-width:46rem}
+  .halves .sec-head{margin-bottom:44px}
+  .halves .sec-label{grid-column:1 / span 6;grid-row:1;padding-top:0;margin-bottom:20px}
+  .halves .sec-title{grid-column:1 / -1;grid-row:2}
+  .halves .sec-link{grid-column:7 / span 6;grid-row:1;justify-self:end;margin-top:0}
+}
+@media (min-width:600px) and (max-width:900px){
+  .halves .values{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:599px){
+  /* On a phone each value is a compact row: the icon beside its name and text. */
+  .halves .value{display:grid;grid-template-columns:60px minmax(0,1fr);column-gap:16px;align-items:start}
+  .halves .value__icon--cells{grid-row:1 / span 2}
+  .halves .value__icon--cells + .value__name{margin-top:0}
+  .halves .value__desc{grid-column:2}
+  .halves .value,.halves .work__item{padding:18px 0 22px}
+  .posts--rows .post{grid-template-columns:minmax(0,1fr);row-gap:8px}
+  .posts--rows .post-meta{flex-direction:row;gap:12px}
+}
+
 @media (max-width:900px){
   .work__list{grid-template-columns:repeat(2,minmax(0,1fr))}
   .proof{grid-template-columns:repeat(2,minmax(0,1fr));max-width:30em}
@@ -134,7 +196,6 @@
   .hero{padding-top:44px}
   .hero-place{grid-column:1 / -1;grid-row:4}
   .panorama{margin-top:16px}
-  .work{margin-top:44px}
   .work__list{grid-template-columns:minmax(0,1fr)}
   .give__row{grid-template-columns:minmax(0,1fr)}
   .give__qr{max-width:180px}

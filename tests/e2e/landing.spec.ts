@@ -6,7 +6,9 @@ import { open, sidewaysOverflow, viewports } from './support';
  * (public/landing). It has to open on its short address, draw its panorama, keep the Support page free of
  * anything that looks like a real address, and carry the content the portal already holds.
  * The executive layer adds a Support call in the menu, proof and named supporters on the Support page, and a
- * Funding and transparency page. The homepage hero stays as it was, clear for the art.
+ * Funding and transparency page. The homepage hero stays as it was, clear for the art. Below it every section
+ * is two halves (head on the left, content on the right, on one centre axis), Mission comes before Values, the
+ * six values carry icons drawn in cells, and dark mode is one black from the header to the footer.
  */
 const added = [
   { name: 'NSM', path: '/landing/nsm.html' },
@@ -28,11 +30,28 @@ for (const viewport of viewports) {
       expect(await sidewaysOverflow(page), 'pixels of sideways scroll').toBeLessThanOrEqual(1);
       await expect(page.locator('.hero-globe--shield svg')).toBeVisible();
       await expect(page.locator('.work__item'), 'projects listed under the mission').toHaveCount(6);
-      await expect(page.locator('.posts .post').first(), 'newest post').toContainText('Activates with NU7');
+      await expect(page.locator('#writing .feature__title'), 'newest post, featured').toContainText('Activates with NU7');
+      await expect(page.locator('#writing .posts--rows .post'), 'the two posts after it').toHaveCount(2);
+      await expect(page.locator('#independence .proof--panel .proof__item'), 'facts beside the funding statement').toHaveCount(4);
       // The hero stays as it was: the proof row lives on the Support page, so nothing competes with the art.
       await expect(page.locator('.hero .proof'), 'proof row in the hero').toHaveCount(0);
       await expect(page.locator('.nav-cta a'), 'the call in the menu').toHaveText('Support');
       await expect(page.locator('.nav-cta a')).toHaveAttribute('href', 'support.html');
+      await expect(page.locator('#values .value__icon--cells'), 'value icons drawn in cells').toHaveCount(6);
+      // Mission, what the organization does and builds, comes before Values.
+      const order = await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id));
+      expect(order, 'order of the sections below the hero').toEqual(['mission', 'values', 'independence', 'writing']);
+      if (viewport.width >= 1180) {
+        // Two halves: every title starts on the left edge and every content block on the same centre axis.
+        const edges = await page.locator('.halves').evaluateAll(sections => sections.map(section => ({
+          title: Math.round(section.querySelector('.sec-title h2')?.getBoundingClientRect().left ?? -1),
+          content: Math.round(section.querySelector('.halves__content')?.getBoundingClientRect().left ?? -1),
+        })));
+        expect(edges).toHaveLength(4);
+        expect(new Set(edges.map(edge => edge.title)).size, 'left edges of the four titles').toBe(1);
+        expect(new Set(edges.map(edge => edge.content)).size, 'left edges of the four content blocks').toBe(1);
+        expect(edges[0].content, 'the content starts right of the title').toBeGreaterThan(edges[0].title + 400);
+      }
 
       // The panorama is drawn by script once it is on screen: a blank canvas means the script never ran.
       const panorama = page.locator('.panorama canvas');
@@ -69,6 +88,17 @@ for (const viewport of viewports) {
     }
   });
 }
+
+test('dark mode is one black: the homepage band matches the page', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await open(page, '/landing');
+  const [body, band] = await page.evaluate(() => {
+    const section = document.querySelector('.independence');
+    return [getComputedStyle(document.body).backgroundColor, section ? getComputedStyle(section).backgroundColor : 'missing'];
+  });
+  expect(body, 'page background in dark mode').toBe('rgb(7, 7, 7)');
+  expect(band, 'background of the Funded by donations section').toBe(body);
+});
 
 test('the added pages carry what the portal already holds', async ({ page }) => {
   await open(page, '/landing/nsm.html');
