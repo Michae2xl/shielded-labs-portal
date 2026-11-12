@@ -2,9 +2,21 @@ import { expect, test } from '@playwright/test';
 import { open, sidewaysOverflow, viewports } from './support';
 
 /**
- * The landing proposal is a static page served beside the portal (public/landing). It has to open on its
- * short address, draw its panorama, and keep the Support page free of anything that looks like a real address.
+ * The landing proposal is a static copy of the proposed shieldedlabs.net pages, served beside the portal
+ * (public/landing). It has to open on its short address, draw its panorama, keep the Support page free of
+ * anything that looks like a real address, and carry the content the portal already holds.
+ * The executive layer adds a Support call in the menu, proof and named supporters on the Support page, and a
+ * Funding and transparency page. The homepage hero stays as it was, clear for the art.
  */
+const added = [
+  { name: 'NSM', path: '/landing/nsm.html' },
+  { name: 'the NU7 post', path: '/landing/nsm-activates-with-nu7.html' },
+  { name: 'Team', path: '/landing/team.html' },
+  { name: 'Key facts', path: '/landing/key-facts.html' },
+  { name: 'Crosslink', path: '/landing/crosslink.html' },
+  { name: 'Funding', path: '/landing/funding.html' },
+] as const;
+
 for (const viewport of viewports) {
   test.describe(`landing proposal, ${viewport.name} (${viewport.width}px)`, () => {
     test.use({ viewport: { width: viewport.width, height: viewport.height } });
@@ -16,6 +28,11 @@ for (const viewport of viewports) {
       expect(await sidewaysOverflow(page), 'pixels of sideways scroll').toBeLessThanOrEqual(1);
       await expect(page.locator('.hero-globe--shield svg')).toBeVisible();
       await expect(page.locator('.work__item'), 'projects listed under the mission').toHaveCount(6);
+      await expect(page.locator('.posts .post').first(), 'newest post').toContainText('Activates with NU7');
+      // The hero stays as it was: the proof row lives on the Support page, so nothing competes with the art.
+      await expect(page.locator('.hero .proof'), 'proof row in the hero').toHaveCount(0);
+      await expect(page.locator('.nav-cta a'), 'the call in the menu').toHaveText('Support');
+      await expect(page.locator('.nav-cta a')).toHaveAttribute('href', 'support.html');
 
       // The panorama is drawn by script once it is on screen: a blank canvas means the script never ran.
       const panorama = page.locator('.panorama canvas');
@@ -37,6 +54,48 @@ for (const viewport of viewports) {
       expect(await sidewaysOverflow(page), 'pixels of sideways scroll').toBeLessThanOrEqual(1);
       await expect(page.locator('.support__flag')).toBeVisible();
       await expect(page.locator('.give__address')).toHaveText([/to be provided by Shielded Labs/, /to be provided by Shielded Labs/]);
+      await expect(page.locator('.section--page-head .proof__item'), 'facts that open the page').toHaveCount(4);
+      await expect(page.locator('.pending'), 'items waiting for Shielded Labs').toHaveCount(3);
     });
+
+    for (const screen of added) {
+      test(`${screen.name} renders without errors, sideways scroll or missing images`, async ({ page }) => {
+        const errors = await open(page, screen.path);
+        expect(errors, 'uncaught errors in the page').toEqual([]);
+        expect(await sidewaysOverflow(page), 'pixels of sideways scroll').toBeLessThanOrEqual(1);
+        const failed = await page.evaluate(() => [...document.images].filter(image => image.complete && image.naturalWidth === 0).length);
+        expect(failed, 'images that failed to load').toBe(0);
+      });
+    }
   });
 }
+
+test('the added pages carry what the portal already holds', async ({ page }) => {
+  await open(page, '/landing/nsm.html');
+  await expect(page.locator('.lead')).toContainText('activated as part of NU7 at block height 3,543,405');
+
+  await open(page, '/landing/team.html');
+  await expect(page.locator('.person')).toHaveCount(14);
+  await expect(page.locator('#aayush-giri .person__name')).toHaveText('Aayush Giri');
+  await expect(page.locator('#wei-jie-koh .person__name')).toHaveText('Wei Jie Koh');
+
+  await open(page, '/landing/key-facts.html');
+  await expect(page.getByRole('link', { name: '14 people' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Donations from Zcash holders and supporters' })).toHaveAttribute('href', 'funding.html');
+
+  await open(page, '/landing/crosslink.html');
+  await expect(page.locator('.step')).toHaveCount(7);
+  await expect(page.locator('a[href*="youtube.com/watch"]')).toHaveCount(20);
+
+  await open(page, '/landing/nsm-activates-with-nu7.html');
+  await expect(page.locator('h1')).toHaveText('The Network Sustainability Mechanism (NSM) Activates with NU7');
+
+  await open(page, '/landing/funding.html');
+  await expect(page.locator('h1')).toHaveText('Funding and transparency');
+  await expect(page.locator('.record__item'), 'results listed as delivered').toHaveCount(2);
+  await expect(page.locator('.facts__list > div'), 'oversight facts').toHaveCount(5);
+  await expect(page.locator('.pending'), 'the reports section is marked as a proposal').toHaveCount(1);
+
+  await open(page, '/landing/support.html');
+  await expect(page.locator('#supporters ~ .resource-list .resource'), 'named supporters').toHaveCount(1);
+});

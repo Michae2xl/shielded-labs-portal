@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement;d.classList.remove('no-js');try{var t=localStorage.getItem('sl-theme');if(t==='light'||t==='dark')d.setAttribute('data-theme',t);}catch(e){}if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reveal');setTimeout(function(){if(!d.classList.contains('reveal-ready'))d.classList.remove('reveal');},3000);}})();</script>
+<title>Network Sustainability Mechanism (NSM) for Zcash</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/proposta.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img src="assets/images/shielded-labs-wordmark.png" width="800" height="200" alt="Shielded Labs, home"></a>
+    <nav class="nav" aria-label="Primary">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-menu"><span class="bars" aria-hidden="true"></span><span class="menu-label">Menu</span></button>
+      <ul class="nav-list" id="primary-menu">
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="index.html">Home</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-home" aria-label="Home submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-home">
+            <li><a href="https://shieldedlabs-website.pages.dev/about/">About</a></li><li><a href="index.html#values">Values</a></li><li><a href="index.html#mission">Mission</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="https://shieldedlabs-website.pages.dev/projects/" aria-current="true">Projects</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-projects" aria-label="Projects submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-projects">
+            <li><a href="nsm.html" aria-current="page">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs-website.pages.dev/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs-website.pages.dev/zero/">Zero</a></li><li><a href="https://shieldedlabs-website.pages.dev/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs-website.pages.dev/roadmap/">Roadmap</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="team.html">Team</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-team" aria-label="Team submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-team">
+            <li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs-website.pages.dev/board/">Board</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs-website.pages.dev/governance/">Governance</a></li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs-website.pages.dev/blog/">Blog</a></li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs-website.pages.dev/contact/">Contact</a></li>
+        <li class="nav-cta"><a href="support.html">Support</a></li>
+        
+        
+      </ul>
+    </nav>
+    <button class="search-btn" type="button" aria-label="Search" aria-haspopup="dialog" aria-controls="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6"></circle><path d="m15 15 5.5 5.5"></path></svg>
+    </button>
+    <button class="theme-btn" type="button" aria-label="Switch to light theme">
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path></svg>
+    </button>
+  </div>
+</header>
+<main id="main" class="page-nsm">
+
+
+<section class="section section--page-head">
+    <div class="wrap">
+      <p class="label"><a href="https://shieldedlabs-website.pages.dev/projects/">Projects</a></p>
+      <h1>Network Sustainability Mechanism (NSM)</h1>
+      <p class="lead">An upgrade to Zcash’s issuance that keeps the 21 million coin cap and lets burned ZEC return later as block rewards, to help sustain the network. It activated as part of NU7 at block height 3,543,405 on November 6, 2026, through ZIP 235 and ZIP 237.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="summary">
+    <div class="wrap">
+      <h2 id="summary">Summary</h2>
+<p>In recent years, there has been increased attention around Bitcoin’s future security budget due to concerns that miner revenue from transaction fees may not be sufficient to provide adequate network security after the block subsidy decreases. Discussions in the Bitcoin community have focused on solutions like adding tail emissions, which could breach Bitcoin’s 21 million coin cap, or whether Bitcoin’s price will rise enough for transaction fees to adequately compensate miners.</p>
+<p>Zcash faces a similar challenge to Bitcoin that the NSM is designed to address.</p>
+<p><strong>The NSM is an upgrade to the issuance mechanism that maintains the 21 million coin cap and enables the burning of ZEC from circulating supply, which can later be reintroduced as future block rewards to help sustain the network.</strong></p>
+<p>Future use cases include donations, ZSA fees, EIP-1559 style dynamic fees, and other fee applications that compensate the network.</p>
+<p>The NSM is specified in a set of ZIPs. The status of each, and the network upgrade it is proposed for, is kept up to date on <a href="https://zips.z.cash/" target="_blank" rel="noopener noreferrer">zips.z.cash</a>. ZIP 237 (“Halving-Preserving Issuance”), the version that activated with NU7, takes an alternative approach to issuance from ZIP 234. The original three ZIPs are:</p>
+<div class="zips">
+        <p class="zip"><a href="https://zips.z.cash/zip-0233" target="_blank" rel="noopener noreferrer">ZIP 233</a> establishes a voluntary burn mechanism that allows users to contribute to network sustainability. This enables “donations” to be made directly to the Zcash network instead of development organizations or individuals. The ZEC that’s removed from circulation can be re-created in future block rewards to support miners, stakers, and Dev Fund recipients, which enhances the long-term sustainability of the network. We believe there are two key impacts related to the removal of ZEC from circulation: First, by removing ZEC from circulation, the overall supply decreases in the short term, resulting in a deflationary effect. The reduced supply increases scarcity, which can potentially result in a higher value for ZEC. Second, removing ZEC from circulation allows for a higher rate of coin creation in the long term. This means that there will be more ZEC available for future block rewards further along the emissions curve, while still respecting the 21 million coin cap.</p>
+        <p class="zip"><a href="https://zips.z.cash/zip-0234" target="_blank" rel="noopener noreferrer">ZIP 234</a> smooths the issuance curve and enables burned coins to be reintroduced into circulation in a straightforward manner. The primary objective of the NSM is to create an automated mechanism that enables users to contribute to the sustainability of the network. As part of this process, burned ZEC can be reintroduced into future block rewards. Smoothing the issuance curve with an exponential decay model offers a relatively predictable way to reintroduce burned coins back into circulation. For example, burning 1 ZEC now causes 0.5 additional ZEC to be issued in the next 4 years, 0.25 additional ZEC to be issued in the following 4 years, and so on. The issuance mechanism is intentionally designed to approximate a four-year half-life, similar to what exists with current halvings. This approach allocates coins at a steady, declining rate, while preventing sudden changes that could disrupt the network.</p>
+        <p class="zip"><a href="https://zips.z.cash/zip-0235" target="_blank" rel="noopener noreferrer">ZIP 235</a> proposes to burn 60% of transaction fees. The impact on miners is minimal because transaction fees are currently low. While the amount of burned ZEC is small, our intention has always been to implement a modest version of the NSM to introduce its basic functionality, leaving discussions about future changes to fee burning mechanisms for the community to decide after the NSM is operational. This approach decouples the technical implementation from governance discussions. Furthermore, given that transaction fees are low, we believe this is the ideal time to implement this before block producers have any strong economic incentive to oppose it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq">
+    <div class="wrap">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+
+      <nav class="toc" aria-label="Questions">
+        <p class="toc__label">Questions</p>
+        <ol>
+          <li><a href="#what-is-the-nsm">What is the Network Sustainability Mechanism (NSM)?</a></li>
+          <li><a href="#why-the-nsm-is-important">Why is the NSM important?</a></li>
+          <li><a href="#what-the-nsm-accomplishes">What does the NSM accomplish?</a></li>
+          <li><a href="#immediate-benefits">What are the immediate benefits and use cases of implementing the NSM?</a></li>
+          <li><a href="#future-use-cases">What are some examples of future use cases?</a></li>
+          <li><a href="#reintroducing-burned-zec">How and when will burned ZEC be reintroduced as future block rewards?</a></li>
+          <li><a href="#future-zec-destinations">What other ways could the future ZEC be spent?</a></li>
+          <li><a href="#future-fee-use-cases">Why aren’t we talking about fees and other long-term burning use cases now?</a></li>
+          <li><a href="#issuance-smoothing">What is the reason for smoothing the issuance curve?</a></li>
+          <li><a href="#impact-on-miners">How will burning transaction fees impact miners?</a></li>
+          <li><a href="#urgency">What’s the urgency for implementing this now?</a></li>
+        </ol>
+      </nav>
+
+      <ol class="qa">
+        <li class="qa__item">
+          <h3 class="qa__q" id="what-is-the-nsm">What is the Network Sustainability Mechanism (NSM)?</h3>
+          <p>The NSM is an upgrade to the issuance mechanism that maintains the 21 million coin cap and enables the burning of ZEC from the circulating supply, which can later be reintroduced as future block rewards to help sustain the network.</p>
+          <p>The NSM is specified in a set of ZIPs; see <a href="https://zips.z.cash/" target="_blank" rel="noopener noreferrer">zips.z.cash</a> for the current status of each. The original three are:</p>
+          <ul>
+          <li><a href="https://zips.z.cash/zip-0233" target="_blank" rel="noopener noreferrer">ZIP 233</a> establishes a voluntary burn mechanism that allows users to contribute to network sustainability.</li>
+          <li><a href="https://zips.z.cash/zip-0234" target="_blank" rel="noopener noreferrer">ZIP 234</a> smooths the issuance curve, which enables burned coins to be reintroduced into circulation in a straightforward and predictable manner.</li>
+          <li><a href="https://zips.z.cash/zip-0235" target="_blank" rel="noopener noreferrer">ZIP 235</a> proposes to burn 60% of transaction fees to help sustain the network.</li>
+          </ul>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="why-the-nsm-is-important">Why is the NSM important?</h3>
+          <p>Recently, there has been increased attention around Bitcoin’s future security budget due to concerns that miner revenue from transaction fees may not be sufficient to provide adequate network security after the block subsidy decreases. Discussions in the Bitcoin community have focused on solutions like adding tail emissions, which could breach Bitcoin’s 21 million coin cap, or whether Bitcoin’s price will rise enough for transaction fees to adequately compensate miners. Zcash faces a similar problem as its network is sustained by block rewards and operates with a supply cap of 21 million coins.</p>
+          <p>The Network Sustainability Mechanism is an attempt to address this issue of network security. It’s a modification to the issuance mechanism that maintains the 21 million coin cap and enables ZEC to be removed from the circulating supply and re-created in future block rewards in order to help sustain the network.</p>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="what-the-nsm-accomplishes">What does the NSM accomplish?</h3>
+          <p>The NSM enables burned ZEC to support network sustainability. This enhancement allows “donations” to be made directly to the Zcash network instead of solely to development organizations or individuals. The ZEC that’s removed from circulation can be re-created in future block rewards to support miners, stakers, and Dev Fund recipients, which enhances the long-term sustainability of the network.</p>
+          <p>There are two significant impacts related to the removal of ZEC from circulation. First, by removing ZEC from circulation, the overall supply decreases in the short term, resulting in a deflationary effect. In this context, deflationary means that the reduced supply increases scarcity, which can potentially result in a higher value for existing ZEC. Second, removing ZEC from circulation allows for a higher rate of coin creation in the long term. This means that there will be more ZEC available for future block rewards further along the emissions curve, supporting incentives for miners, stakers, and Dev Fund recipients while still respecting the 21 million coin cap.</p>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="immediate-benefits">What are the immediate benefits and use cases of implementing the NSM?</h3>
+          <p>As mentioned above, the primary benefit of implementing the NSM is the ability for donations to be made directly to the Zcash network. The NSM provides a credibly-neutral way to contribute to long-term sustainability without favoring any specific organization or individual. Wallet apps, for example, could give users an option to burn ZEC as a donation to support network sustainability when making a transaction. Organizations or individuals can also demonstrate that they are donating to the Zcash network by verifiably burning ZEC.</p>
+          <p>Additionally, the NSM enables applications or systems outside of the consensus protocol to respond to burn events. For example, an application could provide a specific identity badge that represents your contribution to the network based on a donation of a certain amount of ZEC. This could enable token-gated communities, such as a forum where all user accounts are proven donors to Zcash’s long-term sustainability.</p>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="future-use-cases">What are some examples of future use cases?</h3>
+          <p>The following example use cases will be decided by the community in the future and will require thorough discussion, as they involve important governance decisions.</p>
+          <ul>
+          <li><strong>Donations in Other Assets</strong>: Following the announcement of a strategic alliance between Zcash and Namada, Chris Goes highlighted the potential for contributing NAM across a bridge to the Zcash ecosystem via the NSM. Non-ZEC donations can also be achieved through other bridges, such as the Avalanche Red Bridge.</li>
+          <li><strong>Legacy Support Fees</strong>: These fees can be implemented to ensure that users relying on older protocol technology compensate the network for the risks and costs associated with supporting that technology. For example, users storing their funds in an older pool may incur fees that could incentivize them to move their funds to the newer pool.</li>
+          <li><strong>Zcash Shielded Assets (ZSAs)</strong>: A portion of the fees associated with minting, destroying, transacting, storing, or bridging ZSAs could be burned via the NSM to contribute to the network’s security. For instance, if someone holds shielded Bitcoin (or zBTC), they could burn a small percentage of their stored asset to compensate ZEC holders, or perhaps there is a fee burned when sending zBTC over a bridge.</li>
+          <li><strong>Privacy Incentivization Fees</strong>: Users who transact or store their ZEC in transparent addresses could be charged a fee to compensate the Zcash network for the opportunity cost of a larger anonymity set.</li>
+          <li><strong>Ethereum EIP-1559 Style Fees</strong>: A base transaction, dynamic fee mechanism similar to Ethereum’s EIP-1559 could be established, automatically adjusting based on network congestion. A portion of these fees could be burned, providing a consistent and predictable contribution to long-term network sustainability.</li>
+          </ul>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="reintroducing-burned-zec">How and when will burned ZEC be reintroduced as future block rewards?</h3>
+          <p>Removing ZEC from circulation provides an increased rate of coin creation over the long term further along the emissions curve. This approach ensures that there will be more ZEC available for future block rewards further along the emissions curve, all while adhering to the 21 million coin cap. One way to think of this is that burning 1 ZEC now causes 0.5 additional ZEC to be issued in the next 4 years, 0.25 additional ZEC to be issued in the following 4 years, and so on.</p>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="future-zec-destinations">What other ways could the future ZEC be spent?</h3>
+          <p>The NSM does not change anything about the <em>destination</em> of newly issued ZEC, although it changes the <em>amount</em>. The destination of newly issued ZEC is a critical aspect of consensus design and deserves thorough discussion and consensus for any changes. What the NSM enables is new <em>sources</em> of issuance support via different mechanisms for burning ZEC.</p>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="future-fee-use-cases">Why aren’t we talking about fees and other long-term burning use cases now?</h3>
+          <p>From the beginning, Shielded Labs’ goal has been to develop a modest version of the NSM that modifies the issuance schedule while keeping the 21 million supply cap and approximate halving rate, in order to issue more ZEC in the future to compensate for ZEC that has been burned, and to leave the conversation about future changes to fee burning mechanisms for the community to decide at a later point in time after the NSM is up and running.</p>
+          <p>Activating the NSM does not change any discussion or decision about where newly issued ZEC goes, such as to miners or potential future Dev Fund successors, or potentially stakers or other new kinds of destinations in future upgrades. Those discussions should be approached thoughtfully, but separate from discussions about the NSM.</p>
+          <p>This approach allows us to separate the technical development of the NSM from discussions about its potential use cases. By focusing first on the development of the underlying technology, we can keep the project manageable without complicating the development process. This enables the community to have focused discussions about its applications and any changes to fees once the NSM is operational.</p>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="issuance-smoothing">What is the reason for smoothing the issuance curve?</h3>
+          <p>The primary objective of the NSM is to create an automated mechanism that enables users to contribute to the long-term sustainability of the Zcash network. As part of this process, burned ZEC can be reintroduced into future block rewards. Smoothing the issuance curve with an exponential decay model offers a straightforward and dependable way to reintroduce burned coins back into circulation. This approach allocates the necessary coins at a steady, declining rate, allowing for predictable issuance while preventing sudden changes that could disrupt the network. The issuance mechanism is designed to approximate a four-year half-life, and future protocol upgrades may not increase the payout rate beyond this four-year constraint.</p>
+          <p>We’ve developed a simulator that allows you to visualize the impact of smoothing the issuance curve:</p>
+          <p><a href="https://zooko.github.io/zcash-network-sustainability-simulator/#z=CKUB677ZydUziMKxuqlA04XhAQW949oBgODu4uSGEQKy5NcBgLCiyqj9AwKz-f8BgKzH8DcD64ypAoDg7uLkhhEC9cvkAoC4yeWuBAMAgICG1Lac9AOAiKWpowcAJXJldHVybiAoTUFYX1NVUFBMWSAtIHMpIC8gMl80MjNfNzI4bjs" target="_blank" rel="noopener noreferrer">Zcash Network Sustainability Simulator</a></p>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="impact-on-miners">How will burning transaction fees impact miners?</h3>
+          <p>The impact of ZIP 235, which proposes to burn 60% of transaction fees, is minimal. This is because transaction fees are low, so the amount burned is small. Our intention has always been to implement a modest version of the NSM to introduce the basic functionality and to leave the conversation about future changes to fee burning mechanisms for the community to decide at a later point in time after the NSM is up and running. This approach allows us to decouple the technical implementation of the NSM from governance discussions regarding future use cases.</p>
+          <p>Currently, transaction fees are very low, and the proposal to burn a portion of them into the NSM will not have a significant impact on network sustainability. This makes it an ideal time to implement the burn mechanism, before block producers have any strong economic incentive to oppose it, as was the case with Ethereum’s EIP-1559. In Ethereum’s case, there was uncertainty around how fee burning would affect miners, leading to discussions about the potential for chain-splitting forks, but the developer community ultimately reached a consensus to move forward. By implementing this now, we avoid similar issues and ensure a smooth integration of the fee burning mechanism.</p>
+        </li>
+        <li class="qa__item">
+          <h3 class="qa__q" id="urgency">What’s the urgency for implementing this now?</h3>
+          <p>There is no immediate urgency to implement the NSM, but it is crucial to improve long-term sustainability before it becomes a problem. We prefer to do so sooner rather than later. The NSM provides Zcash with a proactive approach to managing its security budget, addressing potential future challenges similar to those faced by Bitcoin. By implementing the NSM now, Zcash can introduce the functionality for burning and minting ZEC, allowing the community to directly contribute to the long-term sustainability of the network.</p>
+          <p>With ZIP 235, we establish the precedent of burning a portion of transaction fees. If subsequent changes to fees enable Zcash to effectively handle demand spikes with increased fees before achieving the necessary scalability, then a silver lining is that these fee spikes will contribute to future issuance. Once those subsequent fee improvements are implemented, Zcash’s monetary policy will resemble Ethereum’s current monetary approach, except Zcash would limit issuance by the four-year decay rule and would impose a 21 million supply cap.</p>
+          <p>In addition, the NSM provides an opportunity for Zcash to continue to improve on Bitcoin’s design. Privacy and the development fund are two important features that define Zcash’s identity and differentiate it from Bitcoin. This upgrade allows Zcash to continue that tradition by providing a mechanism for long-term network sustainability.</p>
+          <p>While it can be tempting to defer implementation by citing a lack of urgency, this mindset may lead to continuous postponements, potentially until it is too late to help, or resulting in missed opportunities that benefit Zcash holders and users. Early implementation opens the door immediately to donations, creates a foundation for future enhancements, enables the community to engage in discussions and governance decisions about potential future use cases, and allows the network to continue its evolution as unstoppable private money.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+
+<section class="section" aria-labelledby="from-the-blog">
+  <div class="wrap">
+    <h2 id="from-the-blog">From the blog</h2>
+    <ul class="resource-list">
+      <li class="resource"><a class="resource__link" href="nsm-activates-with-nu7.html"><span class="resource__name">The Network Sustainability Mechanism (NSM) Activates with NU7</span><span class="resource__host">05 Nov 2026</span></a></li>
+      <li class="resource"><a class="resource__link" href="https://shieldedlabs-website.pages.dev/accelerate-zcash-lets-deliver-a-smaller-network-upgrade-sooner/"><span class="resource__name">Accelerate Zcash: Let’s Deliver A Smaller Network Upgrade Sooner</span><span class="resource__host">13 Aug 2025</span></a></li>
+      <li class="resource"><a class="resource__link" href="https://shieldedlabs-website.pages.dev/network-sustainability-mechanism-nsm/"><span class="resource__name">Network Sustainability Mechanism (NSM)</span><span class="resource__host">24 Nov 2024</span></a></li>
+    </ul>
+  </div>
+</section>
+
+
+
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="grid foot">
+      <div class="foot-brand">
+        <img src="assets/images/shielded-labs-wordmark.png" alt="Shielded Labs" width="800" height="200" decoding="async">
+        <p class="foot-line">Building the future of <em>private money.</em></p>
+        <p class="foot-about">Shielded Labs is an independent, donation-funded Zcash support organization based in Switzerland.</p>
+      </div>
+      <nav class="foot-col foot-col--projects" aria-labelledby="f-projects">
+        <h2 id="f-projects">Projects</h2>
+        <ul>
+          <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs-website.pages.dev/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs-website.pages.dev/zero/">Zero</a></li><li><a href="https://shieldedlabs-website.pages.dev/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs-website.pages.dev/epoch-future-proof-cryptography-for-zcash/">Epoch</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-site">
+        <h2 id="f-site">Organization</h2>
+        <ul>
+          <li><a href="https://shieldedlabs-website.pages.dev/about/">About</a></li><li><a href="https://shieldedlabs-website.pages.dev/governance/">Governance</a></li><li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs-website.pages.dev/board/">Board</a></li><li><a href="https://shieldedlabs-website.pages.dev/blog/">Blog</a></li><li><a href="https://shieldedlabs-website.pages.dev/jobs/">Jobs</a></li><li><a href="funding.html">Funding and transparency</a></li><li><a href="key-facts.html">Key facts</a></li><li><a href="https://shieldedlabs-website.pages.dev/glossary/">Glossary</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-connect">
+        <h2 id="f-connect">Connect</h2>
+        <ul>
+          <li><a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a></li>
+          <li><a href="https://x.com/ShieldedLabs">X</a></li>
+          <li><a href="https://github.com/ShieldedLabs">GitHub</a></li>
+          <li><a href="https://shieldedlabs-website.pages.dev/index.xml">RSS feed</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 Shielded Labs · Association registered in Zug · Dammstrasse 16, 6300 Zug, Switzerland</span>
+      <span class="legal-links"><span>No cookies. No trackers.</span> <a href="https://shieldedlabs-website.pages.dev/privacy-policy/">Privacy policy</a></span>
+    </div>
+  </div>
+</footer>
+<p class="mock-note">Proposal mock for review, not the live site. Donation addresses are placeholders, and items marked Pending wait for Shielded Labs.</p>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

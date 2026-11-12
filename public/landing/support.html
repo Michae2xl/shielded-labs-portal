@@ -23,7 +23,7 @@
         
         <li class="nav-group">
           
-          <a href="index.html" aria-current="page">Home</a>
+          <a href="index.html">Home</a>
           <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-home" aria-label="Home submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
           <ul class="nav-sub" id="submenu-home">
             <li><a href="https://shieldedlabs-website.pages.dev/about/">About</a></li><li><a href="index.html#values">Values</a></li><li><a href="index.html#mission">Mission</a></li>
@@ -38,7 +38,7 @@
           <a href="https://shieldedlabs-website.pages.dev/projects/">Projects</a>
           <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-projects" aria-label="Projects submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
           <ul class="nav-sub" id="submenu-projects">
-            <li><a href="https://shieldedlabs-website.pages.dev/nsm/">Network Sustainability Mechanism</a></li><li><a href="https://shieldedlabs-website.pages.dev/crosslink/">Crosslink</a></li><li><a href="https://shieldedlabs-website.pages.dev/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs-website.pages.dev/zero/">Zero</a></li><li><a href="https://shieldedlabs-website.pages.dev/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs-website.pages.dev/roadmap/">Roadmap</a></li>
+            <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs-website.pages.dev/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs-website.pages.dev/zero/">Zero</a></li><li><a href="https://shieldedlabs-website.pages.dev/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs-website.pages.dev/roadmap/">Roadmap</a></li>
           </ul>
         </li>
         
@@ -47,10 +47,10 @@
         
         <li class="nav-group">
           
-          <a href="https://shieldedlabs-website.pages.dev/team/">Team</a>
+          <a href="team.html">Team</a>
           <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-team" aria-label="Team submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
           <ul class="nav-sub" id="submenu-team">
-            <li><a href="https://shieldedlabs-website.pages.dev/team/">Team</a></li><li><a href="https://shieldedlabs-website.pages.dev/board/">Board</a></li>
+            <li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs-website.pages.dev/board/">Board</a></li>
           </ul>
         </li>
         
@@ -67,7 +67,8 @@
         
         
         
-        <li class="nav-cta"><a href="https://shieldedlabs-website.pages.dev/contact/">Contact</a></li>
+        <li><a href="https://shieldedlabs-website.pages.dev/contact/">Contact</a></li>
+        <li class="nav-cta"><a href="support.html" aria-current="page">Support</a></li>
         
         
       </ul>
@@ -81,93 +82,125 @@
     </button>
   </div>
 </header>
-<main id="main">
+<main id="main" class="exec">
 <section class="section section--page-head">
   <div class="wrap">
     <h1>Support our work</h1>
     <p class="lead">Shielded Labs is the first organization in the Zcash ecosystem that has never received direct or indirect funding from the Development Fund or block rewards. Virtually all of our funding comes from donations from Zcash holders and supporters.</p>
+    <div class="actions">
+      <a class="btn" href="#donate">Donate <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg></a>
+      <a class="tlink" href="#larger-gifts">Larger gifts</a>
+    </div>
+    <ul class="proof" aria-label="Shielded Labs in four facts">
+        <li class="proof__item"><a class="proof__link" href="nsm.html"><span class="proof__figure">NU7</span><span class="proof__label">Network Sustainability Mechanism activated</span></a></li>
+        <li class="proof__item"><a class="proof__link" href="https://shieldedlabs-website.pages.dev/roadmap/"><span class="proof__figure">5 of 5</span><span class="proof__label">Crosslink prototype milestones completed</span></a></li>
+        <li class="proof__item"><a class="proof__link" href="funding.html"><span class="proof__figure">0 ZEC</span><span class="proof__label">from the Development Fund or block rewards</span></a></li>
+        <li class="proof__item"><a class="proof__link" href="team.html"><span class="proof__figure">14</span><span class="proof__label">people on the team</span></a></li>
+      </ul>
   </div>
 </section>
 
-<section class="section">
-  <div class="wrap support">
-    <p class="support__flag label">Proposal preview: these are placeholders, not donation addresses.</p>
-    <div class="support__main">
+<section class="section" aria-labelledby="where">
+  <div class="wrap">
+    <h2 id="where">Where donations go</h2>
+    <p>Protocol research and engineering for Zcash, by a team of 14 people. These are the projects.</p>
+    <ol class="work__list work__list--page">
+      <li class="work__item">
+        <p class="label">Issuance mechanism</p>
+        <h3 class="work__name"><a href="nsm.html">Network Sustainability Mechanism</a></h3>
+        <p class="work__desc">Improve the long-term sustainability of the 21 million coin cap.</p>
+      </li>
+      <li class="work__item">
+        <p class="label">Consensus R&amp;D</p>
+        <h3 class="work__name"><a href="crosslink.html">Crosslink</a></h3>
+        <p class="work__desc">Upgrade Zcash’s long-term security by combining Proof of Work and Proof of Stake.</p>
+      </li>
+      <li class="work__item">
+        <p class="label">Fee proposal</p>
+        <h3 class="work__name"><a href="https://shieldedlabs-website.pages.dev/fees/">Dynamic Fees</a></h3>
+        <p class="work__desc">Develop market-driven, comparable-based transaction fee mechanics.</p>
+      </li>
+      <li class="work__item">
+        <p class="label">Infrastructure software</p>
+        <h3 class="work__name"><a href="https://shieldedlabs-website.pages.dev/zero/">Zero</a></h3>
+        <p class="work__desc">Open-source Zcash infrastructure software for exchanges, mining pools and wallet providers.</p>
+      </li>
+      <li class="work__item">
+        <p class="label">Network upgrade · NU6.3</p>
+        <h3 class="work__name"><a href="https://shieldedlabs-website.pages.dev/ironwood/">Ironwood</a></h3>
+        <p class="work__desc">A new shielded pool that restores the integrity of Zcash’s circulating supply.</p>
+      </li>
+      <li class="work__item">
+        <p class="label">Cryptography research</p>
+        <h3 class="work__name"><a href="https://shieldedlabs-website.pages.dev/epoch-future-proof-cryptography-for-zcash/">Epoch</a></h3>
+        <p class="work__desc">Develop high-assurance post-quantum cryptography for Zcash, with formal verification.</p>
+      </li>
+    </ol>
+    <p><a class="tlink" href="funding.html">Funding and transparency <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg></a></p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="donate">
+  <div class="wrap">
+    <h2 id="donate">Donate</h2>
+    <div class="support__flag pending label">Proposal preview: these are placeholders, not donation addresses.</div>
+    <div class="give-list">
       <article class="give">
-        <p class="give__head label">
-          Zcash, shielded <span class="give__tag">Recommended</span>
-        </p>
+        <p class="give__head label">Zcash, shielded <span class="give__tag">Recommended</span></p>
         <div class="give__row">
           <div class="give__qr" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i class="o"></i><i class="o"></i><i></i><i></i><i></i></div>
           <div class="give__body">
-            <p class="give__address">
-              Unified address: to be provided by Shielded Labs
-            </p>
-            <button class="btn btn-line" type="button" disabled>
-              Copy address
-            </button>
-            <p class="give__note">
-              A shielded transaction does not show the sender or the amount on
-              the public chain.
-            </p>
+            <p class="give__address">Unified address: to be provided by Shielded Labs</p>
+            <button class="btn btn-line" type="button" disabled>Copy address</button>
+            <p class="give__note">A shielded transaction does not show the sender or the amount on the public chain.</p>
           </div>
         </div>
       </article>
       <article class="give">
         <p class="give__head label">Zcash, transparent</p>
         <div class="give__body">
-          <p class="give__address">
-            Transparent address: to be provided by Shielded Labs
-          </p>
-          <button class="btn btn-line" type="button" disabled>
-            Copy address
-          </button>
-          <p class="give__note">
-            For wallets and exchanges that cannot send to a shielded address.
-            The amount and both addresses are public.
-          </p>
+          <p class="give__address">Transparent address: to be provided by Shielded Labs</p>
+          <button class="btn btn-line" type="button" disabled>Copy address</button>
+          <p class="give__note">For wallets and exchanges that cannot send to a shielded address. The amount and both addresses are public.</p>
         </div>
       </article>
       <article class="give">
         <p class="give__head label">Other assets or a bank transfer</p>
         <div class="give__body">
-          <p class="give__note">
-            Write to
-            <a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a> and
-            we will send the details.
-          </p>
+          <p class="give__note">Write to <a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a> and we will send the details.</p>
         </div>
       </article>
     </div>
-    <aside class="support__side">
-      <div>
-        <h2>Check the address before you send</h2>
-        <ol>
-          <li>
-            Compare it with the copy published on
-            <a href="https://x.com/ShieldedLabs">X</a> and on the
-            <a href="https://forum.zcashcommunity.com/">Zcash Community Forum</a
-            >.
-          </li>
-          <li>
-            After you paste it into your wallet, compare the first and the last
-            characters again.
-          </li>
-          <li>
-            If anything differs, do not send. Write to
-            <a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a>.
-          </li>
-        </ol>
-      </div>
-      <div>
-        <h2>Where donations go</h2>
-        <p>
-          Protocol research and engineering for Zcash. See the
-          <a href="https://shieldedlabs-website.pages.dev/projects/">projects</a> and the
-          <a href="https://shieldedlabs-website.pages.dev/roadmap/">roadmap</a>.
-        </p>
-      </div>
-    </aside>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="larger-gifts">
+  <div class="wrap">
+    <h2 id="larger-gifts">Larger gifts</h2>
+    <p>For a larger gift, or a gift from a company or a foundation, write to <a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a> before you send anything. We will agree the asset and confirm the address with you directly.</p>
+    <div class="pending label">Pending: Shielded Labs to confirm the contact and the steps.</div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="supporters">
+  <div class="wrap">
+    <h2 id="supporters">Supporters</h2>
+    <p>Named here only with their consent.</p>
+    <ul class="resource-list">
+      <li class="resource"><a class="resource__link" href="https://www.theblock.co/news/ecosystems/2026-01-21-winklevoss-twins-donate-1-2m-in-zec-to-back-independent-zcash-development-386492" target="_blank" rel="noopener noreferrer"><span class="resource__name">Tyler and Cameron Winklevoss, 3,221 ZEC</span><span class="resource__host">Jan 2026</span><svg class="resource__icon" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12 12 4M5.5 4H12v6.5"></path></svg></a></li>
+    </ul>
+    <div class="pending label">Pending: Shielded Labs to confirm each name and the link to its own announcement.</div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="check">
+  <div class="wrap">
+    <h2 id="check">Check the address before you send</h2>
+    <ol class="give-check">
+      <li>Compare it with the copy published on <a href="https://x.com/ShieldedLabs">X</a> and on the <a href="https://forum.zcashcommunity.com/">Zcash Community Forum</a>.</li>
+      <li>After you paste it into your wallet, compare the first and the last characters again.</li>
+      <li>If anything differs, do not send. Write to <a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a>.</li>
+    </ol>
   </div>
 </section>
 
@@ -183,13 +216,13 @@
       <nav class="foot-col foot-col--projects" aria-labelledby="f-projects">
         <h2 id="f-projects">Projects</h2>
         <ul>
-          <li><a href="https://shieldedlabs-website.pages.dev/nsm/">Network Sustainability Mechanism</a></li><li><a href="https://shieldedlabs-website.pages.dev/crosslink/">Crosslink</a></li><li><a href="https://shieldedlabs-website.pages.dev/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs-website.pages.dev/zero/">Zero</a></li><li><a href="https://shieldedlabs-website.pages.dev/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs-website.pages.dev/epoch-future-proof-cryptography-for-zcash/">Epoch</a></li>
+          <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs-website.pages.dev/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs-website.pages.dev/zero/">Zero</a></li><li><a href="https://shieldedlabs-website.pages.dev/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs-website.pages.dev/epoch-future-proof-cryptography-for-zcash/">Epoch</a></li>
         </ul>
       </nav>
       <nav class="foot-col" aria-labelledby="f-site">
         <h2 id="f-site">Organization</h2>
         <ul>
-          <li><a href="https://shieldedlabs-website.pages.dev/about/">About</a></li><li><a href="https://shieldedlabs-website.pages.dev/governance/">Governance</a></li><li><a href="https://shieldedlabs-website.pages.dev/team/">Team</a></li><li><a href="https://shieldedlabs-website.pages.dev/board/">Board</a></li><li><a href="https://shieldedlabs-website.pages.dev/blog/">Blog</a></li><li><a href="https://shieldedlabs-website.pages.dev/jobs/">Jobs</a></li><li><a href="https://shieldedlabs-website.pages.dev/key-facts/">Key facts</a></li><li><a href="https://shieldedlabs-website.pages.dev/glossary/">Glossary</a></li>
+          <li><a href="https://shieldedlabs-website.pages.dev/about/">About</a></li><li><a href="https://shieldedlabs-website.pages.dev/governance/">Governance</a></li><li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs-website.pages.dev/board/">Board</a></li><li><a href="https://shieldedlabs-website.pages.dev/blog/">Blog</a></li><li><a href="https://shieldedlabs-website.pages.dev/jobs/">Jobs</a></li><li><a href="funding.html">Funding and transparency</a></li><li><a href="key-facts.html">Key facts</a></li><li><a href="https://shieldedlabs-website.pages.dev/glossary/">Glossary</a></li>
         </ul>
       </nav>
       <nav class="foot-col" aria-labelledby="f-connect">
@@ -208,7 +241,7 @@
     </div>
   </div>
 </footer>
-<p class="mock-note">Proposal mock for review, not the live site. Donation addresses are placeholders.</p>
+<p class="mock-note">Proposal mock for review, not the live site. Donation addresses are placeholders, and items marked Pending wait for Shielded Labs.</p>
 <script src="assets/js/site.js" defer></script>
 
 </body>
