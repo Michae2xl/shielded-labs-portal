@@ -44,7 +44,7 @@ for (const viewport of viewports) {
       if (viewport.width >= 1180) {
         // Two halves: every title starts on the left edge and every content block on the same centre axis.
         const edges = await page.locator('.halves').evaluateAll(sections => sections.map(section => ({
-          title: Math.round(section.querySelector('.sec-title h2')?.getBoundingClientRect().left ?? -1),
+          title: Math.round(section.querySelector('.sec-head h2')?.getBoundingClientRect().left ?? -1),
           content: Math.round(section.querySelector('.halves__content')?.getBoundingClientRect().left ?? -1),
         })));
         expect(edges).toHaveLength(4);
@@ -128,4 +128,36 @@ test('the added pages carry what the portal already holds', async ({ page }) => 
 
   await open(page, '/landing/support.html');
   await expect(page.locator('#supporters ~ .resource-list .resource'), 'named supporters').toHaveCount(1);
+});
+
+test('each section opens with its name as the section title, and nothing above an item repeats a category', async ({ page }) => {
+  await open(page, '/landing');
+  const heads = await page.locator('.sec-head').evaluateAll(list => list.map(head => ({
+    headings: [...head.querySelectorAll('h1, h2, h3')].map(node => ({ text: node.textContent?.trim() ?? '', title: node.matches('.sec-title > h2:not(.label)') })),
+    labels: head.querySelectorAll('.sec-label, .no').length,
+  })));
+  // One heading per section head: the section name as its title, with no label or number over it.
+  expect(heads.map(head => head.headings)).toEqual(['Mission', 'Values', 'Independence', 'Blog'].map(text => [{ text, title: true }]));
+  expect(heads.map(head => head.labels)).toEqual([0, 0, 0, 0]);
+  // The name keeps the size and the ink of a section title: it is not drawn as a small label.
+  const type = await page.evaluate(() => {
+    const read = (node: Element) => ({ size: parseFloat(getComputedStyle(node).fontSize), color: getComputedStyle(node).color });
+    const probe = document.body.appendChild(Object.assign(document.createElement('p'), { className: 'label' }));
+    const label = read(probe);
+    probe.remove();
+    return { label, titles: [...document.querySelectorAll('.sec-head h2')].map(read) };
+  });
+  expect(type.titles).toHaveLength(4);
+  for (const title of type.titles) {
+    expect(title.size, 'a section title is far larger than a label').toBeGreaterThan(type.label.size * 2);
+    expect(title.color, 'a section title is in ink, not in the muted label colour').not.toBe(type.label.color);
+  }
+  // An item is its name and a line about it. Posts keep their date, which is a fact and not a category.
+  await expect(page.locator('.work__item .work__name')).toHaveCount(6);
+  await expect(page.locator('.work__item .label'), 'category words above the project names').toHaveCount(0);
+  await expect(page.locator('#writing .tag'), 'category words above the post titles').toHaveCount(0);
+  await expect(page.locator('#writing .post-meta time'), 'dates of the three posts').toHaveCount(3);
+  await open(page, '/landing/support.html');
+  await expect(page.locator('.work__item .work__name')).toHaveCount(6);
+  await expect(page.locator('.work__item .label'), 'category words above the project names on Support').toHaveCount(0);
 });
