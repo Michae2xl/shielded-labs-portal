@@ -12,7 +12,7 @@ export type DebateSide = { label: string; short: string; points: DebatePoint[] }
 /** A published vote on the debated question, option by option, in ballot order. */
 export type MeasuredVote = { pollId: string; question: string; options: { label: string; zec: number }[]; source: string };
 export type Debate = {
-  id: 'nsm' | 'crosslink' | 'dev-fund'; title: string; question: string; status: string; verifiedOn: string;
+  id: 'nsm' | 'crosslink' | 'dev-fund' | 'polls'; title: string; question: string; status: string; verifiedOn: string;
   /** Short name for the topic tabs. */
   tab: string;
   sides: DebateSide[]; projects: string[];
@@ -106,7 +106,7 @@ export const debates: Debate[] = [
     ],
   },
   {
-    id: 'dev-fund', tab: 'Dev Fund', title: 'ZCG and the Dev Fund', verifiedOn: '2026-11-07', projects: [], zips: ['draft-mcgee-future-dev-legal-defense-fund'],
+    id: 'dev-fund', tab: 'Dev Fund', title: 'ZCG and the Dev Fund', verifiedOn: '2026-11-11', projects: [], zips: ['draft-mcgee-future-dev-legal-defense-fund'],
     // No vote on this question yet; these earlier votes set the Dev Fund that ZCG's share comes from.
     polls: ['2025-05-devfund-funding-model-poll', '2024-07-ywallet-devfund-runoff'],
     question: 'What should happen to Zcash Community Grants’ share of the Dev Fund before its scheduled expiry?',
@@ -119,6 +119,8 @@ export const debates: Debate[] = [
         { text: 'Backs the lockbox ZIP as a middle path: ZCG keeps running on its treasury without reforms, while only new issuance goes to a fund for later development and legal defense.', author: 'ebfull', date: '2026-11-05', url: forum('future-dev-and-legal-defense-fund-zip/58611/74') },
         { text: 'Backs the ZIP, speaking personally rather than for the ZCG committee, since it moves 50,000 ZEC to the NSM while ZCG keeps paying for security work, as advocated in June.', author: 'GGuy', date: '2026-11-02', url: forum('future-dev-and-legal-defense-fund-zip/58611/52') },
         { text: 'Calls the lockbox compromise better than other written proposals but asks to clarify the development versus legal defense split, and says ending the dev fund mainly benefits miners.', author: 'zerodartz', date: '2026-11-04', url: forum('future-dev-and-legal-defense-fund-zip/58611/71') },
+        { text: 'Replies that the 12% coinholder share already goes into a lockbox, so the ZIP would give ZCG’s 8% the same structure: a spendable treasury and a lockbox.', author: 'zooko', date: '2026-11-08', url: forum('the-zcg-lockbox-one-tap-off-the-bigger-one-left-running/59027/4'), shieldedLabs: true },
+        { text: 'Withdraws the Soft Landing draft, which tapered both streams, to back the lockbox ZIP, while asking why the coinholder fund does not also contribute to the NSM.', author: 'dismad', date: '2026-10-30', url: forum('draft-zip-dev-fund-soft-landing/58519/6') },
       ] },
       { label: 'End ZCG or the Dev Fund, and where the funds go', short: 'End ZCG', points: [
         { text: 'Argues that coinholders pay for ZCG without controlling it, so the committee model lacks accountability to them.', author: 'maxdesalle', date: '2026-10-26', url: forum('end-zcg-and-send-its-funds-to-the-nsm/58515/1') },
@@ -142,6 +144,38 @@ export const debates: Debate[] = [
         { text: 'Declines to back the lockbox ZIP for now, asking how idle funds would be allocated without a process, and suggests keeping development and legal defense funds separate with USD targets.', author: 'divijpandya', date: '2026-10-31', url: forum('future-dev-and-legal-defense-fund-zip/58611/34') },
         { text: 'Says ZCG’s structure and lack of defined goals are the problem rather than the idea, and proposes fixing governance, setting clear goals, and possibly splitting funding into accountable, time-limited organizations.', author: 'zcashminer1', date: '2026-10-30', url: forum('end-zcg-and-send-its-funds-to-the-nsm/58515/137') },
         { text: 'Says ZCG’s fund has outgrown its current management, favors restructuring and possibly a short pause, and asks how the community’s wishes on moving funds to the NSM would be determined.', author: 'Shawn', date: '2026-10-27', url: forum('end-zcg-and-send-its-funds-to-the-nsm/58515/74') },
+        { text: 'Opposes the lockbox, arguing that if a higher ZEC price makes 8% too much it makes the 12% coinholder stream too much as well, and would let both expire in 2028.', author: 'vaspholdings', date: '2026-11-08', url: forum('the-zcg-lockbox-one-tap-off-the-bigger-one-left-running/59027/1') },
+        { text: 'Asks the ZIP’s owners why only ZCG’s side changes, why 50,000 ZEC whatever the price, and who would decide how the new lockbox is spent.', author: 'vaspholdings', date: '2026-11-09', url: forum('the-zcg-lockbox-one-tap-off-the-bigger-one-left-running/59027/10') },
+        { text: 'Proposes reviewing each grant 6 and 12 months after it ends, with measures suited to the kind of project, to see whether its results lasted.', author: 'CryptoEpoch', date: '2026-11-03', url: forum('a-grant-can-be-completed-and-still-fail-zcash-how-do-we-measure-real-impact/58825/1') },
+      ] },
+    ],
+  },
+  {
+    // Shielded Labs is a party: it co-organizes the November 2026 poll and has published its own view of what polls decide.
+    id: 'polls', tab: 'Polls', title: 'How much coinholder polls decide', verifiedOn: '2026-11-11', projects: [], zips: ['pr-1433-', 'pr-1449-', 'pr-1450-'], polls: [],
+    question: 'How much weight should coin-weighted polls carry in Zcash decisions, and who should be counted?',
+    status: 'Polls on protocol changes are advisory. Three draft ZIPs propose changes to coinholder polling, and a separate one-person poll has been announced for December 2026.',
+    sides: [
+      { label: 'Polls are one input and rough consensus decides', short: 'Advisory', points: [
+        { text: 'Says polls of coinholders and community panels inform a rough consensus process and are not binding, and that a change moves forward only when both groups agree.', author: 'Jason McGee', date: '2026-09-18', url: 'https://shieldedlabs.net/zcash-governance-is-a-superpower/', shieldedLabs: true },
+        { text: 'Argues coinholder polling alone could let a few large holders steer the project, and panels alone would leave those closest to development unchecked, so each checks the other.', author: 'Jason McGee', date: '2026-09-18', url: 'https://shieldedlabs.net/zcash-governance-is-a-superpower/', shieldedLabs: true },
+        { text: 'Argues Zcash is governed by rough consensus with no sovereign: coinholders should have real power in bounded domains, but neither supremacy nor a veto.', author: 'vaspholdings', date: '2026-11-07', url: forum('an-ode-to-rough-consensus/58990/1') },
+        { text: 'Says polls measure preferences and running code measures acceptance, and that rough consensus means answering substantive objections, with no group holding an automatic veto.', author: 'vaspholdings', date: '2026-11-08', url: forum('when-we-disagree-making-rough-consensus-work/59026/1') },
+        { text: 'Opposes voting as the way to decide while supporting polls as one sensor among many, and says conflating the two has been used to stifle discussion.', author: 'fabacab', date: '2026-11-10', url: forum('voting-itself-is-a-moral-hazard-it-should-not-be-the-way-decisions-are-made/59133/1') },
+        { text: 'Would give the coinholder poll the weight of a non-binding resolution, arguing that in a fork it is miners’ revenue that decides, not the poll.', author: 'arya2', date: '2026-11-10', url: forum('voting-itself-is-a-moral-hazard-it-should-not-be-the-way-decisions-are-made/59133/5') },
+      ] },
+      { label: 'Coin-weighted polls should carry authority', short: 'Coin weight', points: [
+        { text: 'Argues a poll must be held as an authority, as a middle ground between halting upgrades and forking that lets miners raise concerns without destructive tactics.', author: 'strahncryptography', date: '2026-11-10', url: forum('voting-itself-is-a-moral-hazard-it-should-not-be-the-way-decisions-are-made/59133/4') },
+        { text: 'Says the coinholder fund is a tax on miners and coinholders alike, so they have the right to vote on it whether or not they engage with the community.', author: 'strahncryptography', date: '2026-11-03', url: forum('introducing-coinperson-voting-one-vote-per-coinholder/58768/16') },
+        { text: 'Says one vote per address is easily gamed: a large holder can fund many shielded addresses and vote from each for the cost of transaction fees.', author: 'strahncryptography', date: '2026-11-02', url: forum('introducing-coinperson-voting-one-vote-per-coinholder/58768/4') },
+        { text: 'Argues that voting by person, with no cost of participation, can be gamed by people with no stake, and that it leads toward identity checks at odds with Zcash.', author: 'thowar2', date: '2026-11-03', url: forum('introducing-coinperson-voting-one-vote-per-coinholder/58768/23') },
+        { text: 'Calls per-person voting a fool’s errand, since generated video and repeated attestations defeat personhood checks, and would choose whichever option maximizes the ecosystem’s market value.', author: 'zeckzodel', date: '2026-11-03', url: forum('introducing-coinperson-voting-one-vote-per-coinholder/58768/9') },
+      ] },
+      { label: 'Count people, not only coins', short: 'One person', points: [
+        { text: 'Announces a parallel poll for December that aims at one vote per coinholder, arguing coinholders are not sufficiently represented when money decides.', author: 'emersonian', date: '2026-11-02', url: forum('introducing-coinperson-voting-one-vote-per-coinholder/58768/1') },
+        { text: 'Says no polling method should be the sole decider and presents per-person voting as an additional data point.', author: 'emersonian', date: '2026-11-03', url: forum('introducing-coinperson-voting-one-vote-per-coinholder/58768/24') },
+        { text: 'Proposes a web of trust in which members sign each other’s keys and a trust threshold maps one vote to one person, with trust revocable against fake accounts.', author: 'pitmutt', date: '2026-11-03', url: forum('introducing-coinperson-voting-one-vote-per-coinholder/58768/21') },
+        { text: 'Suggests privately proving control of a shielded note older than a set block as a Sybil deterrent, while noting one person can control many old notes.', author: 'iJaack', date: '2026-11-05', url: forum('introducing-coinperson-voting-one-vote-per-coinholder/58768/26') },
       ] },
     ],
   },

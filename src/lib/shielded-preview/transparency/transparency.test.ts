@@ -50,6 +50,7 @@ describe('Transparency', () => {
   it('finds the debates a ZIP or a project belongs to', () => {
     expect(debatesForZip('zip-0235').map(debate => debate.id)).toEqual(['nsm']);
     expect(debatesForZip('pr-1216-zip-crosslink').map(debate => debate.id)).toEqual(['crosslink']);
+    expect(debatesForZip('pr-1433-draft-arya-lock-weighted-voting').map(debate => debate.id)).toEqual(['polls']);
     expect(debatesForZip('zip-0032')).toEqual([]);
     expect(debatesForProject('crosslink').map(debate => debate.id)).toEqual(['crosslink']);
     expect(debateHref({ id: 'nsm' })).toBe('?view=governance&section=transparency#debate-nsm');
@@ -95,6 +96,9 @@ describe('Transparency', () => {
     const byId = (id: string) => debates.find(debate => debate.id === id)!;
     expect(voiceCounts(byId('crosslink')).map(item => item.voice)).toEqual(['all', 'position', 'community', 'press']);
     expect(voiceCounts(byId('nsm')).map(item => item.voice)).not.toContain('press');
+    // The debate on what polls decide carries Shielded Labs' own published view beside the community's.
+    expect(voiceCounts(byId('polls'))).toEqual([{ voice: 'all', count: 15 }, { voice: 'position', count: 2 }, { voice: 'community', count: 13 }]);
+    expect(byId('dev-fund').sides.map(side => side.points.length)).toEqual([8, 8, 14]);
   });
 
   it('lists the documents tied to Shielded Labs, newest first, with filters that add up', () => {
