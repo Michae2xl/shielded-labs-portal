@@ -94,9 +94,10 @@ export const upcomingUpgrades: UpcomingUpgrade[] = [
       { who: 'nuttycom', date: '2026-11-10', url: post(59124, 8), text: 'Prefers ZIP 248 signing variants that let users opt out of signing over the consensus branch ID and the expiry height, with the current signing algorithm kept as the default.' },
       { who: 'strahncryptography', date: '2026-11-10', url: post(59124, 9), text: 'Supports removing the branch ID updates, saying NU7 required every wallet to update although it changed nothing in how transactions are built, signed and broadcast.' },
       { who: 'dismad', date: '2026-11-10', url: post(59124, 16), text: 'Says upgrades are coming too often and suggests at least three months between them, so that wallets and the rest of the ecosystem can keep up.' },
+      { who: 'seernet', date: '2026-11-11', url: post(59124, 17), text: 'Replies that there is no need to slow down: asks for better beta testing so that what ships works, and says upgrades should go as fast as is safe, a pace left to the developers.' },
     ],
     sources: [{ label: '“Vision for January 2027”, forum thread', url: nu8List }],
-    checkedAt: '2026-11-11',
+    checkedAt: '2026-11-12',
   },
   {
     id: 'nu7-1', name: 'NU7.1', stage: 'Under discussion',
@@ -117,7 +118,7 @@ export const upcomingUpgrades: UpcomingUpgrade[] = [
     ],
     views: [],
     sources: [{ label: 'Draft NU7.1 poll', url: post(58906, 47) }, { label: 'Timeline for proposals and polling', url: post(58906) }, { label: '20-second block spacing proposal', url: post(59035) }],
-    checkedAt: '2026-11-11',
+    checkedAt: '2026-11-12',
   },
 ];
 

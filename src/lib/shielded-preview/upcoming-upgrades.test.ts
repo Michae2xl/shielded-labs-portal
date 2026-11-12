@@ -54,6 +54,11 @@ describe('Upgrades under discussion', () => {
       expect(view.who).not.toMatch(/Michae2xl/i);
     }
   });
+  it('carries both sides of the exchange on how often upgrades should come', () => {
+    const views = findUpcomingUpgrade('upgrade:NU8')!.views;
+    expect(views.find(view => view.who === 'dismad')?.url).toBe('https://forum.zcashcommunity.com/t/59124/16');
+    expect(views.find(view => view.who === 'seernet')).toMatchObject({ date: '2026-11-11', url: 'https://forum.zcashcommunity.com/t/59124/17' });
+  });
   it('discloses where Shielded Labs is a party to what is being discussed', () => {
     expect(findUpcomingUpgrade('upgrade:NU7.1')!.disclosure).toMatch(/Shielded Labs is one of the organizations/);
     expect(findUpcomingUpgrade('upgrade:NU8')!.disclosure).toMatch(/Shielded Labs staff/);

@@ -237,3 +237,30 @@ describe('Wind-down draft as its author revised it on 10 Nov 2026', () => {
     expect(fundRelations.find(relation => relation.from === 'lockbox' && relation.to === 'wind-down')?.label).toContain('Lockbox');
   });
 });
+
+describe('ZAP draft as its owners revised it on 11 Nov 2026', () => {
+  const draft = fundProposals.find(proposal => proposal.id === 'zap')!;
+  const compare = 'https://github.com/zcash/zips/compare/ad90f2e5b7318338ac9490702c3b0f653a5643a8...28d7618d21971c747c4db3680755d816110acaf1';
+  it('describes the revision the pull request now points to, with both recorded owners', () => {
+    expect(draft.revision).toBe('28d7618d21971c747c4db3680755d816110acaf1');
+    expect(draft.source).toContain(draft.revision);
+    expect(draft.authors).toEqual(['Daira-Emma Hopwood', 'Violet Rollergirl']);
+  });
+  it('says what changed and points at the comparison of the two revisions', () => {
+    expect(draft.revised).toMatchObject({ on: '2026-11-11', source: compare });
+    expect(draft.revised!.text).toMatch(/further disbursement/);
+    expect(draft.revised!.text).toMatch(/development/);
+    expect(draft.revised!.text).toMatch(/earlier versions/);
+  });
+  it('keeps the owner added by the revision out of the independent positions on that draft', () => {
+    const own = proposalStatements('zap').filter(item => item.person === 'rollergirlVi');
+    expect(own.length).toBeGreaterThan(0);
+    for (const item of own) { expect(item.author, item.id).toBe(true); expect(item.context, item.id).toMatch(/owner/); }
+    expect(independentPositions('zap').some(item => item.person === 'rollergirlVi')).toBe(false);
+    // Elsewhere the same account is disclosed as an owner of a competing draft.
+    expect(fundStatements.find(item => item.id === 'lockbox-x-2118166418625876370')!.context).toMatch(/owner of the ZAP draft/);
+  });
+  it('still ties the responses to the 5 Nov text to that text, not to the pinned revision', () => {
+    for (const n of [285, 294]) expect(fundStatements.find(item => item.id === `zap-forum-${n}`)!.versionSource).not.toContain(draft.revision);
+  });
+});

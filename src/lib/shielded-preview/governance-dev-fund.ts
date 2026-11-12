@@ -31,7 +31,10 @@ export const devFundPublished: DevFundPublication = {
         text: 'The proposal was revised on 10 Nov, after this draft was posted: it now also redirects ZCG’s 8% stream, and residual funds would go to the Future Dev and Legal Defense Fund Lockbox rather than the NSM.',
         url: 'https://forum.zcashcommunity.com/t/end-zcg-and-send-its-funds-to-the-nsm/58515/145' } },
       { question: 'Do you support the Future Dev and Legal Defense Fund proposal?', answers: draftAnswers },
-      { question: 'Do you support the Zcash Adoption Pool (ZAP) proposal?', answers: draftAnswers },
+      // The draft's own description of this proposal predates the owners' revision of 11 Nov.
+      { question: 'Do you support the Zcash Adoption Pool (ZAP) proposal?', answers: draftAnswers, note: {
+        text: 'The proposal was revised on 11 Nov, after this draft was posted: it now says the funds may also go to development, in a broad sense, that directly increases adoption, and not only to further disbursement.',
+        url: 'https://github.com/zcash/zips/compare/ad90f2e5b7318338ac9490702c3b0f653a5643a8...28d7618d21971c747c4db3680755d816110acaf1' } },
       { question: 'Do you support maintaining ZCG’s existing funding and operations?', answers: draftAnswers },
       { question: 'Do you support reducing Zcash’s target block time from 25 seconds to 20 seconds as part of NU7.1, as described in this proposal?', answers: draftAnswers },
     ],
@@ -45,6 +48,8 @@ const organizersPost = 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-
 export const devFundNotices = {
   lateProposals: { postedAt: '2026-11-09', url: organizersPost, text: 'Proposals submitted after the deadline are not part of this round of polling: the coordinating organizations decided to uphold it.' },
   questions: { postedAt: '2026-11-09', url: organizersPost, checkedAt: '2026-11-10T02:58:00Z', text: 'On 9 Nov the organizers said the proposed questions and answer choices would follow.' },
+  // Post 54 of the same thread (11 Nov 2026, 21:09 UTC). Shown only while the questions are a draft: replace them when the revised draft is posted.
+  revisedDraft: { postedAt: '2026-11-11', url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/54', text: 'On 11 Nov the organizers said a revised draft would follow the next day, after one more day of comments.' },
 } as const;
 
 export const devFundTimeline = {
