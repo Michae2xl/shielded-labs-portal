@@ -6,23 +6,24 @@ import { projects, sources, REVIEWED, MILESTONES_REVIEWED, TEAM_REVIEWED, type P
 import { legacyProjectResourceHref, resolveEditorialLink } from '@/lib/shielded-preview/editorial/library';
 import { isProjectSection, projectHref, type ProjectSection } from '@/lib/shielded-preview/project-navigation';
 import { searchPortal } from '@/lib/shielded-preview/portal-search';
+import { governanceAddress, isLabsView } from '@/lib/shielded-preview/portals';
 import type { PortalData } from '@/lib/shielded-preview/types';
 import s from './portal.module.css';
 import typography from './typography.module.css';
 import pc from './project-collection.module.css';
-import PortalNavigation, { portalNavigation as navigation, type PortalView as View } from './portal-navigation';
+import PortalNavigation, { portalSearchIndex, type PortalView as View } from './portal-navigation';
 import PortalFooter from './portal-footer';
 import Overview from './overview';
 import ProjectDetail from './project-detail';
 import ProjectCard from './project-card';
 
-const Governance = dynamic(() => import('./governance'));
 const Development = dynamic(() => import('./development'));
 const Editorial = dynamic(() => import('./editorial'));
 const Directory = dynamic(() => import('./directory'));
 const WebsiteProposal = dynamic(() => import('./website-proposal'));
-const defaultView: View = 'governance';
-const isPortalView = (value: string | null | undefined): value is View => value === 'website' || value === 'resources' || navigation.some(item => item.id === value);
+// Governance is a portal of its own (see portals.ts): a link to it leaves this one.
+const defaultView: View = 'overview';
+const isPortalView: (value: string | null | undefined) => value is View = isLabsView;
 const legacyProjectSections: Record<string, ProjectSection> = {
   '#project-overview': 'overview', '#project-progress': 'progress', '#project-milestones': 'progress',
   '#project-resources': 'resources', '#project-development': 'development',
@@ -90,7 +91,7 @@ export default function Portal({ initial, initialView = defaultView, initialProj
     const timer = setInterval(() => { if (!document.hidden) void refresh(); }, 300000);
     return () => { clearTimeout(initialLoad); clearInterval(timer); window.removeEventListener('popstate', loadView); };
   }, [refresh]);
-  function go(next: View, section?: string, recordId?: string) { const params = new URLSearchParams({ view: next }); if (section) params.set('section', section); if (recordId) params.set('record', recordId); if (next === 'resources') { followEditorial(`?${params}`); return; } setView(next); setProject(null); setQuery(''); setDirectorySection(section ?? null); setDirectoryRecord(recordId ?? null); window.history.pushState(null, '', `?${params}`); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
+  function go(next: View | 'governance', section?: string, recordId?: string) { const params = new URLSearchParams({ view: next }); if (section) params.set('section', section); if (recordId) params.set('record', recordId); if (next === 'governance') { window.location.assign(governanceAddress(`?${params}`)); return; } if (next === 'resources') { followEditorial(`?${params}`); return; } setView(next); setProject(null); setQuery(''); setDirectorySection(section ?? null); setDirectoryRecord(recordId ?? null); window.history.pushState(null, '', `?${params}`); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
   function openProject(next: Project, section: ProjectSection = 'overview', record?: string) { setView('projects'); setProject(next); setDirectorySection(section); setDirectoryRecord(record ?? null); setQuery(''); window.history.pushState(null, '', projectHref(next, section, record)); window.scrollTo({ top: 0, behavior: 'instant' }); }
   function changeProjectSection(section: ProjectSection) { if (!project) return; setDirectorySection(section); setDirectoryRecord(null); window.history.pushState(null, '', projectHref(project, section)); window.dispatchEvent(new Event('shielded:navigate')); window.scrollTo({ top: 0, behavior: 'instant' }); }
   function changeProjectRecord(record?: string) {
@@ -102,6 +103,7 @@ export default function Portal({ initial, initialView = defaultView, initialProj
   function followEditorial(href: string) {
     const target = new URL(resolveEditorialLink(href) ?? href, window.location.href);
     const nextView = target.searchParams.get('view');
+    if (nextView === 'governance' && target.origin === window.location.origin) { window.location.assign(governanceAddress(`${target.search}${target.hash}`)); return; }
     if (!isPortalView(nextView)) return;
     const nextProject = nextView === 'projects' ? projects.find(item => item.id === target.searchParams.get('project')) : null;
     const targetSection = target.searchParams.get('section');
@@ -122,12 +124,13 @@ export default function Portal({ initial, initialView = defaultView, initialProj
     const link = event.target instanceof Element ? event.target.closest('a') : null;
     const href = link?.getAttribute('href');
     if (!link || !href?.startsWith('?view=') || link.target) return;
-    if (!isPortalView(new URLSearchParams(href.split('#')[0]).get('view'))) return;
+    const linked = new URLSearchParams(href.split('#')[0]).get('view');
+    if (linked !== 'governance' && !isPortalView(linked)) return;
     event.preventDefault();
     followEditorial(href);
   }
   const liveCount = data.repos.filter(r => r.state === 'live').length;
-  const searchResults = searchPortal(query, navigation).map(result => ({ ...result, run: () => followEditorial(result.href) }));
+  const searchResults = searchPortal(query, portalSearchIndex).map(result => ({ ...result, run: () => followEditorial(result.href) }));
 
 
 
@@ -153,14 +156,12 @@ export default function Portal({ initial, initialView = defaultView, initialProj
 
         {view === 'activity' && <Development initialRepository={directorySection} initialRecord={directoryRecord} data={data} busy={busy} failed={error} onRefresh={() => void refresh()}/>}
 
-        {view === 'governance' && <Governance/>}
-
         {(view === 'impact' || view === 'people') && <Directory onFollow={followEditorial} repositories={data.repos} checkedAt={data.checkedAt} key={view} view={view} section={directorySection} record={directoryRecord} onNavigate={(section, record) => go(view, section, record)} onProject={openProject}/>}
 
         {(view === 'blog' || view === 'resources' || view === 'about') && <Editorial key={view} view={view} section={directorySection} record={directoryRecord} onFollow={followEditorial}/>}
 
         {view === 'website' && <WebsiteProposal section={directorySection} onNavigate={section => go('website', section)} onExplore={destination => { const target = destination.projectId ? projects.find(item => item.id === destination.projectId) : null; if (target) openProject(target); else go(destination.view, destination.section); }}/>}
-        <PortalFooter compact={view === 'governance'} onHome={() => go('overview')} onContact={() => go('about', 'contact')} onPrivacy={() => go('about', 'privacy')} onSources={() => setShowSources(true)}/>
+        <PortalFooter compact={false} onHome={() => go('overview')} onContact={() => go('about', 'contact')} onPrivacy={() => go('about', 'privacy')} onSources={() => setShowSources(true)}/>
       </main>
     </div>
 

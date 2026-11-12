@@ -5,9 +5,10 @@ import { bundledZips } from './zips/library';
 
 describe('Share previews', () => {
   it('describes the portal when no page is selected', () => {
-    expect(shareCard({})).toMatchObject({ title: 'Shielded Labs', subtitle: 'Zcash governance, projects and research', brand: true });
+    expect(shareCard({})).toMatchObject({ title: 'Shielded Labs', subtitle: 'Projects, research and community resources', brand: true });
     expect(shareCard({}).chip).toBeUndefined();
     expect(shareMetadata({}, 'https://portal.example').title).toBe('Shielded Labs');
+    expect(shareMetadata({}, 'https://portal.example').description).toBe('Shielded Labs projects, research and community resources.');
     expect(shareCard({ view: 'unknown' }).title).toBe('Shielded Labs');
   });
 
@@ -35,7 +36,7 @@ describe('Share previews', () => {
     expect(shareCard({ view: 'governance', section: 'proposals', lane: 'dev-fund' })).toMatchObject({ chip: 'Governance', title: 'ZCG / Dev Fund: proposals and polling' });
     expect(shareCard({ view: 'governance', section: 'zips' })).toMatchObject({ chip: 'Governance', title: 'ZIPs' });
     expect(shareCard({ view: 'people', section: 'all', record: 'person:jason-mcgee-stramaglia' })).toMatchObject({ chip: 'Team', title: 'Jason McGee Stramaglia', subtitle: 'Executive Director' });
-    expect(shareCard({ view: 'governance', section: 'overview' })).toMatchObject({ title: 'Governance' });
+    expect(shareCard({ view: 'governance', section: 'overview' })).toMatchObject({ title: 'Zcash Governance' });
     const pages: ShareParams[] = [{}, { view: 'projects' }, { view: 'impact' }, { view: 'activity' }, { view: 'people' }, { view: 'blog' }, { view: 'governance' }, { view: 'about' }, { view: 'impact', record: 'milestone:2026-07-28' }, { view: 'about', record: 'privacy' }, ...governanceSections.map(section => ({ view: 'governance', section: governanceSectionSlug(section) }))];
     for (const page of pages) {
       const card = shareCard(page);
@@ -63,10 +64,22 @@ describe('Share previews', () => {
   });
 
   it('keeps a ZIP’s number in the link title, as the ZIP library lists it', () => {
-    expect(shareMetadata({ view: 'governance', section: 'zips', record: 'zip-0237' }, 'https://portal.example').title).toBe('ZIP 237: Network Sustainability Mechanism: Halving-Preserving Issuance · Shielded Labs');
+    expect(shareMetadata({ view: 'governance', section: 'zips', record: 'zip-0237' }, 'https://portal.example').title).toBe('ZIP 237: Network Sustainability Mechanism: Halving-Preserving Issuance · Zcash Governance');
     const pull = bundledZips.entries.find(entry => entry.kind === 'proposal' && entry.pull);
     expect(pull).toBeDefined();
-    expect(shareMetadata({ view: 'governance', section: 'zips', record: pull!.id }, 'https://portal.example').title).toBe(`PR ${pull!.pull!.number}: ${pull!.title} · Shielded Labs`);
+    expect(shareMetadata({ view: 'governance', section: 'zips', record: pull!.id }, 'https://portal.example').title).toBe(`PR ${pull!.pull!.number}: ${pull!.title} · Zcash Governance`);
+  });
+
+  it('names the governance portal on its own pages and Shielded Labs on the Labs pages', () => {
+    const origin = 'https://portal.example';
+    expect(shareMetadata({ view: 'governance' }, origin)).toMatchObject({ title: 'Zcash Governance', openGraph: { siteName: 'Zcash Governance' } });
+    expect(shareMetadata({ view: 'governance', section: 'overview' }, origin).title).toBe('Zcash Governance');
+    expect(shareMetadata({ view: 'governance', section: 'zips' }, origin)).toMatchObject({ title: 'ZIPs · Zcash Governance', openGraph: { siteName: 'Zcash Governance' } });
+    expect(shareMetadata({ view: 'governance', section: 'voting', lane: 'upgrades', record: 'upgrade:NU7' }, origin).title).toBe('NU7 · Zcash Governance');
+    expect(shareMetadata({ view: 'projects', project: 'nsm' }, origin).openGraph.siteName).toBe('Shielded Labs');
+    expect(shareMetadata({ view: 'blog' }, origin)).toMatchObject({ title: 'Blog · Shielded Labs', openGraph: { siteName: 'Shielded Labs' } });
+    // The image is still drawn from the same record, whichever portal shows it.
+    expect(shareMetadata({ view: 'governance', section: 'zips' }, origin).openGraph.images[0].url).toBe('https://portal.example/api/shielded-preview/og?view=governance&section=zips');
   });
 
   it('only trusts hosts the portal is served from', () => {

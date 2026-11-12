@@ -60,7 +60,7 @@ export default function Overview({ data, onNavigate, onProject, onFollow, projec
       <img className={s.heroArt} src="/logos/shielded-labs-cells.svg" alt="" width={520} height={204} decoding="async"/>
       <div className={s.heroCopy}>
         <h1 ref={heading} tabIndex={-1}><Image src="/logos/shielded-labs-horizontal.png" alt="Shielded Labs" width={800} height={200} priority sizes="(max-width: 700px) 190px, 240px"/></h1>
-        <p>Projects, milestones, code activity and Zcash governance in one place.</p>
+        <p>Projects, milestones and code activity in one place.</p>
       </div>
       <ul className={s.facts} aria-label="At a glance">
         <li><PortalLink view="projects" onNavigate={onNavigate}><span>Projects</span><strong>{projects.length}</strong></PortalLink></li>

@@ -1,57 +1,40 @@
-/* Ten separate buttons, sized by their label, so the row reads as distinct sections. */
+/* Up to 900px the sections are a grid of buttons under the portal bar: two rows of five, and three to a row on a phone. */
 .navigation {
-  display: flex;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
   margin: 0 0 20px;
 }
 
 .navigation a {
   display: flex;
-  flex: 1 1 auto;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 8px;
   min-width: 0;
   min-height: 52px;
-  padding: 12px 14px;
+  padding: 12px 8px;
   border: 1px solid #333;
   border-radius: 7px;
   background: #101010;
   color: #cfcfcf;
   font-size: 15px;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 18px;
+  text-align: center;
   text-decoration: none;
-  white-space: nowrap;
   transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
 
-.navigation a svg { flex-shrink: 0; width: 20px; height: 20px; color: #aaa; transition: color 160ms ease; }
+/* The buttons carry the name alone; the icons belong to the sidebar. */
+.navigation a svg { display: none; }
 .navigation a:hover { border-color: #686868; background: #1a1a1a; color: #fff; }
-.navigation a:hover svg { color: #eee; }
 .navigation a[aria-current] { border-color: #777; background: #242424; color: #fff; font-weight: 600; }
-.navigation a[aria-current] svg { color: #f0f0f0; }
 .navigation a:focus-visible { outline: 2px solid #ddd; outline-offset: 3px; }
-
-@media (max-width: 1640px) {
-  .navigation a svg { display: none; }
-}
-@media (max-width: 1350px) {
-  .navigation { gap: 6px; }
-  .navigation a { padding: 12px 8px; }
-}
-@media (max-width: 1100px) and (min-width: 651px) {
-  /* Ten sections no longer fit one row: two rows of five. */
-  .navigation { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
-}
-@media (max-width: 900px) {
-  .navigation a { white-space: normal; line-height: 18px; text-align: center; }
-}
 
 @media (max-width: 650px) {
   .navigation {
-    display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 6px 4px;
     margin-bottom: 16px;
@@ -62,12 +45,96 @@
     gap: 4px;
     padding: 8px 2px;
     font-size: clamp(12px, 3.35vw, 14px);
-    line-height: 18px;
   }
-  .navigation a svg { display: none; }
   /* A section left alone on the last row takes the full width. */
   .navigation a:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
 }
 
-@media (prefers-reduced-motion: reduce) { .navigation a, .navigation a svg { transition: none; } .navigation a:hover svg { transform: none; } }
-@media print { .navigation { display: none; } }
+/* Above 900px the sections are a sidebar, in the manner of OpenZcash. The portal's name leads, each section is one compact row with its icon, and the current one sits on a soft block. The query is the exact complement of the 900px one, so a fractional width shows one navigation and never none. */
+.sidebar { display: none; }
+
+@media not all and (max-width: 900px) {
+  .navigation { display: none; }
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    width: 248px;
+    height: 100dvh;
+    padding: 20px 14px 14px;
+    background: var(--bg, #070707);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-bottom: 18px;
+  padding: 0 8px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.brand img { flex-shrink: 0; width: 30px; height: 30px; }
+
+/* The narrower sidebar, as wide as the page's left margin at these widths, still holds the name on one line. */
+@media (max-width: 1100px) {
+  .sidebar { width: 224px; padding-left: 10px; padding-right: 10px; }
+  .brand { gap: 8px; padding: 0 6px; font-size: 16px; white-space: nowrap; }
+  .brand img { width: 28px; height: 28px; }
+}
+
+.list { display: flex; flex-direction: column; gap: 2px; }
+.list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: #d2d2d2;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+.list a svg { flex-shrink: 0; width: 20px; height: 20px; color: #b4b4b4; transition: color 160ms ease; }
+.list a:hover { background: #161616; color: #fff; }
+.list a:hover svg { color: #eee; }
+.list a[aria-current] { background: #242424; color: #fff; font-weight: 600; }
+.list a[aria-current] svg { color: #f0f0f0; }
+.sidebar a:focus-visible { outline: 2px solid #ddd; outline-offset: -2px; }
+
+.foot { margin-top: auto; padding-top: 12px; border-top: 1px solid #2a2a2a; }
+.labs {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--text-muted, #b0b0b0);
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+.labs:hover { background: #161616; color: #fff; }
+.labsName { display: flex; align-items: center; gap: 8px; }
+.labs img { flex-shrink: 0; width: 18px; height: 18px; object-fit: contain; opacity: .85; }
+.labs strong { color: #e2e2e2; font-size: 14px; font-weight: 500; }
+
+@media (prefers-reduced-motion: reduce) { .navigation a, .list a, .list a svg, .labs { transition: none; } }
+@media print { .navigation, .sidebar { display: none; } }

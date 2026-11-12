@@ -2,12 +2,9 @@
 .sidebar{width:248px;position:fixed;inset:0 auto 0 0;z-index:10;height:100dvh;background:var(--bg,#070707);display:flex;flex-direction:column;padding:24px 16px}
 .header{display:none;flex-shrink:0;padding:0 12px 32px}
 .toggle{display:none;font-family:var(--font-display)}
-.mobileGovernance{display:flex;align-items:center;justify-content:center;gap:10px;min-width:0;padding:8px 10px;border:1px solid var(--accent-border);border-radius:6px;background:var(--accent-surface);color:var(--accent)}
-.zcashMark{display:block;flex-shrink:0;width:34px;height:34px;object-fit:contain}
-.mobileGovernance>.zcashMark{width:28px;height:28px}
-.governanceLabel{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;min-width:0}
-.governanceLabel>span{font-size:12px;line-height:1.25;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent);font-weight:650}
-.governanceLabel>strong{font-size:16px;line-height:1.35;font-weight:600;letter-spacing:0}
+/* The phone bar leads with the Shielded Labs mark; on wide screens the menu has no brand block. */
+.mobileBrand{display:flex;align-items:center;min-width:0;min-height:44px}
+.mobileBrand img{display:block;width:auto;height:30px}
 .panel{display:flex;flex-direction:column;min-height:0;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#333 transparent}
 .navigation{display:flex;flex-direction:column;gap:16px;flex:1}
 .navigation ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px}
@@ -19,12 +16,6 @@
 .item:hover>svg{color:var(--secondary-ink,#c2c2c2)}
 .item[aria-current=page]{background:#1e1e1e;border-color:#333;color:#fff;font-weight:550}
 .item[aria-current=page]>svg{color:#e3e3e3}
-/* Governance leads the same list as the Labs pages and keeps its own emphasis; the rule below it matches the one above the search. */
-.navigation .governanceItem{margin-bottom:12px;padding-bottom:16px;border-bottom:1px solid #2a2a2a}
-.governanceItem .item{justify-content:center;gap:14px;min-height:80px;padding:14px 12px;background:var(--accent-surface);border-color:var(--accent-border);color:var(--accent)}
-.governanceItem .item:hover,.mobileGovernance:hover{background:var(--accent-surface-hover);border-color:var(--accent-border-hover)}
-.governanceItem .item[aria-current=page],.mobileGovernance[aria-current=page]{background:var(--accent-surface-hover);border-color:var(--accent-border-hover)}
-.governanceItem .item[aria-current=page] .governanceLabel>strong,.mobileGovernance[aria-current=page] .governanceLabel>strong{color:#fff}
 .sidebar a:focus-visible,.toggle:focus-visible{outline:2px solid #ddd;outline-offset:-2px}
 .searchArea{margin-top:24px;padding-top:18px;border-top:1px solid #2a2a2a;flex-shrink:0;min-width:0}
 .searchField{display:flex;align-items:center;gap:8px;min-height:44px;padding:9px 10px;background:#161616;border:1px solid #353535;border-radius:6px;color:#aaa}
@@ -41,19 +32,14 @@
 @media(max-width:900px){
  .sidebar{position:sticky;inset:auto;top:0;width:100%;height:auto;padding:0;border-bottom:1px solid #252525}
  .header{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:76px;padding:12px 24px}
- .mobileGovernance .governanceLabel{gap:1px}.mobileGovernance .governanceLabel>span{font-size:10px}.mobileGovernance .governanceLabel>strong{font-size:14px}
  .toggle{display:flex;align-items:center;justify-content:center;gap:11px;border:1px solid #353535;border-radius:5px;background:transparent;color:#ddd;padding:10px 13px;min-height:42px;font-size:14px;line-height:20px}
  .panel{display:none;overflow-y:auto;max-height:calc(100dvh - 76px);padding:8px 24px 20px;border-top:1px solid #202020}
  .panel.open{display:flex}
  .navigation{display:flex;gap:18px;padding-top:8px;flex:none}
- /* The header already carries the governance shortcut on small screens. */
- .governanceItem{display:none}
  .navigation ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
  .item{font-size:16px;min-height:48px}
  .searchArea{margin-top:18px}.sidebar .searchField input{font-size:16px}.searchResults{max-height:none}
 }
-@media(max-width:500px){.header{padding:10px 16px;min-height:72px;gap:10px}.panel{padding:4px 14px 20px;max-height:calc(100dvh - 72px)}.navigation{gap:18px}.item{min-height:45px;padding:10px 12px;font-size:15px}.navigation ul{gap:2px;grid-template-columns:1fr}}
+@media(max-width:500px){.header{padding:10px 16px;min-height:72px;gap:10px}.mobileBrand img{height:27px}.panel{padding:4px 14px 20px;max-height:calc(100dvh - 72px)}.navigation{gap:18px}.item{min-height:45px;padding:10px 12px;font-size:15px}.navigation ul{gap:2px;grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.item{transition:none}}
 @media print{.sidebar{display:none}}
-
-.sidebar .mobileGovernance{font-family:var(--font-display);font-weight:500}

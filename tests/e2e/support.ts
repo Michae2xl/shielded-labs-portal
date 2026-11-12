@@ -6,13 +6,14 @@ export const viewports = [
   { name: 'desktop', width: 1440, height: 900 },
 ] as const;
 
-const governance = (query = '') => `/shielded-preview?view=governance${query}`;
+// The governance portal answers on its own address; a query here starts with `&`, as it did under `?view=governance`.
+const governance = (query = '') => `/governance${query ? `?${query.slice(1)}` : ''}`;
 const explorer = (query: string) => governance(`&section=zips&topic=dev-fund${query}`);
 export const library = (query = '') => governance(`&section=zips&topic=library${query}`);
 
 /** Every screen a reader can reach from the navigation. */
 export const screens = [
-  { name: 'overview', path: '/shielded-preview' },
+  { name: 'overview', path: '/shielded-preview?view=overview' },
   { name: 'projects', path: '/shielded-preview?view=projects' },
   { name: 'crosslink videos', path: '/shielded-preview?view=projects&project=crosslink&section=participate&record=videos' },
   { name: 'milestones', path: '/shielded-preview?view=impact' },

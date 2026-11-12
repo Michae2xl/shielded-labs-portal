@@ -4,6 +4,7 @@ import { useSyncExternalStore, useState, useRef, type CSSProperties, type ReactN
 import Image from 'next/image';
 import { outsidePollRound, pollRound, proposalCoverage, proposalsBySignals, proposalAims, proposalTopics, independentPositions, profileImages, proposalColor, proposalGroup, fundStatements, relatedXDiscussion, xCoverage, devFundReviewed, explorerState, fundProposals, fundRelations, isHistorical, matchingProposals, proposalStatements, statementPreview, type FundProposal, type FundStatement } from '@/lib/shielded-preview/zips/dev-fund';
 import { devFundSources } from '@/lib/shielded-preview/governance-dev-fund';
+import { governanceAddress } from '@/lib/shielded-preview/portals';
 import type { ZipsIndex } from '@/lib/shielded-preview/zips/types';
 import s from './zip-explorer.module.css';
 import m from './proposal-map.module.css';
@@ -125,9 +126,9 @@ export default function ZipExplorer({ index, children }: { index: ZipsIndex; chi
   const state = explorerState(new URLSearchParams(url));
   function update(values: Record<string, string | null>, replace = false) {
     const params = new URLSearchParams(location.search);
-    params.set('view', 'governance'); params.set('section', 'zips'); params.set('topic', state.topic); params.delete('record');
+    params.set('section', 'zips'); params.set('topic', state.topic); params.delete('record');
     for (const [key, value] of Object.entries(values)) { if (value === null) params.delete(key); else params.set(key, value); }
-    history[replace ? 'replaceState' : 'pushState'](null, '', `?${params}`);
+    history[replace ? 'replaceState' : 'pushState'](null, '', governanceAddress(`?${params}`));
     window.dispatchEvent(new Event('shielded:navigate'));
   }
   const rows = matchingProposals(state.query, state.past, state.group, state.status);

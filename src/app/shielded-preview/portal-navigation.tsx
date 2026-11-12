@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import Image from 'next/image';
+import type { LabsView } from '@/lib/shielded-preview/portals';
 import s from './portal-navigation.module.css';
 
-export type PortalView = 'overview' | 'governance' | 'projects' | 'activity' | 'impact' | 'people' | 'blog' | 'resources' | 'about' | 'website';
+export type PortalView = LabsView;
 type NavigationView = Exclude<PortalView, 'website' | 'resources'>;
+/** The pages of this portal, in menu order. Governance is a portal of its own and is not one of them. */
 export const portalNavigation: { id: NavigationView; title: string; keywords?: string }[] = [
-  { id: 'governance', title: 'Zcash governance', keywords: 'grants funding proposals votes polls panels' },
   { id: 'overview', title: 'Overview' },
   { id: 'projects', title: 'Projects', keywords: 'research faq guides documentation questions resources roadmap' },
   { id: 'impact', title: 'Milestones' },
@@ -16,10 +17,11 @@ export const portalNavigation: { id: NavigationView; title: string; keywords?: s
   { id: 'blog', title: 'Blog', keywords: 'articles news announcements updates' },
   { id: 'about', title: 'About', keywords: 'mission values board careers jobs contact privacy' },
 ];
+/** What the sidebar search can open: these pages and, as a way across, the governance portal. */
+export const portalSearchIndex: { id: string; title: string; keywords?: string }[] = [{ id: 'governance', title: 'Zcash governance', keywords: 'grants funding proposals votes polls panels' }, ...portalNavigation];
 
 function NavigationIcon({ view }: { view: NavigationView }) {
-  if (view === 'governance') return <Image className={s.zcashMark} src="/logos/zcash.svg" width={34} height={34} alt=""/>;
-  const paths: Record<Exclude<NavigationView, 'governance'>, ReactNode> = {
+  const paths: Record<NavigationView, ReactNode> = {
     overview: <><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></>,
     projects: <><path d="M3 8V5a2 2 0 0 1 2-2h5l3 3h6a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Zm0 1h18"/></>,
     activity: <><circle cx="7" cy="5" r="2.5"/><circle cx="7" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M7 7.5v9M18 7.5v1a6 6 0 0 1-6 6H7"/></>,
@@ -29,10 +31,6 @@ function NavigationIcon({ view }: { view: NavigationView }) {
     people: <><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 4a3 3 0 0 1 0 6M18 13a5 5 0 0 1 3 5v3"/></>,
   };
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[view]}</svg>;
-}
-
-function GovernanceLabel() {
-  return <span className={s.governanceLabel}><span>Zcash</span><strong>Governance</strong></span>;
 }
 
 type PortalSearch = { query: string; onChange: (query: string) => void; results: { title: string; kind: string; run: () => void }[] };
@@ -73,16 +71,16 @@ export default function PortalNavigation({ view, onNavigate, search }: { view: P
 
   return <aside className={s.sidebar} ref={aside} aria-label="Portal sidebar">
     <div className={s.header}>
-      <a className={s.mobileGovernance} href="?view=governance" onClick={event => navigate(event, 'governance')} aria-current={view === 'governance' ? 'page' : undefined}><NavigationIcon view="governance"/><GovernanceLabel/></a>
+      <a className={s.mobileBrand} href="?view=overview" onClick={event => navigate(event, 'overview')}><Image src="/logos/shielded-labs-horizontal.png" alt="Shielded Labs" width={800} height={200} sizes="160px"/></a>
       <button ref={toggle} className={s.toggle} aria-expanded={open} aria-controls="portal-navigation" onClick={() => setOpen(value => !value)}>
         <span>{open ? 'Close' : 'Menu'}</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">{open ? <path d="m6 6 12 12M6 18 18 6"/> : <path d="M4 7h16M4 12h16M4 17h16"/>}</svg>
       </button>
     </div>
     <div id="portal-navigation" className={`${s.panel} ${open ? s.open : ''}`}>
       <nav aria-label="Portal navigation" className={s.navigation}>
-        <ul>{portalNavigation.map(item => <li key={item.id} className={item.id === 'governance' ? s.governanceItem : undefined}>
+        <ul>{portalNavigation.map(item => <li key={item.id}>
           <a href={`?view=${item.id}`} className={s.item} aria-current={view === item.id ? 'page' : undefined} onClick={event => navigate(event, item.id)}>
-            <NavigationIcon view={item.id}/>{item.id === 'governance' ? <GovernanceLabel/> : <span>{item.title}</span>}
+            <NavigationIcon view={item.id}/><span>{item.title}</span>
           </a>
         </li>)}</ul>
       </nav>

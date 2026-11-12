@@ -13,7 +13,7 @@ npm ci
 npm run dev
 ```
 
-Open <http://127.0.0.1:4248/shielded-preview>. `/` also opens the portal. Both routes open Governance by default; `?view=overview` opens the Shielded Labs overview. Existing query links under `/shielded-preview` are preserved. The scripts enable the local preview flag and bind to loopback. No `.env`, database, OpenZcash checkout or credentials are required.
+The app serves two portals. Zcash governance opens at <http://127.0.0.1:4248/governance>; the Shielded Labs portal opens at <http://127.0.0.1:4248/shielded-preview?view=overview>, and `/` answers the same views. Any other request to `/` or `/shielded-preview` that names no Labs view is redirected to `/governance`, so links written as `?view=governance&…` before the portals had separate addresses still work. The bare root answers with the governance front page itself, because the hosting health check asks `/` for a 2xx, and then shows `/governance` as its address. Existing query links under `/shielded-preview` are preserved. The scripts enable the local preview flag and bind to loopback. No `.env`, database, OpenZcash checkout or credentials are required.
 
 For the optimized local server:
 

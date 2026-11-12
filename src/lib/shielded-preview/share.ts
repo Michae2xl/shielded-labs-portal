@@ -21,14 +21,16 @@ export const SUBTITLE_MAX = 72;
 const DESCRIPTION_MAX = 160;
 const PUBLIC_ORIGIN = 'https://shielded-labs-portal-preview.up.railway.app';
 const TRUSTED_HOST = /^(?:(?:127\.0\.0\.1|localhost)(?::\d+)?|[a-z0-9-]+\.up\.railway\.app|(?:[a-z0-9-]+\.)*shieldedlabs\.net)$/i;
-const SITE: ShareCard = { title: 'Shielded Labs', subtitle: 'Zcash governance, projects and research', description: 'Zcash governance, Shielded Labs projects, research and community resources.', brand: true };
+const SITE: ShareCard = { title: 'Shielded Labs', subtitle: 'Projects, research and community resources', description: 'Shielded Labs projects, research and community resources.', brand: true };
+// The governance portal signs its own pages; its front page carries the name alone.
+const GOVERNANCE_SITE = 'Zcash Governance';
 const SECTIONS: Record<string, ShareCard> = {
   projects: { title: 'Projects', subtitle: 'Shielded Labs projects and their progress', description: 'Shielded Labs projects, their progress and published references.' },
   impact: { title: 'Milestones', subtitle: 'Dated milestones, each with its source', description: 'Dated milestones from Shielded Labs projects, each with its source.' },
   activity: { title: 'Code activity', subtitle: 'Recent commits across Shielded Labs repositories', description: 'Recent commits across Shielded Labs repositories.' },
   people: { title: 'Team', subtitle: 'The people behind Shielded Labs', description: 'The people behind Shielded Labs and their public work.' },
   blog: { title: 'Blog', subtitle: 'Articles from Shielded Labs', description: 'Articles from Shielded Labs.' },
-  governance: { title: 'Governance', subtitle: 'Proposals, grants, polls, upgrades and ZIPs', description: 'Zcash proposals, grants, polls, network upgrades and ZIPs.' },
+  governance: { title: GOVERNANCE_SITE, subtitle: 'Proposals, grants, polls, upgrades and ZIPs', description: 'Zcash proposals, grants, polls, network upgrades and ZIPs.' },
   about: { title: 'About', subtitle: 'Organization, board, careers and contact', description: 'About Shielded Labs.' },
 };
 const GOVERNANCE_SECTIONS: Record<Exclude<GovernanceSection, 'Overview'>, string> = {
@@ -114,9 +116,16 @@ export function shareOrigin(host: string | null, protocol: string | null) {
   return `${protocol === 'http' || protocol === 'https' ? protocol : local ? 'http' : 'https'}://${host}`;
 }
 
+/** The origin a request was answered on, read from the headers the proxy forwards. */
+export function requestOrigin(request: { get(name: string): string | null }) {
+  const first = (name: string) => request.get(name)?.split(',')[0].trim() ?? null;
+  return shareOrigin(first('x-forwarded-host') ?? first('host'), first('x-forwarded-proto'));
+}
+
 export function shareMetadata(params: ShareParams, origin: string) {
   const card = shareCard(params);
-  const title = card.brand ? card.title : `${card.linkTitle ?? card.title} · Shielded Labs`;
+  const site = params.view === 'governance' ? GOVERNANCE_SITE : SITE.title;
+  const title = card.brand || card.title === site ? card.title : `${card.linkTitle ?? card.title} · ${site}`;
   const query = new URLSearchParams((['view', 'project', 'section', 'record', 'lane'] as const).flatMap(key => params[key] ? [[key, params[key]!]] : []));
   const image = card.image
     ? { url: new URL(card.image.src, origin).href, width: card.image.width, height: card.image.height, alt: card.image.alt }
@@ -124,7 +133,7 @@ export function shareMetadata(params: ShareParams, origin: string) {
   return {
     title,
     description: card.description,
-    openGraph: { title, description: card.description, siteName: 'Shielded Labs', type: 'website' as const, images: [image] },
+    openGraph: { title, description: card.description, siteName: site, type: 'website' as const, images: [image] },
     twitter: { card: 'summary_large_image' as const, title, description: card.description, images: [image.url] },
   };
 }

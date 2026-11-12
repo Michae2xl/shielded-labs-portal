@@ -449,3 +449,28 @@ external. Portal links with no click handler of their own navigate in place thro
 click handler. The Crosslink section Participate carries the OpenZcash test guide: its release and
 "sources checked" date live in `src/lib/shielded-preview/crosslink-guide/history.ts` and need a refresh
 whenever Shielded Labs ships a release, together with the same files in OpenZcash.
+
+### Two portals, two addresses — 12 November 2026
+
+Zcash governance and the Shielded Labs pages are two systems that link to each other. Governance
+answers on `/governance` with a frame of its own: on a wide screen a sidebar in the manner of
+OpenZcash (the Zcash mark and the name on top, the ten sections as a compact list, a link to the
+Shielded Labs portal at the foot), and up to 900px a bar with the name over the same sections as a
+grid of buttons. Its pages are titled `… · Zcash Governance`. The Labs portal keeps `/` and
+`/shielded-preview` with `?view=overview`, `projects`, `impact`, `activity`, `people`, `blog` and
+`about`. Its menu has no governance entry: the way across is the governance card on the Overview, the
+search, and the links from project pages to their ZIPs and debates.
+
+Links between pages keep the form they always had, `?view=<view>&…`, including the ones inside
+imported ZIP documents. `src/lib/shielded-preview/portals.ts` says which portal owns a view and builds
+the address: a governance link becomes `/governance?section=…` (the `view` is dropped), a Labs link
+becomes `/?view=…`. Each frame resolves the links it shows: pages of its own portal open in place,
+pages of the other portal open at that portal's address. The server does the same for a link opened
+directly, which is also what keeps old links working: a request to `/` or `/shielded-preview` with no
+Labs view is redirected to `/governance` with the rest of its query, and a Labs view sent to
+`/governance` is redirected to `/`. The bare root is the exception: it answers with the governance
+front page in place, because the hosting health check asks `/` for a 2xx, and the page then shows
+`/governance` as its address.
+
+Both portals are still one application and one deployment, and share the data APIs under
+`/api/shielded-preview`. Share images are drawn by the same route for both.

@@ -17,6 +17,7 @@ import type { GovernanceData, Source, VoteResult } from '@/lib/shielded-preview/
 import GovernanceRecord from './governance-record';
 import GovernanceNavigation, { type GovernanceSection } from './governance-navigation';
 import { governanceSectionFromSlug, governanceSectionSlug } from '@/lib/shielded-preview/governance-sections';
+import { governanceAddress } from '@/lib/shielded-preview/portals';
 import { isZipActivity, isZipLane, laneForRecord, zipReference, type ZipActivity } from '@/lib/shielded-preview/zips/library';
 import { copyExplorerParams } from '@/lib/shielded-preview/zips/dev-fund';
 import GovernanceProcess from './governance-process';
@@ -43,8 +44,9 @@ type Section = GovernanceSection;
 const recordLane=(section:Section,id:string|null)=>section==='Grants'?'ledger':section==='Transparency'?'debates':section==='ZIPs'?laneForRecord(id):section==='Voting'?(id?.startsWith('poll:')?'archive':id?.startsWith('upgrade:')?'upgrades':'current'):section==='ZCAP'?(id?.startsWith('member:')?'members':'comparison'):section==='Insights'?'decisions':id?.startsWith('election:')?'elections':id?.startsWith('history:')?'history':section==='Proposals'&&(id?.startsWith('coinholder:')||id?.startsWith('q3:')||id?.startsWith('proposal:'))?'coinholder':id?.startsWith('q3:')||section==='Results'?'q3':'review';
 const baseRound=(section:Section,lane:string)=>section==='Proposals'?defaultProposalRound(lane):'all';
 type ListingState={lane:string;filter:string;search:string;page:number;basis:'include'|'exclude';round:string;activity?:string};
+// What the governance address carries: the section and the state of its listing. No `view` names the portal.
 function listingParams(section:Section,id:string|null,state:ListingState){
- const params=new URLSearchParams({view:'governance',section:governanceSectionSlug(section)});
+ const params=new URLSearchParams({section:governanceSectionSlug(section)});
  if(section==='ZIPs'&&typeof location!=='undefined'){
   const current=new URLSearchParams(location.search);
   copyExplorerParams(current,params);
@@ -103,12 +105,12 @@ export default function Governance(){
   if(next==='Voting'&&id===null&&selected?.startsWith('upgrade:'))state.lane='upgrades';
   if(next==='ZIPs'&&id)state.lane=laneForRecord(id);
   setSection(next);setSelected(id);setLane(state.lane);setSearch(state.search);setFilter(state.filter);setPage(state.page);setBasis(state.basis);setRound(state.round);setActivity(isZipActivity(state.activity)?state.activity:'all');
-  history.pushState(null,'',`?${listingParams(next,id,state)}`);window.dispatchEvent(new Event('shielded:navigate'));window.scrollTo({top:0,behavior:'instant'});
+  history.pushState(null,'',governanceAddress(`?${listingParams(next,id,state)}`));window.dispatchEvent(new Event('shielded:navigate'));window.scrollTo({top:0,behavior:'instant'});
  }
  function rememberListing(overrides:Partial<ListingState>){
   const current=new URLSearchParams(location.search);
   const state:ListingState={lane:current.get('lane')??recordLane(section,selected),filter:current.get('filter')??'all',search:current.get('q')??'',page:Number(current.get('page')??1),basis:current.get('basis')==='exclude'?'exclude':'include',round:current.get('round')??baseRound(section,overrides.lane??current.get('lane')??recordLane(section,selected)),activity:current.get('activity')??'all',...overrides};
-  history.replaceState(null,'',`?${listingParams(section,selected,state)}`);
+  history.replaceState(null,'',governanceAddress(`?${listingParams(section,selected,state)}`));
  }
  function find(value:string){setSearch(value);setPage(1);rememberListing({search:value,page:1})}
  function chooseFilter(value:string){setFilter(value);setPage(1);rememberListing({filter:value,page:1})}
@@ -151,6 +153,8 @@ export default function Governance(){
   <div className={g.sourceGuides}><SourceLink url="https://zcashcommunitygrants.org/selection/">ZCG review process</SourceLink><SourceLink url="https://zfnd.org/zcash-community-advisory-panel/">ZCAP role and membership</SourceLink></div>
  </>}><div className={g.governance}>
   <GovernanceNavigation value={section} onChange={value=>go(value)}/>
+  {/* Where "Skip to content" lands: after the sections, so the next Tab reaches the page. */}
+  <span id="governance-content" tabIndex={-1} className={g.srOnly}>Page content</span>
   {!selected&&section!=='How it works'&&<h1 ref={heading} tabIndex={-1} className={g.srOnly}>Governance · {section}</h1>}
 
   {section==='How it works'&&<GovernanceProcess onBack={()=>go('Overview')} onNavigate={go}/>}

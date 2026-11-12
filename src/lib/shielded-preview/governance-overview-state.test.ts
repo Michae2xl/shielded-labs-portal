@@ -59,7 +59,8 @@ it('resets the NU7 selector when active Overview or the outer Governance route c
   expect(selected()).toBe('blocks');
 
   captured.navigate!('Overview');
-  expect(location.search).toBe('?view=governance&section=overview');
+  // The governance portal writes its own address: the section, without the view that used to name it.
+  expect(location.search).toBe('?section=overview');
   expect(selected()).toBe('issuance');
 
   location.search = '?view=governance&question=blocks';

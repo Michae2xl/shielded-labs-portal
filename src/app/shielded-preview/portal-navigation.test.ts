@@ -45,12 +45,14 @@ describe('Sidebar search actions', () => {
 });
 
 describe('Sidebar menu', () => {
-  it('lists Zcash governance and the Labs pages as one menu, without a separate brand block', () => {
+  it('lists the Labs pages as one menu, with no governance entry and no brand block', () => {
     const tree = elements(PortalNavigation({ view: 'overview', onNavigate: () => {} }));
     const lists = tree.filter(node => node.type === 'ul');
     expect(lists).toHaveLength(1);
+    // Governance is a portal of its own: this menu holds only the pages of this one.
     expect(elements(lists[0]).filter(node => node.type === 'a').map(node => node.props.href)).toEqual(
-      ['governance', 'overview', 'projects', 'impact', 'activity', 'people', 'blog', 'about'].map(view => `?view=${view}`));
+      ['overview', 'projects', 'impact', 'activity', 'people', 'blog', 'about'].map(view => `?view=${view}`));
+    expect(tree.filter(node => node.type === 'a').some(node => String(node.props.href).includes('governance'))).toBe(false);
     expect(tree.some(node => node.props['aria-label'] === 'Shielded Labs overview')).toBe(false);
   });
 });
