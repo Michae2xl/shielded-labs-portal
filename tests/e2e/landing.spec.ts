@@ -5,7 +5,7 @@ import { open, sidewaysOverflow, viewports } from './support';
  * The landing proposal is a static copy of the proposed shieldedlabs.net pages, served beside the portal
  * (public/landing). It has to open on its short address, draw its panorama, keep the Support page free of
  * anything that looks like a real address, and carry the content the portal already holds.
- * The executive layer adds a Support call in the menu, proof and named supporters on the Support page, and a
+ * The executive layer adds a Support call in the menu, proof and a supporters section on the Support page, and a
  * Funding and transparency page. The homepage hero stays as it was, clear for the art. Below it every section
  * is two halves (head on the left, content on the right, on one centre axis), Mission comes before Values, the
  * six values carry icons drawn in cells, and dark mode is one black from the header to the footer.
@@ -248,7 +248,9 @@ test('the added pages carry what the portal already holds', async ({ page }) => 
   await expect(page.locator('.pending'), 'the reports section is marked as a proposal').toHaveCount(1);
 
   await open(page, '/landing/support.html');
-  await expect(page.locator('#supporters ~ .resource-list .resource'), 'named supporters').toHaveCount(1);
+  // Nobody is named until Shielded Labs confirms it: the section holds its sentence and a pending note only.
+  await expect(page.locator('#supporters ~ .resource-list'), 'supporters named before confirmation').toHaveCount(0);
+  await expect(page.locator('#supporters ~ .pending')).toHaveCount(1);
 });
 
 test('each section opens with its name as the section title, and nothing above an item repeats a category', async ({ page }) => {
