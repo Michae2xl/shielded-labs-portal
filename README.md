@@ -1,34 +1,64 @@
 # Shielded Labs Portal
 
-Independent local repository for the Shielded Labs governance, research and community portal. Extracted from the OpenZcash working directory on 1 November 2026, including the latest local interface work from 29 October.
+Two portals in one Next.js app:
 
-Typography uses self-hosted Jost for headings and navigation, Inter for body text and data, and Geist Mono for code. Jost's variable font (weights 100–900) comes from [Google Fonts](https://github.com/google/fonts/tree/main/ofl/jost), converted to WOFF2 without changing its glyphs; its SIL Open Font License is included at `public/fonts/Jost-OFL.txt`. The portal does not require a locally installed Futura font or third-party font requests.
+- **Zcash Governance**: proposals, votes, grants, results, ZCAP, the Dev Fund calendar, transparency records and the library of Zcash Improvement Proposals, read from public sources.
+- **Shielded Labs**: the organization's projects, repository activity, milestones, team, articles and guides, including the Crosslink manual.
 
-## Run locally
+It is a prototype for review, not an official Shielded Labs or Zcash site. Every page sends `noindex, nofollow`.
 
-Requires Node.js 20.9 or later, npm and Python 3 for importer tests.
+## Live preview
+
+| What | Address |
+| --- | --- |
+| Zcash Governance | <https://shielded-labs-portal-preview.up.railway.app/governance> |
+| Shielded Labs portal | <https://shielded-labs-portal-preview.up.railway.app/?view=overview> |
+
+The preview runs on Railway from this repository's `main` and is updated by hand; a push does not deploy it. The contact form there is demo-only and sends nothing.
+
+## Clone and run
+
+You need Node.js 20.9 or later, npm, and Python 3 for the importer tests. No database, account, credential or environment file is required.
 
 ```sh
+git clone https://github.com/Michae2xl/shielded-labs-portal.git
+cd shielded-labs-portal
 npm ci
 npm run dev
 ```
 
-The app serves two portals. Zcash governance opens at <http://127.0.0.1:4248/governance>; the Shielded Labs portal opens at <http://127.0.0.1:4248/shielded-preview?view=overview>, and `/` answers the same views. Any other request to `/` or `/shielded-preview` that names no Labs view is redirected to `/governance`, so links written as `?view=governance&…` before the portals had separate addresses still work. The bare root answers with the governance front page itself, because the hosting health check asks `/` for a 2xx, and then shows `/governance` as its address. Existing query links under `/shielded-preview` are preserved. The scripts enable the local preview flag and bind to loopback. No `.env`, database, OpenZcash checkout or credentials are required.
+Then open:
 
-For the optimized local server:
+- Zcash Governance: <http://127.0.0.1:4248/governance>
+- Shielded Labs portal: <http://127.0.0.1:4248/?view=overview>
 
-```sh
-npm run build
-npm start
-```
+For the optimized build, run `npm run build` and then `npm start`, on the same addresses.
 
-The preview flag is a release guard, not authentication. The GitHub remote is `Michae2xl/shielded-labs-portal`. This workspace is a prototype. All pages send `noindex, nofollow`, which does not restrict access.
+### How the addresses work
 
-The independently hosted feedback preview is available at [shielded-labs-portal-preview.up.railway.app](https://shielded-labs-portal-preview.up.railway.app). It runs on Railway without the local Mac or a tunnel. At the owner's request, the interface has no global prototype notice; the contact form remains demo-only. See [deployment and validation](reports/hosted-preview-2026-11-01.md) and [service settings](docs/feedback-hosting.json). Updates require a new deployment; local edits are not automatically published.
+`/governance` is the governance portal. The Shielded Labs portal answers at `/` and at `/shielded-preview` when the link names one of its views, for example `?view=overview`. Any other request to those two paths goes to `/governance`, so older links written as `?view=governance&…` still work. The bare root answers with the governance front page, because the hosting health check asks `/` for a 2xx.
 
-For a shared feedback session, use `npm run build:feedback` followed by `npm run start:feedback`. This mode disables contact delivery in both the browser and the API. The form can be tried locally without sending any personal data. A Cloudflare Quick Tunnel can expose this loopback server temporarily; the URL only works while the tunnel and local server are running. Rebuild with `npm run build` to leave feedback mode.
+### Where things are
 
-For independently hosted feedback, configure the Railway service to build with `npm run build:feedback` and start with `npm run start:hosted` on the platform's `PORT` and `0.0.0.0`. Use `/` as its health check. The hosted service needs no database or credentials and uses Node.js 22 with `RAILPACK_NODE_VERSION=22`. It retains disabled contact delivery and noindex headers. `.railwayignore` excludes local build output, environment files and internal reports from uploads. Service settings are configured on Railway; deprecated `railway.json` deployment configuration is not used.
+| Path | What it holds |
+| --- | --- |
+| `src/app/governance` | The governance portal's page, header and metadata |
+| `src/app/shielded-preview` | The screens of both portals |
+| `src/lib/shielded-preview` | Data, importers' output and the logic behind the screens |
+| `src/app/api` | The routes that read the public sources |
+| `scripts` | Importers, source checks and the isolation check |
+| `tests/e2e` | Screen checks that open every page in Chrome |
+| `docs` | Maintenance guide, hosting settings and provenance records |
+
+### Hosting your own copy
+
+Build with `npm run build:feedback` and start with `npm run start:hosted`, which listens on the platform's `PORT` on `0.0.0.0`. Use `/` as the health check and Node.js 22. This mode keeps contact delivery disabled and needs no database or credentials. The settings used for the preview are in [docs/feedback-hosting.json](docs/feedback-hosting.json), and the deploy steps are in [docs/MAINTAINING.md](docs/MAINTAINING.md).
+
+To share a session from your own machine, use `npm run build:feedback` followed by `npm run start:feedback`; rebuild with `npm run build` to leave that mode.
+
+### Notes
+
+The preview flag set by the scripts is a release guard, not authentication. Typography is self-hosted: Jost for headings and navigation, Inter for body text and data, Geist Mono for code. Jost comes from [Google Fonts](https://github.com/google/fonts/tree/main/ofl/jost) under the SIL Open Font License, included at `public/fonts/Jost-OFL.txt`. The code is under the [MIT License](LICENSE); third-party material is listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## Verify
 
