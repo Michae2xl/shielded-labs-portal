@@ -1,6 +1,6 @@
 {
   "stagingDirectory": "/private/tmp/shielded-white-accent-uj5d39sa",
-  "sourceDirectory": "/Users/maiconguimaraes/Documents/ChatGPT/Shielded Labs Portal",
+  "sourceDirectory": ".",
   "files": [
     {
       "path": ".gitignore",

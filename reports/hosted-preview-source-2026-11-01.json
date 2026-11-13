@@ -1,6 +1,6 @@
 {
   "stagingDirectory": "/private/tmp/shielded-labs-hosted-c_v_byiz",
-  "sourceDirectory": "/Users/maiconguimaraes/Documents/ChatGPT/Shielded Labs Portal",
+  "sourceDirectory": ".",
   "files": [
     {
       "path": ".gitignore",

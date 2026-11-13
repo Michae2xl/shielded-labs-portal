@@ -1,6 +1,6 @@
 {
   "stagingDirectory": "/private/tmp/shielded-compact-cards-2uwj98t7",
-  "sourceDirectory": "/Users/maiconguimaraes/Documents/ChatGPT/Shielded Labs Portal",
+  "sourceDirectory": ".",
   "files": [
     {
       "path": ".gitignore",

@@ -48,6 +48,6 @@ Escopo: prévia local do Shielded Labs Portal em `127.0.0.1:4248`. Foram revisad
 
 ## Capturas da prévia validada
 
-- [Navegação sem faixa superior e busca no fim do menu](/Users/maiconguimaraes/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/portal-sidebar-search.png)
-- [Histórico da célula no desktop](/Users/maiconguimaraes/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/activity-audit-desktop.png)
-- [Histórico com título visível no celular](/Users/maiconguimaraes/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/activity-audit-mobile.png)
+- [Navegação sem faixa superior e busca no fim do menu](~/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/portal-sidebar-search.png)
+- [Histórico da célula no desktop](~/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/activity-audit-desktop.png)
+- [Histórico com título visível no celular](~/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/activity-audit-mobile.png)

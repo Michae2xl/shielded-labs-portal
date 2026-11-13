@@ -67,4 +67,4 @@ Durante a auditoria houve falha transitória de atualização do GitHub. O porta
 
 Preparar uma versão identificada como **protótipo para avaliação**, mantendo a página sem indexação. Definir controle de acesso/tempo de disponibilidade e o comportamento do contato antes de abrir o link. `noindex` não é autenticação. A prévia deve usar este build e um registro do conjunto exato de alterações, para permitir comparar o feedback com versões futuras.
 
-Nada dessa publicação foi executado nesta passagem. Captura final: [Governance no desktop](/Users/maiconguimaraes/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/final-audit-governance-desktop.png).
+Nada dessa publicação foi executado nesta passagem. Captura final: [Governance no desktop](~/.codex/visualizations/2026/11/01/01a197eb-f468-79f0-83f1-215341c867b2/final-audit-governance-desktop.png).

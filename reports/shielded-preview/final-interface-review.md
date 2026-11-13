@@ -17,16 +17,16 @@ Notas de 0 a 10 para o escopo inspecionado. Referências indicam as regras aplic
 
 | Dimensão | Nota | Evidência e tratamento |
 | --- | ---: | --- |
-| Cores | 9 | Paleta monocromática, superfícies e bordas compartilhadas. [Tokens](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/portal.module.css:1). |
-| Hierarquia tipográfica | 8 | Títulos de seção de 23–24 px, introduções e texto dos detalhes com escala consistente. [Overview](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/overview.module.css:18), [detalhes](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/governance-record.module.css:8). |
-| Espaçamento | 8 | Menus, cartões e colunas seguem intervalos recorrentes; eliminada a faixa redundante do Overview. [Menus](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/section-menu.module.css:2), [cartões](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/portal.module.css:219). |
-| Consistência dos componentes | 9 | Um componente controla os menus principais e secundários; o menu ativo também retorna à coleção. [SectionMenu](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/section-menu.tsx:33). |
-| Responsividade | 8 | Navegação e detalhes conferidos em 1440×1000 e 390×844. Nenhuma largura da página excedeu a viewport nos estados inspecionados; menus extensos rolam internamente. [Regra móvel](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/section-menu.module.css:11). |
-| Tema escuro | 9 | Superfícies, fontes, formulários, tabelas e detalhes mantêm o tema escuro da identidade. Não há outro tema oferecido pelo portal. [Base](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/portal.module.css:1). |
-| Animação | 8 | Escudo original preservado; cartões não saltam no hover. Preferência por movimento reduzido respeitada. [Movimento reduzido](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/portal.module.css:42), [cartões](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/portal.module.css:221). |
-| Acessibilidade | 8 | Estado ativo semântico, foco visível, controles dos menus com altura de 44 px; descrições do mapa preservadas para leitores de tela. [Menu](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/section-menu.module.css:3), [mapa](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/development.tsx:111). Inspeção limitada aos fluxos descritos abaixo. |
-| Densidade de informação | 9 | Removidas instruções óbvias, atalhos repetidos e cartões de contexto desnecessários; fontes agrupadas ao final. [Fontes](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/governance.tsx:164). |
-| Acabamento | 8 | Setas e títulos alinhados; hover e foco consistentes; inspeção do mapa só aparece com uma célula ativa. [Interações](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/development.tsx:128), [estados do menu](/Users/maiconguimaraes/openzcash/src/app/shielded-preview/section-menu.module.css:4). |
+| Cores | 9 | Paleta monocromática, superfícies e bordas compartilhadas. [Tokens](~/openzcash/src/app/shielded-preview/portal.module.css:1). |
+| Hierarquia tipográfica | 8 | Títulos de seção de 23–24 px, introduções e texto dos detalhes com escala consistente. [Overview](~/openzcash/src/app/shielded-preview/overview.module.css:18), [detalhes](~/openzcash/src/app/shielded-preview/governance-record.module.css:8). |
+| Espaçamento | 8 | Menus, cartões e colunas seguem intervalos recorrentes; eliminada a faixa redundante do Overview. [Menus](~/openzcash/src/app/shielded-preview/section-menu.module.css:2), [cartões](~/openzcash/src/app/shielded-preview/portal.module.css:219). |
+| Consistência dos componentes | 9 | Um componente controla os menus principais e secundários; o menu ativo também retorna à coleção. [SectionMenu](~/openzcash/src/app/shielded-preview/section-menu.tsx:33). |
+| Responsividade | 8 | Navegação e detalhes conferidos em 1440×1000 e 390×844. Nenhuma largura da página excedeu a viewport nos estados inspecionados; menus extensos rolam internamente. [Regra móvel](~/openzcash/src/app/shielded-preview/section-menu.module.css:11). |
+| Tema escuro | 9 | Superfícies, fontes, formulários, tabelas e detalhes mantêm o tema escuro da identidade. Não há outro tema oferecido pelo portal. [Base](~/openzcash/src/app/shielded-preview/portal.module.css:1). |
+| Animação | 8 | Escudo original preservado; cartões não saltam no hover. Preferência por movimento reduzido respeitada. [Movimento reduzido](~/openzcash/src/app/shielded-preview/portal.module.css:42), [cartões](~/openzcash/src/app/shielded-preview/portal.module.css:221). |
+| Acessibilidade | 8 | Estado ativo semântico, foco visível, controles dos menus com altura de 44 px; descrições do mapa preservadas para leitores de tela. [Menu](~/openzcash/src/app/shielded-preview/section-menu.module.css:3), [mapa](~/openzcash/src/app/shielded-preview/development.tsx:111). Inspeção limitada aos fluxos descritos abaixo. |
+| Densidade de informação | 9 | Removidas instruções óbvias, atalhos repetidos e cartões de contexto desnecessários; fontes agrupadas ao final. [Fontes](~/openzcash/src/app/shielded-preview/governance.tsx:164). |
+| Acabamento | 8 | Setas e títulos alinhados; hover e foco consistentes; inspeção do mapa só aparece com uma célula ativa. [Interações](~/openzcash/src/app/shielded-preview/development.tsx:128), [estados do menu](~/openzcash/src/app/shielded-preview/section-menu.module.css:4). |
 
 ## Verificação funcional observada
 
@@ -55,9 +55,9 @@ Validação restrita à versão local; nenhuma publicação foi realizada. Dados
 
 ## Capturas
 
-- [Overview](/Users/maiconguimaraes/openzcash/reports/shielded-preview/final-cleanup-overview.png)
-- [Governança](/Users/maiconguimaraes/openzcash/reports/shielded-preview/final-cleanup-governance.png)
-- [Projetos](/Users/maiconguimaraes/openzcash/reports/shielded-preview/final-cleanup-projects.png)
-- [Grants](/Users/maiconguimaraes/openzcash/reports/shielded-preview/final-cleanup-grants.png)
-- [Atividade](/Users/maiconguimaraes/openzcash/reports/shielded-preview/final-cleanup-activity.png)
-- [ZCAP no celular](/Users/maiconguimaraes/openzcash/reports/shielded-preview/final-cleanup-zcap-mobile.png)
+- [Overview](~/openzcash/reports/shielded-preview/final-cleanup-overview.png)
+- [Governança](~/openzcash/reports/shielded-preview/final-cleanup-governance.png)
+- [Projetos](~/openzcash/reports/shielded-preview/final-cleanup-projects.png)
+- [Grants](~/openzcash/reports/shielded-preview/final-cleanup-grants.png)
+- [Atividade](~/openzcash/reports/shielded-preview/final-cleanup-activity.png)
+- [ZCAP no celular](~/openzcash/reports/shielded-preview/final-cleanup-zcap-mobile.png)
