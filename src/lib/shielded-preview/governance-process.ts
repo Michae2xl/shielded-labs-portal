@@ -41,9 +41,10 @@ export const governanceProcess: {
         ['Zcash Community Grants (ZCG)', 'Committee that distributes the 8% block reward share as milestone-based grants', 'Change its own share of the Dev Fund'],
         ['Coinholders', 'Vote with ZEC weight in polls and in the coinholder grants program, which receives the 12% share', 'Bind anyone: votes are signals, except grant decisions, which follow the program rules'],
         ['ZCAP and other panels', 'Community advisory panels, alongside ZecHub, the Engineering Caucus and regional communities, that answer polls and elect the ZCG committee', 'Decide on their own'],
-        ['ZIP editors', 'Maintain the zcash/zips repository: assign numbers, review form and clarity, merge', 'Decide whether a proposal is good or whether it will be activated'],
+        ['ZIP editors', 'Review drafts for content and format, assign numbers and merge. By consensus among themselves they may reject a draft or an update on the grounds listed in ZIP 0, and they approve every change of status except an owner’s move between Draft and Withdrawn', 'Refuse publication without a ground from ZIP 0 and an explanation, override an owner’s objection without a public rationale, or activate a change: that takes implementation and adoption by the network'],
         ['Whoever runs the network: miners, node operators, exchanges, wallets, users', 'Choose which software to run. This is where a rule becomes real', 'Nothing. This is the final say'],
       ] },
+      { kind: 'p', text: 'ZIP 0 names the current ZIP editors and their affiliations, Shielded Labs among them, requires each to declare conflicts of interest, and notes that reviewing proposals for security, correctness or implementability is not their primary responsibility.' },
       { kind: 'p', text: 'Until the second halving in 2024, the trademark agreement between the Electric Coin Company and the Zcash Foundation worked as a two-of-two model: both had to agree to any protocol change. ECC withdrew from that agreement around the halving, and since then rough consensus is measured across several panels and the coinholder polls.' },
       { kind: 'links', items: [{ label: 'ZCAP panel and comparison', section: 'ZCAP' }, { label: 'Grant records', section: 'Grants' }, essay('zcash-governance-is-a-superpower', 'Essay: Zcash Governance Is a Superpower')] },
     ] },
@@ -51,7 +52,7 @@ export const governanceProcess: {
       { kind: 'p', text: 'A proposal passes through seven stages and can stop at any of them. Writing code or publishing a ZIP is not enough to change the protocol.' },
       { kind: 'list', ordered: true, items: [
         { title: 'Idea and forum debate.', text: 'Someone opens a topic on the community forum and argues for the change.' },
-        { title: 'Draft ZIP.', text: 'The proposal is written in the ZIP format and sent as a pull request to the zcash/zips repository. At this point it is a draft without a number.' },
+        { title: 'Draft ZIP.', text: 'The proposal is written in the ZIP format and sent as a pull request to the zcash/zips repository. At this point it is a draft without a number. The ZIP editors typically review it for content and format and suggest changes, which its owners may decline; by consensus they may reject it on the grounds listed in ZIP 0.' },
         { title: 'Public discussion.', text: 'The community comments, competing proposals appear, and the authors revise the text.' },
         { title: 'Sentiment polls.', text: 'The development organizations draft the questions and options, publish them for feedback, and then the panels and the coinholders vote.' },
         { title: 'Reading the consensus.', text: 'The organizations interpret the result. Without rough consensus no proposal advances and the protocol stays as it is.' },
@@ -66,7 +67,8 @@ export const governanceProcess: {
       { kind: 'list', items: [
         { title: 'Where they live:', text: 'in the zcash/zips repository on GitHub. ZIP 0 describes the process itself.' },
         { title: 'Types:', text: 'consensus ZIPs change network rules and need a network upgrade; process ZIPs cover governance and the Dev Fund (the 1000 series); informational and standards ZIPs cover wallets and interoperability.' },
-        { title: 'Lifecycle:', text: 'Draft, Proposed, then Implemented or Final. Withdrawn means the authors retired it; Rejected and Obsolete also exist.' },
+        { title: 'Lifecycle:', text: 'Draft, Proposed, then Implemented and Final for consensus and standards ZIPs, or usually Active for process and informational ones. Withdrawn means the owners retired it; Rejected marks a ZIP with no progress for a year; Obsolete and Reserved (a number held before a ZIP is published) also exist.' },
+        { title: 'From Draft to Proposed:', text: 'ZIP 0 asks that the owner consider the ZIP complete and that there be rough consensus on the forums, validated by consensus among the ZIP editors. A ZIP with significant security or privacy implications also needs an independent security review first. Proposed is not activation.' },
         { title: 'Drafts have no number.', text: 'The file is named draft-<author>-<topic> until the editors assign one.' },
       ] },
       { kind: 'table', caption: 'ZIPs that explain the current moment', columns: ['ZIP', 'Topic'], rows: [
