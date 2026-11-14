@@ -50,6 +50,18 @@ describe('How it works: the ZIP editors and the ZIP lifecycle, as ZIP 0 has them
     for (const part of ['ZIP editors typically review', 'owners may decline', 'by consensus they may reject']) expect(draft, part).toContain(part);
   });
 
+  it('states where the Dev Fund round stands as the organizers have published it', () => {
+    const blocks = section('dev-fund-and-zcg').blocks;
+    const words = JSON.stringify(blocks);
+    expect(words).toContain('As of 14 November 2026.');
+    expect(words).toContain('16 to 30 Nov');
+    expect(words).toContain('second version on 13 Nov');
+    expect(words).toContain('merged as a draft on 13 Nov');
+    for (const stale of ['No date has been set', 'have not decided yet', 'An alternative design for development funding']) expect(words, stale).not.toContain(stale);
+    expect(governanceProcess.reviewedAt).toBe('2026-11-14');
+    expect(governanceProcess.sources.map(source => source.href)).toContain('https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906');
+  });
+
   it('keeps ZIP 0 among the sources of the guide', () => {
     expect(governanceProcess.sources.map(source => source.href)).toContain('https://zips.z.cash/zip-0000');
   });

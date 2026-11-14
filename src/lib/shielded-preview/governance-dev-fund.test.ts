@@ -139,7 +139,9 @@ describe('ZCG / Dev Fund published timeline', () => {
   it('shows the draft poll as a draft, with the organizers’ instructions and its post', () => {
     const questions = devFundPublished.questions!;
     expect(questions.draft).toBe(true);
-    expect(questions.url).toContain('/58906/47');
+    expect(questions.publishedAt).toBe('2026-11-13');
+    expect(questions.url).toContain('/58906/86');
+    expect(questions.instructions).toContain('we may hold a runoff poll');
     expect(questions.items).toHaveLength(5);
     expect(new Set(questions.items.flatMap(item => item.answers))).toEqual(new Set(['Support', 'Oppose', 'Abstain']));
     const markup = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate }));
@@ -152,40 +154,36 @@ describe('ZCG / Dev Fund published timeline', () => {
   });
 });
 
-describe('Draft questions about proposals revised after the draft', () => {
+describe('Second version of the draft questions, posted on 13 Nov', () => {
   const items = devFundPublished.questions!.items;
-  const html = () => renderToStaticMarkup(createElement(DevFundVoting, { onNavigate: () => {}, published: devFundPublished }));
-  it('says the Wind Down proposal changed, with the author’s update as the source', () => {
-    const windDown = items[0];
-    expect(windDown.question).toContain('Wind Down');
-    expect(windDown.note?.text).toMatch(/revised/i);
-    expect(windDown.note?.url).toContain('/58515/145');
-    expect(html()).toContain(windDown.note!.text);
+  it('copies the five questions as the organizers posted them', () => {
+    expect(items.map(item => item.question)).toEqual([
+      'Do you support the Wind Down Zcash Community Grants proposal?',
+      'Do you support the Future Dev and Legal Defense Fund proposal?',
+      'Do you support the Zcash Adoption Pool (ZAP) proposal?',
+      'Do you support maintaining ZCG’s existing funding and operations?',
+      'Assuming it can be done safely in a network upgrade, do you support reducing Zcash’s target block time from 25 seconds to 20 seconds?',
+    ]);
   });
-  it('says the ZAP proposal changed on 11 Nov, with the comparison of the two revisions as the source', () => {
-    const zap = items[2];
-    expect(zap.question).toContain('Zcash Adoption Pool');
-    expect(zap.note?.text).toMatch(/revised on 11 Nov/);
-    expect(zap.note?.url).toBe('https://github.com/zcash/zips/compare/ad90f2e5b7318338ac9490702c3b0f653a5643a8...28d7618d21971c747c4db3680755d816110acaf1');
-    expect(html()).toContain(zap.note!.text);
-  });
-  it('leaves the other questions without a note', () => {
-    expect(items.flatMap((item, index) => item.note ? [index] : [])).toEqual([0, 2]);
+  it('carries no note: this version was written after the revisions of 10 and 11 Nov', () => {
+    expect(items.filter(item => item.note)).toEqual([]);
   });
 });
 
-describe('Revised draft announced by the organizers', () => {
-  it('says under the draft questions that a revised draft is to follow, with the organizers’ post', () => {
-    expect(devFundNotices.revisedDraft).toMatchObject({ postedAt: '2026-11-11' });
-    expect(devFundNotices.revisedDraft.url).toContain('/58906/54');
+describe('What the organizers said about closing the questions', () => {
+  it('says under the draft questions that this is the second version and when the questions are to be final', () => {
+    expect(devFundNotices.revisedDraft).toMatchObject({ postedAt: '2026-11-13' });
+    expect(devFundNotices.revisedDraft.url).toContain('/58906/86');
+    expect(devFundNotices.revisedDraft.text).toMatch(/second version/);
+    expect(devFundNotices.revisedDraft.text).toMatch(/15 Nov/);
     const html = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate: () => {}, published: devFundPublished }));
     expect(html).toContain(devFundNotices.revisedDraft.text);
-    expect(html).toContain('/58906/54');
+    expect(html).toContain('Organizers’ post, 13 Nov');
+    expect(html).not.toContain('Organizers’ post, 11 Nov');
   });
   it('drops that line once the questions are no longer a draft', () => {
     const final = { ...devFundPublished, questions: { ...devFundPublished.questions!, draft: false } };
     const html = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate: () => {}, published: final }));
     expect(html).not.toContain(devFundNotices.revisedDraft.text);
-    expect(html).not.toContain('/58906/54');
   });
 });

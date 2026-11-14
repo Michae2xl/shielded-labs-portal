@@ -27,19 +27,22 @@ const originalProposals: FundProposal[] = [
     treasury: '50,000 ZEC removed from circulation and credited to the NSM; ZCG keeps the rest of its treasury and its grants program.',
     implementation: 'Network upgrade required. Spending from the new lockbox needs a future ZIP.' },
   { id: 'zap', short: 'Zcash Adoption Pool', title: 'Zcash Adoption Pool (ZAP)', authors: ['Daira-Emma Hopwood', 'Violet Rollergirl'],
-    stage: 'Open draft', pr: 1431, record: 'pr-1431-draft-dairaemma-governance-zap', revision: '28d7618d21971c747c4db3680755d816110acaf1',
-    source: blob('28d7618d21971c747c4db3680755d816110acaf1', 'draft-dairaemma-governance-zap.md'), discussion: forum(58656),
-    // Read at the revision above on 12 Nov 2026. No forum post announces the change, so the source is the comparison with the revision read before.
+    // Merged by the ZIP editors on 13 Nov 2026, 14:41 UTC. The owners kept editing it in the repository: read at the revision below on 14 Nov 2026,
+    // which adds a rationale comparing it with the other two proposals and does not change what the draft proposes.
+    stage: 'Merged draft', pr: 1431, record: 'draft-dairaemma-governance-zap', revision: '22d04744c012547a23ec9a2a9cd1fb8f82627dc7',
+    source: blob('22d04744c012547a23ec9a2a9cd1fb8f82627dc7', 'draft-dairaemma-governance-zap.md'), discussion: forum(58656),
+    merged: { on: '2026-11-13', source: 'https://github.com/zcash/zips/pull/1431' },
+    // No forum post announces the 11 Nov change, so its source is the comparison with the revision read before.
     revised: { on: '2026-11-11', source: 'https://github.com/zcash/zips/compare/ad90f2e5b7318338ac9490702c3b0f653a5643a8...28d7618d21971c747c4db3680755d816110acaf1',
       text: 'the draft now says the funds are intended to accelerate adoption either by further disbursement or by funding development, in a broad sense, that directly increases it; the earlier text named only further disbursement. Violet Rollergirl, credited before, is now listed as an owner. The statements below were made about earlier versions.' },
     summary: 'Keep ZCG’s funding stream and refocus the grants program on broader ownership and use of ZEC.',
     stream: 'Existing value and duration retained under ZIP 214 Revision 3.', coinholder: 'No change specified.',
     treasury: 'ZCG assets become ZAP assets; existing administration requirements remain.',
     implementation: 'Changes the grants mandate and assessment requirements.' },
-  { id: 'wind-down', short: 'Wind down ZCG', title: 'Winding Down Zcash Community Grants', authors: ['Tom Howard'],
-    stage: 'Open draft', pr: 1423, record: 'pr-1423-draft-howard-wind-down-zcg', revision: '0f0e440bcdc52152d16046463ca04cbcbfec22bc',
-    source: blob('0f0e440bcdc52152d16046463ca04cbcbfec22bc', 'draft-howard-wind-down-zcg.md'), discussion: forum(58515,120),
-    // Read at the revision above on 11 Nov 2026. Earlier statements cite the first revision through `versionSource`.
+  { id: 'wind-down', short: 'Wind down ZCG', title: 'Winding Down Zcash Community Grants and Removal of ZCG Funds to the Network Sustainability Mechanism', authors: ['Tom Howard'],
+    stage: 'Open draft', pr: 1423, record: 'pr-1423-draft-howard-wind-down-zcg', revision: '29524e15bfd394142fbc6170ee77eceae6fd3b81',
+    source: blob('29524e15bfd394142fbc6170ee77eceae6fd3b81', 'draft-howard-wind-down-zcg.md'), discussion: forum(58515,120),
+    // Read at the revision above on 14 Nov 2026: since 10 Nov only the header changed (the title, and the list of ZIPs it updates). Earlier statements cite the first revision through `versionSource`.
     revised: { on: '2026-11-10', source: forum(58515, 145),
       text: 'the draft now also ends ZCG’s 8% stream and redirects it, and sends residual funds to the Future Dev and Legal Defense Fund Lockbox instead of the NSM. The statements below were made about the earlier version.' },
     summary: 'Stop new grants, honor existing commitments, redirect the rest of ZCG’s 8% stream to the Future Dev and Legal Defense Fund Lockbox, and send residual ZCG funds to that Lockbox’s administrator.',
@@ -48,7 +51,7 @@ const originalProposals: FundProposal[] = [
     implementation: 'Takes effect at a Mainnet network upgrade; amends ZIPs 1015 and 1016 and requires legal instruments and approvals.' },
   { id: 'no-change', short: 'Keep existing arrangements', title: 'Keep existing arrangements', authors: ['vaspholdings'],
     stage: 'Baseline', record: 'zip-1016', revision: 'Forum post 10 · 7 Nov 2026', source: forum(58906, 10), discussion: forum(58906, 10),
-    summary: 'A requested no-change option, distinct from abstaining. Not a new ZIP; it is Question 4 of the draft poll published on 10 Nov.',
+    summary: 'A requested no-change option, distinct from abstaining. Not a new ZIP; it is Question 4 of the draft poll, in both versions the organizers posted.',
     stream: 'Retain the 8% ZCG stream until its scheduled expiry.', coinholder: 'Retain the 12% stream until its scheduled expiry.',
     treasury: 'No reallocation requested.', implementation: 'No new change requested.' },
   { id: 'nsm-stream', short: 'Redirect stream to NSM', title: 'Ending the ZCG Funding Stream in Favor of the NSM', authors: ['Sean Bowe'],

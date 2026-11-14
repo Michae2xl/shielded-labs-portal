@@ -29,6 +29,19 @@ describe('Dev Fund evidence boundaries', () => {
     expect(lockbox.authors.map(name => name.replace(/ \(.+\)$/, ''))).toEqual(entry.owners.map(name => name.replace(/ \(.+\)$/, '')));
     expect(proposalStructure(lockbox)).toBe('Proposed change');
   });
+  it('records the ZAP and Town Square drafts, merged on 13 Nov, the same way', () => {
+    for (const [id, pull] of [['zap', 1431], ['town-square', 1454]] as const) {
+      const draft = fundProposals.find(p => p.id === id)!;
+      const entry = bundledZips.entries.find(e => e.id === draft.record)!;
+      expect(draft.stage, id).toBe('Merged draft');
+      expect(entry, id).toMatchObject({ kind: 'draft', status: 'Draft', pullRequest: `https://github.com/zcash/zips/pull/${pull}` });
+      expect(entry.pull, id).toBeUndefined();
+      expect(draft.source, id).toContain(`/blob/${draft.revision}/`);
+      expect(draft.merged, id).toEqual({ on: '2026-11-13', source: `https://github.com/zcash/zips/pull/${pull}` });
+      expect(draft.authors.map(name => name.replace(/ \(.+\)$/, '')), id).toEqual(entry.owners.map(name => name.replace(/ \(.+\)$/, '')));
+      expect(proposalStructure(draft), id).toBe('Proposed change');
+    }
+  });
   it('requires identifiable, dated sources for statements and does not count co-authorship as independent support', () => {
     for (const item of fundStatements) {
       expect(fundProposals.some(p => p.id === item.proposal)).toBe(true);
@@ -59,7 +72,7 @@ describe('ZIP explorer navigation', () => {
   });
   it('retains selected map and comparison state when opening and returning from a document', () => {
     const current = new URLSearchParams('section=zips&topic=dev-fund&layout=map&focus=zap&compare=zap,wind-down&dq=pool&past=1');
-    const document = new URLSearchParams('section=zips&record=pr-1431-draft-dairaemma-governance-zap');
+    const document = new URLSearchParams('section=zips&record=draft-dairaemma-governance-zap');
     copyExplorerParams(current, document);
     const back = new URLSearchParams('section=zips');
     copyExplorerParams(document, back);
@@ -192,7 +205,10 @@ it('marks as outside the November poll exactly the open drafts whose pull reques
   const opened = (record: string | undefined) => bundledZips.entries.find(entry => entry.id === record)?.pull?.createdAt ?? null;
   const drafts = fundProposals.filter(proposal => proposal.stage === 'Open draft');
   const late = drafts.filter(proposal => { const at = opened(proposal.record); return at !== null && Date.parse(at) > Date.parse(pollRound.deadline); });
-  expect(late.map(proposal => proposal.id).sort()).toEqual([...pollRound.late].sort());
+  // A late draft that was merged since has no open pull request to date it by; it stays outside the round all the same.
+  const stillOpen = pollRound.late.filter(id => fundProposals.find(proposal => proposal.id === id)!.stage === 'Open draft');
+  expect(late.map(proposal => proposal.id).sort()).toEqual([...stillOpen].sort());
+  expect(pollRound.late.filter(id => !stillOpen.includes(id))).toEqual(['town-square']);
   expect(fundProposals.filter(outsidePollRound).map(proposal => proposal.pr).sort()).toEqual([1449, 1450, 1451, 1452, 1453, 1454, 1455]);
   // The decision is the organizers' own post; nothing is marked as included.
   expect(pollRound.source).toBe('https://forum.zcashcommunity.com/t/58906/39');
@@ -221,8 +237,10 @@ describe('A short preview of the statements', () => {
 describe('Wind-down draft as its author revised it on 10 Nov 2026', () => {
   const draft = fundProposals.find(proposal => proposal.id === 'wind-down')!;
   it('describes the revision the pull request now points to', () => {
-    expect(draft.revision).toBe('0f0e440bcdc52152d16046463ca04cbcbfec22bc');
+    expect(draft.revision).toBe('29524e15bfd394142fbc6170ee77eceae6fd3b81');
     expect(draft.source).toContain(draft.revision);
+    // The 14 Nov revision changed the header only: the title, and the list of ZIPs it updates.
+    expect(draft.title).toBe('Winding Down Zcash Community Grants and Removal of ZCG Funds to the Network Sustainability Mechanism');
     expect(`${draft.summary} ${draft.stream} ${draft.treasury}`).toContain('Lockbox');
     expect(`${draft.summary} ${draft.treasury}`).not.toMatch(/funds (go )?to the NSM/);
     expect(draft.revised).toMatchObject({ on: '2026-11-10' });
@@ -241,8 +259,9 @@ describe('Wind-down draft as its author revised it on 10 Nov 2026', () => {
 describe('ZAP draft as its owners revised it on 11 Nov 2026', () => {
   const draft = fundProposals.find(proposal => proposal.id === 'zap')!;
   const compare = 'https://github.com/zcash/zips/compare/ad90f2e5b7318338ac9490702c3b0f653a5643a8...28d7618d21971c747c4db3680755d816110acaf1';
-  it('describes the revision the pull request now points to, with both recorded owners', () => {
-    expect(draft.revision).toBe('28d7618d21971c747c4db3680755d816110acaf1');
+  it('describes the text in the ZIPs repository since the merge of 13 Nov, with both recorded owners', () => {
+    expect(draft.revision).toBe('22d04744c012547a23ec9a2a9cd1fb8f82627dc7');
+    expect(draft.record).toBe('draft-dairaemma-governance-zap');
     expect(draft.source).toContain(draft.revision);
     expect(draft.authors).toEqual(['Daira-Emma Hopwood', 'Violet Rollergirl']);
   });

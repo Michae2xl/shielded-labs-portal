@@ -17,7 +17,7 @@ const essay = (record: string, label: string): ProcessLink => ({ label, href: `?
 export const governanceProcess: {
   reviewedAt: string; title: string; summary: string; facts: { name: string; value: string }[]; sections: ProcessSection[]; sources: { label: string; href: string }[];
 } = {
-  reviewedAt: '2026-11-04',
+  reviewedAt: '2026-11-14',
   title: 'How Zcash governance works',
   summary: 'Who decides, how a proposal moves from an idea to activation, and where the Dev Fund debate stands.',
   facts: [{ name: 'Decision basis', value: 'Rough consensus' }, { name: 'Proposal format', value: 'ZIP' }, { name: 'Final say', value: 'Whoever runs the software' }],
@@ -81,24 +81,25 @@ export const governanceProcess: {
       { kind: 'links', items: [{ label: 'Numbered ZIPs', section: 'ZIPs', lane: 'zips' }, { label: 'Unnumbered drafts', section: 'ZIPs', lane: 'drafts' }, { label: 'Open pull requests, rendered', section: 'ZIPs', lane: 'proposals' }] },
     ] },
     { id: 'dev-fund-and-zcg', title: 'The Dev Fund and ZCG: where things stand', blocks: [
-      { kind: 'p', lead: 'As of 4 November 2026.', text: 'Nothing has been decided. If no proposal passes, the current rules continue until the third halving in 2028, when the Dev Fund ends and the full block reward goes to miners.' },
+      { kind: 'p', lead: 'As of 14 November 2026.', text: 'Nothing has been decided. Polling is planned for 16 to 30 Nov. If no proposal passes, the current rules continue until the third halving in 2028, when the Dev Fund ends and the full block reward goes to miners.' },
       { kind: 'p', lead: 'How it works today.', text: 'The Dev Fund is a protocol rule that sets aside 20% of each block: 8% to ZCG and 12% to the coinholder-controlled fund (ZIPs 1015 and 1016). The streams end at block 4,406,400, the third halving. The Dev Fund and the grant programs are different things: if the Dev Fund ended tomorrow, ZCG and the coinholder program would keep the balances they already hold.' },
       { kind: 'table', caption: 'Proposals on the table, all draft ZIPs readable under ZIPs in this portal', columns: ['Proposal', 'Author', 'What it does'], rows: [
         [{ label: 'Future Dev and Legal Defense Fund Lockbox (PR 1428, merged as a draft on 11 Nov)', href: 'https://github.com/zcash/zips/pull/1428' }, 'aquietinvestor', 'Ends the ZCG stream and sends the same 8% to a new lockbox for future development and legal defense; ZCG removes 50,000 ZEC from circulation, credited to the NSM'],
         [{ label: 'Winding Down Zcash Community Grants (PR 1423)', href: 'https://github.com/zcash/zips/pull/1423' }, 'thowar2', 'Winds ZCG down gradually; since a 10 Nov revision, also redirects its 8% stream and residual funds to the Future Dev and Legal Defense Fund Lockbox'],
-        [{ label: 'Zcash Adoption Pool, ZAP (PR 1431)', href: 'https://github.com/zcash/zips/pull/1431' }, 'daira', 'An alternative design for development funding'],
-        ['Other drafts', 'Several authors', 'Reduce the Dev Fund over time, or end both streams while keeping the existing balances'],
+        [{ label: 'Zcash Adoption Pool, ZAP (PR 1431, merged as a draft on 13 Nov)', href: 'https://github.com/zcash/zips/pull/1431' }, 'daira', 'Keeps ZCG’s 8% stream and its treasury, and refocuses the grants program on wider ownership and use of ZEC'],
+        ['Keep existing arrangements (question 4 of the draft poll)', 'vaspholdings', 'The status quo: ZCG keeps its 8% stream until the 2028 halving, with its treasury and operations unchanged'],
+        ['Drafts submitted after 8 Nov', 'Several authors', 'Not part of this round of polling: the organizers kept the deadline'],
       ] },
       { kind: 'p', lead: 'Points of friction on the forum:', text: 'whether it is legitimate to move balances ZCG already holds, how the share was chosen, the lack of a dollar cap, and the pace, with some participants asking for at least three months of debate.' },
       { kind: 'list', ordered: true, items: [
-        { title: 'Now:', text: 'discussion phase on the forum.' },
-        { text: 'The development organizations draft the poll questions and open them for feedback.' },
-        { text: 'Community panels and coinholders vote. No date has been set.' },
-        { text: 'The organizations read the result. Without consensus, nothing changes.' },
+        { title: 'Done:', text: 'proposals closed on 8 Nov. The organizers posted draft poll questions on 10 Nov and a second version on 13 Nov.' },
+        { title: 'Now:', text: 'comments on the questions, which the organizers plan to make final by 15 Nov.' },
+        { text: 'Community panels and coinholders vote from 16 to 30 Nov. Each proposal is its own question, answered Support, Oppose or Abstain.' },
+        { text: 'The organizations read the result. Without consensus, nothing changes. If more than one proposal has broad support, the organizers say they may hold a runoff poll.' },
         { text: 'With consensus, the change enters a future network upgrade with an activation height announced in advance.' },
       ] },
-      { kind: 'p', text: 'Open question: whether the poll presents the proposals as competing alternatives or one by one. The organizations have not decided yet.' },
-      { kind: 'links', items: [{ label: 'Forum thread: Future Dev and Legal Defense Fund ZIP', href: 'https://forum.zcashcommunity.com/t/future-dev-and-legal-defense-fund-zip/58611' }, { label: 'ZCG applications under review', section: 'Proposals', lane: 'review' }, essay('thoughts-on-the-dev-fund', 'Essay: Thoughts on the Dev Fund')] },
+      { kind: 'p', text: 'The draft poll asks about each proposal separately and tells voters to consider each one independently: they may support more than one, including proposals that conflict with each other.' },
+      { kind: 'links', items: [{ label: 'Dev Fund calendar and draft questions', section: 'Voting', lane: 'dev-fund' }, { label: 'Forum thread: Future Dev and Legal Defense Fund ZIP', href: 'https://forum.zcashcommunity.com/t/future-dev-and-legal-defense-fund-zip/58611' }, { label: 'ZCG applications under review', section: 'Proposals', lane: 'review' }, essay('thoughts-on-the-dev-fund', 'Essay: Thoughts on the Dev Fund')] },
     ] },
     { id: 'chain-fork', title: 'Could there be a chain fork?', blocks: [
       { kind: 'p', text: 'Yes. It is possible by design, but unlikely while the consensus process works, because a contested fork is expensive for every side.' },
@@ -128,6 +129,7 @@ export const governanceProcess: {
   sources: [
     { label: 'Forum overview of the process by aquietinvestor, 4 November 2026', href: 'https://forum.zcashcommunity.com/t/future-dev-and-legal-defense-fund-zip/58611/69' },
     { label: 'Future Dev and Legal Defense Fund ZIP · forum thread', href: 'https://forum.zcashcommunity.com/t/future-dev-and-legal-defense-fund-zip/58611' },
+    { label: 'ZCG and the Dev Fund: timeline for proposals and polling · forum thread', href: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906' },
     { label: 'Open ZIP drafts rendered from pull requests · zips.auzum197.com', href: 'https://zips.auzum197.com/new/' },
     { label: 'ZIP 0: the ZIP process', href: 'https://zips.z.cash/zip-0000' },
     { label: 'ZIP 1016', href: 'https://zips.z.cash/zip-1016' },

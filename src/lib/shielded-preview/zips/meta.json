@@ -1,24 +1,29 @@
 {
-  "syncedAt": "2026-11-12T00:57:52.870422+00:00",
+  "syncedAt": "2026-11-14T18:41:17.365894+00:00",
   "upstream": {
     "repository": "https://github.com/zcash/zips",
     "branch": "main",
-    "commit": "de3d909ac99c5ff1f3cd84134f90cb017cb54b78",
-    "committedAt": "2026-11-11T03:34:24Z"
+    "commit": "e5c6487295c3c33246867319e3f701b598535e14",
+    "committedAt": "2026-11-14T17:17:19Z"
   },
   "counts": {
-    "documents": 219,
+    "documents": 223,
     "zips": 130,
-    "drafts": 7,
+    "drafts": 9,
     "guides": 3,
-    "proposals": 79,
+    "proposals": 81,
     "images": 15
   },
   "failures": [],
   "pulls": {
-    "listed": 82,
-    "rendered": 79,
+    "listed": 83,
+    "rendered": 81,
     "failures": [
+      {
+        "pull": 986,
+        "file": "draft-pacu-regtest-local-consensus-definition.md",
+        "error": "draft-pacu-regtest-local-consensus-definition.md has no ZIP header"
+      },
       {
         "pull": 1337,
         "file": "draft-nuttycom-zewif.md",
@@ -28,11 +33,6 @@
         "pull": 1243,
         "file": "draft-frontiercompute-zap1.md",
         "error": "draft-frontiercompute-zap1.md has no ZIP header"
-      },
-      {
-        "pull": 986,
-        "file": "draft-pacu-regtest-local-consensus-definition.md",
-        "error": "draft-pacu-regtest-local-consensus-definition.md has no ZIP header"
       }
     ]
   },

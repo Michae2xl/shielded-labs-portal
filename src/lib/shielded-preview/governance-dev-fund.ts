@@ -18,25 +18,19 @@ export type DevFundPublication = {
   results: { publishedAt: string; url: string } | null;
 };
 const draftAnswers = ['Support', 'Oppose', 'Abstain'];
-// Draft NU7.1 poll, post 47 of the timeline thread (10 Nov 2026, 18:16 UTC), copied as posted.
-// The organizers asked for feedback before 15 Nov and said they may adjust it: re-read the thread before polling opens.
+// Draft NU7.1 poll, version 2: post 86 of the timeline thread (13 Nov 2026, 00:17 UTC), copied as it stood after its last edit of 13 Nov, 23:14 UTC.
+// It replaces the first draft (post 47, 10 Nov). The organizers said the questions are to be final by 15 Nov: re-read the thread before polling opens.
 export const devFundPublished: DevFundPublication = {
   questions: {
-    publishedAt: '2026-11-10', draft: true,
-    url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/47',
-    instructions: 'Please consider each proposal independently. You may support more than one proposal, including proposals that conflict with each other, if you would find any of those outcomes acceptable. The results will help us assess which proposals have broad support.',
+    publishedAt: '2026-11-13', draft: true,
+    url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/86',
+    instructions: 'Please consider each proposal independently. You may support more than one proposal, including proposals that conflict with each other, if you would find any of those outcomes acceptable. The results will help us assess which proposals have broad support. If more than one proposal receives broad support, we may hold a runoff poll.',
     items: [
-      // The draft's own description of this proposal predates the author's revision of 10 Nov.
-      { question: 'Do you support the Wind Down Zcash Community Grants proposal?', answers: draftAnswers, note: {
-        text: 'The proposal was revised on 10 Nov, after this draft was posted: it now also redirects ZCG’s 8% stream, and residual funds would go to the Future Dev and Legal Defense Fund Lockbox rather than the NSM.',
-        url: 'https://forum.zcashcommunity.com/t/end-zcg-and-send-its-funds-to-the-nsm/58515/145' } },
+      { question: 'Do you support the Wind Down Zcash Community Grants proposal?', answers: draftAnswers },
       { question: 'Do you support the Future Dev and Legal Defense Fund proposal?', answers: draftAnswers },
-      // The draft's own description of this proposal predates the owners' revision of 11 Nov.
-      { question: 'Do you support the Zcash Adoption Pool (ZAP) proposal?', answers: draftAnswers, note: {
-        text: 'The proposal was revised on 11 Nov, after this draft was posted: it now says the funds may also go to development, in a broad sense, that directly increases adoption, and not only to further disbursement.',
-        url: 'https://github.com/zcash/zips/compare/ad90f2e5b7318338ac9490702c3b0f653a5643a8...28d7618d21971c747c4db3680755d816110acaf1' } },
+      { question: 'Do you support the Zcash Adoption Pool (ZAP) proposal?', answers: draftAnswers },
       { question: 'Do you support maintaining ZCG’s existing funding and operations?', answers: draftAnswers },
-      { question: 'Do you support reducing Zcash’s target block time from 25 seconds to 20 seconds as part of NU7.1, as described in this proposal?', answers: draftAnswers },
+      { question: 'Assuming it can be done safely in a network upgrade, do you support reducing Zcash’s target block time from 25 seconds to 20 seconds?', answers: draftAnswers },
     ],
   },
   results: null,
@@ -48,8 +42,8 @@ const organizersPost = 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-
 export const devFundNotices = {
   lateProposals: { postedAt: '2026-11-09', url: organizersPost, text: 'Proposals submitted after the deadline are not part of this round of polling: the coordinating organizations decided to uphold it.' },
   questions: { postedAt: '2026-11-09', url: organizersPost, checkedAt: '2026-11-10T02:58:00Z', text: 'On 9 Nov the organizers said the proposed questions and answer choices would follow.' },
-  // Post 54 of the same thread (11 Nov 2026, 21:09 UTC). Shown only while the questions are a draft: replace them when the revised draft is posted.
-  revisedDraft: { postedAt: '2026-11-11', url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/54', text: 'On 11 Nov the organizers said a revised draft would follow the next day, after one more day of comments.' },
+  // Post 86 of the same thread (13 Nov 2026). Shown only while the questions are a draft: drop it when the final questions are posted.
+  revisedDraft: { postedAt: '2026-11-13', url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/86', text: 'This is the second version, posted on 13 Nov. The organizers said the questions are to be final by 15 Nov, before polling opens on 16 Nov.' },
 } as const;
 
 export const devFundTimeline = {

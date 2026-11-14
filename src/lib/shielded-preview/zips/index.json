@@ -3147,6 +3147,30 @@
     "digest": "4851d8513a76bf5f6af900f72bcd6ada8085e15be5a959e48fbf4e075cb85b67"
   },
   {
+    "id": "draft-dairaemma-governance-zap",
+    "number": null,
+    "title": "Zcash Adoption Pool (ZAP)",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus Process",
+    "owners": [
+      "Daira-Emma Hopwood",
+      "Violet Rollergirl"
+    ],
+    "created": "2026-10-30",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/zcash-adoption-pool-zap/58656",
+    "pullRequest": "https://github.com/zcash/zips/pull/1431",
+    "kind": "draft",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/main/zips/draft-dairaemma-governance-zap.md",
+    "official": "https://zips.z.cash/draft-dairaemma-governance-zap",
+    "updatedAt": "2026-11-14T16:59:14Z",
+    "summary": "The portion of Protocol-defined Ecosystem Funding allocated to Zcash Community Grants (ZCG) is reaffirmed and bound to its stated objective in ZIP 1015 5, consistent with increasing adoption as broadly as possible.",
+    "words": 2838,
+    "digest": "8577350a303fab490ca8b97d38bbcb8b58c23135a0e7aadac7a39757ae446e37"
+  },
+  {
     "id": "draft-ecc-authenticated-reply-addrs",
     "number": null,
     "title": "Authenticated Reply Addresses",
@@ -3193,6 +3217,29 @@
     "summary": "This proposal specifies a mechanism for on-chain accountable voting that is available for use by Zcash governance and funding proposals.",
     "words": 1315,
     "digest": "36f8deaadd2944b466f7100fa1a66e225b6c550f243d532ae4554ee4c1d6d4cd"
+  },
+  {
+    "id": "draft-emersonian-zcash-town-square",
+    "number": null,
+    "title": "The Zcash Town Square: Official Discussion and Announcement Cross-Posting",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Blake Benthall (emersonian)"
+    ],
+    "created": "2026-11-08",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/zip-the-zcash-town-square/59049",
+    "pullRequest": "https://github.com/zcash/zips/pull/1454",
+    "kind": "draft",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/main/zips/draft-emersonian-zcash-town-square.md",
+    "official": "https://zips.z.cash/draft-emersonian-zcash-town-square",
+    "updatedAt": "2026-11-09T00:25:19Z",
+    "summary": "This ZIP affirms that the Zcash Community Forum is the Zcash Town Square: the one official venue for discussion of Zcash governance, funding, and protocol direction, and the canonical public record of announcements made by organizations…",
+    "words": 4188,
+    "digest": "d1836ec970927efde06f0984d83fbb3505c9e6c4164b5742863e2d47e81fd652"
   },
   {
     "id": "draft-mcgee-future-dev-legal-defense-fund",
@@ -3339,6 +3386,178 @@
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
   },
   {
+    "id": "pr-1463-draft-mcgee-future-dev-legal-defense-fund",
+    "number": null,
+    "title": "Future Dev and Legal Defense Fund Lockbox, and Removal of 50,000 ZEC of ZCG Funds to the Network Sustainability Mechanism",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus / Process",
+    "owners": [
+      "Sean Bowe (Tachyon Group)",
+      "Zooko Wilcox (Shielded Labs)",
+      "Jason McGee (Shielded Labs)"
+    ],
+    "created": "2026-10-29",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/future-dev-and-legal-defense-fund-zip/58611",
+    "pullRequest": "https://github.com/zcash/zips/pull/1428",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/9fe8df0e99750fc9dd8e150964ea587f8600c74a/zips/draft-mcgee-future-dev-legal-defense-fund.md",
+    "official": "https://github.com/zcash/zips/pull/1463",
+    "updatedAt": "2026-11-14T17:41:10Z",
+    "summary": "This ZIP makes two changes.",
+    "words": 2693,
+    "digest": "21033c1b8d9155e550b045336ca03eeb9315ff0e2c119b611b1a6453f27dc9cd",
+    "base": "draft-mcgee-future-dev-legal-defense-fund",
+    "pull": {
+      "number": 1463,
+      "title": "`draft-mcgee-future-dev-legal-defense-fund` review updates",
+      "author": "daira",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1463",
+      "headSha": "9fe8df0e99750fc9dd8e150964ea587f8600c74a",
+      "createdAt": "2026-11-14T07:44:06Z",
+      "updatedAt": "2026-11-14T17:41:10Z",
+      "change": "update",
+      "file": "draft-mcgee-future-dev-legal-defense-fund.md",
+      "files": [
+        "draft-mcgee-future-dev-legal-defense-fund.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1460-zip-0324",
+    "number": 324,
+    "title": "URI-Encapsulated Payments",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Standards / Wallet",
+    "owners": [
+      "Jack Grigg",
+      "Daira-Emma Hopwood",
+      "Kris Nuttycombe"
+    ],
+    "created": "2019-07-17",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/421",
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "rst",
+    "source": "https://github.com/zcash/zips/blob/b8c30fcfd47565b5c9d81678dc74b7311dd6efb7/zips/zip-0324.rst",
+    "official": "https://github.com/zcash/zips/pull/1460",
+    "updatedAt": "2026-11-13T22:27:38Z",
+    "summary": "This proposal specifies a mechanism for sending Zcash payments via any unmodified (secure) messaging service, printed medium, or other channel over which a short string can be conveyed. The sender need not know the recipient's address and…",
+    "words": 12303,
+    "digest": "11470e8d4afb17011280697fe1f05a4e7ad184a86d2fff5dd31466fdc34e3333",
+    "base": "zip-0324",
+    "pull": {
+      "number": 1460,
+      "title": "[ZIP 324] Specify the implemented URI-encapsulated payment scheme",
+      "author": "pacu",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1460",
+      "headSha": "b8c30fcfd47565b5c9d81678dc74b7311dd6efb7",
+      "createdAt": "2026-11-13T22:27:38Z",
+      "updatedAt": "2026-11-13T22:27:38Z",
+      "change": "update",
+      "file": "zip-0324.rst",
+      "files": [
+        "zip-0324.rst"
+      ]
+    }
+  },
+  {
+    "id": "pr-1459-zip-0000",
+    "number": 0,
+    "title": "ZIP Process",
+    "status": "Active",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "Jack Grigg",
+      "Mark Henderson",
+      "Daira-Emma Hopwood",
+      "Arya",
+      "Marek",
+      "Kris Nuttycombe",
+      "Sam H. Smith",
+      "Sean Bowe",
+      "Tal Derei",
+      "Dev Ojha"
+    ],
+    "created": "2019-02-16",
+    "license": "BSD-2-Clause",
+    "discussionsTo": null,
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "rst",
+    "source": "https://github.com/zcash/zips/blob/10e8ad8fe9488b2fa45605bd77796c24766c86df/zips/zip-0000.rst",
+    "official": "https://github.com/zcash/zips/pull/1459",
+    "updatedAt": "2026-11-13T20:51:10Z",
+    "summary": "A Zcash Improvement Proposal (ZIP) is a design document providing information to the Zcash community, or describing a new feature for Zcash or its processes or environment. The ZIP should provide a concise technical specification of the…",
+    "words": 6371,
+    "digest": "678b75eb27dbd1bc534d69c61845dcbcc648f22b678232c2722fe3ebf772b824",
+    "base": "zip-0000",
+    "pull": {
+      "number": 1459,
+      "title": "[ZIP 312] Key generation: DKG base point, recovery data, several spends, clarifications (on top of #895)",
+      "author": "nikkolasg",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1459",
+      "headSha": "10e8ad8fe9488b2fa45605bd77796c24766c86df",
+      "createdAt": "2026-11-13T19:35:37Z",
+      "updatedAt": "2026-11-13T20:51:10Z",
+      "change": "update",
+      "file": "zip-0000.rst",
+      "files": [
+        "zip-0000.rst",
+        "zip-0312.rst"
+      ]
+    }
+  },
+  {
+    "id": "pr-1459-zip-0312",
+    "number": 312,
+    "title": "FROST for Spend Authorization Multisignatures",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Wallet",
+    "owners": [
+      "Conrado Gouvea",
+      "Daira-Emma Hopwood"
+    ],
+    "created": "2022-08-01",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/382",
+    "pullRequest": "https://github.com/zcash/zips/pull/662",
+    "kind": "proposal",
+    "format": "rst",
+    "source": "https://github.com/zcash/zips/blob/10e8ad8fe9488b2fa45605bd77796c24766c86df/zips/zip-0312.rst",
+    "official": "https://github.com/zcash/zips/pull/1459",
+    "updatedAt": "2026-11-13T20:51:10Z",
+    "summary": "This proposal adapts FROST 3, a threshold signature scheme, to make it support key re-randomization as described in 15. This is a requirement in order for it to be used to implement unlinkable spend authorization signatures in the Orchard…",
+    "words": 4776,
+    "digest": "b7dcd49dfa32ffdc540bc59e2e2a915e1028599f2a33fe3e1785c66792a77a82",
+    "base": "zip-0312",
+    "pull": {
+      "number": 1459,
+      "title": "[ZIP 312] Key generation: DKG base point, recovery data, several spends, clarifications (on top of #895)",
+      "author": "nikkolasg",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1459",
+      "headSha": "10e8ad8fe9488b2fa45605bd77796c24766c86df",
+      "createdAt": "2026-11-13T19:35:37Z",
+      "updatedAt": "2026-11-13T20:51:10Z",
+      "change": "update",
+      "file": "zip-0312.rst",
+      "files": [
+        "zip-0000.rst",
+        "zip-0312.rst"
+      ]
+    }
+  },
+  {
     "id": "pr-1458-zip-0318",
     "number": 318,
     "title": "Orchard to Ironwood Migration",
@@ -3415,45 +3634,6 @@
       "file": "draft-howard-zcg-coinholder-elections.md",
       "files": [
         "draft-howard-zcg-coinholder-elections.md"
-      ]
-    }
-  },
-  {
-    "id": "pr-1454-draft-emersonian-zcash-town-square",
-    "number": null,
-    "title": "The Zcash Town Square: Official Discussion and Announcement Cross-Posting",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Process",
-    "owners": [
-      "Blake Benthall (emersonian)"
-    ],
-    "created": "2026-11-08",
-    "license": "MIT",
-    "discussionsTo": "https://forum.zcashcommunity.com/t/zip-the-zcash-town-square/59049",
-    "pullRequest": "https://github.com/zcash/zips/pull/1454",
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/df8b7a04745c89b41d209bd3f187d180f9ea8671/zips/draft-emersonian-zcash-town-square.md",
-    "official": "https://github.com/zcash/zips/pull/1454",
-    "updatedAt": "2026-11-09T21:45:41Z",
-    "summary": "This ZIP affirms that the Zcash Community Forum is the Zcash Town Square: the one official venue for discussion of Zcash governance, funding, and protocol direction, and the canonical public record of announcements made by organizations…",
-    "words": 4188,
-    "digest": "d1836ec970927efde06f0984d83fbb3505c9e6c4164b5742863e2d47e81fd652",
-    "base": null,
-    "pull": {
-      "number": 1454,
-      "title": "ZIP: The Zcash Town Square",
-      "author": "emersonian",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1454",
-      "headSha": "df8b7a04745c89b41d209bd3f187d180f9ea8671",
-      "createdAt": "2026-11-09T01:15:53Z",
-      "updatedAt": "2026-11-09T21:45:41Z",
-      "change": "new",
-      "file": "draft-emersonian-zcash-town-square.md",
-      "files": [
-        "draft-emersonian-zcash-town-square.md"
       ]
     }
   },
@@ -4462,46 +4642,6 @@
     }
   },
   {
-    "id": "pr-1431-draft-dairaemma-governance-zap",
-    "number": null,
-    "title": "Zcash Adoption Pool (ZAP)",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus Process",
-    "owners": [
-      "Daira-Emma Hopwood",
-      "Violet Rollergirl"
-    ],
-    "created": "2026-10-30",
-    "license": "MIT",
-    "discussionsTo": "https://forum.zcashcommunity.com/t/zcash-adoption-pool-zap/58656",
-    "pullRequest": "https://github.com/zcash/zips/pull/1431",
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/28d7618d21971c747c4db3680755d816110acaf1/zips/draft-dairaemma-governance-zap.md",
-    "official": "https://github.com/zcash/zips/pull/1431",
-    "updatedAt": "2026-11-11T19:18:33Z",
-    "summary": "The portion of Protocol-defined Ecosystem Funding allocated to Zcash Community Grants (ZCG) is reaffirmed and bound to its stated objective in ZIP 1015 5: increasing adoption as broadly as possible.",
-    "words": 2036,
-    "digest": "ac4ea2a4aa59a55bbccb2e3e096346a72b4ab2b47fbefacab7686ebf8cc83d84",
-    "base": null,
-    "pull": {
-      "number": 1431,
-      "title": "Add ZIP draft \"Zcash Adoption Pool (ZAP)\"",
-      "author": "daira",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1431",
-      "headSha": "28d7618d21971c747c4db3680755d816110acaf1",
-      "createdAt": "2026-10-31T17:52:35Z",
-      "updatedAt": "2026-11-11T19:18:33Z",
-      "change": "new",
-      "file": "draft-dairaemma-governance-zap.md",
-      "files": [
-        "draft-dairaemma-governance-zap.md"
-      ]
-    }
-  },
-  {
     "id": "pr-1430-draft-marek-10s-block-target-spacing",
     "number": null,
     "title": "10-second Block Target Spacing",
@@ -4582,7 +4722,7 @@
   {
     "id": "pr-1423-draft-howard-wind-down-zcg",
     "number": null,
-    "title": "Winding Down Zcash Community Grants",
+    "title": "Winding Down Zcash Community Grants and Removal of ZCG Funds to the Network Sustainability Mechanism",
     "status": "Draft",
     "statusDetail": null,
     "category": "Consensus / Process",
@@ -4595,12 +4735,12 @@
     "pullRequest": "https://github.com/zcash/zips/pull/1423",
     "kind": "proposal",
     "format": "md",
-    "source": "https://github.com/zcash/zips/blob/0f0e440bcdc52152d16046463ca04cbcbfec22bc/zips/draft-howard-wind-down-zcg.md",
+    "source": "https://github.com/zcash/zips/blob/29524e15bfd394142fbc6170ee77eceae6fd3b81/zips/draft-howard-wind-down-zcg.md",
     "official": "https://github.com/zcash/zips/pull/1423",
-    "updatedAt": "2026-11-10T23:38:03Z",
+    "updatedAt": "2026-11-14T01:15:40Z",
     "summary": "This ZIP proposes an orderly wind-down of Zcash Community Grants. At activation of the designated Mainnet network upgrade, ZCG would stop making new grants and begin winding down its operations. If ZCG’s 8% funding stream is still active,…",
     "words": 4088,
-    "digest": "bf60ba00b5754001c83f10677df59b05349c719d3065ba2e3f62fad3c05a98d7",
+    "digest": "2a93ca53c1d9e48dcab22cf8521c28c3d2787ec69bea8c3e62b4fb80317d34c6",
     "base": null,
     "pull": {
       "number": 1423,
@@ -4608,9 +4748,9 @@
       "author": "thowar2",
       "draft": false,
       "url": "https://github.com/zcash/zips/pull/1423",
-      "headSha": "0f0e440bcdc52152d16046463ca04cbcbfec22bc",
+      "headSha": "29524e15bfd394142fbc6170ee77eceae6fd3b81",
       "createdAt": "2026-10-29T07:00:25Z",
-      "updatedAt": "2026-11-10T23:38:03Z",
+      "updatedAt": "2026-11-14T01:15:40Z",
       "change": "new",
       "file": "draft-howard-wind-down-zcg.md",
       "files": [
@@ -6486,7 +6626,7 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/4a58cbdd2754da8995bc294d43b092e467ae1184/zips/zip-0000.rst",
     "official": "https://github.com/zcash/zips/pull/895",
-    "updatedAt": "2026-11-10T21:44:57Z",
+    "updatedAt": "2026-11-12T18:00:34Z",
     "summary": "A Zcash Improvement Proposal (ZIP) is a design document providing information to the Zcash community, or describing a new feature for Zcash or its processes or environment. The ZIP should provide a concise technical specification of the…",
     "words": 6371,
     "digest": "678b75eb27dbd1bc534d69c61845dcbcc648f22b678232c2722fe3ebf772b824",
@@ -6499,7 +6639,7 @@
       "url": "https://github.com/zcash/zips/pull/895",
       "headSha": "4a58cbdd2754da8995bc294d43b092e467ae1184",
       "createdAt": "2024-08-13T22:52:46Z",
-      "updatedAt": "2026-11-10T21:44:57Z",
+      "updatedAt": "2026-11-12T18:00:34Z",
       "change": "update",
       "file": "zip-0000.rst",
       "files": [
@@ -6527,7 +6667,7 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/4a58cbdd2754da8995bc294d43b092e467ae1184/zips/zip-0312.rst",
     "official": "https://github.com/zcash/zips/pull/895",
-    "updatedAt": "2026-11-10T21:44:57Z",
+    "updatedAt": "2026-11-12T18:00:34Z",
     "summary": "This proposal adapts FROST 3, a threshold signature scheme, to make it support key re-randomization as described in 15. This is a requirement in order for it to be used to implement unlinkable spend authorization signatures in the Orchard…",
     "words": 4300,
     "digest": "7544bf00e858cd6dab01a05484a312f0875c8fcb704739abb38882b381d59a61",
@@ -6540,7 +6680,7 @@
       "url": "https://github.com/zcash/zips/pull/895",
       "headSha": "4a58cbdd2754da8995bc294d43b092e467ae1184",
       "createdAt": "2024-08-13T22:52:46Z",
-      "updatedAt": "2026-11-10T21:44:57Z",
+      "updatedAt": "2026-11-12T18:00:34Z",
       "change": "update",
       "file": "zip-0312.rst",
       "files": [

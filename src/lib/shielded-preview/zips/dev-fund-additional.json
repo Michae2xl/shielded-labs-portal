@@ -188,9 +188,13 @@
       "Blake Benthall (emersonian)"
     ],
     "group": "Governance",
-    "stage": "Open draft",
+    "stage": "Merged draft",
     "pr": 1454,
-    "record": "pr-1454-draft-emersonian-zcash-town-square",
+    "record": "draft-emersonian-zcash-town-square",
+    "merged": {
+      "on": "2026-11-13",
+      "source": "https://github.com/zcash/zips/pull/1454"
+    },
     "revision": "df8b7a04745c89b41d209bd3f187d180f9ea8671",
     "source": "https://github.com/zcash/zips/blob/df8b7a04745c89b41d209bd3f187d180f9ea8671/zips/draft-emersonian-zcash-town-square.md",
     "discussion": "https://forum.zcashcommunity.com/t/zip-the-zcash-town-square/59049",
