@@ -314,3 +314,20 @@ test('moving between pages: each page marks its place in the menu and its back l
   await page.locator('.post__back a').click();
   await expect(page).toHaveURL(/\/landing\/projects\.html$/);
 });
+
+test('what the audit fixed stays fixed: no dead links, nothing out of date, a privacy policy that matches the site', async ({ page }) => {
+  await open(page, '/landing');
+  await expect(page.locator('.rot__item--zcash'), 'the Zcash mark leads to z.cash').toHaveAttribute('href', 'https://z.cash/');
+  await expect(page.locator('.site-foot a[href="key-facts.html"]'), 'footer link to a page the live site does not have').toHaveCount(0);
+  await open(page, '/landing/ironwood.html');
+  await expect(page.locator('.post__body')).toContainText('It activated as NU6.3 at block height 3,428,143 on July 28, 2026.');
+  await open(page, '/landing/zero.html');
+  await expect(page.locator('a[href^="https://github.com/ShieldedLabs/zero"]'), 'links to repositories that are not public').toHaveCount(0);
+  await open(page, '/landing/fees.html');
+  await expect(page.locator('a[href*="fees.shieldedinfra.net"]'), 'link to a domain that no longer resolves').toHaveCount(0);
+  await open(page, '/landing/jobs.html');
+  await expect(page.locator('.orig-prose')).toContainText('Listing expired');
+  await open(page, '/landing/privacy-policy.html');
+  await expect(page.locator('.orig-prose')).not.toContainText('reCAPTCHA');
+  await expect(page.locator('.orig-prose')).toContainText('We do not use cookies or trackers.');
+});

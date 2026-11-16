@@ -241,12 +241,12 @@ h1,h2,h3,.display{font-weight:600}
 .rot__item{grid-area:1 / 1;margin:0;display:flex;align-items:center;justify-content:center;gap:clamp(14px, 2vw, 28px);opacity:0;animation:rot 12s infinite}
 .rot__item--brand{animation-delay:0s}
 .rot__item--words{animation-delay:4s;font-family:"Montserrat",var(--sans);font-weight:600;font-size:clamp(1.5rem, 3.2vw, 2.5rem);line-height:1.1;letter-spacing:.01em;text-transform:uppercase;color:var(--ink)}
-.rot__item--zcash{animation-delay:8s;color:var(--ink)}
+.rot__item--zcash{animation-delay:8s;color:var(--ink);text-decoration:none}
 .rot__shield svg{display:block;width:clamp(72px, 9vw, 128px);height:auto}
 .rot__name{width:clamp(200px, 30vw, 430px);height:auto}
 .rot__item--zcash svg{display:block;width:clamp(84px, 9vw, 120px);height:auto}
-@keyframes rot{0%{opacity:0;transform:translateY(10px)}5%,28%{opacity:1;transform:none}33.3%,100%{opacity:0;transform:translateY(-10px)}}
-@media (prefers-reduced-motion:reduce){.rot__item{animation:none}.rot__item--brand{opacity:1}}
+@keyframes rot{0%{opacity:0;visibility:hidden;transform:translateY(10px)}5%,28%{opacity:1;visibility:visible;transform:none}33.3%,100%{opacity:0;visibility:hidden;transform:translateY(-10px)}}
+@media (prefers-reduced-motion:reduce){.rot__item{animation:none;visibility:hidden}.rot__item--brand{opacity:1;visibility:visible}}
 .img-on-light{display:var(--img-light)}
 .img-on-dark{display:var(--img-dark)}
 .hero--orig .scroll-cue{position:absolute;right:var(--margin);top:calc(clamp(260px, 42vh, 460px) - 8px);z-index:1}

@@ -74,7 +74,15 @@ def copy_image(src: str) -> str:
     return f"assets/images/blog/{origin.name}"
 
 
+# Documents that moved since the post was written.
+MOVED = {
+    "https://github.com/ShieldedLabs/crosslink-deployment/blob/main/Scoping.md":
+        "https://github.com/ShieldedLabs/zebra-crosslink/blob/main/book/src/design/scoping.md",
+}
+
+
 def local_href(href: str, ids: set[str]) -> str:
+    href = MOVED.get(href, href)
     match = re.match(r"https?://(?:www\.)?shieldedlabs\.net/([^/?#]+)/?(#.*)?$", href)
     if match and match.group(1) in ids:
         return post_file(match.group(1)) + (match.group(2) or "")

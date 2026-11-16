@@ -204,6 +204,42 @@ def content(path: str, title: str) -> str:
     return body.strip()
 
 
+# Where the live page is out of date or links to something that is gone, the landing says what is true now.
+TEXT_FIXES = {
+    "ironwood/": [
+        ("It is scheduled to activate as NU6.3 at block height 3,428,143, approximately July 28 at 12:00 p.m. UTC.",
+         "It activated as NU6.3 at block height 3,428,143 on July 28, 2026."),
+    ],
+    "jobs/": [
+        ('<h3><a href="jobs-cryptographer.html">Cryptographer</a></h3>',
+         '<h3><a href="jobs-cryptographer.html">Cryptographer</a></h3><p class="orig-prose__kicker">Listing expired</p>'),
+    ],
+    # The landing sets no cookies, has no reCAPTCHA, embeds nothing and its form opens the visitor's email app.
+    "privacy-policy/": [
+        ("We do not use tracking cookies. The only cookies that are stored in your browser are to speed up site loading and to prevent spam with reCAPTCHA. If you do not wish to have these cookies you can delete them from your browser or block them.",
+         "We do not use cookies or trackers. The only thing this site keeps in your browser is your choice of light or dark theme, and that choice never leaves your device."),
+        ("Articles on this site may include embedded content (e.g. videos, images, articles, etc.). Embedded content from other websites behaves in the exact same way as if the visitor has visited the other website.",
+         "Articles on this site link to videos, images and articles on other websites. When you follow one of those links, the privacy practices of that website apply."),
+        ("We only use data submitted via the contact form to contact you. We do not share your information with third parties.",
+         "The contact form opens your own email app. We only use the messages you send us to reply to you. We do not share your information with third parties."),
+        ("If you have an account on this site, or have submitted a question via the contact form, you can request",
+         "If you have sent us a message, you can request"),
+    ],
+}
+# Links on the live site that lead nowhere: the repositories are not public and the lab's domain no longer resolves.
+DEAD_LINKS = ["https://github.com/ShieldedLabs/zero", "https://github.com/ShieldedLabs/zero/tree/main/zeronym", "https://fees.shieldedinfra.net/"]
+
+
+def fix(path: str, body: str) -> str:
+    for old, new in TEXT_FIXES.get(path, []):
+        if old not in body:
+            raise ValueError(f"{path}: the live text changed, check this fix: {old[:60]}")
+        body = body.replace(old, new)
+    for url in DEAD_LINKS:
+        body = re.sub(rf'<a href="{re.escape(url)}"[^>]*>(.*?)</a>', r"\1", body)
+    return body
+
+
 def shell() -> tuple[str, str]:
     page = TEMPLATE.read_text()
     return page[: page.index('<main id="main">')], page[page.index("</main>"):]
@@ -303,7 +339,7 @@ def reader(path: str, file: str, title: str, body: str) -> str:
 def main() -> int:
     head, tail = shell()
     for path, (file, title, current) in PAGES.items():
-        body = content(path, title)
+        body = fix(path, content(path, title))
         page_head = re.sub(r"<title>.*?</title>", f"<title>{html.escape(title)} | Shielded Labs</title>", head, count=1)
         page_head = mark(page_head, current, file)
         if path in READER:
