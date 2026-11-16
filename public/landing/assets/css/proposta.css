@@ -207,3 +207,17 @@
 @media (max-width:420px){
   .record__item{grid-template-columns:minmax(0,1fr);row-gap:6px}
 }
+
+/* Values follow the live site: icon centered over centered text. */
+.halves .value{display:block;text-align:center}
+.halves .value__icon--cells{margin-inline:auto}
+.halves .value__icon--cells + .value__name{margin-top:16px}
+.halves .value__desc{margin-inline:auto;max-width:36ch}
+
+/* NSM: note on the change of design, and the original wording kept in strikethrough. */
+.nsm-note{max-width:var(--read);margin-top:24px;padding:14px 18px;border-left:2px solid var(--ink);color:var(--ink-2)}
+.page-nsm del{text-decoration-thickness:1px;color:var(--muted)}
+
+/* Transparency statement */
+.transparency__qr{margin-top:32px}
+.transparency__qr img{display:block;width:229px;height:auto;border-radius:4px}

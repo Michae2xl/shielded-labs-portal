@@ -17,6 +17,7 @@ const added = [
   { name: 'Key facts', path: '/landing/key-facts.html' },
   { name: 'Crosslink', path: '/landing/crosslink.html' },
   { name: 'Funding', path: '/landing/funding.html' },
+  { name: 'Transparency', path: '/landing/transparency.html' },
 ] as const;
 
 for (const viewport of viewports) {
@@ -32,7 +33,12 @@ for (const viewport of viewports) {
       await expect(page.locator('.work__item'), 'projects listed under the mission').toHaveCount(6);
       await expect(page.locator('#writing .feature__title'), 'newest post, featured').toContainText('Activates with NU7');
       await expect(page.locator('#writing .posts--rows .post'), 'the two posts after it').toHaveCount(2);
-      await expect(page.locator('#independence .proof--panel .proof__item'), 'facts beside the funding statement').toHaveCount(4);
+      // The live site has no figures here: About holds its own sentence and links, and the headline is plain type.
+      await expect(page.locator('#about .proof'), 'figures beside the About statement').toHaveCount(0);
+      await expect(page.locator('#hero-title')).toHaveText('Unstoppable private money');
+      await expect(page.locator('#hero-title em'), 'italic words in the headline').toHaveCount(0);
+      await expect(page.locator('.nav-list > li > a', { hasText: 'Transparency' })).toHaveAttribute('href', 'transparency.html');
+      await expect(page.locator('.nav-list a', { hasText: 'Blog' }).first()).toHaveAttribute('href', '/?view=blog&section=all');
       // The hero stays as it was: the proof row lives on the Support page, so nothing competes with the art.
       await expect(page.locator('.hero .proof'), 'proof row in the hero').toHaveCount(0);
       await expect(page.locator('.nav-cta a'), 'the call in the menu').toHaveText('Support');
@@ -40,7 +46,7 @@ for (const viewport of viewports) {
       await expect(page.locator('#values .value__icon--cells'), 'value icons drawn in cells').toHaveCount(6);
       // Mission, what the organization does and builds, comes before Values.
       const order = await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id));
-      expect(order, 'order of the sections below the hero').toEqual(['mission', 'values', 'independence', 'writing']);
+      expect(order, 'order of the sections below the hero').toEqual(['mission', 'values', 'about', 'writing']);
       if (viewport.width >= 1180) {
         // Two halves: every title starts on the left edge and every content block on the same centre axis.
         const edges = await page.locator('.halves').evaluateAll(sections => sections.map(section => ({
@@ -224,6 +230,16 @@ test('a coin with the Zcash mark rolls along the ridge, and stands still when mo
 test('the added pages carry what the portal already holds', async ({ page }) => {
   await open(page, '/landing/nsm.html');
   await expect(page.locator('.lead')).toContainText('activated as part of NU7 at block height 3,543,405');
+  // As on the live NSM page: the note on the change, the original wording struck through, and ZIP 237 added.
+  await expect(page.locator('.nsm-note')).toContainText('preserves the existing four-year halving schedule');
+  await expect(page.locator('.zips del a[href$="zip-0234"]')).toHaveCount(1);
+  await expect(page.locator('.zips a[href$="zip-0237"]')).toHaveCount(1);
+
+  await open(page, '/landing/transparency.html');
+  await expect(page.locator('h1')).toHaveText('Transparency Statement');
+  await expect(page.locator('.transparency p')).toHaveCount(7);
+  await expect(page.locator('.transparency__qr img')).toHaveAttribute('src', 'assets/images/donation-qr.png');
+  expect(await page.locator('.transparency__qr img').evaluate(node => (node as HTMLImageElement).naturalWidth), 'the QR code loads').toBeGreaterThan(0);
 
   await open(page, '/landing/team.html');
   await expect(page.locator('.person')).toHaveCount(14);
@@ -260,7 +276,7 @@ test('each section opens with its name as the section title, and nothing above a
     labels: head.querySelectorAll('.sec-label, .no').length,
   })));
   // One heading per section head: the section name as its title, with no label or number over it.
-  expect(heads.map(head => head.headings)).toEqual(['Mission', 'Values', 'Independence', 'Blog'].map(text => [{ text, title: true }]));
+  expect(heads.map(head => head.headings)).toEqual(['Mission', 'Values', 'About', 'Blog'].map(text => [{ text, title: true }]));
   expect(heads.map(head => head.labels)).toEqual([0, 0, 0, 0]);
   // The name keeps the size and the ink of a section title: it is not drawn as a small label.
   const type = await page.evaluate(() => {
