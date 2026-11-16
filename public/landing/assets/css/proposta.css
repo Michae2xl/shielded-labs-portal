@@ -412,3 +412,12 @@ h1,h2,h3,.display{font-weight:600}
 /* With nine items in the menu, the logo keeps its size on narrower desktops: the items sit closer. */
 .brand{flex:none}
 @media (max-width:1240px) and (min-width:981px){.nav-list{gap:clamp(14px, 1.9vw, 26px)}}
+
+/* Theme switch: just the moon or the sun, no circle around it. */
+.theme-btn{width:36px;height:36px;border:0;border-radius:6px;color:var(--ink-2);transition:color .18s ease,transform .25s ease}
+.theme-btn:hover{color:var(--ink);transform:rotate(-12deg)}
+.theme-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.theme-btn svg{width:20px;height:20px}
+.theme-btn .i-moon path{fill:currentColor;stroke:none}
+.theme-btn .i-sun circle{fill:currentColor;stroke:none}
+@media (prefers-reduced-motion:reduce){.theme-btn:hover{transform:none}}
