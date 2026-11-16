@@ -60,7 +60,9 @@ for (const viewport of viewports) {
       expect(menu.map(item => item.trim())).toEqual(['Home', 'Team', 'Jobs', 'Projects', 'Governance', 'Blog', 'Board', 'Contact', 'Transparency']);
       await expect(page.locator('#submenu-home a')).toHaveText(['About', 'Values', 'Mission']);
       await expect(page.locator('#submenu-projects a')).toHaveText(['NSM', 'Crosslink', 'Dynamic Fees', 'Zero', 'Ironwood']);
-      await expect(page.locator('.nav-cta, .search-btn, .theme-btn'), 'controls the live site does not have').toHaveCount(0);
+      await expect(page.locator('.nav-cta, .search-btn'), 'controls the live site does not have').toHaveCount(0);
+      // The switch between the light and the dark theme stays at the end of the header.
+      await expect(page.locator('.site-header .theme-btn')).toBeVisible();
       // Titles and statements are centered on the page, in the type of the live site.
       const centered = await page.locator('.orig__title, .orig__lead').evaluateAll(nodes => nodes.map(node => {
         const box = node.getBoundingClientRect();
@@ -277,6 +279,10 @@ test('every page of the menu and the footer is a page of the landing, with the t
   await open(page, '/landing/contact.html');
   await expect(page.locator('.contact-form input[name="email"]')).toHaveAttribute('required', '');
   await expect(page.locator('.contact-form')).toHaveAttribute('action', 'mailto:info@shieldedlabs.net');
+  // Two panels as on the live site: the form, and the logo with the X link and the donation QR code.
+  await expect(page.locator('.contact-grid > .contact-panel')).toHaveCount(2);
+  await expect(page.locator('.contact-panel--brand .contact-follow a')).toHaveAttribute('href', 'https://x.com/ShieldedLabs');
+  await expect(page.locator('.contact-panel--brand .contact-panel__qr img')).toHaveAttribute('src', 'assets/images/donation-qr.png');
   await open(page, '/landing/governance.html');
   await expect(page.locator('.orig-prose h3 a').first()).toHaveText('ZCG and the Dev Fund');
   await expect(page.locator('.orig-facts dd').first()).toHaveText('November 16');

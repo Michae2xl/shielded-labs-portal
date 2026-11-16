@@ -41,6 +41,10 @@
         <li><a href="transparency.html">Transparency</a></li>
       </ul>
     </nav>
+    <button class="theme-btn" type="button" aria-label="Switch to light theme">
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path></svg>
+    </button>
   </div>
 </header>
 <main id="main">
@@ -49,18 +53,23 @@
   <div class="wrap">
     <h1 class="orig__title">Contact</h1>
     <p class="orig__intro">If you have any questions, feedback, or are interested in making a donation please contact us below!</p>
-    <form class="contact-form" action="mailto:info@shieldedlabs.net" method="post" enctype="text/plain" data-contact>
-      <label><span>Your Name (required)</span><input type="text" name="name" autocomplete="name" required></label>
-      <label><span>Your Email (required)</span><input type="email" name="email" autocomplete="email" required></label>
-      <label><span>Your Message</span><textarea name="message" rows="6"></textarea></label>
-      <button class="btn" type="submit">Send</button>
-      <p class="contact-form__note">Sending opens your email app with the message ready to <a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a>. Nothing is sent from this page.</p>
-    </form>
-    <div class="contact-follow">
-      <p>Follow us on</p>
-      <a class="contact-follow__x" href="https://x.com/ShieldedLabs" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg><span class="vh">Shielded Labs on X</span></a>
+    <div class="contact-grid">
+      <div class="contact-panel">
+        <form class="contact-form" action="mailto:info@shieldedlabs.net" method="post" enctype="text/plain" data-contact>
+          <label><span>Your Name (required)</span><input type="text" name="name" autocomplete="name" required></label>
+          <label><span>Your Email (required)</span><input type="email" name="email" autocomplete="email" required></label>
+          <label><span>Your Message</span><textarea name="message" rows="7"></textarea></label>
+          <button class="btn" type="submit">Send</button>
+          <p class="contact-form__note">Sending opens your email app with the message ready to <a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a>. Nothing is sent from this page.</p>
+        </form>
+      </div>
+      <div class="contact-panel contact-panel--brand">
+        <img class="contact-panel__logo img-on-light" src="assets/images/shielded-labs-wordmark-light.png" width="800" height="200" alt="Shielded Labs">
+        <img class="contact-panel__logo img-on-dark" src="assets/images/shielded-labs-wordmark.png" width="800" height="200" alt="Shielded Labs">
+        <p class="contact-follow">Follow us on <a class="contact-follow__x" href="https://x.com/ShieldedLabs" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg><span class="vh">Shielded Labs on X</span></a></p>
+        <figure class="contact-panel__qr"><img src="assets/images/donation-qr.png" width="229" height="229" alt="QR code with the Shielded Labs Zcash donation address"></figure>
+      </div>
     </div>
-    <figure class="transparency__qr"><img src="assets/images/donation-qr.png" width="229" height="229" alt="QR code with the Shielded Labs Zcash donation address"></figure>
   </div>
 </section>
 <script>
