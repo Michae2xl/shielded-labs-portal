@@ -46,8 +46,12 @@ for (const viewport of viewports) {
       await expect(page.locator('#values .value__icon--cells'), 'value icons drawn in cells').toHaveCount(6);
       await expect(page.locator('.nav-list > li > a', { hasText: 'Transparency' })).toHaveAttribute('href', 'transparency.html');
       await expect(page.locator('.nav-list a', { hasText: 'Blog' }).first()).toHaveAttribute('href', 'blog.html');
-      await expect(page.locator('.nav-cta a'), 'the call in the menu').toHaveText('Support');
-      await expect(page.locator('.nav-cta a')).toHaveAttribute('href', 'support.html');
+      // The menu of the live site, in its order, with Transparency added last; no extra call, search or theme button.
+      const menu = await page.locator('.nav-list > li > a').allTextContents();
+      expect(menu.map(item => item.trim())).toEqual(['Home', 'Team', 'Jobs', 'Projects', 'Governance', 'Blog', 'Board', 'Contact', 'Transparency']);
+      await expect(page.locator('#submenu-home a')).toHaveText(['About', 'Values', 'Mission']);
+      await expect(page.locator('#submenu-projects a')).toHaveText(['NSM', 'Crosslink', 'Dynamic Fees', 'Zero', 'Ironwood']);
+      await expect(page.locator('.nav-cta, .search-btn, .theme-btn'), 'controls the live site does not have').toHaveCount(0);
       // Titles and statements are centered on the page, in the type of the live site.
       const centered = await page.locator('.orig__title, .orig__lead').evaluateAll(nodes => nodes.map(node => {
         const box = node.getBoundingClientRect();
