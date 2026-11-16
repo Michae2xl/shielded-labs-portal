@@ -93,6 +93,9 @@ def render(nodes, ids: set[str]) -> str:
         attrs = ""
         if node.get("id"):
             attrs += f' id="{esc(node["id"])}"'
+        if tag == "a" and re.fullmatch(r"https?://[bm]\.tech/?", node.get("href", "")):
+            out.append(render(node.get("children", []), ids))  # "B.Tech" and "M.Tech" are degrees, not sites
+            continue
         if tag == "a":
             href = local_href(node.get("href", ""), ids)
             attrs += f' href="{esc(href)}"'
@@ -194,7 +197,7 @@ def index_page(head: str, tail: str, docs: list[dict]) -> str:
 </section>
 {FILTER_SCRIPT}
 """
-    return page(head, tail, "Shielded Labs: blog", "Articles from Shielded Labs: news, engineering updates, governance and security.", main)
+    return page(head, tail, "Blog | Shielded Labs", "Articles from Shielded Labs: news, engineering updates, governance and security.", main)
 
 
 def post_page(head: str, tail: str, doc: dict, ids: set[str]) -> str:
@@ -227,6 +230,10 @@ def post_page(head: str, tail: str, doc: dict, ids: set[str]) -> str:
     if linked.get("also"):
         source += f'<a class="post-aside__link" href="{esc(linked["also"]["href"])}" target="_blank" rel="noopener noreferrer"><span>{esc(linked["also"]["label"])}</span>{OUT}</a>'
     source += "</div>"
+    body = render(doc["body"], ids)
+    # Links to notes the imported text does not carry go nowhere: keep their words, drop the link.
+    present = set(re.findall(r'id="([^"]+)"', body))
+    body = re.sub(rf'<a href="{re.escape(post_file(doc["id"]))}#([^"]+)">(.*?)</a>', lambda m: m.group(0) if m.group(1) in present else m.group(2), body)
     main = f"""<main id="main">
 
 <article class="section post">
@@ -237,7 +244,7 @@ def post_page(head: str, tail: str, doc: dict, ids: set[str]) -> str:
     <div class="post__grid">
       <div class="post__main">
         {cover}
-        <div class="post__body">{render(doc['body'], ids)}</div>
+        <div class="post__body">{body}</div>
       </div>
       <aside class="post-aside" aria-label="About this article">{toc}{project}{source}</aside>
     </div>

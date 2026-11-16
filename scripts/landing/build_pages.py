@@ -304,7 +304,7 @@ def main() -> int:
     head, tail = shell()
     for path, (file, title, current) in PAGES.items():
         body = content(path, title)
-        page_head = re.sub(r"<title>.*?</title>", f"<title>Shielded Labs: {html.escape(title.lower() if title != 'Zero' else title)}</title>", head, count=1)
+        page_head = re.sub(r"<title>.*?</title>", f"<title>{html.escape(title)} | Shielded Labs</title>", head, count=1)
         page_head = mark(page_head, current, file)
         if path in READER:
             (LANDING / file).write_text(page_head + reader(path, file, title, body) + tail)
