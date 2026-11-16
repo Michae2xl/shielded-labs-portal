@@ -264,3 +264,10 @@ h1,h2,h3,.display{font-weight:600}
 .orig-values .value__desc{margin:12px auto 0;max-width:34ch;font-size:var(--fs-small);line-height:1.6;color:var(--ink-2)}
 @media (max-width:900px){.orig-values{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:600px){.orig-values{grid-template-columns:1fr}.hero--orig .scroll-cue{display:none}}
+
+/* Transparency: title, text and QR code centered on the page. */
+.transparency-head .wrap{text-align:center}
+.transparency-head h1{margin-inline:auto}
+.transparency{text-align:center}
+.transparency p{margin-inline:auto}
+.transparency__qr{display:flex;justify-content:center;margin:40px auto 0}
