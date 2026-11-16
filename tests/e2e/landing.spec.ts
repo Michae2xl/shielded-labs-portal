@@ -184,12 +184,17 @@ test('the added pages carry what the portal already holds', async ({ page }) => 
   expect(await page.locator('.transparency__qr img').evaluate(node => (node as HTMLImageElement).naturalWidth), 'the QR code loads').toBeGreaterThan(0);
 
   await open(page, '/landing/team.html');
-  await expect(page.locator('.person')).toHaveCount(14);
+  await expect(page.locator('.person')).toHaveCount(15);
   await expect(page.locator('#aayush-giri .person__name')).toHaveText('Aayush Giri');
   await expect(page.locator('#wei-jie-koh .person__name')).toHaveText('Wei Jie Koh');
+  // The Community Lead, just before Operations at the end of the list.
+  await expect(page.locator('#michael-guima .person__role')).toHaveText('Community Lead');
+  await expect(page.locator('#michael-guima .person__link')).toHaveAttribute('href', 'https://x.com/michael2xl');
+  const order = await page.locator('.person').evaluateAll(people => people.map(person => person.id));
+  expect(order.slice(-2), 'last two people on the team').toEqual(['michael-guima', 'robert-fegler']);
 
   await open(page, '/landing/key-facts.html');
-  await expect(page.getByRole('link', { name: '14 people' })).toBeVisible();
+  await expect(page.getByRole('link', { name: '15 people' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Donations from Zcash holders and supporters' })).toHaveAttribute('href', 'funding.html');
 
   await open(page, '/landing/crosslink.html');
@@ -251,7 +256,7 @@ test('the blog lives on the landing, in the format of the portal: filters, searc
 });
 
 test('team, board and governance follow the pattern of the homepage: a centered title, then centered content', async ({ page }) => {
-  for (const [path, title, people] of [['/landing/team.html', 'Team', 14], ['/landing/board.html', 'Board of Directors', 5], ['/landing/governance.html', 'Governance & Polling', 0]] as const) {
+  for (const [path, title, people] of [['/landing/team.html', 'Team', 15], ['/landing/board.html', 'Board of Directors', 5], ['/landing/governance.html', 'Governance & Polling', 0]] as const) {
     await open(page, path);
     await expect(page.locator('h1.orig__title')).toHaveText(title);
     const offset = await page.locator('h1.orig__title').evaluate(node => {
