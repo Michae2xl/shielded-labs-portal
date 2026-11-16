@@ -20,6 +20,15 @@ const added = [
   { name: 'Blog', path: '/landing/blog.html' },
   { name: 'Governance', path: '/landing/governance.html' },
   { name: 'Board', path: '/landing/board.html' },
+  { name: 'Projects', path: '/landing/projects.html' },
+  { name: 'Dynamic Fees', path: '/landing/fees.html' },
+  { name: 'Zero', path: '/landing/zero.html' },
+  { name: 'Ironwood', path: '/landing/ironwood.html' },
+  { name: 'Roadmap', path: '/landing/roadmap.html' },
+  { name: 'Crosslink FAQ', path: '/landing/crosslink-faq.html' },
+  { name: 'Jobs', path: '/landing/jobs.html' },
+  { name: 'Contact', path: '/landing/contact.html' },
+  { name: 'Privacy Policy', path: '/landing/privacy-policy.html' },
   { name: 'a blog post', path: '/landing/blog-epoch-future-proof-cryptography-for-zcash.html' },
 ] as const;
 
@@ -251,4 +260,21 @@ test('team, board and governance follow the pattern of the homepage: a centered 
   }
   await expect(page.locator('.nav-list a[aria-current="page"]')).toHaveText('Governance');
   await expect(page.locator('.link-card')).toHaveCount(6);
+});
+
+test('every page of the menu and the footer is a page of the landing, with the text of the live site', async ({ page }) => {
+  await open(page, '/landing');
+  const links = await page.locator('.nav-list a, .site-foot a').evaluateAll(nodes => nodes.map(node => node.getAttribute('href') ?? ''));
+  const away = links.filter(href => /shieldedlabs\.net\/(?!feed\/)/.test(href));
+  expect(away, 'menu and footer links that leave the landing for the old site').toEqual([]);
+  await open(page, '/landing/projects.html');
+  await expect(page.locator('.orig-prose a[href="fees.html"]')).toHaveText('Dynamic Fees');
+  await open(page, '/landing/zero.html');
+  await expect(page.locator('.orig-prose')).toContainText('Zero is a supported suite of open-source Zcash infrastructure software');
+  await open(page, '/landing/contact.html');
+  await expect(page.locator('.contact-form input[name="email"]')).toHaveAttribute('required', '');
+  await expect(page.locator('.contact-form')).toHaveAttribute('action', 'mailto:info@shieldedlabs.net');
+  await open(page, '/landing/governance.html');
+  await expect(page.locator('.orig-prose h3 a').first()).toHaveText('ZCG and the Dev Fund');
+  await expect(page.locator('.orig-facts dd').first()).toHaveText('November 16');
 });

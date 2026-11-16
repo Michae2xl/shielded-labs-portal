@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement;d.classList.remove('no-js');try{var t=localStorage.getItem('sl-theme');if(t==='light'||t==='dark')d.setAttribute('data-theme',t);}catch(e){}if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reveal');setTimeout(function(){if(!d.classList.contains('reveal-ready'))d.classList.remove('reveal');},3000);}})();</script>
+<title>Shielded Labs: crosslink faq</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/proposta.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img class="brand__light" src="assets/images/shielded-labs-wordmark-light.png" width="800" height="200" alt="Shielded Labs, home"><img class="brand__dark" src="assets/images/shielded-labs-wordmark.png" width="800" height="200" alt="Shielded Labs, home"></a>
+    <nav class="nav" aria-label="Primary">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-menu"><span class="bars" aria-hidden="true"></span><span class="menu-label">Menu</span></button>
+      <ul class="nav-list" id="primary-menu">
+        <li class="nav-group">
+          <a href="index.html">Home</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-home" aria-label="Home submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-home">
+            <li><a href="index.html#about">About</a></li><li><a href="index.html#values">Values</a></li><li><a href="index.html#mission">Mission</a></li>
+          </ul>
+        </li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li class="nav-group">
+          <a href="projects.html" aria-current="true">Projects</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-projects" aria-label="Projects submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-projects">
+            <li><a href="nsm.html">NSM</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="fees.html">Dynamic Fees</a></li><li><a href="zero.html">Zero</a></li><li><a href="ironwood.html">Ironwood</a></li>
+          </ul>
+        </li>
+        <li><a href="governance.html">Governance</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="board.html">Board</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="transparency.html">Transparency</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<section class="section orig-page">
+  <div class="wrap">
+    <h1 class="orig__title">Crosslink FAQ</h1>
+    <div class="orig-prose orig-prose--site">
+<h3>Is Zcash moving to full Proof-of-Stake?</h3><p>No. Zcash remains a Proof-of-Work blockchain, and Crosslink does not change that. Crosslink adds a <i>finality gadget</i> that runs alongside PoW to make confirmed blocks irreversible and strengthen the network’s security, but it does not replace mining or change how blocks are produced. Crosslink is still a proposal that would need to go through the standard Zcash governance process and achieve strong community consensus before being included in a future network upgrade. Even if Crosslink were activated, there is no indication that Zcash would ever transition to full Proof-of-Stake</p><h3>What is Crosslink?</h3><p>Crosslink builds on Proof-of-Work by adding a finality gadget that provides an additional layer of security and protection against rollbacks. All economic activity and block validation continue to occur on the PoW chain, with the finality gadget running in parallel to anchor blocks and prevent chain reorgs. It strengthens the network by adding an additional layer of protection and consistency without replacing PoW as the foundation of Zcash’s consensus. In short, Crosslink enhances Zcash’s existing security model rather than reinventing it.</p><h3>Why is finality important?</h3><p>Finality ensures that once a block is confirmed, it cannot be reorganized or reversed, which protects users from double-spend and rollback attacks. This increases confidence in transaction settlement and makes the network more reliable for real-world use cases. Finality also allows for shorter confirmation times for exchanges, improves reliability for cross-chain bridges, and provides the stability that DeFi applications require. Providing stronger settlement guarantees makes Zcash easier to integrate into the wider crypto economy.</p><h3>How is Crosslink’s finality different from the finality Zcash already has?</h3><p>Zcash’s current Proof-of-Work system provides “probabilistic finality,” which means that as more blocks are mined, the chance of earlier ones being rolled back decreases, but there is never complete certainty. Crosslink introduces “assured finality,” where once a block is finalized, it cannot be reversed in practice. This gives users confidence that finalized blocks are permanent and ensures the entire network agrees on the same ledger state. In contrast, with probabilistic finality, a large rollback could leave different groups of users disagreeing on which chain to follow, creating confusion and potential division within the community.</p><h3>How does Crosslink staking work?</h3><p>Crosslink staking lets Zcash holders lock up their ZEC in the Orchard pool to help secure the network and earn rewards. Every five days, new staking and unstaking actions are processed together in batches. When someone unstakes, their coins stay locked for one more five-day period before becoming spendable. This design protects privacy, keeps things simple, and gives users a fair way to earn rewards while supporting the network’s security.</p><h3>Where do staking rewards come from?</h3><p>Staking rewards in Crosslink come directly from Zcash’s existing block rewards, and not from new inflation. The 21 million coin cap remains unchanged. Under the proposed distribution, block rewards would be split 40% to miners, 40% to stakers, and 20% to the Dev Fund, resulting in an even 50/50 share between miners and stakers overall. This design strengthens network security through participation while preserving Zcash’s fixed supply and long-term scarcity</p><h3>How much yield will stakers earn?</h3><p>The yield from staking in Crosslink depends on several factors, including the total size of the Orchard pool, the percentage of that pool that’s staked, how much an individual chooses to stake, and the commission rate charged by their selected finalizer. Because these factors interact dynamically, yields will fluctuate over time rather than remaining fixed. To explore different scenarios and estimate potential returns, you can use the <a href="https://aphelionz.github.io/crosslink-economics-simulator/?ps=50&amp;c=10&amp;dz=100&amp;ts=3000000" target="_blank" rel="noopener noreferrer">Crosslink Economic Simulator</a>, which models how rewards change under varying participation and commission levels.</p><h3>What are epoch and unbonding periods?</h3><p>Crosslink operates in fixed 5-day epochs that group all staking and unstaking activity into discrete batches. After an unstake request, coins remain locked for the rest of that epoch and the next one, and become spendable after 5-10 days depending on timing. This is designed to protect privacy and security by reducing information leakage and providing a buffer period to detect and respond to potential attacks.</p><h3>Why are staking and unstaking actions batched?</h3><p>Batching increases privacy by processing many actions together, which makes it harder to correlate specific transactions with individual users or timing patterns. Fixed windows also reduce information leakage and pair with the unbonding period to provide a buffer for detecting and responding to potential attacks. The goal is to preserve privacy and security without adding unnecessary complexity.</p><h3>What is stake quantization and why does it matter?</h3><p>Stake quantization means that staking amounts must be made in exponential increments of 10 (1, 10, 100, 1,000, etc.), preventing observers from easily inferring who staked what. This approach standardizes participation while obscuring individual behavior patterns. It also makes it easier for the community to verify aggregate totals without exposing personal details.</p><h3>Why is there an unbonding delay?</h3><p>The 5-day unbonding delay provides a critical safety window to detect and respond to attacks or finalizer misbehavior before funds can be withdrawn. This buffer discourages rapid exit strategies that could weaken network stability. It’s short enough to keep staking liquid but long enough to add meaningful security and privacy protections.</p><h3>Does Crosslink include slashing?</h3><p>No, the current Crosslink design does not include in-protocol slashing, meaning stakers cannot lose their principal for finalizer misbehavior. Instead, accountability is enforced socially and economically, and the market ultimately decides. Delegators are expected to monitor finalizer performance and move their stake to others who behave reliably and uphold the network’s integrity. Future versions could possibly revisit in-protocol slashing if it can be implemented safely without adding unnecessary complexity or risk to honest participants, but it’s not something Shielded Labs is considering at this time.</p><h3>Does Crosslink compromise privacy?</h3><p>Users who choose not to stake within the Orchard pool continue to enjoy the same level of privacy as before. Those who opt in to staking disclose only the size of their stake so the community can verify total participation and monitor finalizers, without revealing information that links a stake to a specific individual. Because all staking activity occurs within the Orchard pool, Crosslink may potentially increase overall usage of the shielded pool and strengthen its anonymity set.</p><h3>Why are they called finalizers and not validators?</h3><p>In Crosslink, the Proof-of-Work miners are still the validators who produce and verify blocks. The new participants introduced by Crosslink perform a different role: they finalize blocks by confirming them as irreversible once sufficient consensus is reached. The term finalizer distinguishes this role from traditional validators in pure Proof-of-Stake systems and emphasizes that finalizers strengthen, rather than replace, Zcash’s existing PoW consensus.</p><h3>Is Crosslink fully shielded staking?</h3><p>In Crosslink V1, stakers disclose their stake amounts (in rounded increments) for accountability while keeping timing and ownership information private. We have explored and continue to explore other mechanisms to further enhance privacy, but this approach provides a strong balance of privacy, security, and practicality. The long-term goal is to maximize privacy without sacrificing clarity or safety.</p><h3>Does Crosslink increase Zcash’s attack surface?</h3><p>Crosslink makes Zcash more secure by making attacks significantly harder to execute. An adversary would need to compromise both the PoW and PoS layers instead of just one. The PoS layer also introduces accountability where if validators act dishonestly, the community can coordinate a response or even trigger a community-activated fork that slashes their stake. This creates consequences for bad actors that don’t exist in pure PoW, which strengthens the network’s overall resilience and credibility.</p><h3>What happens if there’s an attack or consensus failure?</h3><p>If an attack occurs, Crosslink is designed to revert to probabilistic PoW finality while finalizers and stakers re-establish consensus. In more serious cases, an emergency patch could temporarily pause PoS finality while allowing regular PoW transactions to continue. This layered defense makes Zcash more resilient to coordinated or unexpected network disruptions.</p><h3>Why were the parameters changed from the original design?</h3><p>The initial 10-day epoch and 30-day unbonding period were seen as too restrictive and unfriendly to liquidity. The revised 5-day epoch and 1-epoch unbonding reduce wait times while maintaining the privacy and security goals of the protocol. These changes reflect community feedback and the project’s commitment to iterative improvement.</p><h3>What is Tenderlink?</h3><p>Tenderlink is a lightweight, Shielded Labs-maintained version of Tendermint that provides consensus for Crosslink’s finality layer. By maintaining our own codebase, we improve stability, reduce dependencies, and gain full control over optimizations. This approach may also position Crosslink to eventually support more finalizers without compromising performance</p><h3>Why is time to market an important goal for Crosslink?</h3><p>Our goal is to get a functional version of Crosslink into users’ hands as soon as possible so we can learn from real-world experience rather than endless theory. Delivering an initial version early allows us to gather feedback, test assumptions, and make informed improvements through short, deliberate feedback loops. Each iteration builds the foundation for faster progress in future versions, since practical experience often resolves uncertainties that slow down theoretical design work. By prioritizing iteration and community input, we can build a secure, practical staking solution faster while still maintaining Zcash’s standards for privacy and security.</p><h3>When will Crosslink be completed?</h3><p>Our goal is to have a working testnet prototype ready by early Q1 2026. Once it’s live, we’ll gather feedback from coinholders and community panels to gauge whether there’s broad support for moving forward. If the community supports the proposal, the productionization and integration phase is expected to take about a year, as it will require close coordination with other protocol engineering teams. Full integration may also depend on broader ecosystem priorities and the timing of future network upgrades.</p><h3>What is the governance process for Crosslink?</h3><p>Like all major protocol changes, Crosslink would need to go through Zcash’s standard governance process before it could be activated. That means it must first be formally specified in a Zcash Improvement Proposal (ZIP), discussed publicly, and demonstrate strong consensus through coinholder and community panel feedback. If consensus emerges, Crosslink could then be scheduled for inclusion in a future network upgrade, coordinated among the core engineering teams. Governance is driven by transparent discussion and broad agreement between coinholders and the community.</p><h3>Has Crosslink received an independent security review?</h3><p>Yes. In December 2025, Shielded Labs engaged Nicolás “Nikete” Della Penna to conduct an independent security and mechanism-design review of the current Crosslink implementation. The review examined Crosslink’s incentive structure, safety and liveness assumptions, and potential failure modes. It confirmed that the design introduces finality as intended while also identifying areas for improvement that are being incorporated as the design evolves. This review marked the beginning of a broader hardening process, and additional independent security reviews are expected as Crosslink moves closer to production readiness.</p><p>You can read Nikete’s full report here: <a href="https://www.nikete.com/crosslink_zebra_audit.pdf" target="_blank" rel="noopener noreferrer">https://www.nikete.com/crosslink_zebra_audit.pdf</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="grid foot">
+      <div class="foot-brand">
+        <img src="assets/images/shielded-labs-wordmark.png" alt="Shielded Labs" width="800" height="200" decoding="async">
+        <p class="foot-line">Building the future of private money</p>
+        <p class="foot-about">Shielded Labs is an independent, donation-funded Zcash support organization based in Switzerland.</p>
+      </div>
+      <nav class="foot-col foot-col--projects" aria-labelledby="f-projects">
+        <h2 id="f-projects">Projects</h2>
+        <ul>
+          <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="fees.html">Dynamic Fees</a></li><li><a href="zero.html">Zero</a></li><li><a href="ironwood.html">Ironwood</a></li><li><a href="blog-epoch-future-proof-cryptography-for-zcash.html">Epoch</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-site">
+        <h2 id="f-site">Organization</h2>
+        <ul>
+          <li><a href="index.html#about">About</a></li><li><a href="governance.html">Governance</a></li><li><a href="team.html">Team</a></li><li><a href="board.html">Board</a></li><li><a href="blog.html">Blog</a></li><li><a href="jobs.html">Jobs</a></li><li><a href="transparency.html">Transparency</a></li><li><a href="key-facts.html">Key facts</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-connect">
+        <h2 id="f-connect">Connect</h2>
+        <ul>
+          <li><a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a></li>
+          <li><a href="https://x.com/ShieldedLabs">X</a></li>
+          <li><a href="https://github.com/ShieldedLabs">GitHub</a></li>
+          <li><a href="https://shieldedlabs.net/feed/">RSS feed</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 Shielded Labs · Association registered in Zug · Dammstrasse 16, 6300 Zug, Switzerland</span>
+      <span class="legal-links"><span>No cookies. No trackers.</span> <a href="privacy-policy.html">Privacy policy</a></span>
+    </div>
+  </div>
+</footer>
+<p class="mock-note">Proposal mock for review, not the live site. Donation addresses are placeholders, and items marked Pending wait for Shielded Labs.</p>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>
