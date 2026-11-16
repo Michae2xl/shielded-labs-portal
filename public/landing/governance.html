@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement;d.classList.remove('no-js');try{var t=localStorage.getItem('sl-theme');if(t==='light'||t==='dark')d.setAttribute('data-theme',t);}catch(e){}if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reveal');setTimeout(function(){if(!d.classList.contains('reveal-ready'))d.classList.remove('reveal');},3000);}})();</script>
+<title>Shielded Labs: governance and polling</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/proposta.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img class="brand__light" src="assets/images/shielded-labs-wordmark-light.png" width="800" height="200" alt="Shielded Labs, home"><img class="brand__dark" src="assets/images/shielded-labs-wordmark.png" width="800" height="200" alt="Shielded Labs, home"></a>
+    <nav class="nav" aria-label="Primary">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-menu"><span class="bars" aria-hidden="true"></span><span class="menu-label">Menu</span></button>
+      <ul class="nav-list" id="primary-menu">
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="index.html">Home</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-home" aria-label="Home submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-home">
+            <li><a href="index.html#about">About</a></li><li><a href="index.html#mission">Mission</a></li><li><a href="index.html#values">Values</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="https://shieldedlabs.net/projects/">Projects</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-projects" aria-label="Projects submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-projects">
+            <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs.net/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs.net/zero/">Zero</a></li><li><a href="https://shieldedlabs.net/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs.net/roadmap/">Roadmap</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="team.html">Team</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-team" aria-label="Team submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-team">
+            <li><a href="team.html">Team</a></li><li><a href="board.html">Board</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li><a href="governance.html" aria-current="page">Governance</a></li>
+        
+        
+        
+        
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="transparency.html">Transparency</a></li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs.net/contact/">Contact</a></li>
+        <li class="nav-cta"><a href="support.html">Support</a></li>
+        
+        
+      </ul>
+    </nav>
+    <button class="search-btn" type="button" aria-label="Search" aria-haspopup="dialog" aria-controls="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6"></circle><path d="m15 15 5.5 5.5"></path></svg>
+    </button>
+    <button class="theme-btn" type="button" aria-label="Switch to light theme">
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path></svg>
+    </button>
+  </div>
+</header>
+<main id="main">
+
+<section class="section orig-page">
+  <div class="wrap">
+    <h1 class="orig__title">Governance &amp; Polling</h1>
+    <p class="orig__intro">This page provides information about upcoming Zcash polls, including both protocol governance polls used to gauge community and coinholder sentiment and coinholder-directed funding used to allocate grants.</p>
+    <div class="orig-prose">
+      <h2>Governance Overview</h2>
+      <p>Zcash governance has evolved significantly over the years, moving from a relatively centralized model toward a broader, more decentralized process. Today, it is useful to distinguish between two related but separate functions: determining support for changes to the Zcash protocol and deciding how ecosystem funding is allocated.</p>
+      <ul>
+        <li><strong>Protocol Governance:</strong> Changes to Zcash are developed and discussed openly through the ZIP process, with community panels and coinholders helping gauge support for proposed upgrades. These are polls, not binding votes. Zcash has no onchain governance mechanism that automatically determines which changes are adopted. Instead, polling provides input into a broader rough-consensus process, with changes ultimately taking effect when network participants choose to adopt the software.</li>
+        <li><strong>Funding:</strong> Zcash currently allocates 20% of block rewards to ecosystem development. Of this, 8% goes to Zcash Community Grants (ZCG) and 12% goes to the Coinholder-Directed Retroactive Grants Program, which allows ZEC holders to decide which grant proposals should receive funding. We provide information below on how to participate in the coinholder grants program.</li>
+      </ul>
+
+      <h2>Upcoming Polls</h2>
+      <h3><a href="https://forum.zcashcommunity.com/t/call-for-proposals-coinholder-directed-retroactive-grants-program-q3/56885" target="_blank" rel="noopener noreferrer">Q3 Coinholder-Directed Retroactive Grants</a></h3>
+      <p class="orig-prose__kicker">Funding</p>
+      <p>The Coinholder-Directed Retroactive Grants Program allows ZEC holders to decide which completed projects should receive retroactive funding.</p>
+      <dl class="orig-facts">
+        <div><dt>Public review period</dt><dd>August 17 to September 16</dd></div>
+        <div><dt>Coinholder poll</dt><dd>September 17 to September 29</dd></div>
+        <div><dt>Participants</dt><dd>ZEC coinholders</dd></div>
+      </dl>
+
+      <h2>How to Participate</h2>
+      <h3>Coinholders</h3>
+      <p>ZEC holders can participate directly in coinholder polls using supported wallets. Vizor, ZODL, and ZKool currently support Zcash coinholder voting. Choose a wallet below to download it:</p>
+      <ul class="link-cards">
+        <li><a class="link-card" href="https://vizor.cash/" target="_blank" rel="noopener noreferrer"><img src="assets/images/wallet-vizor.png" width="40" height="40" alt="" loading="lazy" decoding="async"><span class="link-card__text"><span class="link-card__name">Vizor</span><span class="link-card__host">vizor.cash</span></span></a></li>
+        <li><a class="link-card" href="https://zodl.com" target="_blank" rel="noopener noreferrer"><img src="assets/images/wallet-zodl.png" width="40" height="40" alt="" loading="lazy" decoding="async"><span class="link-card__text"><span class="link-card__name">ZODL</span><span class="link-card__host">zodl.com</span></span></a></li>
+        <li><a class="link-card" href="https://hhanh00.github.io/zkool2/" target="_blank" rel="noopener noreferrer"><img src="assets/images/wallet-zkool.png" width="40" height="40" alt="" loading="lazy" decoding="async"><span class="link-card__text"><span class="link-card__name">ZKool</span><span class="link-card__host">hhanh00.github.io/zkool2</span></span></a></li>
+      </ul>
+      <h3>ZCAP</h3>
+      <p>The Zcash Community Advisory Panel (ZCAP) is a group of community members polled by the Zcash Foundation to provide advisory input on Zcash governance. Membership is open to people who meet one or more eligibility criteria.</p>
+      <ul class="link-cards">
+        <li><a class="link-card" href="https://zfnd.org/zcash-community-advisory-panel/" target="_blank" rel="noopener noreferrer"><span class="link-card__text"><span class="link-card__name">Zcash Community Advisory Panel</span><span class="link-card__host">zfnd.org/zcash-community-advisory-panel</span></span></a></li>
+      </ul>
+      <h3>Other Community Panels</h3>
+      <p>ZecHub and several regional Zcash communities also participate in governance polling. To learn more about these groups or get involved, visit ZecHub or inquire about regional communities on the Zcash Community Forum.</p>
+      <ul class="link-cards">
+        <li><a class="link-card" href="https://zechub.wiki" target="_blank" rel="noopener noreferrer"><img src="assets/images/community-zechub.png" width="40" height="40" alt="" loading="lazy" decoding="async"><span class="link-card__text"><span class="link-card__name">ZecHub</span><span class="link-card__host">zechub.wiki</span></span></a></li>
+        <li><a class="link-card" href="https://forum.zcashcommunity.com" target="_blank" rel="noopener noreferrer"><span class="link-card__text"><span class="link-card__name">Zcash Community Forum</span><span class="link-card__host">forum.zcashcommunity.com</span></span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="grid foot">
+      <div class="foot-brand">
+        <img src="assets/images/shielded-labs-wordmark.png" alt="Shielded Labs" width="800" height="200" decoding="async">
+        <p class="foot-line">Building the future of private money</p>
+        <p class="foot-about">Shielded Labs is an independent, donation-funded Zcash support organization based in Switzerland.</p>
+      </div>
+      <nav class="foot-col foot-col--projects" aria-labelledby="f-projects">
+        <h2 id="f-projects">Projects</h2>
+        <ul>
+          <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs.net/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs.net/zero/">Zero</a></li><li><a href="https://shieldedlabs.net/ironwood/">Ironwood</a></li><li><a href="blog-epoch-future-proof-cryptography-for-zcash.html">Epoch</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-site">
+        <h2 id="f-site">Organization</h2>
+        <ul>
+          <li><a href="index.html#about">About</a></li><li><a href="governance.html">Governance</a></li><li><a href="team.html">Team</a></li><li><a href="board.html">Board</a></li><li><a href="blog.html">Blog</a></li><li><a href="https://shieldedlabs.net/jobs/">Jobs</a></li><li><a href="transparency.html">Transparency</a></li><li><a href="key-facts.html">Key facts</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-connect">
+        <h2 id="f-connect">Connect</h2>
+        <ul>
+          <li><a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a></li>
+          <li><a href="https://x.com/ShieldedLabs">X</a></li>
+          <li><a href="https://github.com/ShieldedLabs">GitHub</a></li>
+          <li><a href="https://shieldedlabs.net/feed/">RSS feed</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 Shielded Labs · Association registered in Zug · Dammstrasse 16, 6300 Zug, Switzerland</span>
+      <span class="legal-links"><span>No cookies. No trackers.</span> <a href="https://shieldedlabs.net/privacy-policy/">Privacy policy</a></span>
+    </div>
+  </div>
+</footer>
+<p class="mock-note">Proposal mock for review, not the live site. Donation addresses are placeholders, and items marked Pending wait for Shielded Labs.</p>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

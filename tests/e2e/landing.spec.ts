@@ -18,6 +18,8 @@ const added = [
   { name: 'Funding', path: '/landing/funding.html' },
   { name: 'Transparency', path: '/landing/transparency.html' },
   { name: 'Blog', path: '/landing/blog.html' },
+  { name: 'Governance', path: '/landing/governance.html' },
+  { name: 'Board', path: '/landing/board.html' },
   { name: 'a blog post', path: '/landing/blog-epoch-future-proof-cryptography-for-zcash.html' },
 ] as const;
 
@@ -228,4 +230,21 @@ test('the blog lives on the landing, in the format of the portal: filters, searc
   await expect(page.locator('.post-aside a', { hasText: 'Original source' })).toHaveAttribute('href', 'https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/');
   // No page of the landing sends the reader to the portal's blog.
   await expect(page.locator('a[href*="view=blog"]')).toHaveCount(0);
+});
+
+test('team, board and governance follow the pattern of the homepage: a centered title, then centered content', async ({ page }) => {
+  for (const [path, title, people] of [['/landing/team.html', 'Team', 14], ['/landing/board.html', 'Board of Directors', 5], ['/landing/governance.html', 'Governance & Polling', 0]] as const) {
+    await open(page, path);
+    await expect(page.locator('h1.orig__title')).toHaveText(title);
+    const offset = await page.locator('h1.orig__title').evaluate(node => {
+      const box = node.getBoundingClientRect();
+      return Math.abs(box.left + box.width / 2 - document.documentElement.clientWidth / 2);
+    });
+    expect(offset, `distance of the ${title} title from the centre`).toBeLessThanOrEqual(2);
+    await expect(page.locator('.people--orig .person')).toHaveCount(people);
+    // The menu leads to the landing's own page, not to the old site.
+    await expect(page.locator('a[href="https://shieldedlabs.net/governance/"], a[href="https://shieldedlabs.net/board/"]')).toHaveCount(0);
+  }
+  await expect(page.locator('.nav-list a[aria-current="page"]')).toHaveText('Governance');
+  await expect(page.locator('.link-card')).toHaveCount(6);
 });
