@@ -55,9 +55,9 @@ for (const viewport of viewports) {
       await expect(page.locator('#values .value__icon--cells'), 'value icons drawn in cells').toHaveCount(6);
       await expect(page.locator('.nav-list > li > a', { hasText: 'Transparency' })).toHaveAttribute('href', 'transparency.html');
       await expect(page.locator('.nav-list a', { hasText: 'Blog' }).first()).toHaveAttribute('href', 'blog.html');
-      // The menu of the live site, in its order, with Transparency added last; no extra call, search or theme button.
+      // The menu of the live site, in its order, with Transparency added last and Jobs hidden while there is no opening.
       const menu = await page.locator('.nav-list > li > a').allTextContents();
-      expect(menu.map(item => item.trim())).toEqual(['Home', 'Team', 'Jobs', 'Projects', 'Governance', 'Blog', 'Board', 'Contact', 'Transparency']);
+      expect(menu.map(item => item.trim())).toEqual(['Home', 'Team', 'Projects', 'Governance', 'Blog', 'Board', 'Contact', 'Transparency']);
       await expect(page.locator('#submenu-home a')).toHaveText(['About', 'Values', 'Mission']);
       await expect(page.locator('#submenu-projects a')).toHaveText(['NSM', 'Crosslink', 'Dynamic Fees', 'Zero', 'Ironwood']);
       await expect(page.locator('.nav-cta, .search-btn'), 'controls the live site does not have').toHaveCount(0);
@@ -298,7 +298,6 @@ test('moving between pages: each page marks its place in the menu and its back l
     ['/landing/nsm.html', 'Projects', 'projects.html'],
     ['/landing/roadmap.html', 'Projects', 'crosslink.html'],
     ['/landing/blog-epoch-future-proof-cryptography-for-zcash.html', 'Blog', 'blog.html'],
-    ['/landing/jobs-cryptographer.html', 'Jobs', 'jobs.html'],
   ] as const;
   for (const [path, menu, back] of places) {
     await open(page, path);
@@ -330,4 +329,11 @@ test('what the audit fixed stays fixed: no dead links, nothing out of date, a pr
   await open(page, '/landing/privacy-policy.html');
   await expect(page.locator('.orig-prose')).not.toContainText('reCAPTCHA');
   await expect(page.locator('.orig-prose')).toContainText('We do not use cookies or trackers.');
+});
+
+test('Jobs stays out of the menu and the footer while there is no opening', async ({ page }) => {
+  for (const path of ['/landing', '/landing/blog.html', '/landing/nsm.html', '/landing/contact.html']) {
+    await open(page, path);
+    await expect(page.locator('.nav-list a[href="jobs.html"], .site-foot a[href="jobs.html"]'), `links to Jobs on ${path}`).toHaveCount(0);
+  }
 });
