@@ -6,9 +6,8 @@ import { open, sidewaysOverflow, viewports } from './support';
  * (public/landing). It has to open on its short address, draw its panorama, keep the Support page free of
  * anything that looks like a real address, and carry the content the portal already holds.
  * The executive layer adds a Support call in the menu, proof and a supporters section on the Support page, and a
- * Funding and transparency page. The homepage hero stays as it was, clear for the art. Below it every section
- * is two halves (head on the left, content on the right, on one centre axis), Mission comes before Values, the
- * six values carry icons drawn in cells, and dark mode is one black from the header to the footer.
+ * Funding and transparency page. The homepage follows the live shieldedlabs.net: a clean top where the official
+ * words rotate over the art, then About, Values and Mission, centered, in the type of the live site.
  */
 const added = [
   { name: 'NSM', path: '/landing/nsm.html' },
@@ -29,34 +28,31 @@ for (const viewport of viewports) {
       expect(errors, 'uncaught errors in the page').toEqual([]);
       expect(new URL(page.url()).pathname).toBe('/landing/index.html');
       expect(await sidewaysOverflow(page), 'pixels of sideways scroll').toBeLessThanOrEqual(1);
-      await expect(page.locator('.hero-globe--shield svg')).toBeVisible();
-      await expect(page.locator('.work__item'), 'projects listed under the mission').toHaveCount(6);
-      await expect(page.locator('#writing .feature__title'), 'newest post, featured').toContainText('Activates with NU7');
-      await expect(page.locator('#writing .posts--rows .post'), 'the two posts after it').toHaveCount(2);
-      // The live site has no figures here: About holds its own sentence and links, and the headline is plain type.
-      await expect(page.locator('#about .proof'), 'figures beside the About statement').toHaveCount(0);
-      await expect(page.locator('#hero-title')).toHaveText('Unstoppable private money');
-      await expect(page.locator('#hero-title em'), 'italic words in the headline').toHaveCount(0);
+      // A clean top, as on the live site: the official words rotate over the art, with no fixed sentence or buttons.
+      await expect(page.locator('#hero-title')).toHaveText('Shielded Labs: Unstoppable Private Money');
+      await expect(page.locator('.rot .rot__item'), 'rotating items: name, words, Zcash mark').toHaveCount(3);
+      await expect(page.locator('.rot__item--words')).toHaveText('Unstoppable Private Money');
+      await expect(page.locator('.rot__shield svg')).toHaveCount(1);
+      await expect(page.locator('.hero .lead, .hero .actions, .hero-place'), 'fixed sentences and buttons in the top').toHaveCount(0);
+      // Below it, the sections of the live site in its order, with no Independence band, project cards or posts.
+      const order = await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id));
+      expect(order, 'order of the sections below the top').toEqual(['about', 'values', 'mission']);
+      await expect(page.locator('.independence, #writing, .work__item, .proof'), 'blocks the live site does not have').toHaveCount(0);
+      await expect(page.locator('.orig__title')).toHaveText(['About', 'Values', 'Mission']);
+      await expect(page.locator('#values .value__icon--cells'), 'value icons drawn in cells').toHaveCount(6);
       await expect(page.locator('.nav-list > li > a', { hasText: 'Transparency' })).toHaveAttribute('href', 'transparency.html');
       await expect(page.locator('.nav-list a', { hasText: 'Blog' }).first()).toHaveAttribute('href', '/?view=blog&section=all');
-      // The hero stays as it was: the proof row lives on the Support page, so nothing competes with the art.
-      await expect(page.locator('.hero .proof'), 'proof row in the hero').toHaveCount(0);
       await expect(page.locator('.nav-cta a'), 'the call in the menu').toHaveText('Support');
       await expect(page.locator('.nav-cta a')).toHaveAttribute('href', 'support.html');
-      await expect(page.locator('#values .value__icon--cells'), 'value icons drawn in cells').toHaveCount(6);
-      // Mission, what the organization does and builds, comes before Values.
-      const order = await page.locator('main > section[id]').evaluateAll(sections => sections.map(section => section.id));
-      expect(order, 'order of the sections below the hero').toEqual(['mission', 'values', 'about', 'writing']);
-      if (viewport.width >= 1180) {
-        // Two halves: every title starts on the left edge and every content block on the same centre axis.
-        const edges = await page.locator('.halves').evaluateAll(sections => sections.map(section => ({
-          title: Math.round(section.querySelector('.sec-head h2')?.getBoundingClientRect().left ?? -1),
-          content: Math.round(section.querySelector('.halves__content')?.getBoundingClientRect().left ?? -1),
-        })));
-        expect(edges).toHaveLength(4);
-        expect(new Set(edges.map(edge => edge.title)).size, 'left edges of the four titles').toBe(1);
-        expect(new Set(edges.map(edge => edge.content)).size, 'left edges of the four content blocks').toBe(1);
-        expect(edges[0].content, 'the content starts right of the title').toBeGreaterThan(edges[0].title + 400);
+      // Titles and statements are centered on the page, in the type of the live site.
+      const centered = await page.locator('.orig__title, .orig__lead').evaluateAll(nodes => nodes.map(node => {
+        const box = node.getBoundingClientRect();
+        return { offset: Math.abs(box.left + box.width / 2 - document.documentElement.clientWidth / 2), align: getComputedStyle(node).textAlign, font: getComputedStyle(node).fontFamily };
+      }));
+      for (const item of centered) {
+        expect(item.offset, 'distance from the centre of the page').toBeLessThanOrEqual(2);
+        expect(item.align).toBe('center');
+        expect(item.font).toContain('Raleway');
       }
 
       // The panorama is drawn by script once it is on screen: a blank canvas means the script never ran.
@@ -88,7 +84,13 @@ for (const viewport of viewports) {
         const errors = await open(page, screen.path);
         expect(errors, 'uncaught errors in the page').toEqual([]);
         expect(await sidewaysOverflow(page), 'pixels of sideways scroll').toBeLessThanOrEqual(1);
-        const failed = await page.evaluate(() => [...document.images].filter(image => image.complete && image.naturalWidth === 0).length);
+        // Shown images must have loaded; the logo for the other theme is hidden, so its file is fetched instead.
+        const failed = await page.evaluate(async () => {
+          const shown = [...document.images].filter(image => image.getClientRects().length > 0 && image.complete && image.naturalWidth === 0);
+          const hidden = [...document.images].filter(image => image.getClientRects().length === 0);
+          const missing = await Promise.all(hidden.map(image => fetch(image.src).then(response => !response.ok, () => true)));
+          return shown.length + missing.filter(Boolean).length;
+        });
         expect(failed, 'images that failed to load').toBe(0);
       });
     }
@@ -100,46 +102,11 @@ test('in light mode the logo keeps the original shield: nothing inverts it', asy
   await open(page, '/landing');
   await expect(page.locator('.brand .brand__light')).toBeVisible();
   await expect(page.locator('.brand .brand__dark')).toBeHidden();
-  const filters = await page.evaluate(() => [...document.querySelectorAll('.brand img, .hero-globe--shield svg')].map(node => getComputedStyle(node).filter));
-  expect(filters, 'filters on the header logo and the hero shield').toEqual(['none', 'none', 'none']);
+  const filters = await page.evaluate(() => [...document.querySelectorAll('.brand img, .rot__shield svg')].map(node => getComputedStyle(node).filter));
+  expect(filters, 'filters on the header logo and the rotating shield').toEqual(['none', 'none', 'none']);
   await page.emulateMedia({ colorScheme: 'dark' });
   await expect(page.locator('.brand .brand__dark')).toBeVisible();
   await expect(page.locator('.brand .brand__light')).toBeHidden();
-});
-
-test('dark mode is one black: the homepage band matches the page', async ({ page }) => {
-  await page.emulateMedia({ colorScheme: 'dark' });
-  await open(page, '/landing');
-  const [body, band] = await page.evaluate(() => {
-    const section = document.querySelector('.independence');
-    return [getComputedStyle(document.body).backgroundColor, section ? getComputedStyle(section).backgroundColor : 'missing'];
-  });
-  expect(body, 'page background in dark mode').toBe('rgb(7, 7, 7)');
-  expect(band, 'background of the Funded by donations section').toBe(body);
-});
-
-test('on a wide screen the pause under each section is the same, and shorter than the site section space', async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  // The pause runs from the end of one section to the rule of the next.
-  const pauses = async (colorScheme: 'dark' | 'light') => {
-    await page.emulateMedia({ colorScheme });
-    await open(page, '/landing');
-    return page.evaluate(() => {
-      const blocks = [...document.querySelectorAll('main > section.halves > .wrap')].map(block => block.getBoundingClientRect());
-      return {
-        pauses: blocks.slice(1).map((block, index) => Math.round(block.top - blocks[index].bottom)),
-        site: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sec-space')),
-      };
-    });
-  };
-  const near = (measured: number[], expected: number[]) => measured.length === expected.length && measured.every((value, index) => Math.abs(value - expected[index]) <= 1);
-  // In dark mode no band surrounds a section, so the three pauses are plain and equal.
-  const dark = await pauses('dark');
-  expect(near(dark.pauses, [72, 72, 72]), `pauses in dark mode: ${dark.pauses.join(', ')}`).toBe(true);
-  expect(Math.max(...dark.pauses), 'pause under a section, against the site section space').toBeLessThan(dark.site);
-  // In light mode Independence is a band, and its own padding (64 above the rule, 72 below the content) adds to the pause on each side.
-  const light = await pauses('light');
-  expect(near(light.pauses, [72, 72 + 64, 72 + 72]), `pauses in light mode: ${light.pauses.join(', ')}`).toBe(true);
 });
 
 test('the panorama keeps one colour, the Swiss flag: a red square with a white cross', async ({ page }) => {
@@ -281,33 +248,14 @@ test('the added pages carry what the portal already holds', async ({ page }) => 
   await expect(page.locator('#supporters ~ .pending')).toHaveCount(1);
 });
 
-test('each section opens with its name as the section title, and nothing above an item repeats a category', async ({ page }) => {
+test('the rotating words keep one still frame when motion is reduced, and nothing above an item repeats a category', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await open(page, '/landing');
-  const heads = await page.locator('.sec-head').evaluateAll(list => list.map(head => ({
-    headings: [...head.querySelectorAll('h1, h2, h3')].map(node => ({ text: node.textContent?.trim() ?? '', title: node.matches('.sec-title > h2:not(.label)') })),
-    labels: head.querySelectorAll('.sec-label, .no').length,
-  })));
-  // One heading per section head: the section name as its title, with no label or number over it.
-  expect(heads.map(head => head.headings)).toEqual(['Mission', 'Values', 'About', 'Blog'].map(text => [{ text, title: true }]));
-  expect(heads.map(head => head.labels)).toEqual([0, 0, 0, 0]);
-  // The name keeps the size and the ink of a section title: it is not drawn as a small label.
-  const type = await page.evaluate(() => {
-    const read = (node: Element) => ({ size: parseFloat(getComputedStyle(node).fontSize), color: getComputedStyle(node).color });
-    const probe = document.body.appendChild(Object.assign(document.createElement('p'), { className: 'label' }));
-    const label = read(probe);
-    probe.remove();
-    return { label, titles: [...document.querySelectorAll('.sec-head h2')].map(read) };
-  });
-  expect(type.titles).toHaveLength(4);
-  for (const title of type.titles) {
-    expect(title.size, 'a section title is far larger than a label').toBeGreaterThan(type.label.size * 2);
-    expect(title.color, 'a section title is in ink, not in the muted label colour').not.toBe(type.label.color);
-  }
-  // An item is its name and a line about it. Posts keep their date, which is a fact and not a category.
-  await expect(page.locator('.work__item .work__name')).toHaveCount(6);
-  await expect(page.locator('.work__item .label'), 'category words above the project names').toHaveCount(0);
-  await expect(page.locator('#writing .tag'), 'category words above the post titles').toHaveCount(0);
-  await expect(page.locator('#writing .post-meta time'), 'dates of the three posts').toHaveCount(3);
+  // With motion reduced only the first item, the Shielded Labs name, stays on screen.
+  const shown = await page.locator('.rot__item').evaluateAll(items => items.map(item => getComputedStyle(item).opacity));
+  expect(shown).toEqual(['1', '0', '0']);
+  // Each value is its icon, its name and a line about it.
+  await expect(page.locator('#values .value .label'), 'category words above the values').toHaveCount(0);
   await open(page, '/landing/support.html');
   await expect(page.locator('.work__item .work__name')).toHaveCount(6);
   await expect(page.locator('.work__item .label'), 'category words above the project names on Support').toHaveCount(0);

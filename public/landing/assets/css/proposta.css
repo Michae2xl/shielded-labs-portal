@@ -226,3 +226,41 @@
 .brand img{filter:none}
 .brand .brand__light{display:var(--img-light)}
 .brand .brand__dark{display:var(--img-dark)}
+
+/* Type of the live site (shieldedlabs.net): Raleway for titles, Roboto Flex for text, Montserrat for the rotating words.
+   Self-hosted from Google Fonts (SIL Open Font License), Latin only. */
+@font-face{font-family:'Raleway';font-style:normal;font-weight:400 700;font-display:swap;src:url(../fonts/raleway-normal-latin.woff2) format('woff2')}
+@font-face{font-family:'Roboto Flex';font-style:normal;font-weight:400 700;font-display:swap;src:url(../fonts/roboto-flex-normal-latin.woff2) format('woff2')}
+@font-face{font-family:'Montserrat';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/montserrat-600-latin.woff2) format('woff2')}
+:root{--serif:"Raleway","Helvetica Neue",Arial,sans-serif;--sans:"Roboto Flex","Helvetica Neue",Arial,sans-serif}
+h1,h2,h3,.display{font-weight:600}
+
+/* Homepage in the pattern of the live site: a clean top with rotating words, then About, Values and Mission, centered. */
+.hero--orig{position:relative;padding:0;display:flex;flex-direction:column}
+.rot{position:relative;display:grid;place-items:center;min-height:clamp(260px, 42vh, 460px);padding:56px var(--margin) 0;text-align:center}
+.rot__item{grid-area:1 / 1;margin:0;display:flex;align-items:center;justify-content:center;gap:clamp(14px, 2vw, 28px);opacity:0;animation:rot 12s infinite}
+.rot__item--brand{animation-delay:0s}
+.rot__item--words{animation-delay:4s;font-family:"Montserrat",var(--sans);font-weight:600;font-size:clamp(1.5rem, 3.2vw, 2.5rem);line-height:1.1;letter-spacing:.01em;text-transform:uppercase;color:var(--ink)}
+.rot__item--zcash{animation-delay:8s;color:var(--ink)}
+.rot__shield svg{display:block;width:clamp(72px, 9vw, 128px);height:auto}
+.rot__name{width:clamp(200px, 30vw, 430px);height:auto}
+.rot__item--zcash svg{display:block;width:clamp(84px, 9vw, 120px);height:auto}
+@keyframes rot{0%{opacity:0;transform:translateY(10px)}5%,28%{opacity:1;transform:none}33.3%,100%{opacity:0;transform:translateY(-10px)}}
+@media (prefers-reduced-motion:reduce){.rot__item{animation:none}.rot__item--brand{opacity:1}}
+.img-on-light{display:var(--img-light)}
+.img-on-dark{display:var(--img-dark)}
+.hero--orig .scroll-cue{position:absolute;right:var(--margin);top:calc(clamp(260px, 42vh, 460px) - 8px);z-index:1}
+.hero--orig .panorama{margin-top:0}
+
+.orig{padding:clamp(64px, 8vw, 104px) 0 0;text-align:center}
+.orig:last-of-type{padding-bottom:clamp(72px, 9vw, 120px)}
+.orig__title{font-family:var(--serif);font-weight:700;font-size:1.875rem;line-height:1.25;color:var(--ink);margin:0}
+.orig__title::after{content:"";display:block;width:30px;height:1px;margin:14px auto 0;background:currentColor;opacity:.6}
+.orig__lead{max-width:960px;margin:32px auto 0;font-family:var(--serif);font-weight:600;font-size:clamp(1.25rem, 2vw, 1.5625rem);line-height:1.4;color:var(--ink);text-wrap:balance}
+.orig-values{list-style:none;margin:48px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 clamp(24px, 4vw, 56px)}
+.orig-values .value{display:block;text-align:center;border-top:0;border-bottom:1px solid var(--rule);padding:40px 0 44px}
+.orig-values .value__icon--cells{margin:0 auto;color:var(--ink)}
+.orig-values .value__name{margin-top:20px;font-family:var(--serif);font-weight:600;font-size:1.125rem;line-height:1.25}
+.orig-values .value__desc{margin:12px auto 0;max-width:34ch;font-size:var(--fs-small);line-height:1.6;color:var(--ink-2)}
+@media (max-width:900px){.orig-values{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.orig-values{grid-template-columns:1fr}.hero--orig .scroll-cue{display:none}}
