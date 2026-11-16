@@ -10,7 +10,7 @@
 @view-transition{navigation:none}
 
 /* 1. The shield in cells takes the globe's place. On paper it is drawn in ink. */
-:root{--shield-filter:invert(1)}
+:root{--shield-filter:none}
 @media screen and (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){--shield-filter:none}
 }
@@ -221,3 +221,8 @@
 /* Transparency statement */
 .transparency__qr{margin-top:32px}
 .transparency__qr img{display:block;width:229px;height:auto;border-radius:4px}
+
+/* Header logo: in light mode the shield keeps its original dark face and only the name turns dark. */
+.brand img{filter:none}
+.brand .brand__light{display:var(--img-light)}
+.brand .brand__dark{display:var(--img-dark)}

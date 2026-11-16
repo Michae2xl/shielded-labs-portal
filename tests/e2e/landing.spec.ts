@@ -95,6 +95,18 @@ for (const viewport of viewports) {
   });
 }
 
+test('in light mode the logo keeps the original shield: nothing inverts it', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' });
+  await open(page, '/landing');
+  await expect(page.locator('.brand .brand__light')).toBeVisible();
+  await expect(page.locator('.brand .brand__dark')).toBeHidden();
+  const filters = await page.evaluate(() => [...document.querySelectorAll('.brand img, .hero-globe--shield svg')].map(node => getComputedStyle(node).filter));
+  expect(filters, 'filters on the header logo and the hero shield').toEqual(['none', 'none', 'none']);
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expect(page.locator('.brand .brand__dark')).toBeVisible();
+  await expect(page.locator('.brand .brand__light')).toBeHidden();
+});
+
 test('dark mode is one black: the homepage band matches the page', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'dark' });
   await open(page, '/landing');
