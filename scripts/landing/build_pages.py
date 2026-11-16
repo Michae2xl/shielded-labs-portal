@@ -210,6 +210,10 @@ TEXT_FIXES = {
         ("It is scheduled to activate as NU6.3 at block height 3,428,143, approximately July 28 at 12:00 p.m. UTC.",
          "It activated as NU6.3 at block height 3,428,143 on July 28, 2026."),
     ],
+    "fees/": [
+        ("The best introduction to our work on this topic is the following article, along with our interactive explorer that walks through the current iteration of our proposal.",
+         "The best introduction to our work on this topic is the following article."),
+    ],
     "jobs/": [
         ('<h3><a href="jobs-cryptographer.html">Cryptographer</a></h3>',
          '<h3><a href="jobs-cryptographer.html">Cryptographer</a></h3><p class="orig-prose__kicker">Listing expired</p>'),
@@ -226,11 +230,31 @@ TEXT_FIXES = {
          "If you have sent us a message, you can request"),
     ],
 }
-# Links on the live site that lead nowhere: the repositories are not public and the lab's domain no longer resolves.
-DEAD_LINKS = ["https://github.com/ShieldedLabs/zero", "https://github.com/ShieldedLabs/zero/tree/main/zeronym", "https://fees.shieldedinfra.net/"]
+# Links on the live site that lead nowhere: the Zero repository is private for now (Shielded Labs, 16 Nov 2026).
+DEAD_LINKS = ["https://github.com/ShieldedLabs/zero", "https://github.com/ShieldedLabs/zero/tree/main/zeronym"]
+# New homes Shielded Labs gave for a link; used once the new address is public, until then the text stays unlinked.
+NEW_HOMES = {"https://github.com/ShieldedLabs/zero/tree/main/zeronym": "https://github.com/ShieldedLabs/zeronym"}
+# Items Shielded Labs asked to remove: the Dynamic Fees Lab has no new address (16 Nov 2026).
+REMOVE = {"fees/": [r"\s*<li><a href=\"https://fees\.shieldedinfra\.net/\"[^>]*>.*?</a></li>"]}
+
+
+def is_public(url: str) -> bool:
+    try:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as response:
+            return response.status == 200
+    except Exception:
+        return False
 
 
 def fix(path: str, body: str) -> str:
+    for pattern in REMOVE.get(path, []):
+        body = re.sub(pattern, "", body)
+    for old_url, new_url in NEW_HOMES.items():
+        if f'href="{old_url}"' in body:
+            if is_public(new_url):
+                body = body.replace(f'href="{old_url}"', f'href="{new_url}"')
+            else:
+                print(f"{path}: {new_url} is not public yet, the text stays unlinked")
     for old, new in TEXT_FIXES.get(path, []):
         if old not in body:
             raise ValueError(f"{path}: the live text changed, check this fix: {old[:60]}")

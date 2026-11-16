@@ -324,6 +324,7 @@ test('what the audit fixed stays fixed: no dead links, nothing out of date, a pr
   await expect(page.locator('a[href^="https://github.com/ShieldedLabs/zero"]'), 'links to repositories that are not public').toHaveCount(0);
   await open(page, '/landing/fees.html');
   await expect(page.locator('a[href*="fees.shieldedinfra.net"]'), 'link to a domain that no longer resolves').toHaveCount(0);
+  await expect(page.locator('.post__body'), 'the lab Shielded Labs asked to remove').not.toContainText('Dynamic Fees Lab');
   await open(page, '/landing/jobs.html');
   await expect(page.locator('.orig-prose')).toContainText('Listing expired');
   await open(page, '/landing/privacy-policy.html');
