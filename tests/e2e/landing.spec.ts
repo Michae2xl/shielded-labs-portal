@@ -167,11 +167,13 @@ test('the panorama has no coin rolling through the town', async ({ page }) => {
 
 test('the added pages carry what the portal already holds', async ({ page }) => {
   await open(page, '/landing/nsm.html');
-  await expect(page.locator('.lead')).toContainText('activated as part of NU7 at block height 3,543,405');
+  // The text of the live NSM page, in the reader of the blog: the note, the original wording struck through, ZIP 237 added.
+  await expect(page.locator('.post__back a')).toHaveAttribute('href', 'projects.html');
   // As on the live NSM page: the note on the change, the original wording struck through, and ZIP 237 added.
-  await expect(page.locator('.nsm-note')).toContainText('preserves the existing four-year halving schedule');
-  await expect(page.locator('.zips del a[href$="zip-0234"]')).toHaveCount(1);
-  await expect(page.locator('.zips a[href$="zip-0237"]')).toHaveCount(1);
+  await expect(page.locator('.post__body p').first()).toContainText('preserves the existing four-year halving schedule');
+  await expect(page.locator('.post__body del a[href$="zip-0234"]').first()).toBeVisible();
+  await expect(page.locator('.post__body a[href$="zip-0237"]').first()).toBeVisible();
+  await expect(page.locator('.post-aside a[aria-current="page"]')).toHaveText('Network Sustainability Mechanism');
 
   await open(page, '/landing/transparency.html');
   await expect(page.locator('h1')).toHaveText('Transparency Statement');
@@ -189,8 +191,9 @@ test('the added pages carry what the portal already holds', async ({ page }) => 
   await expect(page.getByRole('link', { name: 'Donations from Zcash holders and supporters' })).toHaveAttribute('href', 'funding.html');
 
   await open(page, '/landing/crosslink.html');
-  await expect(page.locator('.step')).toHaveCount(7);
-  await expect(page.locator('a[href*="youtube.com/watch"]')).toHaveCount(20);
+  await expect(page.locator('.post__title')).toHaveText('Crosslink');
+  await expect(page.locator('.post__body a[href="roadmap.html"]')).toHaveText('Roadmap');
+  await expect(page.locator('.post__body a[href="crosslink-faq.html"]')).toHaveText('Frequently Asked Questions');
 
   await open(page, '/landing/nsm-activates-with-nu7.html');
   await expect(page.locator('h1')).toHaveText('The Network Sustainability Mechanism (NSM) Activates with NU7');
@@ -270,11 +273,33 @@ test('every page of the menu and the footer is a page of the landing, with the t
   await open(page, '/landing/projects.html');
   await expect(page.locator('.orig-prose a[href="fees.html"]')).toHaveText('Dynamic Fees');
   await open(page, '/landing/zero.html');
-  await expect(page.locator('.orig-prose')).toContainText('Zero is a supported suite of open-source Zcash infrastructure software');
+  await expect(page.locator('.post__body')).toContainText('Zero is a supported suite of open-source Zcash infrastructure software');
   await open(page, '/landing/contact.html');
   await expect(page.locator('.contact-form input[name="email"]')).toHaveAttribute('required', '');
   await expect(page.locator('.contact-form')).toHaveAttribute('action', 'mailto:info@shieldedlabs.net');
   await open(page, '/landing/governance.html');
   await expect(page.locator('.orig-prose h3 a').first()).toHaveText('ZCG and the Dev Fund');
   await expect(page.locator('.orig-facts dd').first()).toHaveText('November 16');
+});
+
+test('moving between pages: each page marks its place in the menu and its back link goes one level up', async ({ page }) => {
+  const places = [
+    ['/landing/nsm.html', 'Projects', 'projects.html'],
+    ['/landing/roadmap.html', 'Projects', 'crosslink.html'],
+    ['/landing/blog-epoch-future-proof-cryptography-for-zcash.html', 'Blog', 'blog.html'],
+    ['/landing/jobs-cryptographer.html', 'Jobs', 'jobs.html'],
+  ] as const;
+  for (const [path, menu, back] of places) {
+    await open(page, path);
+    await expect(page.locator('.nav-list > li > a[aria-current]'), `menu item marked on ${path}`).toHaveText(menu);
+    await expect(page.locator('.post__back a'), `back link on ${path}`).toHaveAttribute('href', back);
+  }
+  // From the homepage, the menu reaches every section and the projects through the Projects page.
+  await open(page, '/landing');
+  await page.locator('.nav-list > li > a', { hasText: 'Projects' }).click();
+  await expect(page).toHaveURL(/\/landing\/projects\.html$/);
+  await page.locator('.orig-prose a', { hasText: 'Zero' }).click();
+  await expect(page.locator('.post__title')).toHaveText('Zero');
+  await page.locator('.post__back a').click();
+  await expect(page).toHaveURL(/\/landing\/projects\.html$/);
 });
