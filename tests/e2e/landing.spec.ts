@@ -140,70 +140,12 @@ test('the panorama keeps one colour, the Swiss flag: a red square with a white c
   expect(cross, 'white pixels of the cross inside the red field').toBeGreaterThan(20);
 });
 
-test('a coin with the Zcash mark rolls along the ridge, and stands still when motion is reduced', async ({ page }) => {
-  type Coin = { x: number; y: number; turn: number; radius: number };
-  // The panorama leaves the place of the coin on its element, in CSS pixels, for this check.
-  const coin = () => page.evaluate(() => {
-    const host = document.querySelector('[data-panorama]') as (HTMLElement & { coin?: Coin }) | null;
-    const canvas = host?.querySelector('canvas');
-    if (!host?.coin || !canvas) return null;
-    const box = canvas.getBoundingClientRect();
-    const scale = canvas.width / box.width;
-    const { x, y, turn, radius } = host.coin;
-    // Inside the disc nothing shows from behind, so what is painted there is the coin: its cells, less the Z.
-    const [left, top, side] = [Math.round((x - radius) * scale), Math.round((y - radius) * scale), Math.round(radius * 2 * scale)];
-    const pixels = canvas.getContext('2d')!.getImageData(left, top, side, side).data;
-    let [inside, painted] = [0, 0];
-    for (let index = 0; index < side * side; index += 1) {
-      const [dx, dy] = [(index % side) + 0.5 - side / 2, Math.floor(index / side) + 0.5 - side / 2];
-      if (dx * dx + dy * dy > (side / 2) ** 2) continue;
-      inside += 1;
-      if (pixels[index * 4 + 3] > 100) painted += 1;
-    }
-    return { x, y, turn, radius, drawn: painted / inside, width: box.width, height: box.height };
-  });
-  // The page clock is paused before the page opens: scene time moves only by the steps below.
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.clock.install({ time: new Date('2026-01-01T00:00:00Z') });
-  await page.clock.pauseAt(new Date('2026-01-01T00:00:10Z'));
+test('the panorama has no coin rolling through the town', async ({ page }) => {
   await open(page, '/landing');
-  await page.locator('.panorama canvas').scrollIntoViewIfNeeded();
-  // Each look at the coin first lets the scene draw; the browser reports the canvas on screen in its own time.
-  const drawn = async () => { await page.clock.runFor(250); return coin(); };
-  await expect.poll(drawn, { message: 'the place of the coin', timeout: 6_000 }).not.toBeNull();
-  const first = await coin();
-  await page.clock.runFor(4_000);
-  const later = await coin();
-  expect(later, 'the place of the coin four seconds on').not.toBeNull();
-  if (!first || !later) return;
-  for (const place of [first, later]) {
-    expect(place.x, 'the coin is on screen').toBeGreaterThanOrEqual(0);
-    expect(place.x, 'the coin is on screen').toBeLessThanOrEqual(place.width);
-    expect(place.y - place.radius, 'the top edge of the canvas never clips the coin').toBeGreaterThanOrEqual(0);
-    expect(place.y + place.radius, 'the coin stays above the bottom edge').toBeLessThanOrEqual(place.height);
-    expect(place.drawn, 'share of the disc of the coin that is painted').toBeGreaterThan(0.4);
-  }
-  // It rolls: it moves along, and turns at least as far as it travels, since the ground under it drifts the other way.
-  expect(later.x - first.x, 'pixels the coin moved in four seconds').toBeGreaterThan(40);
-  expect((later.turn - first.turn) * first.radius, 'distance rolled, from the turn of the coin').toBeGreaterThan(later.x - first.x);
-
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect.poll(async () => (await drawn())?.turn, { message: 'turn of the coin in the still frame', timeout: 6_000 }).toBe(0);
-  const still = await coin();
-  await page.clock.runFor(3_000);
-  expect(await coin(), 'the still frame three seconds on').toEqual(still);
-  expect(still?.x, 'the still coin stands in the left third').toBeLessThan((still?.width ?? 0) / 3);
-
-  // On a phone the still frame shows the coin too. The scene is rebuilt on a finer grid, so the coin is smaller.
-  await page.setViewportSize({ width: 375, height: 812 });
-  await page.locator('.panorama canvas').scrollIntoViewIfNeeded();
-  await expect.poll(async () => (await drawn())?.radius, { message: 'radius of the coin on the grid of a phone', timeout: 6_000 }).toBeLessThan(first.radius);
-  const phone = await coin();
-  if (!phone) return;
-  expect(phone.turn, 'the coin stands upright on a phone').toBe(0);
-  expect(phone.x - phone.radius, 'the coin is whole on a phone, left edge').toBeGreaterThanOrEqual(0);
-  expect(phone.x + phone.radius, 'the coin is whole on a phone, right edge').toBeLessThanOrEqual(phone.width);
-  expect(phone.drawn, 'share of the disc of the coin that is painted, on a phone').toBeGreaterThan(0.4);
+  const panorama = page.locator('.panorama canvas');
+  await panorama.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(500);
+  expect(await page.evaluate(() => 'coin' in (document.querySelector('[data-panorama]') ?? {})), 'a coin drawn in the panorama').toBe(false);
 });
 
 test('the added pages carry what the portal already holds', async ({ page }) => {
