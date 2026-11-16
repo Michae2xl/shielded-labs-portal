@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement;d.classList.remove('no-js');try{var t=localStorage.getItem('sl-theme');if(t==='light'||t==='dark')d.setAttribute('data-theme',t);}catch(e){}if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reveal');setTimeout(function(){if(!d.classList.contains('reveal-ready'))d.classList.remove('reveal');},3000);}})();</script>
+<title>Thoughts on Sentiment Polling and Governance | Shielded Labs</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/proposta.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img class="brand__light" src="assets/images/shielded-labs-wordmark-light.png" width="800" height="200" alt="Shielded Labs, home"><img class="brand__dark" src="assets/images/shielded-labs-wordmark.png" width="800" height="200" alt="Shielded Labs, home"></a>
+    <nav class="nav" aria-label="Primary">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-menu"><span class="bars" aria-hidden="true"></span><span class="menu-label">Menu</span></button>
+      <ul class="nav-list" id="primary-menu">
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="index.html">Home</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-home" aria-label="Home submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-home">
+            <li><a href="index.html#about">About</a></li><li><a href="index.html#mission">Mission</a></li><li><a href="index.html#values">Values</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="https://shieldedlabs.net/projects/">Projects</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-projects" aria-label="Projects submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-projects">
+            <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs.net/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs.net/zero/">Zero</a></li><li><a href="https://shieldedlabs.net/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs.net/roadmap/">Roadmap</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="team.html">Team</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-team" aria-label="Team submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-team">
+            <li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs.net/board/">Board</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs.net/governance/">Governance</a></li>
+        
+        
+        
+        
+        <li><a href="blog.html" aria-current="page">Blog</a></li>
+        <li><a href="transparency.html">Transparency</a></li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs.net/contact/">Contact</a></li>
+        <li class="nav-cta"><a href="support.html">Support</a></li>
+        
+        
+      </ul>
+    </nav>
+    <button class="search-btn" type="button" aria-label="Search" aria-haspopup="dialog" aria-controls="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6"></circle><path d="m15 15 5.5 5.5"></path></svg>
+    </button>
+    <button class="theme-btn" type="button" aria-label="Switch to light theme">
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path></svg>
+    </button>
+  </div>
+</header>
+<main id="main">
+
+<article class="section post">
+  <div class="wrap">
+    <p class="post__back"><a href="blog.html"><svg class="arr arr--back" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M15 5H1.5M5.5 1l-4 4 4 4"></path></svg><span>Articles</span></a></p>
+    <h1 class="post__title">Thoughts on Sentiment Polling and Governance</h1>
+    <p class="post__meta"><span>Jason McGee</span><span aria-hidden="true">·</span><time datetime="2026-02-23">23 Feb 2026</time><span aria-hidden="true">·</span><span>7 min read</span></p>
+    <div class="post__grid">
+      <div class="post__main">
+        <figure class="post__cover"><img src="assets/images/blog/9479c0a4dd4419228f3d.png" width="1536" height="1024" alt="Artwork for Thoughts on Sentiment Polling and Governance" decoding="async"></figure>
+        <div class="post__body"><p>In light of the recent governance polling, I want to share our perspective on how we interpret the results, what they may imply for Shielded Labs’ projects like the Network Sustainability Mechanism (NSM) and Dynamic Fees, and how they fit into the broader evolution of Zcash governance. The results provide a useful signal. Because Zcash does not have formal onchain governance, these polls are best understood as inputs into a rough consensus process, one way of gauging sentiment and informing decisions rather than mechanically determining outcomes.</p><h3 id="history"><strong>History</strong></h3><p>Zcash governance has evolved meaningfully over time, and one useful way to understand that evolution is by looking at each halving era. In the early years after launch, governance was relatively centralized. Protocol decisions were largely driven by the Zcash Company, later renamed the Electric Coin Company (ECC), and ultimate responsibility rested with the CEO. From what I understand, there were efforts to gather community feedback and gauge support before major upgrades were activated, but formal mechanisms for measuring consensus were limited at that point in time. </p><p>Around the first halving, there was a clear effort to decentralize governance. The trademark agreement between the ECC and the Zcash Foundation effectively created a two-of-two multisig governance model in which both organizations had to agree on any changes to the protocol. You can see an example of that <a href="https://forum.zcashcommunity.com/t/undisclosed-and-actively-relevant-conflicts-of-interest-on-the-zcash-foundation-board-of-directors/41618/18" target="_blank" rel="noopener noreferrer">here</a>. The Zcash Foundation relied on the Zcash Community Advisory Panel (ZCAP) to help inform its decisions, and ECC had its own mechanisms for gauging consensus, including early iterations of coinholder polling as well as broader community outreach.</p><p>Around the time of the second halving, ECC withdrew from the trademark agreement, effectively dissolving the bimodal governance structure. In its place, the ecosystem shifted toward a model that relies more heavily on structured sentiment gathering across multiple community panels, including ZCAP, ZAC, ZecHub, and various regional communities. Coinholders were later incorporated into the sentiment gathering process and now serve as an important additional input in assessing and signaling consensus.The current coinholder voting mechanism is still somewhat cumbersome and not especially user friendly, but it has improved over time and the process continues to be refined with each iteration.</p><h3 id="how-governance-works-today"><strong>How Governance Works Today</strong></h3><p>Today, Zcash governance is open and process driven. Anyone can propose a change to the protocol through the ZIP process. Proposals are specified in writing, discussed publicly, and evaluated across multiple forums. For a change to move forward, it is generally expected to demonstrate broad support across community panels, along with sentiment from coinholders. If rough consensus emerges, engineering teams can coordinate implementation and target a future network upgrade.</p><p>Polling panels and coinholders is a way to measure sentiment, but it is not governance itself. Governance ultimately rests with those who run and rely on the network, including miners, node operators, exchanges, wallets, and users. Writing code or publishing a ZIP is not sufficient to change the protocol. Changes only take effect if the community chooses to adopt the software and that version of ZEC continues to be recognized and valued in practice.</p><p>Contentious forks are always a possibility, and that is by design. The ability for participants to refuse changes and run alternative software is a core property of a permissionless system. Zcash’s governance processes exist to reduce unnecessary conflict by creating structured ways to discuss proposals, test support, and iterate before activation. Based on this, I do not think Zcash is likely to experience the kind of conflict that characterized Bitcoin’s block size wars, largely because there is already a defined process for evaluating and gauging support before changes move forward. Disagreement in good faith is healthy and often leads to stronger outcomes. The goal is not to eliminate disagreement, but to give it a constructive outlet so changes can be debated, refined, and either adopted or rejected without compromising user choice.</p><h3 id="shielded-labs-interpretation-of-the-results"><strong>Shielded Labs’ Interpretation of the Results</strong></h3><p>From our perspective at Shielded Labs, this polling round marks the beginning of a deeper conversation rather than the end of one. The information is valuable because it reflects where there is alignment and where there are concerns. In a rough consensus system, sentiment data is not a verdict but a signal that we take seriously and view as an input that should inform further discussion and refinement. Our goal is to continue engaging constructively, incorporate feedback where appropriate, and move forward in areas where clear support exists.</p><p>The Network Sustainability Mechanism (NSM)  is a good example of how we are interpreting the results. There were two separate questions: one related to the NSM and issuance smoothing, and another focused on burning 60 percent of transaction fees to support network sustainability. One nuance worth noting is that it was not entirely clear whether respondents were signaling support for the general direction of the proposal or for the specific ZIP level implementation. In the case of the NSM, there appears to be broad agreement around recycling or burning coins to support network sustainability, with more focused concern around the specific issuance smoothing curve. Distinguishing between support for the overall objective and support for a particular implementation is important.</p><p>The issuance smoothing question received broad support from panels but not from coinholders. By contrast, the fee burning question received broad support from both panels and coinholders. Based on those results, we believe there is clear support for the components that allow ZEC to be removed from circulation, including <a href="https://zips.z.cash/zip-0233" target="_blank" rel="noopener noreferrer">ZIP 233</a> and <a href="https://zips.z.cash/zip-0235" target="_blank" rel="noopener noreferrer">ZIP 235</a>. We intend to move forward with the parts that demonstrated broad consensus and work to include them in the next network upgrade.</p><p>With respect to issuance smoothing, our current assessment is that, for some coinholders, the existing emissions schedule is viewed as a defining part of Zcash’s monetary identity, similar in principle to the 21 million supply cap. That is a rational position. We plan to continue engaging directly with coinholders to better explain the rationale behind smoothing the issuance curve, and we are also open to exploring alternative designs that preserve the halving schedule while still advancing network sustainability.</p><p>The same principle applies to Dynamic Fees, which received relatively low support from both panels and coinholders. Our proposal was never intended to be final. It was a starting point for discussion. The feedback is important because it highlights where there are open questions, uncertainty, or reservations about the current design. We plan to continue engaging with stakeholders, refining the proposal, and improving it based on the concerns that have been raised.</p><p>Thoughts on Polling and Governance</p><p>It is important to emphasize that polling results are not final decisions about the long term direction of the protocol. They reflect sentiment at a particular moment in time. Sentiment often moves with market conditions. When price performance is strong, people are generally more inclined to preserve what is working and less interested in making significant changes. When price performance is weak, there is usually more willingness to revisit assumptions and consider adjustments. Features that are controversial or that did not receive strong support today may still be desirable in the future. They remain part of the design space, and there will be additional opportunities for discussion, iteration, and future polling.</p><p>In the case of ZSAs specifically, work can continue even if mainnet activation is uncertain. Running them on testnets, refining implementations, clarifying use cases, and engaging potential issuers can all move the discussion from abstract debate toward real world evaluation. Proposals tend to improve when they are tested, scrutinized, and better understood over time.</p><p>One of Shielded Labs’ core values is to honor the holders. We believe coinholders should have a voice in shaping Zcash’s direction and we prioritize initiatives that we believe strengthen ZEC over the long term. Coinholder input carries real weight and provides an economic signal that deserves careful consideration. At the same time, coinholders do not control the protocol and do not have formal veto power. Governance should not be used as a means for any group to impose its preferences on the broader set of Zcash users and holders. The protocol changes only if the network as a whole chooses to adopt them.</p><p>The current coinholder polling mechanism is used by a relatively small number of large holders and does not fully represent coinholders as a whole. Many holders choose not to participate because transferring coins or interacting with the voting mechanism carries perceived risk or added complexity. We should recognize this context and continue improving the existing system, or consider replacing it with a better one, so that more coinholders can participate with lower friction and greater confidence. We should also run polls more frequently so that sentiment is measured on an ongoing basis rather than only at inflection points.</p><p>Governance in Zcash is still evolving. Each round of polling is another step in that process. This is what it looks like for a network to continue to decentralize and mature.</p></div>
+      </div>
+      <aside class="post-aside" aria-label="About this article"><div class="post-aside__block"><p class="post-aside__label">On this page</p><ol class="post-aside__toc"></ol></div><div class="post-aside__block"><p class="post-aside__label">Source</p><p class="post-aside__text">Updated 3 Aug 2026</p><p class="post-aside__text">Retrieved 28 Oct 2026</p><a class="post-aside__link" href="https://shieldedlabs.net/thoughts-on-sentiment-polling-and-governance/" target="_blank" rel="noopener noreferrer"><span>Original source</span><svg class="arr" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9 9 3M4 3h5v5"></path></svg></a></div></aside>
+    </div>
+  </div>
+</article>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="grid foot">
+      <div class="foot-brand">
+        <img src="assets/images/shielded-labs-wordmark.png" alt="Shielded Labs" width="800" height="200" decoding="async">
+        <p class="foot-line">Building the future of private money</p>
+        <p class="foot-about">Shielded Labs is an independent, donation-funded Zcash support organization based in Switzerland.</p>
+      </div>
+      <nav class="foot-col foot-col--projects" aria-labelledby="f-projects">
+        <h2 id="f-projects">Projects</h2>
+        <ul>
+          <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs.net/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs.net/zero/">Zero</a></li><li><a href="https://shieldedlabs.net/ironwood/">Ironwood</a></li><li><a href="blog-epoch-future-proof-cryptography-for-zcash.html">Epoch</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-site">
+        <h2 id="f-site">Organization</h2>
+        <ul>
+          <li><a href="index.html#about">About</a></li><li><a href="https://shieldedlabs.net/governance/">Governance</a></li><li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs.net/board/">Board</a></li><li><a href="blog.html">Blog</a></li><li><a href="https://shieldedlabs.net/jobs/">Jobs</a></li><li><a href="transparency.html">Transparency</a></li><li><a href="key-facts.html">Key facts</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-connect">
+        <h2 id="f-connect">Connect</h2>
+        <ul>
+          <li><a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a></li>
+          <li><a href="https://x.com/ShieldedLabs">X</a></li>
+          <li><a href="https://github.com/ShieldedLabs">GitHub</a></li>
+          <li><a href="https://shieldedlabs.net/feed/">RSS feed</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 Shielded Labs · Association registered in Zug · Dammstrasse 16, 6300 Zug, Switzerland</span>
+      <span class="legal-links"><span>No cookies. No trackers.</span> <a href="https://shieldedlabs.net/privacy-policy/">Privacy policy</a></span>
+    </div>
+  </div>
+</footer>
+<p class="mock-note">Proposal mock for review, not the live site. Donation addresses are placeholders, and items marked Pending wait for Shielded Labs.</p>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

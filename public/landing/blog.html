@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement;d.classList.remove('no-js');try{var t=localStorage.getItem('sl-theme');if(t==='light'||t==='dark')d.setAttribute('data-theme',t);}catch(e){}if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reveal');setTimeout(function(){if(!d.classList.contains('reveal-ready'))d.classList.remove('reveal');},3000);}})();</script>
+<title>Shielded Labs: blog</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/proposta.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img class="brand__light" src="assets/images/shielded-labs-wordmark-light.png" width="800" height="200" alt="Shielded Labs, home"><img class="brand__dark" src="assets/images/shielded-labs-wordmark.png" width="800" height="200" alt="Shielded Labs, home"></a>
+    <nav class="nav" aria-label="Primary">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-menu"><span class="bars" aria-hidden="true"></span><span class="menu-label">Menu</span></button>
+      <ul class="nav-list" id="primary-menu">
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="index.html">Home</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-home" aria-label="Home submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-home">
+            <li><a href="index.html#about">About</a></li><li><a href="index.html#mission">Mission</a></li><li><a href="index.html#values">Values</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="https://shieldedlabs.net/projects/">Projects</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-projects" aria-label="Projects submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-projects">
+            <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs.net/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs.net/zero/">Zero</a></li><li><a href="https://shieldedlabs.net/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs.net/roadmap/">Roadmap</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="team.html">Team</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-team" aria-label="Team submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-team">
+            <li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs.net/board/">Board</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs.net/governance/">Governance</a></li>
+        
+        
+        
+        
+        <li><a href="blog.html" aria-current="page">Blog</a></li>
+        <li><a href="transparency.html">Transparency</a></li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs.net/contact/">Contact</a></li>
+        <li class="nav-cta"><a href="support.html">Support</a></li>
+        
+        
+      </ul>
+    </nav>
+    <button class="search-btn" type="button" aria-label="Search" aria-haspopup="dialog" aria-controls="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6"></circle><path d="m15 15 5.5 5.5"></path></svg>
+    </button>
+    <button class="theme-btn" type="button" aria-label="Switch to light theme">
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path></svg>
+    </button>
+  </div>
+</header>
+<main id="main">
+
+<section class="section section--page-head blog-head">
+  <div class="wrap">
+    <h1>Blog</h1>
+  </div>
+</section>
+<section class="section section--flush">
+  <div class="wrap blog">
+    <div class="blog-tools">
+      <div class="blog-filters" role="group" aria-label="Category"><button type="button" class="blog-filter" data-blog-filter="all" aria-pressed="true">All articles</button><button type="button" class="blog-filter" data-blog-filter="News" aria-pressed="false">News</button><button type="button" class="blog-filter" data-blog-filter="Engineering Update" aria-pressed="false">Engineering Update</button><button type="button" class="blog-filter" data-blog-filter="Governance" aria-pressed="false">Governance</button><button type="button" class="blog-filter" data-blog-filter="Security" aria-pressed="false">Security</button></div>
+      <label class="blog-search"><span class="vh">Search articles</span><input type="search" placeholder="Search articles…" data-blog-search></label>
+    </div>
+    <ul class="blog-list" data-blog-list>
+      <li class="blog-row" data-category="News" data-words="the network sustainability mechanism (nsm) activates with nu7 jason mcgee news jason mcgee on the nsm activating with nu7: the share of fees removed from circulation, reissuance from 2031 and how coinholder sentiment shaped the design.">
+        <a class="blog-row__link" href="nsm-activates-with-nu7.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/80e0969bf57f5377f0ca.png" width="1983" height="793" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2026-11-05">5 Nov 2026</time></span>
+            <span class="blog-row__title">The Network Sustainability Mechanism (NSM) Activates with NU7</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 3 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="epoch: future-proof cryptography for zcash jason mcgee news shielded labs is excited to announce epoch, a new research and engineering project to future-proof zcash against emerging threats from quantum computing, increasingly capable ai, sophisticated…">
+        <a class="blog-row__link" href="blog-epoch-future-proof-cryptography-for-zcash.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/eb09553eea91e49ca4dc.jpg" width="1600" height="900" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2026-10-01">1 Oct 2026</time></span>
+            <span class="blog-row__title">Epoch: Future-Proof Cryptography for Zcash</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 6 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="Governance" data-words="zcash governance is a superpower jason mcgee governance there has been a lot of discussion lately about the dev fund, and i want to use this opportunity to share shielded labs’ perspective on governance. this essay covers three topics: how zcash…">
+        <a class="blog-row__link" href="blog-zcash-governance-is-a-superpower.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/6c7e0079f5d164c8ca91.png" width="1600" height="900" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>Governance</span><time datetime="2026-09-18">18 Sep 2026</time></span>
+            <span class="blog-row__title">Zcash Governance Is a Superpower</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 10 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="Governance" data-words="thoughts on the dev fund jason mcgee governance maxime’s essay on the dev fund  has generated a lot of discussion over the past week. it’s been good to see so many people engage with the question of whether the dev fund should continue, and…">
+        <a class="blog-row__link" href="blog-thoughts-on-the-dev-fund.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/c829c63d09396869339f.png" width="1600" height="900" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>Governance</span><time datetime="2026-09-15">15 Sep 2026</time></span>
+            <span class="blog-row__title">Thoughts on the Dev Fund</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 11 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="Security" data-words="four questions about the orchard vulnerability jason mcgee and zooko wilcox security the recent orchard vulnerability raised important questions about the zcash supply and the safety of user funds. discussions have mixed together several distinct issues, making it difficult to…">
+        <a class="blog-row__link" href="blog-four-questions-about-the-orchard-vulnerability.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/d334a62c79c6ca6d697e.jpeg" width="1536" height="1024" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>Security</span><time datetime="2026-06-15">15 Jun 2026</time></span>
+            <span class="blog-row__title">Four Questions About the Orchard Vulnerability</span>
+            <span class="blog-row__by">Jason McGee and Zooko Wilcox <span aria-hidden="true">·</span> 6 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="Security" data-words="ironwood: verifying the soundness of zcash’s circulating supply zooko wilcox, jason mcgee, and taylor hornby security shielded labs is working with the zcash foundation, tachyon group, valar group, and the zcash open development lab (zodl) on a proposal called “ironwood” that allows any user to verify the…">
+        <a class="blog-row__link" href="blog-ironwood-verifying-the-soundness-of-zcashs-circulating-supply.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/d3bd3c3048f63bf08a5d.jpeg" width="1536" height="1024" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>Security</span><time datetime="2026-06-06">6 Jun 2026</time></span>
+            <span class="blog-row__title">Ironwood: Verifying the Soundness of Zcash’s Circulating Supply</span>
+            <span class="blog-row__by">Zooko Wilcox, Jason McGee, and Taylor Hornby <span aria-hidden="true">·</span> 5 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="Security" data-words="the orchard counterfeiting vulnerability zooko wilcox, jason mcgee, and taylor hornby security on may 29, 2026, taylor hornby discovered a critical counterfeiting vulnerability in zcash’s orchard pool.">
+        <a class="blog-row__link" href="blog-the-orchard-counterfeiting-vulnerability.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/770fc8623c5d7db8a030.png" width="1536" height="1024" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>Security</span><time datetime="2026-06-04">4 Jun 2026</time></span>
+            <span class="blog-row__title">The Orchard Counterfeiting Vulnerability</span>
+            <span class="blog-row__by">Zooko Wilcox, Jason McGee, and Taylor Hornby <span aria-hidden="true">·</span> 5 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="crosslink feature net: reflections on the first six weeks jason mcgee news it has been a little over six weeks since we launched the crosslink incentivized feature net, where participants can join the network as miners or finalizers and stake to earn rewards. we wanted…">
+        <a class="blog-row__link" href="blog-crosslink-feature-net-reflections-on-the-first-six-weeks.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/0bbfb2142530a762fbb3.png" width="1672" height="941" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2026-05-29">29 May 2026</time></span>
+            <span class="blog-row__title">Crosslink Feature Net: Reflections on the First Six Weeks</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 7 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="Engineering Update" data-words="zcash dynamic fees, now! mark henderson engineering update today, zcash transactions use a fixed fee model based on transaction complexity. this creates a “goldilocks zone” in the price of zec: fees need to be high enough to discourage spam, but low…">
+        <a class="blog-row__link" href="blog-zcash-dynamic-fees-now.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/4e7cbe68f6290e131d8f.jpg" width="720" height="342" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>Engineering Update</span><time datetime="2026-05-27">27 May 2026</time></span>
+            <span class="blog-row__title">Zcash Dynamic Fees, Now!</span>
+            <span class="blog-row__by">Mark Henderson <span aria-hidden="true">·</span> 4 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="Security" data-words="advisory: reduce your zcashd attack surface by shielding it behind zebra zooko wilcox, mark henderson, judah caruso security shielded labs recommends that exchanges, custodians, infrastructure providers, and anyone running a publicly-reachable  zcashd  reduce their attack surface by placing zebra in front of it. this…">
+        <a class="blog-row__link" href="blog-advisory-reduce-your-zcashd-attack-surface-by-shielding-it-behind-zebra.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/28d89bcdcadd0b4af209.png" width="1536" height="1024" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>Security</span><time datetime="2026-04-17">17 Apr 2026</time></span>
+            <span class="blog-row__title">Advisory: Reduce Your zcashd Attack Surface by Shielding It Behind Zebra</span>
+            <span class="blog-row__by">Zooko Wilcox, Mark Henderson, Judah Caruso <span aria-hidden="true">·</span> 4 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="crosslink: incentivized feature nets jason mcgee news shielded labs is transitioning crosslink from its prototype phase into productization. as part of this next phase,  we are introducing a series of incentivized testnets , which we call  feature…">
+        <a class="blog-row__link" href="blog-crosslink-incentivized-feature-nets.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/092f3c202b1769161d24.png" width="1921" height="1081" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2026-04-02">2 Apr 2026</time></span>
+            <span class="blog-row__title">Crosslink: Incentivized Feature Nets</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 6 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="zcash vulnerability successfully remediated zooko wilcox [*], daira-emma hopwood [†], jack “str4d” grigg [†] , judah caruso [*], jason mcgee [*], and josh swihart [†] news security researcher alex “scalar” sol identified a vulnerability in zcashd that could have allowed invalid transactions introduced by a miner to be accepted under certain conditions, potentially…">
+        <a class="blog-row__link" href="blog-zcash-vulnerability-successfully-remediated.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/ff47bf91afaef7b72230.png" width="1536" height="1024" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2026-03-31">31 Mar 2026</time></span>
+            <span class="blog-row__title">Zcash Vulnerability Successfully Remediated</span>
+            <span class="blog-row__by">Zooko Wilcox [*], Daira-Emma Hopwood [†], Jack “str4d” Grigg [†] , Judah Caruso [*], Jason McGee [*], and Josh Swihart [†] <span aria-hidden="true">·</span> 6 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="thoughts on sentiment polling and governance jason mcgee news in light of the recent governance polling, i want to share our perspective on how we interpret the results, what they may imply for shielded labs’ projects like the network sustainability…">
+        <a class="blog-row__link" href="blog-thoughts-on-sentiment-polling-and-governance.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/9479c0a4dd4419228f3d.png" width="1536" height="1024" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2026-02-23">23 Feb 2026</time></span>
+            <span class="blog-row__title">Thoughts on Sentiment Polling and Governance</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 7 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="coinholder-directed retroactive grants program: q4 results jason mcgee news the results are in! coinholders voted on nine proposals in the inaugural coinholder-directed retroactive grants program, and five were approved: fpf administration, bitcoin vn, electric coin…">
+        <a class="blog-row__link" href="blog-coinholder-directed-retroactive-grants-program-q4-results.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/ddb43bb46302face80d6.png" width="1920" height="1080" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2025-11-26">26 Nov 2025</time></span>
+            <span class="blog-row__title">Coinholder-Directed Retroactive Grants Program: Q4 Results</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 1 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="crosslink: updated staking design jason mcgee news crosslink builds on proof of work (pow) by adding a finality gadget that provides an additional layer of security and protection against rollbacks. all economic activity and block validation…">
+        <a class="blog-row__link" href="blog-crosslink-updated-staking-design.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/8dcca4a9c0ee5d419fae.jpg" width="1921" height="1081" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2025-10-27">27 Oct 2025</time></span>
+            <span class="blog-row__title">Crosslink: Updated Staking Design</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 10 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="zcash and staking economics jason mcgee news crosslink is the beating heart of zcash. like the heart’s two sides pumping blood to the lungs and the rest of the body, it depends on both stakers and miners to keep the network secure and…">
+        <a class="blog-row__link" href="blog-zcash-and-staking-economics.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/4979bb06c7fed56a2b6d.png" width="1921" height="1080" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2025-09-12">12 Sep 2025</time></span>
+            <span class="blog-row__title">Zcash and Staking Economics</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 4 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="zcash coinholders approve retroactive grants program jason mcgee news the  results  are in! coinholders have voted to ratify the new coinholder grants program, confirming it will operate as a retroactive grants program and approving the process outlined in the…">
+        <a class="blog-row__link" href="blog-zcash-coinholders-approve-retroactive-grants-program.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/e19928edea193ebd077e.png" width="1180" height="664" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2025-09-04">4 Sep 2025</time></span>
+            <span class="blog-row__title">Zcash Coinholders Approve Retroactive Grants Program</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 4 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="accelerate zcash: let’s deliver a smaller network upgrade sooner jason mcgee news zcash needs to ship protocol upgrades faster and more frequently. nu7 has been delayed for far too long, with shifting timelines, expanding scope, and growing dependencies slowing progress. this…">
+        <a class="blog-row__link" href="blog-accelerate-zcash-lets-deliver-a-smaller-network-upgrade-sooner.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/f393f10a4fc08185afd8.png" width="1180" height="664" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2025-08-13">13 Aug 2025</time></span>
+            <span class="blog-row__title">Accelerate Zcash: Let’s Deliver A Smaller Network Upgrade Sooner</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 6 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="Engineering Update" data-words="crosslink roadmap mark henderson engineering update for a high level overview of our roadmap, please visit this  link .">
+        <a class="blog-row__link" href="blog-crosslink-roadmap-q1-2025.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/de7edbf3debbdc07b343.png" width="1920" height="1080" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>Engineering Update</span><time datetime="2025-03-07">7 Mar 2025</time></span>
+            <span class="blog-row__title">Crosslink Roadmap</span>
+            <span class="blog-row__by">Mark Henderson <span aria-hidden="true">·</span> 7 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="shielded labs seeks fifth board member jason mcgee news shielded labs, a donation-funded zcash support organization, is seeking a board member to help shape its strategic direction and oversee its leadership team. this position provides the…">
+        <a class="blog-row__link" href="blog-shielded-labs-seeks-fifth-board-member.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/996fd1ff596ad27a2bee.png" width="1920" height="1080" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2025-02-25">25 Feb 2025</time></span>
+            <span class="blog-row__title">Shielded Labs Seeks Fifth Board Member</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 2 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+      <li class="blog-row" data-category="News" data-words="network sustainability mechanism (nsm) jason mcgee news twitter spaces event – november 5, 2024">
+        <a class="blog-row__link" href="blog-network-sustainability-mechanism-nsm.html">
+          <span class="blog-row__cover"><img src="assets/images/blog/a6ebcd64a46684c38458.png" width="678" height="376" alt="" loading="lazy" decoding="async"></span>
+          <span class="blog-row__text">
+            <span class="blog-row__meta"><span>News</span><time datetime="2024-11-24">24 Nov 2024</time></span>
+            <span class="blog-row__title">Network Sustainability Mechanism (NSM)</span>
+            <span class="blog-row__by">Jason McGee <span aria-hidden="true">·</span> 1 min read</span>
+          </span>
+          <svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg>
+        </a>
+      </li>
+    </ul>
+    <p class="blog-empty" data-blog-empty hidden>No articles match.</p>
+  </div>
+</section>
+<script>
+(function () {
+  var list = document.querySelector('[data-blog-list]');
+  var buttons = document.querySelectorAll('[data-blog-filter]');
+  var search = document.querySelector('[data-blog-search]');
+  var empty = document.querySelector('[data-blog-empty]');
+  if (!list) return;
+  var category = 'all';
+  function apply() {
+    var words = (search && search.value || '').trim().toLowerCase();
+    var shown = 0;
+    list.querySelectorAll('.blog-row').forEach(function (row) {
+      var visible = (category === 'all' || row.dataset.category === category) && (!words || row.dataset.words.indexOf(words) !== -1);
+      row.hidden = !visible;
+      if (visible) shown += 1;
+    });
+    if (empty) empty.hidden = shown > 0;
+  }
+  buttons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      category = button.dataset.blogFilter;
+      buttons.forEach(function (other) { other.setAttribute('aria-pressed', String(other === button)); });
+      apply();
+    });
+  });
+  if (search) search.addEventListener('input', apply);
+})();
+</script>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="grid foot">
+      <div class="foot-brand">
+        <img src="assets/images/shielded-labs-wordmark.png" alt="Shielded Labs" width="800" height="200" decoding="async">
+        <p class="foot-line">Building the future of private money</p>
+        <p class="foot-about">Shielded Labs is an independent, donation-funded Zcash support organization based in Switzerland.</p>
+      </div>
+      <nav class="foot-col foot-col--projects" aria-labelledby="f-projects">
+        <h2 id="f-projects">Projects</h2>
+        <ul>
+          <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs.net/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs.net/zero/">Zero</a></li><li><a href="https://shieldedlabs.net/ironwood/">Ironwood</a></li><li><a href="blog-epoch-future-proof-cryptography-for-zcash.html">Epoch</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-site">
+        <h2 id="f-site">Organization</h2>
+        <ul>
+          <li><a href="index.html#about">About</a></li><li><a href="https://shieldedlabs.net/governance/">Governance</a></li><li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs.net/board/">Board</a></li><li><a href="blog.html">Blog</a></li><li><a href="https://shieldedlabs.net/jobs/">Jobs</a></li><li><a href="transparency.html">Transparency</a></li><li><a href="key-facts.html">Key facts</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-connect">
+        <h2 id="f-connect">Connect</h2>
+        <ul>
+          <li><a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a></li>
+          <li><a href="https://x.com/ShieldedLabs">X</a></li>
+          <li><a href="https://github.com/ShieldedLabs">GitHub</a></li>
+          <li><a href="https://shieldedlabs.net/feed/">RSS feed</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 Shielded Labs · Association registered in Zug · Dammstrasse 16, 6300 Zug, Switzerland</span>
+      <span class="legal-links"><span>No cookies. No trackers.</span> <a href="https://shieldedlabs.net/privacy-policy/">Privacy policy</a></span>
+    </div>
+  </div>
+</footer>
+<p class="mock-note">Proposal mock for review, not the live site. Donation addresses are placeholders, and items marked Pending wait for Shielded Labs.</p>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>

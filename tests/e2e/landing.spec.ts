@@ -17,6 +17,8 @@ const added = [
   { name: 'Crosslink', path: '/landing/crosslink.html' },
   { name: 'Funding', path: '/landing/funding.html' },
   { name: 'Transparency', path: '/landing/transparency.html' },
+  { name: 'Blog', path: '/landing/blog.html' },
+  { name: 'a blog post', path: '/landing/blog-epoch-future-proof-cryptography-for-zcash.html' },
 ] as const;
 
 for (const viewport of viewports) {
@@ -41,7 +43,7 @@ for (const viewport of viewports) {
       await expect(page.locator('.orig__title')).toHaveText(['About', 'Values', 'Mission']);
       await expect(page.locator('#values .value__icon--cells'), 'value icons drawn in cells').toHaveCount(6);
       await expect(page.locator('.nav-list > li > a', { hasText: 'Transparency' })).toHaveAttribute('href', 'transparency.html');
-      await expect(page.locator('.nav-list a', { hasText: 'Blog' }).first()).toHaveAttribute('href', '/?view=blog&section=all');
+      await expect(page.locator('.nav-list a', { hasText: 'Blog' }).first()).toHaveAttribute('href', 'blog.html');
       await expect(page.locator('.nav-cta a'), 'the call in the menu').toHaveText('Support');
       await expect(page.locator('.nav-cta a')).toHaveAttribute('href', 'support.html');
       // Titles and statements are centered on the page, in the type of the live site.
@@ -201,4 +203,29 @@ test('the rotating words keep one still frame when motion is reduced, and nothin
   await open(page, '/landing/support.html');
   await expect(page.locator('.work__item .work__name')).toHaveCount(6);
   await expect(page.locator('.work__item .label'), 'category words above the project names on Support').toHaveCount(0);
+});
+
+test('the blog lives on the landing, in the format of the portal: filters, search and a reader for each post', async ({ page }) => {
+  await open(page, '/landing/blog.html');
+  await expect(page.locator('.nav-list a[aria-current="page"]')).toHaveText('Blog');
+  const rows = page.locator('.blog-row');
+  await expect(rows).toHaveCount(21);
+  await expect(rows.first().locator('.blog-row__title')).toHaveText('The Network Sustainability Mechanism (NSM) Activates with NU7');
+  // Every post opens a page of the landing, never the portal.
+  const targets = await page.locator('.blog-row__link').evaluateAll(links => links.map(link => link.getAttribute('href') ?? ''));
+  expect(targets.filter(href => !/^[a-z0-9-]+\.html$/.test(href)), 'posts that open outside the landing').toEqual([]);
+  await page.getByRole('button', { name: 'Security' }).click();
+  await expect(page.locator('.blog-row:visible')).toHaveCount(4);
+  await page.getByRole('button', { name: 'All articles' }).click();
+  await page.getByPlaceholder('Search articles…').fill('orchard');
+  await expect(page.locator('.blog-row:visible')).toHaveCount(2);
+
+  await open(page, '/landing/blog-epoch-future-proof-cryptography-for-zcash.html');
+  await expect(page.locator('.post__title')).toHaveText('Epoch: Future-Proof Cryptography for Zcash');
+  await expect(page.locator('.post__back a')).toHaveAttribute('href', 'blog.html');
+  await expect(page.locator('.post-aside__toc a')).toHaveCount(5);
+  await expect(page.locator('.post__body h2#what-is-epoch')).toHaveText('What Is Epoch?');
+  await expect(page.locator('.post-aside a', { hasText: 'Original source' })).toHaveAttribute('href', 'https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/');
+  // No page of the landing sends the reader to the portal's blog.
+  await expect(page.locator('a[href*="view=blog"]')).toHaveCount(0);
 });

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement;d.classList.remove('no-js');try{var t=localStorage.getItem('sl-theme');if(t==='light'||t==='dark')d.setAttribute('data-theme',t);}catch(e){}if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('reveal');setTimeout(function(){if(!d.classList.contains('reveal-ready'))d.classList.remove('reveal');},3000);}})();</script>
+<title>Crosslink Feature Net: Reflections on the First Six Weeks | Shielded Labs</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="assets/css/site.css">
+<link rel="stylesheet" href="assets/css/proposta.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="index.html"><img class="brand__light" src="assets/images/shielded-labs-wordmark-light.png" width="800" height="200" alt="Shielded Labs, home"><img class="brand__dark" src="assets/images/shielded-labs-wordmark.png" width="800" height="200" alt="Shielded Labs, home"></a>
+    <nav class="nav" aria-label="Primary">
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="primary-menu"><span class="bars" aria-hidden="true"></span><span class="menu-label">Menu</span></button>
+      <ul class="nav-list" id="primary-menu">
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="index.html">Home</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-home" aria-label="Home submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-home">
+            <li><a href="index.html#about">About</a></li><li><a href="index.html#mission">Mission</a></li><li><a href="index.html#values">Values</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="https://shieldedlabs.net/projects/">Projects</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-projects" aria-label="Projects submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-projects">
+            <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs.net/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs.net/zero/">Zero</a></li><li><a href="https://shieldedlabs.net/ironwood/">Ironwood</a></li><li><a href="https://shieldedlabs.net/roadmap/">Roadmap</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li class="nav-group">
+          
+          <a href="team.html">Team</a>
+          <button class="nav-group__toggle" type="button" aria-expanded="false" aria-controls="submenu-team" aria-label="Team submenu"><svg viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M2.5 4.5 6 8l3.5-3.5"></path></svg></button>
+          <ul class="nav-sub" id="submenu-team">
+            <li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs.net/board/">Board</a></li>
+          </ul>
+        </li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs.net/governance/">Governance</a></li>
+        
+        
+        
+        
+        <li><a href="blog.html" aria-current="page">Blog</a></li>
+        <li><a href="transparency.html">Transparency</a></li>
+        
+        
+        
+        
+        <li><a href="https://shieldedlabs.net/contact/">Contact</a></li>
+        <li class="nav-cta"><a href="support.html">Support</a></li>
+        
+        
+      </ul>
+    </nav>
+    <button class="search-btn" type="button" aria-label="Search" aria-haspopup="dialog" aria-controls="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6"></circle><path d="m15 15 5.5 5.5"></path></svg>
+    </button>
+    <button class="theme-btn" type="button" aria-label="Switch to light theme">
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"></path></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path></svg>
+    </button>
+  </div>
+</header>
+<main id="main">
+
+<article class="section post">
+  <div class="wrap">
+    <p class="post__back"><a href="blog.html"><svg class="arr arr--back" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M15 5H1.5M5.5 1l-4 4 4 4"></path></svg><span>Articles</span></a></p>
+    <h1 class="post__title">Crosslink Feature Net: Reflections on the First Six Weeks</h1>
+    <p class="post__meta"><span>Jason McGee</span><span aria-hidden="true">·</span><time datetime="2026-05-29">29 May 2026</time><span aria-hidden="true">·</span><span>7 min read</span></p>
+    <div class="post__grid">
+      <div class="post__main">
+        <figure class="post__cover"><img src="assets/images/blog/0bbfb2142530a762fbb3.png" width="1672" height="941" alt="Artwork for Crosslink Feature Net: Reflections on the First Six Weeks" decoding="async"></figure>
+        <div class="post__body"><p>It has been a little over six weeks since we launched the Crosslink incentivized feature net, where participants can join the network as miners or finalizers and stake to earn rewards. We wanted to provide an update on how the network has been progressing, the issues we’ve encountered so far, what we’ve learned from them, and what we are currently focused on improving.</p><p>As expected at this stage, the network is still immature and has been extremely rough around the edges. Participants have encountered crashes, syncing issues, stalled finality, and a variety of other bugs and edge cases across multiple iterations of the network, particularly around block production, syncing behavior, and network recovery. While that has understandably been frustrating at times for some participants, others have embraced the challenge by helping diagnose issues, coordinate recovery efforts, and better understand how the system behaves in practice. As a result, the feature net has already provided valuable insights into real-world network behavior, and overall we are encouraged by the progress being made. </p><p>Rather than repeatedly resetting the network every time a major issue occurs and only practicing under ideal conditions, our goal is to work through these problems in a live environment whenever possible. The kinds of failures, outages, and coordination challenges we are encountering are precisely the kinds of situations a production network must be able to survive. We believe working through them now will ultimately lead to a stronger network.</p><h2 id="stalled-bft"><strong>Stalled BFT</strong></h2><p>The most significant issue the network is currently facing is a stalled finality layer. Stalls are perhaps the most controversial aspect of BFT systems. Rather than risking transaction rollbacks, a protocol will halt finalization if it can no longer safely reach consensus, choosing safety over availability. This is the opposite side of the tradeoff made by the Nakamoto PoW that Zcash currently uses, which prioritizes availability and continued block production even under adverse conditions, but accepts the possibility of transaction rollbacks through chain reorganizations. Put simply, when network conditions become unfavorable, PoW tends to produce rollbacks while BFT systems tend to produce stalls. </p><p>In Crosslink, a BFT stall causes finality to stop progressing while PoW continues producing blocks. This can happen if enough stake goes offline. At this stage, it is still unclear whether the network will recover naturally as finalizers come back online or whether participants will ultimately decide that some form of coordinated recovery action is necessary.</p><p>As developers, it is often tempting to simply reset the network when it encounters a difficult state, much like rebooting a laptop when something goes wrong. However, because stalls are a known and expected behavior of BFT systems, and because the feature net is designed to expose real-world operational challenges, we believe there is greater value in understanding and working through these situations. Our focus is on improving the robustness of the software and providing better analytics, monitoring, and diagnostic tools. Ultimately, our goal is to give participants the ability to detect, analyze, coordinate, and recover from these kinds of scenarios themselves, in order to ensure that any future deployment is more resilient under real-world conditions.</p><p>To help participants better understand the state of the network, we recently released new visualization and diagnostic tooling focused on finalizer activity and network health. The tooling allows users to identify which finalizers appear online or offline based on recent voting activity, view aggregate online and offline stake, inspect individual finalizer status, and better interpret the current state of the BFT network. Recent updates also introduced additional filtering and the visualization of finalizers’ direct connection status, made possible by peer-to-peer topology improvements.</p><p>A major goal of this work is to ensure that participants have the information necessary to make informed decisions themselves rather than relying on Shielded Labs to dictate outcomes. One of the core ideas behind the Crosslink architecture is that different participants in the system have different responsibilities:</p><ol><li><p>Wallets protect users.</p></li><li><p>Miners include transactions and produce blocks.</p></li><li><p>Finalizers enforce finality.</p></li><li><p>Stakers select good finalizers.</p></li><li><p>Users slash stakers if they fail to do their job.</p></li></ol><p>To that end, we are developing recovery tooling that could allow users to coordinate an emergency network upgrade if the broader network concludes that action is necessary, including mechanisms that could socially slash stake delegated to persistently inactive finalizers. The operational and coordination challenges involved here are exactly the sort of issues the feature net is intended to surface before any production deployment is considered.</p><h2 id="what-s-next"><strong>What’s Next</strong></h2><p>When we originally introduced the incentivized feature net, the plan was for development to progress through a series of “seasons,” where each new season would effectively operate as a new network with updated software, fresh consensus history, and improved functionality. The idea was that participants could continue earning rewards while porting over their finalizer identities and transitioning between progressively more mature networks.</p><p>However, based on the issues we have encountered so far, we have decided to move away from the idea of regularly restarting the network and launching entirely new seasons on a predetermined schedule. As mentioned earlier in this post, we believe there is significant value in working through failures and recovery scenarios in a live environment rather than repeatedly resetting the network and starting over. While that approach can be slower and more painful in the short term, we believe it will produce a stronger network and give us a much deeper understanding of how the system behaves under real-world conditions.</p><p>Going forward, the plan is to continue iterating on the existing network through regular software updates that improve stability, fix bugs, expand tooling, and introduce more mature functionality over time, only restarting the network when deemed essential for development [1]. We will continue to provide regular updates on network progress, major issues, new tooling, and changes to the feature net as development continues.</p><h2 id="reward-distribution"><strong>Reward Distribution</strong></h2><p>Rather than tying incentives to discrete “seasons,” rewards will instead be distributed on a rolling six week cadence. Before each payout period begins, we will announce how much ZEC has been allocated for that six week period.</p><p>We will also be announcing the payout process for the first six weeks shortly. Because this is the initial distribution period, there will likely be a short delay before rewards are processed as we finalize the tooling and operational workflow. The current plan is for participants to submit a feature net wallet viewing key along with a mainnet Orchard address where rewards should be sent. As originally specified, rewards will be based on cTAZ earned through mining and staking activity during the payout period, and not total cTAZ holdings.</p><p>Participants will have a limited claim window to submit the required information and receive rewards. Any unclaimed ZEC remaining after that period may be used as discretionary rewards for contributors who went above and beyond in testing, debugging, reporting issues, or otherwise helping improve the network. As previously mentioned, Shielded Labs will not be a recipient of ZEC-based rewards from the incentivized feature net.</p><h2 id="conclusion"><strong>Conclusion</strong></h2><p>We appreciate everyone who has continued participating despite the instability and the inevitable frustrations that come with testing software at this stage of development. The feedback, failures, and edge cases encountered over the past six weeks have already significantly improved our understanding of the system and will help guide the next phase of development.</p><p>Despite the challenges, many participants have continued providing valuable feedback, testing edge cases, reporting bugs, developing tooling, and helping improve the network in meaningful ways. We especially want to thank @zk_nd3r and @kenbak for being consistently engaged and going above and beyond by building block explorers and contributing important infrastructure. We would also like to recognize @dismad, @pacu, Orchard Guardian, and Tom Z for their valuable feedback and contributions throughout the first six weeks of the feature net.</p><p>We also understand that the current state of the network can make participation difficult or frustrating for some users. There is absolutely no expectation that everyone participate at this early stage. Participants are free to step away and rejoin later as the network becomes more stable and mature. As previously mentioned, the amount of ZEC allocated to the incentivized feature net is expected to increase over time as the network and tooling continue to improve. We also expect the network to continue running for an extended period of time, likely through 2026 and into 2027. In addition, we plan to continue hosting workshops and community calls on a regular basis, approximately once every six weeks, and there will continue to be plenty of opportunities for participants to get involved.</p><h5>Footnotes</h5><p>[1]  While we are moving away from planned seasonal resets, we may still reset the network when doing so allows us to simplify the codebase or make significant design improvements that would otherwise break compatibility. Backwards compatibility is not a primary goal at this stage, but it will become increasingly important as we move closer to production readiness.</p></div>
+      </div>
+      <aside class="post-aside" aria-label="About this article"><div class="post-aside__block"><p class="post-aside__label">On this page</p><ol class="post-aside__toc"><li><a href="#stalled-bft">Stalled BFT</a></li><li><a href="#what-s-next">What’s Next</a></li><li><a href="#reward-distribution">Reward Distribution</a></li><li><a href="#conclusion">Conclusion</a></li></ol></div><div class="post-aside__block"><p class="post-aside__label">Project</p><a class="post-aside__link" href="crosslink.html"><span>Crosslink</span><svg class="arr" viewBox="0 0 15 10" aria-hidden="true" focusable="false"><path d="M0 5h13.5M9.5 1l4 4-4 4"></path></svg></a></div><div class="post-aside__block"><p class="post-aside__label">Source</p><p class="post-aside__text">Updated 3 Aug 2026</p><p class="post-aside__text">Retrieved 28 Oct 2026</p><a class="post-aside__link" href="https://shieldedlabs.net/crosslink-feature-net-reflections-on-the-first-six-weeks/" target="_blank" rel="noopener noreferrer"><span>Original source</span><svg class="arr" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><path d="M3 9 9 3M4 3h5v5"></path></svg></a></div></aside>
+    </div>
+  </div>
+</article>
+
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="grid foot">
+      <div class="foot-brand">
+        <img src="assets/images/shielded-labs-wordmark.png" alt="Shielded Labs" width="800" height="200" decoding="async">
+        <p class="foot-line">Building the future of private money</p>
+        <p class="foot-about">Shielded Labs is an independent, donation-funded Zcash support organization based in Switzerland.</p>
+      </div>
+      <nav class="foot-col foot-col--projects" aria-labelledby="f-projects">
+        <h2 id="f-projects">Projects</h2>
+        <ul>
+          <li><a href="nsm.html">Network Sustainability Mechanism</a></li><li><a href="crosslink.html">Crosslink</a></li><li><a href="https://shieldedlabs.net/fees/">Dynamic Fees</a></li><li><a href="https://shieldedlabs.net/zero/">Zero</a></li><li><a href="https://shieldedlabs.net/ironwood/">Ironwood</a></li><li><a href="blog-epoch-future-proof-cryptography-for-zcash.html">Epoch</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-site">
+        <h2 id="f-site">Organization</h2>
+        <ul>
+          <li><a href="index.html#about">About</a></li><li><a href="https://shieldedlabs.net/governance/">Governance</a></li><li><a href="team.html">Team</a></li><li><a href="https://shieldedlabs.net/board/">Board</a></li><li><a href="blog.html">Blog</a></li><li><a href="https://shieldedlabs.net/jobs/">Jobs</a></li><li><a href="transparency.html">Transparency</a></li><li><a href="key-facts.html">Key facts</a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="f-connect">
+        <h2 id="f-connect">Connect</h2>
+        <ul>
+          <li><a href="mailto:info@shieldedlabs.net">info@shieldedlabs.net</a></li>
+          <li><a href="https://x.com/ShieldedLabs">X</a></li>
+          <li><a href="https://github.com/ShieldedLabs">GitHub</a></li>
+          <li><a href="https://shieldedlabs.net/feed/">RSS feed</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="legal">
+      <span>© 2026 Shielded Labs · Association registered in Zug · Dammstrasse 16, 6300 Zug, Switzerland</span>
+      <span class="legal-links"><span>No cookies. No trackers.</span> <a href="https://shieldedlabs.net/privacy-policy/">Privacy policy</a></span>
+    </div>
+  </div>
+</footer>
+<p class="mock-note">Proposal mock for review, not the live site. Donation addresses are placeholders, and items marked Pending wait for Shielded Labs.</p>
+<script src="assets/js/site.js" defer></script>
+
+</body>
+</html>
