@@ -198,13 +198,17 @@ function Questions({ snapshot }: { snapshot: TurnoutSnapshot }) {
             <li key={q.id}>
               <details className={s.question}>
                 <summary className={s.questionSummary}>
-                  <span className={s.qLabel}>
-                    <span className={s.qNumber}>Q{q.id}</span> {q.label}
+                  <span className={s.qNumber}>Q{q.id}</span>
+                  <span className={s.qLabel}>{q.label}</span>
+                  <span className={s.qMetric}>
+                    <span className={s.qCount} aria-label={q.shares === null ? 'Shares unavailable' : `${formatCount(q.shares)} shares`}>
+                      <strong>{formatCount(q.shares)}</strong>
+                      <span>shares</span>
+                    </span>
+                    <span className={s.qBar} aria-hidden="true">
+                      <span style={{ width: `${(((q.shares ?? 0) / top) * 100).toFixed(1)}%` }} />
+                    </span>
                   </span>
-                  <span className={s.qBar} aria-hidden="true">
-                    <span style={{ width: `${(((q.shares ?? 0) / top) * 100).toFixed(1)}%` }} />
-                  </span>
-                  <strong aria-label={q.shares === null ? 'Shares unavailable' : `${formatCount(q.shares)} shares`}>{formatCount(q.shares)}</strong>
                   <svg className={s.qChevron} width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
                 </summary>
                 <div className={s.officialQuestion}>
