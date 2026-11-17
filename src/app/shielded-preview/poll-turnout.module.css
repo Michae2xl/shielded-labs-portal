@@ -500,74 +500,126 @@
 
 /* Accepted shares by question, scaled to the question with the most shares. */
 .questions {
-  margin-top: 22px;
+  margin-top: 26px;
 }
-.questions h4 {
+.panel .questions h4 {
   margin: 0 0 6px;
-  color: var(--tp-ink-2);
-  font-size: 13px;
-  font-weight: 500;
+  color: var(--tp-ink);
+  font-size: 16px;
+  font-weight: 600;
   line-height: 1.5;
 }
 .panel .questionHint {
-  margin: 0 0 10px;
+  margin: 0 0 16px;
   color: var(--tp-muted);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
 }
 .questions > ol {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 32px;
+  align-items: start;
+  gap: 10px 16px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .questions > ol > li {
   min-width: 0;
-  border-top: 1px solid var(--tp-line);
 }
-.questionSummary {
+.question {
+  border: 1px solid var(--tp-line);
+  border-radius: 10px;
+  background: var(--tp-surface);
+}
+.question:hover,
+.question[open] {
+  background: var(--tp-raised);
+}
+.question[open] {
+  border-color: color-mix(in srgb, var(--tp-s3) 35%, var(--tp-line));
+}
+/* Own the disclosure layout instead of inheriting the portal's flex row and extra arrow. */
+.panel .question > .questionSummary {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(40px, 18%) 7ch 14px;
+  grid-template-columns: 36px minmax(0, 1fr) max-content 14px;
   align-items: center;
   gap: 12px;
   min-width: 0;
-  min-height: 48px;
-  padding: 10px 0;
+  min-height: 76px;
+  padding: 14px 16px;
+  border-radius: 10px;
   cursor: pointer;
   list-style: none;
 }
 .questionSummary::-webkit-details-marker {
   display: none;
 }
+.panel .question > .questionSummary::marker {
+  content: '';
+}
+.panel .question > .questionSummary::after {
+  display: none;
+  content: none;
+}
 .questionSummary:hover .qLabel {
   color: var(--tp-ink);
 }
-.questionSummary:focus-visible {
+.panel .questionSummary:focus-visible {
   outline: 2px solid var(--tp-ink);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 .qChevron {
   color: var(--tp-muted);
+  transition: transform 160ms ease;
 }
 .question[open] .qChevron {
   transform: rotate(180deg);
 }
 .qLabel {
-  overflow: hidden;
-  color: var(--tp-ink-2);
-  font-size: 13px;
-  line-height: 1.5;
+  min-width: 0;
+  color: var(--tp-ink);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
   white-space: normal;
 }
 .qNumber {
-  color: var(--tp-muted);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--tp-line);
+  border-radius: 8px;
+  background: var(--tp-raised);
+  color: var(--tp-ink-2);
+  font-size: 12px;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
+.question[open] .qNumber {
+  border-color: color-mix(in srgb, var(--tp-s3) 25%, var(--tp-line));
+  background: color-mix(in srgb, var(--tp-s3) 9%, var(--tp-surface));
+  color: var(--tp-s3);
+}
+.qMetric {
+  display: grid;
+  gap: 7px;
+  min-width: 72px;
+}
+.qCount {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 5px;
+  white-space: nowrap;
+}
+.qCount > span {
+  color: var(--tp-muted);
+  font-size: 11px;
+}
 .qBar {
-  height: 6px;
+  height: 3px;
   overflow: hidden;
   border-radius: 6px;
   background: var(--tp-track);
@@ -578,35 +630,34 @@
   border-radius: 6px;
   background: var(--tp-s3);
 }
-.questionSummary > strong {
+.qCount > strong {
   color: var(--tp-ink);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 .officialQuestion {
-  margin-bottom: 14px;
-  padding: 16px;
-  border: 1px solid var(--tp-line);
-  border-radius: 8px;
-  background: var(--tp-raised);
+  margin: 0 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--tp-line);
 }
 .officialLabel {
-  color: var(--tp-muted);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  color: var(--tp-s3);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.officialQuestion h5 {
-  margin: 6px 0 12px;
+.panel .officialQuestion h5 {
+  margin: 8px 0 12px;
   color: var(--tp-ink);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.5;
 }
 .panel .officialQuestion p {
+  max-width: 75ch;
   margin: 0 0 12px;
   color: var(--tp-ink-2);
   font-size: 13px;
@@ -619,9 +670,11 @@
 .answerOptions {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 18px;
+  gap: 6px 20px;
   margin: 0 0 14px;
-  padding: 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--tp-line);
+  border-bottom: 1px solid var(--tp-line);
   list-style: none;
   color: var(--tp-ink-2);
   font-size: 12px;
@@ -743,7 +796,8 @@
   .panel .range button {
     transition: none;
   }
-  .meter span {
+  .meter span,
+  .qChevron {
     transition: none;
   }
 }
@@ -807,9 +861,25 @@
   .chart {
     margin-top: 10px;
   }
-  .questionSummary {
-    grid-template-columns: minmax(0, 1fr) 32px 6.5ch 14px;
+  .panel .question > .questionSummary {
+    grid-template-columns: 32px minmax(0, 1fr) max-content 14px;
     gap: 8px;
+    padding: 12px;
+  }
+  .qNumber {
+    width: 32px;
+    height: 32px;
+  }
+  .qMetric {
+    min-width: 55px;
+  }
+  .qCount {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+  }
+  .officialQuestion {
+    margin-inline: 12px;
   }
 }
 /* Too narrow for two: one card a row. */
