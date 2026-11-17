@@ -24,6 +24,7 @@ test.describe('The poll as a site of its own', () => {
       const errors = await open(page, '/poll');
       const questions = page.getByRole('region', { name: 'Coinholder activity by question', exact: true });
       const totals = page.getByLabel('Coinholder activity across all questions');
+      await expect(page.getByRole('link', { name: 'View by question' })).toHaveAttribute('href', '#poll-turnout-questions');
       await expect(totals).toContainText('245');
       await expect(totals).toContainText('18,120');
       await expect(questions.locator('summary').first()).toContainText('51 casts');
@@ -73,7 +74,10 @@ test.describe('The poll as a site of its own', () => {
     const internal = await page.evaluate(() => [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')!).filter((href) => !/^(https?:|mailto:|#)/.test(href)));
     expect(internal).toEqual([]);
     const jumps = await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].map((a) => [a.getAttribute('href'), Boolean(document.getElementById(a.getAttribute('href')!.slice(1)))]));
-    expect(jumps).toEqual([['#how-to-take-part', true]]);
+    expect(jumps).toContainEqual(['#how-to-take-part', true]);
+    for (const jump of jumps) {
+      expect([['#how-to-take-part', true], ['#poll-turnout-questions', true]]).toContainEqual(jump);
+    }
     await expect(page.getByRole('heading', { name: 'How to take part' })).toBeVisible();
     // The jump lands below the page's fixed bar, with the block's title in view.
     await page.getByRole('link', { name: 'How to take part' }).click();
