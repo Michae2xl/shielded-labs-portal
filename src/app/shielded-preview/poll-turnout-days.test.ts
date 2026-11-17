@@ -46,9 +46,9 @@ describe('panel ballots per day', () => {
   it('gives coinholders a separate question axis with current shares, never daily ballots', () => {
     const markup = html(SNAPSHOT);
     const shares = markup.slice(markup.indexOf('aria-labelledby="coinholder-bars-heading"'));
-    expect(text(shares)).toContain('Coinholder shares Latest reading · 17 Nov, 01:29 UTC Coinholders 80 Q1 40 Q2 20 Q3 4 Q4 0 Q5 144 total shares');
+    expect(text(shares)).toContain('Coinholders 80 Q1 40 Q2 20 Q3 4 Q4 0 Q5 144 total shares');
     expect(shares).toContain('aria-label="Q1 Wind down ZCG: 80 shares"');
-    expect(shares).toContain('Daily share history is not available.');
+    expect(shares).toContain('The final tally shows the ZEC behind each answer.');
     expect(text(shares)).not.toContain('today');
     expect(shares).not.toContain('data-future');
     expect(shares).not.toContain('ballots');
@@ -61,7 +61,8 @@ describe('panel ballots per day', () => {
     };
     const markup = html(unavailable);
     const shares = markup.slice(markup.indexOf('aria-labelledby="coinholder-bars-heading"'));
-    expect(text(shares)).toContain('Awaiting a reading Coinholders — Q1 — Q2 — Q3 — Q4 — Q5 — total shares');
+    expect(text(shares)).toContain('Awaiting a reading');
+    expect(text(shares)).toContain('Coinholders — Q1 — Q2 — Q3 — Q4 — Q5 — total shares');
     expect(shares).toContain('aria-label="Q1 Wind down ZCG: shares unavailable"');
     expect(shares).not.toContain('<i style=');
   });

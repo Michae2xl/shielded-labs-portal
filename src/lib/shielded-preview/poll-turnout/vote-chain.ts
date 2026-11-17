@@ -8,9 +8,9 @@ import { z } from 'zod';
  *   question inside the transaction. Counting those gives the votes cast per question, with block times.
  * - Its REST summary counts the encrypted shares revealed per question. Each vote is split into 16 shares
  *   revealed after delays. The portal displays these accepted shares directly, without a conversion
- *   to votes or people. Cast helpers below are retained for auditing the former counter.
+ *   to votes or people. The RPC supplies an independent count of commitments.
  *
- * Neither says how anyone voted: option counts are summed away here and never leave this module.
+ * While voting is open, only aggregate activity leaves this module. Final weights require the published tally.
  */
 
 export const SHARES_PER_VOTE = 16;
@@ -32,11 +32,20 @@ const assertRound = (round: string) => {
 /** The vote chain's session states (vote-sdk, proto/svote/v1/types.proto). */
 const CHAIN_STATUS = { 1: 'active', 2: 'tallying', 3: 'finalized', 4: 'pending' } as const;
 export type ChainRoundStatus = (typeof CHAIN_STATUS)[keyof typeof CHAIN_STATUS] | 'unknown';
+export interface AnswerWeight {
+  label: string;
+  zec: number;
+}
+export interface ChainQuestion {
+  id: number;
+  shares: number;
+  results?: AnswerWeight[];
+}
 export interface ChainSummary {
   status: ChainRoundStatus;
   endsAt: string | null;
   totalShares: number;
-  questions: { id: number; shares: number }[];
+  questions: ChainQuestion[];
 }
 
 const count = z.union([z.number().int().nonnegative(), z.string().regex(/^\d+$/).transform(Number)]).refine(Number.isSafeInteger, 'unsafe count');
@@ -69,6 +78,51 @@ export function parseChainSummary(json: unknown, round: string): ChainSummary {
   };
 }
 
+// A missing scalar in a published protobuf row represents zero. A missing row
+// is different: it supplies no evidence that this option was tallied.
+const finalRoster = z.object({
+  vote_round_id: z.string(),
+  status: z.literal(3),
+  proposals: z.array(z.object({
+    id: count,
+    options: z.array(z.object({
+      index: count.default(0), label: z.string().trim().min(1), total_value: count.default(0),
+    })).min(1),
+  })),
+});
+const finalTally = z.object({
+  results: z.array(z.object({
+    vote_round_id: z.string(), proposal_id: count, vote_decision: count.default(0), total_value: count.default(0),
+  })).min(1),
+});
+
+/** Match the summary to an actual tally row for every answer, including explicit zero results. */
+export function readFinalWeights(summary: unknown, tally: unknown, round: string): Map<number, AnswerWeight[]> {
+  const roster = finalRoster.parse(summary);
+  if (base64ToHex(roster.vote_round_id) !== round) throw new Error('Wrong finalized round');
+  const rows = new Map<string, number>();
+  for (const row of finalTally.parse(tally).results) {
+    const key = `${row.proposal_id}/${row.vote_decision}`;
+    if (row.vote_round_id !== roster.vote_round_id || rows.has(key)) throw new Error('Invalid tally row');
+    rows.set(key, row.total_value);
+  }
+  const weights = new Map<number, AnswerWeight[]>();
+  for (const proposal of roster.proposals) {
+    let units = 0;
+    const answers = proposal.options.map((option) => {
+      const key = `${proposal.id}/${option.index}`;
+      if (rows.get(key) !== option.total_value) throw new Error('Missing or inconsistent final weight');
+      rows.delete(key);
+      units += option.total_value;
+      return { label: option.label, zec: option.total_value / 8 };
+    });
+    if (!Number.isSafeInteger(units) || weights.has(proposal.id)) throw new Error('Invalid proposal tally');
+    weights.set(proposal.id, answers);
+  }
+  if (rows.size) throw new Error('Unexpected tally choices');
+  return weights;
+}
+
 // ---------- RPC: votes as they are cast ----------
 
 /** The events a cast vote leaves (vote-sdk, x/vote/types/events.go). */
@@ -85,6 +139,19 @@ export function txSearchUrl(event: CastEvent, round: string, after: number, upTo
 export const statusUrl = () => `${VOTE_CHAIN_RPC}/status`;
 export const headerUrl = (height: number) => `${VOTE_CHAIN_RPC}/header?height=${height}`;
 
+export interface CastCount {
+  height: number;
+  questions: Record<number, number>;
+}
+
+function batchQuestions(attrs: Record<string, string>): number[] | null {
+  if (!/^\d+(,\d+)*$/.test(attrs.proposal_ids ?? '')) return null;
+  const ids = attrs.proposal_ids.split(',').map(Number);
+  if (ids.some((id) => !Number.isSafeInteger(id) || id < 1) || new Set(ids).size !== ids.length ||
+      (attrs.batch_size !== undefined && Number(attrs.batch_size) !== ids.length)) return null;
+  return ids;
+}
+
 /** One cast: its block, and the questions it answers (null when a lone vote's question could not be read). */
 export interface Cast {
   hash: string;
@@ -92,7 +159,7 @@ export interface Cast {
   questions: number[] | null;
 }
 
-const height = z.string().regex(/^\d+$/).transform(Number);
+const height = z.string().regex(/^\d+$/).transform(Number).refine(Number.isSafeInteger);
 const pageSchema = z.object({
   result: z.object({
     total_count: height,
@@ -111,7 +178,7 @@ const pageSchema = z.object({
 });
 
 /** One tx_search page as casts; failed transactions and events about other rounds are left out. */
-export function parseCastPage(json: unknown, event: CastEvent, round: string): { total: number; txs: number; casts: Cast[] } {
+export function parseCastPage(json: unknown, event: CastEvent, round: string): { total: number; txs: number; hashes: string[]; casts: Cast[] } {
   assertRound(round);
   const { result } = pageSchema.parse(json);
   const casts: Cast[] = [];
@@ -124,15 +191,11 @@ export function parseCastPage(json: unknown, event: CastEvent, round: string): {
       const questions =
         event === 'cast_vote'
           ? castVoteQuestion(tx.tx, round)
-          : (attrs.proposal_ids ?? '')
-              .split(',')
-              .filter(Boolean)
-              .map(Number)
-              .filter((id) => Number.isInteger(id) && id > 0);
+          : batchQuestions(attrs);
       casts.push({ hash: tx.hash, height: tx.height, questions: questions === null ? null : [questions].flat() });
     }
   }
-  return { total: result.total_count, txs: result.txs.length, casts };
+  return { total: result.total_count, txs: result.txs.length, hashes: result.txs.map((tx) => tx.hash), casts };
 }
 
 /** Protobuf fields of one message, enough to read varints and byte strings. */

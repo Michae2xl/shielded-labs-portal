@@ -1,6 +1,6 @@
 import { participationSources as wallets } from '../governance-participation';
 import { toSeries, type SeriesPoint } from './series';
-import { type ChainRoundStatus, VOTE_CHAIN_HOSTS, voteSummaryUrl } from './vote-chain';
+import { type AnswerWeight, type CastCount, type ChainQuestion, type ChainRoundStatus, VOTE_CHAIN_HOSTS, voteSummaryUrl } from './vote-chain';
 import zcapHistory from './zcap-history.json';
 import { ZCAP_ELECTION_ID, ZCAP_STATUS_URL } from './siv-history';
 
@@ -168,12 +168,13 @@ export interface CountRead {
   /** True when the count itself is an estimate (revealed shares ÷ 16). */
   approximate: boolean;
   /** Accepted shares per question, without conversion to votes or people. */
-  questions?: { id: number; shares: number }[];
+  questions?: ChainQuestion[];
 }
 export interface TurnoutReads {
   bodies: Record<string, Read<CountRead> | undefined>;
   roster: number | null;
   chainStatus: ChainRoundStatus | null;
+  casts?: Read<CastCount>;
 }
 
 // ---------- What the route returns ----------
@@ -209,9 +210,10 @@ export interface TurnoutSnapshot {
   checkedAt: string;
   phase: PollPhase;
   previousLabel: string;
+  casts?: Read<CastCount>;
   bodies: BodyTurnout[];
   /** Accepted coinholder shares per question, summed across answers. */
-  questions: { id: number; label: string; shares: number | null }[];
+  questions: { id: number; label: string; shares: number | null; results?: AnswerWeight[] }[];
 }
 
 const STATE: Record<ReadState, BodyState> = { fetched: 'live', stale: 'stale', unavailable: 'unavailable' };
@@ -282,7 +284,7 @@ function recordedBody(source: RecordedSource | SivSource, roster: number | null,
   };
 }
 
-/** Everything the panel shows, from the record and what was read. Counts only, never a leaning. */
+/** Everything the panel shows, from the record and what was read. Answer weights are available only for a published tally. */
 export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, now: number): TurnoutSnapshot {
   const opensAt = Date.parse(config.opensAt);
   const bodies = config.sources.map((source) => {
@@ -297,7 +299,7 @@ export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, no
   });
   const chain = config.sources.find((s) => s.kind === 'vote-chain');
   const chainRead = chain ? (reads.bodies[chain.id]?.data ?? null) : null;
-  const shares = new Map(chainRead?.questions?.map((q) => [q.id, q.shares]));
+  const questions = new Map(chainRead?.questions?.map((q) => [q.id, q]));
   return {
     round: config.round,
     opensAt: config.opensAt,
@@ -305,11 +307,13 @@ export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, no
     checkedAt: new Date(now).toISOString(),
     phase: pollPhase(config, reads.chainStatus, now),
     previousLabel: config.previousLabel,
+    casts: reads.casts,
     bodies,
     questions: config.questions.map((q) => ({
       id: q.id,
       label: q.label,
-      shares: shares.get(q.id) ?? null,
+      shares: questions.get(q.id)?.shares ?? null,
+      ...(reads.chainStatus === 'finalized' && questions.get(q.id)?.results ? { results: questions.get(q.id)?.results } : {}),
     })),
   };
 }

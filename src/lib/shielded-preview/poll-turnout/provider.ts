@@ -4,8 +4,8 @@ import { HELIOS_PAGE, heliosBallotTimes, heliosUrls, heliosVoterIds } from './he
 import { cumulative } from './series';
 import { NU7_1_TURNOUT, buildSnapshot, type CountRead, type HeliosSource, type PollTurnoutConfig, type Read, type SivSource, type TurnoutSnapshot, type VoteChainSource } from './turnout';
 import { createSivReader } from './siv-provider';
-import { VOTE_CHAIN_HOSTS, parseChainSummary, voteSummaryUrl, type ChainSummary } from './vote-chain';
-import type { GetJson } from './vote-chain-scanner';
+import { VOTE_CHAIN_HOSTS, parseChainSummary, readFinalWeights, voteSummaryUrl, type ChainSummary } from './vote-chain';
+import { castCheckpoint, createVoteChainScanner, type GetJson } from './vote-chain-scanner';
 
 // One reading a minute: votes arrive in bursts, Helios and the roster change slowly. A failed reading
 // keeps the last good one, marked stale, and is retried sooner.
@@ -55,15 +55,24 @@ function cachedRead<T>(load: (key: string) => Promise<{ data: T; observedAt?: nu
 /** The vote chain's summary from Valar Group, or from the Zcash Foundation mirror when Valar fails. */
 async function readSummary(getJson: GetJson, round: string, questionIds: number[]): Promise<ChainSummary> {
   const errors: string[] = [];
+  let finalized: ChainSummary | undefined;
   for (const host of VOTE_CHAIN_HOSTS) {
     try {
-      const summary = parseChainSummary(await getJson(voteSummaryUrl(host.origin, round), LIMITS), round);
+      const raw = await getJson(voteSummaryUrl(host.origin, round), LIMITS);
+      const summary = parseChainSummary(raw, round);
       if (summary.questions.length !== questionIds.length || summary.questions.some((q) => !questionIds.includes(q.id))) throw new Error('Incomplete question roster');
-      return summary;
+      if (summary.status === 'finalized') {
+        finalized = summary;
+        const tally = await getJson(`${host.origin}/shielded-vote/v1/tally-results/${round}`, LIMITS);
+        const weights = readFinalWeights(raw, tally, round);
+        return { ...summary, questions: summary.questions.map((q) => ({ ...q, results: weights.get(q.id) })) };
+      }
+      if (!finalized) return summary;
     } catch (error) {
       errors.push(`${host.name}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
+  if (finalized) return finalized;
   throw new Error(errors.join('; '));
 }
 
@@ -71,6 +80,10 @@ export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => 
   const getJson = jsonReader(fetcher);
   const siv = createSivReader(fetcher, now);
   const summary = cachedRead<ChainSummary>(async (round) => ({ data: await readSummary(getJson, round, config.questions.map((q) => q.id)) }), TTL, now);
+
+  const coinholders = config.sources.find((s): s is VoteChainSource => s.kind === 'vote-chain');
+  const scan = coinholders && createVoteChainScanner(coinholders.round, config.questions.map((q) => q.id), getJson, now);
+  const casts = scan && cachedRead(scan, TTL, now);
 
   // The same summary supplies the total and every question. Counts are accepted shares, as on
   // Zakura, not cast transactions or shares / 16. The summary has no historical timestamps.
@@ -127,18 +140,21 @@ export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => 
 
   return async function getPollTurnout(): Promise<TurnoutSnapshot> {
     const live = config.sources.filter((s): s is VoteChainSource | HeliosSource | SivSource => s.kind !== 'recorded');
-    const chainSource = config.sources.find((s): s is VoteChainSource => s.kind === 'vote-chain');
-    const [bodyReads, rosterRead, summaryRead] = await Promise.all([
+    const [bodyReads, rosterRead, summaryRead, castRead] = await Promise.all([
       Promise.all(live.map((source) => (source.kind === 'vote-chain' ? readers['vote-chain'](source) : source.kind === 'helios' ? readers.helios(source) : readers.siv(source)))),
       config.sources.some((s) => (s.kind === 'recorded' || s.kind === 'siv') && s.electorate === 'zcap-roster') ? roster('zcap') : null,
-      chainSource ? summary(chainSource.round) : null,
+      coinholders ? summary(coinholders.round) : null,
+      coinholders && casts ? casts(coinholders.round) : null,
     ]);
+    const seed = coinholders && castCheckpoint(coinholders.round, now());
+    const castReading = castRead?.data || !seed ? castRead : { state: 'stale' as const, data: seed.count, observedAt: new Date(seed.time).toISOString() };
     return buildSnapshot(
       config,
       {
         bodies: Object.fromEntries(live.map((source, i) => [source.id, bodyReads[i]])),
         roster: rosterRead?.data ?? null,
         chainStatus: summaryRead?.data?.status ?? null,
+        casts: castReading ?? undefined,
       },
       now(),
     );

@@ -41,10 +41,12 @@ function CoinholderShares({ body, questions }: { body: BodyTurnout; questions: T
   const top = Math.max(1, ...questions.map((question) => question.shares ?? 0));
   return (
     <section className={s.sharesBlock} aria-labelledby="coinholder-bars-heading">
-      <header className={s.sharesHead}>
-        <h4 id="coinholder-bars-heading">Coinholder shares</h4>
+      <details className={s.shareDisclosure}>
+      <summary className={s.sharesHead}>
+        <span id="coinholder-bars-heading" className={s.sharesTitle}>Coinholder network activity</span>
         <span>{body.observedAt ? <>Latest reading · <time dateTime={body.observedAt}>{stampLabel(Date.parse(body.observedAt))}</time></> : 'Awaiting a reading'}</span>
-      </header>
+      </summary>
+      <p className={s.shareNote}>A taller bar means the network has received more encrypted fragments for that question. Each fragment can carry a different weight.</p>
       <div className={`${s.row} ${s.shareRow}`}>
         <span className={s.who}>
           <span className={s.logos} aria-hidden="true">
@@ -73,7 +75,8 @@ function CoinholderShares({ body, questions }: { body: BodyTurnout; questions: T
           <small>total shares</small>
         </span>
       </div>
-      <p className={s.shareNote}>Shares by question in the latest reading. Each share is an encrypted vote fragment; one voter can contribute many. Daily share history is not available.</p>
+      <p className={s.shareNote}>One wallet can contribute many shares. The final tally shows the ZEC behind each answer.</p>
+      </details>
     </section>
   );
 }
