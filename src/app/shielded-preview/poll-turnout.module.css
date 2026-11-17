@@ -17,6 +17,12 @@
   /* Emphasis, not a palette: the coinholder vote in Zcash gold, every panel in ink. */
   --tp-s1: #d4d4d4;
   --tp-s3: #e0a62a;
+  /* The time-span switch and the live mark. */
+  --tp-pill: #333;
+  --tp-pill-edge: rgba(255, 255, 255, 0.07);
+  --tp-pill-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --tp-live: #e0a62a;
+  --tp-live-halo: rgba(224, 166, 42, 0.45);
   container: turnoutPanel / inline-size;
   margin: 0;
   border: 1px solid var(--tp-border);
@@ -44,6 +50,11 @@
   --tp-crosshair: #75716a;
   --tp-s1: #2b2926;
   --tp-s3: #b07800;
+  --tp-pill: #fff;
+  --tp-pill-edge: rgba(22, 21, 19, 0.07);
+  --tp-pill-shadow: 0 1px 2px rgba(22, 21, 19, 0.1);
+  --tp-live: #b07800;
+  --tp-live-halo: rgba(176, 120, 0, 0.35);
   box-shadow:
     0 1px 2px rgba(22, 21, 19, 0.04),
     0 8px 24px rgba(22, 21, 19, 0.05);
@@ -74,75 +85,93 @@
   color: var(--tp-muted);
   font-size: 14px;
   line-height: 1.5;
+  text-wrap: balance;
 }
 .controls {
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
 }
-/* Two spans in one control: higher specificity than the portal's button reset. */
+/* The time span: two equal halves on a sunken track, the chosen one on a raised pill that slides across.
+   Two classes in each selector: above the portal's button reset. */
 .panel .range {
-  display: inline-flex;
-  padding: 2px;
-  border: 1px solid var(--tp-border);
-  border-radius: 8px;
-  background: var(--tp-surface);
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 3px;
+  border-radius: 10px;
+  background: var(--tp-track);
+}
+.panel .range::before {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 7px;
+  background: var(--tp-pill);
+  box-shadow:
+    var(--tp-pill-shadow),
+    inset 0 0 0 1px var(--tp-pill-edge);
+  content: '';
+  transition: transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.panel .range[data-range='whole']::before {
+  transform: translateX(100%);
 }
 .panel .range button {
-  min-height: 30px;
-  padding: 4px 11px;
+  position: relative;
+  min-height: 28px;
+  padding: 4px 14px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 7px;
   background: transparent;
   color: var(--tp-muted);
   font-family: inherit;
   font-size: 12.5px;
-  font-weight: 500;
+  font-weight: 550;
   line-height: 1.4;
+  white-space: nowrap;
   cursor: pointer;
+  transition: color 160ms ease;
 }
-.panel .range button:hover {
-  color: var(--tp-ink);
-}
+.panel .range button:hover,
 .panel .range button[aria-pressed='true'] {
-  background: var(--tp-raised);
-  box-shadow: inset 0 0 0 1px var(--tp-line);
   color: var(--tp-ink);
 }
 .panel .range button:focus-visible {
   outline: 2px solid var(--tp-ink);
   outline-offset: 1px;
 }
+/* Whether the counts are live: a quiet pill, a gold dot that breathes while the sources answer. */
 .state {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
+  min-height: 34px;
+  padding: 0 12px 0 11px;
+  border-radius: 999px;
+  background: var(--tp-track);
   color: var(--tp-ink-2);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.5;
+  font-size: 12.5px;
+  font-weight: 550;
+  line-height: 1;
   white-space: nowrap;
 }
 .pulse {
-  position: relative;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--tp-now);
 }
-.state[data-state='live'] .pulse {
-  background: var(--tp-ink);
+.state[data-state='live'] {
+  color: var(--tp-ink);
 }
-.state[data-state='live'] .pulse::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1px solid var(--tp-ink);
-  opacity: 0;
-  animation: ring 2.4s ease-out infinite;
+.state[data-state='live'] .pulse {
+  background: var(--tp-live);
+  animation: breathe 2.4s ease-out infinite;
 }
 .state[data-state='stale'] .pulse {
   background: transparent;
@@ -577,14 +606,13 @@
   white-space: nowrap;
 }
 
-@keyframes ring {
-  from {
-    transform: scale(0.5);
-    opacity: 0.9;
+@keyframes breathe {
+  0% {
+    box-shadow: 0 0 0 0 var(--tp-live-halo);
   }
-  to {
-    transform: scale(1.6);
-    opacity: 0;
+  70%,
+  100% {
+    box-shadow: 0 0 0 6px transparent;
   }
 }
 @keyframes halo {
@@ -598,9 +626,13 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .state[data-state='live'] .pulse::after,
+  .state[data-state='live'] .pulse,
   .end[data-state='live'] .halo {
     animation: none;
+  }
+  .panel .range::before,
+  .panel .range button {
+    transition: none;
   }
   .meter span {
     transition: none;

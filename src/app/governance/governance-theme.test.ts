@@ -84,10 +84,15 @@ describe('the governance light theme', () => {
     new Function('localStorage', 'document', 'matchMedia', THEME_SCRIPT)({ getItem: () => { throw new Error('blocked'); } }, { documentElement: { dataset } }, () => ({ matches: true }));
     expect(dataset.govTheme).toBe('light');
   });
-  it('shows a sun on the dark theme, the emoji alone, named for what it does', () => {
+  it('draws a thin-line sun and a crescent, no circle or emoji, and is named for what it does', () => {
     const html = renderToStaticMarkup(createElement(ThemeToggle, { className: 'corner' }));
     expect(html).toContain('aria-label="Switch to the light theme"');
-    expect(html).toContain('☀️');
-    expect(html).not.toMatch(/<svg|<img/);
+    expect(html).toMatch(/class="[^"]*corner/);
+    // Both marks are drawn; the theme attribute on the page shows one, so it is right before the page wakes up.
+    expect(html.match(/<svg [^>]*aria-hidden="true"/g)).toHaveLength(2);
+    expect(html).not.toMatch(/☀️|🌙|<img/);
+    const css = readFileSync('src/app/governance/theme-toggle.module.css', 'utf8');
+    expect(css).toMatch(/:global\(:root\[data-gov-theme='light'\]\) \.sun \{\s*display: none;/);
+    expect(css).not.toMatch(/border-radius|background/);
   });
 });

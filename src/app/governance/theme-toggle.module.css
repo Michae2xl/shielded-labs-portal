@@ -1,0 +1,38 @@
+/* The theme switch's mark: a thin-line sun on the dark theme, a crescent on the light one, in the ink of where it sits.
+   Both are drawn and the theme attribute picks one, so the right mark shows before the page wakes up. */
+.mark {
+  display: block;
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.moon {
+  display: none;
+}
+:global(:root[data-gov-theme='light']) .sun {
+  display: none;
+}
+:global(:root[data-gov-theme='light']) .moon {
+  display: block;
+}
+/* On hover the sun turns a little and the moon tips. */
+.toggle:hover .sun {
+  transform: rotate(45deg);
+}
+.toggle:hover .moon {
+  transform: rotate(-18deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .mark {
+    transition: none;
+  }
+  .toggle:hover .sun,
+  .toggle:hover .moon {
+    transform: none;
+  }
+}

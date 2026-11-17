@@ -230,7 +230,7 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
         </div>
         <div className={s.controls}>
           {snapshot && snapshot.phase === 'open' && (
-            <div className={s.range} role="group" aria-label="Time span">
+            <div className={s.range} role="group" aria-label="Time span" data-range={range}>
               {(['so-far', 'whole'] as const).map((value) => (
                 <button key={value} type="button" aria-pressed={range === value} onClick={() => setRange(value)}>
                   {value === 'so-far' ? 'So far' : 'Whole poll'}

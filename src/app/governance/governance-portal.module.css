@@ -20,7 +20,7 @@
  .name>strong{font-size:14px;line-height:1.35;font-weight:600}
  .barEnd{display:flex;align-items:center;gap:6px;min-width:0}
  /* The theme switch in the bar's corner: the emoji alone, no circle. */
- .theme.theme{display:grid;place-items:center;flex-shrink:0;width:34px;height:42px;padding:0;border:0;background:transparent;font-size:18px;line-height:1;cursor:pointer;opacity:.85}
+ .theme.theme{display:grid;place-items:center;flex-shrink:0;width:34px;height:42px;padding:0;border:0;background:transparent;color:var(--c-bdbdbd, #bdbdbd);line-height:1;cursor:pointer;transition:color 160ms ease}.theme.theme:hover{color:var(--c-ffffff, #fff)}
  .theme.theme:focus-visible{outline:2px solid var(--c-eeeeee, #eee);outline-offset:2px;border-radius:6px}
  .labs{display:flex;align-items:center;gap:9px;min-height:42px;padding:10px 13px;border:1px solid var(--c-353535, #353535);border-radius:5px;color:var(--c-dddddd, #ddd);font-size:14px;line-height:20px;white-space:nowrap}
  .labs>img{display:block;flex-shrink:0;width:22px;height:22px;object-fit:contain;opacity:.85}

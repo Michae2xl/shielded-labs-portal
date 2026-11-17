@@ -118,8 +118,8 @@
 
 .foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--c-2a2a2a, #2a2a2a); }
 /* The theme switch in the sidebar's corner: the emoji alone. The class is doubled to outweigh the portal's button reset. */
-.theme.theme { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; margin: 0 0 4px; padding: 0; border: 0; border-radius: 8px; background: transparent; font-size: 18px; line-height: 1; cursor: pointer; opacity: .8; transition: opacity 160ms ease, transform 160ms ease; }
-.theme.theme:hover { opacity: 1; transform: rotate(-12deg); }
+.theme.theme { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; margin: 0 0 4px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: var(--c-a8a8a8, #a8a8a8); line-height: 1; cursor: pointer; transition: color 160ms ease; }
+.theme.theme:hover { color: var(--c-ffffff, #fff); }
 .theme.theme:focus-visible { outline: 2px solid var(--c-eeeeee, #eee); outline-offset: 2px; }
 .labs {
   display: flex;
@@ -140,5 +140,5 @@
 .labs img { flex-shrink: 0; width: 18px; height: 18px; object-fit: contain; opacity: .85; }
 .labs strong { color: var(--c-e2e2e2, #e2e2e2); font-size: 14px; font-weight: 500; }
 
-@media (prefers-reduced-motion: reduce) { .navigation a, .list a, .list a svg, .labs, .theme.theme { transition: none; } .theme.theme:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .navigation a, .list a, .list a svg, .labs, .theme.theme { transition: none; } }
 @media print { .navigation, .sidebar { display: none; } }

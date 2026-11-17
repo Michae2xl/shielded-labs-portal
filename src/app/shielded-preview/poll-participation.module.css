@@ -1,5 +1,6 @@
-/* How to take part: the ballots' shared instructions, then one column per group that votes. */
-.card {
+/* How to take part: the ballots' shared instructions, then one column per group that votes.
+   Two classes, over the cards' own 24 px: the poll page's bar stays fixed at the top, and the link in its header lands here. */
+.card.card {
   scroll-margin-top: 90px;
 }
 .card .guidance {

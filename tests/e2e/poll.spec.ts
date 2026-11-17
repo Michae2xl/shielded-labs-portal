@@ -17,6 +17,13 @@ test.describe('The poll as a site of its own', () => {
     const jumps = await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].map((a) => [a.getAttribute('href'), Boolean(document.getElementById(a.getAttribute('href')!.slice(1)))]));
     expect(jumps).toEqual([['#how-to-take-part', true]]);
     await expect(page.getByRole('heading', { name: 'How to take part' })).toBeVisible();
+    // The jump lands below the page's fixed bar, with the block's title in view.
+    await page.getByRole('link', { name: 'How to take part' }).click();
+    await expect.poll(() => page.evaluate(() => {
+      const bar = document.querySelector('header')!.getBoundingClientRect().bottom;
+      const title = document.getElementById('take-part-heading')!.getBoundingClientRect().top;
+      return title >= bar;
+    })).toBe(true);
     expect(await sidewaysOverflow(page)).toBe(0);
   });
 

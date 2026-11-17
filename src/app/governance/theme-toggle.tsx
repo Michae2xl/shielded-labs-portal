@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { THEME_EVENT, THEME_KEY } from './theme';
+import s from './theme-toggle.module.css';
 
 const isLight = () => document.documentElement.dataset.govTheme === 'light';
 
-/** A sun on the dark theme and a moon on the light one: the emoji alone, no circle. Every copy on the page stays in step. */
+/** A thin-line sun on the dark theme and a crescent on the light one, no circle. Every copy on the page stays in step. */
 export default function ThemeToggle({ className }: { className?: string }) {
   const [light, setLight] = useState(false);
   useEffect(() => {
@@ -27,8 +28,14 @@ export default function ThemeToggle({ className }: { className?: string }) {
   }
   const label = light ? 'Switch to the dark theme' : 'Switch to the light theme';
   return (
-    <button type="button" className={className} onClick={toggle} aria-label={label} title={label}>
-      <span aria-hidden="true">{light ? '🌙' : '☀️'}</span>
+    <button type="button" className={`${s.toggle} ${className ?? ''}`} onClick={toggle} aria-label={label} title={label}>
+      <svg className={`${s.mark} ${s.sun}`} viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.2" />
+        <path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4" />
+      </svg>
+      <svg className={`${s.mark} ${s.moon}`} viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19.5 14.6A8 8 0 0 1 9.4 4.5a8 8 0 1 0 10.1 10.1Z" />
+      </svg>
     </button>
   );
 }
