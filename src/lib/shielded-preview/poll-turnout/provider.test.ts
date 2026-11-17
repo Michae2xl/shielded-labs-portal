@@ -3,6 +3,11 @@ vi.mock('server-only', () => ({}));
 import live from './nu7-1-vote-summary.json';
 import { createTurnoutProvider } from './provider';
 import { headerOf, statusOf, txSearch, type FakeCast } from './test-chain';
+import { NU7_1_TURNOUT } from './turnout';
+
+// The latest ZCAP count read by hand: each new reading is one line in turnout.ts, and these tests follow it.
+const ZCAP_SOURCE = NU7_1_TURNOUT.sources.find((source) => source.id === 'zcap');
+const ZCAP_LAST = (ZCAP_SOURCE?.kind === 'recorded' ? ZCAP_SOURCE.readings : []).at(-1)!;
 
 const T0 = Date.parse('2026-11-17T00:00:00Z');
 const ballots = [
@@ -57,7 +62,7 @@ describe('the turnout provider', () => {
     const [a, b] = await Promise.all([get(), get()]);
     expect(a.bodies.map((body) => [body.name, body.value, body.eligible, body.state])).toEqual([
       ['Coinholders', 3, null, 'live'],
-      ['ZCAP', 33, 2, 'recorded'],
+      ['ZCAP', ZCAP_LAST.ballots, 2, 'recorded'],
       ['Zcash Brasil', 3, 518, 'live'],
       ['ZecHub', 3, 518, 'live'],
     ]);
@@ -110,7 +115,7 @@ describe('the turnout provider', () => {
     const snapshot = await createTurnoutProvider(network({ casts: [], tip: 1, down: { rpc: true, valar: true, zf: true, helios: true } }), () => T0)();
     expect(snapshot.bodies.map((b) => [b.value, b.state])).toEqual([
       [null, 'unavailable'],
-      [33, 'recorded'],
+      [ZCAP_LAST.ballots, 'recorded'],
       [null, 'unavailable'],
       [null, 'unavailable'],
     ]);

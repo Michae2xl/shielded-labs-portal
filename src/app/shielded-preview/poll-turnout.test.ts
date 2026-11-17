@@ -4,6 +4,10 @@ import { describe, expect, it } from 'vitest';
 import { NU7_1_TURNOUT, buildSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
 import { PollTurnoutCard } from './poll-turnout';
 
+// The latest ZCAP count read by hand: each new reading is one line in turnout.ts, and these tests follow it.
+const ZCAP_SOURCE = NU7_1_TURNOUT.sources.find((source) => source.id === 'zcap');
+const ZCAP_LAST = (ZCAP_SOURCE?.kind === 'recorded' ? ZCAP_SOURCE.readings : []).at(-1)!;
+
 const NOW = Date.parse('2026-11-17T01:10:00Z');
 const helios = (value: number, eligible: number, at: string) => ({
   state: 'fetched' as const,
@@ -35,7 +39,7 @@ describe('live turnout panel', () => {
     const out = text(html({ snapshot: SNAPSHOT }));
     expect(out).toContain('Live turnout NU7.1 poll · day 2 of 15 · closes 1 Dec, 02:59 UTC');
     expect(out).toContain('Coinholders 136 votes 11% of last poll 16 Nov Now Live · Vote chain ↗');
-    expect(out).toContain('ZCAP 33 ballots 16% of 203 · last poll 68% 16 Nov Now By hand 02:20 UTC · SIV ↗');
+    expect(out).toContain(`ZCAP ${ZCAP_LAST.ballots} ballots ${Math.round((ZCAP_LAST.ballots / 203) * 100)}% of 203 · last poll 68% 16 Nov Now By hand ${ZCAP_LAST.at.slice(11, 16)} UTC · SIV ↗`);
     expect(out).toContain('Zcash Brasil 3 ballots 17% of 18 16 Nov Now Live · Helios ↗');
     expect(out).toContain('ZecHub 1 ballot 4% of 23 16 Nov Now Live · Helios ↗');
     expect(out).toContain('Q1 Wind down ZCG 136');

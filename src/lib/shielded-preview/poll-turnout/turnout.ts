@@ -140,6 +140,7 @@ export const NU7_1_TURNOUT: PollTurnoutConfig = {
         { ballots: 24, at: '2026-11-16T23:16:00Z' },
         { ballots: 29, at: '2026-11-17T01:04:00Z' },
         { ballots: 33, at: '2026-11-17T02:20:00Z' },
+        { ballots: 37, at: '2026-11-17T03:13:00Z' },
       ],
       electorate: 'zcap-roster',
       previous: { value: 135, eligible: 198, source: 'https://forum.zcashcommunity.com/t/nu7-sentiment-polls-results/57590/4' },

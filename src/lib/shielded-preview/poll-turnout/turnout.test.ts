@@ -6,6 +6,11 @@ import { NU7_1_TURNOUT, buildSnapshot, pollPhase, type CountRead, type Read, typ
 import { SHARES_PER_VOTE, parseChainSummary } from './vote-chain';
 
 const NOW = Date.parse('2026-11-17T00:30:00Z');
+
+// The latest ZCAP count read by hand: each new reading is one line in turnout.ts, and these tests follow it.
+const ZCAP_SOURCE = NU7_1_TURNOUT.sources.find((source) => source.id === 'zcap');
+const ZCAP_READINGS = ZCAP_SOURCE?.kind === 'recorded' ? ZCAP_SOURCE.readings : [];
+const ZCAP_LAST = ZCAP_READINGS.at(-1)!;
 const fetched = (data: CountRead, observedAt = '2026-11-17T00:29:00.000Z'): Read<CountRead> => ({ state: 'fetched', observedAt, data });
 const chain: CountRead = {
   value: 131,
@@ -36,12 +41,13 @@ describe('the snapshot the route returns', () => {
   it('lists every body in the record’s order, with its count, who could vote and how it is known', () => {
     expect(snapshot.bodies.map((b) => [b.name, b.value, b.unit, b.eligible, b.timing, b.state])).toEqual([
       ['Coinholders', 131, 'votes', null, 'exact', 'live'],
-      ['ZCAP', 33, 'ballots', 203, 'recorded', 'recorded'],
+      ['ZCAP', ZCAP_LAST.ballots, 'ballots', 203, 'recorded', 'recorded'],
       ['Zcash Brasil', 3, 'ballots', 18, 'exact', 'live'],
       ['ZecHub', 1, 'ballots', 23, 'exact', 'live'],
     ]);
-    expect(snapshot.bodies[1]).toMatchObject({ observedAt: '2026-11-17T02:20:00Z', eligibleLabel: 'eligible', source: { label: 'SIV' } });
-    expect(snapshot.bodies[1].series.map((p) => p.value)).toEqual([0, 24, 29, 33]);
+    expect(snapshot.bodies[1]).toMatchObject({ observedAt: ZCAP_LAST.at, eligibleLabel: 'eligible', source: { label: 'SIV' } });
+    expect(snapshot.bodies[1].series.map((p) => p.value)).toEqual([0, ...ZCAP_READINGS.map((r) => r.ballots)]);
+    expect(ZCAP_READINGS.slice(0, 2).map((r) => r.ballots)).toEqual([24, 29]);
     expect(snapshot.bodies[0].previous).toMatchObject({ value: 1290, high: 1324, note: '2.4M ZEC' });
     expect(snapshot.phase).toBe('open');
     expect(snapshot.questions.map((q) => q.votes)).toEqual([131, 131, 131, 131, 131]);
@@ -82,7 +88,7 @@ describe('the snapshot the route returns', () => {
     const empty = buildSnapshot(NU7_1_TURNOUT, { bodies: {}, roster: null, chainStatus: null }, NOW);
     expect(empty.bodies.map((b) => [b.value, b.state, b.eligible])).toEqual([
       [null, 'unavailable', null],
-      [33, 'recorded', null],
+      [ZCAP_LAST.ballots, 'recorded', null],
       [null, 'unavailable', null],
       [null, 'unavailable', null],
     ]);
