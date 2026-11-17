@@ -32,6 +32,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      - run: node --test scripts/zcap/sync.test.mjs
       - run: npm run test:importer
       - run: npm run test:sources
       - run: npm run test:zips

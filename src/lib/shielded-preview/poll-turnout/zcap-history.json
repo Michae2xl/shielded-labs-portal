@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "electionId": "1794682180496",
+  "observations": [
+    { "ballots": 24, "at": "2026-11-16T23:16:00Z", "method": "manual" },
+    { "ballots": 29, "at": "2026-11-17T01:04:00Z", "method": "manual" },
+    { "ballots": 33, "at": "2026-11-17T02:20:00Z", "method": "manual" },
+    { "ballots": 37, "at": "2026-11-17T03:13:00Z", "method": "manual" },
+    { "ballots": 40, "at": "2026-11-17T04:07:00Z", "method": "manual" }
+  ]
+}

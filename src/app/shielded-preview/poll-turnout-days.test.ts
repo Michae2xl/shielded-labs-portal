@@ -36,7 +36,7 @@ describe('votes per day', () => {
     expect(out).toContain('Zcash Brasil 3 0 0 today');
     expect(out).toContain('ZecHub 1 0 0 today');
     expect(out).toContain('Nov 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30');
-    expect(out).toContain('ZCAP from counts read by hand.');
+    expect(out).toContain('ZCAP uses changes between observed totals; vote times are not published.');
   });
   it('reads every day so far aloud, row by row', () => {
     const markup = html(SNAPSHOT);

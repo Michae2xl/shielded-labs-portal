@@ -102,7 +102,7 @@ export function TurnoutByDayCard({ snapshot, now }: { snapshot: ReturnType<typeo
               ))}
             </span>
           </div>
-          <p className={b.note}>Coinholder votes and panel ballots that arrived each day. ZCAP from counts read by hand.</p>
+          <p className={b.note}>Coinholder votes and panel ballots that arrived each day. ZCAP uses changes between observed totals; vote times are not published.</p>
         </>
       ) : (
         <p className={b.note}>Reading the vote chain and the panels.</p>
