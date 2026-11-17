@@ -8,7 +8,7 @@ test.describe('The poll as a site of its own', () => {
     await open(page, '/poll');
     await expect(page.getByRole('heading', { level: 1, name: 'ZCG / Dev Fund poll' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Live turnout' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Votes per day' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Panel ballots per day' })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Governance sections' })).toHaveCount(0);
     await expect(page.getByRole('button', { name: /Switch to the (light|dark) theme/ })).toBeVisible();
     // Links leave for public sources, write to a help address, or jump within the page; none leads into the portal.

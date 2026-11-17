@@ -4,8 +4,8 @@ import { HELIOS_PAGE, heliosBallotTimes, heliosUrls, heliosVoterIds } from './he
 import { cumulative } from './series';
 import { NU7_1_TURNOUT, buildSnapshot, type CountRead, type HeliosSource, type PollTurnoutConfig, type Read, type SivSource, type TurnoutSnapshot, type VoteChainSource } from './turnout';
 import { createSivReader } from './siv-provider';
-import { SHARES_PER_VOTE, VOTE_CHAIN_HOSTS, parseChainSummary, voteSummaryUrl, type ChainSummary } from './vote-chain';
-import { createVoteChainScanner, type GetJson } from './vote-chain-scanner';
+import { VOTE_CHAIN_HOSTS, parseChainSummary, voteSummaryUrl, type ChainSummary } from './vote-chain';
+import type { GetJson } from './vote-chain-scanner';
 
 // One reading a minute: votes arrive in bursts, Helios and the roster change slowly. A failed reading
 // keeps the last good one, marked stale, and is retried sooner.
@@ -53,11 +53,13 @@ function cachedRead<T>(load: (key: string) => Promise<{ data: T; observedAt?: nu
 }
 
 /** The vote chain's summary from Valar Group, or from the Zcash Foundation mirror when Valar fails. */
-async function readSummary(getJson: GetJson, round: string): Promise<ChainSummary> {
+async function readSummary(getJson: GetJson, round: string, questionIds: number[]): Promise<ChainSummary> {
   const errors: string[] = [];
   for (const host of VOTE_CHAIN_HOSTS) {
     try {
-      return parseChainSummary(await getJson(voteSummaryUrl(host.origin, round), LIMITS), round);
+      const summary = parseChainSummary(await getJson(voteSummaryUrl(host.origin, round), LIMITS), round);
+      if (summary.questions.length !== questionIds.length || summary.questions.some((q) => !questionIds.includes(q.id))) throw new Error('Incomplete question roster');
+      return summary;
     } catch (error) {
       errors.push(`${host.name}: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -68,38 +70,18 @@ async function readSummary(getJson: GetJson, round: string): Promise<ChainSummar
 export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => number = Date.now, config: PollTurnoutConfig = NU7_1_TURNOUT) {
   const getJson = jsonReader(fetcher);
   const siv = createSivReader(fetcher, now);
-  const scanners = new Map<string, ReturnType<typeof createVoteChainScanner>>();
-  const scannerFor = (round: string) => scanners.get(round) ?? scanners.set(round, createVoteChainScanner(round, getJson)).get(round)!;
+  const summary = cachedRead<ChainSummary>(async (round) => ({ data: await readSummary(getJson, round, config.questions.map((q) => q.id)) }), TTL, now);
 
-  const summary = cachedRead<ChainSummary>(async (round) => ({ data: await readSummary(getJson, round) }), TTL, now);
-
-  // Votes as cast, from the RPC. Once the RPC has answered, a failure keeps that exact count (marked stale);
-  // only a round never read there falls back to the summary's revealed shares, and only to a fresh summary.
-  const counted = new Set<string>();
-  const chain = cachedRead<CountRead>(
-    async (round) => {
-      try {
-        const count = await scannerFor(round)();
-        counted.add(round);
-        const top = Math.max(0, ...count.questions.map((q) => q.votes));
-        return {
-          observedAt: count.through.time,
-          data: { value: top, points: count.points, eligible: null, approximate: false, questions: count.questions, unread: count.unread },
-        };
-      } catch (error) {
-        if (counted.has(round)) throw error;
-        const fallback = await summary(round);
-        if (fallback.state !== 'fetched' || !fallback.data) throw error;
-        const questions = fallback.data.questions.map((q) => ({ id: q.id, votes: Math.round(q.shares / SHARES_PER_VOTE) }));
-        return {
-          observedAt: fallback.observedAt ? Date.parse(fallback.observedAt) : undefined,
-          data: { value: Math.max(0, ...questions.map((q) => q.votes)), points: [], eligible: null, approximate: true, questions, unread: 0 },
-        };
-      }
-    },
-    TTL,
-    now,
-  );
+  // The same summary supplies the total and every question. Counts are accepted shares, as on
+  // Zakura, not cast transactions or shares / 16. The summary has no historical timestamps.
+  async function chain(round: string): Promise<Read<CountRead>> {
+    const read = await summary(round);
+    return {
+      state: read.state,
+      observedAt: read.observedAt,
+      data: read.data ? { value: read.data.totalShares, questions: read.data.questions, points: [], eligible: null, approximate: false } : null,
+    };
+  }
 
   const helios = cachedRead<CountRead>(
     async (election) => {

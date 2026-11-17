@@ -13,7 +13,7 @@ const SNAPSHOT = buildSnapshot(
       coinholders: {
         state: 'fetched',
         observedAt: '2026-11-17T01:29:00.000Z',
-        data: { value: 144, points: [{ at: at('2026-11-16T22:00:00Z'), value: 124 }, { at: at('2026-11-17T01:20:00Z'), value: 144 }], eligible: null, approximate: false, questions: [], unread: 0 },
+        data: { value: 144, points: [{ at: at('2026-11-16T22:00:00Z'), value: 124 }, { at: at('2026-11-17T01:20:00Z'), value: 144 }], eligible: null, approximate: false, questions: [] },
       },
       'zcash-brasil': { state: 'fetched', observedAt: '2026-11-17T01:29:00.000Z', data: { value: 3, points: [{ at: at('2026-11-16T12:24:46Z'), value: 3 }], eligible: 18, approximate: false } },
       zechub: { state: 'fetched', observedAt: '2026-11-17T01:29:00.000Z', data: { value: 1, points: [{ at: at('2026-11-16T16:43:47Z'), value: 1 }], eligible: 23, approximate: false } },
@@ -26,12 +26,12 @@ const SNAPSHOT = buildSnapshot(
 const html = (snapshot: typeof SNAPSHOT | null) => renderToStaticMarkup(createElement(TurnoutByDayCard, { snapshot, now: NOW }));
 const text = (markup: string) => markup.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 
-describe('votes per day', () => {
+describe('panel ballots per day', () => {
   it('gives each body a row with what it added today, across the fifteen days of the poll', () => {
     const out = text(html(SNAPSHOT));
-    expect(out).toContain('Votes per day New each day · UTC');
+    expect(out).toContain('Panel ballots per day New each day · UTC');
     // Each day's count on its bar, then what the body added today.
-    expect(out).toContain('Coinholders 124 20 +20 today');
+    expect(out).not.toContain('Coinholders');
     expect(out).toContain('ZCAP 24 5 +5 today');
     expect(out).toContain('Zcash Brasil 3 0 0 today');
     expect(out).toContain('ZecHub 1 0 0 today');
@@ -40,15 +40,15 @@ describe('votes per day', () => {
   });
   it('reads every day so far aloud, row by row', () => {
     const markup = html(SNAPSHOT);
-    expect(markup).toContain('aria-label="Coinholders: 124 on 16 Nov, 20 on 17 Nov"');
+    expect(markup).not.toContain('aria-label="Coinholders:');
     expect(markup).toContain('aria-label="ZCAP: 24 on 16 Nov, 5 on 17 Nov"');
-    expect(markup.match(/data-future="true"/g)).toHaveLength(4 * 13);
+    expect(markup.match(/data-future="true"/g)).toHaveLength(3 * 13);
   });
   it('puts a count inside a bar with room for it, on top of a short one, and marks a day with none', () => {
     const markup = html(SNAPSHOT);
-    // Coinholders: 124 fills the bar; 20 is a sixth of it, so it sits above.
-    expect(markup).toMatch(/<i style="height:100\.0%"><b>124<\/b><\/i>/);
-    expect(markup).toMatch(/<i style="height:16\.1%"><\/i><b class="[^"]*" style="bottom:calc\(16\.1% \+ 4px\)">20<\/b>/);
+    // ZCAP: 24 fills the bar; 5 is about a fifth, so it sits above.
+    expect(markup).toMatch(/<i style="height:100\.0%"><b>24<\/b><\/i>/);
+    expect(markup).toMatch(/<i style="height:20\.8%"><\/i><b class="[^"]*" style="bottom:calc\(20\.8% \+ 4px\)">5<\/b>/);
     expect(markup).toMatch(/<b class="[^"]*" data-zero="true">0<\/b>/);
   });
   it('waits without numbers before the first reading', () => {

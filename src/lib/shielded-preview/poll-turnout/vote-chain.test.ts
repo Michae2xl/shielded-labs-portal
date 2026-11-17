@@ -10,6 +10,7 @@ describe('the vote chain summary (revealed shares)', () => {
     const summary = parseChainSummary(LIVE(), ROUND);
     expect(summary.status).toBe('active');
     expect(summary.endsAt).toBe('2026-12-01T02:59:00.000Z');
+    expect(summary.totalShares).toBe(276);
     expect(summary.questions).toEqual([
       { id: 1, shares: 105 },
       { id: 2, shares: 43 },
@@ -32,6 +33,14 @@ describe('the vote chain summary (revealed shares)', () => {
     first.options[0].ballot_count = '200';
     delete first.options[1].ballot_count;
     expect(parseChainSummary(body, ROUND).questions[0].shares).toBe(206);
+  });
+  it('rejects unsafe counts and totals instead of silently rounding the displayed shares', () => {
+    const body = LIVE();
+    const [first] = body.proposals as { options: { ballot_count?: unknown }[] }[];
+    first.options[0].ballot_count = '9007199254740992';
+    expect(() => parseChainSummary(body, ROUND)).toThrow();
+    first.options[0].ballot_count = Number.MAX_SAFE_INTEGER;
+    expect(() => parseChainSummary(body, ROUND)).toThrow('unsafe total');
   });
 });
 
