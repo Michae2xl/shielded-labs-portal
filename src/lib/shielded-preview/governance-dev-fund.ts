@@ -41,6 +41,8 @@ export const devFundPublished: DevFundPublication = {
 const organizersPost = 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/39';
 export const devFundNotices = {
   lateProposals: { postedAt: '2026-11-09', url: organizersPost, text: 'Proposals submitted after the deadline are not part of this round of polling: the coordinating organizations decided to uphold it.' },
+  // Post 133 of the same thread (16 Nov 2026, edited the same day).
+  closing: { postedAt: '2026-11-16', url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/133', text: 'On 16 Nov the organizers opened coinholder polling and said all polls close on Tuesday, 1 Dec at 02:59 UTC.' },
   questions: { postedAt: '2026-11-09', url: organizersPost, checkedAt: '2026-11-10T02:58:00Z', text: 'On 9 Nov the organizers said the proposed questions and answer choices would follow.' },
   // Post 86 of the same thread (13 Nov 2026). Shown only while the questions are a draft: drop it when the final questions are posted.
   revisedDraft: { postedAt: '2026-11-13', url: 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/86', text: 'This is the second version, posted on 13 Nov. The organizers said the questions are to be final by 15 Nov, before polling opens on 16 Nov.' },
@@ -54,7 +56,8 @@ export const devFundTimeline = {
     { id: 'proposals', label: 'Proposal deadline', short: 'Proposals close', dates: '8 Nov', time: '23:59 UTC', summary: 'Anyone can submit a proposal until Sunday, 8 Nov at 23:59 UTC.', endsAt: '2026-11-08T23:59:00Z' },
     { id: 'questions', label: 'Proposed poll questions', short: 'Poll questions', dates: '9 Nov', time: null, summary: 'The proposed poll questions and possible answers are to be published for public feedback.', endsAt: '2026-11-10T00:00:00Z' },
     { id: 'discussion', label: 'Discussion and changes', short: 'Discussion', dates: '9 – 15 Nov', time: null, summary: 'The community can discuss the proposals and suggest changes to the poll questions and answer choices before polling begins.', endsAt: '2026-11-16T00:00:00Z' },
-    { id: 'polling', label: 'Planned polling', short: 'Polling', dates: '16 – 30 Nov', time: null, summary: 'Polls for coinholders and community panels are to open on 16 Nov and close on Monday, 30 Nov at 23:59 UTC.', endsAt: '2026-11-30T23:59:00Z' },
+    // The calendar said 30 Nov at 23:59 UTC; on 16 Nov the organizers set the close at 1 Dec, 02:59 UTC (post 133), which ends this step.
+    { id: 'polling', label: 'Planned polling', short: 'Polling', dates: '16 – 30 Nov', time: null, summary: 'Polls for coinholders and community panels are to open on 16 Nov and close on Monday, 30 Nov at 23:59 UTC.', endsAt: '2026-12-01T02:59:00Z' },
   ],
 } as const;
 
@@ -63,7 +66,7 @@ export function devFundPhase(now: number | null) {
   if (now === null || !Number.isFinite(now)) return { id: null, label: 'Published timeline' };
   if (now < Date.parse(proposals.endsAt)) return { id: proposals.id, label: 'Accepting proposals' };
   if (now < Date.parse(discussion.endsAt)) return { id: discussion.id, label: 'Discussion period' };
-  if (now < Date.parse(polling.endsAt)) return { id: polling.id, label: 'Planned polling period' };
+  if (now < Date.parse(polling.endsAt)) return { id: polling.id, label: 'Polling open' };
   return { id: null, label: 'Polling period ended' };
 }
 

@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
   }
   // The launch address shows the poll page alone; see launch.ts.
   const host = requestHost(req.headers);
-  const route = launchRoute(host, pathname);
+  const route = launchRoute(host, pathname, req.nextUrl.search);
   if (route && 'rewrite' in route) return NextResponse.rewrite(new URL(route.rewrite, req.url));
   // Behind the hosting proxy the request URL is internal: send the reader to the public address.
   if (route && 'redirect' in route) return NextResponse.redirect(new URL(route.redirect, `https://${host}`), 307);

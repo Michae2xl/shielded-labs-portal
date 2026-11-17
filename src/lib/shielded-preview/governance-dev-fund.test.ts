@@ -19,7 +19,8 @@ describe('ZCG / Dev Fund published timeline', () => {
   it('keeps the dates of the published timeline', () => {
     expect(devFundTimeline.steps.map(step => step.dates)).toEqual(['8 Nov', '9 Nov', '9 – 15 Nov', '16 – 30 Nov']);
     expect(devFundTimeline.steps[0].endsAt).toBe('2026-11-08T23:59:00Z');
-    expect(devFundTimeline.steps[3].endsAt).toBe('2026-11-30T23:59:00Z');
+    // The organizers moved the close to 1 Dec, 02:59 UTC on 16 Nov (post 133); the published dates stay.
+    expect(devFundTimeline.steps[3].endsAt).toBe('2026-12-01T02:59:00Z');
   });
 
   it('moves through the phases at the published boundaries', () => {
@@ -27,8 +28,9 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(devFundPhase(at('2026-11-08T23:58:59Z')).id).toBe('proposals');
     expect(devFundPhase(at('2026-11-08T23:59:00Z')).id).toBe('discussion');
     expect(devFundPhase(at('2026-11-15T23:59:59Z')).id).toBe('discussion');
-    expect(devFundPhase(at('2026-11-16T00:00:00Z')).label).toBe('Planned polling period');
-    expect(devFundPhase(at('2026-11-30T23:59:00Z'))).toEqual({ id: null, label: 'Polling period ended' });
+    expect(devFundPhase(at('2026-11-16T00:00:00Z')).label).toBe('Polling open');
+    expect(devFundPhase(at('2026-11-30T23:59:00Z')).id).toBe('polling');
+    expect(devFundPhase(at('2026-12-01T02:59:00Z'))).toEqual({ id: null, label: 'Polling period ended' });
     expect(devFundPhase(null).label).toBe('Published timeline');
   });
 
@@ -37,7 +39,8 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(devFundNextSteps(at('2026-11-05T17:00:00Z'))).toHaveLength(4);
     expect(devFundNextSteps(at('2026-11-09T12:00:00Z')).map(step => step.id)).toEqual(['questions', 'discussion', 'polling']);
     expect(devFundNextSteps(at('2026-11-20T12:00:00Z')).map(step => step.id)).toEqual(['polling']);
-    expect(devFundNextSteps(at('2026-12-01T00:00:00Z'))).toEqual([]);
+    expect(devFundNextSteps(at('2026-12-01T00:00:00Z')).map(step => step.id)).toEqual(['polling']);
+    expect(devFundNextSteps(at('2026-12-01T03:00:00Z'))).toEqual([]);
   });
 
   it('opens the Governance overview with the card and links to the details', () => {
@@ -82,6 +85,13 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(markup).toContain('Not approved or scheduled');
     expect(markup).toContain('It depends on rough consensus after polling.');
     expect(markup).not.toContain('Q4 2026');
+  });
+
+  it('notes under Polling the organizers’ update on the close, with its post', () => {
+    expect(devFundNotices.closing.url).toContain('/58906/133');
+    const markup = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate, published: { questions: null, results: null } }));
+    expect(markup).toContain('all polls close on Tuesday, 1 Dec at 02:59 UTC');
+    expect(markup).toContain('Organizers’ post, 16 Nov');
   });
 
   it('keeps the timeline compact: each step can take focus and names the card that holds its text', () => {
@@ -139,7 +149,8 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(states(at('2026-11-10T03:00:00Z'))).toEqual(['done', 'awaited', 'current', 'next']);
     expect(states(at('2026-11-10T03:00:00Z'), { questions: { publishedAt: '2026-11-10', url: 'https://forum.zcashcommunity.com/t/1', items: [] }, results: null })).toEqual(['done', 'done', 'current', 'next']);
     expect(states(at('2026-11-20T00:00:00Z'))).toEqual(['done', 'awaited', 'done', 'current']);
-    expect(states(at('2026-12-01T00:00:00Z'))[3]).toBe('done');
+    expect(states(at('2026-12-01T00:00:00Z'))[3]).toBe('current');
+    expect(states(at('2026-12-01T03:00:00Z'))[3]).toBe('done');
   });
 
   it('keeps the draft poll on record, with the organizers’ instructions and its post', () => {

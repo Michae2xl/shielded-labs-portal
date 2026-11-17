@@ -15,6 +15,12 @@ describe('the launch address', () => {
     expect(launchRoute(host, '/poll')).toBeNull();
     for (const path of ['/governance', '/shielded-preview', '/landing', '/landing/index.html']) expect(launchRoute(host, path)).toEqual({ redirect: '/' });
   });
+  it('serves the poll’s share image, and no other', () => {
+    const host = 'governance.shieldedlabs.net';
+    expect(launchRoute(host, '/api/shielded-preview/og', '?view=governance&section=voting&lane=dev-fund')).toBeNull();
+    expect(launchRoute(host, '/api/shielded-preview/og', '?view=governance&section=zips&record=zip-0001')).toEqual({ notFound: true });
+    expect(launchRoute(host, '/api/shielded-preview/og')).toEqual({ notFound: true });
+  });
   it('serves only the data the page reads', () => {
     const host = 'governance.shieldedlabs.net';
     expect(launchRoute(host, '/api/shielded-preview/turnout')).toBeNull();

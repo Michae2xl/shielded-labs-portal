@@ -46,7 +46,7 @@ export function DevFundOverviewCard({ onNavigate }: { onNavigate: CollectionNavi
   return <section className={`${b.card} ${s.overviewCard}`} aria-labelledby="dev-fund-heading">
     <header className={`${b.header} ${s.centered}`}><h2 id="dev-fund-heading">{timeline.title}</h2><Phase now={now}/></header>
     {steps.length > 0
-      ? <ol className={s.stepper} aria-label="Timeline">{timeline.steps.map(step => { const state = devFundStepState(step, now); return <li key={step.id} data-state={state} aria-current={current === step.id ? 'step' : undefined}><Stamp step={step}/><span>{step.short}</span>{state === 'awaited' && <em>Awaited</em>}{step.id === 'questions' && state === 'done' && devFundPublished.questions?.draft && <em>Draft out</em>}{state === 'done' && <em className={s.srOnly}>Done</em>}</li>; })}</ol>
+      ? <ol className={s.stepper} aria-label="Timeline">{timeline.steps.map(step => { const state = devFundStepState(step, now); return <li key={step.id} data-state={state} aria-current={current === step.id ? 'step' : undefined}><Stamp step={step}/><span>{step.short}</span>{state === 'awaited' && <em>Awaited</em>}{step.id === 'questions' && state === 'done' && devFundPublished.questions?.draft && current !== 'polling' && <em>Draft out</em>}{state === 'done' && <em className={s.srOnly}>Done</em>}</li>; })}</ol>
       : <p className={s.closed}>Polling was planned to close on 30 Nov at 23:59 UTC.</p>}
     <Link section="Voting" selection={{ lane: devFundLane }} onNavigate={onNavigate} className={`${b.footer} ${s.details}`}>View details<Arrow/></Link>
   </section>;
@@ -116,6 +116,7 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
           {step.id === 'proposals' && (devFundAcceptsProposals(now)
             ? <Link section="Proposals" selection={{ lane: devFundLane }} onNavigate={onNavigate} className={s.link}>How to submit<Arrow/></Link>
             : <><p>{notices.lateProposals.text}</p><Cited href={notices.lateProposals.url}>Organizers’ post, 9 Nov</Cited></>)}
+          {step.id === 'polling' && <><p>{notices.closing.text}</p><Cited href={notices.closing.url}>Organizers’ post, 16 Nov</Cited></>}
         </div>
       </li>)}</ol>
     </section>

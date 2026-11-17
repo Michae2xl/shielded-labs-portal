@@ -71,6 +71,7 @@ function governanceCard(params: ShareParams): ShareCard | null {
   if (upcoming) return { chip: 'Network upgrade', title: upcoming.name, subtitle: line(upcoming.stage, `${upcoming.fact.name}: ${upcoming.fact.value}`), description: clip(upcoming.summary, DESCRIPTION_MAX) };
   const poll = record.polls.find(item => `poll:${item.id}` === id);
   if (poll) return { chip: 'Poll', title: poll.name, subtitle: line(day(poll.date)), description: clip(poll.outcome ?? poll.status ?? 'Zcash community poll.', DESCRIPTION_MAX) };
+  if (params.lane === devFundLane && params.section === 'voting') return { chip: 'Live turnout', title: 'ZCG / Dev Fund poll', subtitle: 'Coinholders, ZCAP and community panels · 16 Nov to 1 Dec 2026', description: 'Live turnout of the ZCG / Dev Fund poll: coinholder votes on the vote chain and ZCAP and community panel ballots, from public sources.' };
   if (params.lane === devFundLane) return { chip: 'Governance', title: devFundTimeline.title, subtitle: 'Published calendar for proposals and polling', description: 'The published calendar for proposals, poll questions and polling.' };
   const section = governanceSectionFromSlug(params.section);
   if (!section || section === 'Overview') return null;

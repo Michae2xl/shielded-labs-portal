@@ -34,6 +34,8 @@ describe('Share previews', () => {
     expect(shareCard({ view: 'governance', section: 'voting', lane: 'upgrades', record: 'upgrade:NU7' })).toMatchObject({ chip: 'Network upgrade', title: 'NU7', subtitle: 'Activated at block 3,543,405 · 06 Nov 2026' });
     expect(shareCard({ view: 'governance', section: 'voting', record: 'poll:2019-07-nu3-codename-straw-poll' })).toMatchObject({ chip: 'Poll', subtitle: '02 Aug 2019' });
     expect(shareCard({ view: 'governance', section: 'proposals', lane: 'dev-fund' })).toMatchObject({ chip: 'Governance', title: 'ZCG / Dev Fund: proposals and polling' });
+    // The Voting lane, and the poll page that shows it, share the poll's live turnout.
+    expect(shareCard({ view: 'governance', section: 'voting', lane: 'dev-fund' })).toMatchObject({ chip: 'Live turnout', title: 'ZCG / Dev Fund poll' });
     expect(shareCard({ view: 'governance', section: 'zips' })).toMatchObject({ chip: 'Governance', title: 'ZIPs' });
     expect(shareCard({ view: 'people', section: 'all', record: 'person:jason-mcgee-stramaglia' })).toMatchObject({ chip: 'Team', title: 'Jason McGee Stramaglia', subtitle: 'Executive Director' });
     expect(shareCard({ view: 'governance', section: 'overview' })).toMatchObject({ title: 'Zcash Governance' });
