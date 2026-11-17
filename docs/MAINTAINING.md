@@ -20,7 +20,7 @@ The GitHub sources run without a token. Conditional requests keep unchanged repo
 
 ## Hourly ZCAP turnout
 
-`.github/workflows/zcap-sync.yml` runs at minute 23 of each hour (GitHub schedules can be delayed), independently of visitors or a local computer. It reads `https://siv.org/api/election/1794682180496/num-votes`, the endpoint SIV's own public status page uses. `num_votes` is the displayed total; the pending and invalidated counters are **not** added to it. When the API cannot answer, the collector tries the normal public status page in the runner's Chrome. It does not solve challenges or require a voter/admin login. If both reads fail, the job fails and leaves the last successful history unchanged.
+`.github/workflows/zcap-sync.yml` runs at minute 47 of each hour (GitHub schedules can be delayed), independently of visitors or a local computer. It reads `https://siv.org/api/election/1794682180496/num-votes`, the endpoint SIV's own public status page uses. `num_votes` is the displayed total; the pending and invalidated counters are **not** added to it. When the API cannot answer, the collector tries the normal public status page in the runner's Chrome. It does not solve challenges or require a voter/admin login. If both reads fail, the job fails and leaves the last successful history unchanged.
 
 Each record contains only an observation time, cumulative total and collection method. The first five records preserve the earlier manual readings. Retries in the same UTC hour replace that hour's automatic sample. An unchanged total in a later hour records a fresh observation; it adds no votes. Decreasing totals, malformed responses and histories from a different election fail for review. No identities, encrypted ballots or choices are stored. Daily additions are changes between observations, not exact vote timestamps.
 
@@ -28,7 +28,7 @@ Successful runs on `main` commit `zcap.json` to the separate `turnout-data` bran
 
 The repository is private. On the existing Railway service, set `ZCAP_DATA_TOKEN` to a server-only GitHub token with **Contents: read** for this repository. If `ZIPS_DATA_TOKEN` already has that access, the reader reuses it; no new credential is needed. `ZCAP_DATA_URL` is optional and defaults to `https://raw.githubusercontent.com/Michae2xl/shielded-labs-portal/turnout-data/zcap.json`. Credentials are sent only to this repository on `raw.githubusercontent.com`, and redirects are rejected. Without access, the page says **Saved**, not **Hourly**. A successful history older than two hours is marked **Delayed**, except for a final post-close observation.
 
-Deploy the application once using the normal checks and `railway up --ci`. Then run **Sync ZCAP turnout** in GitHub Actions and verify the ZCAP card says **Hourly** with the same total and timestamp as the latest history. Hourly reads thereafter need no application deployment. Collector checks: `node --test scripts/zcap/sync.test.mjs` (Node 24+); server and display checks run with `npm test`.
+Deploy the application once using the normal checks and `railway up --ci`. Then run **Sync ZCAP turnout** in GitHub Actions and verify the ZCAP card says **Hourly** with the same total and timestamp as the latest history. Confirm that a later run has event `schedule`: a successful manual or push run proves collection works, but does not verify the hourly trigger. Hourly reads thereafter need no application deployment. Collector checks: `node --test scripts/zcap/sync.test.mjs` (Node 24+); server and display checks run with `npm test`.
 
 ## What needs a person
 
