@@ -2,6 +2,8 @@ import { participationSources as wallets } from '../governance-participation';
 import nu7ScopePace from './nu7-scope-pace.json';
 import { toSeries, type SeriesPoint } from './series';
 import { SHARES_PER_VOTE, type ChainRoundStatus } from './vote-chain';
+import zcapHistory from './zcap-history.json';
+import { ZCAP_ELECTION_ID, ZCAP_STATUS_URL } from './siv-history';
 
 /**
  * Turnout of an open poll while it runs, from public sources only: how many have voted in each body,
@@ -75,7 +77,12 @@ export interface RecordedSource extends SourceBase {
   /** Who may vote, when the voting tool does not say. */
   electorate: 'zcap-roster' | null;
 }
-export type TurnoutSource = VoteChainSource | HeliosSource | RecordedSource;
+/** SIV publishes totals, not vote timestamps; the hourly collector persists its observations. */
+export interface SivSource extends Omit<RecordedSource, 'kind'> {
+  kind: 'siv';
+  electionId: string;
+}
+export type TurnoutSource = VoteChainSource | HeliosSource | RecordedSource | SivSource;
 
 export interface PollTurnoutConfig {
   round: string;
@@ -128,21 +135,16 @@ export const NU7_1_TURNOUT: PollTurnoutConfig = {
       },
     },
     {
-      kind: 'recorded',
+      kind: 'siv',
       id: 'zcap',
       name: 'ZCAP',
       slot: 1,
       // The Zcash Foundation runs ZCAP; its mark is the Foundation's GitHub organization image.
       logos: [{ src: '/community-logos/zcash-foundation.png', name: 'Zcash Foundation', shape: 'round' }],
-      liveUrl: 'https://siv.org/election/1794682180496',
-      // SIV's status page answers only a browser, so each count is read there by hand.
-      readings: [
-        { ballots: 24, at: '2026-11-16T23:16:00Z' },
-        { ballots: 29, at: '2026-11-17T01:04:00Z' },
-        { ballots: 33, at: '2026-11-17T02:20:00Z' },
-        { ballots: 37, at: '2026-11-17T03:13:00Z' },
-        { ballots: 40, at: '2026-11-17T04:07:00Z' },
-      ],
+      liveUrl: ZCAP_STATUS_URL,
+      electionId: ZCAP_ELECTION_ID,
+      // Dated fallback if the hourly history cannot be read, including on a cold start.
+      readings: zcapHistory.observations,
       electorate: 'zcap-roster',
       previous: { value: 135, eligible: 198, source: 'https://forum.zcashcommunity.com/t/nu7-sentiment-polls-results/57590/4' },
     },
@@ -211,7 +213,7 @@ export interface BodyTurnout {
   /** Said after who may vote: "eligible". */
   eligibleLabel: string | null;
   series: SeriesPoint[];
-  /** exact: each vote's own time; recorded: counts read by hand; approximate: shares ÷ 16, no times. */
+  /** exact: each vote's own time; recorded: observed totals (manual or hourly); approximate: shares ÷ 16. */
   timing: 'exact' | 'recorded' | 'approximate';
   state: BodyState;
   observedAt: string | null;
@@ -269,7 +271,7 @@ function readBody(source: Exclude<TurnoutSource, RecordedSource>, read: Read<Cou
     eligibleLabel: data?.eligible == null ? null : 'eligible',
     // A running total starts at zero when polls open; an estimate from shares has no times to draw.
     series: data && !data.approximate ? toSeries([{ at: opensAt, value: 0 }, ...data.points], opensAt) : [],
-    timing: data?.approximate ? 'approximate' : 'exact',
+    timing: source.kind === 'siv' ? 'recorded' : data?.approximate ? 'approximate' : 'exact',
     state: read ? STATE[read.state] : 'unavailable',
     observedAt: read?.observedAt ?? null,
     source: sourceLink(source),
@@ -290,7 +292,7 @@ function paceReference(pace: PaceRecord, firstVote: number, closesAt: number): B
   return { label: pace.label, openedAt: new Date(firstVote).toISOString(), points };
 }
 
-function recordedBody(source: RecordedSource, roster: number | null, opensAt: number): BodyTurnout {
+function recordedBody(source: RecordedSource | SivSource, roster: number | null, opensAt: number): BodyTurnout {
   const readings = [...source.readings].sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
   const last = readings.at(-1) ?? null;
   const eligible = source.electorate === 'zcap-roster' ? roster : null;
@@ -318,9 +320,16 @@ function recordedBody(source: RecordedSource, roster: number | null, opensAt: nu
 /** Everything the panel shows, from the record and what was read. Counts only, never a leaning. */
 export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, now: number): TurnoutSnapshot {
   const opensAt = Date.parse(config.opensAt);
-  const bodies = config.sources.map((source) =>
-    source.kind === 'recorded' ? recordedBody(source, reads.roster, opensAt) : readBody(source, reads.bodies[source.id], opensAt, config.closesAt),
-  );
+  const bodies = config.sources.map((source) => {
+    const read = reads.bodies[source.id];
+    if (source.kind === 'recorded' || (source.kind === 'siv' && !read?.data)) return recordedBody(source, reads.roster, opensAt);
+    const body = readBody(source, read, opensAt, config.closesAt);
+    if (source.kind === 'siv' && source.electorate === 'zcap-roster') {
+      body.eligible = reads.roster;
+      body.eligibleLabel = reads.roster === null ? null : 'eligible';
+    }
+    return body;
+  });
   const chain = config.sources.find((s) => s.kind === 'vote-chain');
   const chainRead = chain ? (reads.bodies[chain.id]?.data ?? null) : null;
   const votes = new Map(chainRead?.questions?.map((q) => [q.id, q.votes]));

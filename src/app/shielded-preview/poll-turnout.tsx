@@ -95,7 +95,8 @@ function status(body: BodyTurnout, now: number) {
   if (body.timing === 'recorded') {
     if (!body.observedAt) return 'Not read yet';
     const at = Date.parse(body.observedAt);
-    return dayLabel(at) === dayLabel(now) ? `By hand ${timeLabel(at)}` : `By hand ${dayLabel(at)}, ${timeLabel(at)}`;
+    const label = body.kind === 'siv' ? (body.state === 'live' ? 'Hourly' : body.state === 'stale' ? 'Delayed' : 'Saved') : 'By hand';
+    return dayLabel(at) === dayLabel(now) ? `${label} ${timeLabel(at)}` : `${label} ${dayLabel(at)}, ${timeLabel(at)}`;
   }
   if (body.timing === 'approximate') return 'Estimate';
   if (body.state === 'stale') return body.observedAt ? `Last read ${timeLabel(Date.parse(body.observedAt))}` : 'Last read';
@@ -268,7 +269,7 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
             <details className={s.table}>
               <summary>Daily counts</summary>
               <table>
-                <caption className={s.caption}>Each body’s running total at the end of each poll day, UTC. A count read by hand shows its last reading that day.</caption>
+                <caption className={s.caption}>Each body’s running total at the end of each poll day, UTC. ZCAP shows its last observed total that day.</caption>
                 <thead>
                   <tr>
                     <th scope="col">Day</th>

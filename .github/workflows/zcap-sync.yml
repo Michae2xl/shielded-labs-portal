@@ -1,0 +1,88 @@
+name: Sync ZCAP turnout
+
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main, codex/zcap-hourly]
+    paths:
+      - '.github/workflows/zcap-sync.yml'
+      - 'scripts/zcap/**'
+      - 'src/lib/shielded-preview/poll-turnout/siv-history.ts'
+      - 'src/lib/shielded-preview/poll-turnout/zcap-history.json'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zcap-turnout-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - name: Read the existing durable history
+        id: history
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build
+          if git ls-remote --exit-code --heads origin turnout-data > /dev/null; then
+            git fetch --no-tags origin turnout-data
+            git show FETCH_HEAD:zcap.json > build/zcap.json
+            echo 'exists=true' >> "$GITHUB_OUTPUT"
+          else
+            code=$?
+            if [ "$code" -ne 2 ]; then exit "$code"; fi
+            cp src/lib/shielded-preview/poll-turnout/zcap-history.json build/zcap.json
+            echo 'exists=false' >> "$GITHUB_OUTPUT"
+          fi
+          node --input-type=module <<'NODE' >> "$GITHUB_OUTPUT"
+          import { readFileSync } from 'node:fs';
+          import { parseSivHistory } from './src/lib/shielded-preview/poll-turnout/siv-history.ts';
+          const last = parseSivHistory(JSON.parse(readFileSync('build/zcap.json', 'utf8'))).observations.at(-1);
+          console.log(`finished=${last.method !== 'manual' && Date.parse(last.at) >= Date.parse('2026-12-01T02:59:00Z')}`);
+          NODE
+      - name: Install the existing browser dependency
+        if: steps.history.outputs.finished != 'true'
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Test count validation and collection
+        if: steps.history.outputs.finished != 'true'
+        run: node --test scripts/zcap/sync.test.mjs
+      - name: Read public SIV turnout
+        if: steps.history.outputs.finished != 'true'
+        run: node scripts/zcap/sync.mjs build/zcap.json
+      - name: Keep the validated reading for review
+        if: steps.history.outputs.finished != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: zcap-turnout
+          path: build/zcap.json
+          retention-days: 7
+      - name: Publish history without deploying the site
+        if: github.ref == 'refs/heads/main' && steps.history.outputs.finished != 'true'
+        shell: bash
+        env:
+          HISTORY_EXISTS: ${{ steps.history.outputs.exists }}
+        run: |
+          set -euo pipefail
+          cp build/zcap.json "$RUNNER_TEMP/zcap.json"
+          if [ "$HISTORY_EXISTS" = true ]; then
+            git checkout --detach FETCH_HEAD
+          else
+            git checkout --orphan turnout-data
+            git rm -rf .
+          fi
+          cp "$RUNNER_TEMP/zcap.json" zcap.json
+          git add zcap.json
+          if git diff --cached --quiet; then exit 0; fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Record hourly ZCAP turnout'
+          git push origin HEAD:refs/heads/turnout-data

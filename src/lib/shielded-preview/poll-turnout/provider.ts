@@ -2,7 +2,8 @@ import 'server-only';
 import { parseCsv } from '@/lib/zcg/csv';
 import { HELIOS_PAGE, heliosBallotTimes, heliosUrls, heliosVoterIds } from './helios';
 import { cumulative } from './series';
-import { NU7_1_TURNOUT, buildSnapshot, type CountRead, type HeliosSource, type PollTurnoutConfig, type Read, type TurnoutSnapshot, type VoteChainSource } from './turnout';
+import { NU7_1_TURNOUT, buildSnapshot, type CountRead, type HeliosSource, type PollTurnoutConfig, type Read, type SivSource, type TurnoutSnapshot, type VoteChainSource } from './turnout';
+import { createSivReader } from './siv-provider';
 import { SHARES_PER_VOTE, VOTE_CHAIN_HOSTS, parseChainSummary, voteSummaryUrl, type ChainSummary } from './vote-chain';
 import { createVoteChainScanner, type GetJson } from './vote-chain-scanner';
 
@@ -66,6 +67,7 @@ async function readSummary(getJson: GetJson, round: string): Promise<ChainSummar
 
 export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => number = Date.now, config: PollTurnoutConfig = NU7_1_TURNOUT) {
   const getJson = jsonReader(fetcher);
+  const siv = createSivReader(fetcher, now);
   const scanners = new Map<string, ReturnType<typeof createVoteChainScanner>>();
   const scannerFor = (round: string) => scanners.get(round) ?? scanners.set(round, createVoteChainScanner(round, getJson)).get(round)!;
 
@@ -135,17 +137,18 @@ export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => 
     now,
   );
 
-  const readers: { [K in 'vote-chain' | 'helios']: (source: Extract<VoteChainSource | HeliosSource, { kind: K }>) => Promise<Read<CountRead>> } = {
+  const readers: { [K in 'vote-chain' | 'helios' | 'siv']: (source: Extract<VoteChainSource | HeliosSource | SivSource, { kind: K }>) => Promise<Read<CountRead>> } = {
     'vote-chain': (source) => chain(source.round),
     helios: (source) => helios(source.electionUuid),
+    siv: (source) => siv(source, config.closesAt),
   };
 
   return async function getPollTurnout(): Promise<TurnoutSnapshot> {
-    const live = config.sources.filter((s): s is VoteChainSource | HeliosSource => s.kind !== 'recorded');
+    const live = config.sources.filter((s): s is VoteChainSource | HeliosSource | SivSource => s.kind !== 'recorded');
     const chainSource = config.sources.find((s): s is VoteChainSource => s.kind === 'vote-chain');
     const [bodyReads, rosterRead, summaryRead] = await Promise.all([
-      Promise.all(live.map((source) => (source.kind === 'vote-chain' ? readers['vote-chain'](source) : readers.helios(source)))),
-      config.sources.some((s) => s.kind === 'recorded' && s.electorate === 'zcap-roster') ? roster('zcap') : null,
+      Promise.all(live.map((source) => (source.kind === 'vote-chain' ? readers['vote-chain'](source) : source.kind === 'helios' ? readers.helios(source) : readers.siv(source)))),
+      config.sources.some((s) => (s.kind === 'recorded' || s.kind === 'siv') && s.electorate === 'zcap-roster') ? roster('zcap') : null,
       chainSource ? summary(chainSource.round) : null,
     ]);
     return buildSnapshot(

@@ -7,7 +7,7 @@ import { NU7_1_TURNOUT } from './turnout';
 
 // The latest ZCAP count read by hand: each new reading is one line in turnout.ts, and these tests follow it.
 const ZCAP_SOURCE = NU7_1_TURNOUT.sources.find((source) => source.id === 'zcap');
-const ZCAP_LAST = (ZCAP_SOURCE?.kind === 'recorded' ? ZCAP_SOURCE.readings : []).at(-1)!;
+const ZCAP_LAST = (ZCAP_SOURCE?.kind === 'siv' ? ZCAP_SOURCE.readings : []).at(-1)!;
 
 const T0 = Date.parse('2026-11-17T00:00:00Z');
 const ballots = [

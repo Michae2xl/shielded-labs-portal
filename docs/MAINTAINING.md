@@ -12,10 +12,23 @@ The portal reads some sources live and carries dated copies of others. This page
 | ZCG review queue, grants, payments, committee, verification, coinholder proposals | `governance-provider.ts` | 5-minute cache | Last reading, then `governance-data/snapshot.json` |
 | ZCG grants ledger | openzcash.org API | 5-minute cache | Hidden |
 | ZIPs and open ZIP pull requests | `zips-data` branch, written every 6 hours by `zips-sync.yml` | Read only when `ZIPS_DATA_URL` is set | Bundled snapshot in `src/lib/shielded-preview/zips` |
+| ZCAP NU7.1 turnout | SIV public counter → `turnout-data/zcap.json` | Hourly GitHub workflow; portal reads with a 1-minute cache | Last good reading, then the dated bundled record; never zero on a failed request |
 
 The NSM balance is scheduled issuance minus the issued supply in all chain value pools at the tip, as ZIP 237 defines it; `src/lib/shielded-preview/nsm/balance.ts` holds the subsidy rules and the published test values. The formula holds until the reissuance height (block 8,939,664); from there the balance depends on every prior block and the portal stops computing it.
 
 The GitHub sources run without a token. Conditional requests keep unchanged repositories out of the hourly limit; if the limit is reached, the pages show the last reading and say so.
+
+## Hourly ZCAP turnout
+
+`.github/workflows/zcap-sync.yml` runs at minute 23 of each hour (GitHub schedules can be delayed), independently of visitors or a local computer. It reads `https://siv.org/api/election/1794682180496/num-votes`, the endpoint SIV's own public status page uses. `num_votes` is the displayed total; the pending and invalidated counters are **not** added to it. When the API cannot answer, the collector tries the normal public status page in the runner's Chrome. It does not solve challenges or require a voter/admin login. If both reads fail, the job fails and leaves the last successful history unchanged.
+
+Each record contains only an observation time, cumulative total and collection method. The first five records preserve the earlier manual readings. Retries in the same UTC hour replace that hour's automatic sample. An unchanged total in a later hour records a fresh observation; it adds no votes. Decreasing totals, malformed responses and histories from a different election fail for review. No identities, encrypted ballots or choices are stored. Daily additions are changes between observations, not exact vote timestamps.
+
+Successful runs on `main` commit `zcap.json` to the separate `turnout-data` branch. The portal reads that file without a deploy. After the first successful observation at or after the poll closes (1 December 2026, 02:59 UTC), later scheduled jobs skip collection. The workflow can then be disabled from Actions.
+
+The repository is private. On the existing Railway service, set `ZCAP_DATA_TOKEN` to a server-only GitHub token with **Contents: read** for this repository. If `ZIPS_DATA_TOKEN` already has that access, the reader reuses it; no new credential is needed. `ZCAP_DATA_URL` is optional and defaults to `https://raw.githubusercontent.com/Michae2xl/shielded-labs-portal/turnout-data/zcap.json`. Credentials are sent only to this repository on `raw.githubusercontent.com`, and redirects are rejected. Without access, the page says **Saved**, not **Hourly**. A successful history older than two hours is marked **Delayed**, except for a final post-close observation.
+
+Deploy the application once using the normal checks and `railway up --ci`. Then run **Sync ZCAP turnout** in GitHub Actions and verify the ZCAP card says **Hourly** with the same total and timestamp as the latest history. Hourly reads thereafter need no application deployment. Collector checks: `node --test scripts/zcap/sync.test.mjs` (Node 24+); server and display checks run with `npm test`.
 
 ## What needs a person
 

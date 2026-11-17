@@ -9,7 +9,7 @@ const NOW = Date.parse('2026-11-17T00:30:00Z');
 
 // The latest ZCAP count read by hand: each new reading is one line in turnout.ts, and these tests follow it.
 const ZCAP_SOURCE = NU7_1_TURNOUT.sources.find((source) => source.id === 'zcap');
-const ZCAP_READINGS = ZCAP_SOURCE?.kind === 'recorded' ? ZCAP_SOURCE.readings : [];
+const ZCAP_READINGS = ZCAP_SOURCE?.kind === 'siv' ? ZCAP_SOURCE.readings : [];
 const ZCAP_LAST = ZCAP_READINGS.at(-1)!;
 const fetched = (data: CountRead, observedAt = '2026-11-17T00:29:00.000Z'): Read<CountRead> => ({ state: 'fetched', observedAt, data });
 const chain: CountRead = {
@@ -100,7 +100,7 @@ describe('the record', () => {
   it('keeps every source public, every reading dated, and the gold for the coinholder vote alone', () => {
     expect(NU7_1_TURNOUT.sources.map((s) => [s.kind, s.slot])).toEqual([
       ['vote-chain', 3],
-      ['recorded', 1],
+      ['siv', 1],
       ['helios', 1],
       ['helios', 1],
     ]);
