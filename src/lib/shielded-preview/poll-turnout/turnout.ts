@@ -1,7 +1,6 @@
 import { participationSources as wallets } from '../governance-participation';
-import nu7ScopePace from './nu7-scope-pace.json';
 import { toSeries, type SeriesPoint } from './series';
-import { SHARES_PER_VOTE, type ChainRoundStatus } from './vote-chain';
+import { type ChainRoundStatus, VOTE_CHAIN_HOSTS, voteSummaryUrl } from './vote-chain';
 import zcapHistory from './zcap-history.json';
 import { ZCAP_ELECTION_ID, ZCAP_STATUS_URL } from './siv-history';
 
@@ -51,16 +50,6 @@ export interface VoteChainSource extends SourceBase {
   kind: 'vote-chain';
   /** The vote-chain round, 64 hex characters. */
   round: string;
-  /** An earlier round's pace, hour by hour since it opened, to set beside this one's (vote-chain-pace.py). */
-  pace?: PaceRecord;
-}
-/** What vote-chain-pace.py writes: an earlier round's votes a question, each hour after the round was created. */
-export interface PaceRecord {
-  label: string;
-  openedAt: string;
-  /** Its first vote: both rounds are set against their own first vote, since a round can wait before polls open. */
-  firstVoteAt: string;
-  hourly: number[];
 }
 /** A panel on Helios: the server reads its ballots and voter list. */
 export interface HeliosSource extends SourceBase {
@@ -94,8 +83,6 @@ export interface PollTurnoutConfig {
   sources: TurnoutSource[];
 }
 
-const sharesToVotes = (shares: number) => Math.round(shares / SHARES_PER_VOTE);
-
 /**
  * NU7.1 poll: polling opened on 16 Nov; the vote chain closes on 1 Dec at 02:59 UTC.
  * Sources: forum topic 58906 (timeline, post 133), topic 59366, the vote chain.
@@ -125,14 +112,8 @@ export const NU7_1_TURNOUT: PollTurnoutConfig = {
         { src: '/wallet-logos/zkool.png', name: 'Zkool', shape: 'square', href: wallets.zkool },
       ],
       round: '290ce255ee4c4d63457a55b3e72e07c579e44b6e578438a01c3eaad5c158991e',
-      pace: nu7ScopePace,
-      // NU7 scope poll: 20,642 to 21,190 shares a question, 16 shares a vote.
-      previous: {
-        value: sharesToVotes(20_642),
-        high: sharesToVotes(21_190),
-        note: '2.4M ZEC',
-        source: 'https://zvote.zfnd.org/shielded-vote/v1/vote-summary/16eef7ebc77e0e04fb1c7329abfcc390f4a0c002964671ebb360914a3e5a3f11',
-      },
+      // Earlier cast counts and shares / 16 are not comparable to this raw share total.
+      previous: null,
     },
     {
       kind: 'siv',
@@ -186,10 +167,8 @@ export interface CountRead {
   eligible: number | null;
   /** True when the count itself is an estimate (revealed shares ÷ 16). */
   approximate: boolean;
-  /** Votes per question, for the vote chain. */
-  questions?: { id: number; votes: number }[];
-  /** Lone votes whose question could not be read. */
-  unread?: number;
+  /** Accepted shares per question, without conversion to votes or people. */
+  questions?: { id: number; shares: number }[];
 }
 export interface TurnoutReads {
   bodies: Record<string, Read<CountRead> | undefined>;
@@ -206,15 +185,15 @@ export interface BodyTurnout {
   slot: Slot;
   logos: SourceLogo[];
   kind: TurnoutSource['kind'];
-  unit: 'ballots' | 'votes';
+  unit: 'ballots' | 'shares';
   value: number | null;
   approximate: boolean;
   eligible: number | null;
   /** Said after who may vote: "eligible". */
   eligibleLabel: string | null;
   series: SeriesPoint[];
-  /** exact: each vote's own time; recorded: observed totals (manual or hourly); approximate: shares ÷ 16. */
-  timing: 'exact' | 'recorded' | 'approximate';
+  /** snapshot: a current total without event history; recorded: observed panel totals. */
+  timing: 'exact' | 'recorded' | 'approximate' | 'snapshot';
   state: BodyState;
   observedAt: string | null;
   source: { label: string; href: string };
@@ -231,16 +210,14 @@ export interface TurnoutSnapshot {
   phase: PollPhase;
   previousLabel: string;
   bodies: BodyTurnout[];
-  /** Coinholder votes per question: turnout only, never an answer. */
-  questions: { id: number; label: string; votes: number | null; approximate: boolean }[];
-  /** Lone coinholder votes whose question could not be read: counted nowhere above. */
-  unreadVotes: number;
+  /** Accepted coinholder shares per question, summed across answers. */
+  questions: { id: number; label: string; shares: number | null }[];
 }
 
 const STATE: Record<ReadState, BodyState> = { fetched: 'live', stale: 'stale', unavailable: 'unavailable' };
 
 function sourceLink(source: TurnoutSource): { label: string; href: string } {
-  if (source.kind === 'vote-chain') return { label: 'Vote chain', href: 'https://prod.explorer.valargroup.org/zvote-1' };
+  if (source.kind === 'vote-chain') return { label: 'Vote chain API', href: voteSummaryUrl(VOTE_CHAIN_HOSTS[0].origin, source.round) };
   if (source.kind === 'helios') return { label: 'Helios', href: `https://vote.heliosvoting.org/helios/elections/${source.electionUuid}/voters/list` };
   return { label: 'SIV', href: source.liveUrl };
 }
@@ -256,7 +233,7 @@ export function pollPhase(config: PollTurnoutConfig, status: ChainRoundStatus | 
   return now < Date.parse(config.opensAt) ? 'upcoming' : 'open';
 }
 
-function readBody(source: Exclude<TurnoutSource, RecordedSource>, read: Read<CountRead> | undefined, opensAt: number, closesAtOf: string): BodyTurnout {
+function readBody(source: Exclude<TurnoutSource, RecordedSource>, read: Read<CountRead> | undefined, opensAt: number): BodyTurnout {
   const data = read?.data ?? null;
   return {
     id: source.id,
@@ -264,32 +241,20 @@ function readBody(source: Exclude<TurnoutSource, RecordedSource>, read: Read<Cou
     slot: source.slot,
     logos: source.logos,
     kind: source.kind,
-    unit: source.kind === 'vote-chain' ? 'votes' : 'ballots',
+    unit: source.kind === 'vote-chain' ? 'shares' : 'ballots',
     value: data?.value ?? null,
     approximate: data?.approximate ?? false,
     eligible: data?.eligible ?? null,
     eligibleLabel: data?.eligible == null ? null : 'eligible',
-    // A running total starts at zero when polls open; an estimate from shares has no times to draw.
-    series: data && !data.approximate ? toSeries([{ at: opensAt, value: 0 }, ...data.points], opensAt) : [],
-    timing: source.kind === 'siv' ? 'recorded' : data?.approximate ? 'approximate' : 'exact',
+    // The share summary has no event times. Never relabel cast history or invent a share curve.
+    series: source.kind !== 'vote-chain' && data && !data.approximate ? toSeries([{ at: opensAt, value: 0 }, ...data.points], opensAt) : [],
+    timing: source.kind === 'vote-chain' ? 'snapshot' : source.kind === 'siv' ? 'recorded' : data?.approximate ? 'approximate' : 'exact',
     state: read ? STATE[read.state] : 'unavailable',
     observedAt: read?.observedAt ?? null,
     source: sourceLink(source),
     previous: previousOf(source),
-    reference: source.kind === 'vote-chain' && source.pace && data?.points.length && !data.approximate ? paceReference(source.pace, data.points[0].at, Date.parse(closesAtOf)) : null,
+    reference: null,
   };
-}
-
-const HOUR = 3_600_000;
-/** The earlier round's hourly totals from its first vote on, placed at the same hours after this round's first vote, up to the close. */
-function paceReference(pace: PaceRecord, firstVote: number, closesAt: number): BodyTurnout['reference'] {
-  const offset = Math.floor((Date.parse(pace.firstVoteAt) - Date.parse(pace.openedAt)) / HOUR);
-  const points = pace.hourly
-    .slice(offset)
-    .map((value, hour) => ({ at: firstVote + hour * HOUR, value }))
-    .filter((point) => point.at <= closesAt)
-    .map((point) => ({ at: new Date(point.at).toISOString(), value: point.value }));
-  return { label: pace.label, openedAt: new Date(firstVote).toISOString(), points };
 }
 
 function recordedBody(source: RecordedSource | SivSource, roster: number | null, opensAt: number): BodyTurnout {
@@ -323,7 +288,7 @@ export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, no
   const bodies = config.sources.map((source) => {
     const read = reads.bodies[source.id];
     if (source.kind === 'recorded' || (source.kind === 'siv' && !read?.data)) return recordedBody(source, reads.roster, opensAt);
-    const body = readBody(source, read, opensAt, config.closesAt);
+    const body = readBody(source, read, opensAt);
     if (source.kind === 'siv' && source.electorate === 'zcap-roster') {
       body.eligible = reads.roster;
       body.eligibleLabel = reads.roster === null ? null : 'eligible';
@@ -332,7 +297,7 @@ export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, no
   });
   const chain = config.sources.find((s) => s.kind === 'vote-chain');
   const chainRead = chain ? (reads.bodies[chain.id]?.data ?? null) : null;
-  const votes = new Map(chainRead?.questions?.map((q) => [q.id, q.votes]));
+  const shares = new Map(chainRead?.questions?.map((q) => [q.id, q.shares]));
   return {
     round: config.round,
     opensAt: config.opensAt,
@@ -344,9 +309,7 @@ export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, no
     questions: config.questions.map((q) => ({
       id: q.id,
       label: q.label,
-      votes: chainRead ? (votes.get(q.id) ?? 0) : null,
-      approximate: chainRead?.approximate ?? false,
+      shares: shares.get(q.id) ?? null,
     })),
-    unreadVotes: chainRead?.unread ?? 0,
   };
 }

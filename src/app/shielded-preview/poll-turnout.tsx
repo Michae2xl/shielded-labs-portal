@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from 'react';
 import Image from 'next/image';
 import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
-import { chartSpan, dailyRows, dayLabel, formatCount, knownAt, pollDay, stampLabel, timeLabel, valueAt } from '@/lib/shielded-preview/poll-turnout/view';
+import { chartSpan, dailyRows, dayLabel, formatCount, knownAt, pollDay, stampLabel, timeLabel } from '@/lib/shielded-preview/poll-turnout/view';
 import { TurnoutTrack, useCrosshair, useWidth, type Window } from './poll-turnout-chart';
 import s from './poll-turnout.module.css';
 
@@ -85,13 +85,13 @@ function meterOf(body: BodyTurnout, value: number | null): { share: number; labe
   return null;
 }
 function meterGap(body: BodyTurnout, hover: number | null) {
-  if (body.state === 'unavailable') return 'Not read';
+  if (body.state === 'unavailable') return body.kind === 'vote-chain' ? 'Vote chain not answering' : 'Not read';
   if (hover !== null && body.timing === 'recorded') return 'Not read at this time';
   return body.kind === 'vote-chain' ? 'No earlier poll' : 'Electorate not published';
 }
 /** Where the count comes from, and how fresh it is; a reading from today needs no date. */
 function status(body: BodyTurnout, now: number) {
-  if (body.state === 'unavailable') return 'Unavailable';
+  if (body.state === 'unavailable') return body.kind === 'vote-chain' ? 'Not answering' : 'Unavailable';
   if (body.timing === 'recorded') {
     if (!body.observedAt) return 'Not read yet';
     const at = Date.parse(body.observedAt);
@@ -100,6 +100,7 @@ function status(body: BodyTurnout, now: number) {
   }
   if (body.timing === 'approximate') return 'Estimate';
   if (body.state === 'stale') return body.observedAt ? `Last read ${timeLabel(Date.parse(body.observedAt))}` : 'Last read';
+  if (body.timing === 'snapshot' && body.observedAt) return `Updated ${timeLabel(Date.parse(body.observedAt))}`;
   return 'Live';
 }
 
@@ -126,7 +127,8 @@ function Logos({ logos }: { logos: BodyTurnout['logos'] }) {
 
 function BodyCard({ body, w, hover, onPointer, onLeave }: { body: BodyTurnout; w: Window; hover: number | null; onPointer: (e: PointerEvent<HTMLElement>) => void; onLeave: () => void }) {
   const [chartRef, width] = useWidth<HTMLDivElement>();
-  const shown = hover === null ? body.value : knownAt(body, hover);
+  const shares = body.unit === 'shares';
+  const shown = shares || hover === null ? body.value : knownAt(body, hover);
   const meter = meterOf(body, shown);
   return (
     <li className={s.card} data-slot={body.slot} data-state={body.state} data-kind={body.kind}>
@@ -137,31 +139,40 @@ function BodyCard({ body, w, hover, onPointer, onLeave }: { body: BodyTurnout; w
         </div>
         <p className={s.value}>
           <strong>{formatCount(shown, body.approximate && hover === null)}</strong>
-          <span>{shown === 1 ? body.unit.slice(0, -1) : body.unit}</span>
+          <span>{shares ? 'total shares' : shown === 1 ? body.unit.slice(0, -1) : body.unit}</span>
         </p>
       </div>
-      <div className={s.meter} aria-hidden="true">
-        <span style={{ width: `${Math.min(100, (meter?.share ?? 0) * 100).toFixed(1)}%` }} />
-      </div>
-      <p className={s.meterLabel} data-hover={hover !== null || undefined}>
-        {hover !== null ? (
-          `At ${stampLabel(hover)}`
-        ) : meter ? (
-          <>
-            {meter.label}
-            {meter.extra && <span className={s.extra}>{meter.extra}</span>}
-          </>
-        ) : (
-          meterGap(body, hover)
-        )}
-      </p>
-      <div ref={chartRef} className={s.chart} onPointerMove={onPointer} onPointerDown={onPointer} onPointerLeave={onLeave}>
-        <TurnoutTrack body={body} w={w} width={width} height={TRACK_HEIGHT} hover={hover} />
-      </div>
-      <div className={s.span} aria-hidden="true">
-        <span>{dayLabel(w.start)}</span>
-        <span>{w.end >= w.closes ? dayLabel(w.closes) : 'Now'}</span>
-      </div>
+      {shares ? (
+        <div className={s.shareSummary}>
+          <strong>Across all 5 questions</strong>
+          <p>Encrypted vote fragments. One voter can contribute many shares.</p>
+        </div>
+      ) : (
+        <>
+          <div className={s.meter} aria-hidden="true">
+            <span style={{ width: `${Math.min(100, (meter?.share ?? 0) * 100).toFixed(1)}%` }} />
+          </div>
+          <p className={s.meterLabel} data-hover={hover !== null || undefined}>
+            {hover !== null ? (
+              `At ${stampLabel(hover)}`
+            ) : meter ? (
+              <>
+                {meter.label}
+                {meter.extra && <span className={s.extra}>{meter.extra}</span>}
+              </>
+            ) : (
+              meterGap(body, hover)
+            )}
+          </p>
+          <div ref={chartRef} className={s.chart} onPointerMove={onPointer} onPointerDown={onPointer} onPointerLeave={onLeave}>
+            <TurnoutTrack body={body} w={w} width={width} height={TRACK_HEIGHT} hover={hover} />
+          </div>
+          <div className={s.span} aria-hidden="true">
+            <span>{dayLabel(w.start)}</span>
+            <span>{w.end >= w.closes ? dayLabel(w.closes) : 'Now'}</span>
+          </div>
+        </>
+      )}
       <p className={s.source}>
         <i className={s.dot} data-state={body.state} aria-hidden="true" />
         {status(body, w.now)} ·{' '}
@@ -173,29 +184,14 @@ function BodyCard({ body, w, hover, onPointer, onLeave }: { body: BodyTurnout; w
   );
 }
 
-const HOUR = 3_600_000;
-/** The coinholder vote's pace beside an earlier round's, at the same time after each round's first vote. Only facts from the chain. */
-function Pace({ snapshot, now }: { snapshot: TurnoutSnapshot; now: number }) {
-  const body = snapshot.bodies.find((b) => b.reference && b.series.length);
-  if (!body?.reference) return null;
-  const hours = Math.floor((now - Date.parse(body.reference.openedAt)) / HOUR);
-  const then = valueAt(body.reference.points, now);
-  const nowValue = valueAt(body.series, now) ?? body.value;
-  if (hours < 1 || then === null || nowValue === null) return null;
-  const span = hours < 48 ? `${hours} hours` : `${Math.floor(hours / 24)} days`;
-  return (
-    <p className={s.pace}>
-      <strong>{formatCount(nowValue)}</strong> coinholder votes a question {span} after the first vote. The {body.reference.label} had <strong>≈ {formatCount(then)}</strong> at the same point{' '}
-      <i aria-hidden="true" /> (dashed line).
-    </p>
-  );
-}
-
 function Questions({ snapshot }: { snapshot: TurnoutSnapshot }) {
-  const top = Math.max(1, ...snapshot.questions.map((q) => q.votes ?? 0));
+  const top = Math.max(1, ...snapshot.questions.map((q) => q.shares ?? 0));
   return (
     <section className={s.questions} aria-labelledby="poll-turnout-questions">
-      <h4 id="poll-turnout-questions">Coinholder votes by question</h4>
+      <div className={s.questionHead}>
+        <h4 id="poll-turnout-questions">Coinholder shares by question</h4>
+        <a href="https://zakura.com/voting/#vote-290ce255ee4c" target="_blank" rel="noopener noreferrer">Compare on Zakura ↗</a>
+      </div>
       <ol>
         {snapshot.questions.map((q) => (
           <li key={q.id}>
@@ -203,9 +199,9 @@ function Questions({ snapshot }: { snapshot: TurnoutSnapshot }) {
               <span className={s.qNumber}>Q{q.id}</span> {q.label}
             </span>
             <span className={s.qBar} aria-hidden="true">
-              <span style={{ width: `${(((q.votes ?? 0) / top) * 100).toFixed(1)}%` }} />
+              <span style={{ width: `${(((q.shares ?? 0) / top) * 100).toFixed(1)}%` }} />
             </span>
-            <strong>{formatCount(q.votes, q.approximate)}</strong>
+            <strong>{formatCount(q.shares)}</strong>
           </li>
         ))}
       </ol>
@@ -213,7 +209,7 @@ function Questions({ snapshot }: { snapshot: TurnoutSnapshot }) {
   );
 }
 
-/** How many have voted so far in each body that answers the same questions, and when. Counts only, never a leaning. */
+/** Current coinholder shares and panel ballots, with source links and unit-specific explanations. */
 export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { snapshot: TurnoutSnapshot | null; failed?: boolean; now?: number }) {
   const state = panelState(snapshot, failed);
   const [range, setRange] = useState<'so-far' | 'whole'>('so-far');
@@ -222,6 +218,7 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
   const closes = snapshot ? Date.parse(snapshot.closesAt) : 0;
   const w: Window | null = snapshot ? { opens, closes, now, ...chartSpan(opens, closes, now, range) } : null;
   const crosshair = useCrosshair(w);
+  const panels = snapshot ? { ...snapshot, bodies: snapshot.bodies.filter((body) => body.unit === 'ballots') } : null;
   return (
     <section className={s.panel} id="poll-turnout" aria-labelledby="poll-turnout-heading" data-state={state}>
       <header className={s.head}>
@@ -245,7 +242,7 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
           </span>
         </div>
       </header>
-      {snapshot && w ? (
+      {snapshot && w && panels ? (
         <>
           <ol
             className={s.cards}
@@ -259,21 +256,25 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
               <BodyCard key={body.id} body={body} w={w} hover={crosshair.hover} onPointer={crosshair.onPointer} onLeave={crosshair.clear} />
             ))}
           </ol>
-          <Pace snapshot={snapshot} now={now} />
           <Questions snapshot={snapshot} />
           <footer className={s.foot}>
             <p>
-              Counts only: one ballot per panel member; coinholder votes on the most-answered question. Answers and ZEC weight come with the results.
-              {snapshot.unreadVotes > 0 && ` ${snapshot.unreadVotes} coinholder ${snapshot.unreadVotes === 1 ? 'vote' : 'votes'} could not be placed by question.`}
+              Total shares = Q1 + Q2 + Q3 + Q4 + Q5. Shares measure encrypted fragments, not unique voters or ZEC. Panel counts are submitted ballots.
             </p>
+            <details className={`${s.table} ${s.methodology}`}>
+              <summary>How these counts work</summary>
+              <p>For each question, we add the accepted share counts across all answer options in the vote chain’s public summary, the measure shown by Zakura. The top total adds the five question counts from the same reading. Repeated page refreshes do not add shares. Unique voters cannot be inferred from these totals.</p>
+              <p>The former “votes” counter counted successful cast transactions per question and displayed the largest count. A wallet can submit multiple bundles of notes, so that counter also did not identify individual voters. It has been replaced with shares to match the source.</p>
+              <p>Shares are published over time, so dividing them by 16 does not recover a live voter count. ZEC-weighted results are published after the poll closes. The share summary has no historical timestamps; daily charts below show panel ballots.</p>
+            </details>
             <details className={s.table}>
-              <summary>Daily counts</summary>
+              <summary>Daily panel counts</summary>
               <table>
-                <caption className={s.caption}>Each body’s running total at the end of each poll day, UTC. ZCAP shows its last observed total that day.</caption>
+                <caption className={s.caption}>Each panel’s cumulative ballots at the end of each poll day, UTC. ZCAP shows its last observed total that day.</caption>
                 <thead>
                   <tr>
                     <th scope="col">Day</th>
-                    {snapshot.bodies.map((b) => (
+                    {panels.bodies.map((b) => (
                       <th key={b.id} scope="col">
                         {b.name}
                       </th>
@@ -281,11 +282,11 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
                   </tr>
                 </thead>
                 <tbody>
-                  {dailyRows(snapshot, now).map((row) => (
+                  {dailyRows(panels, now).map((row) => (
                     <tr key={row.day}>
                       <th scope="row">{dayLabel(row.day)}</th>
                       {row.values.map((v, i) => (
-                        <td key={snapshot.bodies[i].id}>{formatCount(v)}</td>
+                        <td key={panels.bodies[i].id}>{formatCount(v)}</td>
                       ))}
                     </tr>
                   ))}

@@ -7,8 +7,8 @@ import { z } from 'zod';
  *   bundle of notes, with the questions it answers (`proposal_ids`); a vote cast on its own carries its
  *   question inside the transaction. Counting those gives the votes cast per question, with block times.
  * - Its REST summary counts the encrypted shares revealed per question. Each vote is split into 16 shares
- *   revealed after random delays (forum topic 56912, post 5), so shares ÷ 16 trails the votes cast. The
- *   portal falls back to it only when the RPC cannot be read.
+ *   revealed after delays. The portal displays these accepted shares directly, without a conversion
+ *   to votes or people. Cast helpers below are retained for auditing the former counter.
  *
  * Neither says how anyone voted: option counts are summed away here and never leave this module.
  */
@@ -35,16 +35,17 @@ export type ChainRoundStatus = (typeof CHAIN_STATUS)[keyof typeof CHAIN_STATUS] 
 export interface ChainSummary {
   status: ChainRoundStatus;
   endsAt: string | null;
+  totalShares: number;
   questions: { id: number; shares: number }[];
 }
 
-const count = z.union([z.number().int().nonnegative(), z.string().regex(/^\d+$/).transform(Number)]);
+const count = z.union([z.number().int().nonnegative(), z.string().regex(/^\d+$/).transform(Number)]).refine(Number.isSafeInteger, 'unsafe count');
 const summarySchema = z.object({
   vote_round_id: z.string(),
   status: z.number().int().optional(),
   vote_end_time: count.optional(),
   proposals: z
-    .array(z.object({ id: z.number().int().positive(), options: z.array(z.object({ ballot_count: count.optional() })) }))
+    .array(z.object({ id: z.number().int().positive(), options: z.array(z.object({ ballot_count: count.optional() })).min(1) }))
     .min(1),
 });
 const base64ToHex = (value: string) => Array.from(atob(value), (c) => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
@@ -55,12 +56,16 @@ export function parseChainSummary(json: unknown, round: string): ChainSummary {
   const summary = summarySchema.parse(json);
   if (base64ToHex(summary.vote_round_id) !== round) throw new Error('answered for another round');
   if (new Set(summary.proposals.map((p) => p.id)).size !== summary.proposals.length) throw new Error('a question appears twice');
+  const questions = summary.proposals
+    .map((p) => ({ id: p.id, shares: p.options.reduce((sum, o) => sum + (o.ballot_count ?? 0), 0) }))
+    .sort((a, b) => a.id - b.id);
+  const totalShares = questions.reduce((sum, q) => sum + q.shares, 0);
+  if (!Number.isSafeInteger(totalShares)) throw new Error('unsafe total');
   return {
     status: CHAIN_STATUS[summary.status as keyof typeof CHAIN_STATUS] ?? 'unknown',
     endsAt: summary.vote_end_time === undefined ? null : new Date(summary.vote_end_time * 1000).toISOString(),
-    questions: summary.proposals
-      .map((p) => ({ id: p.id, shares: p.options.reduce((sum, o) => sum + (o.ballot_count ?? 0), 0) }))
-      .sort((a, b) => a.id - b.id),
+    totalShares,
+    questions,
   };
 }
 

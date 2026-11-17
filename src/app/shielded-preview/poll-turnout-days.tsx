@@ -38,18 +38,19 @@ function monthsOf(days: { day: number }[]): string {
 /** What each body added on each day of the poll: one row of bars per body, each day's count on its bar, today's bar in the body's colour. */
 export function TurnoutByDayCard({ snapshot, now }: { snapshot: ReturnType<typeof usePollTurnout>['snapshot']; now: number | null }) {
   const at = now ?? (snapshot ? Date.parse(snapshot.checkedAt) : 0);
-  const days = snapshot ? dailyNew(snapshot, at) : [];
+  const panels = snapshot ? { ...snapshot, bodies: snapshot.bodies.filter((body) => body.unit === 'ballots') } : null;
+  const days = panels ? dailyNew(panels, at) : [];
   const today = days.findLastIndex((d) => !d.future);
   return (
     <section className={`${b.card} ${s.card}`} aria-labelledby="turnout-days-heading" style={{ '--days': days.length || 15 } as CSSProperties}>
       <header className={b.header}>
-        <h3 id="turnout-days-heading">Votes per day</h3>
+        <h3 id="turnout-days-heading">Panel ballots per day</h3>
         <span className={b.meta}>New each day · UTC</span>
       </header>
-      {snapshot && days.length > 0 ? (
+      {panels && days.length > 0 ? (
         <>
           <ol className={s.rows}>
-            {snapshot.bodies.map((body, index) => {
+            {panels.bodies.map((body, index) => {
               const values = days.map((d) => d.values[index]);
               const top = Math.max(1, ...values.map((v) => v ?? 0));
               const latest = today >= 0 ? values[today] : null;
@@ -102,7 +103,7 @@ export function TurnoutByDayCard({ snapshot, now }: { snapshot: ReturnType<typeo
               ))}
             </span>
           </div>
-          <p className={b.note}>Coinholder votes and panel ballots that arrived each day. ZCAP uses changes between observed totals; vote times are not published.</p>
+          <p className={b.note}>Panel ballots received each day. ZCAP uses changes between observed totals; vote times are not published.</p>
         </>
       ) : (
         <p className={b.note}>Reading the vote chain and the panels.</p>

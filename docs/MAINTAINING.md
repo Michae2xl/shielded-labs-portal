@@ -18,6 +18,14 @@ The NSM balance is scheduled issuance minus the issued supply in all chain value
 
 The GitHub sources run without a token. Conditional requests keep unchanged repositories out of the hourly limit; if the limit is reached, the pages show the last reading and say so.
 
+## Coinholder share counts
+
+The coinholder card and Q1–Q5 read `/shielded-vote/v1/vote-summary/{round}` from Valar Group, with the Zcash Foundation mirror as fallback, cached for one minute. This is the share-count metric displayed by Zakura. For each question, the portal sums `options[].ballot_count`; the card sums all five question counts from that same response. It never adds consecutive snapshots, divides by 16, or treats a share as a unique person or ZEC. The provider rejects another round, duplicate or missing questions, invalid counts and unsafe integer totals; on failure it retains the last good reading with its original timestamp.
+
+The old `248 votes` reading on 17 November 2026 came from a different measure: `createVoteChainScanner` read successful `delegate_and_cast_vote_batch`, `cast_vote_batch` and `cast_vote` events, retained each event/transaction pair once, and counted the questions included in each cast. Q1–Q5 were 243, 243, 244, 244 and 248 at the observed reading. The headline used `Math.max`, so it showed Q5's 248, not the sum of questions or a count of people. A wallet can submit multiple note bundles. The old scanner remains available for audit, but is no longer used by the turnout provider.
+
+The share summary exposes current totals, not historical event times. The former cast-history curve and comparison with the earlier poll are therefore not shown as share history. Daily charts show the panel ballot series. Never relabel the old series as shares or fill missing share history with invented values. Final ZEC-weighted results remain separate from these participation counters.
+
 ## Hourly ZCAP turnout
 
 `.github/workflows/zcap-sync.yml` runs at minute 47 of each hour (GitHub schedules can be delayed), independently of visitors or a local computer. It reads `https://siv.org/api/election/1794682180496/num-votes`, the endpoint SIV's own public status page uses. `num_votes` is the displayed total; the pending and invalidated counters are **not** added to it. When the API cannot answer, the collector tries the normal public status page in the runner's Chrome. It does not solve challenges or require a voter/admin login. If both reads fail, the job fails and leaves the last successful history unchanged.

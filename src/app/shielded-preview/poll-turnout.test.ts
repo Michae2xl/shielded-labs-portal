@@ -21,7 +21,7 @@ const SNAPSHOT = buildSnapshot(
       coinholders: {
         state: 'fetched',
         observedAt: '2026-11-17T01:09:30.000Z',
-        data: { value: 136, points: [{ at: Date.parse('2026-11-16T17:30:05Z'), value: 1 }, { at: Date.parse('2026-11-17T00:58:00Z'), value: 136 }], eligible: null, approximate: false, questions: [1, 2, 3, 4, 5].map((id) => ({ id, votes: 136 })), unread: 0 },
+        data: { value: 680, points: [], eligible: null, approximate: false, questions: [1, 2, 3, 4, 5].map((id) => ({ id, shares: 136 })) },
       },
       'zcash-brasil': helios(3, 18, '2026-11-16T12:24:46Z'),
       zechub: helios(1, 23, '2026-11-16T16:43:47Z'),
@@ -38,12 +38,12 @@ describe('live turnout panel', () => {
   it('shows one card per body: who it is, its count, its share of who may vote, and where the count comes from', () => {
     const out = text(html({ snapshot: SNAPSHOT }));
     expect(out).toContain('Live turnout NU7.1 poll · day 2 of 15 · closes 1 Dec, 02:59 UTC');
-    expect(out).toContain('Coinholders 136 votes 11% of last poll 16 Nov Now Live · Vote chain ↗');
+    expect(out).toContain('Coinholders 680 total shares Across all 5 questions Encrypted vote fragments. One voter can contribute many shares. Updated 01:09 UTC · Vote chain API ↗');
     expect(out).toContain(`ZCAP ${ZCAP_LAST.ballots} ballots ${Math.round((ZCAP_LAST.ballots / 203) * 100)}% of 203 · last poll 68% 16 Nov Now Saved ${ZCAP_LAST.at.slice(11, 16)} UTC · SIV ↗`);
     expect(out).toContain('Zcash Brasil 3 ballots 17% of 18 16 Nov Now Live · Helios ↗');
     expect(out).toContain('ZecHub 1 ballot 4% of 23 16 Nov Now Live · Helios ↗');
     expect(out).toContain('Q1 Wind down ZCG 136');
-    expect(out).toContain('Counts only: one ballot per panel member; coinholder votes on the most-answered question.');
+    expect(out).toContain('Total shares = Q1 + Q2 + Q3 + Q4 + Q5.');
     expect(out).toContain('So far Whole poll');
   });
   it('marks each body with its logo, and the coinholder vote with the wallets named for this round, each leading to its site', () => {
@@ -55,9 +55,30 @@ describe('live turnout panel', () => {
     for (const name of ['Zcash Foundation', 'Zcash Brasil', 'ZecHub']) expect(markup).toContain(`aria-label="${name}"`);
     expect(markup.match(/<img /g)).toHaveLength(6);
   });
-  it('sets the coinholder pace beside the earlier round’s, at the same time after each round’s first vote', () => {
+  it('explains shares and the former counter, without implying a unique voter count', () => {
     const out = text(html({ snapshot: SNAPSHOT }));
-    expect(out).toMatch(/136 coinholder votes a question \d+ hours after the first vote\. The NU7 scope poll, Sep 2026 had ≈ [\d,]+ at the same point \(dashed line\)\./);
+    expect(out).toContain('How these counts work');
+    expect(out).toContain('Unique voters cannot be inferred from these totals.');
+    expect(out).toContain('counted successful cast transactions per question and displayed the largest count');
+    expect(out).toContain('Coinholder shares by question');
+    expect(out).toContain('Compare on Zakura');
+    expect(out).not.toContain('680 votes');
+    expect(out).not.toContain('of last poll');
+    expect(out).not.toContain('dashed line');
+  });
+  it('says the vote chain is not answering, with no number, before its first reading', () => {
+    const down = buildSnapshot(
+      NU7_1_TURNOUT,
+      {
+        bodies: { coinholders: { state: 'unavailable', observedAt: null, data: null }, 'zcash-brasil': helios(3, 18, '2026-11-16T12:24:46Z'), zechub: helios(1, 23, '2026-11-16T16:43:47Z') },
+        roster: 203,
+        chainStatus: 'active',
+      },
+      NOW,
+    );
+    const out = text(html({ snapshot: down, failed: false }));
+    expect(out).toMatch(/Coinholders — total shares .* Not answering · Vote chain API ↗/);
+    expect(out).not.toMatch(/Estimate|≈/);
   });
   it('lays the cards out four to a row at most', () => {
     expect(html({ snapshot: SNAPSHOT })).toContain('--cards:4');
@@ -78,8 +99,8 @@ describe('live turnout panel', () => {
   });
   it('keeps a daily table for reading without the charts', () => {
     const out = text(html({ snapshot: SNAPSHOT }));
-    expect(out).toContain('Daily counts');
-    expect(out).toContain('16 Nov 1 24 3 1 17 Nov 136 29 3 1');
+    expect(out).toContain('Daily panel counts');
+    expect(out).toContain('16 Nov 24 3 1 17 Nov 29 3 1');
   });
   it('opens every link in a new tab without leaking the opener', () => {
     for (const [, attrs] of html({ snapshot: SNAPSHOT }).matchAll(/<a ([^>]+)>/g)) {
