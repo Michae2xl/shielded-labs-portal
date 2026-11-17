@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "electionId": "1794682180496",
+  "observations": [
+    {
+      "at": "2026-11-16T23:16:00.000Z",
+      "ballots": 24,
+      "method": "manual"
+    },
+    {
+      "at": "2026-11-17T01:04:00.000Z",
+      "ballots": 29,
+      "method": "manual"
+    },
+    {
+      "at": "2026-11-17T02:20:00.000Z",
+      "ballots": 33,
+      "method": "manual"
+    },
+    {
+      "at": "2026-11-17T03:13:00.000Z",
+      "ballots": 37,
+      "method": "manual"
+    },
+    {
+      "at": "2026-11-17T04:07:00.000Z",
+      "ballots": 40,
+      "method": "manual"
+    },
+    {
+      "at": "2026-11-17T05:34:19.864Z",
+      "ballots": 42,
+      "method": "api"
+    }
+  ]
+}
