@@ -1,0 +1,228 @@
+/* How to take part: the ballots' shared instructions, then one column per group that votes. */
+.card {
+  scroll-margin-top: 90px;
+}
+.card .guidance {
+  display: grid;
+  gap: 2px;
+  margin: 10px 20px 0;
+  color: var(--c-cfcfcf, #cfcfcf);
+  font-size: 15px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.card .guidance span:last-child {
+  color: var(--c-a8a8a8, #a8a8a8);
+}
+.groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 20px 18px;
+  padding: 0;
+  list-style: none;
+}
+.group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 16px 16px 14px;
+  border: 1px solid var(--c-2a2a2a, #2a2a2a);
+  border-radius: 12px;
+  background: var(--c-141414, #141414);
+}
+.who {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.who h4 {
+  margin: 0;
+  color: var(--c-f2f2f2, #f2f2f2);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 550;
+  line-height: 1.3;
+}
+.marks {
+  display: flex;
+  flex-shrink: 0;
+  gap: 4px;
+}
+.mark {
+  display: block;
+  width: 26px;
+  height: 26px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px var(--c-2a2a2a, #2a2a2a);
+}
+.mark[data-shape='round'] {
+  border-radius: 50%;
+}
+.mark[data-shape='square'] {
+  border-radius: 6px;
+}
+.facts {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.facts li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--c-c4c4c4, #c4c4c4);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+.keep {
+  white-space: nowrap;
+}
+.facts li::before {
+  position: absolute;
+  top: 0.62em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--c-5c5c5c, #5c5c5c);
+  content: '';
+}
+.group:first-child .facts li::before {
+  background: var(--c-e0a62a, #e0a62a);
+}
+/* The Zkool link: the whole URL in a field to select, and a button to copy it. */
+.copy {
+  display: flex;
+  margin-top: 8px;
+  overflow: hidden;
+  border: 1px solid var(--c-333333, #333);
+  border-radius: 8px;
+  background: var(--c-0f0f0f, #0f0f0f);
+}
+.copy .copyValue {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 10px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--c-d6d6d6, #d6d6d6);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+}
+.copy:focus-within {
+  border-color: var(--c-6a6a6a, #6a6a6a);
+}
+.copy .copyButton {
+  flex-shrink: 0;
+  min-width: 78px;
+  padding: 0 12px;
+  border: 0;
+  border-left: 1px solid var(--c-333333, #333);
+  background: var(--c-1c1c1c, #1c1c1c);
+  color: var(--c-f2f2f2, #f2f2f2);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+.copy .copyButton:hover {
+  background: var(--c-262626, #262626);
+}
+.copy .copyButton:focus-visible {
+  outline: 2px solid var(--c-eeeeee, #eee);
+  outline-offset: -3px;
+}
+.copy[data-state='copied'] .copyButton {
+  color: var(--c-e0a62a, #e0a62a);
+}
+.status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.address {
+  color: var(--c-ececec, #ececec);
+  overflow-wrap: anywhere;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 16px;
+}
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--c-333333, #333);
+  border-radius: 999px;
+  color: var(--c-e6e6e6, #e6e6e6);
+  font-size: 13px;
+  line-height: 1.4;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+.link:hover {
+  border-color: var(--c-5a5a5a, #5a5a5a);
+  background: var(--c-1c1c1c, #1c1c1c);
+}
+.link:focus-visible,
+.inline:focus-visible {
+  outline: 2px solid var(--c-eeeeee, #eee);
+  outline-offset: 2px;
+}
+.link svg,
+.inline svg {
+  flex-shrink: 0;
+  color: var(--c-9c9c9c, #9c9c9c);
+}
+.inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--c-e6e6e6, #e6e6e6);
+  text-decoration: underline;
+  text-decoration-color: var(--c-555555, #555);
+  text-underline-offset: 3px;
+}
+.inline:hover {
+  text-decoration-color: currentColor;
+}
+@media (max-width: 940px) {
+  .groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .card .guidance,
+  .groups {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .card .guidance {
+    font-size: 14.5px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .copy .copyButton {
+    transition: none;
+  }
+}

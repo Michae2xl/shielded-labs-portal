@@ -82,24 +82,147 @@
   gap: 18px;
   padding: 40px 28px 24px;
 }
+/* The opening: the poll's name and what it is on the left, where it stands on the right. */
 .hero {
-  padding: 4px 0 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+  align-items: end;
+  gap: 24px 48px;
+  padding: 8px 0 14px;
+}
+.intro {
+  min-width: 0;
 }
 .hero h1 {
   margin: 0;
   color: var(--c-f5f5f5, #f5f5f5);
   font-family: var(--font-display);
-  font-size: clamp(30px, 4.2vw, 46px);
+  font-size: clamp(34px, 4.6vw, 62px);
   font-weight: 600;
-  line-height: 1.08;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+/* Two classes deep, so the portal's rule for every paragraph does not resize these.
+   Two lines that break at the comma, about as wide as the title above them. */
+.hero .lead {
+  margin: 18px 0 0;
+  color: var(--c-c8c8c8, #c8c8c8);
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+.hero .lead span {
+  display: block;
+}
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.facts li {
+  padding: 5px 12px;
+  border: 1px solid var(--c-2e2e2e, #2e2e2e);
+  border-radius: 999px;
+  color: var(--c-bdbdbd, #bdbdbd);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+/* The one chip that is a link: it leads down to how each group votes. */
+.facts li:has(.jump) {
+  padding: 0;
+  border-color: var(--c-e0a62a, #e0a62a);
+}
+.facts .jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: var(--c-f2f2f2, #f2f2f2);
+  font-weight: 550;
+  text-decoration: none;
+}
+.facts .jump:hover {
+  background: rgba(224, 166, 42, 0.12);
+}
+.facts .jump:focus-visible {
+  outline: 2px solid var(--c-eeeeee, #eee);
+  outline-offset: 2px;
+}
+.status {
+  min-height: 150px;
+  padding: 18px 20px;
+  border: 1px solid var(--c-2e2e2e, #2e2e2e);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--c-161616, #161616) 0, var(--c-101010, #101010) 100%);
+}
+.status .state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--c-eeeeee, #eee);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-6a6a6a, #6a6a6a);
+}
+.status[data-open] .dot {
+  background: var(--c-e0a62a, #e0a62a);
+  box-shadow: 0 0 0 4px rgba(224, 166, 42, 0.18);
+}
+.status .left {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 12px 0 0;
+  color: var(--c-9c9c9c, #9c9c9c);
+  font-size: 15px;
+}
+.status .left strong {
+  color: var(--c-f5f5f5, #f5f5f5);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1;
   letter-spacing: -0.03em;
 }
-.hero p {
-  max-width: 70ch;
-  margin: 12px 0 0;
-  color: var(--c-b8b8b8, #b8b8b8);
-  font-size: 16px;
-  line-height: 1.6;
+.status .left span + strong {
+  margin-left: 10px;
+}
+.status .closes {
+  margin: 8px 0 0;
+  color: var(--c-bdbdbd, #bdbdbd);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.progress {
+  height: 4px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--c-262626, #262626);
+}
+.progress span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--c-e0a62a, #e0a62a);
+}
+.status .day {
+  margin: 6px 0 0;
+  color: var(--c-9c9c9c, #9c9c9c);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
 }
 .notice {
   margin-top: 4px;
@@ -146,8 +269,22 @@
   .main {
     padding: 26px 16px 20px;
   }
-  .hero p {
-    font-size: 15px;
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  .status {
+    min-height: 0;
+  }
+  .status .left strong {
+    font-size: 34px;
+  }
+  .hero .lead {
+    font-size: 16px;
+  }
+  .facts li {
+    padding: 4px 10px;
+    font-size: 12px;
   }
   .foot {
     padding: 18px 16px 32px;

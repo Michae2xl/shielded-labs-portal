@@ -1,3 +1,5 @@
+import { participationSources as wallets } from '../governance-participation';
+import nu7ScopePace from './nu7-scope-pace.json';
 import { toSeries, type SeriesPoint } from './series';
 import { SHARES_PER_VOTE, type ChainRoundStatus } from './vote-chain';
 
@@ -32,6 +34,8 @@ export interface SourceLogo {
   src: string;
   name: string;
   shape: 'round' | 'square';
+  /** Where the mark leads: a wallet's own site, for anyone who wants to vote with it. */
+  href?: string;
 }
 interface SourceBase {
   id: string;
@@ -45,6 +49,16 @@ export interface VoteChainSource extends SourceBase {
   kind: 'vote-chain';
   /** The vote-chain round, 64 hex characters. */
   round: string;
+  /** An earlier round's pace, hour by hour since it opened, to set beside this one's (vote-chain-pace.py). */
+  pace?: PaceRecord;
+}
+/** What vote-chain-pace.py writes: an earlier round's votes a question, each hour after the round was created. */
+export interface PaceRecord {
+  label: string;
+  openedAt: string;
+  /** Its first vote: both rounds are set against their own first vote, since a round can wait before polls open. */
+  firstVoteAt: string;
+  hourly: number[];
 }
 /** A panel on Helios: the server reads its ballots and voter list. */
 export interface HeliosSource extends SourceBase {
@@ -99,11 +113,12 @@ export const NU7_1_TURNOUT: PollTurnoutConfig = {
       slot: 3,
       // The wallets the organizers named for this round: "Participate using Vizor, ZODL, or Zkool" (topic 58906, post 133).
       logos: [
-        { src: '/wallet-logos/vizor.png', name: 'Vizor', shape: 'square' },
-        { src: '/wallet-logos/zodl.png', name: 'ZODL', shape: 'square' },
-        { src: '/wallet-logos/zkool.png', name: 'Zkool', shape: 'square' },
+        { src: '/wallet-logos/vizor.png', name: 'Vizor', shape: 'square', href: wallets.vizor },
+        { src: '/wallet-logos/zodl.png', name: 'ZODL', shape: 'square', href: wallets.zodl },
+        { src: '/wallet-logos/zkool.png', name: 'Zkool', shape: 'square', href: wallets.zkool },
       ],
       round: '290ce255ee4c4d63457a55b3e72e07c579e44b6e578438a01c3eaad5c158991e',
+      pace: nu7ScopePace,
       // NU7 scope poll: 20,642 to 21,190 shares a question, 16 shares a vote.
       previous: {
         value: sharesToVotes(20_642),
@@ -124,6 +139,7 @@ export const NU7_1_TURNOUT: PollTurnoutConfig = {
       readings: [
         { ballots: 24, at: '2026-11-16T23:16:00Z' },
         { ballots: 29, at: '2026-11-17T01:04:00Z' },
+        { ballots: 33, at: '2026-11-17T02:20:00Z' },
       ],
       electorate: 'zcap-roster',
       previous: { value: 135, eligible: 198, source: 'https://forum.zcashcommunity.com/t/nu7-sentiment-polls-results/57590/4' },
@@ -199,6 +215,8 @@ export interface BodyTurnout {
   observedAt: string | null;
   source: { label: string; href: string };
   previous: { value: number; high: number | null; eligible: number | null; note: string | null; href: string } | null;
+  /** An earlier round's running total, set on this round's clock (hours since each round's first vote); null when not recorded. */
+  reference: { label: string; openedAt: string; points: SeriesPoint[] } | null;
 }
 export type PollPhase = 'upcoming' | 'open' | 'counting' | 'closed';
 export interface TurnoutSnapshot {
@@ -234,7 +252,7 @@ export function pollPhase(config: PollTurnoutConfig, status: ChainRoundStatus | 
   return now < Date.parse(config.opensAt) ? 'upcoming' : 'open';
 }
 
-function readBody(source: Exclude<TurnoutSource, RecordedSource>, read: Read<CountRead> | undefined, opensAt: number): BodyTurnout {
+function readBody(source: Exclude<TurnoutSource, RecordedSource>, read: Read<CountRead> | undefined, opensAt: number, closesAtOf: string): BodyTurnout {
   const data = read?.data ?? null;
   return {
     id: source.id,
@@ -254,7 +272,20 @@ function readBody(source: Exclude<TurnoutSource, RecordedSource>, read: Read<Cou
     observedAt: read?.observedAt ?? null,
     source: sourceLink(source),
     previous: previousOf(source),
+    reference: source.kind === 'vote-chain' && source.pace && data?.points.length && !data.approximate ? paceReference(source.pace, data.points[0].at, Date.parse(closesAtOf)) : null,
   };
+}
+
+const HOUR = 3_600_000;
+/** The earlier round's hourly totals from its first vote on, placed at the same hours after this round's first vote, up to the close. */
+function paceReference(pace: PaceRecord, firstVote: number, closesAt: number): BodyTurnout['reference'] {
+  const offset = Math.floor((Date.parse(pace.firstVoteAt) - Date.parse(pace.openedAt)) / HOUR);
+  const points = pace.hourly
+    .slice(offset)
+    .map((value, hour) => ({ at: firstVote + hour * HOUR, value }))
+    .filter((point) => point.at <= closesAt)
+    .map((point) => ({ at: new Date(point.at).toISOString(), value: point.value }));
+  return { label: pace.label, openedAt: new Date(firstVote).toISOString(), points };
 }
 
 function recordedBody(source: RecordedSource, roster: number | null, opensAt: number): BodyTurnout {
@@ -278,6 +309,7 @@ function recordedBody(source: RecordedSource, roster: number | null, opensAt: nu
     observedAt: last?.at ?? null,
     source: sourceLink(source),
     previous: previousOf(source),
+    reference: null,
   };
 }
 
@@ -285,7 +317,7 @@ function recordedBody(source: RecordedSource, roster: number | null, opensAt: nu
 export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, now: number): TurnoutSnapshot {
   const opensAt = Date.parse(config.opensAt);
   const bodies = config.sources.map((source) =>
-    source.kind === 'recorded' ? recordedBody(source, reads.roster, opensAt) : readBody(source, reads.bodies[source.id], opensAt),
+    source.kind === 'recorded' ? recordedBody(source, reads.roster, opensAt) : readBody(source, reads.bodies[source.id], opensAt, config.closesAt),
   );
   const chain = config.sources.find((s) => s.kind === 'vote-chain');
   const chainRead = chain ? (reads.bodies[chain.id]?.data ?? null) : null;

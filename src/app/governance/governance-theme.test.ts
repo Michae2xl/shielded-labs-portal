@@ -70,14 +70,19 @@ describe('the governance light theme', () => {
     for (const hex of ['eeeeee', 'b8b8b8', '909090', '6d6d6d', '525252', '3e3e3e']) used.add(`--c-${hex}`);
     expect([...used].filter((name) => !defined.has(name))).toEqual([]);
   });
-  it('turns the page light only when this browser chose it', () => {
-    const run = (stored: string | null) => {
+  it('follows the visitor’s saved choice, and otherwise their system', () => {
+    const run = (stored: string | null, systemLight: boolean) => {
       const dataset: Record<string, string> = {};
-      new Function('localStorage', 'document', THEME_SCRIPT)({ getItem: (k: string) => (k === THEME_KEY ? stored : null) }, { documentElement: { dataset } });
+      const matchMedia = (query: string) => ({ matches: systemLight && query === '(prefers-color-scheme: light)' });
+      new Function('localStorage', 'document', 'matchMedia', THEME_SCRIPT)({ getItem: (k: string) => (k === THEME_KEY ? stored : null) }, { documentElement: { dataset } }, matchMedia);
       return dataset.govTheme ?? 'dark';
     };
-    expect([run(null), run('dark'), run('light')]).toEqual(['dark', 'dark', 'light']);
-    expect(() => new Function('localStorage', 'document', THEME_SCRIPT)({ getItem: () => { throw new Error('blocked'); } }, {})).not.toThrow();
+    expect([run(null, false), run(null, true)]).toEqual(['dark', 'light']);
+    expect([run('dark', true), run('light', false)]).toEqual(['dark', 'light']);
+    // Storage blocked (a private window): the system still decides.
+    const dataset: Record<string, string> = {};
+    new Function('localStorage', 'document', 'matchMedia', THEME_SCRIPT)({ getItem: () => { throw new Error('blocked'); } }, { documentElement: { dataset } }, () => ({ matches: true }));
+    expect(dataset.govTheme).toBe('light');
   });
   it('shows a sun on the dark theme, the emoji alone, named for what it does', () => {
     const html = renderToStaticMarkup(createElement(ThemeToggle, { className: 'corner' }));

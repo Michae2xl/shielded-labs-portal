@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from 'react';
 import Image from 'next/image';
 import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
-import { chartSpan, dailyRows, dayLabel, formatCount, knownAt, pollDay, stampLabel, timeLabel } from '@/lib/shielded-preview/poll-turnout/view';
+import { chartSpan, dailyRows, dayLabel, formatCount, knownAt, pollDay, stampLabel, timeLabel, valueAt } from '@/lib/shielded-preview/poll-turnout/view';
 import { TurnoutTrack, useCrosshair, useWidth, type Window } from './poll-turnout-chart';
 import s from './poll-turnout.module.css';
 
@@ -102,7 +102,18 @@ function status(body: BodyTurnout, now: number) {
   return 'Live';
 }
 
+/** Who the card is: logos alone, or links when a mark leads somewhere (the wallets that vote). */
 function Logos({ logos }: { logos: BodyTurnout['logos'] }) {
+  if (logos.some((logo) => logo.href))
+    return (
+      <div className={s.logos}>
+        {logos.map((logo) => (
+          <a key={logo.src} className={s.logoLink} href={logo.href} target="_blank" rel="noopener noreferrer" aria-label={`${logo.name}, wallet site`} title={logo.name}>
+            <Image className={s.logo} data-shape={logo.shape} src={logo.src} alt="" width={40} height={40} />
+          </a>
+        ))}
+      </div>
+    );
   return (
     <div className={s.logos} role="img" aria-label={logos.map((l) => l.name).join(', ')}>
       {logos.map((logo) => (
@@ -158,6 +169,24 @@ function BodyCard({ body, w, hover, onPointer, onLeave }: { body: BodyTurnout; w
         </a>
       </p>
     </li>
+  );
+}
+
+const HOUR = 3_600_000;
+/** The coinholder vote's pace beside an earlier round's, at the same time after each round's first vote. Only facts from the chain. */
+function Pace({ snapshot, now }: { snapshot: TurnoutSnapshot; now: number }) {
+  const body = snapshot.bodies.find((b) => b.reference && b.series.length);
+  if (!body?.reference) return null;
+  const hours = Math.floor((now - Date.parse(body.reference.openedAt)) / HOUR);
+  const then = valueAt(body.reference.points, now);
+  const nowValue = valueAt(body.series, now) ?? body.value;
+  if (hours < 1 || then === null || nowValue === null) return null;
+  const span = hours < 48 ? `${hours} hours` : `${Math.floor(hours / 24)} days`;
+  return (
+    <p className={s.pace}>
+      <strong>{formatCount(nowValue)}</strong> coinholder votes a question {span} after the first vote. The {body.reference.label} had <strong>≈ {formatCount(then)}</strong> at the same point{' '}
+      <i aria-hidden="true" /> (dashed line).
+    </p>
   );
 }
 
@@ -229,6 +258,7 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
               <BodyCard key={body.id} body={body} w={w} hover={crosshair.hover} onPointer={crosshair.onPointer} onLeave={crosshair.clear} />
             ))}
           </ol>
+          <Pace snapshot={snapshot} now={now} />
           <Questions snapshot={snapshot} />
           <footer className={s.foot}>
             <p>

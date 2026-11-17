@@ -57,7 +57,7 @@ describe('the turnout provider', () => {
     const [a, b] = await Promise.all([get(), get()]);
     expect(a.bodies.map((body) => [body.name, body.value, body.eligible, body.state])).toEqual([
       ['Coinholders', 3, null, 'live'],
-      ['ZCAP', 29, 2, 'recorded'],
+      ['ZCAP', 33, 2, 'recorded'],
       ['Zcash Brasil', 3, 518, 'live'],
       ['ZecHub', 3, 518, 'live'],
     ]);
@@ -110,7 +110,7 @@ describe('the turnout provider', () => {
     const snapshot = await createTurnoutProvider(network({ casts: [], tip: 1, down: { rpc: true, valar: true, zf: true, helios: true } }), () => T0)();
     expect(snapshot.bodies.map((b) => [b.value, b.state])).toEqual([
       [null, 'unavailable'],
-      [29, 'recorded'],
+      [33, 'recorded'],
       [null, 'unavailable'],
       [null, 'unavailable'],
     ]);

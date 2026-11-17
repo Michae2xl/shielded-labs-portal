@@ -6,5 +6,5 @@ import { requestOrigin, shareMetadata, type ShareParams } from '@/lib/shielded-p
 export function governanceMetadata(params: RequestParams, request: { get(name: string): string | null }): Metadata {
   const page: ShareParams = { view: 'governance' };
   for (const key of ['section', 'record', 'lane'] as const) { const value = params[key]; if (typeof value === 'string') page[key] = value; }
-  return { ...shareMetadata(page, requestOrigin(request)), applicationName: 'Zcash Governance', robots: { index: false, follow: false } };
+  return { ...shareMetadata(page, requestOrigin(request)), applicationName: 'Zcash Governance', icons: { icon: '/logos/zcash.svg' }, robots: { index: false, follow: false } };
 }

@@ -11,8 +11,12 @@ test.describe('The poll as a site of its own', () => {
     await expect(page.getByRole('heading', { name: 'Votes per day' })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Governance sections' })).toHaveCount(0);
     await expect(page.getByRole('button', { name: /Switch to the (light|dark) theme/ })).toBeVisible();
-    const internal = await page.evaluate(() => [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')!).filter((href) => !/^https?:/.test(href)));
+    // Links leave for public sources, write to a help address, or jump within the page; none leads into the portal.
+    const internal = await page.evaluate(() => [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')!).filter((href) => !/^(https?:|mailto:|#)/.test(href)));
     expect(internal).toEqual([]);
+    const jumps = await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].map((a) => [a.getAttribute('href'), Boolean(document.getElementById(a.getAttribute('href')!.slice(1)))]));
+    expect(jumps).toEqual([['#how-to-take-part', true]]);
+    await expect(page.getByRole('heading', { name: 'How to take part' })).toBeVisible();
     expect(await sidewaysOverflow(page)).toBe(0);
   });
 

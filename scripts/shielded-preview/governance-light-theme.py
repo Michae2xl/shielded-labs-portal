@@ -28,7 +28,7 @@ SHEETS = [
         'governance-dev-fund', 'governance-filters', 'governance-grant-rounds', 'governance-insights', 'governance-navigation',
         'governance-overview', 'governance-participation', 'governance-process', 'governance-program-guide', 'governance-record',
         'governance-references', 'governance-zcap', 'governance-zcg', 'governance-zips', 'governance', 'markdown', 'portal-footer',
-        'poll-turnout-days', 'portal', 'proposal-map', 'transparency', 'typography', 'upcoming-upgrade-sections', 'zip-explorer',
+        'poll-participation', 'poll-turnout-days', 'portal', 'proposal-map', 'transparency', 'typography', 'upcoming-upgrade-sections', 'zip-explorer',
     )],
 ]
 

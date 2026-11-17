@@ -17,7 +17,7 @@ const SNAPSHOT = buildSnapshot(
       coinholders: {
         state: 'fetched',
         observedAt: '2026-11-17T01:09:30.000Z',
-        data: { value: 136, points: [{ at: Date.parse('2026-11-17T00:58:00Z'), value: 136 }], eligible: null, approximate: false, questions: [1, 2, 3, 4, 5].map((id) => ({ id, votes: 136 })), unread: 0 },
+        data: { value: 136, points: [{ at: Date.parse('2026-11-16T17:30:05Z'), value: 1 }, { at: Date.parse('2026-11-17T00:58:00Z'), value: 136 }], eligible: null, approximate: false, questions: [1, 2, 3, 4, 5].map((id) => ({ id, votes: 136 })), unread: 0 },
       },
       'zcash-brasil': helios(3, 18, '2026-11-16T12:24:46Z'),
       zechub: helios(1, 23, '2026-11-16T16:43:47Z'),
@@ -35,18 +35,25 @@ describe('live turnout panel', () => {
     const out = text(html({ snapshot: SNAPSHOT }));
     expect(out).toContain('Live turnout NU7.1 poll · day 2 of 15 · closes 1 Dec, 02:59 UTC');
     expect(out).toContain('Coinholders 136 votes 11% of last poll 16 Nov Now Live · Vote chain ↗');
-    expect(out).toContain('ZCAP 29 ballots 14% of 203 · last poll 68% 16 Nov Now By hand 01:04 UTC · SIV ↗');
+    expect(out).toContain('ZCAP 33 ballots 16% of 203 · last poll 68% 16 Nov Now By hand 02:20 UTC · SIV ↗');
     expect(out).toContain('Zcash Brasil 3 ballots 17% of 18 16 Nov Now Live · Helios ↗');
     expect(out).toContain('ZecHub 1 ballot 4% of 23 16 Nov Now Live · Helios ↗');
     expect(out).toContain('Q1 Wind down ZCG 136');
     expect(out).toContain('Counts only: one ballot per panel member; coinholder votes on the most-answered question.');
     expect(out).toContain('So far Whole poll');
   });
-  it('marks each body with its logo, and the coinholder vote with the wallets named for this round', () => {
+  it('marks each body with its logo, and the coinholder vote with the wallets named for this round, each leading to its site', () => {
     const markup = html({ snapshot: SNAPSHOT });
-    expect(markup).toContain('aria-label="Vizor, ZODL, Zkool"');
+    for (const [name, href] of [['Vizor', 'https://vizor.cash'], ['ZODL', 'https://zodl.com'], ['Zkool', 'https://github.com/hhanh00/zkool2']]) {
+      expect(markup).toContain(`href="${href}"`);
+      expect(markup).toContain(`aria-label="${name}, wallet site"`);
+    }
     for (const name of ['Zcash Foundation', 'Zcash Brasil', 'ZecHub']) expect(markup).toContain(`aria-label="${name}"`);
     expect(markup.match(/<img /g)).toHaveLength(6);
+  });
+  it('sets the coinholder pace beside the earlier round’s, at the same time after each round’s first vote', () => {
+    const out = text(html({ snapshot: SNAPSHOT }));
+    expect(out).toMatch(/136 coinholder votes a question \d+ hours after the first vote\. The NU7 scope poll, Sep 2026 had ≈ [\d,]+ at the same point \(dashed line\)\./);
   });
   it('lays the cards out four to a row at most', () => {
     expect(html({ snapshot: SNAPSHOT })).toContain('--cards:4');
@@ -62,7 +69,7 @@ describe('live turnout panel', () => {
   it('keeps a daily table for reading without the charts', () => {
     const out = text(html({ snapshot: SNAPSHOT }));
     expect(out).toContain('Daily counts');
-    expect(out).toContain('16 Nov 0 24 3 1 17 Nov 136 29 3 1');
+    expect(out).toContain('16 Nov 1 24 3 1 17 Nov 136 29 3 1');
   });
   it('opens every link in a new tab without leaking the opener', () => {
     for (const [, attrs] of html({ snapshot: SNAPSHOT }).matchAll(/<a ([^>]+)>/g)) {

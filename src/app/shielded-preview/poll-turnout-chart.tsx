@@ -44,7 +44,9 @@ export function timeAt(clientX: number, rect: DOMRect, w: Window): number {
 export function TurnoutTrack({ body, w, width, height, hover }: { body: BodyTurnout; w: Window; width: number; height: number; hover: number | null }) {
   if (width <= 0) return <svg className={s.track} height={height} aria-hidden="true" />;
   const end = lineEnd(body, w.now);
-  const top = niceMax(Math.max(body.value ?? 0, ...body.series.map((p) => p.value)));
+  // An earlier round's pace, drawn up to the end of the span in view; the scale makes room for it.
+  const reference = (body.reference?.points ?? []).filter((p) => Date.parse(p.at) <= w.end);
+  const top = niceMax(Math.max(body.value ?? 0, ...body.series.map((p) => p.value), ...reference.map((p) => p.value)));
   const y = (v: number) => PAD_TOP + (1 - v / top) * (height - PAD_TOP - PAD_BOTTOM);
   const points = body.series.map((p) => ({ x: xOf(Date.parse(p.at), w, width), y: y(p.value) }));
   const nowX = xOf(w.now, w, width);
@@ -54,6 +56,7 @@ export function TurnoutTrack({ body, w, width, height, hover }: { body: BodyTurn
     if (body.timing === 'recorded') line = points.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
     else line = `${points.map((p, i) => (i ? `H${p.x.toFixed(1)} V${p.y.toFixed(1)}` : `M${p.x.toFixed(1)} ${p.y.toFixed(1)}`)).join(' ')} H${xOf(end, w, width).toFixed(1)}`;
   }
+  const referenceLine = reference.length > 1 ? reference.map((p, i) => `${i ? 'L' : 'M'}${xOf(Date.parse(p.at), w, width).toFixed(1)} ${y(p.value).toFixed(1)}`).join(' ') : '';
   const last = points.at(-1);
   const endX = end === null ? null : xOf(end, w, width);
   const hoverValue = hover === null ? null : knownAt(body, hover);
@@ -65,6 +68,7 @@ export function TurnoutTrack({ body, w, width, height, hover }: { body: BodyTurn
       <text className={s.tick} x={0} y={PAD_TOP - 5}>
         {top.toLocaleString('en-US')}
       </text>
+      {referenceLine && <path className={s.reference} d={referenceLine} />}
       {line && body.timing !== 'recorded' && <path className={s.area} d={`${line} V${base} H${points[0].x.toFixed(1)} Z`} />}
       {line && <path className={s.line} data-timing={body.timing} d={line} />}
       {body.timing === 'recorded' && points.slice(1).map((p, i) => <circle key={i} className={s.reading} cx={p.x} cy={p.y} r={3.5} />)}

@@ -36,12 +36,12 @@ describe('the snapshot the route returns', () => {
   it('lists every body in the record’s order, with its count, who could vote and how it is known', () => {
     expect(snapshot.bodies.map((b) => [b.name, b.value, b.unit, b.eligible, b.timing, b.state])).toEqual([
       ['Coinholders', 131, 'votes', null, 'exact', 'live'],
-      ['ZCAP', 29, 'ballots', 203, 'recorded', 'recorded'],
+      ['ZCAP', 33, 'ballots', 203, 'recorded', 'recorded'],
       ['Zcash Brasil', 3, 'ballots', 18, 'exact', 'live'],
       ['ZecHub', 1, 'ballots', 23, 'exact', 'live'],
     ]);
-    expect(snapshot.bodies[1]).toMatchObject({ observedAt: '2026-11-17T01:04:00Z', eligibleLabel: 'eligible', source: { label: 'SIV' } });
-    expect(snapshot.bodies[1].series.map((p) => p.value)).toEqual([0, 24, 29]);
+    expect(snapshot.bodies[1]).toMatchObject({ observedAt: '2026-11-17T02:20:00Z', eligibleLabel: 'eligible', source: { label: 'SIV' } });
+    expect(snapshot.bodies[1].series.map((p) => p.value)).toEqual([0, 24, 29, 33]);
     expect(snapshot.bodies[0].previous).toMatchObject({ value: 1290, high: 1324, note: '2.4M ZEC' });
     expect(snapshot.phase).toBe('open');
     expect(snapshot.questions.map((q) => q.votes)).toEqual([131, 131, 131, 131, 131]);
@@ -49,6 +49,21 @@ describe('the snapshot the route returns', () => {
   it('starts every line at zero when polls open', () => {
     for (const body of snapshot.bodies) expect(body.series[0]).toEqual({ at: '2026-11-16T00:00:00.000Z', value: 0 });
     expect(snapshot.bodies[0].series.at(-1)).toEqual({ at: '2026-11-17T00:04:23.000Z', value: 131 });
+  });
+  it('sets the earlier round’s pace beside the coinholder vote, from each round’s first vote, up to the close', () => {
+    const [coinholders, ...panels] = snapshot.bodies;
+    expect(panels.every((b) => b.reference === null)).toBe(true);
+    const reference = coinholders.reference!;
+    expect(reference.label).toBe('NU7 scope poll, Sep 2026');
+    // This round's first vote in the read above, and the earlier round's first hour of votes.
+    const opened = Date.parse(reference.openedAt);
+    expect(opened).toBe(Date.parse('2026-11-16T17:30:05Z'));
+    expect(Date.parse(reference.points[0].at)).toBe(opened);
+    expect(reference.points[0].value).toBeLessThan(50);
+    for (const [i, point] of reference.points.entries()) expect(Date.parse(point.at)).toBe(opened + i * 3_600_000);
+    expect(Date.parse(reference.points.at(-1)!.at)).toBeLessThanOrEqual(Date.parse(NU7_1_TURNOUT.closesAt));
+    // A running total never falls.
+    expect(reference.points.every((p, i) => i === 0 || p.value >= reference.points[i - 1].value)).toBe(true);
   });
   it('never carries an option’s count or label', () => {
     const json = JSON.stringify(buildSnapshot(NU7_1_TURNOUT, READS, NOW));
@@ -67,7 +82,7 @@ describe('the snapshot the route returns', () => {
     const empty = buildSnapshot(NU7_1_TURNOUT, { bodies: {}, roster: null, chainStatus: null }, NOW);
     expect(empty.bodies.map((b) => [b.value, b.state, b.eligible])).toEqual([
       [null, 'unavailable', null],
-      [29, 'recorded', null],
+      [33, 'recorded', null],
       [null, 'unavailable', null],
       [null, 'unavailable', null],
     ]);

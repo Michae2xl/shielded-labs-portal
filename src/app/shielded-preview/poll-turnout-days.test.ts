@@ -30,11 +30,12 @@ describe('votes per day', () => {
   it('gives each body a row with what it added today, across the fifteen days of the poll', () => {
     const out = text(html(SNAPSHOT));
     expect(out).toContain('Votes per day New each day · UTC');
-    expect(out).toContain('Coinholders +20 today');
-    expect(out).toContain('ZCAP +5 today');
-    expect(out).toContain('Zcash Brasil 0 today');
-    expect(out).toContain('ZecHub 0 today');
-    expect(out).toContain('16 Nov 30 Nov');
+    // Each day's count on its bar, then what the body added today.
+    expect(out).toContain('Coinholders 124 20 +20 today');
+    expect(out).toContain('ZCAP 24 5 +5 today');
+    expect(out).toContain('Zcash Brasil 3 0 0 today');
+    expect(out).toContain('ZecHub 1 0 0 today');
+    expect(out).toContain('Nov 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30');
     expect(out).toContain('ZCAP from counts read by hand.');
   });
   it('reads every day so far aloud, row by row', () => {
@@ -42,6 +43,13 @@ describe('votes per day', () => {
     expect(markup).toContain('aria-label="Coinholders: 124 on 16 Nov, 20 on 17 Nov"');
     expect(markup).toContain('aria-label="ZCAP: 24 on 16 Nov, 5 on 17 Nov"');
     expect(markup.match(/data-future="true"/g)).toHaveLength(4 * 13);
+  });
+  it('puts a count inside a bar with room for it, on top of a short one, and marks a day with none', () => {
+    const markup = html(SNAPSHOT);
+    // Coinholders: 124 fills the bar; 20 is a sixth of it, so it sits above.
+    expect(markup).toMatch(/<i style="height:100\.0%"><b>124<\/b><\/i>/);
+    expect(markup).toMatch(/<i style="height:16\.1%"><\/i><b class="[^"]*" style="bottom:calc\(16\.1% \+ 4px\)">20<\/b>/);
+    expect(markup).toMatch(/<b class="[^"]*" data-zero="true">0<\/b>/);
   });
   it('waits without numbers before the first reading', () => {
     const out = text(html(null));

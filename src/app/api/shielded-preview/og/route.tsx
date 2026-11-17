@@ -8,27 +8,30 @@ import { clip, shareCard, type ShareCard } from '@/lib/shielded-preview/share';
 export const dynamic = 'force-dynamic';
 // The portal's own typeface and shield; the image renderer reads WOFF, not the WOFF2 the pages use.
 type Font = { name: string; data: Buffer; weight: 400 | 500; style: 'normal' };
-type Assets = { fonts: Font[]; shield: string };
+type Assets = { fonts: Font[]; shield: string; coin: string };
 let assets: Promise<Assets> | undefined;
 const asset = (path: string) => readFile(join(process.cwd(), 'public', path));
 const loadAssets = () => assets ??= Promise.all([
   Promise.all(([400, 500] as const).map(async weight => ({ name: 'Inter', data: await asset(`fonts/og/inter-latin-${weight}-normal.woff`), weight, style: 'normal' as const }))),
   asset('logos/shielded-labs.png').then(data => `data:image/png;base64,${data.toString('base64')}`),
-]).then(([fonts, shield]) => ({ fonts, shield }));
+  asset('logos/zcash.svg').then(data => `data:image/svg+xml;base64,${data.toString('base64')}`),
+]).then(([fonts, shield, coin]) => ({ fonts, shield, coin }));
+/** Whose mark an image carries: the governance portal's coin, or the Shielded Labs shield. */
+type Brand = { image: string; first: string; second: string };
 
 const INK = '#f4f4f4';
 const MUTED = '#9b9b9b';
 const FAINT = '#6f6f6f';
 const titleSize = (title: string) => title.length <= 18 ? 104 : title.length <= 32 ? 84 : title.length <= 52 ? 68 : 56;
 
-function Mark({ shield, size }: { shield: string; size: 'small' | 'large' }) {
+function Mark({ brand, size }: { brand: Brand; size: 'small' | 'large' }) {
   const large = size === 'large';
   return <div style={{ display: 'flex', alignItems: 'center', flexDirection: large ? 'column' : 'row', gap: large ? 34 : 18 }}>
     {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img src={shield} alt="" width={large ? 136 : 50} height={large ? 136 : 50}/>
+    <img src={brand.image} alt="" width={large ? 136 : 50} height={large ? 136 : 50}/>
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: large ? 'center' : 'flex-start', gap: large ? 14 : 4 }}>
-      <div style={{ display: 'flex', fontSize: large ? 66 : 25, fontWeight: 500, letterSpacing: large ? 15 : 5, paddingLeft: large ? 15 : 0, color: INK, lineHeight: 1 }}>SHIELDED</div>
-      <div style={{ display: 'flex', fontSize: large ? 30 : 14, fontWeight: 500, letterSpacing: large ? 23 : 9, paddingLeft: large ? 23 : 0, color: MUTED, lineHeight: 1 }}>LABS</div>
+      <div style={{ display: 'flex', fontSize: large ? 66 : 25, fontWeight: 500, letterSpacing: large ? 15 : 5, paddingLeft: large ? 15 : 0, color: INK, lineHeight: 1 }}>{brand.first}</div>
+      <div style={{ display: 'flex', fontSize: large ? 30 : 14, fontWeight: 500, letterSpacing: large ? 23 : 9, paddingLeft: large ? 23 : 0, color: MUTED, lineHeight: 1 }}>{brand.second}</div>
     </div>
   </div>;
 }
@@ -59,20 +62,20 @@ function Balance({ reading }: { reading: NsmReading }) {
   </div>;
 }
 
-function Brand({ shield }: { shield: string }) {
+function BrandImage({ brand }: { brand: Brand }) {
   return <Frame>
     <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Mark shield={shield} size="large"/>
+      <Mark brand={brand} size="large"/>
     </div>
   </Frame>;
 }
 
 /** The share image: the shield, a chip naming the kind of page, its title and one short line; the NSM shows its balance. */
-function Card({ card, reading, shield }: { card: ShareCard; reading: NsmReading | null; shield: string }) {
+function Card({ card, reading, brand }: { card: ShareCard; reading: NsmReading | null; brand: Brand }) {
   const title = clip(card.title, 90);
   return <Frame>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-      <Mark shield={shield} size="small"/>
+      <Mark brand={brand} size="small"/>
       {card.chip ? <Chip label={card.chip}/> : null}
     </div>
     {reading ? <Balance reading={reading}/> : <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -84,8 +87,11 @@ function Card({ card, reading, shield }: { card: ShareCard; reading: NsmReading 
 
 export async function GET(request: Request) {
   if(process.env.SHIELDED_LABS_PREVIEW!=='1')return new Response('Not found',{status:404});
-  const card = shareCard(Object.fromEntries(new URL(request.url).searchParams));
-  const [{ fonts, shield }, reading] = await Promise.all([loadAssets(), card.live === 'nsm' ? getNsmBalance().then(result => result.reading) : null]);
-  const image = card.brand ? <Brand shield={shield}/> : <Card card={card} reading={reading} shield={shield}/>;
+  const params = Object.fromEntries(new URL(request.url).searchParams);
+  const card = shareCard(params);
+  const [{ fonts, shield, coin }, reading] = await Promise.all([loadAssets(), card.live === 'nsm' ? getNsmBalance().then(result => result.reading) : null]);
+  // Governance pages carry the governance portal's own mark; every other page, the Shielded Labs shield.
+  const brand: Brand = params.view === 'governance' ? { image: coin, first: 'ZCASH', second: 'GOVERNANCE' } : { image: shield, first: 'SHIELDED', second: 'LABS' };
+  const image = card.brand ? <BrandImage brand={brand}/> : <Card card={card} reading={reading} brand={brand}/>;
   return new ImageResponse(image, { width: 1200, height: 630, fonts, headers: { 'Cache-Control': 'public, max-age=300', 'X-Robots-Tag': 'noindex' } });
 }
