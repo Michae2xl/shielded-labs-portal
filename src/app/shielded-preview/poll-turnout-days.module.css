@@ -1,4 +1,4 @@
-/* Votes per day: a row per body, one bar per poll day with its count, today's in the body's colour. */
+/* Panel ballots per day, with coinholder shares on a separate question axis. */
 .card {
   --row-gold: var(--c-e0a62a, #e0a62a);
   --row-ink: var(--c-d4d4d4, #d4d4d4);
@@ -174,9 +174,76 @@
   font-weight: 650;
 }
 
+/* Breathing room and a new axis keep shares distinct from daily panel ballots. */
+.sharesBlock {
+  margin: 16px 20px 20px;
+  padding-top: 24px;
+  border-top: 1px solid var(--c-303030, #303030);
+}
+.sharesHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+.sharesHead h4 {
+  margin: 0;
+  color: var(--c-eeeeee, #eee);
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+.sharesHead > span {
+  color: var(--c-9c9c9c, #9c9c9c);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.shareRow {
+  padding: 22px 0 0;
+  border: 0;
+}
+.shareBars {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.shareBars > li {
+  display: grid;
+  grid-template-rows: 76px auto;
+  gap: 8px;
+  min-width: 0;
+}
+.shareBars .slot i {
+  background: var(--row-gold);
+}
+.shareBars .slot b {
+  display: block;
+}
+.shareBars .slot i b {
+  color: var(--on-series);
+}
+.questionAxis {
+  color: var(--c-9c9c9c, #9c9c9c);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.card .shareNote {
+  max-width: 90ch;
+  margin: 16px 0 0;
+  color: var(--c-b8b8b8, #b8b8b8);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 @media (max-width: 520px) {
   .rows,
-  .axis {
+  .axis,
+  .sharesBlock {
     margin-left: 16px;
     margin-right: 16px;
   }
@@ -201,5 +268,11 @@
     grid-row: 1;
     grid-column: 2;
     justify-self: end;
+  }
+  .shareBars {
+    gap: 5px;
+  }
+  .shareBars > li {
+    grid-template-rows: 64px auto;
   }
 }

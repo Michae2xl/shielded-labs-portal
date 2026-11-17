@@ -141,5 +141,12 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
       </section>
     </div>
     <Published/>
+    <section className={s.resources} aria-labelledby="poll-resources-heading">
+      <div>
+        <h3 id="poll-resources-heading">Resources</h3>
+        <p>Follow the coinholder poll on another public tracker.</p>
+      </div>
+      <Cited href="https://zakura.com/voting/#vote-290ce255ee4c">Zakura vote tracker</Cited>
+    </section>
   </div>;
 }

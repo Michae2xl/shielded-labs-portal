@@ -3,6 +3,7 @@
 import { useEffect, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from 'react';
 import Image from 'next/image';
 import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
+import officialBallot from '@/lib/shielded-preview/poll-turnout/nu71-questions.json';
 import { chartSpan, dailyRows, dayLabel, formatCount, knownAt, pollDay, stampLabel, timeLabel } from '@/lib/shielded-preview/poll-turnout/view';
 import { TurnoutTrack, useCrosshair, useWidth, type Window } from './poll-turnout-chart';
 import s from './poll-turnout.module.css';
@@ -188,22 +189,41 @@ function Questions({ snapshot }: { snapshot: TurnoutSnapshot }) {
   const top = Math.max(1, ...snapshot.questions.map((q) => q.shares ?? 0));
   return (
     <section className={s.questions} aria-labelledby="poll-turnout-questions">
-      <div className={s.questionHead}>
-        <h4 id="poll-turnout-questions">Coinholder shares by question</h4>
-        <a href="https://zakura.com/voting/#vote-290ce255ee4c" target="_blank" rel="noopener noreferrer">Compare on Zakura ↗</a>
-      </div>
+      <h4 id="poll-turnout-questions">Coinholder shares by question</h4>
+      <p className={s.questionHint}>Expand a question to read the official wording and answer options.</p>
       <ol>
-        {snapshot.questions.map((q) => (
-          <li key={q.id}>
-            <span className={s.qLabel}>
-              <span className={s.qNumber}>Q{q.id}</span> {q.label}
-            </span>
-            <span className={s.qBar} aria-hidden="true">
-              <span style={{ width: `${(((q.shares ?? 0) / top) * 100).toFixed(1)}%` }} />
-            </span>
-            <strong>{formatCount(q.shares)}</strong>
-          </li>
-        ))}
+        {snapshot.questions.map((q) => {
+          const official = snapshot.round === officialBallot.round ? officialBallot.questions.find((question) => question.id === q.id) : undefined;
+          return (
+            <li key={q.id}>
+              <details className={s.question}>
+                <summary className={s.questionSummary}>
+                  <span className={s.qLabel}>
+                    <span className={s.qNumber}>Q{q.id}</span> {q.label}
+                  </span>
+                  <span className={s.qBar} aria-hidden="true">
+                    <span style={{ width: `${(((q.shares ?? 0) / top) * 100).toFixed(1)}%` }} />
+                  </span>
+                  <strong aria-label={q.shares === null ? 'Shares unavailable' : `${formatCount(q.shares)} shares`}>{formatCount(q.shares)}</strong>
+                  <svg className={s.qChevron} width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4" /></svg>
+                </summary>
+                <div className={s.officialQuestion}>
+                  {official ? (
+                    <>
+                      <span className={s.officialLabel}>Official question</span>
+                      <h5>{official.title}</h5>
+                      {official.paragraphs.map((paragraph, index) => <p key={index} className={index === official.paragraphs.length - 1 ? s.questionPrompt : undefined}>{paragraph}</p>)}
+                      <ul className={s.answerOptions} aria-label="Answer options">
+                        {official.options.map((option) => <li key={option}>{option}</li>)}
+                      </ul>
+                      <a href={officialBallot.source} target="_blank" rel="noopener noreferrer">Official ballot source ↗</a>
+                    </>
+                  ) : <p>Official wording is not available for this question.</p>}
+                </div>
+              </details>
+            </li>
+          );
+        })}
       </ol>
     </section>
   );
@@ -259,13 +279,14 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
           <Questions snapshot={snapshot} />
           <footer className={s.foot}>
             <p>
-              Total shares = Q1 + Q2 + Q3 + Q4 + Q5. Shares measure encrypted fragments, not unique voters or ZEC. Panel counts are submitted ballots.
+              Total shares = Q1 + Q2 + Q3 + Q4 + Q5. Each share is an encrypted vote fragment, not a coin or a whole ballot. Panel counts are submitted ballots.
             </p>
             <details className={`${s.table} ${s.methodology}`}>
               <summary>How these counts work</summary>
-              <p>For each question, we add the accepted share counts across all answer options in the vote chain’s public summary, the measure shown by Zakura. The top total adds the five question counts from the same reading. Repeated page refreshes do not add shares. Unique voters cannot be inferred from these totals.</p>
-              <p>The former “votes” counter counted successful cast transactions per question and displayed the largest count. A wallet can submit multiple bundles of notes, so that counter also did not identify individual voters. It has been replaced with shares to match the source.</p>
-              <p>Shares are published over time, so dividing them by 16 does not recover a live voter count. ZEC-weighted results are published after the poll closes. The share summary has no historical timestamps; daily charts below show panel ballots.</p>
+              <p><strong>What a share means.</strong> A share is an encrypted fragment used to tally a coinholder vote. One voter can contribute many shares. For example, 500 shares does not mean 500 ZEC, 500 ballots or 500 people. Unique voters cannot be inferred from these totals.</p>
+              <p><strong>How we add them.</strong> Each question shows the accepted shares across all its answer options in the vote chain’s public summary. Total shares adds Q1–Q5 from that same reading. Refreshing the page replaces the reading; it does not add it to earlier totals.</p>
+              <p><strong>What the charts show.</strong> Panel bars show new ballots each day. ZCAP uses changes between observed totals because vote times are not public. Coinholder bars show current shares by question: the source does not provide a daily share history. ZEC-weighted results are published after the poll closes.</p>
+              <p><strong>About the earlier counter.</strong> The former “votes” counter counted successful cast transactions per question and displayed the largest count. A wallet can submit multiple bundles of notes, so that counter also did not identify individual voters. Shares arrive over time, so dividing the current total by 16 cannot recover a voter count either.</p>
             </details>
             <details className={s.table}>
               <summary>Daily panel counts</summary>

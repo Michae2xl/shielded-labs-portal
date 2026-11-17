@@ -61,10 +61,25 @@ describe('live turnout panel', () => {
     expect(out).toContain('Unique voters cannot be inferred from these totals.');
     expect(out).toContain('counted successful cast transactions per question and displayed the largest count');
     expect(out).toContain('Coinholder shares by question');
-    expect(out).toContain('Compare on Zakura');
+    expect(out).not.toContain('Compare on Zakura');
     expect(out).not.toContain('680 votes');
     expect(out).not.toContain('of last poll');
     expect(out).not.toContain('dashed line');
+  });
+  it('includes the official wording and answer options for all five expandable questions', () => {
+    const markup = html({ snapshot: SNAPSHOT });
+    const out = text(markup);
+    expect(out).toContain('[ZIP] Wind Down Zcash Community Grants');
+    expect(out).toContain('Do you support the Wind Down Zcash Community Grants proposal?');
+    expect(out).toContain('Do you support the Future Dev and Legal Defense Fund proposal?');
+    expect(out).toContain('Do you support the Zcash Adoption Pool (ZAP) proposal?');
+    expect(out).toContain('Do you support maintaining ZCG’s existing funding and operations?');
+    expect(out).toContain('Assuming it can be done safely in a network upgrade, do you support reducing Zcash’s target block time from 25 seconds to 20 seconds?');
+    expect(markup.match(/aria-label="Answer options"/g)).toHaveLength(5);
+    expect(out.match(/Support Oppose Abstain/g)).toHaveLength(5);
+  });
+  it('does not attach NU7.1 wording to a different round', () => {
+    expect(text(html({ snapshot: { ...SNAPSHOT, round: 'A later poll' } }))).not.toContain('[ZIP] Wind Down Zcash Community Grants');
   });
   it('says the vote chain is not answering, with no number, before its first reading', () => {
     const down = buildSnapshot(

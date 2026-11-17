@@ -13,7 +13,7 @@ const SNAPSHOT = buildSnapshot(
       coinholders: {
         state: 'fetched',
         observedAt: '2026-11-17T01:29:00.000Z',
-        data: { value: 144, points: [{ at: at('2026-11-16T22:00:00Z'), value: 124 }, { at: at('2026-11-17T01:20:00Z'), value: 144 }], eligible: null, approximate: false, questions: [] },
+        data: { value: 144, points: [], eligible: null, approximate: false, questions: [80, 40, 20, 4, 0].map((shares, index) => ({ id: index + 1, shares })) },
       },
       'zcash-brasil': { state: 'fetched', observedAt: '2026-11-17T01:29:00.000Z', data: { value: 3, points: [{ at: at('2026-11-16T12:24:46Z'), value: 3 }], eligible: 18, approximate: false } },
       zechub: { state: 'fetched', observedAt: '2026-11-17T01:29:00.000Z', data: { value: 1, points: [{ at: at('2026-11-16T16:43:47Z'), value: 1 }], eligible: 23, approximate: false } },
@@ -31,7 +31,6 @@ describe('panel ballots per day', () => {
     const out = text(html(SNAPSHOT));
     expect(out).toContain('Panel ballots per day New each day · UTC');
     // Each day's count on its bar, then what the body added today.
-    expect(out).not.toContain('Coinholders');
     expect(out).toContain('ZCAP 24 5 +5 today');
     expect(out).toContain('Zcash Brasil 3 0 0 today');
     expect(out).toContain('ZecHub 1 0 0 today');
@@ -43,6 +42,28 @@ describe('panel ballots per day', () => {
     expect(markup).not.toContain('aria-label="Coinholders:');
     expect(markup).toContain('aria-label="ZCAP: 24 on 16 Nov, 5 on 17 Nov"');
     expect(markup.match(/data-future="true"/g)).toHaveLength(3 * 13);
+  });
+  it('gives coinholders a separate question axis with current shares, never daily ballots', () => {
+    const markup = html(SNAPSHOT);
+    const shares = markup.slice(markup.indexOf('aria-labelledby="coinholder-bars-heading"'));
+    expect(text(shares)).toContain('Coinholder shares Latest reading · 17 Nov, 01:29 UTC Coinholders 80 Q1 40 Q2 20 Q3 4 Q4 0 Q5 144 total shares');
+    expect(shares).toContain('aria-label="Q1 Wind down ZCG: 80 shares"');
+    expect(shares).toContain('Daily share history is not available.');
+    expect(text(shares)).not.toContain('today');
+    expect(shares).not.toContain('data-future');
+    expect(shares).not.toContain('ballots');
+  });
+  it('does not turn missing shares into zeroes or invent a reading time', () => {
+    const unavailable = {
+      ...SNAPSHOT,
+      bodies: SNAPSHOT.bodies.map((body) => body.id === 'coinholders' ? { ...body, value: null, observedAt: null, state: 'unavailable' as const } : body),
+      questions: SNAPSHOT.questions.map((question) => ({ ...question, shares: null })),
+    };
+    const markup = html(unavailable);
+    const shares = markup.slice(markup.indexOf('aria-labelledby="coinholder-bars-heading"'));
+    expect(text(shares)).toContain('Awaiting a reading Coinholders — Q1 — Q2 — Q3 — Q4 — Q5 — total shares');
+    expect(shares).toContain('aria-label="Q1 Wind down ZCG: shares unavailable"');
+    expect(shares).not.toContain('<i style=');
   });
   it('puts a count inside a bar with room for it, on top of a short one, and marks a day with none', () => {
     const markup = html(SNAPSHOT);
