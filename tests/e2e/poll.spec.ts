@@ -1,9 +1,58 @@
 import { expect, test } from '@playwright/test';
 import { open, sidewaysOverflow } from './support';
+import { NU7_1_TURNOUT, buildSnapshot } from '../../src/lib/shielded-preview/poll-turnout/turnout';
 
 const LAUNCH = { host: 'governance.shieldedlabs.net' };
 
 test.describe('The poll as a site of its own', () => {
+  for (const width of [375, 1440]) {
+    test(`official questions expand and coinholder bars keep their own units at ${width}px`, async ({ page }, testInfo) => {
+      const now = Date.parse('2026-11-17T16:30:00Z');
+      const snapshot = buildSnapshot(NU7_1_TURNOUT, {
+        bodies: {
+          coinholders: {
+            state: 'fetched', observedAt: '2026-11-17T16:29:00Z',
+            data: { value: 18120, points: [], eligible: null, approximate: false, questions: [4800, 4700, 4600, 4000, 20].map((shares, index) => ({ id: index + 1, shares })) },
+          },
+        },
+        roster: 203, chainStatus: 'active',
+      }, now);
+      await page.setViewportSize({ width, height: 900 });
+      await page.clock.setFixedTime(now);
+      await page.route('**/api/shielded-preview/turnout', (route) => route.fulfill({ json: snapshot }));
+      const errors = await open(page, '/poll');
+      const questions = page.getByRole('region', { name: 'Coinholder shares by question', exact: true });
+      const first = questions.locator('summary').first();
+      await expect(questions.getByText('[ZIP] Wind Down Zcash Community Grants', { exact: true })).toBeHidden();
+      await first.focus();
+      await first.press('Enter');
+      await expect(questions.getByText('[ZIP] Wind Down Zcash Community Grants', { exact: true })).toBeVisible();
+      await expect(questions.getByText('Do you support the Wind Down Zcash Community Grants proposal?', { exact: true })).toBeVisible();
+      await expect(questions.getByRole('list', { name: 'Answer options' }).getByRole('listitem')).toHaveText(['Support', 'Oppose', 'Abstain']);
+      await first.press('Space');
+      await expect(questions.getByText('[ZIP] Wind Down Zcash Community Grants', { exact: true })).toBeHidden();
+      for (let index = 0; index < 5; index++) await questions.locator('summary').nth(index).click();
+      await expect(questions.getByRole('list', { name: 'Answer options' })).toHaveCount(5);
+      await expect(questions.getByRole('link', { name: 'Official ballot source' })).toHaveCount(5);
+      const shares = page.getByRole('region', { name: 'Coinholder shares', exact: true });
+      await expect(shares.getByRole('listitem')).toHaveCount(5);
+      await expect(shares.getByRole('listitem').first()).toHaveAccessibleName('Q1 Wind down ZCG: 4,800 shares');
+      await expect(shares).toContainText('18,120');
+      await expect(shares).toContainText('total shares');
+      await expect(shares).not.toContainText('today');
+      const resources = page.getByRole('region', { name: 'Resources', exact: true });
+      await expect(resources.getByRole('link', { name: 'Zakura vote tracker' })).toHaveAttribute('href', 'https://zakura.com/voting/#vote-290ce255ee4c');
+      await expect(questions.getByRole('link', { name: /Zakura/ })).toHaveCount(0);
+      for (const theme of ['light', 'dark']) {
+        if (await page.locator('html').getAttribute('data-gov-theme') !== theme) await page.getByRole('button', { name: `Switch to the ${theme} theme` }).click();
+        expect(await sidewaysOverflow(page)).toBe(0);
+        await shares.scrollIntoViewIfNeeded();
+        await page.getByRole('region', { name: 'Panel ballots per day', exact: true }).screenshot({ path: testInfo.outputPath(`turnout-${theme}.png`) });
+      }
+      expect(errors).toEqual([]);
+    });
+  }
+
   test('shows the poll alone: its title, the live turnout, and no way into the rest of the portal', async ({ page }) => {
     await open(page, '/poll');
     await expect(page.getByRole('heading', { level: 1, name: 'ZCG / Dev Fund poll' })).toBeVisible();

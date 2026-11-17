@@ -2,7 +2,8 @@
 
 import { useEffect, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
-import { dailyNew, dayLabel, formatCount } from '@/lib/shielded-preview/poll-turnout/view';
+import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
+import { dailyNew, dayLabel, formatCount, stampLabel } from '@/lib/shielded-preview/poll-turnout/view';
 import { usePollTurnout } from './poll-turnout';
 import b from './governance-bento.module.css';
 import s from './poll-turnout-days.module.css';
@@ -35,12 +36,55 @@ function monthsOf(days: { day: number }[]): string {
   return months.join(' – ');
 }
 
-/** What each body added on each day of the poll: one row of bars per body, each day's count on its bar, today's bar in the body's colour. */
+/** Shares have no daily history: give them their own question axis and total. */
+function CoinholderShares({ body, questions }: { body: BodyTurnout; questions: TurnoutSnapshot['questions'] }) {
+  const top = Math.max(1, ...questions.map((question) => question.shares ?? 0));
+  return (
+    <section className={s.sharesBlock} aria-labelledby="coinholder-bars-heading">
+      <header className={s.sharesHead}>
+        <h4 id="coinholder-bars-heading">Coinholder shares</h4>
+        <span>{body.observedAt ? <>Latest reading · <time dateTime={body.observedAt}>{stampLabel(Date.parse(body.observedAt))}</time></> : 'Awaiting a reading'}</span>
+      </header>
+      <div className={`${s.row} ${s.shareRow}`}>
+        <span className={s.who}>
+          <span className={s.logos} aria-hidden="true">
+            {body.logos.map((logo) => <Image key={logo.src} className={s.logo} data-shape={logo.shape} src={logo.src} alt="" width={20} height={20} />)}
+          </span>
+          <span className={s.name}>{body.name}</span>
+        </span>
+        <ol className={s.shareBars} aria-label="Latest shares by question">
+          {questions.map((question) => {
+            const value = question.shares;
+            const height = value ? Math.max(6, (value / top) * 100) : 0;
+            const inside = value !== null && value / top >= INSIDE;
+            return (
+              <li key={question.id} aria-label={`Q${question.id} ${question.label}: ${value === null ? 'shares unavailable' : `${formatCount(value)} shares`}`}>
+                <span className={s.slot} aria-hidden="true" title={`Q${question.id} ${question.label}: ${value === null ? 'shares unavailable' : `${formatCount(value)} shares`}`}>
+                  {value !== null && value > 0 && <i style={{ height: `${height.toFixed(1)}%` }}>{inside && <b>{barLabel(value)}</b>}</i>}
+                  {!inside && <b className={s.over} data-zero={value === 0 || value === null || undefined} style={value ? { bottom: `calc(${height.toFixed(1)}% + 4px)` } : undefined}>{value === null ? '—' : barLabel(value)}</b>}
+                </span>
+                <span className={s.questionAxis} aria-hidden="true">Q{question.id}</span>
+              </li>
+            );
+          })}
+        </ol>
+        <span className={s.today}>
+          <strong>{formatCount(body.value)}</strong>
+          <small>total shares</small>
+        </span>
+      </div>
+      <p className={s.shareNote}>Shares by question in the latest reading. Each share is an encrypted vote fragment; one voter can contribute many. Daily share history is not available.</p>
+    </section>
+  );
+}
+
+/** Daily panel ballots, followed by a separate row for the latest coinholder shares. */
 export function TurnoutByDayCard({ snapshot, now }: { snapshot: ReturnType<typeof usePollTurnout>['snapshot']; now: number | null }) {
   const at = now ?? (snapshot ? Date.parse(snapshot.checkedAt) : 0);
   const panels = snapshot ? { ...snapshot, bodies: snapshot.bodies.filter((body) => body.unit === 'ballots') } : null;
   const days = panels ? dailyNew(panels, at) : [];
   const today = days.findLastIndex((d) => !d.future);
+  const coinholders = snapshot?.bodies.find((body) => body.id === 'coinholders' && body.unit === 'shares');
   return (
     <section className={`${b.card} ${s.card}`} aria-labelledby="turnout-days-heading" style={{ '--days': days.length || 15 } as CSSProperties}>
       <header className={b.header}>
@@ -104,6 +148,7 @@ export function TurnoutByDayCard({ snapshot, now }: { snapshot: ReturnType<typeo
             </span>
           </div>
           <p className={b.note}>Panel ballots received each day. ZCAP uses changes between observed totals; vote times are not published.</p>
+          {coinholders && snapshot && <CoinholderShares body={coinholders} questions={snapshot.questions} />}
         </>
       ) : (
         <p className={b.note}>Reading the vote chain and the panels.</p>
