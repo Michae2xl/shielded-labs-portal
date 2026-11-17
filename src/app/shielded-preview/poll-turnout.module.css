@@ -222,9 +222,6 @@
 .card[data-kind='vote-chain'] .top {
   flex-wrap: wrap;
 }
-.card[data-kind='vote-chain'] .value {
-  margin-left: auto;
-}
 .shareSummary {
   margin-top: 18px;
   padding-top: 12px;
@@ -232,9 +229,6 @@
   color: var(--tp-ink-2);
   font-size: 13px;
   line-height: 1.6;
-}
-.shareSummary strong {
-  font-weight: 500;
 }
 .panel .shareSummary p {
   margin: 8px 0 0;
@@ -498,7 +492,7 @@
   stroke-width: 1;
 }
 
-/* Accepted shares by question, scaled to the question with the most shares. */
+/* One disclosure per official question. All answer bars use the full weight on that question. */
 .questions {
   margin-top: 26px;
 }
@@ -515,40 +509,138 @@
   font-size: 13px;
   line-height: 1.5;
 }
+.coinHead {
+  margin-bottom: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tp-line);
+}
+.coinTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.panel .coinTitle h4 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: -.035em;
+}
+.phaseBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--tp-line);
+  border-radius: 99px;
+  color: var(--tp-ink-2);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.phaseBadge::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tp-s3);
+  content: '';
+}
+.panel .coinHead .questionHint {
+  margin: 9px 0 0;
+  max-width: 72ch;
+  color: var(--tp-ink-2);
+  font-size: 14px;
+}
+.coinCounts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--tp-line);
+  font-variant-numeric: tabular-nums;
+}
+.coinCounts dt { color: var(--tp-ink-2); font-size: 13px; }
+.coinCounts dd { margin: 0; }
+.coinCounts dd:first-of-type { color: var(--tp-ink); font-size: clamp(20px, 3cqi, 30px); font-weight: 500; line-height: 1.15; letter-spacing: -.03em; }
+.readingTime { display: block; margin-top: 4px; color: var(--tp-muted); font-size: 10.5px; line-height: 1.4; }
+.readingTime time { display: block; }
+.qCounts { display: flex; justify-content: flex-end; align-items: baseline; gap: 14px; }
+.qCounts > span { white-space: nowrap; min-width: 8ch; }
+.panel .observation { margin: 6px 0 14px; color: var(--tp-muted); font-size: 12px; }
+.observation a { color: var(--tp-ink-2); text-underline-offset: 3px; }
+.qMetric { color: var(--tp-ink); font-size: 14px; font-weight: 550; text-align: right; font-variant-numeric: tabular-nums; }
+.qMetric small { color: var(--tp-muted); font-size: 12px; font-weight: 400; }
+.panel .answerChart p {
+  color: var(--tp-ink-2);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 10px 0;
+}
+.panel .resultSource { color: var(--tp-ink); text-underline-offset: 3px; font-size: 13px; }
+.resultSource { display: inline-block; margin-top: 14px; }
+.answerChart { max-width: 700px; margin: 0 0 16px; }
+.answerTotal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 3px 12px;
+  padding-block: 10px;
+  border-block: 1px solid var(--tp-line);
+  color: var(--tp-ink-2);
+  font-size: 13px;
+}
+.answerTotal strong { color: var(--tp-ink); font-size: 16px; font-variant-numeric: tabular-nums; }
+.panel .answerChart ul { display: grid; gap: 14px; margin: 16px 0; padding: 0; list-style: none; }
+.panel .answerChart li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 12px;
+  padding: 0;
+  color: var(--tp-ink);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.answerName { flex: 1 1 130px; }
+.answerValue { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.answerValue small { color: var(--tp-muted); font-size: 12px; }
+.answerTrack { flex: 0 0 100%; height: 5px; overflow: hidden; background: var(--tp-track); border-radius: 4px; }
+.answerTrack i { display: block; height: 100%; border-radius: inherit; background: var(--tp-s3); }
 .questions > ol {
   display: grid;
   /* Each disclosure owns its row so opening it never leaves a vacant neighboring column. */
   grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
+  gap: 0;
   margin: 0;
   padding: 0;
+  border: 1px solid var(--tp-line);
+  border-radius: 8px;
   list-style: none;
 }
+.questions > ol > li + li { border-top: 1px solid var(--tp-line); }
+.questions > ol > li:first-child .question { border-radius: 7px 7px 0 0; }
+.questions > ol > li:last-child .question { border-radius: 0 0 7px 7px; }
 .questions > ol > li {
   min-width: 0;
 }
 .question {
-  border: 1px solid var(--tp-line);
-  border-radius: 10px;
   background: var(--tp-surface);
 }
 .question:hover,
 .question[open] {
   background: var(--tp-raised);
 }
-.question[open] {
-  border-color: color-mix(in srgb, var(--tp-s3) 35%, var(--tp-line));
-}
 /* Own the disclosure layout instead of inheriting the portal's flex row and extra arrow. */
 .panel .question > .questionSummary {
   display: grid;
-  grid-template-columns: 36px minmax(0, 1fr) max-content 14px;
+  grid-template-columns: 25px minmax(0, 1fr) max-content 14px;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
-  min-height: 76px;
-  padding: 14px 16px;
-  border-radius: 10px;
+  min-height: 39px;
+  padding: 5px 12px;
+  border-radius: inherit;
   cursor: pointer;
   list-style: none;
 }
@@ -567,7 +659,7 @@
 }
 .panel .questionSummary:focus-visible {
   outline: 2px solid var(--tp-ink);
-  outline-offset: 3px;
+  outline-offset: -2px;
 }
 .qChevron {
   color: var(--tp-muted);
@@ -587,55 +679,20 @@
 .qNumber {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 25px;
+  height: 23px;
   border: 1px solid var(--tp-line);
-  border-radius: 8px;
+  border-radius: 5px;
   background: var(--tp-raised);
   color: var(--tp-ink-2);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 550;
   font-variant-numeric: tabular-nums;
 }
 .question[open] .qNumber {
   border-color: color-mix(in srgb, var(--tp-s3) 25%, var(--tp-line));
   background: color-mix(in srgb, var(--tp-s3) 9%, var(--tp-surface));
   color: var(--tp-s3);
-}
-.qMetric {
-  display: grid;
-  gap: 7px;
-  min-width: 72px;
-}
-.qCount {
-  display: flex;
-  align-items: baseline;
-  justify-content: flex-end;
-  gap: 5px;
-  white-space: nowrap;
-}
-.qCount > span {
-  color: var(--tp-muted);
-  font-size: 11px;
-}
-.qBar {
-  height: 3px;
-  overflow: hidden;
-  border-radius: 6px;
-  background: var(--tp-track);
-}
-.qBar span {
-  display: block;
-  height: 100%;
-  border-radius: 6px;
-  background: var(--tp-s3);
-}
-.qCount > strong {
-  color: var(--tp-ink);
-  font-size: 16px;
-  font-weight: 600;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
 }
 .officialQuestion {
   margin: 0 16px;
@@ -857,22 +914,16 @@
     margin-top: 10px;
   }
   .panel .question > .questionSummary {
-    grid-template-columns: 32px minmax(0, 1fr) max-content 14px;
-    gap: 8px;
-    padding: 12px;
+    grid-template-columns: 23px minmax(0, 1fr) max-content 12px;
+    min-height: 44px;
+    gap: 6px;
+    padding: 6px 8px;
   }
-  .qNumber {
-    width: 32px;
-    height: 32px;
-  }
-  .qMetric {
-    min-width: 55px;
-  }
-  .qCount {
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 1px;
-  }
+  .qCounts { display: grid; gap: 0; font-size: 12px; line-height: 1.3; }
+  .qCounts > span { min-width: 0; }
+  .qCounts small { font-size: 11px; }
+  .coinCounts { gap: 4px; }
+  .qNumber { width: 23px; height: 22px; }
   .officialQuestion {
     margin-inline: 12px;
   }

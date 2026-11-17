@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type ReactNode } from 'react';
+import { CoinholderProtocolGuide } from './coinholder-protocol-guide';
 import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import { devFundAcceptsProposals, devFundLane, devFundNextSteps, devFundNotices as notices, devFundPhase, devFundPublished, devFundStepState, devFundSources as sources, devFundTimeline as timeline, type DevFundPublication } from '@/lib/shielded-preview/governance-dev-fund';
 import { Arrow, Link, type CollectionNavigate } from './governance-link';
@@ -129,7 +130,7 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
         <header className={b.header}><h3 id="dev-fund-results-heading">Results</h3>{published.results && <time className={b.meta} dateTime={published.results.publishedAt}>{date(published.results.publishedAt)}</time>}</header>
         {published.results
           ? <Cited href={published.results.url} className={b.footer}>Published results</Cited>
-          : <p className={`${s.text} ${s.cardText}`}>Not published. The five organizations will publish the results shortly after polls close and assess whether there is rough consensus to move forward with a proposal.</p>}
+          : <p className={`${s.text} ${s.cardText}`}>The five organizations will publish their assessment of the poll after voting closes, including whether there is rough consensus to move forward with a proposal.</p>}
       </section>
       </div>
       <section className={b.card} aria-labelledby="dev-fund-upgrade-heading">
@@ -144,9 +145,10 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
     <section className={s.resources} aria-labelledby="poll-resources-heading">
       <div>
         <h3 id="poll-resources-heading">Resources</h3>
-        <p>Follow the coinholder poll on another public tracker.</p>
+        <p>Track the current round and check how coinholder results are counted.</p>
       </div>
       <Cited href="https://zakura.com/voting/#vote-290ce255ee4c">Zakura vote tracker</Cited>
+      <CoinholderProtocolGuide />
     </section>
   </div>;
 }

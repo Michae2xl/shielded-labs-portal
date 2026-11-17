@@ -1,79 +1,81 @@
 import 'server-only';
-import { blockTime } from './series';
-import { CAST_EVENTS, headerUrl, parseCastPage, parseHeaderTime, parseStatus, statusUrl, tallyCasts, txSearchUrl, type Cast, type CastEvent } from './vote-chain';
+import { z } from 'zod';
+import { CAST_EVENTS, parseCastPage, parseStatus, statusUrl, txSearchUrl, type CastCount } from './vote-chain';
 
-/** Reads a JSON body; the scanner passes its own size and time limits. */
 export type GetJson = (url: string, limits: { timeout: number; maxBytes: number }) => Promise<unknown>;
 
-// A ballot transaction carries its proofs (about 100 KB), so pages stay small and each reading
-// fetches only what arrived since the last one. A long backlog is read over several readings.
-const PAGE: Record<CastEvent, number> = { delegate_and_cast_vote_batch: 20, cast_vote_batch: 20, cast_vote: 50 };
-const MAX_PAGES_PER_READING = 25;
-const RPC_LIMITS = { timeout: 15_000, maxBytes: 6_000_000 };
-const SMALL_LIMITS = { timeout: 8_000, maxBytes: 200_000 };
-/** Exact block times fetched per reading; any other block is placed between its known neighbours. */
-const HEADERS_PER_READING = 24;
+const PAGE_SIZE = 16;
+const PAGE_LIMIT = 2;
+const archive = z.object({ result: z.object({
+  node_info: z.object({ network: z.literal('zvote-1'), other: z.object({ tx_index: z.literal('on') }) }),
+  sync_info: z.object({ catching_up: z.literal(false), earliest_block_height: z.literal('1') }),
+}) });
 
-export interface ChainCount {
-  /** Votes per question so far. */
-  questions: { id: number; votes: number }[];
-  /** Running total of the most-answered question, at block times. */
-  points: { at: number; value: number }[];
-  unread: number;
-  /** The block every event up to which has been read, and its time. */
-  through: { height: number; time: number };
+// Recount of all three indexed event types from genesis through this block, across every page.
+// This aggregate lets new server instances replay only the subsequent blocks.
+const NU71_CHECKPOINT = {
+  round: '290ce255ee4c4d63457a55b3e72e07c579e44b6e578438a01c3eaad5c158991e',
+  time: Date.parse('2026-11-17T20:05:24.779Z'),
+  count: { height: 10980938, questions: { 1: 326, 2: 326, 3: 327, 4: 327, 5: 331 } } satisfies CastCount,
+};
+export function castCheckpoint(round: string, now: number) {
+  return round === NU71_CHECKPOINT.round && now >= NU71_CHECKPOINT.time ? NU71_CHECKPOINT : null;
 }
 
-/** Counts a round's votes from the RPC, keeping what it has read between readings. */
-export function createVoteChainScanner(round: string, getJson: GetJson) {
-  const casts = new Map<string, Cast>();
-  const anchors = new Map<number, number>();
-  const scanned: Record<CastEvent, number> = { delegate_and_cast_vote_batch: 0, cast_vote_batch: 0, cast_vote: 0 };
+function startWindow(tip: { height: number; time: number }) {
+  return {
+    tip,
+    streams: CAST_EVENTS.map((event) => ({
+      event, page: 1, total: null as number | null, complete: false, seen: new Set<string>(), counts: new Map<number, number>(),
+    })),
+  };
+}
 
-  async function scanEvent(event: CastEvent, upTo: number) {
-    let last = scanned[event];
-    for (let page = 1, seen = 0; page <= MAX_PAGES_PER_READING; page++) {
-      const result = parseCastPage(await getJson(txSearchUrl(event, round, scanned[event], upTo, page, PAGE[event]), RPC_LIMITS), event, round);
-      for (const cast of result.casts) {
-        casts.set(`${event}:${cast.hash}`, cast);
-        last = Math.max(last, cast.height);
+/** Publish only after all three event indexes have been read through the same finalized block. */
+export function createVoteChainScanner(round: string, ids: number[], getJson: GetJson, now: () => number) {
+  const seed = castCheckpoint(round, now());
+  let previous: CastCount = seed?.count ?? { height: 0, questions: Object.fromEntries(ids.map((id) => [id, 0])) };
+  let window: ReturnType<typeof startWindow> | null = null;
+
+  async function advance(stream: ReturnType<typeof startWindow>['streams'][number], tip: number) {
+    for (let i = 0; i < PAGE_LIMIT && !stream.complete; i++) {
+      const url = txSearchUrl(stream.event, round, previous.height, tip, stream.page, PAGE_SIZE);
+      const page = parseCastPage(await getJson(url, { timeout: 8_000, maxBytes: 5_000_000 }), stream.event, round);
+      const expected = Math.min(PAGE_SIZE, page.total - stream.seen.size);
+      if (page.txs !== expected || (stream.total !== null && page.total !== stream.total) ||
+          new Set(page.hashes).size !== page.txs || page.hashes.some((hash) => stream.seen.has(hash))) {
+        throw new Error('Incomplete or repeated cast page');
       }
-      seen += result.txs;
-      if (seen >= result.total || result.txs === 0) {
-        scanned[event] = upTo;
-        return;
+      const additions = new Map<number, number>();
+      for (const cast of page.casts) {
+        if (cast.height <= previous.height || cast.height > tip || !cast.questions?.length || cast.questions.some((id) => !ids.includes(id))) {
+          throw new Error('Cannot attribute all cast commitments');
+        }
+        for (const id of cast.questions) additions.set(id, (additions.get(id) ?? 0) + 1);
       }
+      for (const [id, count] of additions) stream.counts.set(id, (stream.counts.get(id) ?? 0) + count);
+      for (const hash of page.hashes) stream.seen.add(hash);
+      stream.total = page.total;
+      stream.page++;
+      stream.complete = stream.seen.size === page.total;
     }
-    // Stopped early: every block below the last one read is complete; that block is read again next time.
-    scanned[event] = Math.max(scanned[event], last - 1);
   }
 
-  async function placeBlocks() {
-    const missing = [...new Set([...casts.values()].map((c) => c.height))].filter((h) => !anchors.has(h)).sort((a, b) => a - b);
-    // The oldest block first, so every other block has known neighbours, then blocks spread across the rest.
-    const step = Math.max(1, Math.ceil(missing.length / HEADERS_PER_READING));
-    const batch = [...new Set([missing[0], ...missing.filter((_, i) => i % step === step - 1)])].filter((h) => h !== undefined).slice(0, HEADERS_PER_READING);
-    const times = await Promise.all(batch.map((h) => getJson(headerUrl(h), SMALL_LIMITS).then(parseHeaderTime, () => null)));
-    batch.forEach((h, i) => {
-      const time = times[i];
-      if (time !== null && Number.isFinite(time)) anchors.set(h, time);
-    });
-  }
-
-  return async function read(): Promise<ChainCount> {
-    const latest = parseStatus(await getJson(statusUrl(), SMALL_LIMITS));
-    anchors.set(latest.height, latest.time);
-    for (const event of CAST_EVENTS) await scanEvent(event, latest.height);
-    await placeBlocks();
-    const throughHeight = Math.min(...CAST_EVENTS.map((e) => scanned[e]));
-    const all = [...casts.values()].filter((c) => c.height <= throughHeight);
-    const { perQuestion, unread, topTimes } = tallyCasts(all, (h) => blockTime(h, anchors));
-    const sorted = [...topTimes].sort((a, b) => a - b);
-    return {
-      questions: [...perQuestion].map(([id, votes]) => ({ id, votes })).sort((a, b) => a.id - b.id),
-      points: sorted.map((at, i) => ({ at, value: i + 1 })),
-      unread,
-      through: { height: throughHeight, time: blockTime(throughHeight, anchors) ?? latest.time },
-    };
+  return async () => {
+    if (!window) {
+      const raw = await getJson(statusUrl(), { timeout: 12_000, maxBytes: 200_000 });
+      archive.parse(raw);
+      const tip = parseStatus(raw);
+      if (tip.height < previous.height) throw new Error('Archive is behind the last reading');
+      window = startWindow(tip);
+    }
+    const { tip, streams } = window;
+    const attempts = await Promise.allSettled(streams.map((s) => advance(s, tip.height)));
+    if (attempts.some((a) => a.status === 'rejected') || streams.some((s) => !s.complete)) throw new Error('Cast count pending');
+    const questions = { ...previous.questions };
+    for (const stream of streams) for (const [id, count] of stream.counts) questions[id] += count;
+    previous = { height: tip.height, questions };
+    window = null;
+    return { data: previous, observedAt: tip.time };
   };
 }

@@ -1,0 +1,15 @@
+.guide { flex: 1 0 100%; min-width: 0; margin: 8px 0 0; color: var(--c-eeeeee, #eee); }
+.guide > summary { padding: 10px 0; cursor: pointer; font-weight: 550; font-size: 14px; }
+.guide > summary:focus-visible, .scroll:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.scroll { overflow-x: auto; margin: 4px 0 12px; }
+.scroll table { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: 14px; line-height: 1.5; }
+.scroll caption { text-align: left; color: var(--c-b0b0b0, #b0b0b0); padding-bottom: 10px; }
+.scroll th, .scroll td { padding: 10px 12px; border-top: 1px solid var(--c-303030, #303030); vertical-align: top; text-align: left; overflow-wrap: anywhere; }
+.scroll th { font-weight: 550; }
+.scroll thead th { background: var(--c-151515, #151515); }
+.scroll td { color: var(--c-c8c8c8, #c8c8c8); }
+.scroll th:first-child { width: 18%; }
+.scroll a { color: var(--c-eeeeee, #eee); text-underline-offset: 3px; }
+@media (max-width: 600px) {
+  .scroll table { min-width: 560px; }
+}

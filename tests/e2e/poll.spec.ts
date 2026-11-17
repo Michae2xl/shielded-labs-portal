@@ -15,13 +15,21 @@ test.describe('The poll as a site of its own', () => {
             data: { value: 18120, points: [], eligible: null, approximate: false, questions: [4800, 4700, 4600, 4000, 20].map((shares, index) => ({ id: index + 1, shares })) },
           },
         },
+        casts: { state: 'fetched', observedAt: '2026-11-17T16:28:00Z', data: { height: 900, questions: { 1: 51, 2: 50, 3: 49, 4: 48, 5: 47 } } },
         roster: 203, chainStatus: 'active',
       }, now);
       await page.setViewportSize({ width, height: 900 });
       await page.clock.setFixedTime(now);
       await page.route('**/api/shielded-preview/turnout', (route) => route.fulfill({ json: snapshot }));
       const errors = await open(page, '/poll');
-      const questions = page.getByRole('region', { name: 'Coinholder shares by question', exact: true });
+      const questions = page.getByRole('region', { name: 'Coinholder activity by question', exact: true });
+      const totals = page.getByLabel('Coinholder activity across all questions');
+      await expect(totals).toContainText('245');
+      await expect(totals).toContainText('18,120');
+      await expect(questions.locator('summary').first()).toContainText('51 casts');
+      await expect(questions.locator('details[open]')).toHaveCount(0);
+      await expect(questions.locator('summary').first()).toContainText('4,800 shares');
+      await expect(questions.locator('summary [style*="width"]')).toHaveCount(0);
       const first = questions.locator('summary').first();
       await expect(questions.getByText('[ZIP] Wind Down Zcash Community Grants', { exact: true })).toBeHidden();
       await first.focus();
@@ -34,7 +42,8 @@ test.describe('The poll as a site of its own', () => {
       for (let index = 0; index < 5; index++) await questions.locator('summary').nth(index).click();
       await expect(questions.getByRole('list', { name: 'Answer options' })).toHaveCount(5);
       await expect(questions.getByRole('link', { name: 'Official ballot source' })).toHaveCount(5);
-      const shares = page.getByRole('region', { name: 'Coinholder shares', exact: true });
+      const shares = page.getByRole('region', { name: 'Coinholder network activity', exact: true });
+      await shares.locator('summary').click();
       await expect(shares.getByRole('listitem')).toHaveCount(5);
       await expect(shares.getByRole('listitem').first()).toHaveAccessibleName('Q1 Wind down ZCG: 4,800 shares');
       await expect(shares).toContainText('18,120');

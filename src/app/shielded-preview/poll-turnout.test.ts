@@ -26,24 +26,26 @@ const SNAPSHOT = buildSnapshot(
       'zcash-brasil': helios(3, 18, '2026-11-16T12:24:46Z'),
       zechub: helios(1, 23, '2026-11-16T16:43:47Z'),
     },
+    casts: { state: 'fetched', observedAt: '2026-11-17T01:08:00Z', data: { height: 300, questions: { 1: 12, 2: 11, 3: 10, 4: 9, 5: 0 } } },
     roster: 203,
     chainStatus: 'active',
   },
   NOW,
 );
 const html = (props: Parameters<typeof PollTurnoutCard>[0]) => renderToStaticMarkup(createElement(PollTurnoutCard, { now: NOW, ...props }));
-const text = (markup: string) => markup.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+const text = (markup: string) => markup.replace(/<[^>]+>/g, ' ').replaceAll('&#x27;', "'").replace(/\s+/g, ' ');
 
 describe('live turnout panel', () => {
   it('shows one card per body: who it is, its count, its share of who may vote, and where the count comes from', () => {
     const out = text(html({ snapshot: SNAPSHOT }));
     expect(out).toContain('Live turnout NU7.1 poll · day 2 of 15 · closes 1 Dec, 02:59 UTC');
-    expect(out).toContain('Coinholders 680 total shares Across all 5 questions Encrypted vote fragments. One voter can contribute many shares. Updated 01:09 UTC · Vote chain API ↗');
+    expect(out).toContain('Coinholders Casts 42 Observed 17 Nov, 01:08 UTC Shares 680 Observed 17 Nov, 01:09 UTC View by question ↓');
     expect(out).toContain(`ZCAP ${ZCAP_LAST.ballots} ballots ${Math.round((ZCAP_LAST.ballots / 203) * 100)}% of 203 · last poll 68% 16 Nov Now Saved ${ZCAP_LAST.at.slice(11, 16)} UTC · SIV ↗`);
     expect(out).toContain('Zcash Brasil 3 ballots 17% of 18 16 Nov Now Live · Helios ↗');
     expect(out).toContain('ZecHub 1 ballot 4% of 23 16 Nov Now Live · Helios ↗');
-    expect(out).toContain('Q1 Wind down ZCG 136');
-    expect(out).toContain('Total shares = Q1 + Q2 + Q3 + Q4 + Q5.');
+    expect(out).toContain('Q1 Wind down ZCG');
+    expect(out).toContain('Casts 42');
+    expect(out).toContain('Shares 680');
     expect(out).toContain('So far Whole poll');
   });
   it('marks each body with its logo, and the coinholder vote with the wallets named for this round, each leading to its site', () => {
@@ -55,16 +57,24 @@ describe('live turnout panel', () => {
     for (const name of ['Zcash Foundation', 'Zcash Brasil', 'ZecHub']) expect(markup).toContain(`aria-label="${name}"`);
     expect(markup.match(/<img /g)).toHaveLength(6);
   });
-  it('explains shares and the former counter, without implying a unique voter count', () => {
-    const out = text(html({ snapshot: SNAPSHOT }));
-    expect(out).toContain('How these counts work');
-    expect(out).toContain('Unique voters cannot be inferred from these totals.');
-    expect(out).toContain('counted successful cast transactions per question and displayed the largest count');
-    expect(out).toContain('Coinholder shares by question');
-    expect(out).not.toContain('Compare on Zakura');
-    expect(out).not.toContain('680 votes');
-    expect(out).not.toContain('of last poll');
-    expect(out).not.toContain('dashed line');
+  it('shows the same activity metric for every question in ballot order with the observation time', () => {
+    const markup = html({ snapshot: SNAPSHOT });
+    const summaries = Array.from(markup.matchAll(/<summary[^>]*>(.*?)<\/summary>/gs), (m) => text(m[1]).trim());
+    expect(summaries.slice(0, 5)).toEqual(SNAPSHOT.questions.map((q) => `Q${q.id} ${q.label} ${SNAPSHOT.casts?.data?.questions[q.id]} casts 136 shares`));
+    expect(markup.toLowerCase()).toContain('datetime="2026-11-17t01:09:30.000z"');
+    expect(markup).not.toContain('Zcash Grants Hub');
+    expect(markup).not.toContain('details open');
+  });
+  it('distinguishes no activity from a missing reading', () => {
+    const questions = SNAPSHOT.questions.map((q) => ({ ...q, shares: 0 }));
+    const allZero = { ...SNAPSHOT, questions, bodies: SNAPSHOT.bodies.map((b) => b.unit === 'shares' ? { ...b, value: 0 } : b) };
+    expect(text(html({ snapshot: allZero }))).toContain('Shares 0');
+    const missing = { ...allZero, questions: questions.map((q) => ({ ...q, shares: null })), bodies: allZero.bodies.map((b) => b.unit === 'shares' ? { ...b, value: null, observedAt: null, state: 'unavailable' as const } : b) };
+    const out = text(html({ snapshot: missing }));
+    expect(out).toContain('Shares —');
+    expect(out).toContain('Awaiting a reading');
+    expect(out).toContain('Casts 42');
+    expect(text(html({ snapshot: { ...SNAPSHOT, casts: undefined } }))).toContain('Casts — Awaiting a reading');
   });
   it('includes the official wording and answer options for all five expandable questions', () => {
     const markup = html({ snapshot: SNAPSHOT });
@@ -78,21 +88,33 @@ describe('live turnout panel', () => {
     expect(markup.match(/aria-label="Answer options"/g)).toHaveLength(5);
     expect(out.match(/Support Oppose Abstain/g)).toHaveLength(5);
   });
+  it('only shows live-round answer weights after a complete final tally', () => {
+    const questions = SNAPSHOT.questions.map((q) => ({ ...q, results: [{ label: 'Support', zec: 40.125 }, { label: 'Abstain', zec: 0 }] }));
+    const card = (phase: typeof SNAPSHOT.phase, rows = questions) => text(html({ snapshot: { ...SNAPSHOT, phase, questions: rows } }));
+    expect(card('open')).not.toContain('40.125 ZEC');
+    expect(card('counting')).toContain('Awaiting tally');
+    expect(card('counting')).not.toContain('40.125 ZEC');
+    expect(card('closed')).toContain('40.125 ZEC · 100%');
+    expect(html({ snapshot: { ...SNAPSHOT, phase: 'closed', questions } })).not.toMatch(/<details[^>]*\sopen[\s=>]/);
+    expect(card('closed')).toContain('Abstain 0 ZEC · 0%');
+    expect(card('closed', questions.map((q, i) => i ? q : { ...q, results: [] }))).toContain('Tally unavailable');
+  });
   it('does not attach NU7.1 wording to a different round', () => {
     expect(text(html({ snapshot: { ...SNAPSHOT, round: 'A later poll' } }))).not.toContain('[ZIP] Wind Down Zcash Community Grants');
   });
-  it('says the vote chain is not answering, with no number, before its first reading', () => {
+  it('keeps verified casts visible before the first share reading', () => {
     const down = buildSnapshot(
       NU7_1_TURNOUT,
       {
         bodies: { coinholders: { state: 'unavailable', observedAt: null, data: null }, 'zcash-brasil': helios(3, 18, '2026-11-16T12:24:46Z'), zechub: helios(1, 23, '2026-11-16T16:43:47Z') },
+        casts: { state: 'fetched', observedAt: '2026-11-17T01:08:00Z', data: { height: 300, questions: { 1: 12, 2: 11, 3: 10, 4: 9, 5: 0 } } },
         roster: 203,
         chainStatus: 'active',
       },
       NOW,
     );
     const out = text(html({ snapshot: down, failed: false }));
-    expect(out).toMatch(/Coinholders — total shares .* Not answering · Vote chain API ↗/);
+    expect(out).toContain('Coinholders Casts 42 Observed 17 Nov, 01:08 UTC Shares — Awaiting a reading');
     expect(out).not.toMatch(/Estimate|≈/);
   });
   it('lays the cards out four to a row at most', () => {
@@ -117,8 +139,8 @@ describe('live turnout panel', () => {
     expect(out).toContain('Daily panel counts');
     expect(out).toContain('16 Nov 24 3 1 17 Nov 29 3 1');
   });
-  it('opens every link in a new tab without leaking the opener', () => {
-    for (const [, attrs] of html({ snapshot: SNAPSHOT }).matchAll(/<a ([^>]+)>/g)) {
+  it('opens external sources in a new tab without leaking the opener', () => {
+    for (const [, attrs] of html({ snapshot: SNAPSHOT }).matchAll(/<a (href="https?:[^>]+)>/g)) {
       expect(attrs).toContain('target="_blank"');
       expect(attrs).toContain('rel="noopener noreferrer"');
       expect(attrs).toMatch(/href="https:\/\//);
