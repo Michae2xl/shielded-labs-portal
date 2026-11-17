@@ -517,9 +517,9 @@
 }
 .questions > ol {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
-  gap: 10px 16px;
+  /* Each disclosure owns its row so opening it never leaves a vacant neighboring column. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -805,11 +805,6 @@
 @container turnoutPanel (max-width: 940px) {
   .cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@container turnoutPanel (max-width: 700px) {
-  .questions > ol {
-    grid-template-columns: minmax(0, 1fr);
   }
 }
 /* Phone: still two by two, smaller; the controls under the title. */
