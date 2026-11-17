@@ -2,7 +2,7 @@ name: Sync ZCAP turnout
 
 on:
   schedule:
-    - cron: '23 * * * *'
+    - cron: '47 * * * *'
   workflow_dispatch:
   push:
     branches: [main, codex/zcap-hourly]
