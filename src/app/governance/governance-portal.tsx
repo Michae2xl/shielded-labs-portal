@@ -9,6 +9,7 @@ import portal from '@/app/shielded-preview/portal.module.css';
 import typography from '@/app/shielded-preview/typography.module.css';
 import GovernanceHeader from './governance-header';
 import s from './governance-portal.module.css';
+import './governance-theme.css';
 
 /** Where a link clicked inside the governance frame leads: a governance address to open in place, a Labs address to navigate to, or null to leave it to the browser. */
 export function governanceLinkTarget(href: string): { here: string } | { away: string } | null {

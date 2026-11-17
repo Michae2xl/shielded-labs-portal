@@ -1,6 +1,6 @@
 .overview {
   min-width: 0;
-  color: #eee;
+  color: var(--c-eeeeee, #eee);
   container: governanceOverview / inline-size;
 }
 .overview a { color: inherit; text-decoration: none; }
@@ -10,28 +10,28 @@
 .groupHeader { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; margin-bottom: 18px; }
 .overview .groupHeader h2 { margin: 0; font-size: var(--title-section); line-height: 1.4; font-weight: 550; letter-spacing: -.4px; scroll-margin-top: 24px; }
 .groupLinks { display: flex; flex-wrap: wrap; gap: 10px; }
-.groupHeader > a, .groupLinks > a { display: inline-flex; align-items: center; gap: 12px; min-height: 42px; padding: 8px 13px; border: 1px solid #383838; border-radius: 6px; background: #161616; font-size: 14px; color: var(--accent-secondary); }
+.groupHeader > a, .groupLinks > a { display: inline-flex; align-items: center; gap: 12px; min-height: 42px; padding: 8px 13px; border: 1px solid var(--c-383838, #383838); border-radius: 6px; background: var(--c-161616, #161616); font-size: 14px; color: var(--accent-secondary); }
 .activityGrid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
 .applications { grid-column: span 7; }
 .payments { grid-column: span 5; }
 .proposals, .grantList { display: grid; grid-auto-rows: 1fr; flex: 1; padding: 6px 20px 0; }
-.record { display: grid; grid-template-columns: minmax(0, 1fr) 112px 22px; align-items: center; gap: 12px; padding: 14px 0; border-top: 1px solid #303030; }
+.record { display: grid; grid-template-columns: minmax(0, 1fr) 112px 22px; align-items: center; gap: 12px; padding: 14px 0; border-top: 1px solid var(--c-303030, #303030); }
 .record:first-child { border-top: 0; }
 .recordInfo { min-width: 0; }
-.overview .record h4 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; margin: 0; color: #f0f0f0; font-size: 16px; font-weight: 500; line-height: 1.45; }
-.recordDate { display: block; margin-top: 5px; color: #b8b8b8; font-size: 13px; line-height: 1.5; font-variant-numeric: tabular-nums; }
-.recordMetric { display: flex; flex-direction: column; justify-content: center; gap: 3px; padding-left: 12px; border-left: 1px solid #353535; text-align: right; font-variant-numeric: tabular-nums; }
+.overview .record h4 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; margin: 0; color: var(--c-f0f0f0, #f0f0f0); font-size: 16px; font-weight: 500; line-height: 1.45; }
+.recordDate { display: block; margin-top: 5px; color: var(--c-b8b8b8, #b8b8b8); font-size: 13px; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.recordMetric { display: flex; flex-direction: column; justify-content: center; gap: 3px; padding-left: 12px; border-left: 1px solid var(--c-353535, #353535); text-align: right; font-variant-numeric: tabular-nums; }
 .recordMetric > span { color: var(--accent-muted); font-size: 12px; line-height: 1.5; white-space: nowrap; }
 .recordMetric > strong { color: var(--accent); font-size: 22px; font-weight: 550; line-height: 1.2; letter-spacing: -.4px; }
 .metricTotal { color: var(--accent-muted); font-size: 18px; font-weight: 450; }
 .recordArrow { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; color: var(--accent-secondary); }
 .recordArrow svg { width: 16px; height: 16px; }
-.record:hover h4 { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+.record:hover h4 { color: var(--c-ffffff, #fff); text-decoration: underline; text-underline-offset: 4px; }
 .record:hover .recordArrow { color: var(--accent); }
-.groupHeader > a:hover, .groupLinks > a:hover { background: var(--accent-surface-hover); color: #fff; }
+.groupHeader > a:hover, .groupLinks > a:hover { background: var(--accent-surface-hover); color: var(--c-ffffff, #fff); }
 .overview .source { display: block; padding: 8px 20px 12px; color: var(--accent-muted); font-size: 13px; line-height: 1.5; }
-.overview .empty { margin: 0; padding: 22px; color: #bbb; font-size: 15px; line-height: 1.6; }
-.overview .editorialNote { margin-top: 24px; border-radius: 12px; border-color: #343434; background: #111; }
+.overview .empty { margin: 0; padding: 22px; color: var(--c-bbbbbb, #bbb); font-size: 15px; line-height: 1.6; }
+.overview .editorialNote { margin-top: 24px; border-radius: 12px; border-color: var(--c-343434, #343434); background: var(--c-111111, #111); }
 @container governanceBentoCard (max-width: 460px) {
   .record { grid-template-columns: minmax(0, 1fr) 90px; gap: 12px; }
   .recordArrow { display: none; }

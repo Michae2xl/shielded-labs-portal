@@ -9,13 +9,13 @@
 .piece path { transition: filter 160ms ease; }
 .piece:hover path { filter: brightness(1.55); }
 .figure .art text { text-anchor: middle; font-family: var(--font-display), sans-serif; }
-.figure .art .step { fill: #f4b728; font-size: 12px; font-weight: 600; }
-.figure .art .name { fill: #f4f4f4; font-size: 17px; font-weight: 550; letter-spacing: -.2px; }
-.figure .art .verb { fill: #b9b9b9; font-size: 13px; font-family: inherit; }
+.figure .art .step { fill: var(--c-f4b728, #f4b728); font-size: 12px; font-weight: 600; }
+.figure .art .name { fill: var(--c-f4f4f4, #f4f4f4); font-size: 17px; font-weight: 550; letter-spacing: -.2px; }
+.figure .art .verb { fill: var(--c-b9b9b9, #b9b9b9); font-size: 13px; font-family: inherit; }
 .gaps { pointer-events: none; }
-.gaps path { fill: none; stroke: var(--bg, #070707); stroke-width: 6; stroke-linejoin: round; }
+.gaps path { fill: none; stroke: var(--bg, var(--c-070707, #070707)); stroke-width: 6; stroke-linejoin: round; }
 .mark { animation: mark-in .5s ease-out .55s both; }
-.mark circle { fill: #0d0d0d; stroke: #2e2e2e; stroke-width: 1; }
+.mark circle { fill: var(--c-0d0d0d, #0d0d0d); stroke: var(--c-2e2e2e, #2e2e2e); stroke-width: 1; }
 @keyframes piece-in { from { opacity: 0; transform: translate(var(--dx), var(--dy)); } }
 @keyframes mark-in { from { opacity: 0; } }
 /* Too narrow for art and words side by side: the triangle goes between the paragraph and the steps. */

@@ -15,10 +15,10 @@
   min-width: 0;
   min-height: 52px;
   padding: 12px 8px;
-  border: 1px solid #333;
+  border: 1px solid var(--c-333333, #333);
   border-radius: 7px;
-  background: #101010;
-  color: #cfcfcf;
+  background: var(--c-101010, #101010);
+  color: var(--c-cfcfcf, #cfcfcf);
   font-size: 15px;
   font-weight: 500;
   line-height: 18px;
@@ -29,9 +29,9 @@
 
 /* The buttons carry the name alone; the icons belong to the sidebar. */
 .navigation a svg { display: none; }
-.navigation a:hover { border-color: #686868; background: #1a1a1a; color: #fff; }
-.navigation a[aria-current] { border-color: #777; background: #242424; color: #fff; font-weight: 600; }
-.navigation a:focus-visible { outline: 2px solid #ddd; outline-offset: 3px; }
+.navigation a:hover { border-color: var(--c-686868, #686868); background: var(--c-1a1a1a, #1a1a1a); color: var(--c-ffffff, #fff); }
+.navigation a[aria-current] { border-color: var(--c-777777, #777); background: var(--c-242424, #242424); color: var(--c-ffffff, #fff); font-weight: 600; }
+.navigation a:focus-visible { outline: 2px solid var(--c-dddddd, #ddd); outline-offset: 3px; }
 
 @media (max-width: 650px) {
   .navigation {
@@ -64,10 +64,10 @@
     width: 248px;
     height: 100dvh;
     padding: 20px 14px 14px;
-    background: var(--bg, #070707);
+    background: var(--bg, var(--c-070707, #070707));
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #333 transparent;
+    scrollbar-color: var(--c-333333, #333) transparent;
   }
 }
 
@@ -78,7 +78,7 @@
   min-height: 44px;
   margin-bottom: 18px;
   padding: 0 8px;
-  color: #fff;
+  color: var(--c-ffffff, #fff);
   font-family: var(--font-display);
   font-size: 18px;
   font-weight: 600;
@@ -102,21 +102,25 @@
   min-height: 38px;
   padding: 7px 10px;
   border-radius: 8px;
-  color: #d2d2d2;
+  color: var(--c-d2d2d2, #d2d2d2);
   font-size: 15px;
   font-weight: 500;
   line-height: 24px;
   text-decoration: none;
   transition: color 160ms ease, background-color 160ms ease;
 }
-.list a svg { flex-shrink: 0; width: 20px; height: 20px; color: #b4b4b4; transition: color 160ms ease; }
-.list a:hover { background: #161616; color: #fff; }
-.list a:hover svg { color: #eee; }
-.list a[aria-current] { background: #242424; color: #fff; font-weight: 600; }
-.list a[aria-current] svg { color: #f0f0f0; }
-.sidebar a:focus-visible { outline: 2px solid #ddd; outline-offset: -2px; }
+.list a svg { flex-shrink: 0; width: 20px; height: 20px; color: var(--c-b4b4b4, #b4b4b4); transition: color 160ms ease; }
+.list a:hover { background: var(--c-161616, #161616); color: var(--c-ffffff, #fff); }
+.list a:hover svg { color: var(--c-eeeeee, #eee); }
+.list a[aria-current] { background: var(--c-242424, #242424); color: var(--c-ffffff, #fff); font-weight: 600; }
+.list a[aria-current] svg { color: var(--c-f0f0f0, #f0f0f0); }
+.sidebar a:focus-visible { outline: 2px solid var(--c-dddddd, #ddd); outline-offset: -2px; }
 
-.foot { margin-top: auto; padding-top: 12px; border-top: 1px solid #2a2a2a; }
+.foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--c-2a2a2a, #2a2a2a); }
+/* The theme switch in the sidebar's corner: the emoji alone. The class is doubled to outweigh the portal's button reset. */
+.theme.theme { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; margin: 0 0 4px; padding: 0; border: 0; border-radius: 8px; background: transparent; font-size: 18px; line-height: 1; cursor: pointer; opacity: .8; transition: opacity 160ms ease, transform 160ms ease; }
+.theme.theme:hover { opacity: 1; transform: rotate(-12deg); }
+.theme.theme:focus-visible { outline: 2px solid var(--c-eeeeee, #eee); outline-offset: 2px; }
 .labs {
   display: flex;
   flex-direction: column;
@@ -125,16 +129,16 @@
   min-height: 44px;
   padding: 8px 10px;
   border-radius: 8px;
-  color: var(--text-muted, #b0b0b0);
+  color: var(--text-muted, var(--c-b0b0b0, #b0b0b0));
   font-size: 13px;
   line-height: 18px;
   text-decoration: none;
   transition: color 160ms ease, background-color 160ms ease;
 }
-.labs:hover { background: #161616; color: #fff; }
+.labs:hover { background: var(--c-161616, #161616); color: var(--c-ffffff, #fff); }
 .labsName { display: flex; align-items: center; gap: 8px; }
 .labs img { flex-shrink: 0; width: 18px; height: 18px; object-fit: contain; opacity: .85; }
-.labs strong { color: #e2e2e2; font-size: 14px; font-weight: 500; }
+.labs strong { color: var(--c-e2e2e2, #e2e2e2); font-size: 14px; font-weight: 500; }
 
-@media (prefers-reduced-motion: reduce) { .navigation a, .list a, .list a svg, .labs { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .navigation a, .list a, .list a svg, .labs, .theme.theme { transition: none; } .theme.theme:hover { transform: none; } }
 @media print { .navigation, .sidebar { display: none; } }

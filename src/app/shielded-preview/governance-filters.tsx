@@ -13,7 +13,7 @@ export default function GovernanceFilters({ lead, children }: { lead?: string; c
     {lead && <p className={s.lead}>{lead}</p>}
     <svg className={s.art} viewBox={`0 0 ${triangle.width} ${triangle.height}`} role="img" aria-label={summary}>
       <defs>
-        <pattern id="filter-cells" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#101010"/><rect x=".5" y=".5" width="6" height="6" rx=".7" fill="#272727"/></pattern>
+        <pattern id="filter-cells" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" style={{ fill: 'var(--c-101010, #101010)' }}/><rect x=".5" y=".5" width="6" height="6" rx=".7" style={{ fill: 'var(--c-272727, #272727)' }}/></pattern>
       </defs>
       {pieces.map((piece, index) => <g key={piece.id} className={s.piece} style={{ '--dx': `${piece.slide[0]}px`, '--dy': `${piece.slide[1]}px`, '--delay': `${index * .13}s` } as CSSProperties}>
         <path d={piece.path} fill="url(#filter-cells)"/>

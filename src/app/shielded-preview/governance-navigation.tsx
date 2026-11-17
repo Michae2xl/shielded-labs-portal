@@ -7,6 +7,7 @@ import GovernanceGlyph, { type GovernanceGlyphKind } from './governance-glyph';
 import { ShieldMark } from './shield';
 import { governanceSectionSlug, governanceSections, type GovernanceSection } from '@/lib/shielded-preview/governance-sections';
 import { GOVERNANCE_PATH, labsAddress } from '@/lib/shielded-preview/portals';
+import ThemeToggle from '@/app/governance/theme-toggle';
 
 export { governanceSections };
 export type { GovernanceSection };
@@ -36,6 +37,7 @@ export default function GovernanceNavigation({ value, onChange }: {
       <nav className={s.list} aria-label="Governance sections">{sections()}</nav>
       <div className={s.foot}>
         <a className={s.labs} href={labsAddress('?view=overview')}><span>Maintained by</span><span className={s.labsName}><ShieldMark size={18}/><strong>Shielded Labs</strong></span></a>
+        <ThemeToggle className={s.theme}/>
       </div>
     </aside>
     <nav className={s.navigation} aria-label="Governance sections">{sections()}</nav>

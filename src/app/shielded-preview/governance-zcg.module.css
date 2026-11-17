@@ -1,12 +1,12 @@
 /* The figures, then the months: the summary slot of a list lays its children out in a row. */
 .summary{display:flex;flex-direction:column;width:100%;min-width:0}
 .months{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:8px;margin:14px 0 2px;padding:0;list-style:none}
-.months>li{display:grid;grid-template-rows:54px auto auto auto;justify-items:center;gap:2px;min-width:0;padding:12px 8px 10px;border:1px solid #2c2c2c;border-radius:8px;background:#101010;text-align:center}
-.bar{display:flex;align-items:flex-end;width:26px;height:54px;border-bottom:1px solid #3a3a3a}
-.bar>span{display:block;width:100%;border-radius:4px 4px 0 0;background:#cfcfcf}
-.months strong{margin-top:6px;font-size:15px;font-weight:550;line-height:1.3;color:#f1f1f1;font-variant-numeric:tabular-nums}
-.months li>span:not(.bar){font-size:13px;line-height:1.4;color:#d0d0d0}
-.months small{font-size:12px;line-height:1.4;color:var(--text-muted,#bcbcbc)}
+.months>li{display:grid;grid-template-rows:54px auto auto auto;justify-items:center;gap:2px;min-width:0;padding:12px 8px 10px;border:1px solid var(--c-2c2c2c, #2c2c2c);border-radius:8px;background:var(--c-101010, #101010);text-align:center}
+.bar{display:flex;align-items:flex-end;width:26px;height:54px;border-bottom:1px solid var(--c-3a3a3a, #3a3a3a)}
+.bar>span{display:block;width:100%;border-radius:4px 4px 0 0;background:var(--c-cfcfcf, #cfcfcf)}
+.months strong{margin-top:6px;font-size:15px;font-weight:550;line-height:1.3;color:var(--c-f1f1f1, #f1f1f1);font-variant-numeric:tabular-nums}
+.months li>span:not(.bar){font-size:13px;line-height:1.4;color:var(--c-d0d0d0, #d0d0d0)}
+.months small{font-size:12px;line-height:1.4;color:var(--text-muted,var(--c-bcbcbc, #bcbcbc))}
 @container(max-width:640px){.months{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media print{.months>li{background:#fff;border-color:#777}.bar>span{background:#444}}
-.summary .part{margin:10px 2px 4px!important;font-size:14px!important;line-height:1.6;color:#d0d0d0}
+@media print{.months>li{background:var(--c-ffffff, #fff);border-color:var(--c-777777, #777)}.bar>span{background:var(--c-444444, #444)}}
+.summary .part{margin:10px 2px 4px!important;font-size:14px!important;line-height:1.6;color:var(--c-d0d0d0, #d0d0d0)}

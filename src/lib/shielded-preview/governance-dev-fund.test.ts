@@ -84,18 +84,25 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(markup).not.toContain('Q4 2026');
   });
 
-  it('shows questions, answers and results only once they are published', () => {
+  it('keeps the timeline compact: each step can take focus and names the card that holds its text', () => {
+    const markup = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate, published: { questions: null, results: null } }));
+    for (const step of devFundTimeline.steps) {
+      expect(markup).toContain(`aria-describedby="dev-fund-step-${step.id}"`);
+      expect(markup).toContain(`id="dev-fund-step-${step.id}"`);
+      expect(markup).toContain(step.short);
+    }
+    expect(markup.match(/tabindex="0"/g)?.length).toBeGreaterThanOrEqual(devFundTimeline.steps.length);
+  });
+
+  it('shows results only once they are published, and leaves the questions to the live turnout panel', () => {
     const empty = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate, published: { questions: null, results: null } }));
-    expect(empty).toContain('Not published yet. Publication is planned for 9 Nov.');
-    expect(empty).not.toContain('Published questions');
     expect(empty).not.toContain('Published results');
     const published = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate, published: {
       questions: { publishedAt: '2026-11-09', url: 'https://forum.zcashcommunity.com/t/questions/1', items: [{ question: 'An example question?', answers: ['First answer', 'Second answer'] }] },
       results: { publishedAt: '2026-12-01', url: 'https://forum.zcashcommunity.com/t/results/2' },
     } }));
-    expect(published).toContain('An example question?');
-    expect(published).toContain('Second answer');
-    expect(published).toContain('Published questions');
+    expect(published).not.toContain('An example question?');
+    expect(published).not.toContain('Published questions');
     expect(published).toContain('Published results');
     expect(published).not.toContain('Not published');
   });
@@ -113,7 +120,6 @@ describe('ZCG / Dev Fund published timeline', () => {
     const early = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate, published: { questions: null, results: null } }));
     expect(early).toContain('How to submit');
     expect(early).not.toContain('not part of this round');
-    expect(early).toContain('Not published yet. Publication is planned for 9 Nov.');
     vi.useFakeTimers({ now: at('2026-11-10T03:00:00Z') });
     try {
       // useNow reads the clock in an effect, which static rendering never runs; the data still has to carry the facts.
@@ -136,7 +142,7 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(states(at('2026-12-01T00:00:00Z'))[3]).toBe('done');
   });
 
-  it('shows the draft poll as a draft, with the organizers’ instructions and its post', () => {
+  it('keeps the draft poll on record, with the organizers’ instructions and its post', () => {
     const questions = devFundPublished.questions!;
     expect(questions.draft).toBe(true);
     expect(questions.publishedAt).toBe('2026-11-13');
@@ -144,12 +150,10 @@ describe('ZCG / Dev Fund published timeline', () => {
     expect(questions.instructions).toContain('we may hold a runoff poll');
     expect(questions.items).toHaveLength(5);
     expect(new Set(questions.items.flatMap(item => item.answers))).toEqual(new Set(['Support', 'Oppose', 'Abstain']));
+    // The Voting lane does not repeat them: the live turnout panel lists the questions.
     const markup = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate }));
-    expect(markup).toContain('Draft poll questions');
-    expect(markup).toContain('the organizers may adjust it before polling opens');
-    expect(markup).toContain('You may support more than one proposal');
-    expect(markup).toContain('Do you support maintaining ZCG’s existing funding and operations?');
-    expect(markup).not.toContain('None had been posted');
+    expect(markup).not.toContain('Draft poll questions');
+    expect(markup).not.toContain('Do you support maintaining ZCG’s existing funding and operations?');
     expect(devFundStepState(devFundTimeline.steps[1], at('2026-11-10T21:00:00Z'))).toBe('done');
   });
 });
@@ -171,19 +175,18 @@ describe('Second version of the draft questions, posted on 13 Nov', () => {
 });
 
 describe('What the organizers said about closing the questions', () => {
-  it('says under the draft questions that this is the second version and when the questions are to be final', () => {
+  it('keeps the note that this is the second version, and when the questions are to be final', () => {
     expect(devFundNotices.revisedDraft).toMatchObject({ postedAt: '2026-11-13' });
     expect(devFundNotices.revisedDraft.url).toContain('/58906/86');
     expect(devFundNotices.revisedDraft.text).toMatch(/second version/);
     expect(devFundNotices.revisedDraft.text).toMatch(/15 Nov/);
-    const html = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate: () => {}, published: devFundPublished }));
-    expect(html).toContain(devFundNotices.revisedDraft.text);
-    expect(html).toContain('Organizers’ post, 13 Nov');
-    expect(html).not.toContain('Organizers’ post, 11 Nov');
   });
-  it('drops that line once the questions are no longer a draft', () => {
+  it('no longer shows the draft questions or their note in the Voting lane, draft or final', () => {
     const final = { ...devFundPublished, questions: { ...devFundPublished.questions!, draft: false } };
-    const html = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate: () => {}, published: final }));
-    expect(html).not.toContain(devFundNotices.revisedDraft.text);
+    for (const published of [devFundPublished, final]) {
+      const html = renderToStaticMarkup(createElement(DevFundVoting, { onNavigate: () => {}, published }));
+      expect(html).not.toContain(devFundNotices.revisedDraft.text);
+      expect(html).not.toContain('Organizers’ post, 13 Nov');
+    }
   });
 });

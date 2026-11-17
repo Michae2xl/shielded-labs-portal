@@ -1,0 +1,637 @@
+/* Live turnout: one card per voting body, its count above its running total across the poll. */
+.panel {
+  --tp-bg: linear-gradient(180deg, #161616 0, #101010 160px);
+  --tp-surface: #111;
+  --tp-raised: #151515;
+  --tp-ink: #f2f2f2;
+  --tp-ink-2: #c4c4c4;
+  --tp-muted: #9c9c9c;
+  --tp-line: #282828;
+  --tp-border: #2e2e2e;
+  --tp-grid: #232323;
+  --tp-axis: #383838;
+  --tp-track: #262626;
+  --tp-elapsed: rgba(255, 255, 255, 0.02);
+  --tp-now: #6a6a6a;
+  --tp-crosshair: #8f8f8f;
+  /* Emphasis, not a palette: the coinholder vote in Zcash gold, every panel in ink. */
+  --tp-s1: #d4d4d4;
+  --tp-s3: #e0a62a;
+  container: turnoutPanel / inline-size;
+  margin: 0;
+  border: 1px solid var(--tp-border);
+  border-radius: 12px;
+  background: var(--tp-bg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 22px 24px 18px;
+  color: var(--tp-ink);
+  scroll-margin-top: 90px;
+}
+:global(:root[data-gov-theme='light']) .panel {
+  --tp-bg: #fff;
+  --tp-surface: #fff;
+  --tp-raised: #faf9f7;
+  --tp-ink: #161513;
+  --tp-ink-2: #4b4842;
+  --tp-muted: #75716a;
+  --tp-line: #e8e6e1;
+  --tp-border: #e4e2dc;
+  --tp-grid: #efede8;
+  --tp-axis: #d6d3cc;
+  --tp-track: #ebe9e4;
+  --tp-elapsed: rgba(22, 21, 19, 0.02);
+  --tp-now: #a8a49b;
+  --tp-crosshair: #75716a;
+  --tp-s1: #2b2926;
+  --tp-s3: #b07800;
+  box-shadow:
+    0 1px 2px rgba(22, 21, 19, 0.04),
+    0 8px 24px rgba(22, 21, 19, 0.05);
+}
+.panel [data-slot='1'] {
+  --series: var(--tp-s1);
+}
+.panel [data-slot='3'] {
+  --series: var(--tp-s3);
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.head h3 {
+  margin: 0;
+  color: var(--tp-ink);
+  font-size: var(--title-card, 20px);
+  font-weight: 550;
+  line-height: 1.3;
+  letter-spacing: -0.3px;
+}
+.sub {
+  margin: 4px 0 0;
+  color: var(--tp-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.controls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 18px;
+}
+/* Two spans in one control: higher specificity than the portal's button reset. */
+.panel .range {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid var(--tp-border);
+  border-radius: 8px;
+  background: var(--tp-surface);
+}
+.panel .range button {
+  min-height: 30px;
+  padding: 4px 11px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--tp-muted);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.panel .range button:hover {
+  color: var(--tp-ink);
+}
+.panel .range button[aria-pressed='true'] {
+  background: var(--tp-raised);
+  box-shadow: inset 0 0 0 1px var(--tp-line);
+  color: var(--tp-ink);
+}
+.panel .range button:focus-visible {
+  outline: 2px solid var(--tp-ink);
+  outline-offset: 1px;
+}
+.state {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  color: var(--tp-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.pulse {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tp-now);
+}
+.state[data-state='live'] .pulse {
+  background: var(--tp-ink);
+}
+.state[data-state='live'] .pulse::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--tp-ink);
+  opacity: 0;
+  animation: ring 2.4s ease-out infinite;
+}
+.state[data-state='stale'] .pulse {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--tp-muted);
+}
+
+/* Cards: as many columns as bodies, up to four; two, then one, as the panel narrows. */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(var(--cards, 4), minmax(0, 1fr));
+  gap: 12px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  border-radius: 12px;
+  outline: none;
+}
+.cards:focus-visible {
+  box-shadow: 0 0 0 2px var(--tp-ink);
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 18px 18px 14px;
+  border: 1px solid var(--tp-line);
+  border-radius: 12px;
+  background: var(--tp-raised);
+}
+/* Who it is on the left; the count in the corner, with room around it. */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.who {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+.card[data-kind='vote-chain'] {
+  border-color: color-mix(in srgb, var(--series) 32%, var(--tp-line));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--series) 8%, var(--tp-raised)) 0, var(--tp-raised) 70%);
+}
+/* Who the card is: an organization's round logo, or the wallets' app icons side by side. */
+.logos {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+}
+.logo {
+  display: block;
+  flex-shrink: 0;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px var(--tp-line);
+}
+.logo[data-shape='round'] {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.logo[data-shape='square'] {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+}
+.name {
+  margin: 0;
+  color: var(--tp-ink-2);
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+.value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  margin: 0;
+  text-align: right;
+}
+.value strong {
+  color: var(--tp-ink);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+.value span {
+  color: var(--tp-muted);
+  font-size: 12px;
+}
+.meter {
+  width: 100%;
+  height: 4px;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--tp-track);
+}
+.meter span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--series);
+  transition: width 400ms ease;
+}
+.meterLabel {
+  max-width: 100%;
+  overflow: hidden;
+  margin: 7px 0 0;
+  color: var(--tp-ink-2);
+  font-size: 12.5px;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-variant-numeric: tabular-nums;
+}
+.meterLabel[data-hover] {
+  color: var(--tp-ink);
+}
+.card[data-state='unavailable'] .value strong {
+  color: var(--tp-muted);
+}
+.chart {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  margin-top: 14px;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+.span {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 4px;
+  color: var(--tp-muted);
+  font-size: 11px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+.source {
+  margin: auto 0 0;
+  padding-top: 12px;
+  color: var(--tp-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+.dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--tp-now);
+  vertical-align: 1px;
+}
+.dot[data-state='live'] {
+  background: var(--tp-ink-2);
+}
+.dot[data-state='recorded'] {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--tp-muted);
+}
+.source a,
+.table summary {
+  color: var(--tp-ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--tp-axis);
+  text-underline-offset: 3px;
+}
+.source a:hover {
+  color: var(--tp-ink);
+  text-decoration-color: currentColor;
+}
+.source a:focus-visible,
+.table summary:focus-visible {
+  outline: 2px solid var(--tp-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* The chart inside each card. */
+.track {
+  display: block;
+  overflow: visible;
+}
+.elapsed {
+  fill: var(--tp-elapsed);
+}
+.grid {
+  stroke: var(--tp-grid);
+  stroke-width: 1;
+}
+.baseline {
+  stroke: var(--tp-axis);
+  stroke-width: 1;
+}
+.tick {
+  fill: var(--tp-muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.area {
+  fill: var(--series);
+  opacity: 0.12;
+}
+.line {
+  fill: none;
+  stroke: var(--series);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+/* Counts read by hand: the readings are points; between them the count is not known. */
+.line[data-timing='recorded'] {
+  stroke-width: 1.5;
+  stroke-dasharray: 2 5;
+  opacity: 0.8;
+}
+.reading,
+.dot {
+  fill: var(--series);
+  stroke: var(--tp-raised);
+  stroke-width: 2;
+}
+.halo {
+  fill: var(--series);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.end[data-state='live'] .halo {
+  animation: halo 2.4s ease-out infinite;
+}
+.now {
+  stroke: var(--tp-now);
+  stroke-width: 1;
+}
+.crosshair line {
+  stroke: var(--tp-crosshair);
+  stroke-width: 1;
+}
+
+/* Coinholder votes by question: one bar each, against the most-answered question. */
+.questions {
+  margin-top: 22px;
+}
+.questions h4 {
+  margin: 0 0 6px;
+  color: var(--tp-ink-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.questions ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.questions li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(72px, 34%) 3.5ch;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 8px 0;
+  border-top: 1px solid var(--tp-line);
+}
+.qLabel {
+  overflow: hidden;
+  color: var(--tp-ink-2);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.qNumber {
+  color: var(--tp-muted);
+  font-variant-numeric: tabular-nums;
+}
+.qBar {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--tp-track);
+}
+.qBar span {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+  background: var(--tp-s3);
+}
+.questions strong {
+  color: var(--tp-ink);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tp-line);
+}
+.foot p,
+.waiting {
+  max-width: 78ch;
+  margin: 0;
+  color: var(--tp-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.waiting {
+  margin-top: 14px;
+}
+.table summary {
+  cursor: pointer;
+  font-size: 13px;
+  list-style: none;
+}
+.table summary::-webkit-details-marker {
+  display: none;
+}
+.table[open] {
+  flex-basis: 100%;
+}
+.table table {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.table th,
+.table td {
+  padding: 6px 10px 6px 0;
+  border-bottom: 1px solid var(--tp-line);
+  color: var(--tp-ink-2);
+  font-weight: 400;
+  text-align: right;
+}
+.table th:first-child {
+  text-align: left;
+}
+.table caption {
+  padding-top: 8px;
+  color: var(--tp-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: left;
+  caption-side: bottom;
+}
+.table thead th {
+  color: var(--tp-muted);
+  font-size: 12px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes ring {
+  from {
+    transform: scale(0.5);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+@keyframes halo {
+  from {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .state[data-state='live'] .pulse::after,
+  .end[data-state='live'] .halo {
+    animation: none;
+  }
+  .meter span {
+    transition: none;
+  }
+}
+
+@container turnoutPanel (max-width: 940px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container turnoutPanel (max-width: 700px) {
+  .questions ol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* Phone: still two by two, smaller; the controls under the title. */
+@container turnoutPanel (max-width: 520px) {
+  .head {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .cards {
+    gap: 8px;
+  }
+  .card {
+    padding: 14px 10px 12px;
+  }
+  .logos {
+    gap: 4px;
+    height: 32px;
+  }
+  .logo[data-shape='round'] {
+    width: 32px;
+    height: 32px;
+  }
+  .logo[data-shape='square'] {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+  }
+  .top {
+    gap: 6px;
+  }
+  .who {
+    gap: 8px;
+  }
+  .name {
+    font-size: 12.5px;
+  }
+  .value strong {
+    font-size: 24px;
+  }
+  .value span {
+    font-size: 12px;
+  }
+  .extra {
+    display: none;
+  }
+  .meter {
+    margin-top: 10px;
+  }
+  .chart {
+    margin-top: 10px;
+  }
+  .questions li {
+    grid-template-columns: minmax(0, 1fr) 64px 3.5ch;
+    gap: 10px;
+  }
+}
+/* Too narrow for two: one card a row. */
+@container turnoutPanel (max-width: 300px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .panel {
+    padding: 18px 16px 14px;
+  }
+}
+@media print {
+  .pulse {
+    display: none;
+  }
+}

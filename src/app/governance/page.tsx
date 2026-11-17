@@ -4,6 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import { governanceRedirect, type RequestParams } from '@/lib/shielded-preview/portals';
 import { governanceMetadata } from './governance-metadata';
 import GovernancePortal from './governance-portal';
+import { THEME_SCRIPT } from './theme';
 
 export const dynamic = 'force-dynamic';
 export async function generateMetadata({ searchParams }: { searchParams: Promise<RequestParams> }): Promise<Metadata> {
@@ -14,5 +15,8 @@ export default async function GovernancePage({ searchParams }: { searchParams: P
   if (process.env.SHIELDED_LABS_PREVIEW !== '1') notFound();
   const destination = governanceRedirect(await searchParams);
   if (destination) redirect(destination);
-  return <GovernancePortal/>;
+  return <>
+    <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }}/>
+    <GovernancePortal/>
+  </>;
 }

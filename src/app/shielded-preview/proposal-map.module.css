@@ -3,25 +3,25 @@
 .board { padding: 20px; }
 
 .lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; min-width: 0; }
-.lane { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 16px 14px 14px; border: 1px solid #272727; border-top: 2px solid var(--topic); border-radius: 10px; background: #111; }
+.lane { display: flex; flex-direction: column; gap: 6px; min-width: 0; padding: 16px 14px 14px; border: 1px solid var(--c-272727, #272727); border-top: 2px solid var(--topic); border-radius: 10px; background: var(--c-111111, #111); }
 .lane header { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 2px 10px; margin: 0 2px 8px; }
 .map .lane h4 { margin: 0; color: var(--topic); font-size: 15px; font-weight: 550; line-height: 1.4; }
 .lane header span { color: var(--topic); font-size: 13px; font-variant-numeric: tabular-nums; }
-.map .lane header p { grid-column: 1 / -1; margin: 0; color: #9a9a9a; font-size: 12px; line-height: 1.45; }
-.map .node { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1px 10px; width: 100%; min-height: 52px; padding: 8px 10px; border: 1px solid #292929; border-radius: 8px; background: #171717; color: #eee; text-align: left; transition: border-color 160ms ease, background-color 160ms ease; }
+.map .lane header p { grid-column: 1 / -1; margin: 0; color: var(--c-9a9a9a, #9a9a9a); font-size: 12px; line-height: 1.45; }
+.map .node { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1px 10px; width: 100%; min-height: 52px; padding: 8px 10px; border: 1px solid var(--c-292929, #292929); border-radius: 8px; background: var(--c-171717, #171717); color: var(--c-eeeeee, #eee); text-align: left; transition: border-color 160ms ease, background-color 160ms ease; }
 .map .node > :first-child { grid-row: 1 / span 2; }
 .map .node strong { font-size: 13.5px; font-weight: 550; line-height: 1.35; overflow-wrap: anywhere; }
-.map .node small { grid-column: 2; color: #8f8f8f; font-size: 11.5px; line-height: 1.4; }
-.map .node:hover { border-color: #5a5a5a; background: #1c1c1c; }
-.map .node[aria-pressed=true] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, #171717); box-shadow: inset 3px 0 0 var(--accent); }
-.map .node[data-muted] { border-style: dashed; background: #121212; }
-.map .node[data-muted] strong { color: #b9b9b9; }
-.map .laneNote { margin: 8px 2px 2px; color: #8f8f8f; font-size: 11.5px; line-height: 1.4; }
-.map .laneEmpty { margin: 0 2px; color: #8f8f8f; font-size: 12.5px; }
-.earlier { margin: 0 20px 18px; padding-top: 16px; border-top: 1px dashed #333; }
+.map .node small { grid-column: 2; color: var(--c-8f8f8f, #8f8f8f); font-size: 11.5px; line-height: 1.4; }
+.map .node:hover { border-color: var(--c-5a5a5a, #5a5a5a); background: var(--c-1c1c1c, #1c1c1c); }
+.map .node[aria-pressed=true] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 9%, var(--c-171717, #171717)); box-shadow: inset 3px 0 0 var(--accent); }
+.map .node[data-muted] { border-style: dashed; background: var(--c-121212, #121212); }
+.map .node[data-muted] strong { color: var(--c-b9b9b9, #b9b9b9); }
+.map .laneNote { margin: 8px 2px 2px; color: var(--c-8f8f8f, #8f8f8f); font-size: 11.5px; line-height: 1.4; }
+.map .laneEmpty { margin: 0 2px; color: var(--c-8f8f8f, #8f8f8f); font-size: 12.5px; }
+.earlier { margin: 0 20px 18px; padding-top: 16px; border-top: 1px dashed var(--c-333333, #333); }
 .earlier header { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin-bottom: 10px; }
-.map .earlier h4 { margin: 0; color: #cfcfcf; font-size: 14px; font-weight: 550; }
-.map .earlier header p { margin: 0; color: #8f8f8f; font-size: 12px; }
+.map .earlier h4 { margin: 0; color: var(--c-cfcfcf, #cfcfcf); font-size: 14px; font-weight: 550; }
+.map .earlier header p { margin: 0; color: var(--c-8f8f8f, #8f8f8f); font-size: 12px; }
 .earlier > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 @media (max-width: 1100px) { .lanes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .lanes, .earlier > div { grid-template-columns: minmax(0, 1fr); } .board { padding: 16px; } .earlier { margin: 0 16px 16px; } }

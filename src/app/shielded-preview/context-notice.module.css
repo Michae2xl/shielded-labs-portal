@@ -18,5 +18,5 @@
 }
 
 @media print {
-  .notice { background: #fff; border-color: #777; color: #111; }
+  .notice { background: var(--c-ffffff, #fff); border-color: var(--c-777777, #777); color: var(--c-111111, #111); }
 }

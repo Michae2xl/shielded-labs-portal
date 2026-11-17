@@ -25,7 +25,8 @@ const programs = [
   { id: 'coinholder', name: 'Coinholder grants', sheet: 'coinholder_grants' },
 ];
 
-const shades = ['#eeeeee', '#b8b8b8', '#909090', '#6d6d6d', '#525252', '#3e3e3e'];
+// Each shade reads its light-theme value (governance-theme.css) and keeps the literal in the dark theme.
+const shades = ['eeeeee', 'b8b8b8', '909090', '6d6d6d', '525252', '3e3e3e'].map(hex => `var(--c-${hex}, #${hex})`);
 const share = (count: number, total: number) => total ? `${(count / total * 100).toFixed(1)}%` : '—';
 
 function Metric({ name, children }: { name: string; children: ReactNode }) {
@@ -40,8 +41,8 @@ function Panel({ title, meta, children, className = '' }: { title: string; meta?
 function Ring({ counts, total, caption }: { counts: number[]; total: number; caption: string }) {
   return <div className={s.ring}>
     <svg viewBox="0 0 180 180" fill="none" aria-hidden="true">
-      <circle cx="90" cy="90" r="76" stroke="#292929" strokeWidth="13"/>
-      {total > 0 && counts.map((count, index) => <circle key={index} cx="90" cy="90" r="76" pathLength="100" stroke={shades[index % shades.length]} strokeWidth="13"
+      <circle cx="90" cy="90" r="76" style={{ stroke: 'var(--c-292929, #292929)' }} strokeWidth="13"/>
+      {total > 0 && counts.map((count, index) => <circle key={index} cx="90" cy="90" r="76" pathLength="100" style={{ stroke: shades[index % shades.length] }} strokeWidth="13"
         strokeDasharray={`${count / total * 100} 100`}
         strokeDashoffset={-counts.slice(0, index).reduce((sum, value) => sum + value, 0) / total * 100}
         transform="rotate(-90 90 90)"/>)}

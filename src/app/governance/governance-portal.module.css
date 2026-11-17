@@ -11,19 +11,24 @@
  .workspace{margin-left:0}
  .main{padding:20px 28px 0}
  /* As tall as the Labs bar (76px, then 72px) and sticky like it: record bars inside the pages stick right below. */
- .bar{display:block;position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid #252525}
+ .bar{display:block;position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--c-252525, #252525)}
  .barInner{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:76px;padding:12px 24px}
  .brand{display:flex;align-items:center;gap:10px;min-width:0;padding:8px 10px;border:1px solid var(--accent-border);border-radius:6px;background:var(--accent-surface);color:var(--accent);font-family:var(--font-display);font-weight:500}
  .mark{display:block;flex-shrink:0;width:28px;height:28px;object-fit:contain}
  .name{display:flex;flex-direction:column;gap:1px;min-width:0}
  .name>span{font-size:10px;line-height:1.25;letter-spacing:1.6px;text-transform:uppercase;font-weight:650}
  .name>strong{font-size:14px;line-height:1.35;font-weight:600}
- .labs{display:flex;align-items:center;gap:9px;min-height:42px;padding:10px 13px;border:1px solid #353535;border-radius:5px;color:#ddd;font-size:14px;line-height:20px;white-space:nowrap}
+ .barEnd{display:flex;align-items:center;gap:6px;min-width:0}
+ /* The theme switch in the bar's corner: the emoji alone, no circle. */
+ .theme.theme{display:grid;place-items:center;flex-shrink:0;width:34px;height:42px;padding:0;border:0;background:transparent;font-size:18px;line-height:1;cursor:pointer;opacity:.85}
+ .theme.theme:focus-visible{outline:2px solid var(--c-eeeeee, #eee);outline-offset:2px;border-radius:6px}
+ .labs{display:flex;align-items:center;gap:9px;min-height:42px;padding:10px 13px;border:1px solid var(--c-353535, #353535);border-radius:5px;color:var(--c-dddddd, #ddd);font-size:14px;line-height:20px;white-space:nowrap}
  .labs>img{display:block;flex-shrink:0;width:22px;height:22px;object-fit:contain;opacity:.85}
  .labs>strong{font-weight:500}
 }
 @media(max-width:650px){.main{padding:16px 22px 0}}
 @media(max-width:500px){.barInner{min-height:72px;padding:10px 16px;gap:10px}}
+@media(max-width:380px){.labs{padding:10px;gap:7px}.theme.theme{width:30px}}
 @media(max-width:350px){
  /* Too narrow for both names: the Labs button keeps its mark, and its name for screen readers. */
  .labs{position:relative;padding:10px 12px}

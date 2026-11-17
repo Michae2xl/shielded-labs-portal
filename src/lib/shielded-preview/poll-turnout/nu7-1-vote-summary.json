@@ -1,0 +1,112 @@
+{
+  "vote_round_id": "KQziVe5MTWNFelWz5y4HxXnkS25XhDigHD6q1cFYmR4=",
+  "status": 1,
+  "description": "Please consider each proposal independently. You may support more than one proposal, including proposals that conflict with each other, if you would find any of those outcomes acceptable. The results will help us assess which proposals have broad support. If more than one proposal receives broad support, we may hold a runoff poll.",
+  "vote_end_time": 1796093940,
+  "proposals": [
+    {
+      "id": 1,
+      "title": "[ZIP] Wind Down Zcash Community Grants",
+      "description": "This proposal would wind down ZCG and end new grants. Grants already awarded would continue, with payments made as agreed milestones are met. After covering existing grants and wind-down costs, remaining funds would go to the Future Dev and Legal Defense Fund lockbox. If ZCG\u2019s 8% funding stream is still active when the upgrade takes effect, it would go to that lockbox until the November 2028 halving.\n\nDo you support the Wind Down Zcash Community Grants proposal?",
+      "options": [
+        {
+          "label": "Support",
+          "ballot_count": 72
+        },
+        {
+          "index": 1,
+          "label": "Oppose",
+          "ballot_count": 27
+        },
+        {
+          "index": 2,
+          "label": "Abstain",
+          "ballot_count": 6
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "[ZIP] Future Dev and Legal Defense Fund",
+      "description": "This proposal would redirect ZCG\u2019s 8% funding stream to a new Future Dev and Legal Defense Fund lockbox requiring community approval for disbursements, require ZCG to contribute 50,000 ZEC to the NSM, and preserve ZCG and its grant program with its remaining treasury.\n\nDo you support the Future Dev and Legal Defense Fund proposal?",
+      "options": [
+        {
+          "label": "Support",
+          "ballot_count": 38
+        },
+        {
+          "index": 1,
+          "label": "Oppose",
+          "ballot_count": 2
+        },
+        {
+          "index": 2,
+          "label": "Abstain",
+          "ballot_count": 3
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "[ZIP] Zcash Adoption Pool (ZAP)",
+      "description": "This proposal would retain ZCG\u2019s existing treasury and continue its 8% funding stream through November 2028. It would rename the grant program and its pool of funds to Zcash Adoption Pool, consistent with using those funds to increase Zcash and ZEC adoption as broadly as possible. It would also leave open the possibility of using funds from the existing treasury for development and legal defense.\n\nDo you support the Zcash Adoption Pool (ZAP) proposal?",
+      "options": [
+        {
+          "label": "Support",
+          "ballot_count": 2
+        },
+        {
+          "index": 1,
+          "label": "Oppose",
+          "ballot_count": 32
+        },
+        {
+          "index": 2,
+          "label": "Abstain",
+          "ballot_count": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Maintain ZCG\u2019s existing funding and operations",
+      "description": "This is the status quo option. ZCG would continue receiving its 8% funding stream through the November 2028 halving, and its treasury and operations would remain unchanged.\n\nDo you support maintaining ZCG\u2019s existing funding and operations?",
+      "options": [
+        {
+          "label": "Support",
+          "ballot_count": 2
+        },
+        {
+          "index": 1,
+          "label": "Oppose",
+          "ballot_count": 40
+        },
+        {
+          "index": 2,
+          "label": "Abstain",
+          "ballot_count": 3
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Reduce target block time to 20 seconds",
+      "description": "Assuming it can be done safely in a network upgrade, do you support reducing Zcash\u2019s target block time from 25 seconds to 20 seconds?",
+      "options": [
+        {
+          "label": "Support",
+          "ballot_count": 46
+        },
+        {
+          "index": 1,
+          "label": "Oppose",
+          "ballot_count": 2
+        },
+        {
+          "index": 2,
+          "label": "Abstain"
+        }
+      ]
+    }
+  ]
+}
