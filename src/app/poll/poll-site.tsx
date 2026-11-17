@@ -93,7 +93,7 @@ export default function PollSite() {
           <div className={s.intro}>
             <h1 id="poll-title">ZCG / Dev Fund poll</h1>
             <p className={s.lead}>
-              <span>Five questions on ZCG and the Dev Fund,</span> <span>answered by coinholders, ZCAP and community panels.</span>
+              Five questions on ZCG and the Dev Fund, answered by coinholders, ZCAP and community panels.
             </p>
             <ul className={s.facts}>
               <li>16 Nov to 1 Dec 2026</li>
