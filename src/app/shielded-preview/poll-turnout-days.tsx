@@ -89,7 +89,7 @@ export function TurnoutByDayCard({ snapshot, now }: { snapshot: ReturnType<typeo
   const today = days.findLastIndex((d) => !d.future);
   const coinholders = snapshot?.bodies.find((body) => body.id === 'coinholders' && body.unit === 'shares');
   return (
-    <section className={`${b.card} ${s.card}`} aria-labelledby="turnout-days-heading" style={{ '--days': days.length || 15 } as CSSProperties}>
+    <section id="panel-ballots" className={`${b.card} ${s.card}`} aria-labelledby="turnout-days-heading" style={{ '--days': days.length || 15 } as CSSProperties}>
       <header className={b.header}>
         <h3 id="turnout-days-heading">Panel ballots per day</h3>
         <span className={b.meta}>New each day · UTC</span>

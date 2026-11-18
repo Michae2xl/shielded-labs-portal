@@ -99,15 +99,16 @@ export default function PollSite() {
               <li>16 Nov to 1 Dec 2026</li>
               <li>Results after polls close</li>
               <li>Turnout live from public sources</li>
-              <li>
-                <a className={s.jump} href="#how-to-take-part">
-                  How to take part
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <path d="M12 5v14M6 13l6 6 6-6" />
-                  </svg>
-                </a>
-              </li>
             </ul>
+            <nav className={s.sectionNav} aria-label="Poll sections">
+              <a href="#poll-turnout">Live turnout</a>
+              <a href="#panel-ballots">Panel ballots</a>
+              <a href="#how-to-take-part">How to take part</a>
+              <a className={s.tutorialLink} href="#wallet-tutorials">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11L13 8z" /></svg>
+                Voting tutorials
+              </a>
+            </nav>
           </div>
           <Status />
         </section>

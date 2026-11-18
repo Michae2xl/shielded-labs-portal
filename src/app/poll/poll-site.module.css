@@ -126,7 +126,7 @@
   font-size: 12px;
   line-height: 1.5;
 }
-.facts li:not(:has(.jump))::before {
+.facts li::before {
   content: '';
   width: 3px;
   height: 3px;
@@ -134,26 +134,34 @@
   border-radius: 50%;
   background: currentColor;
 }
-/* The participation link is the only outlined item in the metadata row. */
-.facts .jump {
+.sectionNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.sectionNav a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 36px;
-  padding: 7px 12px;
-  border: 1px solid var(--c-e0a62a, #e0a62a);
-  border-radius: 6px;
+  gap: 7px;
+  min-height: 44px;
+  padding: 8px 15px;
+  border: 1px solid var(--c-404040, #404040);
+  border-radius: 7px;
   color: var(--c-f2f2f2, #f2f2f2);
+  font-size: 14px;
   font-weight: 550;
+  text-align: center;
   text-decoration: none;
-  white-space: nowrap;
 }
-.facts .jump:hover {
-  background: rgba(224, 166, 42, 0.12);
+.sectionNav .tutorialLink,
+.sectionNav a:hover {
+  border-color: var(--c-e0a62a, #e0a62a);
+  background: rgba(224, 166, 42, 0.10);
 }
-.facts .jump:focus-visible {
-  outline: 2px solid var(--c-eeeeee, #eee);
+.sectionNav a:focus-visible {
+  outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 .status {
@@ -284,10 +292,16 @@
     gap: 10px 16px;
     margin-top: 16px;
   }
-  .facts .jump {
-    min-height: 40px;
-  }
   .foot {
     padding: 18px 16px 32px;
+  }
+}
+@media (max-width: 560px) {
+  .sectionNav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sectionNav a {
+    padding-inline: 8px;
   }
 }
