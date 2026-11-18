@@ -93,13 +93,8 @@ export default function PollSite() {
           <div className={s.intro}>
             <h1 id="poll-title">ZCG / Dev Fund poll</h1>
             <p className={s.lead}>
-              Five questions on ZCG and the Dev Fund, answered by coinholders, ZCAP and community panels.
+              Coinholders, ZCAP members and community panels vote on five questions about Zcash grant funding and target block time.
             </p>
-            <ul className={s.facts}>
-              <li>16 Nov to 1 Dec 2026</li>
-              <li>Results after polls close</li>
-              <li>Turnout live from public sources</li>
-            </ul>
             <nav className={s.sectionNav} aria-label="Poll sections">
               <a href="#how-to-take-part">How to participate</a>
               <a className={s.tutorialLink} href="#wallet-tutorials">
