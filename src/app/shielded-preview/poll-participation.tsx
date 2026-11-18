@@ -87,7 +87,7 @@ export default function PollParticipation() {
             <h4>{coinholders.name}</h4>
           </div>
           <ul className={s.facts}>
-            <li>Vote from Vizor, ZODL or Zkool.</li>
+            <li>Vote from Vizor, ZODL or Zkool. <a className={s.link} href="#wallet-tutorials">Watch wallet tutorials</a></li>
             <li>
               Zkool asks for the poll’s settings link. Paste this one, from the organizers’ post:
               <CopyField value={how.coinholders.zkoolSettings} label="Zkool settings link" />

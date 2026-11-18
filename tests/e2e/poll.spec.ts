@@ -6,6 +6,26 @@ const LAUNCH = { host: 'governance.shieldedlabs.net' };
 
 test.describe('The poll as a site of its own', () => {
   for (const width of [375, 1440]) {
+    test(`coinholders can play each wallet tutorial at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await open(page, '/poll');
+      await page.getByRole('link', { name: 'Watch wallet tutorials' }).click();
+      const gallery = page.getByRole('region', { name: 'Wallet voting tutorials' });
+      await expect(gallery.locator('video')).toHaveCount(0);
+      for (const title of ['Vizor on desktop', 'Vizor on mobile', 'Zodl on mobile']) {
+        const trigger = gallery.getByRole('button', { name: `Watch ${title}` });
+        await trigger.click();
+        const player = page.getByRole('dialog', { name: title }).locator('video');
+        await expect.poll(() => player.evaluate(v => (v as HTMLVideoElement).currentTime)).toBeGreaterThan(0);
+        await player.evaluate(v => { (v as HTMLVideoElement).textTracks[0].mode = 'showing'; });
+        await expect.poll(() => player.evaluate(v => (v as HTMLVideoElement).textTracks[0].cues?.length ?? 0)).toBeGreaterThan(0);
+        await page.getByRole('button', { name: 'Close video' }).click();
+        await expect(player).toHaveCount(0);
+        await expect(trigger).toBeFocused();
+      }
+      expect(await sidewaysOverflow(page)).toBe(0);
+    });
+
     test(`official questions expand and coinholder bars keep their own units at ${width}px`, async ({ page }, testInfo) => {
       const now = Date.parse('2026-11-17T16:30:00Z');
       const snapshot = buildSnapshot(NU7_1_TURNOUT, {
@@ -76,7 +96,7 @@ test.describe('The poll as a site of its own', () => {
     const jumps = await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].map((a) => [a.getAttribute('href'), Boolean(document.getElementById(a.getAttribute('href')!.slice(1)))]));
     expect(jumps).toContainEqual(['#how-to-take-part', true]);
     for (const jump of jumps) {
-      expect([['#how-to-take-part', true], ['#poll-turnout-questions', true]]).toContainEqual(jump);
+      expect([['#how-to-take-part', true], ['#poll-turnout-questions', true], ['#wallet-tutorials', true]]).toContainEqual(jump);
     }
     await expect(page.getByRole('heading', { name: 'How to take part' })).toBeVisible();
     // The jump lands below the page's fixed bar, with the block's title in view.
