@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { BodyTurnout, TurnoutSnapshot } from './turnout';
-import { chartSpan, dailyNew, dailyRows, formatCount, knownAt, lineEnd, niceMax, pollDay, tickLabel, timeTicks, valueAt } from './view';
+import { chartReadingAt, chartSpan, dailyNew, dailyRows, formatCount, lineEnd, niceMax, pollDay, tickLabel, timeTicks, valueAt } from './view';
 
 const H = 3_600_000;
 const OPEN = Date.parse('2026-11-16T00:00:00Z');
@@ -9,7 +9,7 @@ const series = [
   { at: '2026-11-16T00:00:00.000Z', value: 0 },
   { at: '2026-11-16T12:00:00.000Z', value: 3 },
 ];
-const body = (timing: BodyTurnout['timing']) => ({ series, timing }) as BodyTurnout;
+const body = (timing: BodyTurnout['timing']) => ({ series, timing, value: 3 }) as BodyTurnout;
 
 describe('reading the chart', () => {
   it('gives the running total at a time, and how far each line reaches', () => {
@@ -17,11 +17,16 @@ describe('reading the chart', () => {
     expect(lineEnd(body('exact'), OPEN + 20 * H)).toBe(OPEN + 20 * H);
     expect(lineEnd(body('recorded'), OPEN + 20 * H)).toBe(OPEN + 12 * H);
   });
-  it('knows a count read by hand only at its readings and after the last one', () => {
-    expect(knownAt(body('recorded'), OPEN + 6 * H)).toBeNull();
-    expect(knownAt(body('recorded'), OPEN)).toBe(0);
-    expect(knownAt(body('recorded'), OPEN + 14 * H)).toBe(3);
-    expect(knownAt(body('exact'), OPEN + 6 * H)).toBe(0);
+  it('snaps a recorded count and its timestamp to the same point, preferring the earlier one on a tie', () => {
+    const recorded = body('recorded');
+    for (const hours of [0, 2, 6])
+      expect(chartReadingAt(recorded, OPEN + hours * H)).toEqual({ at: OPEN, value: 0 });
+    for (const hours of [7, 12, 14])
+      expect(chartReadingAt(recorded, OPEN + hours * H)).toEqual({ at: OPEN + 12 * H, value: 3 });
+    const at = OPEN + 6 * H;
+    expect(chartReadingAt({ ...recorded, value: null }, at)).toEqual({ at, value: null });
+    expect(chartReadingAt({ ...recorded, series: [] }, at)).toEqual({ at, value: null });
+    expect(chartReadingAt(body('exact'), at)).toEqual({ at, value: 0 });
   });
   it('rounds a scale up to a clean top', () => {
     expect([niceMax(0), niceMax(3), niceMax(24), niceMax(131), niceMax(1_324)]).toEqual([4, 4, 50, 200, 2_000]);

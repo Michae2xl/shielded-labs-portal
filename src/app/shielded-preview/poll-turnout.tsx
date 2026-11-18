@@ -4,7 +4,7 @@ import { useEffect, useState, useSyncExternalStore, type CSSProperties, type Poi
 import Image from 'next/image';
 import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
 import { CoinholderCounts, CoinholderVote, coinholderPhase } from './coinholder-vote';
-import { chartSpan, dailyRows, dayLabel, formatCount, knownAt, pollDay, stampLabel, timeLabel } from '@/lib/shielded-preview/poll-turnout/view';
+import { chartReadingAt, chartSpan, dailyRows, dayLabel, formatCount, pollDay, stampLabel, timeLabel } from '@/lib/shielded-preview/poll-turnout/view';
 import { TurnoutTrack, useCrosshair, useWidth, type Window } from './poll-turnout-chart';
 import s from './poll-turnout.module.css';
 
@@ -130,7 +130,8 @@ function BodyCard({ body, snapshot, w, hover, onPointer, onLeave }: { body: Body
   const [chartRef, width] = useWidth<HTMLDivElement>();
   const shares = body.unit === 'shares';
   const phase = shares ? coinholderPhase(snapshot) : null;
-  const shown = shares || hover === null ? body.value : knownAt(body, hover);
+  const reading = !shares && hover !== null ? chartReadingAt(body, hover) : null;
+  const shown = reading ? reading.value : body.value;
   const meter = meterOf(body, shown);
   return (
     <li className={s.card} data-slot={body.slot} data-state={body.state} data-kind={body.kind}>
@@ -154,8 +155,8 @@ function BodyCard({ body, snapshot, w, hover, onPointer, onLeave }: { body: Body
             <span style={{ width: `${Math.min(100, (meter?.share ?? 0) * 100).toFixed(1)}%` }} />
           </div>
           <p className={s.meterLabel} data-hover={hover !== null || undefined}>
-            {hover !== null ? (
-              `At ${stampLabel(hover)}`
+            {reading ? (
+              reading.value === null && body.timing === 'recorded' ? meterGap(body, hover) : `At ${stampLabel(reading.at)}`
             ) : meter ? (
               <>
                 {meter.label}
@@ -166,7 +167,7 @@ function BodyCard({ body, snapshot, w, hover, onPointer, onLeave }: { body: Body
             )}
           </p>
           <div ref={chartRef} className={s.chart} onPointerMove={onPointer} onPointerDown={onPointer} onPointerLeave={onLeave}>
-            <TurnoutTrack body={body} w={w} width={width} height={TRACK_HEIGHT} hover={hover} />
+            <TurnoutTrack body={body} w={w} width={width} height={TRACK_HEIGHT} reading={reading} />
           </div>
           <div className={s.span} aria-hidden="true">
             <span>{dayLabel(w.start)}</span>

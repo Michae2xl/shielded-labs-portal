@@ -23,14 +23,23 @@ export function valueAt(series: readonly SeriesPoint[], at: number): number | nu
   return value;
 }
 
-/** A body's count at a time, as far as it is known: a count read by hand is known only from its last reading on. */
-export function knownAt(body: Pick<BodyTurnout, 'series' | 'timing'>, at: number): number | null {
-  if (body.timing !== 'recorded') return valueAt(body.series, at);
-  const last = body.series.at(-1);
-  if (!last) return null;
-  if (at >= Date.parse(last.at)) return last.value;
-  const exact = body.series.find((p) => Date.parse(p.at) === at);
-  return exact ? exact.value : null;
+export interface ChartReading { at: number; value: number | null }
+
+/** Recorded totals snap to a chart point so its timestamp, marker and count agree. */
+export function chartReadingAt(body: Pick<BodyTurnout, 'series' | 'timing' | 'value'>, at: number): ChartReading {
+  if (body.timing !== 'recorded') return { at, value: valueAt(body.series, at) };
+  if (body.value === null || body.series.length === 0) return { at, value: null };
+
+  let closest = body.series[0];
+  let distance = Math.abs(Date.parse(closest.at) - at);
+  for (const point of body.series) {
+    const nextDistance = Math.abs(Date.parse(point.at) - at);
+    if (nextDistance < distance) {
+      closest = point;
+      distance = nextDistance;
+    }
+  }
+  return { at: Date.parse(closest.at), value: closest.value };
 }
 
 /** How far a body's line reaches: a live count holds until now; a count read by hand stops at its last reading. */
