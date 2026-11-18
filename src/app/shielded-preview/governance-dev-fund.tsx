@@ -6,7 +6,6 @@ import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/librar
 import { devFundAcceptsProposals, devFundLane, devFundNextSteps, devFundNotices as notices, devFundPhase, devFundPublished, devFundStepState, devFundSources as sources, devFundTimeline as timeline, type DevFundPublication } from '@/lib/shielded-preview/governance-dev-fund';
 import { Arrow, Link, type CollectionNavigate } from './governance-link';
 import PollTurnout from './poll-turnout';
-import TurnoutByDay from './poll-turnout-days';
 import PollParticipation from './poll-participation';
 import WalletTutorials from './wallet-tutorials';
 import b from './governance-bento.module.css';
@@ -105,10 +104,9 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
   const now = useNow();
   const current = devFundPhase(now).id;
   return <div className={s.lane}>
-    <PollTurnout/>
-    <TurnoutByDay/>
     <PollParticipation/>
     <WalletTutorials/>
+    <PollTurnout/>
     <section className={`${b.card} ${s.compact}`} aria-labelledby="dev-fund-timeline-heading">
       <header className={`${b.header} ${s.centered}`}><h3 id="dev-fund-timeline-heading">Published timeline</h3><Phase now={now}/></header>
       {/* Each step shows its date and name; its text opens in a card on hover, focus or tap. */}

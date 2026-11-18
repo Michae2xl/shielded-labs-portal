@@ -10,7 +10,7 @@ const text = markup.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 
 describe('how to take part', () => {
   it('gives the ballots’ shared instructions, then one column per group that votes', () => {
-    expect(text).toContain('How to take part Until 1 Dec, 02:59 UTC');
+    expect(text).toContain('How to participate Until 1 Dec, 02:59 UTC');
     expect(text).toContain('you may support more than one, even proposals that conflict');
     expect(text).toContain('a runoff poll may follow');
     expect(markup).toContain('id="how-to-take-part"');

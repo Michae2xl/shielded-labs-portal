@@ -101,13 +101,13 @@ export default function PollSite() {
               <li>Turnout live from public sources</li>
             </ul>
             <nav className={s.sectionNav} aria-label="Poll sections">
-              <a href="#poll-turnout">Live turnout</a>
-              <a href="#panel-ballots">Panel ballots</a>
-              <a href="#how-to-take-part">How to take part</a>
+              <a href="#how-to-take-part">How to participate</a>
               <a className={s.tutorialLink} href="#wallet-tutorials">
                 <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11L13 8z" /></svg>
-                Voting tutorials
+                Video tutorials
               </a>
+              <a href="#poll-turnout-questions">Coinholder activity by question</a>
+              <a href="#poll-turnout">Panels</a>
             </nav>
           </div>
           <Status />

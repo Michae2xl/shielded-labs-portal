@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
 import { headerUrl, type AnswerWeight } from '@/lib/shielded-preview/poll-turnout/vote-chain';
 import { formatCount, stampLabel } from '@/lib/shielded-preview/poll-turnout/view';
@@ -61,7 +62,7 @@ export function CoinholderCounts({ snapshot, body }: { snapshot: TurnoutSnapshot
   </dl>;
 }
 
-export function CoinholderVote({ snapshot }: { snapshot: TurnoutSnapshot }) {
+export function CoinholderVote({ snapshot, walletLogos }: { snapshot: TurnoutSnapshot; walletLogos: ReactNode }) {
   const phase = coinholderPhase(snapshot);
   const published = phase === 'Final results';
   const pending = phase === 'Tally unavailable';
@@ -76,9 +77,9 @@ export function CoinholderVote({ snapshot }: { snapshot: TurnoutSnapshot }) {
   const castCount = snapshot.casts?.data;
 
   return (
-    <section className={s.questions} aria-labelledby="poll-turnout-questions">
+    <div className={s.questions}>
       <header className={s.coinHead}>
-        <div className={s.coinTitle}><h4 id="poll-turnout-questions">{published ? 'Coinholder results by question' : 'Coinholder activity by question'}</h4><span className={s.phaseBadge}>{phase}</span></div>
+        <div className={s.coinTitle}><h3 id="coinholder-question-heading">{published ? 'Coinholder results by question' : 'Coinholder activity by question'}</h3><span className={s.phaseBadge}>{phase}</span>{walletLogos}</div>
         <p className={s.questionHint}>{statusText}</p>
         {!published && <p className={s.observation}>
           {castCount && <a href={headerUrl(castCount.height)} target="_blank" rel="noopener noreferrer">Block for cast count ↗</a>}
@@ -86,6 +87,7 @@ export function CoinholderVote({ snapshot }: { snapshot: TurnoutSnapshot }) {
           {chain && <a href={chain.source.href} target="_blank" rel="noopener noreferrer">Share totals by question ↗</a>}
         </p>}
       </header>
+      {!published && chain && <CoinholderCounts snapshot={snapshot} body={chain} />}
       <ol>
         {snapshot.questions.map((question) => {
           const official = snapshot.round === officialBallot.round ? officialBallot.questions.find((q) => q.id === question.id) : undefined;
@@ -119,6 +121,6 @@ export function CoinholderVote({ snapshot }: { snapshot: TurnoutSnapshot }) {
         })}
       </ol>
       {published && chain && <a className={s.resultSource} href={chain.source.href} target="_blank" rel="noopener noreferrer">View this round on the vote chain ↗</a>}
-    </section>
+    </div>
   );
 }

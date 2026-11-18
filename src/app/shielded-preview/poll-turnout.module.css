@@ -493,16 +493,6 @@
 }
 
 /* One disclosure per official question. All answer bars use the full weight on that question. */
-.questions {
-  margin-top: 26px;
-}
-.panel .questions h4 {
-  margin: 0 0 6px;
-  color: var(--tp-ink);
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.5;
-}
 .panel .questionHint {
   margin: 0 0 16px;
   color: var(--tp-muted);
@@ -511,8 +501,6 @@
 }
 .coinHead {
   margin-bottom: 8px;
-  padding-top: 12px;
-  border-top: 1px solid var(--tp-line);
 }
 .coinTitle {
   display: flex;
@@ -520,10 +508,9 @@
   align-items: center;
   gap: 8px 14px;
 }
-.panel .coinTitle h4 {
+.panel .coinTitle h3 {
   margin: 0;
-  scroll-margin-top: 90px;
-  font-size: 16px;
+  font-size: var(--title-card, 20px);
   line-height: 1.2;
   letter-spacing: -.035em;
 }

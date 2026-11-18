@@ -3,7 +3,8 @@
 import { useEffect, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from 'react';
 import Image from 'next/image';
 import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
-import { CoinholderCounts, CoinholderVote, coinholderPhase } from './coinholder-vote';
+import { CoinholderShares, TurnoutByDayCard } from './poll-turnout-days';
+import { CoinholderVote } from './coinholder-vote';
 import { chartReadingAt, chartSpan, dailyRows, dayLabel, formatCount, pollDay, stampLabel, timeLabel } from '@/lib/shielded-preview/poll-turnout/view';
 import { TurnoutTrack, useCrosshair, useWidth, type Window } from './poll-turnout-chart';
 import s from './poll-turnout.module.css';
@@ -126,11 +127,9 @@ function Logos({ logos }: { logos: BodyTurnout['logos'] }) {
   );
 }
 
-function BodyCard({ body, snapshot, w, hover, onPointer, onLeave }: { body: BodyTurnout; snapshot: TurnoutSnapshot; w: Window; hover: number | null; onPointer: (e: PointerEvent<HTMLElement>) => void; onLeave: () => void }) {
+function BodyCard({ body, w, hover, onPointer, onLeave }: { body: BodyTurnout; w: Window; hover: number | null; onPointer: (e: PointerEvent<HTMLElement>) => void; onLeave: () => void }) {
   const [chartRef, width] = useWidth<HTMLDivElement>();
-  const shares = body.unit === 'shares';
-  const phase = shares ? coinholderPhase(snapshot) : null;
-  const reading = !shares && hover !== null ? chartReadingAt(body, hover) : null;
+  const reading = hover !== null ? chartReadingAt(body, hover) : null;
   const shown = reading ? reading.value : body.value;
   const meter = meterOf(body, shown);
   return (
@@ -140,44 +139,33 @@ function BodyCard({ body, snapshot, w, hover, onPointer, onLeave }: { body: Body
           {body.logos.length > 0 && <Logos logos={body.logos} />}
           <h4 className={s.name}>{body.name}</h4>
         </div>
-        {!shares && <p className={s.value}>
+        <p className={s.value}>
           <strong>{formatCount(shown, body.approximate && hover === null)}</strong>
           <span>{shown === 1 ? 'ballot' : 'ballots'}</span>
-        </p>}
+        </p>
       </div>
-      {shares ? (
-        phase === 'Final results'
-          ? <p className={s.shareSummary}>See the final ZEC weight by answer.</p>
-          : <CoinholderCounts snapshot={snapshot} body={body} />
-      ) : (
-        <>
-          <div className={s.meter} aria-hidden="true">
-            <span style={{ width: `${Math.min(100, (meter?.share ?? 0) * 100).toFixed(1)}%` }} />
-          </div>
-          <p className={s.meterLabel} data-hover={hover !== null || undefined}>
-            {reading ? (
-              reading.value === null && body.timing === 'recorded' ? meterGap(body, hover) : `At ${stampLabel(reading.at)}`
-            ) : meter ? (
-              <>
-                {meter.label}
-                {meter.extra && <span className={s.extra}>{meter.extra}</span>}
-              </>
-            ) : (
-              meterGap(body, hover)
-            )}
-          </p>
-          <div ref={chartRef} className={s.chart} onPointerMove={onPointer} onPointerDown={onPointer} onPointerLeave={onLeave}>
-            <TurnoutTrack body={body} w={w} width={width} height={TRACK_HEIGHT} reading={reading} />
-          </div>
-          <div className={s.span} aria-hidden="true">
-            <span>{dayLabel(w.start)}</span>
-            <span>{w.end >= w.closes ? dayLabel(w.closes) : 'Now'}</span>
-          </div>
-        </>
-      )}
-      {shares ? (
-        <p className={s.source}><a href="#poll-turnout-questions">View by question ↓</a></p>
-      ) : (
+      <div className={s.meter} aria-hidden="true">
+        <span style={{ width: `${Math.min(100, (meter?.share ?? 0) * 100).toFixed(1)}%` }} />
+      </div>
+      <p className={s.meterLabel} data-hover={hover !== null || undefined}>
+        {reading ? (
+          reading.value === null && body.timing === 'recorded' ? meterGap(body, hover) : `At ${stampLabel(reading.at)}`
+        ) : meter ? (
+          <>
+            {meter.label}
+            {meter.extra && <span className={s.extra}>{meter.extra}</span>}
+          </>
+        ) : (
+          meterGap(body, hover)
+        )}
+      </p>
+      <div ref={chartRef} className={s.chart} onPointerMove={onPointer} onPointerDown={onPointer} onPointerLeave={onLeave}>
+        <TurnoutTrack body={body} w={w} width={width} height={TRACK_HEIGHT} reading={reading} />
+      </div>
+      <div className={s.span} aria-hidden="true">
+        <span>{dayLabel(w.start)}</span>
+        <span>{w.end >= w.closes ? dayLabel(w.closes) : 'Now'}</span>
+      </div>
       <p className={s.source}>
         <i className={s.dot} data-state={body.state} aria-hidden="true" />
         {status(body, w.now)} ·{' '}
@@ -185,14 +173,12 @@ function BodyCard({ body, snapshot, w, hover, onPointer, onLeave }: { body: Body
           {body.source.label} ↗
         </a>
       </p>
-      )}
     </li>
   );
 }
 
 /** Current coinholder shares and panel ballots, with source links and unit-specific explanations. */
 export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { snapshot: TurnoutSnapshot | null; failed?: boolean; now?: number }) {
-  const state = panelState(snapshot, failed);
   const [range, setRange] = useState<'so-far' | 'whole'>('so-far');
   const now = nowProp ?? (snapshot ? Date.parse(snapshot.checkedAt) : 0);
   const opens = snapshot ? Date.parse(snapshot.opensAt) : 0;
@@ -200,11 +186,22 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
   const w: Window | null = snapshot ? { opens, closes, now, ...chartSpan(opens, closes, now, range) } : null;
   const crosshair = useCrosshair(w);
   const panels = snapshot ? { ...snapshot, bodies: snapshot.bodies.filter((body) => body.unit === 'ballots') } : null;
-  return (
-    <section className={s.panel} id="poll-turnout" aria-labelledby="poll-turnout-heading" data-state={state}>
+  const state = panelState(panels, failed);
+  const coinholders = snapshot?.bodies.find(body => body.unit === 'shares');
+  return <>
+    <section className={s.panel} id="poll-turnout-questions" aria-labelledby="coinholder-question-heading" tabIndex={-1}>
+      {snapshot ? <>
+        <CoinholderVote snapshot={snapshot} walletLogos={coinholders && <Logos logos={coinholders.logos} />} />
+        {coinholders && <CoinholderShares body={coinholders} questions={snapshot.questions} />}
+      </> : <>
+        <header className={s.head}><h3 id="coinholder-question-heading">Coinholder activity by question</h3></header>
+        <p className={s.waiting}>{failed ? 'Coinholder activity unavailable right now.' : 'Reading coinholder activity.'}</p>
+      </>}
+    </section>
+    <section className={s.panel} id="poll-turnout" tabIndex={-1} aria-labelledby="poll-turnout-heading" data-state={state}>
       <header className={s.head}>
         <div>
-          <h3 id="poll-turnout-heading">Live turnout</h3>
+          <h3 id="poll-turnout-heading">Panels</h3>
           {snapshot && <p className={s.sub}>{subtitle(snapshot, now)}</p>}
         </div>
         <div className={s.controls}>
@@ -227,17 +224,16 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
         <>
           <ol
             className={s.cards}
-            style={{ '--cards': Math.min(4, snapshot.bodies.length) } as CSSProperties}
+            style={{ '--cards': Math.min(4, panels.bodies.length) } as CSSProperties}
             tabIndex={0}
             aria-label="Turnout by body. Arrow keys move every chart along the poll; Escape clears."
             onKeyDown={crosshair.onKey}
             onBlur={crosshair.clear}
           >
-            {snapshot.bodies.map((body) => (
-              <BodyCard key={body.id} body={body} snapshot={snapshot} w={w} hover={crosshair.hover} onPointer={crosshair.onPointer} onLeave={crosshair.clear} />
+            {panels.bodies.map((body) => (
+              <BodyCard key={body.id} body={body} w={w} hover={crosshair.hover} onPointer={crosshair.onPointer} onLeave={crosshair.clear} />
             ))}
           </ol>
-          <CoinholderVote snapshot={snapshot} />
           <footer className={s.foot}>
             <details className={s.table}>
               <summary>Daily panel counts</summary>
@@ -268,10 +264,11 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
           </footer>
         </>
       ) : (
-        <p className={s.waiting}>{failed ? 'Turnout unavailable right now.' : 'Reading the vote chain and the panels.'}</p>
+        <p className={s.waiting}>{failed ? 'Turnout unavailable right now.' : 'Reading panel turnout.'}</p>
       )}
+      <TurnoutByDayCard snapshot={panels} now={now} />
     </section>
-  );
+  </>;
 }
 
 export default function PollTurnout() {

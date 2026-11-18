@@ -1,26 +1,11 @@
 'use client';
 
-import { useEffect, useState, type CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 import Image from 'next/image';
 import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
 import { dailyNew, dayLabel, formatCount, stampLabel } from '@/lib/shielded-preview/poll-turnout/view';
-import { usePollTurnout } from './poll-turnout';
 import b from './governance-bento.module.css';
 import s from './poll-turnout-days.module.css';
-
-function useNow() {
-  const [now, setNow] = useState<number | null>(null);
-  useEffect(() => {
-    const tick = () => setNow(Date.now());
-    const first = window.setTimeout(tick, 0);
-    const timer = window.setInterval(tick, 60_000);
-    return () => {
-      window.clearTimeout(first);
-      window.clearInterval(timer);
-    };
-  }, []);
-  return now;
-}
 
 /** A bar this tall (share of the row's busiest day) has room for its count inside; a shorter one carries it on top. */
 const INSIDE = 0.3;
@@ -37,7 +22,7 @@ function monthsOf(days: { day: number }[]): string {
 }
 
 /** Shares have no daily history: give them their own question axis and total. */
-function CoinholderShares({ body, questions }: { body: BodyTurnout; questions: TurnoutSnapshot['questions'] }) {
+export function CoinholderShares({ body, questions }: { body: BodyTurnout; questions: TurnoutSnapshot['questions'] }) {
   const top = Math.max(1, ...questions.map((question) => question.shares ?? 0));
   return (
     <section className={s.sharesBlock} aria-labelledby="coinholder-bars-heading">
@@ -81,13 +66,12 @@ function CoinholderShares({ body, questions }: { body: BodyTurnout; questions: T
   );
 }
 
-/** Daily panel ballots, followed by a separate row for the latest coinholder shares. */
-export function TurnoutByDayCard({ snapshot, now }: { snapshot: ReturnType<typeof usePollTurnout>['snapshot']; now: number | null }) {
+/** Daily ballot counts for each panel. */
+export function TurnoutByDayCard({ snapshot, now }: { snapshot: TurnoutSnapshot | null; now: number | null }) {
   const at = now ?? (snapshot ? Date.parse(snapshot.checkedAt) : 0);
   const panels = snapshot ? { ...snapshot, bodies: snapshot.bodies.filter((body) => body.unit === 'ballots') } : null;
   const days = panels ? dailyNew(panels, at) : [];
   const today = days.findLastIndex((d) => !d.future);
-  const coinholders = snapshot?.bodies.find((body) => body.id === 'coinholders' && body.unit === 'shares');
   return (
     <section id="panel-ballots" className={`${b.card} ${s.card}`} aria-labelledby="turnout-days-heading" style={{ '--days': days.length || 15 } as CSSProperties}>
       <header className={b.header}>
@@ -151,17 +135,10 @@ export function TurnoutByDayCard({ snapshot, now }: { snapshot: ReturnType<typeo
             </span>
           </div>
           <p className={b.note}>Panel ballots received each day. ZCAP uses changes between observed totals; vote times are not published.</p>
-          {coinholders && snapshot && <CoinholderShares body={coinholders} questions={snapshot.questions} />}
         </>
       ) : (
-        <p className={b.note}>Reading the vote chain and the panels.</p>
+        <p className={b.note}>Reading panel turnout.</p>
       )}
     </section>
   );
-}
-
-export default function TurnoutByDay() {
-  const { snapshot } = usePollTurnout();
-  const now = useNow();
-  return <TurnoutByDayCard snapshot={snapshot} now={now} />;
 }
