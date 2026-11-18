@@ -850,6 +850,30 @@
     "digest": "ca04fd46134c18ed3b6fcb2cd9fc2c8e7bad79cad5b1e61f70553d726beeeac7"
   },
   {
+    "id": "zip-0223",
+    "number": 223,
+    "title": "Reduce Block Target Spacing from 25 to 20 Seconds",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus",
+    "owners": [
+      "Dev Ojha",
+      "Evan Forbes"
+    ],
+    "created": "2026-11-04",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/proposal-lower-zcash-block-target-spacing-from-25s-to-20s/59035",
+    "pullRequest": null,
+    "kind": "zip",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/main/zips/zip-0223.md",
+    "official": "https://zips.z.cash/zip-0223",
+    "updatedAt": "2026-11-18T01:17:16Z",
+    "summary": "This proposal reduces block target spacing from 25 to 20 seconds in a network upgrade after NU7. It builds on ZIP 218 and lowers its per-block shielded action limits and global shielded budget by 20%, from 330 to 264 Orchard-protocol…",
+    "words": 2447,
+    "digest": "dba10a9462dd8e240c02a20ac01896ee61eeae92ec3b7e49a51ca31377e54897"
+  },
+  {
     "id": "zip-0224",
     "number": 224,
     "title": "Orchard Shielded Protocol",
@@ -3409,6 +3433,85 @@
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
   },
   {
+    "id": "pr-1470-draft-upbqdn-legacy-tree-roots",
+    "number": null,
+    "title": "Note Commitment Tree Roots for the Legacy P2P Protocol",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Network",
+    "owners": [
+      "Marek"
+    ],
+    "created": "2026-11-18",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/ZcashFoundation/zebra/pull/12427",
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "rst",
+    "source": "https://github.com/zcash/zips/blob/610f809954372b32a6858f410210715343ec2e3a/zips/draft-upbqdn-legacy-tree-roots.rst",
+    "official": "https://github.com/zcash/zips/pull/1470",
+    "updatedAt": "2026-11-18T17:28:22Z",
+    "summary": "This ZIP adds a service bit and two messages, gettreeroots and treeroots, to the legacy protocol. With them a node obtains the tree roots of a range of blocks from a peer. The node does not trust the peer: it checks each block's roots…",
+    "words": 1342,
+    "digest": "96771bdcb0c192fca243be39e0e32a0c92ee917cb3e76c98bbe9293dc61ba623",
+    "base": null,
+    "pull": {
+      "number": 1470,
+      "title": "docs: draft legacy P2P note commitment tree root exchange",
+      "author": "upbqdn",
+      "draft": true,
+      "url": "https://github.com/zcash/zips/pull/1470",
+      "headSha": "610f809954372b32a6858f410210715343ec2e3a",
+      "createdAt": "2026-11-18T17:28:22Z",
+      "updatedAt": "2026-11-18T17:28:22Z",
+      "change": "new",
+      "file": "draft-upbqdn-legacy-tree-roots.rst",
+      "files": [
+        "draft-upbqdn-legacy-tree-roots.rst"
+      ]
+    }
+  },
+  {
+    "id": "pr-1469-zip-0320",
+    "number": 320,
+    "title": "Defining an Address Type to which funds can only be sent from Transparent Addresses",
+    "status": "Active",
+    "statusDetail": null,
+    "category": "Standards / Wallet",
+    "owners": [
+      "Daira-Emma Hopwood",
+      "Kris Nuttycombe"
+    ],
+    "created": "2024-01-12",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/757",
+    "pullRequest": "https://github.com/zcash/zips/pull/760",
+    "kind": "proposal",
+    "format": "rst",
+    "source": "https://github.com/zcash/zips/blob/9c5f8cca4221c16f858a176c00431045585cce12/zips/zip-0320.rst",
+    "official": "https://github.com/zcash/zips/pull/1469",
+    "updatedAt": "2026-11-18T14:52:01Z",
+    "summary": "This ZIP defines a new encoding for transparent Zcash addresses. Wallets must ensure that no shielded notes are spent in transactions that send to a transparent address encoded in the specified fashion.",
+    "words": 1972,
+    "digest": "70f3fd06e83f1dbfad66a00c42956d8d2bf05169cabe709dec6db1818e7eff10",
+    "base": "zip-0320",
+    "pull": {
+      "number": 1469,
+      "title": "[ZIP 320] Specify decoding edge cases, Regtest and test vectors",
+      "author": "Anirudh-712",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1469",
+      "headSha": "9c5f8cca4221c16f858a176c00431045585cce12",
+      "createdAt": "2026-11-18T14:52:01Z",
+      "updatedAt": "2026-11-18T14:52:01Z",
+      "change": "update",
+      "file": "zip-0320.rst",
+      "files": [
+        "zip-0320.rst"
+      ]
+    }
+  },
+  {
     "id": "pr-1467-zip-0229",
     "number": 229,
     "title": "Version 6 Transaction Format",
@@ -4183,46 +4286,6 @@
     }
   },
   {
-    "id": "pr-1437-zip-0223",
-    "number": 223,
-    "title": "Reduce Block Target Spacing from 25 to 20 Seconds",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus",
-    "owners": [
-      "Dev Ojha",
-      "Evan Forbes"
-    ],
-    "created": "2026-11-04",
-    "license": "MIT",
-    "discussionsTo": "https://forum.zcashcommunity.com/t/proposal-lower-zcash-block-target-spacing-from-25s-to-20s/59035",
-    "pullRequest": null,
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/7b5363fc8c12c3b28d66bb312adcf41a111aa5be/zips/zip-0223.md",
-    "official": "https://github.com/zcash/zips/pull/1437",
-    "updatedAt": "2026-11-18T01:23:09Z",
-    "summary": "This proposal reduces block target spacing from 25 to 20 seconds in a network upgrade after NU7. It builds on ZIP 218 and lowers its per-block shielded action limits and global shielded budget by 20%, from 330 to 264 Orchard-protocol…",
-    "words": 2447,
-    "digest": "dba10a9462dd8e240c02a20ac01896ee61eeae92ec3b7e49a51ca31377e54897",
-    "base": null,
-    "pull": {
-      "number": 1437,
-      "title": "ZIP 223: Reduce block target spacing from 25 to 20 seconds",
-      "author": "evan-forbes",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1437",
-      "headSha": "7b5363fc8c12c3b28d66bb312adcf41a111aa5be",
-      "createdAt": "2026-11-05T16:48:32Z",
-      "updatedAt": "2026-11-18T01:23:09Z",
-      "change": "new",
-      "file": "zip-0223.md",
-      "files": [
-        "zip-0223.md"
-      ]
-    }
-  },
-  {
     "id": "pr-1436-draft-marek-node-network-limited",
     "number": null,
     "title": "Limited Block Serving Service Flag",
@@ -4359,7 +4422,7 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/4fe8d25ce026c6444440e087408480017cbb0241/zips/draft-khadim-aryaethn-frost-member-backup.md",
     "official": "https://github.com/zcash/zips/pull/1432",
-    "updatedAt": "2026-11-07T11:01:00Z",
+    "updatedAt": "2026-11-18T13:08:55Z",
     "summary": "This ZIP defines a backup string for one member of a FROST group that spends shielded ZEC with Orchard-protocol keys (in the Orchard or Ironwood pool). The string holds the member’s identifier, the threshold, the group size, the member’s…",
     "words": 3482,
     "digest": "541463e2d69f271a1fb698fcdfe8028f41454f24fa3ac8036fad11cb01cc0c65",
@@ -4372,7 +4435,7 @@
       "url": "https://github.com/zcash/zips/pull/1432",
       "headSha": "4fe8d25ce026c6444440e087408480017cbb0241",
       "createdAt": "2026-11-02T16:33:35Z",
-      "updatedAt": "2026-11-07T11:01:00Z",
+      "updatedAt": "2026-11-18T13:08:55Z",
       "change": "new",
       "file": "draft-khadim-aryaethn-frost-member-backup.md",
       "files": [
