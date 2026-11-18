@@ -119,11 +119,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  min-height: 44px;
+  gap: 8px;
+  min-height: 46px;
+  background: var(--c-161616, #161616);
   padding: 8px 15px;
   border: 1px solid var(--c-404040, #404040);
-  border-radius: 7px;
+  border-radius: 8px;
   color: var(--c-f2f2f2, #f2f2f2);
   font-size: 14px;
   font-weight: 550;
@@ -132,6 +133,8 @@
   text-wrap: balance;
   text-decoration: none;
 }
+.sectionNav svg { flex: 0 0 18px; }
+.sectionNav a:active { background: var(--c-262626, #262626); }
 .sectionNav .tutorialLink,
 .sectionNav a:hover {
   border-color: var(--c-e0a62a, #e0a62a);
@@ -211,9 +214,6 @@
   font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
-.notice {
-  margin-top: 4px;
-}
 .foot {
   display: flex;
   flex-wrap: wrap;
@@ -275,7 +275,9 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .sectionNav a {
-    padding: 8px 10px;
+    padding: 9px 11px;
+    justify-content: flex-start;
+    text-align: left;
   }
   .status[data-open] {
     display: grid;

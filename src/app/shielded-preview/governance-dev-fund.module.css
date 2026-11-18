@@ -93,9 +93,20 @@
 .published { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px 24px; padding: 0 2px; }
 .lane .published p { flex: 1 1 420px; margin: 0; color: var(--c-b0b0b0, #b0b0b0); font-size: 13px; line-height: 1.6; }
 .published > div { display: flex; flex-wrap: wrap; gap: 0 20px; }
-.resources { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; margin-top: 12px; padding: 20px 2px 0; border-top: 1px solid var(--c-303030, #303030); }
-.resources h3 { margin: 0 0 4px; color: var(--c-eeeeee, #eee); font-size: 14px; font-weight: 550; line-height: 1.5; }
-.lane .resources p { margin: 0; color: var(--c-b0b0b0, #b0b0b0); font-size: 13px; line-height: 1.6; }
+.attribution { border-top: 1px solid var(--c-303030, #303030); }
+.attribution summary { width: fit-content; padding: 12px 20px; color: var(--c-bdbdbd, #bdbdbd); font-size: 13px; cursor: pointer; }
+.attribution p { margin: 0; padding: 0 20px 14px; color: var(--c-c8c8c8, #c8c8c8); font-size: 14px; }
+.resources { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px 24px; padding: 16px 20px; border: 1px solid var(--c-303030, #303030); border-radius: 12px; background: var(--c-111111, #111); }
+.resources h3 { margin: 0; color: var(--c-eeeeee, #eee); font-size: 17px; font-weight: 550; }
+.resourceLinks { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+.lane .resourceButton { display: inline-flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--c-404040, #404040); border-radius: 8px; background: var(--c-161616, #161616); color: var(--c-eeeeee, #eee); font-size: 14px; font-weight: 550; }
+.lane .resourceButton:hover { border-color: var(--c-e0a62a, #e0a62a); }
+.resources > details { grid-column: 1 / -1; }
+@container devFundLane (max-width: 650px) {
+  .resources { grid-template-columns: 1fr; gap: 12px; padding: 16px; }
+  .resourceLinks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .resourceLinks > :last-child { grid-column: 1 / -1; }
+}
 
 @container governanceBentoCard (max-width: 900px) {
   .detailed { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px; }
