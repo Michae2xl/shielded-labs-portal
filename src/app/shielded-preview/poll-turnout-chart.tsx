@@ -2,7 +2,7 @@
 
 import { useCallback, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import type { BodyTurnout } from '@/lib/shielded-preview/poll-turnout/turnout';
-import { knownAt, lineEnd, niceMax } from '@/lib/shielded-preview/poll-turnout/view';
+import { type ChartReading, lineEnd, niceMax } from '@/lib/shielded-preview/poll-turnout/view';
 import s from './poll-turnout.module.css';
 
 const HOUR = 3_600_000;
@@ -41,7 +41,7 @@ export function timeAt(clientX: number, rect: DOMRect, w: Window): number {
 }
 
 /** One body's running total across the poll window: a step line for counts with their own times, read-by-hand counts as points. */
-export function TurnoutTrack({ body, w, width, height, hover }: { body: BodyTurnout; w: Window; width: number; height: number; hover: number | null }) {
+export function TurnoutTrack({ body, w, width, height, reading }: { body: BodyTurnout; w: Window; width: number; height: number; reading: ChartReading | null }) {
   if (width <= 0) return <svg className={s.track} height={height} aria-hidden="true" />;
   const end = lineEnd(body, w.now);
   // An earlier round's pace, drawn up to the end of the span in view; the scale makes room for it.
@@ -59,7 +59,6 @@ export function TurnoutTrack({ body, w, width, height, hover }: { body: BodyTurn
   const referenceLine = reference.length > 1 ? reference.map((p, i) => `${i ? 'L' : 'M'}${xOf(Date.parse(p.at), w, width).toFixed(1)} ${y(p.value).toFixed(1)}`).join(' ') : '';
   const last = points.at(-1);
   const endX = end === null ? null : xOf(end, w, width);
-  const hoverValue = hover === null ? null : knownAt(body, hover);
   return (
     <svg className={s.track} width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true">
       <rect className={s.elapsed} x={0} y={PAD_TOP} width={nowX} height={base - PAD_TOP} />
@@ -79,10 +78,10 @@ export function TurnoutTrack({ body, w, width, height, hover }: { body: BodyTurn
           <circle className={s.dot} cx={endX} cy={last.y} r={4} />
         </g>
       )}
-      {hover !== null && (
+      {reading && (
         <g className={s.crosshair}>
-          <line x1={xOf(hover, w, width) + 0.5} x2={xOf(hover, w, width) + 0.5} y1={PAD_TOP} y2={base} />
-          {hoverValue !== null && <circle className={s.dot} cx={xOf(hover, w, width)} cy={y(hoverValue)} r={4} />}
+          <line x1={xOf(reading.at, w, width) + 0.5} x2={xOf(reading.at, w, width) + 0.5} y1={PAD_TOP} y2={base} />
+          {reading.value !== null && <circle className={s.dot} cx={xOf(reading.at, w, width)} cy={y(reading.value)} r={4} />}
         </g>
       )}
     </svg>
