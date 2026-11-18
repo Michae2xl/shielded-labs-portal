@@ -6,6 +6,25 @@ const LAUNCH = { host: 'governance.shieldedlabs.net' };
 
 test.describe('The poll as a site of its own', () => {
   for (const width of [375, 1440]) {
+    test(`all poll section links are visible on arrival and jump below the header at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 667 });
+      await open(page, '/poll');
+      const nav = page.getByRole('navigation', { name: 'Poll sections' });
+      const links = nav.getByRole('link');
+      await expect(links).toHaveText(['Live turnout', 'Panel ballots', 'How to take part', 'Voting tutorials']);
+      await expect(nav).toBeInViewport({ ratio: 1 });
+      for (const link of await links.all()) {
+        const hash = (await link.getAttribute('href'))!;
+        await link.click();
+        await expect(page).toHaveURL(new RegExp(hash + '$'));
+        await expect.poll(() => page.locator(hash).evaluate(el => {
+          const top = el.getBoundingClientRect().top;
+          return top >= document.querySelector('header')!.getBoundingClientRect().bottom && top < window.innerHeight / 2;
+        })).toBe(true);
+      }
+      expect(await sidewaysOverflow(page)).toBe(0);
+    });
+
     test(`coinholders can play each wallet tutorial at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await open(page, '/poll');
@@ -96,7 +115,7 @@ test.describe('The poll as a site of its own', () => {
     const jumps = await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].map((a) => [a.getAttribute('href'), Boolean(document.getElementById(a.getAttribute('href')!.slice(1)))]));
     expect(jumps).toContainEqual(['#how-to-take-part', true]);
     for (const jump of jumps) {
-      expect([['#how-to-take-part', true], ['#poll-turnout-questions', true], ['#wallet-tutorials', true]]).toContainEqual(jump);
+      expect([['#poll-turnout', true], ['#panel-ballots', true], ['#how-to-take-part', true], ['#poll-turnout-questions', true], ['#wallet-tutorials', true]]).toContainEqual(jump);
     }
     await expect(page.getByRole('heading', { name: 'How to take part' })).toBeVisible();
     // The jump lands below the page's fixed bar, with the block's title in view.
