@@ -8,6 +8,7 @@ import { Arrow, Link, type CollectionNavigate } from './governance-link';
 import PollTurnout from './poll-turnout';
 import TurnoutByDay from './poll-turnout-days';
 import PollParticipation from './poll-participation';
+import WalletTutorials from './wallet-tutorials';
 import b from './governance-bento.module.css';
 import p from './governance-participation.module.css';
 import s from './governance-dev-fund.module.css';
@@ -107,6 +108,7 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
     <PollTurnout/>
     <TurnoutByDay/>
     <PollParticipation/>
+    <WalletTutorials/>
     <section className={`${b.card} ${s.compact}`} aria-labelledby="dev-fund-timeline-heading">
       <header className={`${b.header} ${s.centered}`}><h3 id="dev-fund-timeline-heading">Published timeline</h3><Phase now={now}/></header>
       {/* Each step shows its date and name; its text opens in a card on hover, focus or tap. */}
