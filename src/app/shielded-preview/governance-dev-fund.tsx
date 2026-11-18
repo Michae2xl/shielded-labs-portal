@@ -122,6 +122,10 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
           {step.id === 'polling' && <><p>{notices.closing.text}</p><Cited href={notices.closing.url}>Organizers’ post, 16 Nov</Cited></>}
         </div>
       </li>)}</ol>
+      <details className={s.attribution}>
+        <summary>Timeline credits</summary>
+        <p>Published <time dateTime={timeline.publishedAt}>{date(timeline.publishedAt)}</time> by {timeline.organizations}.</p>
+      </details>
     </section>
 
     <div className={s.pair}>
@@ -141,13 +145,13 @@ export function DevFundVoting({ onNavigate, published = devFundPublished }: { on
         </div>
       </section>
     </div>
-    <Published/>
     <section className={s.resources} aria-labelledby="poll-resources-heading">
-      <div>
-        <h3 id="poll-resources-heading">Resources</h3>
-        <p>Track the current round and check how coinholder results are counted.</p>
+      <h3 id="poll-resources-heading">Resources</h3>
+      <div className={s.resourceLinks}>
+        <Cited href={sources.timeline} className={s.resourceButton}>Zcash Forum</Cited>
+        <Cited href={sources.post} className={s.resourceButton}>Post on X</Cited>
+        <Cited href="https://zakura.com/voting/#vote-290ce255ee4c" className={s.resourceButton}>Zakura vote tracker</Cited>
       </div>
-      <Cited href="https://zakura.com/voting/#vote-290ce255ee4c">Zakura vote tracker</Cited>
       <CoinholderProtocolGuide />
     </section>
   </div>;

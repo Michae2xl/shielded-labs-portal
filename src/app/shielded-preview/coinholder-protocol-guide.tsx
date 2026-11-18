@@ -8,7 +8,7 @@ function Source({ href, children }: { href: string; children: ReactNode }) {
 export function CoinholderProtocolGuide() {
   return (
     <details className={s.guide}>
-      <summary>What can you verify in a coinholder vote?</summary>
+      <summary>Coinholder vote verification</summary>
       <div className={s.scroll} role="region" aria-label="Coinholder protocol comparison" tabIndex={0}>
         <table>
           <caption>This NU7.1 poll uses Valar. Earlier polls used Hanh’s software.</caption>

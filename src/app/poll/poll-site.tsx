@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { pollDay } from '@/lib/shielded-preview/poll-turnout/view';
 import { usePollTurnout } from '@/app/shielded-preview/poll-turnout';
 import ThemeToggle from '@/app/governance/theme-toggle';
-import ContextNotice from '@/app/shielded-preview/context-notice';
 import { DevFundVoting } from '@/app/shielded-preview/governance-dev-fund';
 import { ShieldMark } from '@/app/shielded-preview/shield';
 import portal from '@/app/shielded-preview/portal.module.css';
@@ -15,6 +14,12 @@ import '@/app/governance/governance-theme.css';
 
 // The page stands alone: nothing in it leads to the rest of the portal.
 const stay = () => {};
+const sectionLinks = [
+  { href: '#how-to-take-part', label: 'How to participate', icon: 'm6 11 5-7 7 5-5 7z M5 14H4l-2 6h20l-2-6h-3' },
+  { href: '#wallet-tutorials', label: 'Video tutorials', icon: 'M3 5h18v14H3z M10 9l5 3-5 3z' },
+  { href: '#poll-turnout-questions', label: 'Coinholder activity by question', icon: 'M4 4v16h17 M8 16v-4 M13 16V7 M18 16v-6' },
+  { href: '#poll-turnout', label: 'Panels', icon: 'M3 4h7v7H3z M14 4h7v7h-7z M3 15h7v5H3z M14 15h7v5h-7z' },
+] as const;
 const HOUR = 3_600_000;
 const DAY = 24 * HOUR;
 const CLOSE = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC' });
@@ -96,19 +101,17 @@ export default function PollSite() {
               Coinholders, ZCAP members and community panels vote on five questions about Zcash grant funding and target block time.
             </p>
             <nav className={s.sectionNav} aria-label="Poll sections">
-              <a href="#how-to-take-part">How to participate</a>
-              <a className={s.tutorialLink} href="#wallet-tutorials">
-                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11L13 8z" /></svg>
-                Video tutorials
-              </a>
-              <a href="#poll-turnout-questions">Coinholder activity by question</a>
-              <a href="#poll-turnout">Panels</a>
+              {sectionLinks.map(({ href, label, icon }) => (
+                <a key={href} href={href} className={href === '#wallet-tutorials' ? s.tutorialLink : undefined}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={icon} /></svg>
+                  <span>{label}</span>
+                </a>
+              ))}
             </nav>
           </div>
           <Status />
         </section>
         <DevFundVoting onNavigate={stay} />
-        <ContextNotice className={s.notice}>Polls inform decisions. ZIP status, node releases and network activation remain separate milestones.</ContextNotice>
       </main>
       <footer className={s.foot}>
         <a className={s.labs} href="https://shieldedlabs.net" target="_blank" rel="noopener noreferrer">
@@ -117,7 +120,6 @@ export default function PollSite() {
             Maintained by <strong>Shielded Labs</strong>
           </span>
         </a>
-        <span>Neutral governance information. Every count links its source.</span>
       </footer>
     </div>
   );
