@@ -1,6 +1,8 @@
 /* Panel ballots per day, with coinholder shares on a separate question axis. */
 section.card {
   scroll-margin-top: 90px;
+}
+.card, .sharesBlock {
   --row-gold: var(--c-e0a62a, #e0a62a);
   --row-ink: var(--c-d4d4d4, #d4d4d4);
 }
@@ -258,7 +260,7 @@ section.card {
   font-variant-numeric: tabular-nums;
   text-align: center;
 }
-.card .shareNote {
+.sharesBlock .shareNote {
   max-width: 90ch;
   margin: 16px 0 0;
   color: var(--c-b8b8b8, #b8b8b8);

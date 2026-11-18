@@ -72,7 +72,7 @@ export default function PollParticipation() {
   return (
     <section className={`${b.card} ${s.card}`} id="how-to-take-part" aria-labelledby="take-part-heading" tabIndex={-1}>
       <header className={b.header}>
-        <h3 id="take-part-heading">How to take part</h3>
+        <h3 id="take-part-heading">How to participate</h3>
         <span className={b.meta}>Until {how.closes}</span>
       </header>
       <p className={s.guidance}>

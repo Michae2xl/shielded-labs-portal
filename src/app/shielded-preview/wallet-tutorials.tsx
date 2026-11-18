@@ -19,7 +19,7 @@ export default function WalletTutorials() {
   return (
     <section className={`${b.card} ${s.section}`} id="wallet-tutorials" aria-labelledby="wallet-tutorials-title" tabIndex={-1}>
       <header className={b.header}>
-        <h3 id="wallet-tutorials-title">Wallet voting tutorials</h3>
+        <h3 id="wallet-tutorials-title">Video tutorials</h3>
         <span className={b.meta}>English audio &amp; captions</span>
       </header>
       <ul className={s.gallery}>

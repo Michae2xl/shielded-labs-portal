@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { NU7_1_TURNOUT, buildSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
-import { TurnoutByDayCard } from './poll-turnout-days';
+import { CoinholderShares, TurnoutByDayCard } from './poll-turnout-days';
 
 const NOW = Date.parse('2026-11-17T01:30:00Z');
 const at = (iso: string) => Date.parse(iso);
@@ -24,6 +24,9 @@ const SNAPSHOT = buildSnapshot(
   NOW,
 );
 const html = (snapshot: typeof SNAPSHOT | null) => renderToStaticMarkup(createElement(TurnoutByDayCard, { snapshot, now: NOW }));
+const shareChart = (snapshot: typeof SNAPSHOT) => renderToStaticMarkup(createElement(CoinholderShares, {
+  body: snapshot.bodies.find(body => body.unit === 'shares')!, questions: snapshot.questions,
+}));
 const text = (markup: string) => markup.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
 
 describe('panel ballots per day', () => {
@@ -44,8 +47,8 @@ describe('panel ballots per day', () => {
     expect(markup.match(/data-future="true"/g)).toHaveLength(3 * 13);
   });
   it('gives coinholders a separate question axis with current shares, never daily ballots', () => {
-    const markup = html(SNAPSHOT);
-    const shares = markup.slice(markup.indexOf('aria-labelledby="coinholder-bars-heading"'));
+    expect(html(SNAPSHOT)).not.toContain('coinholder-bars-heading');
+    const shares = shareChart(SNAPSHOT);
     expect(text(shares)).toContain('Coinholders 80 Q1 40 Q2 20 Q3 4 Q4 0 Q5 144 total shares');
     expect(shares).toContain('aria-label="Q1 Wind down ZCG: 80 shares"');
     expect(shares).toContain('The final tally shows the ZEC behind each answer.');
@@ -59,8 +62,7 @@ describe('panel ballots per day', () => {
       bodies: SNAPSHOT.bodies.map((body) => body.id === 'coinholders' ? { ...body, value: null, observedAt: null, state: 'unavailable' as const } : body),
       questions: SNAPSHOT.questions.map((question) => ({ ...question, shares: null })),
     };
-    const markup = html(unavailable);
-    const shares = markup.slice(markup.indexOf('aria-labelledby="coinholder-bars-heading"'));
+    const shares = shareChart(unavailable);
     expect(text(shares)).toContain('Awaiting a reading');
     expect(text(shares)).toContain('Coinholders — Q1 — Q2 — Q3 — Q4 — Q5 — total shares');
     expect(shares).toContain('aria-label="Q1 Wind down ZCG: shares unavailable"');
@@ -75,7 +77,7 @@ describe('panel ballots per day', () => {
   });
   it('waits without numbers before the first reading', () => {
     const out = text(html(null));
-    expect(out).toContain('Reading the vote chain and the panels.');
+    expect(out).toContain('Reading panel turnout.');
     expect(out).not.toMatch(/today/);
   });
 });

@@ -38,8 +38,8 @@ const text = (markup: string) => markup.replace(/<[^>]+>/g, ' ').replaceAll('&#x
 describe('live turnout panel', () => {
   it('shows one card per body: who it is, its count, its share of who may vote, and where the count comes from', () => {
     const out = text(html({ snapshot: SNAPSHOT }));
-    expect(out).toContain('Live turnout NU7.1 poll · day 2 of 15 · closes 1 Dec, 02:59 UTC');
-    expect(out).toContain('Coinholders Casts 42 Observed 17 Nov, 01:08 UTC Shares 680 Observed 17 Nov, 01:09 UTC View by question ↓');
+    expect(out).toContain('Panels NU7.1 poll · day 2 of 15 · closes 1 Dec, 02:59 UTC');
+    expect(out).toContain('Casts 42 Observed 17 Nov, 01:08 UTC Shares 680 Observed 17 Nov, 01:09 UTC');
     expect(out).toContain(`ZCAP ${ZCAP_LAST.ballots} ballots ${Math.round((ZCAP_LAST.ballots / 203) * 100)}% of 203 · last poll 68% 16 Nov Now Saved ${ZCAP_LAST.at.slice(11, 16)} UTC · SIV ↗`);
     expect(out).toContain('Zcash Brasil 3 ballots 17% of 18 16 Nov Now Live · Helios ↗');
     expect(out).toContain('ZecHub 1 ballot 4% of 23 16 Nov Now Live · Helios ↗');
@@ -55,7 +55,7 @@ describe('live turnout panel', () => {
       expect(markup).toContain(`aria-label="${name}, wallet site"`);
     }
     for (const name of ['Zcash Foundation', 'Zcash Brasil', 'ZecHub']) expect(markup).toContain(`aria-label="${name}"`);
-    expect(markup.match(/<img /g)).toHaveLength(6);
+    expect(markup.match(/aria-label="[^"]+, wallet site"/g)).toHaveLength(3);
   });
   it('shows the same activity metric for every question in ballot order with the observation time', () => {
     const markup = html({ snapshot: SNAPSHOT });
@@ -114,11 +114,11 @@ describe('live turnout panel', () => {
       NOW,
     );
     const out = text(html({ snapshot: down, failed: false }));
-    expect(out).toContain('Coinholders Casts 42 Observed 17 Nov, 01:08 UTC Shares — Awaiting a reading');
+    expect(out).toContain('Casts 42 Observed 17 Nov, 01:08 UTC Shares — Awaiting a reading');
     expect(out).not.toMatch(/Estimate|≈/);
   });
   it('lays the cards out four to a row at most', () => {
-    expect(html({ snapshot: SNAPSHOT })).toContain('--cards:4');
+    expect(html({ snapshot: SNAPSHOT })).toContain('--cards:3');
   });
   it('marks a reading the browser could not refresh as the last one', () => {
     expect(text(html({ snapshot: SNAPSHOT, failed: true }))).toContain('Last reading');

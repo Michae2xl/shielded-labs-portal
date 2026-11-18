@@ -11,7 +11,11 @@ test.describe('The poll as a site of its own', () => {
       await open(page, '/poll');
       const nav = page.getByRole('navigation', { name: 'Poll sections' });
       const links = nav.getByRole('link');
-      await expect(links).toHaveText(['Live turnout', 'Panel ballots', 'How to take part', 'Voting tutorials']);
+      await expect(links).toHaveText(['How to participate', 'Video tutorials', 'Coinholder activity by question', 'Panels']);
+      expect(await links.evaluateAll(items => {
+        const sections = items.map(a => document.getElementById(a.getAttribute('href')!.slice(1))!);
+        return sections.every((el, i) => i === 0 || (sections[i - 1].compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0);
+      })).toBe(true);
       await expect(nav).toBeInViewport({ ratio: 1 });
       for (const link of await links.all()) {
         const hash = (await link.getAttribute('href'))!;
@@ -29,7 +33,7 @@ test.describe('The poll as a site of its own', () => {
       await page.setViewportSize({ width, height: 900 });
       await open(page, '/poll');
       await page.getByRole('link', { name: 'Watch wallet tutorials' }).click();
-      const gallery = page.getByRole('region', { name: 'Wallet voting tutorials' });
+      const gallery = page.getByRole('region', { name: 'Video tutorials' });
       await expect(gallery.locator('video')).toHaveCount(0);
       for (const title of ['Vizor on desktop', 'Vizor on mobile', 'Zodl on mobile']) {
         const trigger = gallery.getByRole('button', { name: `Watch ${title}` });
@@ -63,7 +67,7 @@ test.describe('The poll as a site of its own', () => {
       const errors = await open(page, '/poll');
       const questions = page.getByRole('region', { name: 'Coinholder activity by question', exact: true });
       const totals = page.getByLabel('Coinholder activity across all questions');
-      await expect(page.getByRole('link', { name: 'View by question' })).toHaveAttribute('href', '#poll-turnout-questions');
+      await expect(page.getByRole('link', { name: 'Coinholder activity by question' })).toHaveAttribute('href', '#poll-turnout-questions');
       await expect(totals).toContainText('245');
       await expect(totals).toContainText('18,120');
       await expect(questions.locator('summary').first()).toContainText('51 casts');
@@ -105,7 +109,7 @@ test.describe('The poll as a site of its own', () => {
   test('shows the poll alone: its title, the live turnout, and no way into the rest of the portal', async ({ page }) => {
     await open(page, '/poll');
     await expect(page.getByRole('heading', { level: 1, name: 'ZCG / Dev Fund poll' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Live turnout' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Panels', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Panel ballots per day' })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Governance sections' })).toHaveCount(0);
     await expect(page.getByRole('button', { name: /Switch to the (light|dark) theme/ })).toBeVisible();
@@ -117,9 +121,9 @@ test.describe('The poll as a site of its own', () => {
     for (const jump of jumps) {
       expect([['#poll-turnout', true], ['#panel-ballots', true], ['#how-to-take-part', true], ['#poll-turnout-questions', true], ['#wallet-tutorials', true]]).toContainEqual(jump);
     }
-    await expect(page.getByRole('heading', { name: 'How to take part' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'How to participate' })).toBeVisible();
     // The jump lands below the page's fixed bar, with the block's title in view.
-    await page.getByRole('link', { name: 'How to take part' }).click();
+    await page.getByRole('link', { name: 'How to participate' }).click();
     await expect.poll(() => page.evaluate(() => {
       const bar = document.querySelector('header')!.getBoundingClientRect().bottom;
       const title = document.getElementById('take-part-heading')!.getBoundingClientRect().top;
