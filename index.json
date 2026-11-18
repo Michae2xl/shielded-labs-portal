@@ -922,10 +922,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0226.rst",
     "official": "https://zips.z.cash/zip-0226",
-    "updatedAt": "2026-10-21T13:31:50Z",
+    "updatedAt": "2026-11-10T20:20:20Z",
     "summary": "This ZIP (ZIP 226) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 227 5. The OrchardZSA protocol is an extension of the Orchard protocol that enables the issuance, transfer and burn of custom…",
-    "words": 4553,
-    "digest": "855240fec37121ca110ffa001e5d0931e72f3e7c119896b123adb5d8144217b7"
+    "words": 4522,
+    "digest": "b66e59e7c02d9db5ff1800c4ae49733fd4bcdd48a9a4f0a6ef6aadfd5c149d78"
   },
   {
     "id": "zip-0227",
@@ -948,10 +948,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0227.rst",
     "official": "https://zips.z.cash/zip-0227",
-    "updatedAt": "2026-07-09T10:12:54Z",
+    "updatedAt": "2026-11-10T20:20:20Z",
     "summary": "This ZIP (ZIP 227) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 226 10. This protocol is an extension of the Orchard protocol that enables the creation, transfer and burn of Custom Assets on the…",
     "words": 5300,
-    "digest": "8cec34cccb7d8257655c60fc6cf70c0dfc810a93bcc98dfe34c3c6719a16e1ac"
+    "digest": "28b7a61d018754177d77b690666253595d9d1c2e3e7eb85e9663aa36de3cc934"
   },
   {
     "id": "zip-0228",
@@ -1085,10 +1085,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0233.md",
     "official": "https://zips.z.cash/zip-0233",
-    "updatedAt": "2026-10-16T01:56:36Z",
+    "updatedAt": "2026-11-17T20:56:16Z",
     "summary": "This ZIP proposes the introduction of a mechanism to voluntarily remove funds entirely from circulation on the network. The explicit intent of this removal is that the funds will be returned to circulation through future block subsidies,…",
-    "words": 1105,
-    "digest": "790e204072833060eae5e7cb2563acc23394a17680b6ce48eb602b713dc65d53"
+    "words": 1213,
+    "digest": "7ff27d5df2f87ed694e759041f95e983e5cfa4d6bc4a5ae11a9f5f7175da924c"
   },
   {
     "id": "zip-0234",
@@ -1358,10 +1358,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0248.rst",
     "official": "https://zips.z.cash/zip-0248",
-    "updatedAt": "2026-11-03T21:39:34Z",
-    "summary": "This ZIP proposes an encoding for V7 Zcash transactions that is intended to reduce the impact of future changes to the Zcash transaction format on the Zcash ecosystem. It defines a new typecode-length-value encoding for a sequence of…",
-    "words": 10081,
-    "digest": "ce1c8970cc2a49e98c390b337a586b67d3a8b5800b6e71ebf643fc934f10f771"
+    "updatedAt": "2026-11-17T22:01:31Z",
+    "summary": "This ZIP proposes an encoding for v7 Zcash transactions that reduces the impact of future transaction format changes on wallets and other clients. Previous format changes required clients to update their parsers even when they did not use…",
+    "words": 12506,
+    "digest": "db175d8e6d5392bf46a3f95982b6b30f06e27a1499e5921dc1ccd823af061b42"
   },
   {
     "id": "zip-0250",
@@ -2923,7 +2923,7 @@
       "Kris Nuttycombe",
       "Jack Grigg"
     ],
-    "created": null,
+    "created": "2024-10-29",
     "license": "MIT",
     "discussionsTo": "https://github.com/zcash/zips/issues/803",
     "pullRequest": "https://github.com/zcash/zips/pull/919",
@@ -2931,10 +2931,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-2002.rst",
     "official": "https://zips.z.cash/zip-2002",
-    "updatedAt": "2026-09-01T20:42:01Z",
-    "summary": "This proposal makes the transaction fee explicit in the V7 transaction format, as an entry in the transparent transaction value pool balance map defined in ZIP 248 9. Instead of fees being implicit in the difference between the input value…",
-    "words": 723,
-    "digest": "765feba958dc4ee5667e8108a4aea4274c2551188c45100ae43d72934ab7036f"
+    "updatedAt": "2026-11-17T20:56:16Z",
+    "summary": "This proposal makes the transaction fee explicit in the v7 transaction format, as an entry in the transparent transaction value pool balance map defined in ZIP 248 10. Instead of fees being implicit in the difference between the input…",
+    "words": 769,
+    "digest": "3916a2ddd8a322166a7c76abd6ce5112a2eb95fb849883e68c1e81f9f20da3c1"
   },
   {
     "id": "zip-2003",
@@ -3242,6 +3242,29 @@
     "digest": "d1836ec970927efde06f0984d83fbb3505c9e6c4164b5742863e2d47e81fd652"
   },
   {
+    "id": "draft-howard-wind-down-zcg",
+    "number": null,
+    "title": "Winding Down Zcash Community Grants and Removal of ZCG Funds to the Network Sustainability Mechanism",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus / Process",
+    "owners": [
+      "Tom Howard"
+    ],
+    "created": "2026-10-28",
+    "license": "MIT",
+    "discussionsTo": "https://forum.zcashcommunity.com/t/end-zcg-and-send-its-funds-to-the-nsm/58515",
+    "pullRequest": "https://github.com/zcash/zips/pull/1423",
+    "kind": "draft",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/main/zips/draft-howard-wind-down-zcg.md",
+    "official": "https://zips.z.cash/draft-howard-wind-down-zcg",
+    "updatedAt": "2026-11-14T01:15:38Z",
+    "summary": "This ZIP proposes an orderly wind-down of Zcash Community Grants. At activation of the designated Mainnet network upgrade, ZCG would stop making new grants and begin winding down its operations. If ZCG’s 8% funding stream is still active,…",
+    "words": 4088,
+    "digest": "2a93ca53c1d9e48dcab22cf8521c28c3d2787ec69bea8c3e62b4fb80317d34c6"
+  },
+  {
     "id": "draft-mcgee-future-dev-legal-defense-fund",
     "number": null,
     "title": "Future Dev and Legal Defense Fund Lockbox, and Removal of ZCG Funds to the Network Sustainability Mechanism",
@@ -3384,6 +3407,48 @@
     "summary": "{Edit this to reflect the key words that are actually used.} The key words “MUST”, “REQUIRED”, “MUST NOT”, “SHOULD”, and “MAY” in this document are to be interpreted as described in BCP 14 1 when, and only when, they appear in all capitals.",
     "words": 163,
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
+  },
+  {
+    "id": "pr-1467-zip-0229",
+    "number": 229,
+    "title": "Version 6 Transaction Format",
+    "status": "Final",
+    "statusDetail": null,
+    "category": "Consensus",
+    "owners": [
+      "Daira-Emma Hopwood",
+      "Kris Nuttycombe",
+      "Dev Ojha",
+      "Sean Bowe"
+    ],
+    "created": "2026-06-13",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/1326",
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/76277923978855251cf356f5dc95a1a2978ceaff/zips/zip-0229.md",
+    "official": "https://github.com/zcash/zips/pull/1467",
+    "updatedAt": "2026-11-18T03:48:21Z",
+    "summary": "This ZIP defines version 6 of the Zcash transaction format, to be activated at NU6.3 8.",
+    "words": 3596,
+    "digest": "379a59a6af250fd5e8a7544f925a14dfaa8a6d95cffb9e5ad254182e1ff0c37a",
+    "base": "zip-0229",
+    "pull": {
+      "number": 1467,
+      "title": "ZIP 229: Subtract the Ironwood balancing value in the coinbase total output value",
+      "author": "daira",
+      "draft": true,
+      "url": "https://github.com/zcash/zips/pull/1467",
+      "headSha": "76277923978855251cf356f5dc95a1a2978ceaff",
+      "createdAt": "2026-11-18T03:48:17Z",
+      "updatedAt": "2026-11-18T03:48:21Z",
+      "change": "update",
+      "file": "zip-0229.md",
+      "files": [
+        "zip-0229.md"
+      ]
+    }
   },
   {
     "id": "pr-1463-draft-mcgee-future-dev-legal-defense-fund",
@@ -3889,9 +3954,9 @@
     "pullRequest": null,
     "kind": "proposal",
     "format": "md",
-    "source": "https://github.com/zcash/zips/blob/150b0de3bd834b5960019082cdf89b30bc7481b3/zips/draft-marek-miner-sentiment-polling.md",
+    "source": "https://github.com/zcash/zips/blob/a19554e87caa80179ba8fb4f9e9794f13a2d247c/zips/draft-marek-miner-sentiment-polling.md",
     "official": "https://github.com/zcash/zips/pull/1447",
-    "updatedAt": "2026-11-17T12:09:38Z",
+    "updatedAt": "2026-11-17T22:53:02Z",
     "summary": "This proposal specifies a mechanism for polling miners. A Poll Definition is a JSON document that gives a set of questions, an Option Code for each option, a Voting Period fixed in block heights, and the method by which the responses to…",
     "words": 5557,
     "digest": "789c761111f67f10612eb9b8a5dc11dd15e1e4e0548e08b43270faebc1244079",
@@ -3902,63 +3967,14 @@
       "author": "nuttycom",
       "draft": true,
       "url": "https://github.com/zcash/zips/pull/1447",
-      "headSha": "150b0de3bd834b5960019082cdf89b30bc7481b3",
+      "headSha": "a19554e87caa80179ba8fb4f9e9794f13a2d247c",
       "createdAt": "2026-11-06T22:00:35Z",
-      "updatedAt": "2026-11-17T12:09:38Z",
+      "updatedAt": "2026-11-17T22:53:02Z",
       "change": "new",
       "file": "draft-marek-miner-sentiment-polling.md",
       "files": [
         "draft-marek-miner-sentiment-polling.md",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1447-zip-0233",
-    "number": 233,
-    "title": "Network Sustainability Mechanism: Removing Funds From Circulation",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus / Ecosystem",
-    "owners": [
-      "Jason McGee",
-      "Zooko Wilcox",
-      "Mark Henderson",
-      "Tomek Piotrowski",
-      "Mariusz Pilarek",
-      "Paul Dann"
-    ],
-    "created": "2023-08-16",
-    "license": "BSD-2-Clause",
-    "discussionsTo": "https://github.com/zcash/zips/issues/922",
-    "pullRequest": null,
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/150b0de3bd834b5960019082cdf89b30bc7481b3/zips/zip-0233.md",
-    "official": "https://github.com/zcash/zips/pull/1447",
-    "updatedAt": "2026-11-17T12:09:38Z",
-    "summary": "This ZIP proposes the introduction of a mechanism to voluntarily remove funds entirely from circulation on the network. The explicit intent of this removal is that the funds will be returned to circulation through future block subsidies,…",
-    "words": 1125,
-    "digest": "21bff2074950bc12c1838cab9612431b123f0821e5412c473fdb91a9e22f73f5",
-    "base": "zip-0233",
-    "pull": {
-      "number": 1447,
-      "title": "ZIP 248 miner signalling fields; Miner Sentiment Polling draft",
-      "author": "nuttycom",
-      "draft": true,
-      "url": "https://github.com/zcash/zips/pull/1447",
-      "headSha": "150b0de3bd834b5960019082cdf89b30bc7481b3",
-      "createdAt": "2026-11-06T22:00:35Z",
-      "updatedAt": "2026-11-17T12:09:38Z",
-      "change": "update",
-      "file": "zip-0233.md",
-      "files": [
-        "draft-marek-miner-sentiment-polling.md",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
+        "zip-0248.rst"
       ]
     }
   },
@@ -3981,12 +3997,12 @@
     "pullRequest": "https://github.com/zcash/zips/pull/1156",
     "kind": "proposal",
     "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/150b0de3bd834b5960019082cdf89b30bc7481b3/zips/zip-0248.rst",
+    "source": "https://github.com/zcash/zips/blob/a19554e87caa80179ba8fb4f9e9794f13a2d247c/zips/zip-0248.rst",
     "official": "https://github.com/zcash/zips/pull/1447",
-    "updatedAt": "2026-11-17T12:09:38Z",
-    "summary": "This ZIP proposes an encoding for V7 Zcash transactions that reduces the impact of future transaction format changes on wallets and other clients. Previous format changes required clients to update their parsers even when they did not use…",
-    "words": 11925,
-    "digest": "2f66e0d6e9ab36fcd964645939289979f4b012e5230339ee942f9c5f9dd3cab0",
+    "updatedAt": "2026-11-17T22:53:02Z",
+    "summary": "This ZIP proposes an encoding for v7 Zcash transactions that reduces the impact of future transaction format changes on wallets and other clients. Previous format changes required clients to update their parsers even when they did not use…",
+    "words": 12769,
+    "digest": "5cd3ee4abc20568bbb83083665ea482eabd9d021df19702bd05af057765eb02e",
     "base": "zip-0248",
     "pull": {
       "number": 1447,
@@ -3994,60 +4010,14 @@
       "author": "nuttycom",
       "draft": true,
       "url": "https://github.com/zcash/zips/pull/1447",
-      "headSha": "150b0de3bd834b5960019082cdf89b30bc7481b3",
+      "headSha": "a19554e87caa80179ba8fb4f9e9794f13a2d247c",
       "createdAt": "2026-11-06T22:00:35Z",
-      "updatedAt": "2026-11-17T12:09:38Z",
+      "updatedAt": "2026-11-17T22:53:02Z",
       "change": "update",
       "file": "zip-0248.rst",
       "files": [
         "draft-marek-miner-sentiment-polling.md",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1447-zip-2002",
-    "number": 2002,
-    "title": "Explicit Fees",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus",
-    "owners": [
-      "Daira-Emma Hopwood",
-      "Kris Nuttycombe",
-      "Jack Grigg"
-    ],
-    "created": null,
-    "license": "MIT",
-    "discussionsTo": "https://github.com/zcash/zips/issues/803",
-    "pullRequest": "https://github.com/zcash/zips/pull/919",
-    "kind": "proposal",
-    "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/150b0de3bd834b5960019082cdf89b30bc7481b3/zips/zip-2002.rst",
-    "official": "https://github.com/zcash/zips/pull/1447",
-    "updatedAt": "2026-11-17T12:09:38Z",
-    "summary": "This proposal makes the transaction fee explicit in the V7 transaction format, as an entry in the transparent transaction value pool balance map defined in ZIP 248 9. Instead of fees being implicit in the difference between the input value…",
-    "words": 902,
-    "digest": "15405314e3b98dcdf612e7a44d36b334aa6e32a4b618a245bc25e2e64be51a3a",
-    "base": "zip-2002",
-    "pull": {
-      "number": 1447,
-      "title": "ZIP 248 miner signalling fields; Miner Sentiment Polling draft",
-      "author": "nuttycom",
-      "draft": true,
-      "url": "https://github.com/zcash/zips/pull/1447",
-      "headSha": "150b0de3bd834b5960019082cdf89b30bc7481b3",
-      "createdAt": "2026-11-06T22:00:35Z",
-      "updatedAt": "2026-11-17T12:09:38Z",
-      "change": "update",
-      "file": "zip-2002.rst",
-      "files": [
-        "draft-marek-miner-sentiment-polling.md",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
+        "zip-0248.rst"
       ]
     }
   },
@@ -4088,237 +4058,6 @@
       "file": "zip-0207.rst",
       "files": [
         "zip-0207.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1443-zip-0226",
-    "number": 226,
-    "title": "Transfer and Burn of Zcash Shielded Assets",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus",
-    "owners": [
-      "Pablo Kogan",
-      "Vivek Arte",
-      "Daira-Emma Hopwood",
-      "Jack Grigg"
-    ],
-    "created": "2022-05-01",
-    "license": "MIT",
-    "discussionsTo": "https://github.com/zcash/zips/issues/618",
-    "pullRequest": "https://github.com/zcash/zips/pull/680",
-    "kind": "proposal",
-    "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/4b32fdc694cded047a95ffb61de1bdf05c8004b9/zips/zip-0226.rst",
-    "official": "https://github.com/zcash/zips/pull/1443",
-    "updatedAt": "2026-11-17T20:58:20Z",
-    "summary": "This ZIP (ZIP 226) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 227 5. The OrchardZSA protocol is an extension of the Orchard protocol that enables the issuance, transfer and burn of custom…",
-    "words": 4522,
-    "digest": "b66e59e7c02d9db5ff1800c4ae49733fd4bcdd48a9a4f0a6ef6aadfd5c149d78",
-    "base": "zip-0226",
-    "pull": {
-      "number": 1443,
-      "title": "ZIP 248 fixes",
-      "author": "str4d",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1443",
-      "headSha": "4b32fdc694cded047a95ffb61de1bdf05c8004b9",
-      "createdAt": "2026-11-05T20:35:47Z",
-      "updatedAt": "2026-11-17T20:58:20Z",
-      "change": "update",
-      "file": "zip-0226.rst",
-      "files": [
-        "zip-0226.rst",
-        "zip-0227.rst",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1443-zip-0227",
-    "number": 227,
-    "title": "Issuance of Zcash Shielded Assets",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus",
-    "owners": [
-      "Pablo Kogan",
-      "Vivek Arte",
-      "Daira-Emma Hopwood",
-      "Jack Grigg"
-    ],
-    "created": "2022-05-01",
-    "license": "MIT",
-    "discussionsTo": "https://github.com/zcash/zips/issues/618",
-    "pullRequest": "https://github.com/zcash/zips/pull/680",
-    "kind": "proposal",
-    "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/4b32fdc694cded047a95ffb61de1bdf05c8004b9/zips/zip-0227.rst",
-    "official": "https://github.com/zcash/zips/pull/1443",
-    "updatedAt": "2026-11-17T20:58:20Z",
-    "summary": "This ZIP (ZIP 227) proposes the Orchard Zcash Shielded Assets (OrchardZSA) protocol, in conjunction with ZIP 226 10. This protocol is an extension of the Orchard protocol that enables the creation, transfer and burn of Custom Assets on the…",
-    "words": 5300,
-    "digest": "28b7a61d018754177d77b690666253595d9d1c2e3e7eb85e9663aa36de3cc934",
-    "base": "zip-0227",
-    "pull": {
-      "number": 1443,
-      "title": "ZIP 248 fixes",
-      "author": "str4d",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1443",
-      "headSha": "4b32fdc694cded047a95ffb61de1bdf05c8004b9",
-      "createdAt": "2026-11-05T20:35:47Z",
-      "updatedAt": "2026-11-17T20:58:20Z",
-      "change": "update",
-      "file": "zip-0227.rst",
-      "files": [
-        "zip-0226.rst",
-        "zip-0227.rst",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1443-zip-0233",
-    "number": 233,
-    "title": "Network Sustainability Mechanism: Removing Funds From Circulation",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus / Ecosystem",
-    "owners": [
-      "Jason McGee",
-      "Zooko Wilcox",
-      "Mark Henderson",
-      "Tomek Piotrowski",
-      "Mariusz Pilarek",
-      "Paul Dann"
-    ],
-    "created": "2023-08-16",
-    "license": "BSD-2-Clause",
-    "discussionsTo": "https://github.com/zcash/zips/issues/922",
-    "pullRequest": null,
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/4b32fdc694cded047a95ffb61de1bdf05c8004b9/zips/zip-0233.md",
-    "official": "https://github.com/zcash/zips/pull/1443",
-    "updatedAt": "2026-11-17T20:58:20Z",
-    "summary": "This ZIP proposes the introduction of a mechanism to voluntarily remove funds entirely from circulation on the network. The explicit intent of this removal is that the funds will be returned to circulation through future block subsidies,…",
-    "words": 1213,
-    "digest": "7ff27d5df2f87ed694e759041f95e983e5cfa4d6bc4a5ae11a9f5f7175da924c",
-    "base": "zip-0233",
-    "pull": {
-      "number": 1443,
-      "title": "ZIP 248 fixes",
-      "author": "str4d",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1443",
-      "headSha": "4b32fdc694cded047a95ffb61de1bdf05c8004b9",
-      "createdAt": "2026-11-05T20:35:47Z",
-      "updatedAt": "2026-11-17T20:58:20Z",
-      "change": "update",
-      "file": "zip-0233.md",
-      "files": [
-        "zip-0226.rst",
-        "zip-0227.rst",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1443-zip-0248",
-    "number": 248,
-    "title": "Extensible Transaction Format",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus / Wallet",
-    "owners": [
-      "Jack Grigg",
-      "Kris Nuttycombe",
-      "Daira-Emma Hopwood",
-      "Schell Scivally"
-    ],
-    "created": "2025-12-17",
-    "license": "MIT",
-    "discussionsTo": "https://github.com/zcash/zips/pull/1163",
-    "pullRequest": "https://github.com/zcash/zips/pull/1156",
-    "kind": "proposal",
-    "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/4b32fdc694cded047a95ffb61de1bdf05c8004b9/zips/zip-0248.rst",
-    "official": "https://github.com/zcash/zips/pull/1443",
-    "updatedAt": "2026-11-17T20:58:20Z",
-    "summary": "This ZIP proposes an encoding for v7 Zcash transactions that reduces the impact of future transaction format changes on wallets and other clients. Previous format changes required clients to update their parsers even when they did not use…",
-    "words": 13477,
-    "digest": "68a5e25288605f4a88d4181b63ca95441ef0927d6312662327366033ccd7a2ad",
-    "base": "zip-0248",
-    "pull": {
-      "number": 1443,
-      "title": "ZIP 248 fixes",
-      "author": "str4d",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1443",
-      "headSha": "4b32fdc694cded047a95ffb61de1bdf05c8004b9",
-      "createdAt": "2026-11-05T20:35:47Z",
-      "updatedAt": "2026-11-17T20:58:20Z",
-      "change": "update",
-      "file": "zip-0248.rst",
-      "files": [
-        "zip-0226.rst",
-        "zip-0227.rst",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1443-zip-2002",
-    "number": 2002,
-    "title": "Explicit Fees",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus",
-    "owners": [
-      "Daira-Emma Hopwood",
-      "Kris Nuttycombe",
-      "Jack Grigg"
-    ],
-    "created": "2024-10-29",
-    "license": "MIT",
-    "discussionsTo": "https://github.com/zcash/zips/issues/803",
-    "pullRequest": "https://github.com/zcash/zips/pull/919",
-    "kind": "proposal",
-    "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/4b32fdc694cded047a95ffb61de1bdf05c8004b9/zips/zip-2002.rst",
-    "official": "https://github.com/zcash/zips/pull/1443",
-    "updatedAt": "2026-11-17T20:58:20Z",
-    "summary": "This proposal makes the transaction fee explicit in the v7 transaction format, as an entry in the transparent transaction value pool balance map defined in ZIP 248 10. Instead of fees being implicit in the difference between the input…",
-    "words": 769,
-    "digest": "3916a2ddd8a322166a7c76abd6ce5112a2eb95fb849883e68c1e81f9f20da3c1",
-    "base": "zip-2002",
-    "pull": {
-      "number": 1443,
-      "title": "ZIP 248 fixes",
-      "author": "str4d",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1443",
-      "headSha": "4b32fdc694cded047a95ffb61de1bdf05c8004b9",
-      "createdAt": "2026-11-05T20:35:47Z",
-      "updatedAt": "2026-11-17T20:58:20Z",
-      "change": "update",
-      "file": "zip-2002.rst",
-      "files": [
-        "zip-0226.rst",
-        "zip-0227.rst",
-        "zip-0233.md",
-        "zip-0248.rst",
-        "zip-2002.rst"
       ]
     }
   },
@@ -4444,8 +4183,8 @@
     }
   },
   {
-    "id": "pr-1437-draft-valargroup-20-second-block-target-spacing",
-    "number": null,
+    "id": "pr-1437-zip-0223",
+    "number": 223,
     "title": "Reduce Block Target Spacing from 25 to 20 Seconds",
     "status": "Draft",
     "statusDetail": null,
@@ -4460,26 +4199,26 @@
     "pullRequest": null,
     "kind": "proposal",
     "format": "md",
-    "source": "https://github.com/zcash/zips/blob/3d430060bc864929d3138b0014e68728bb548f73/zips/draft-valargroup-20-second-block-target-spacing.md",
+    "source": "https://github.com/zcash/zips/blob/7b5363fc8c12c3b28d66bb312adcf41a111aa5be/zips/zip-0223.md",
     "official": "https://github.com/zcash/zips/pull/1437",
-    "updatedAt": "2026-11-17T20:13:24Z",
+    "updatedAt": "2026-11-18T01:23:09Z",
     "summary": "This proposal reduces block target spacing from 25 to 20 seconds in a network upgrade after NU7. It builds on ZIP 218 and lowers its per-block shielded action limits and global shielded budget by 20%, from 330 to 264 Orchard-protocol…",
     "words": 2447,
-    "digest": "4b9ca8db15ecb9fc0c2412859470c3cbe0f1c22250c813371a187214a7f6621f",
+    "digest": "dba10a9462dd8e240c02a20ac01896ee61eeae92ec3b7e49a51ca31377e54897",
     "base": null,
     "pull": {
       "number": 1437,
-      "title": "Draft ZIP: Reduce block target spacing from 25 to 20 seconds",
+      "title": "ZIP 223: Reduce block target spacing from 25 to 20 seconds",
       "author": "evan-forbes",
       "draft": false,
       "url": "https://github.com/zcash/zips/pull/1437",
-      "headSha": "3d430060bc864929d3138b0014e68728bb548f73",
+      "headSha": "7b5363fc8c12c3b28d66bb312adcf41a111aa5be",
       "createdAt": "2026-11-05T16:48:32Z",
-      "updatedAt": "2026-11-17T20:13:24Z",
+      "updatedAt": "2026-11-18T01:23:09Z",
       "change": "new",
-      "file": "draft-valargroup-20-second-block-target-spacing.md",
+      "file": "zip-0223.md",
       "files": [
-        "draft-valargroup-20-second-block-target-spacing.md"
+        "zip-0223.md"
       ]
     }
   },
@@ -4716,45 +4455,6 @@
       "file": "draft-marek-compact-block-relay.md",
       "files": [
         "draft-marek-compact-block-relay.md"
-      ]
-    }
-  },
-  {
-    "id": "pr-1423-draft-howard-wind-down-zcg",
-    "number": null,
-    "title": "Winding Down Zcash Community Grants and Removal of ZCG Funds to the Network Sustainability Mechanism",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus / Process",
-    "owners": [
-      "Tom Howard"
-    ],
-    "created": "2026-10-28",
-    "license": "MIT",
-    "discussionsTo": "https://forum.zcashcommunity.com/t/end-zcg-and-send-its-funds-to-the-nsm/58515",
-    "pullRequest": "https://github.com/zcash/zips/pull/1423",
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/29524e15bfd394142fbc6170ee77eceae6fd3b81/zips/draft-howard-wind-down-zcg.md",
-    "official": "https://github.com/zcash/zips/pull/1423",
-    "updatedAt": "2026-11-14T01:15:40Z",
-    "summary": "This ZIP proposes an orderly wind-down of Zcash Community Grants. At activation of the designated Mainnet network upgrade, ZCG would stop making new grants and begin winding down its operations. If ZCG’s 8% funding stream is still active,…",
-    "words": 4088,
-    "digest": "2a93ca53c1d9e48dcab22cf8521c28c3d2787ec69bea8c3e62b4fb80317d34c6",
-    "base": null,
-    "pull": {
-      "number": 1423,
-      "title": "Draft ZIP: Wind down Zcash Community Grants and redirect its funding",
-      "author": "thowar2",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1423",
-      "headSha": "29524e15bfd394142fbc6170ee77eceae6fd3b81",
-      "createdAt": "2026-10-29T07:00:25Z",
-      "updatedAt": "2026-11-14T01:15:40Z",
-      "change": "new",
-      "file": "draft-howard-wind-down-zcg.md",
-      "files": [
-        "draft-howard-wind-down-zcg.md"
       ]
     }
   },
