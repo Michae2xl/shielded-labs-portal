@@ -15,7 +15,7 @@ import { findUpcomingUpgrade } from './upcoming-upgrades';
 export type ShareParams = Partial<Record<'view' | 'project' | 'section' | 'record' | 'lane' | 'q', string>>;
 export type ShareImage = { src: string; width: number; height: number; alt: string };
 // `linkTitle` names the page in the link text when the image shows its identifier elsewhere, as a ZIP's number.
-export type ShareCard = { chip?: string; title: string; linkTitle?: string; subtitle: string; description: string; image?: ShareImage; live?: 'nsm'; brand?: true };
+export type ShareCard = { chip?: string; title: string; linkTitle?: string; socialTitle?: string; subtitle: string; description: string; image?: ShareImage; live?: 'nsm'; brand?: true };
 
 export const SUBTITLE_MAX = 72;
 const DESCRIPTION_MAX = 160;
@@ -71,7 +71,7 @@ function governanceCard(params: ShareParams): ShareCard | null {
   if (upcoming) return { chip: 'Network upgrade', title: upcoming.name, subtitle: line(upcoming.stage, `${upcoming.fact.name}: ${upcoming.fact.value}`), description: clip(upcoming.summary, DESCRIPTION_MAX) };
   const poll = record.polls.find(item => `poll:${item.id}` === id);
   if (poll) return { chip: 'Poll', title: poll.name, subtitle: line(day(poll.date)), description: clip(poll.outcome ?? poll.status ?? 'Zcash community poll.', DESCRIPTION_MAX) };
-  if (params.lane === devFundLane && params.section === 'voting') return { image: { src: '/logos/zcash-governance-cover.png', width: 1734, height: 907, alt: 'Zcash Governance — Shielded Labs' }, chip: 'Live turnout', title: 'ZCG / Dev Fund poll', subtitle: 'Coinholders, ZCAP and community panels · 16 Nov to 1 Dec 2026', description: 'Live turnout of the ZCG / Dev Fund poll: coinholder votes on the vote chain and ZCAP and community panel ballots, from public sources.' };
+  if (params.lane === devFundLane && params.section === 'voting') return { socialTitle: GOVERNANCE_SITE, image: { src: '/logos/zcash-governance-cover.png?v=2', width: 1734, height: 907, alt: 'Zcash Governance — Shielded Labs' }, chip: 'Live turnout', title: 'ZCG / Dev Fund poll', subtitle: 'Coinholders, ZCAP and community panels · 16 Nov to 1 Dec 2026', description: 'Live turnout of the ZCG / Dev Fund poll: coinholder votes on the vote chain and ZCAP and community panel ballots, from public sources.' };
   if (params.lane === devFundLane) return { chip: 'Governance', title: devFundTimeline.title, subtitle: 'Published calendar for proposals and polling', description: 'The published calendar for proposals, poll questions and polling.' };
   const section = governanceSectionFromSlug(params.section);
   if (!section || section === 'Overview') return null;
@@ -127,6 +127,7 @@ export function shareMetadata(params: ShareParams, origin: string) {
   const card = shareCard(params);
   const site = params.view === 'governance' ? GOVERNANCE_SITE : SITE.title;
   const title = card.brand || card.title === site ? card.title : `${card.linkTitle ?? card.title} · ${site}`;
+  const socialTitle = card.socialTitle ?? title;
   const query = new URLSearchParams((['view', 'project', 'section', 'record', 'lane'] as const).flatMap(key => params[key] ? [[key, params[key]!]] : []));
   const image = card.image
     ? { url: new URL(card.image.src, origin).href, width: card.image.width, height: card.image.height, alt: card.image.alt }
@@ -134,7 +135,7 @@ export function shareMetadata(params: ShareParams, origin: string) {
   return {
     title,
     description: card.description,
-    openGraph: { title, description: card.description, siteName: site, type: 'website' as const, images: [image] },
-    twitter: { card: 'summary_large_image' as const, title, description: card.description, images: [image.url] },
+    openGraph: { title: socialTitle, description: card.description, siteName: site, type: 'website' as const, images: [image] },
+    twitter: { card: 'summary_large_image' as const, title: socialTitle, description: card.description, images: [image.url] },
   };
 }
