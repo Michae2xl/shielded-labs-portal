@@ -29,6 +29,26 @@ test.describe('The poll as a site of its own', () => {
       expect(await sidewaysOverflow(page)).toBe(0);
     });
 
+    test(`miner cards and manual verification work at ${width}px`, async ({ page, context }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+      await page.route('**/api/shielded-preview/miner-poll', route => route.fulfill({ json: {
+        phase: 'counting', height: 3591399, tallied: 200, withBallot: 50, questions: null, updatedAt: '2026-11-20T02:00:00Z',
+      } }));
+      await open(page, '/poll#miner-sentiment');
+      const card = page.locator('#miner-sentiment');
+      await expect(card.locator('dt')).toHaveText(['Status', 'Blocks tallied', 'Blocks with a ballot']);
+      await expect(card.getByText('25.0% of tallied blocks')).toBeVisible();
+      const boxes = await card.locator('dl > div').evaluateAll(items => items.map(item => item.getBoundingClientRect().top));
+      expect(boxes[1]).toBe(boxes[2]);
+      if (width === 375) expect(boxes[1]).toBeGreaterThan(boxes[0]);
+      else expect(boxes[1]).toBe(boxes[0]);
+      await card.getByRole('button', { name: 'Copy command' }).click();
+      await expect(card.getByText('Command copied.')).toBeVisible();
+      expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(await card.locator('pre code').textContent());
+      expect(await sidewaysOverflow(page)).toBe(0);
+    });
+
     test(`coinholders can play each wallet tutorial at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await open(page, '/poll');
