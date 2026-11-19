@@ -122,7 +122,9 @@ test.describe('The poll as a site of its own', () => {
       await expect(totals).toContainText('245');
       await expect(totals).toContainText('18,120');
       for (const value of await totals.locator('dt + dd').all()) await expect(value).toHaveCSS('text-align', 'center');
-      const unitPositions = await questions.locator('summary').evaluateAll(rows => rows.map(row =>
+      const questionRows = questions.locator('ol > li > details > summary');
+      await expect(questionRows).toHaveCount(5);
+      const unitPositions = await questionRows.evaluateAll(rows => rows.map(row =>
         [...row.querySelectorAll('small')].map(unit => unit.getBoundingClientRect().left)
       ));
       for (const [casts, shares] of unitPositions) {
