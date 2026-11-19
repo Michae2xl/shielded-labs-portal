@@ -234,34 +234,31 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
               <BodyCard key={body.id} body={body} w={w} hover={crosshair.hover} onPointer={crosshair.onPointer} onLeave={crosshair.clear} />
             ))}
           </ol>
-          <footer className={s.foot}>
-            <details className={s.table}>
-              <summary>Daily panel counts</summary>
-              <table>
-                <caption className={s.caption}>Each panel’s cumulative ballots at the end of each poll day, UTC. ZCAP shows its last observed total that day.</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Day</th>
-                    {panels.bodies.map((b) => (
-                      <th key={b.id} scope="col">
-                        {b.name}
-                      </th>
+          <div className={s.srOnly}>
+            <table>
+              <caption>Cumulative panel ballots by UTC day. ZCAP uses the latest observation available by that point.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Day</th>
+                  {panels.bodies.map((b) => (
+                    <th key={b.id} scope="col">
+                      {b.name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {dailyRows(panels, now).map((row) => (
+                  <tr key={row.day}>
+                    <th scope="row">{dayLabel(row.day)}</th>
+                    {row.values.map((v, i) => (
+                      <td key={panels.bodies[i].id}>{formatCount(v)}</td>
                     ))}
                   </tr>
-                </thead>
-                <tbody>
-                  {dailyRows(panels, now).map((row) => (
-                    <tr key={row.day}>
-                      <th scope="row">{dayLabel(row.day)}</th>
-                      {row.values.map((v, i) => (
-                        <td key={panels.bodies[i].id}>{formatCount(v)}</td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </details>
-          </footer>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </>
       ) : (
         <p className={s.waiting}>{failed ? 'Turnout unavailable right now.' : 'Reading panel turnout.'}</p>
