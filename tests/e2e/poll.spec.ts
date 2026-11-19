@@ -43,7 +43,19 @@ test.describe('The poll as a site of its own', () => {
       expect(boxes[1]).toBe(boxes[2]);
       if (width === 375) expect(boxes[1]).toBeGreaterThan(boxes[0]);
       else expect(boxes[1]).toBe(boxes[0]);
-      await card.getByRole('button', { name: 'Copy command' }).click();
+      const resources = card.getByRole('navigation', { name: 'Miner poll resources' });
+      const resourceLinks = resources.getByRole('link');
+      await expect(resourceLinks).toHaveText(['Official tally', 'Poll rules', 'Ballot builder', 'Foundation announcement']);
+      await expect(resourceLinks.first()).toHaveAttribute('href', 'https://miner-poll.zfnd.org/');
+      for (const item of await resourceLinks.all()) {
+        await expect(item).toBeVisible();
+        await expect(item).toHaveAttribute('target', '_blank');
+        expect((await item.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+      }
+      const copy = card.getByRole('button', { name: 'Copy command' });
+      await expect(copy).toBeHidden();
+      await card.getByText('Verify the tally', { exact: true }).press('Enter');
+      await copy.click();
       await expect(card.getByText('Command copied.')).toBeVisible();
       expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(await card.locator('pre code').textContent());
       expect(await sidewaysOverflow(page)).toBe(0);

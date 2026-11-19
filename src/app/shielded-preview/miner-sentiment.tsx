@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { eligibleBlocks, minerPoll, type MinerReading } from '@/lib/shielded-preview/miner-poll/poll';
 import { NU7_1_TURNOUT } from '@/lib/shielded-preview/poll-turnout/turnout';
 import { formatCount, stampLabel } from '@/lib/shielded-preview/poll-turnout/view';
+import { leavingLink } from '@/lib/shielded-preview/editorial/library';
+import { OutArrow } from './governance-link';
+import fund from './governance-dev-fund.module.css';
 import panel from './poll-turnout.module.css';
 import s from './miner-sentiment.module.css';
 
@@ -29,47 +32,46 @@ function VerifyTally() {
       }
     }
   }
-  return <section className={s.verify} aria-labelledby="miner-verify-heading">
-    <div className={s.verifyHead}>
-      <h4 id="miner-verify-heading">Verify the tally</h4>
-      <a href={minerPoll.tally}>View official miner tally ↗</a>
+  return <details className={s.details}>
+    <summary>Verify the tally</summary>
+    <div className={s.verify}>
+      <p>From block {formatCount(minerPoll.start)}, run Zebra’s <code>miner-poll</code> against a synced mainnet <code>zebrad</code> node with RPC enabled.</p>
+      <div className={s.command}>
+        <pre><code ref={command}>{tallyCommand}</code></pre>
+        <button className={fund.resourceButton} type="button" onClick={copyCommand}>Copy command</button>
+      </div>
+      <span role="status" className={s.copyStatus}>{copyStatus}</span>
+      <p>Compare <code>blocks_with_ballot</code> with the official tally at the same <code>tallied_through_height</code>.</p>
     </div>
-    <p>Compare the counts at the same block height on the Foundation’s tally. To check them independently, run <code>miner-poll</code> from Zebra’s <code>zebra-utils</code> against a synced mainnet <code>zebrad</code> node with RPC enabled.</p>
-    <div className={s.command}>
-      <pre><code ref={command}>{tallyCommand}</code></pre>
-      <button type="button" onClick={copyCommand}>Copy command</button>
-    </div>
-    <span role="status" className={s.copyStatus}>{copyStatus}</span>
-    <p className={s.hint}>The command works from block {formatCount(minerPoll.start)}. In the JSON output, <code>tallied_through_height</code> is the last block checked and <code>blocks_with_ballot</code> is the ballot count.</p>
-  </section>;
+  </details>;
 }
 
 function StatusNote({ reading }: { reading: MinerReading }) {
   switch (reading.phase) {
     case 'upcoming': {
       const remaining = minerPoll.start - reading.height;
-      return <>Opens in {formatCount(remaining)} {remaining === 1 ? 'block' : 'blocks'} at height {formatCount(minerPoll.start)}.</>;
+      return <>Opens in {formatCount(remaining)} {remaining === 1 ? 'block' : 'blocks'} (block {formatCount(minerPoll.start)})</>;
     }
     case 'counting': return <>Last eligible block {formatCount(minerPoll.end)}.</>;
-    case 'confirming': return <>All eligible blocks tallied. Awaiting the official final result.</>;
-    case 'final': return <>Final tally through block {formatCount(minerPoll.end)}.</>;
+    case 'confirming': return <>{minerPoll.confirmations} confirmations required.</>;
+    case 'final': return <>Through block {formatCount(minerPoll.end)}.</>;
   }
 }
 
 export function MinerCard({ reading, failed = false }: { reading: MinerReading | null; failed?: boolean }) {
   return <section id="miner-sentiment" className={panel.panel} aria-labelledby="miner-heading" tabIndex={-1}>
     <header className={panel.head}>
-      <div><h3 id="miner-heading">Miner sentiment</h3><p className={panel.sub}>In this Zcash Foundation pilot, miners and pools can answer the five NU7.1 questions in each block they mine. A pool can signal more than once.</p></div>
+      <div><h3 id="miner-heading">Miner sentiment</h3><p className={panel.sub}>Miners and pools can submit one ballot per block on the five NU7.1 questions.</p></div>
     </header>
     {reading ? <>
       <dl className={s.metrics} aria-label="NU7.1 miner poll summary">
         <div><dt>Status</dt><dd>{phaseLabel[reading.phase]}</dd><dd className={s.note}><StatusNote reading={reading}/></dd></div>
         <div><dt>Blocks tallied</dt><dd>{formatCount(reading.tallied)}</dd>
-          <dd className={s.note}>of {formatCount(eligibleBlocks)} eligible blocks ({percent.format(reading.tallied / eligibleBlocks)})</dd></div>
+          <dd className={s.note}>of {formatCount(eligibleBlocks)} eligible blocks{reading.tallied > 0 && ` (${percent.format(reading.tallied / eligibleBlocks)})`}</dd></div>
         <div><dt>Blocks with a ballot</dt><dd>{formatCount(reading.withBallot)}</dd>
-          <dd className={s.note}>{reading.tallied > 0 ? `${percent.format(reading.withBallot / reading.tallied)} of tallied blocks` : 'No blocks tallied yet'}</dd></div>
+          {reading.tallied > 0 && <dd className={s.note}>{percent.format(reading.withBallot / reading.tallied)} of tallied blocks</dd>}</div>
       </dl>
-      <p className={s.stamp}>Source updated <time dateTime={reading.updatedAt}>{stampLabel(Date.parse(reading.updatedAt))}</time> · Mainnet block {formatCount(reading.height)}</p>
+      <p className={s.stamp}>Updated <time dateTime={reading.updatedAt}>{stampLabel(Date.parse(reading.updatedAt))}</time> · Mainnet block {formatCount(reading.height)}</p>
     </> : <p className={s.notice} role="status">{failed ? 'The official tally is unavailable.' : 'Loading the official tally…'}</p>}
     {failed && reading && <p className={s.notice} role="status">Refresh unavailable. Showing the last reading received.</p>}
     {reading?.questions && <details className={s.details}>
@@ -83,13 +85,17 @@ export function MinerCard({ reading, failed = false }: { reading: MinerReading |
         </table>
       </div>
     </details>}
-    <details className={s.details}>
-      <summary>How the tally works</summary>
-      <p>Each of the {formatCount(eligibleBlocks)} mainnet blocks from {formatCount(minerPoll.start)} through {formatCount(minerPoll.end)} can carry one counted ballot. Miners can support, oppose, abstain or skip a question. Skipping leaves it unanswered.</p>
-      <p>The block heights set the voting window. The final tally requires 100 confirmations of the last eligible block.</p>
-      <div className={s.links}><a href={minerPoll.definition}>Poll rules ↗</a><a href={minerPoll.announcement}>Foundation announcement ↗</a><a href={minerPoll.builder}>Ballot builder ↗</a></div>
-    </details>
     <VerifyTally/>
+    <nav className={s.links} aria-label="Miner poll resources">
+      {[
+        ['Official tally', minerPoll.tally],
+        ['Poll rules', minerPoll.definition],
+        ['Ballot builder', minerPoll.builder],
+        ['Foundation announcement', minerPoll.announcement],
+      ].map(([label, href]) => (
+        <a key={href} className={fund.resourceButton} href={href} {...leavingLink(href)}>{label}<OutArrow/></a>
+      ))}
+    </nav>
   </section>;
 }
 

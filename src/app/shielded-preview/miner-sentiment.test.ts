@@ -22,8 +22,8 @@ describe('miner sentiment card', () => {
     expect(html).toContain('Not started');
     expect(html).toContain('Opens in 1,261 blocks');
     expect(html).not.toContain('Results by question');
-    expect(html).toContain('No blocks tallied yet');
-    expect(html).toContain('of 38,451 eligible blocks (0.0%)');
+    expect(html).not.toContain('No blocks tallied yet');
+    expect(html).toContain('of 38,451 eligible blocks');
   });
   it('shows the official command and explains how to compare readings', () => {
     const html = render(null, true);
