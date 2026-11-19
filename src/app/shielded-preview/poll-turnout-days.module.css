@@ -1,5 +1,6 @@
 /* Panel ballots per day, with coinholder shares on a separate question axis. */
 section.card {
+  margin-block-start: 16px;
   scroll-margin-top: 90px;
 }
 .card, .sharesBlock {

@@ -134,9 +134,12 @@ describe('live turnout panel', () => {
     expect(out).toContain('Loading');
     expect(out).not.toMatch(/\d+ ballots/);
   });
-  it('keeps a daily table for reading without the charts', () => {
-    const out = text(html({ snapshot: SNAPSHOT }));
-    expect(out).toContain('Daily panel counts');
+  it('keeps cumulative totals accessible without a separate daily disclosure', () => {
+    const markup = html({ snapshot: SNAPSHOT });
+    const out = text(markup);
+    expect(out).not.toContain('Daily panel counts');
+    expect(markup).toContain('<table><caption>Cumulative panel ballots by UTC day.');
+    expect(out).toContain('Panel ballots per day');
     expect(out).toContain('16 Nov 24 3 1 17 Nov 29 3 1');
   });
   it('opens external sources in a new tab without leaking the opener', () => {
