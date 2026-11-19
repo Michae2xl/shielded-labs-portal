@@ -7,7 +7,11 @@ import PollSite from './poll-site';
 
 export const dynamic = 'force-dynamic';
 export async function generateMetadata(): Promise<Metadata> {
-  return governanceMetadata({ section: 'voting', lane: 'dev-fund' }, await headers());
+  return {
+    ...governanceMetadata({ section: 'voting', lane: 'dev-fund' }, await headers()),
+    title: 'Zcash Governance',
+    icons: { icon: '/logos/shielded-labs.png' },
+  };
 }
 /** The ZCG / Dev Fund poll as a site of its own: what the launch address shows at its root. */
 export default function PollPage() {
