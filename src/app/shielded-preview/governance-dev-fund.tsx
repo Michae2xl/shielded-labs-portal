@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { CoinholderProtocolGuide } from './coinholder-protocol-guide';
 import { leavingLink, sourceHref } from '@/lib/shielded-preview/editorial/library';
 import { devFundAcceptsProposals, devFundLane, devFundNextSteps, devFundNotices as notices, devFundPhase, devFundPublished, devFundStepState, devFundSources as sources, devFundTimeline as timeline, type DevFundPublication } from '@/lib/shielded-preview/governance-dev-fund';
-import { Arrow, Link, type CollectionNavigate } from './governance-link';
+import { Arrow, OutArrow, Link, type CollectionNavigate } from './governance-link';
 import PollTurnout from './poll-turnout';
 import MinerSentiment from './miner-sentiment';
 import PollParticipation from './poll-participation';
@@ -26,9 +26,6 @@ function useNow() {
   return now;
 }
 
-function OutArrow() {
-  return <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>;
-}
 /** A citation: it opens in the portal when the portal holds the document, and leaves otherwise. */
 function Cited({ href, children, className = s.link }: { href: string; children: ReactNode; className?: string }) {
   const target = sourceHref(href);
