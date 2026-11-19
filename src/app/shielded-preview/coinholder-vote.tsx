@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
 import { headerUrl, type AnswerWeight } from '@/lib/shielded-preview/poll-turnout/vote-chain';
 import { formatCount, stampLabel } from '@/lib/shielded-preview/poll-turnout/view';
@@ -88,7 +88,7 @@ export function CoinholderVote({ snapshot, walletLogos }: { snapshot: TurnoutSna
         </p>}
       </header>
       {!published && chain && <CoinholderCounts snapshot={snapshot} body={chain} />}
-      <ol>
+      <ol style={{ '--share-digits': Math.max(1, ...snapshot.questions.map(question => formatCount(question.shares).length)) } as CSSProperties}>
         {snapshot.questions.map((question) => {
           const official = snapshot.round === officialBallot.round ? officialBallot.questions.find((q) => q.id === question.id) : undefined;
           return <li key={question.id}>
