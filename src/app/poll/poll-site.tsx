@@ -19,6 +19,7 @@ const sectionLinks = [
   { href: '#wallet-tutorials', label: 'Video tutorials', icon: 'M3 5h18v14H3z M10 9l5 3-5 3z' },
   { href: '#poll-turnout-questions', label: 'Coinholder activity by question', icon: 'M4 4v16h17 M8 16v-4 M13 16V7 M18 16v-6' },
   { href: '#poll-turnout', label: 'Panels', icon: 'M3 4h7v7H3z M14 4h7v7h-7z M3 15h7v5H3z M14 15h7v5h-7z' },
+  { href: '#miner-sentiment', label: 'Miner sentiment', icon: 'm12 3 8 4.5v9L12 21l-8-4.5v-9z M4 7.5l8 4.5 8-4.5 M12 12v9' },
 ] as const;
 const HOUR = 3_600_000;
 const DAY = 24 * HOUR;
@@ -98,7 +99,7 @@ export default function PollSite() {
           <div className={s.intro}>
             <h1 id="poll-title">ZCG / Dev Fund poll</h1>
             <p className={s.lead}>
-              Coinholders, ZCAP members and community panels vote on five questions about Zcash grant funding and target block time.
+              Coinholders, ZCAP members and community panels vote on five questions about Zcash grant funding and target block time. Miners can signal on the same questions in the blocks they mine.
             </p>
             <nav className={s.sectionNav} aria-label="Poll sections">
               {sectionLinks.map(({ href, label, icon }) => (

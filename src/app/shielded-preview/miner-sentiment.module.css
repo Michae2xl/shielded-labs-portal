@@ -1,0 +1,31 @@
+.reading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 36px;
+  margin-top: 16px;
+  padding: 12px 0;
+  border-block: 1px solid var(--tp-line);
+}
+.reading > div { display: grid; gap: 2px; }
+.reading strong { font-size: 26px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.reading span, .stamp, .details p, .tableBox caption { color: var(--tp-ink-2); font-size: 13px; line-height: 1.5; }
+.phase { margin-inline-start: auto; }
+.phase b { font-size: 14px; font-weight: 600; }
+.stamp { margin: 8px 0 14px; font-variant-numeric: tabular-nums; }
+.notice { color: var(--tp-ink-2); margin: 14px 0; }
+.details { border-top: 1px solid var(--tp-line); }
+.details summary { padding: 10px 0; cursor: pointer; font-size: 14px; font-weight: 550; }
+.details p { max-width: 78ch; margin: 0 0 8px; }
+.links { display: flex; gap: 10px 20px; flex-wrap: wrap; padding: 6px 0; }
+.links a { color: var(--tp-ink); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.links a:hover { color: var(--tp-s3); }
+.tableBox { max-width: 100%; overflow-x: auto; }
+.tableBox table { border-collapse: collapse; width: 100%; text-align: right; font-size: 13px; font-variant-numeric: tabular-nums; }
+.tableBox caption { text-align: left; padding: 0 0 8px; }
+.tableBox th, .tableBox td { border-bottom: 1px solid var(--tp-line); padding: 6px; }
+.tableBox th:first-child { text-align: left; }
+@media (max-width: 560px) {
+  .reading { gap: 12px 24px; }
+  .phase { flex-basis: 100%; margin-inline-start: 0; }
+}

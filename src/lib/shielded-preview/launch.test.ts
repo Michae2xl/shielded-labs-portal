@@ -24,6 +24,7 @@ describe('the launch address', () => {
   it('serves only the data the page reads', () => {
     const host = 'governance.shieldedlabs.net';
     expect(launchRoute(host, '/api/shielded-preview/turnout')).toBeNull();
+    expect(launchRoute(host, '/api/shielded-preview/miner-poll')).toBeNull();
     expect(launchRoute(host, '/api/shielded-preview/governance')).toEqual({ notFound: true });
     expect(launchRoute(host, '/api/shielded-preview/contact')).toEqual({ notFound: true });
   });
