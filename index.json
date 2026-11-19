@@ -477,8 +477,8 @@
     "id": "zip-0207",
     "number": 207,
     "title": "Funding Streams",
-    "status": "Proposed",
-    "statusDetail": "[Revision 0: Canopy, Revision 1: NU6] Final, [Revision 2: NU7] Proposed",
+    "status": "Final",
+    "statusDetail": "[Revision 0: Canopy, Revision 1: NU6, Revision 2: NU7] Final",
     "category": "Consensus",
     "owners": [
       "Jack Grigg",
@@ -492,10 +492,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0207.rst",
     "official": "https://zips.z.cash/zip-0207",
-    "updatedAt": "2026-11-06T15:44:24Z",
+    "updatedAt": "2026-11-18T22:47:58Z",
     "summary": "This proposal specifies a mechanism to support funding streams, distributed from a portion of the block subsidy for a specified range of block heights.",
-    "words": 2555,
-    "digest": "ba3d1e31dc46fbd4986eeefec77174a28942dc6c1db5ca25f9f2113a81073bce"
+    "words": 2553,
+    "digest": "81eddb21b06aa8762c2031ffdfaace4d9880ac98ab044c280dedd41e30b8a20d"
   },
   {
     "id": "zip-0208",
@@ -641,8 +641,8 @@
     "id": "zip-0214",
     "number": 214,
     "title": "Consensus rules for a Zcash Development Fund",
-    "status": "Proposed",
-    "statusDetail": "[Revision 0: Canopy, Revision 1: NU6] Final, [Revision 2: NU6.1] Proposed, [Revision 3: NU7] Proposed",
+    "status": "Final",
+    "statusDetail": "[Revision 0: Canopy, Revision 1: NU6, Revision 2: NU6.1, Revision 3: NU7] Final",
     "category": "Consensus",
     "owners": [
       "Daira-Emma Hopwood",
@@ -656,10 +656,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0214.rst",
     "official": "https://zips.z.cash/zip-0214",
-    "updatedAt": "2026-10-21T14:15:10Z",
+    "updatedAt": "2026-11-18T22:47:58Z",
     "summary": "Revision 0 of this ZIP describes consensus rule changes interpreting the proposed structure of the Zcash Development Fund, which was enacted in Network Upgrade 4 and lasted for 4 years.",
-    "words": 2465,
-    "digest": "9b0d2f2166e7931ee9c5751e86f92bc8fb76421eceecbdeca92e92d464c3af81"
+    "words": 2462,
+    "digest": "a79637fc1a534a672d972a21c3758c3b1c37922e60de3dd897650e5af0428343"
   },
   {
     "id": "zip-0215",
@@ -735,7 +735,7 @@
     "id": "zip-0218",
     "number": 218,
     "title": "25-second Block Target Spacing",
-    "status": "Proposed",
+    "status": "Final",
     "statusDetail": null,
     "category": "Consensus",
     "owners": [
@@ -750,10 +750,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0218.md",
     "official": "https://zips.z.cash/zip-0218",
-    "updatedAt": "2026-11-06T15:44:24Z",
+    "updatedAt": "2026-11-18T22:47:58Z",
     "summary": "This proposal specifies a change in the block target spacing from 75 seconds to 25 seconds in NU7, and introduces per-pool action limits for the Sapling, Orchard, and Ironwood shielded pools.",
-    "words": 5936,
-    "digest": "7eca7fef2568b3102939663a084be3573d658faa0c260b2f43423b146ca7ed38"
+    "words": 5929,
+    "digest": "1dfa0d259290a18d29cecf667943e10043bbdc67947425c4ff9d944011f3fc34"
   },
   {
     "id": "zip-0219",
@@ -1027,10 +1027,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0229.md",
     "official": "https://zips.z.cash/zip-0229",
-    "updatedAt": "2026-11-06T01:48:42Z",
+    "updatedAt": "2026-11-18T00:21:25Z",
     "summary": "This ZIP defines version 6 of the Zcash transaction format, to be activated at NU6.3 8.",
-    "words": 3503,
-    "digest": "46373cab72dc8303406239c05e763641bd620d8fa7ea6551a0e316e1a0b67cea"
+    "words": 3596,
+    "digest": "379a59a6af250fd5e8a7544f925a14dfaa8a6d95cffb9e5ad254182e1ff0c37a"
   },
   {
     "id": "zip-0230",
@@ -1146,7 +1146,7 @@
     "id": "zip-0235",
     "number": 235,
     "title": "Remove 60% of Transaction Fees From Circulation",
-    "status": "Proposed",
+    "status": "Final",
     "statusDetail": null,
     "category": "Consensus / Ecosystem",
     "owners": [
@@ -1165,10 +1165,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0235.md",
     "official": "https://zips.z.cash/zip-0235",
-    "updatedAt": "2026-11-06T15:44:24Z",
+    "updatedAt": "2026-11-18T22:47:58Z",
     "summary": "This ZIP proposes to remove 60% of transaction fees from circulation, while the remaining 40% is directed as before. The intent of this removal is that the funds will be automatically and algorithmically reissued through future block…",
-    "words": 1658,
-    "digest": "fa98e1cf0bb2fbdb64105bcaf7bdd7e079853239589af09f664e3b193870043a"
+    "words": 1655,
+    "digest": "02ce57d0f3877a8224e84fa353a403c39e54ff39d93ec0ddd071deff2e55591a"
   },
   {
     "id": "zip-0236",
@@ -1197,7 +1197,7 @@
     "id": "zip-0237",
     "number": 237,
     "title": "Network Sustainability Mechanism: Halving-Preserving Issuance",
-    "status": "Proposed",
+    "status": "Final",
     "statusDetail": null,
     "category": "Consensus",
     "owners": [
@@ -1211,10 +1211,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0237.md",
     "official": "https://zips.z.cash/zip-0237",
-    "updatedAt": "2026-11-06T15:44:25Z",
+    "updatedAt": "2026-11-18T22:47:58Z",
     "summary": "This ZIP proposes a change to how nodes calculate the block subsidy.",
-    "words": 3063,
-    "digest": "69f7a78245664172d726c4c42517578322bd2a693fe275d313009ebbcba19a3f"
+    "words": 3058,
+    "digest": "fae0e26ebcc595d36b4f3bedc0636248eb068e7b27ba6b93ceb8b4f538f5143f"
   },
   {
     "id": "zip-0239",
@@ -1598,7 +1598,7 @@
     "id": "zip-0259",
     "number": 259,
     "title": "Deployment of the NU7 Network Upgrade",
-    "status": "Proposed",
+    "status": "Final",
     "statusDetail": null,
     "category": "Consensus / Network",
     "owners": [
@@ -1612,10 +1612,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0259.md",
     "official": "https://zips.z.cash/zip-0259",
-    "updatedAt": "2026-11-06T15:44:25Z",
+    "updatedAt": "2026-11-18T22:47:58Z",
     "summary": "This proposal defines the deployment of the NU7 network upgrade. NU7 reduces the block target spacing from 75 seconds to 25 seconds, introduces per-pool and global shielded action limits, introduces the Network Sustainability Mechanism…",
-    "words": 1221,
-    "digest": "03afae16e93bca7cda3638a29afff1e02af40fdd6868995fd56fa1ef0df438b5"
+    "words": 1219,
+    "digest": "09dfc4820bd015bf18697152587d0a465d8790005f874674ca90e2adf1957966"
   },
   {
     "id": "zip-0260",
@@ -1668,7 +1668,7 @@
     "id": "zip-0271",
     "number": 271,
     "title": "Dev Fund Extension and One-Time Disbursement",
-    "status": "Proposed",
+    "status": "Final",
     "statusDetail": null,
     "category": "Consensus / Process",
     "owners": [
@@ -1684,10 +1684,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0271.md",
     "official": "https://zips.z.cash/zip-0271",
-    "updatedAt": "2026-09-24T13:47:28Z",
+    "updatedAt": "2026-11-18T23:01:40Z",
     "summary": "This ZIP proposes an extension of protocol-based development funding, in the context of multiple alternatives for distributing funds that have accrued to the Deferred Dev Fund Lockbox. This proposal is intended to be evaluated in the…",
     "words": 3228,
-    "digest": "88141f0743e669475ee68edb74283566f81480632b29f83273323df3e8f2f733"
+    "digest": "6e863a387d567726e8e502e027406f9d5aade1906a9ae9acb4c074edf1ad7e24"
   },
   {
     "id": "zip-0300",
@@ -2184,10 +2184,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0320.rst",
     "official": "https://zips.z.cash/zip-0320",
-    "updatedAt": "2026-02-10T21:17:45Z",
+    "updatedAt": "2026-11-19T00:01:28Z",
     "summary": "This ZIP defines a new encoding for transparent Zcash addresses. Wallets must ensure that no shielded notes are spent in transactions that send to a transparent address encoded in the specified fashion.",
-    "words": 1608,
-    "digest": "9363ce263a1a85d0c3aee91f959dfed2ea7716d0e86bc7ce4a49f13d85ed36f0"
+    "words": 1948,
+    "digest": "8762db9e7eaf0a47e6329c95502e174cd8e4a447eef7fb80b3e5a3a211cd44e3"
   },
   {
     "id": "zip-0321",
@@ -2868,9 +2868,9 @@
     "id": "zip-1015",
     "number": 1015,
     "title": "Block Subsidy Allocation for Non-Direct Development Funding",
-    "status": "Final",
+    "status": "Active",
     "statusDetail": null,
-    "category": "Consensus",
+    "category": "Consensus Process",
     "owners": [
       "Jason McGee",
       "@Peacemonger (Zcash Forum)",
@@ -2884,18 +2884,18 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-1015.rst",
     "official": "https://zips.z.cash/zip-1015",
-    "updatedAt": "2025-02-20T14:10:26Z",
+    "updatedAt": "2026-11-18T23:00:47Z",
     "summary": "This ZIP proposes the allocation of a percentage of the Zcash block subsidy, post-November 2024 halving, split between Zcash Community Grants (ZCG) and an in-protocol \"lockbox.\" The \"lockbox\" is a separate pool of issued funds tracked by…",
     "words": 2512,
-    "digest": "f1dc763612be7e8e8f4f0609decf3b8d2d250fb2e41ca85e73529ddba7b23df6"
+    "digest": "e6d0958362e46932a4022ad6cbad21e6b8c86a50457997b0fa57f2d30073a062"
   },
   {
     "id": "zip-1016",
     "number": 1016,
     "title": "Community and Coinholder Funding Model",
-    "status": "Proposed",
+    "status": "Active",
     "statusDetail": null,
-    "category": "Consensus / Process",
+    "category": "Consensus Process",
     "owners": [
       "Josh Swihart"
     ],
@@ -2907,10 +2907,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-1016.md",
     "official": "https://zips.z.cash/zip-1016",
-    "updatedAt": "2026-09-24T13:47:28Z",
+    "updatedAt": "2026-11-18T23:00:47Z",
     "summary": "This proposal outlines a funding model that gives the community and coin holders distinct voices in determining what, if any, grants are provided to support Zcash’s development and community efforts.",
     "words": 1759,
-    "digest": "53b2db6f394ee2850c212e564b464127bd1b52ea39bdecfe5ba5000d3358a27a"
+    "digest": "6e6b6b43829d8ab7539047a5100e73c05e5f303270a70f8404f1afa7af115a86"
   },
   {
     "id": "zip-2001",
@@ -2964,7 +2964,7 @@
     "id": "zip-2003",
     "number": 2003,
     "title": "Disallow version 4 transactions",
-    "status": "Proposed",
+    "status": "Final",
     "statusDetail": null,
     "category": "Consensus",
     "owners": [
@@ -2978,10 +2978,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-2003.rst",
     "official": "https://zips.z.cash/zip-2003",
-    "updatedAt": "2026-10-22T14:45:44Z",
+    "updatedAt": "2026-11-18T22:47:58Z",
     "summary": "This proposal disallows all v4 transactions from NU7 onward. It therefore affects every workflow that creates v4 transactions, not only workflows involving Sprout. Neither the v5 transaction format 8 introduced in the NU5 network upgrade,…",
-    "words": 913,
-    "digest": "85cb55c8ea35bbc3c2468f8ce0b47ee73af4f5faefc631b7c454334bc4332635"
+    "words": 910,
+    "digest": "50c8d888b665ba25e64dd828c548de370f7691bd290e3c38980e24d286d532bc"
   },
   {
     "id": "zip-2004",
@@ -3080,7 +3080,7 @@
     "id": "zip-2008",
     "number": 2008,
     "title": "Update to `FS_FPF_ZCG_H3` address list",
-    "status": "Proposed",
+    "status": "Final",
     "statusDetail": null,
     "category": "Consensus",
     "owners": [
@@ -3094,10 +3094,10 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-2008.md",
     "official": "https://zips.z.cash/zip-2008",
-    "updatedAt": "2026-11-06T15:44:24Z",
+    "updatedAt": "2026-11-18T22:47:58Z",
     "summary": "This ZIP updates the address list for the FS_FPF_ZCG_H3 funding stream, reflecting operational changes by the recipient.",
-    "words": 752,
-    "digest": "ae847ff3cea74b68ef06bc7a2ffa3e9dc579054f761f5a8aa76991d0142966e9"
+    "words": 749,
+    "digest": "83ab4d1cd9f0c8b9eec389bf5d7374c372d7e42de05a652a645e77ee8c0362de"
   },
   {
     "id": "zip-2009",
@@ -3433,6 +3433,89 @@
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
   },
   {
+    "id": "pr-1474-zip-0272",
+    "number": 272,
+    "title": "Zcash Consensus Accounts",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus",
+    "owners": [
+      "Kris Nuttycombe",
+      "Jack Grigg",
+      "Daira-Emma Hopwood"
+    ],
+    "created": "2026-01-11",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/1165",
+    "pullRequest": "https://github.com/zcash/zips/pull/1162",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/6056cbadce85bf1727a241ad5a309826a4f7db97/zips/zip-0272.md",
+    "official": "https://github.com/zcash/zips/pull/1474",
+    "updatedAt": "2026-11-19T00:34:17Z",
+    "summary": "This ZIP introduces a system of transparent consensus accounts for receiving newly-issued ZEC, with spending from each account being controlled by a ZIP 270 5 signing key. Consensus accounts supplement (but do not replace) shielded…",
+    "words": 3371,
+    "digest": "bf984a3c5439cbea08c5edc215956b4b22b8a965946507f86f503e6ad2604bc8",
+    "base": null,
+    "pull": {
+      "number": 1474,
+      "title": "[ZIP 272]: Define the consensus account bundles in terms of ZIP 248 and ZIP 270",
+      "author": "arya2",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1474",
+      "headSha": "6056cbadce85bf1727a241ad5a309826a4f7db97",
+      "createdAt": "2026-11-19T00:34:16Z",
+      "updatedAt": "2026-11-19T00:34:17Z",
+      "change": "new",
+      "file": "zip-0272.md",
+      "files": [
+        "zip-0272.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1473-zip-0270",
+    "number": 270,
+    "title": "Key Rotation for Tracked Signing Keys",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus",
+    "owners": [
+      "Jack Grigg",
+      "Kris Nuttycombe",
+      "Daira-Emma Hopwood",
+      "Arya"
+    ],
+    "created": "2025-09-16",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/1047",
+    "pullRequest": "https://github.com/zcash/zips/pull/1473",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/61ebfddead83b065312a34f923a57aacb17b530f/zips/zip-0270.md",
+    "official": "https://github.com/zcash/zips/pull/1473",
+    "updatedAt": "2026-11-19T00:34:39Z",
+    "summary": "This ZIP describes a mechanism for keys registered at the consensus level to be rotated, or migrated between supported signing protocols.",
+    "words": 3375,
+    "digest": "3465d00b089c2857c2c1f55c5924296189342318575978e2dc4d554c9c543c54",
+    "base": "zip-0270",
+    "pull": {
+      "number": 1473,
+      "title": "[ZIP 270]: Specify the key state, key rotation operations, and the v7 key rotation bundle",
+      "author": "arya2",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1473",
+      "headSha": "61ebfddead83b065312a34f923a57aacb17b530f",
+      "createdAt": "2026-11-19T00:33:40Z",
+      "updatedAt": "2026-11-19T00:34:39Z",
+      "change": "update",
+      "file": "zip-0270.md",
+      "files": [
+        "zip-0270.md"
+      ]
+    }
+  },
+  {
     "id": "pr-1470-draft-upbqdn-legacy-tree-roots",
     "number": null,
     "title": "Note Commitment Tree Roots for the Legacy P2P Protocol",
@@ -3468,88 +3551,6 @@
       "file": "draft-upbqdn-legacy-tree-roots.rst",
       "files": [
         "draft-upbqdn-legacy-tree-roots.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1469-zip-0320",
-    "number": 320,
-    "title": "Defining an Address Type to which funds can only be sent from Transparent Addresses",
-    "status": "Active",
-    "statusDetail": null,
-    "category": "Standards / Wallet",
-    "owners": [
-      "Daira-Emma Hopwood",
-      "Kris Nuttycombe"
-    ],
-    "created": "2024-01-12",
-    "license": "MIT",
-    "discussionsTo": "https://github.com/zcash/zips/issues/757",
-    "pullRequest": "https://github.com/zcash/zips/pull/760",
-    "kind": "proposal",
-    "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/9c5f8cca4221c16f858a176c00431045585cce12/zips/zip-0320.rst",
-    "official": "https://github.com/zcash/zips/pull/1469",
-    "updatedAt": "2026-11-18T14:52:01Z",
-    "summary": "This ZIP defines a new encoding for transparent Zcash addresses. Wallets must ensure that no shielded notes are spent in transactions that send to a transparent address encoded in the specified fashion.",
-    "words": 1972,
-    "digest": "70f3fd06e83f1dbfad66a00c42956d8d2bf05169cabe709dec6db1818e7eff10",
-    "base": "zip-0320",
-    "pull": {
-      "number": 1469,
-      "title": "[ZIP 320] Specify decoding edge cases, Regtest and test vectors",
-      "author": "Anirudh-712",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1469",
-      "headSha": "9c5f8cca4221c16f858a176c00431045585cce12",
-      "createdAt": "2026-11-18T14:52:01Z",
-      "updatedAt": "2026-11-18T14:52:01Z",
-      "change": "update",
-      "file": "zip-0320.rst",
-      "files": [
-        "zip-0320.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1467-zip-0229",
-    "number": 229,
-    "title": "Version 6 Transaction Format",
-    "status": "Final",
-    "statusDetail": null,
-    "category": "Consensus",
-    "owners": [
-      "Daira-Emma Hopwood",
-      "Kris Nuttycombe",
-      "Dev Ojha",
-      "Sean Bowe"
-    ],
-    "created": "2026-06-13",
-    "license": "MIT",
-    "discussionsTo": "https://github.com/zcash/zips/issues/1326",
-    "pullRequest": null,
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/76277923978855251cf356f5dc95a1a2978ceaff/zips/zip-0229.md",
-    "official": "https://github.com/zcash/zips/pull/1467",
-    "updatedAt": "2026-11-18T03:48:21Z",
-    "summary": "This ZIP defines version 6 of the Zcash transaction format, to be activated at NU6.3 8.",
-    "words": 3596,
-    "digest": "379a59a6af250fd5e8a7544f925a14dfaa8a6d95cffb9e5ad254182e1ff0c37a",
-    "base": "zip-0229",
-    "pull": {
-      "number": 1467,
-      "title": "ZIP 229: Subtract the Ironwood balancing value in the coinbase total output value",
-      "author": "daira",
-      "draft": true,
-      "url": "https://github.com/zcash/zips/pull/1467",
-      "headSha": "76277923978855251cf356f5dc95a1a2978ceaff",
-      "createdAt": "2026-11-18T03:48:17Z",
-      "updatedAt": "2026-11-18T03:48:21Z",
-      "change": "update",
-      "file": "zip-0229.md",
-      "files": [
-        "zip-0229.md"
       ]
     }
   },
@@ -4057,22 +4058,22 @@
     "pullRequest": null,
     "kind": "proposal",
     "format": "md",
-    "source": "https://github.com/zcash/zips/blob/a19554e87caa80179ba8fb4f9e9794f13a2d247c/zips/draft-marek-miner-sentiment-polling.md",
+    "source": "https://github.com/zcash/zips/blob/c0dba9f2c8794fdec61deb7fdd25e676fadc5f79/zips/draft-marek-miner-sentiment-polling.md",
     "official": "https://github.com/zcash/zips/pull/1447",
-    "updatedAt": "2026-11-17T22:53:02Z",
+    "updatedAt": "2026-11-18T23:18:39Z",
     "summary": "This proposal specifies a mechanism for polling miners. A Poll Definition is a JSON document that gives a set of questions, an Option Code for each option, a Voting Period fixed in block heights, and the method by which the responses to…",
-    "words": 5557,
-    "digest": "789c761111f67f10612eb9b8a5dc11dd15e1e4e0548e08b43270faebc1244079",
+    "words": 6469,
+    "digest": "6ccf038ad8d1dde32d9ed6f5b2675f256f6d662ab93faae6e6ae37eadb87b998",
     "base": null,
     "pull": {
       "number": 1447,
       "title": "ZIP 248 miner signalling fields; Miner Sentiment Polling draft",
       "author": "nuttycom",
-      "draft": true,
+      "draft": false,
       "url": "https://github.com/zcash/zips/pull/1447",
-      "headSha": "a19554e87caa80179ba8fb4f9e9794f13a2d247c",
+      "headSha": "c0dba9f2c8794fdec61deb7fdd25e676fadc5f79",
       "createdAt": "2026-11-06T22:00:35Z",
-      "updatedAt": "2026-11-17T22:53:02Z",
+      "updatedAt": "2026-11-18T23:18:39Z",
       "change": "new",
       "file": "draft-marek-miner-sentiment-polling.md",
       "files": [
@@ -4100,9 +4101,9 @@
     "pullRequest": "https://github.com/zcash/zips/pull/1156",
     "kind": "proposal",
     "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/a19554e87caa80179ba8fb4f9e9794f13a2d247c/zips/zip-0248.rst",
+    "source": "https://github.com/zcash/zips/blob/c0dba9f2c8794fdec61deb7fdd25e676fadc5f79/zips/zip-0248.rst",
     "official": "https://github.com/zcash/zips/pull/1447",
-    "updatedAt": "2026-11-17T22:53:02Z",
+    "updatedAt": "2026-11-18T23:18:39Z",
     "summary": "This ZIP proposes an encoding for v7 Zcash transactions that reduces the impact of future transaction format changes on wallets and other clients. Previous format changes required clients to update their parsers even when they did not use…",
     "words": 12769,
     "digest": "5cd3ee4abc20568bbb83083665ea482eabd9d021df19702bd05af057765eb02e",
@@ -4111,11 +4112,11 @@
       "number": 1447,
       "title": "ZIP 248 miner signalling fields; Miner Sentiment Polling draft",
       "author": "nuttycom",
-      "draft": true,
+      "draft": false,
       "url": "https://github.com/zcash/zips/pull/1447",
-      "headSha": "a19554e87caa80179ba8fb4f9e9794f13a2d247c",
+      "headSha": "c0dba9f2c8794fdec61deb7fdd25e676fadc5f79",
       "createdAt": "2026-11-06T22:00:35Z",
-      "updatedAt": "2026-11-17T22:53:02Z",
+      "updatedAt": "2026-11-18T23:18:39Z",
       "change": "update",
       "file": "zip-0248.rst",
       "files": [
@@ -4301,12 +4302,12 @@
     "pullRequest": null,
     "kind": "proposal",
     "format": "md",
-    "source": "https://github.com/zcash/zips/blob/91e3dce26b1883fc19a3599e34a6d622f8c1cdad/zips/draft-marek-node-network-limited.md",
+    "source": "https://github.com/zcash/zips/blob/3ca5c34d7c947de8afce48a84c7654f10b4c5351/zips/draft-marek-node-network-limited.md",
     "official": "https://github.com/zcash/zips/pull/1436",
-    "updatedAt": "2026-11-16T07:30:39Z",
+    "updatedAt": "2026-11-18T23:25:13Z",
     "summary": "This ZIP defines the service flag NODE_NETWORK_LIMITED for the Zcash peer-to-peer protocol specified in ZIP 204 2. A node that sets it serves at least the most recent 2,304 blocks of its best chain, but not necessarily older blocks. It is…",
-    "words": 597,
-    "digest": "b218e67059774e98fc952480f4bf3438cf9d2500c693549d4ae96c1a113b632d",
+    "words": 776,
+    "digest": "55638ad858d3f3da3b4a9f9222ce0f7b92e3567dff5c89efc79422ff9c4f9f90",
     "base": null,
     "pull": {
       "number": 1436,
@@ -4314,9 +4315,9 @@
       "author": "upbqdn",
       "draft": false,
       "url": "https://github.com/zcash/zips/pull/1436",
-      "headSha": "91e3dce26b1883fc19a3599e34a6d622f8c1cdad",
+      "headSha": "3ca5c34d7c947de8afce48a84c7654f10b4c5351",
       "createdAt": "2026-11-03T23:27:17Z",
-      "updatedAt": "2026-11-16T07:30:39Z",
+      "updatedAt": "2026-11-18T23:25:13Z",
       "change": "new",
       "file": "draft-marek-node-network-limited.md",
       "files": [
@@ -4422,7 +4423,7 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/4fe8d25ce026c6444440e087408480017cbb0241/zips/draft-khadim-aryaethn-frost-member-backup.md",
     "official": "https://github.com/zcash/zips/pull/1432",
-    "updatedAt": "2026-11-18T13:08:55Z",
+    "updatedAt": "2026-11-18T23:26:46Z",
     "summary": "This ZIP defines a backup string for one member of a FROST group that spends shielded ZEC with Orchard-protocol keys (in the Orchard or Ironwood pool). The string holds the member’s identifier, the threshold, the group size, the member’s…",
     "words": 3482,
     "digest": "541463e2d69f271a1fb698fcdfe8028f41454f24fa3ac8036fad11cb01cc0c65",
@@ -4435,7 +4436,7 @@
       "url": "https://github.com/zcash/zips/pull/1432",
       "headSha": "4fe8d25ce026c6444440e087408480017cbb0241",
       "createdAt": "2026-11-02T16:33:35Z",
-      "updatedAt": "2026-11-18T13:08:55Z",
+      "updatedAt": "2026-11-18T23:26:46Z",
       "change": "new",
       "file": "draft-khadim-aryaethn-frost-member-backup.md",
       "files": [
