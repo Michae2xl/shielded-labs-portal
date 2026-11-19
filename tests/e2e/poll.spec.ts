@@ -121,6 +121,14 @@ test.describe('The poll as a site of its own', () => {
       await expect(page.getByRole('link', { name: 'Coinholder activity by question' })).toHaveAttribute('href', '#poll-turnout-questions');
       await expect(totals).toContainText('245');
       await expect(totals).toContainText('18,120');
+      for (const value of await totals.locator('dt + dd').all()) await expect(value).toHaveCSS('text-align', 'center');
+      const unitPositions = await questions.locator('summary').evaluateAll(rows => rows.map(row =>
+        [...row.querySelectorAll('small')].map(unit => unit.getBoundingClientRect().left)
+      ));
+      for (const [casts, shares] of unitPositions) {
+        expect(casts).toBeCloseTo(unitPositions[0][0], 0);
+        expect(shares).toBeCloseTo(unitPositions[0][1], 0);
+      }
       await expect(questions.locator('summary').first()).toContainText('51 casts');
       await expect(questions.locator('details[open]')).toHaveCount(0);
       await expect(questions.locator('summary').first()).toContainText('4,800 shares');
