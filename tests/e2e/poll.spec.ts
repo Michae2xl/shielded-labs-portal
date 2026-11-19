@@ -39,6 +39,9 @@ test.describe('The poll as a site of its own', () => {
       const card = page.locator('#miner-sentiment');
       await expect(card.locator('dt')).toHaveText(['Status', 'Blocks tallied', 'Blocks with a ballot']);
       await expect(card.getByText('25.0% of tallied blocks')).toBeVisible();
+      for (const value of await card.locator('dt + dd').all()) {
+        await expect(value).toHaveCSS('text-align', 'center');
+      }
       const boxes = await card.locator('dl > div').evaluateAll(items => items.map(item => item.getBoundingClientRect().top));
       expect(boxes[1]).toBe(boxes[2]);
       if (width === 375) expect(boxes[1]).toBeGreaterThan(boxes[0]);

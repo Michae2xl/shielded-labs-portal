@@ -6,14 +6,20 @@
 }
 .metrics > div {
   min-width: 0;
-  padding: 12px 15px;
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  row-gap: 5px;
+  padding: 16px 14px;
+  text-align: center;
   background: var(--tp-raised);
   border: 1px solid var(--tp-border);
   border-radius: 8px;
 }
-.metrics dt { color: var(--tp-ink-2); font-size: 13px; font-weight: 550; line-height: 1.4; }
-.metrics dd { margin: 5px 0 0; color: var(--tp-ink); font: 550 26px/1.15 var(--font-display); font-variant-numeric: tabular-nums; }
+.metrics dt { color: var(--tp-ink-2); font: 500 13px/1.4 var(--font-inter); }
+.metrics dd { margin: 0; color: var(--tp-ink); font: 600 clamp(25px, 3cqi, 30px)/1.15 var(--font-display); font-variant-numeric: tabular-nums; }
 .metrics dd.note, .details .verify p, .tableBox caption { color: var(--tp-ink-2); font: 400 13px/1.5 var(--font-inter); }
+.metrics dd.note { font-size: 12px; line-height: 1.5; text-wrap: balance; }
 .metrics + p.stamp { margin: 10px 0 16px; color: var(--tp-muted); font-size: 13px; line-height: 1.5; font-variant-numeric: tabular-nums; }
 p.notice { color: var(--tp-ink-2); margin: 14px 0; }
 .details { border-top: 1px solid var(--tp-line); }
@@ -40,7 +46,7 @@ details.details > summary { min-height: 44px; padding: 10px 0; cursor: pointer; 
 .copyStatus:not(:empty) { position: static; font-size: 13px; color: var(--tp-ink-2); }
 @container (max-width: 575px) {
   .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
-  .metrics > div { padding: 10px 12px; }
+  .metrics > div { padding: 12px 10px; }
   .metrics > div:first-child { grid-column: 1 / -1; }
   .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr)); }
   .command { flex-direction: column; align-items: stretch; gap: 8px; }
