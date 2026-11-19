@@ -39,6 +39,9 @@ test.describe('The poll as a site of its own', () => {
       const card = page.locator('#miner-sentiment');
       await expect(card.locator('dt')).toHaveText(['Status', 'Blocks tallied', 'Blocks with a ballot']);
       await expect(card.getByText('25.0% of tallied blocks')).toBeVisible();
+      for (const value of await card.locator('dt + dd').all()) {
+        await expect(value).toHaveCSS('text-align', 'center');
+      }
       const boxes = await card.locator('dl > div').evaluateAll(items => items.map(item => item.getBoundingClientRect().top));
       expect(boxes[1]).toBe(boxes[2]);
       if (width === 375) expect(boxes[1]).toBeGreaterThan(boxes[0]);
@@ -58,6 +61,22 @@ test.describe('The poll as a site of its own', () => {
       await copy.click();
       await expect(card.getByText('Command copied.')).toBeVisible();
       expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(await card.locator('pre code').textContent());
+      expect(await sidewaysOverflow(page)).toBe(0);
+    });
+
+    test(`coinholders see the mainnet height and its block time at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.route('**/api/shielded-preview/chain-tip', route => route.fulfill({ json: {
+        height: 3590254, time: '2026-11-19T17:15:44.000Z',
+      } }));
+      await open(page, '/poll');
+      const card = page.locator('#how-to-take-part li').filter({ has: page.getByRole('heading', { name: 'Coinholders', exact: true }) });
+      const time = card.locator('time');
+      await expect(time).toHaveText('17:15:44 UTC');
+      await expect(card.getByText('3,590,254')).toBeVisible();
+      const title = await card.getByRole('heading', { name: 'Coinholders' }).boundingBox();
+      const stamp = await time.boundingBox();
+      expect(stamp!.x).toBeGreaterThanOrEqual(title!.x + title!.width);
       expect(await sidewaysOverflow(page)).toBe(0);
     });
 
@@ -102,6 +121,16 @@ test.describe('The poll as a site of its own', () => {
       await expect(page.getByRole('link', { name: 'Coinholder activity by question' })).toHaveAttribute('href', '#poll-turnout-questions');
       await expect(totals).toContainText('245');
       await expect(totals).toContainText('18,120');
+      for (const value of await totals.locator('dt + dd').all()) await expect(value).toHaveCSS('text-align', 'center');
+      const questionRows = questions.locator('ol > li > details > summary');
+      await expect(questionRows).toHaveCount(5);
+      const unitPositions = await questionRows.evaluateAll(rows => rows.map(row =>
+        [...row.querySelectorAll('small')].map(unit => unit.getBoundingClientRect().left)
+      ));
+      for (const [casts, shares] of unitPositions) {
+        expect(casts).toBeCloseTo(unitPositions[0][0], 0);
+        expect(shares).toBeCloseTo(unitPositions[0][1], 0);
+      }
       await expect(questions.locator('summary').first()).toContainText('51 casts');
       await expect(questions.locator('details[open]')).toHaveCount(0);
       await expect(questions.locator('summary').first()).toContainText('4,800 shares');

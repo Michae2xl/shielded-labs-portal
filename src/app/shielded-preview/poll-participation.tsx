@@ -8,7 +8,37 @@ import type { SourceLogo } from '@/lib/shielded-preview/poll-turnout/turnout';
 import b from './governance-bento.module.css';
 import s from './poll-participation.module.css';
 
-const SNAPSHOT_TIME = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC' });
+const blockClock = new Intl.DateTimeFormat('en-GB', { timeStyle: 'medium', hourCycle: 'h23', timeZone: 'UTC' });
+
+function MainnetBlock() {
+  const [tip, setTip] = useState<{ height: number; time: string } | null>(null);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    let timer: ReturnType<typeof setTimeout>;
+    async function refresh() {
+      try {
+        const response = await fetch('/api/shielded-preview/chain-tip', { signal: controller.signal });
+        if (!response.ok) throw new Error('Chain tip unavailable');
+        const next = await response.json();
+        if (!controller.signal.aborted) { setTip(next); setFailed(false); }
+      } catch {
+        if (!controller.signal.aborted) setFailed(true);
+      } finally {
+        if (!controller.signal.aborted) timer = setTimeout(refresh, 30_000);
+      }
+    }
+    void refresh();
+    return () => { controller.abort(); clearTimeout(timer); };
+  }, []);
+  return <div className={s.block}>
+    <span>{failed && tip ? 'Last known block' : 'Mainnet block'}</span>
+    {tip ? <>
+      <strong>{tip.height.toLocaleString('en-US')}</strong>
+      <time dateTime={tip.time} title={tip.time}>{blockClock.format(new Date(tip.time))} UTC</time>
+    </> : <small>{failed ? 'Unavailable' : 'Loading…'}</small>}
+  </div>;
+}
 
 function Out({ href, children, className = s.link }: { href: string; children: ReactNode; className?: string }) {
   return (
@@ -68,7 +98,6 @@ export default function PollParticipation() {
   const coinholders = bodyMarks('coinholders');
   const zcap = bodyMarks('zcap');
   const panels = how.panels.map((panel) => ({ ...panel, ...bodyMarks(panel.id) }));
-  const { snapshot } = how.coinholders;
   return (
     <section className={`${b.card} ${s.card}`} id="how-to-take-part" aria-labelledby="take-part-heading" tabIndex={-1}>
       <header className={b.header}>
@@ -85,17 +114,15 @@ export default function PollParticipation() {
           <div className={s.who}>
             <Marks logos={coinholders.logos} />
             <h4>{coinholders.name}</h4>
+            <MainnetBlock/>
           </div>
-          <ul className={s.facts}>
-            <li>Vote from Vizor, ZODL or Zkool. <a className={s.link} href="#wallet-tutorials">Watch wallet tutorials</a></li>
-            <li>
-              Zkool asks for the poll’s settings link. Paste this one, from the organizers’ post:
+          <div className={s.walletSetup}>
+            <a className={s.link} href="#wallet-tutorials">Watch wallet tutorials</a>
+            <div>
+              <span>Zkool settings link</span>
               <CopyField value={how.coinholders.zkoolSettings} label="Zkool settings link" />
-            </li>
-            <li>
-              Balances as of block {snapshot.height.toLocaleString('en-US')}, <span className={s.keep}>{SNAPSHOT_TIME.format(new Date(snapshot.at))} UTC.</span>
-            </li>
-          </ul>
+            </div>
+          </div>
           <div className={s.links}>
             {coinholders.logos.map((wallet) => wallet.href && <Out key={wallet.name} href={wallet.href}>{wallet.name}</Out>)}
             <Out href={how.coinholders.zkoolSetup}>Organizers’ post</Out>
