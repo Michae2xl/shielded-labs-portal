@@ -80,9 +80,25 @@
   overflow-wrap: anywhere;
   text-wrap: pretty;
 }
-.keep {
+.group:first-child { container: wallets / inline-size; }
+.group:first-child .who { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; }
+@container wallets (max-width: 285px) {
+  .group:first-child .who { grid-template-columns: 1fr auto; gap: 4px 8px; }
+  .who h4 { grid-column: 1; }
+  .who .block { grid-column: 2; grid-row: 1 / 3; }
+}
+.block {
+  display: grid;
+  justify-items: end;
+  margin-inline-start: auto;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
   white-space: nowrap;
 }
+.block span, .block time, .block small { color: var(--c-a8a8a8, #a8a8a8); font-size: 12px; }
+.block strong { color: var(--c-f2f2f2, #f2f2f2); font-size: 17px; font-weight: 550; }
+.walletSetup { display: grid; gap: 14px; margin-top: 16px; font-size: 14px; }
+.walletSetup > a { justify-self: start; }
 .facts li::before {
   position: absolute;
   top: 0.62em;
@@ -92,9 +108,6 @@
   border-radius: 50%;
   background: var(--c-5c5c5c, #5c5c5c);
   content: '';
-}
-.group:first-child .facts li::before {
-  background: var(--c-e0a62a, #e0a62a);
 }
 /* The Zkool link: the whole URL in a field to select, and a button to copy it. */
 .copy {

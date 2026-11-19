@@ -61,6 +61,22 @@ test.describe('The poll as a site of its own', () => {
       expect(await sidewaysOverflow(page)).toBe(0);
     });
 
+    test(`coinholders see the mainnet height and its block time at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.route('**/api/shielded-preview/chain-tip', route => route.fulfill({ json: {
+        height: 3590254, time: '2026-11-19T17:15:44.000Z',
+      } }));
+      await open(page, '/poll');
+      const card = page.locator('#how-to-take-part li').filter({ has: page.getByRole('heading', { name: 'Coinholders', exact: true }) });
+      const time = card.locator('time');
+      await expect(time).toHaveText('17:15:44 UTC');
+      await expect(card.getByText('3,590,254')).toBeVisible();
+      const title = await card.getByRole('heading', { name: 'Coinholders' }).boundingBox();
+      const stamp = await time.boundingBox();
+      expect(stamp!.x).toBeGreaterThanOrEqual(title!.x + title!.width);
+      expect(await sidewaysOverflow(page)).toBe(0);
+    });
+
     test(`coinholders can play each wallet tutorial at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await open(page, '/poll');

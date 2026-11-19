@@ -17,14 +17,15 @@ describe('how to take part', () => {
     expect(text).toMatch(/Coinholders .*ZCAP members .*Community panels/);
   });
   it('sends coinholders to the three wallets the organizers named, and Zkool users to their post', () => {
-    expect(text).toContain('Vote from Vizor, ZODL or Zkool.');
+    expect(text).toContain('Watch wallet tutorials');
     for (const site of ['https://vizor.cash', 'https://zodl.com', 'https://github.com/hhanh00/zkool2']) expect(markup).toContain(`href="${site}"`);
     expect(markup).toContain('href="https://forum.zcashcommunity.com/t/zcg-and-the-dev-fund-timeline-for-proposals-and-polling/58906/133"');
     // The settings link Zkool asks for, whole, in a field to copy: the one in post 133.
     expect(markup).toContain('value="https://voting.valargroup.dev/pins/prod/28fc9b631091ae8bc2f8635d8930489238ce144174cbd15a03efb0530b301ebe/v2-static-voting-config.json?checksum=sha256:28fc9b631091ae8bc2f8635d8930489238ce144174cbd15a03efb0530b301ebe"');
     expect(markup).toMatch(/<input [^>]*readOnly=""[^>]*aria-label="Zkool settings link"|<input [^>]*aria-label="Zkool settings link"[^>]*readOnly=""/);
     expect(text).toContain('Copy');
-    expect(text).toContain('Balances as of block 3,578,540, 16 Nov, 08:02 UTC.');
+    expect(text).toContain('Mainnet block');
+    expect(text).not.toContain('3,578,540');
     expect(text).toContain('They vote on Helios, with the voter ID and password it emails them.');
   });
   it('tells ZCAP members which email to look for and where to ask for help', () => {
