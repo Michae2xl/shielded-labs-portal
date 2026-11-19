@@ -14,13 +14,28 @@ describe('miner sentiment card', () => {
     const html = render(null, true);
     expect(html).toContain('The official tally is unavailable');
     expect(html).toContain('https://miner-poll.zfnd.org/');
-    expect(html).not.toContain('blocks with a ballot');
+    expect(html).not.toContain('<dt>Blocks with a ballot</dt>');
+    expect(html).toContain('Verify the tally');
   });
   it('shows verified pre-opening counts and block distance', () => {
     const html = render(reading);
     expect(html).toContain('Not started');
     expect(html).toContain('Opens in 1,261 blocks');
     expect(html).not.toContain('Results by question');
+    expect(html).toContain('No blocks tallied yet');
+    expect(html).toContain('of 38,451 eligible blocks (0.0%)');
+  });
+  it('shows the official command and explains how to compare readings', () => {
+    const html = render(null, true);
+    expect(html).toContain('miner-poll tally --election nu7-1 --options 3,3,3,3,3 --network mainnet --start 3591200 --end 3629650 --addr 127.0.0.1:8232');
+    expect(html).toContain('tallied_through_height');
+    expect(html).toContain('blocks_with_ballot');
+    expect(html).toContain('Copy command');
+  });
+  it('uses the whole window for progress and tallied blocks for ballot coverage', () => {
+    const html = render({ ...reading, phase: 'counting', tallied: 200, withBallot: 50 });
+    expect(html).toContain('of 38,451 eligible blocks (0.5%)');
+    expect(html).toContain('25.0% of tallied blocks');
   });
   it('preserves a previous reading on refresh failure and separates abstentions from unanswered blocks', () => {
     const html = render({ ...reading, phase: 'counting', tallied: 10, withBallot: 5,
