@@ -1,0 +1,2 @@
+.heading { display: flex; align-items: center; gap: 9px; }
+.heading img { flex: none; border-radius: 50%; }
