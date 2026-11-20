@@ -13,6 +13,7 @@ const TTL = 60_000;
 const RETRY = 30_000;
 const ROSTER_TTL = 3_600_000;
 const LIMITS = { timeout: 5_000, maxBytes: 2_000_000 };
+const HELIOS_LIMITS = { ...LIMITS, timeout: 15_000 };
 const MAX_VOTER_PAGES = 20;
 const ROSTER_CSV = 'https://docs.google.com/spreadsheets/d/1pg_zSzigrxjdF-1oLz9WDzscglL2_1vzK4jTRNcXiCQ/export?format=csv&gid=0';
 
@@ -99,15 +100,17 @@ export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => 
   const helios = cachedRead<CountRead>(
     async (election) => {
       const urls = heliosUrls(election);
-      const times = heliosBallotTimes(await getJson(urls.ballots, LIMITS));
-      let voters = 0;
-      let after: string | undefined;
-      for (let page = 0; ; page++) {
+      const [ballots, firstPage] = await Promise.all([
+        getJson(urls.ballots, HELIOS_LIMITS),
+        getJson(urls.voters(), HELIOS_LIMITS),
+      ]);
+      const times = heliosBallotTimes(ballots);
+      let ids = heliosVoterIds(firstPage);
+      let voters = ids.length;
+      for (let page = 1; ids.length === HELIOS_PAGE; page++) {
         if (page >= MAX_VOTER_PAGES) throw new Error('Voter list too long');
-        const ids = heliosVoterIds(await getJson(urls.voters(after), LIMITS));
+        ids = heliosVoterIds(await getJson(urls.voters(ids[ids.length - 1]), HELIOS_LIMITS));
         voters += ids.length;
-        if (ids.length < HELIOS_PAGE) break;
-        after = ids[ids.length - 1];
       }
       if (times.length > voters) throw new Error('More ballots than voters');
       return { data: { value: times.length, points: cumulative(times.filter(Number.isFinite)), eligible: voters, approximate: false } };
