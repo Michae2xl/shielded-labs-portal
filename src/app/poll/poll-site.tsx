@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { pollDay } from '@/lib/shielded-preview/poll-turnout/view';
 import { usePollTurnout } from '@/app/shielded-preview/poll-turnout';
 import ThemeToggle from '@/app/governance/theme-toggle';
@@ -85,11 +84,8 @@ export default function PollSite() {
       <header className={s.bar}>
         <div className={s.barInner}>
           <span className={s.brand}>
-            <Image src="/logos/zcash.svg" width={30} height={30} alt="" />
-            <span className={s.brandName}>
-              <small>Zcash</small>
-              <strong>Governance</strong>
-            </span>
+            <ShieldMark size={30} />
+            <strong className={s.brandName}>Zcash Governance</strong>
           </span>
           <ThemeToggle className={s.theme} />
         </div>
