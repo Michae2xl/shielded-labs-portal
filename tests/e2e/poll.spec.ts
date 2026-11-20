@@ -11,7 +11,7 @@ test.describe('The poll as a site of its own', () => {
       await open(page, '/poll');
       const nav = page.getByRole('navigation', { name: 'Poll sections' });
       const links = nav.getByRole('link');
-      await expect(links).toHaveText(['How to participate', 'Video tutorials', 'Coinholder activity by question', 'Panels', 'Engineering Caucus', 'Miner sentiment']);
+      await expect(links).toHaveText(['How to participate', 'Video tutorials', 'Coinholder activity by question', 'Panels', 'Miner sentiment']);
       expect(await links.evaluateAll(items => {
         const sections = items.map(a => document.getElementById(a.getAttribute('href')!.slice(1))!);
         return sections.every((el, i) => i === 0 || (sections[i - 1].compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0);
@@ -180,7 +180,7 @@ test.describe('The poll as a site of its own', () => {
     const jumps = await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].map((a) => [a.getAttribute('href'), Boolean(document.getElementById(a.getAttribute('href')!.slice(1)))]));
     expect(jumps).toContainEqual(['#how-to-take-part', true]);
     for (const jump of jumps) {
-      expect([['#poll-turnout', true], ['#panel-ballots', true], ['#how-to-take-part', true], ['#poll-turnout-questions', true], ['#wallet-tutorials', true], ['#engineering-caucus', true], ['#miner-sentiment', true]]).toContainEqual(jump);
+      expect([['#poll-turnout', true], ['#panel-ballots', true], ['#how-to-take-part', true], ['#poll-turnout-questions', true], ['#wallet-tutorials', true], ['#miner-sentiment', true]]).toContainEqual(jump);
     }
     await expect(page.getByRole('heading', { name: 'How to participate' })).toBeVisible();
     // The jump lands below the page's fixed bar, with the block's title in view.

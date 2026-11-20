@@ -73,6 +73,7 @@ describe('the turnout provider', () => {
       ['ZCAP', ZCAP_LAST.ballots, 2, 'recorded'],
       ['Zcash Brasil', 3, 518, 'live'],
       ['ZecHub', 3, 518, 'live'],
+      ['Zcash Engineering Caucus', 3, 518, 'live'],
     ]);
     expect(a.questions.map((q) => q.shares)).toEqual([105, 43, 35, 45, 48]);
     expect(a.bodies[0]).toMatchObject({ unit: 'shares', approximate: false, series: [], reference: null, previous: null });

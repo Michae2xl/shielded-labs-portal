@@ -18,7 +18,6 @@ const sectionLinks = [
   { href: '#wallet-tutorials', label: 'Video tutorials', icon: 'M3 5h18v14H3z M10 9l5 3-5 3z' },
   { href: '#poll-turnout-questions', label: 'Coinholder activity by question', icon: 'M4 4v16h17 M8 16v-4 M13 16V7 M18 16v-6' },
   { href: '#poll-turnout', label: 'Panels', icon: 'M3 4h7v7H3z M14 4h7v7h-7z M3 15h7v5H3z M14 15h7v5h-7z' },
-  { href: '#engineering-caucus', label: 'Engineering Caucus', icon: 'm8 7-5 5 5 5 M16 7l5 5-5 5 M14 4l-4 16' },
   { href: '#miner-sentiment', label: 'Miner sentiment', icon: 'm12 3 8 4.5v9L12 21l-8-4.5v-9z M4 7.5l8 4.5 8-4.5 M12 12v9' },
 ] as const;
 const HOUR = 3_600_000;

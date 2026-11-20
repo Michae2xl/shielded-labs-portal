@@ -6,7 +6,7 @@
 export const LAUNCH_HOSTS = ['governance.shieldedlabs.net'] as const;
 export const LAUNCH_PAGE = '/poll';
 /** The data the poll page reads; every other API stays off the launch address. */
-const LAUNCH_APIS = ['/api/shielded-preview/turnout', '/api/shielded-preview/miner-poll', '/api/shielded-preview/engineering-caucus', '/api/shielded-preview/chain-tip'];
+const LAUNCH_APIS = ['/api/shielded-preview/turnout', '/api/shielded-preview/miner-poll', '/api/shielded-preview/chain-tip'];
 /** The share image, only for the poll itself. */
 const SHARE_IMAGE = '/api/shielded-preview/og';
 const isPollShare = (search: string) => {

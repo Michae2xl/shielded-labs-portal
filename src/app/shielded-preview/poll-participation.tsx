@@ -154,6 +154,7 @@ export default function PollParticipation() {
           <ul className={s.facts}>
             <li>Only members on each panel’s list can vote.</li>
             <li>They vote on Helios, with the voter ID and password it emails them.</li>
+            <li>The Engineering Caucus ballot closes <time dateTime="2026-11-30T23:59:00Z">30 Nov, 23:59 UTC</time>.</li>
           </ul>
           <div className={s.links}>
             {panels.map((panel) => (
