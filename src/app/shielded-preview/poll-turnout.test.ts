@@ -25,6 +25,7 @@ const SNAPSHOT = buildSnapshot(
       },
       'zcash-brasil': helios(3, 18, '2026-11-16T12:24:46Z'),
       zechub: helios(1, 23, '2026-11-16T16:43:47Z'),
+      'engineering-caucus': helios(2, 8, '2026-11-17T00:10:00Z'),
     },
     casts: { state: 'fetched', observedAt: '2026-11-17T01:08:00Z', data: { height: 300, questions: { 1: 12, 2: 11, 3: 10, 4: 9, 5: 0 } } },
     roster: 203,
@@ -43,6 +44,7 @@ describe('live turnout panel', () => {
     expect(out).toContain(`ZCAP ${ZCAP_LAST.ballots} ballots ${Math.round((ZCAP_LAST.ballots / 203) * 100)}% of 203 · last poll 68% 16 Nov Now Saved ${ZCAP_LAST.at.slice(11, 16)} UTC · SIV ↗`);
     expect(out).toContain('Zcash Brasil 3 ballots 17% of 18 16 Nov Now Live · Helios ↗');
     expect(out).toContain('ZecHub 1 ballot 4% of 23 16 Nov Now Live · Helios ↗');
+    expect(out).toContain('Zcash Engineering Caucus 2 ballots 25% of 8 16 Nov Now Live · Helios ↗');
     expect(out).toContain('Q1 Wind down ZCG');
     expect(out).toContain('Casts 42');
     expect(out).toContain('Shares 680');
@@ -54,7 +56,7 @@ describe('live turnout panel', () => {
       expect(markup).toContain(`href="${href}"`);
       expect(markup).toContain(`aria-label="${name}, wallet site"`);
     }
-    for (const name of ['Zcash Foundation', 'Zcash Brasil', 'ZecHub']) expect(markup).toContain(`aria-label="${name}"`);
+    for (const name of ['Zcash Foundation', 'Zcash Brasil', 'ZecHub', 'Zcash Engineering Caucus']) expect(markup).toContain(`aria-label="${name}"`);
     expect(markup.match(/aria-label="[^"]+, wallet site"/g)).toHaveLength(3);
   });
   it('shows the same activity metric for every question in ballot order with the observation time', () => {
@@ -118,7 +120,7 @@ describe('live turnout panel', () => {
     expect(out).not.toMatch(/Estimate|≈/);
   });
   it('lays the cards out four to a row at most', () => {
-    expect(html({ snapshot: SNAPSHOT })).toContain('--cards:3');
+    expect(html({ snapshot: SNAPSHOT })).toContain('--cards:4');
   });
   it('marks a reading the browser could not refresh as the last one', () => {
     expect(text(html({ snapshot: SNAPSHOT, failed: true }))).toContain('Last reading');
@@ -140,7 +142,7 @@ describe('live turnout panel', () => {
     expect(out).not.toContain('Daily panel counts');
     expect(markup).toContain('<table><caption>Cumulative panel ballots by UTC day.');
     expect(out).toContain('Panel ballots per day');
-    expect(out).toContain('16 Nov 24 3 1 17 Nov 29 3 1');
+    expect(out).toContain('16 Nov 24 3 1 0 17 Nov 29 3 1 2');
   });
   it('opens external sources in a new tab without leaking the opener', () => {
     for (const [, attrs] of html({ snapshot: SNAPSHOT }).matchAll(/<a (href="https?:[^>]+)>/g)) {

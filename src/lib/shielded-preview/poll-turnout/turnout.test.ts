@@ -27,7 +27,7 @@ const brasil: CountRead = {
   approximate: false,
 };
 const zechub: CountRead = { value: 1, points: [{ at: Date.parse('2026-11-16T16:43:47Z'), value: 1 }], eligible: 23, approximate: false };
-const READS: TurnoutReads = { bodies: { coinholders: fetched(chain), 'zcash-brasil': fetched(brasil), zechub: fetched(zechub) }, roster: 203, chainStatus: 'active' };
+const READS: TurnoutReads = { bodies: { coinholders: fetched(chain), 'zcash-brasil': fetched(brasil), zechub: fetched(zechub), 'engineering-caucus': fetched({ value: 0, eligible: 8, points: [], approximate: false }) }, roster: 203, chainStatus: 'active' };
 
 describe('the snapshot the route returns', () => {
   const snapshot = buildSnapshot(NU7_1_TURNOUT, READS, NOW);
@@ -38,6 +38,7 @@ describe('the snapshot the route returns', () => {
       ['ZCAP', ZCAP_LAST.ballots, 'ballots', 203, 'recorded', 'recorded'],
       ['Zcash Brasil', 3, 'ballots', 18, 'exact', 'live'],
       ['ZecHub', 1, 'ballots', 23, 'exact', 'live'],
+      ['Zcash Engineering Caucus', 0, 'ballots', 8, 'exact', 'live'],
     ]);
     expect(snapshot.bodies[1]).toMatchObject({ observedAt: ZCAP_LAST.at, eligibleLabel: 'eligible', source: { label: 'SIV' } });
     expect(snapshot.bodies[1].series.map((p) => p.value)).toEqual([0, ...ZCAP_READINGS.map((r) => r.ballots)]);
@@ -65,6 +66,7 @@ describe('the snapshot the route returns', () => {
       [ZCAP_LAST.ballots, 'recorded', null],
       [null, 'unavailable', null],
       [null, 'unavailable', null],
+      [null, 'unavailable', null],
     ]);
     expect(empty.questions.every((q) => q.shares === null)).toBe(true);
   });
@@ -75,6 +77,7 @@ describe('the record', () => {
     expect(NU7_1_TURNOUT.sources.map((s) => [s.kind, s.slot])).toEqual([
       ['vote-chain', 3],
       ['siv', 1],
+      ['helios', 1],
       ['helios', 1],
       ['helios', 1],
     ]);

@@ -17,6 +17,7 @@ const SNAPSHOT = buildSnapshot(
       },
       'zcash-brasil': { state: 'fetched', observedAt: '2026-11-17T01:29:00.000Z', data: { value: 3, points: [{ at: at('2026-11-16T12:24:46Z'), value: 3 }], eligible: 18, approximate: false } },
       zechub: { state: 'fetched', observedAt: '2026-11-17T01:29:00.000Z', data: { value: 1, points: [{ at: at('2026-11-16T16:43:47Z'), value: 1 }], eligible: 23, approximate: false } },
+      'engineering-caucus': { state: 'fetched', observedAt: '2026-11-17T01:29:00.000Z', data: { value: 2, points: [{ at: at('2026-11-17T00:10:00Z'), value: 2 }], eligible: 8, approximate: false } },
     },
     roster: 203,
     chainStatus: 'active',
@@ -37,6 +38,7 @@ describe('panel ballots per day', () => {
     expect(out).toContain('ZCAP 24 5 +5 today');
     expect(out).toContain('Zcash Brasil 3 0 0 today');
     expect(out).toContain('ZecHub 1 0 0 today');
+    expect(out).toContain('Zcash Engineering Caucus 0 2 +2 today');
     expect(out).toContain('Nov 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30');
     expect(out).toContain('ZCAP uses changes between observed totals; vote times are not published.');
   });
@@ -44,7 +46,7 @@ describe('panel ballots per day', () => {
     const markup = html(SNAPSHOT);
     expect(markup).not.toContain('aria-label="Coinholders:');
     expect(markup).toContain('aria-label="ZCAP: 24 on 16 Nov, 5 on 17 Nov"');
-    expect(markup.match(/data-future="true"/g)).toHaveLength(3 * 13);
+    expect(markup.match(/data-future="true"/g)).toHaveLength(4 * 13);
   });
   it('gives coinholders a separate question axis with current shares, never daily ballots', () => {
     expect(html(SNAPSHOT)).not.toContain('coinholder-bars-heading');

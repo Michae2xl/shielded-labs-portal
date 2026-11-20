@@ -5,10 +5,10 @@ const ORGANIZERS_THREAD = 'https://forum.zcashcommunity.com/t/zcg-and-the-dev-fu
 /**
  * How each group takes part in the NU7.1 poll, in the words of whoever runs its ballot. Read on 17 Nov 2026:
  * the organizers' post (topic 58906, post 133), the Zcash Foundation's ZCAP post (topic 59366), the vote
- * chain's record of the round and the two Helios elections.
+ * chain's record of the round and the original Helios elections.
  */
 export const NU7_1_PARTICIPATION = {
-  // The vote chain's round and both Helios elections carry these instructions.
+  // The vote chain's round and the original Helios elections carry these instructions.
   guidance: [
     'Consider each proposal on its own: you may support more than one, even proposals that conflict, if you would accept either outcome.',
     'If more than one gets broad support, a runoff poll may follow.',
@@ -34,11 +34,11 @@ export const NU7_1_PARTICIPATION = {
     help: 'zcap-poll-help@zfnd.org',
     post: 'https://forum.zcashcommunity.com/t/zcap-poll-now-open-nu7-1/59366',
   },
-  // Registration is closed in both elections: only members on each panel's list vote.
-  panels: [
-    { id: 'zcash-brasil', ballot: 'https://vote.heliosvoting.org/helios/elections/b2b63125-8cee-4f9c-bab5-dd8d5de0d030/view' },
-    { id: 'zechub', ballot: 'https://vote.heliosvoting.org/helios/elections/c197ce1b-f97a-4a88-a6b5-6eb9914d7b4c/view' },
-  ],
+  panels: NU7_1_TURNOUT.sources.flatMap((source) =>
+    source.kind === 'helios'
+      ? [{ id: source.id, ballot: `https://vote.heliosvoting.org/helios/elections/${source.electionUuid}/view` }]
+      : [],
+  ),
 } as const;
 
 /** A body's name and marks, as the turnout panel shows them, so both say who it is the same way. */

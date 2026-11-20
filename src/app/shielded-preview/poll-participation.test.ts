@@ -38,11 +38,12 @@ describe('how to take part', () => {
     expect(NU7_1_PARTICIPATION.panels.map((panel) => panel.ballot)).toEqual(helios.map((uuid) => `https://vote.heliosvoting.org/helios/elections/${uuid}/view`));
     expect(text).toContain('Zcash Brasil ballot');
     expect(text).toContain('ZecHub ballot');
+    expect(text).toContain('Zcash Engineering Caucus ballot');
   });
   it('opens every outside link in a new tab, and names each body as the turnout panel does', () => {
     const outside = markup.match(/<a [^>]*href="https:[^"]+"[^>]*>/g) ?? [];
-    // Three wallets, the organizers' post and thread, the Zcash Foundation's post, two Helios ballots.
-    expect(outside.length).toBe(8);
+    // Three wallets, the organizers' post and thread, the Zcash Foundation's post, each Helios ballot.
+    expect(outside.length).toBe(6 + NU7_1_PARTICIPATION.panels.length);
     expect(outside.every((tag) => tag.includes('target="_blank"') && tag.includes('rel="noopener noreferrer"'))).toBe(true);
     expect(bodyMarks('zcap').name).toBe('ZCAP');
     expect(() => bodyMarks('nobody')).toThrow();

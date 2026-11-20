@@ -148,6 +148,15 @@ export const NU7_1_TURNOUT: PollTurnoutConfig = {
       electionUuid: 'c197ce1b-f97a-4a88-a6b5-6eb9914d7b4c',
       previous: null,
     },
+    {
+      kind: 'helios',
+      id: 'engineering-caucus',
+      name: 'Zcash Engineering Caucus',
+      slot: 1,
+      logos: [{ src: '/community-logos/engineering-caucus.png', name: 'Zcash Engineering Caucus', shape: 'round' }],
+      electionUuid: 'ada93733-ac84-4add-b6d7-cee7bc6109a5',
+      previous: null,
+    },
   ],
 };
 

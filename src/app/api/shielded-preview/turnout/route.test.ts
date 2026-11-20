@@ -30,6 +30,7 @@ describe('turnout route', () => {
       ['ZCAP', 'recorded'],
       ['Zcash Brasil', 'unavailable'],
       ['ZecHub', 'unavailable'],
+      ['Zcash Engineering Caucus', 'unavailable'],
     ]);
   });
 });
