@@ -3433,6 +3433,45 @@
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
   },
   {
+    "id": "pr-1476-draft-nuttycom-deferred-broadcast-sighash",
+    "number": null,
+    "title": "Sighash Variant for Deferred Broadcast",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Consensus / Wallet",
+    "owners": [
+      "Kris Nuttycombe"
+    ],
+    "created": "2026-11-19",
+    "license": "MIT",
+    "discussionsTo": null,
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/e42bf33a2ae4198f4acdb78a91616c8e2cfe180e/zips/draft-nuttycom-deferred-broadcast-sighash.md",
+    "official": "https://github.com/zcash/zips/pull/1476",
+    "updatedAt": "2026-11-19T23:11:03Z",
+    "summary": "ZIP 248 6 lets each signature in a v7 transaction select a signature hash (“sighash”) variant. Its only variant, variant 0, commits to all of the effecting data of the transaction, including the consensus branch ID and the expiry height.",
+    "words": 6323,
+    "digest": "d9505ef15d3d937ee2a04178a9f0beb352f0e155ee36ce48f469d3b6822f9fcc",
+    "base": null,
+    "pull": {
+      "number": 1476,
+      "title": "Add draft ZIP: Sighash Variant for Deferred Broadcast",
+      "author": "nuttycom",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1476",
+      "headSha": "e42bf33a2ae4198f4acdb78a91616c8e2cfe180e",
+      "createdAt": "2026-11-19T22:45:30Z",
+      "updatedAt": "2026-11-19T23:11:03Z",
+      "change": "new",
+      "file": "draft-nuttycom-deferred-broadcast-sighash.md",
+      "files": [
+        "draft-nuttycom-deferred-broadcast-sighash.md"
+      ]
+    }
+  },
+  {
     "id": "pr-1474-zip-0272",
     "number": 272,
     "title": "Zcash Consensus Accounts",
@@ -3663,7 +3702,7 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/67ab0d29dfd152b78f4d6fed8d87a57efa72154c/zips/zip-0000.rst",
     "official": "https://github.com/zcash/zips/pull/1459",
-    "updatedAt": "2026-11-17T19:54:01Z",
+    "updatedAt": "2026-11-20T02:30:26Z",
     "summary": "A Zcash Improvement Proposal (ZIP) is a design document providing information to the Zcash community, or describing a new feature for Zcash or its processes or environment. The ZIP should provide a concise technical specification of the…",
     "words": 6371,
     "digest": "678b75eb27dbd1bc534d69c61845dcbcc648f22b678232c2722fe3ebf772b824",
@@ -3676,7 +3715,7 @@
       "url": "https://github.com/zcash/zips/pull/1459",
       "headSha": "67ab0d29dfd152b78f4d6fed8d87a57efa72154c",
       "createdAt": "2026-11-13T19:35:37Z",
-      "updatedAt": "2026-11-17T19:54:01Z",
+      "updatedAt": "2026-11-20T02:30:26Z",
       "change": "update",
       "file": "zip-0000.rst",
       "files": [
@@ -3704,7 +3743,7 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/67ab0d29dfd152b78f4d6fed8d87a57efa72154c/zips/zip-0312.rst",
     "official": "https://github.com/zcash/zips/pull/1459",
-    "updatedAt": "2026-11-17T19:54:01Z",
+    "updatedAt": "2026-11-20T02:30:26Z",
     "summary": "This proposal adapts FROST 3, a threshold signature scheme, to make it support key re-randomization as described in 15. This is a requirement in order for it to be used to implement unlinkable spend authorization signatures in the Orchard…",
     "words": 4967,
     "digest": "434f2247f92b678ca70e5ad9fe6839bd67aa45df98b4f66d9fd8aa1a9213345e",
@@ -3717,7 +3756,7 @@
       "url": "https://github.com/zcash/zips/pull/1459",
       "headSha": "67ab0d29dfd152b78f4d6fed8d87a57efa72154c",
       "createdAt": "2026-11-13T19:35:37Z",
-      "updatedAt": "2026-11-17T19:54:01Z",
+      "updatedAt": "2026-11-20T02:30:26Z",
       "change": "update",
       "file": "zip-0312.rst",
       "files": [
