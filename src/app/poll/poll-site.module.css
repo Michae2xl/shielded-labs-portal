@@ -209,7 +209,6 @@
   margin-top: 16px;
   background: var(--c-0a0a0a, #0a0a0a);
   color: var(--c-eeeeee, #eeeeee);
-  border-top: 1px solid var(--c-333333, #333333);
 }
 .footInner {
   display: grid;
