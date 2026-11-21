@@ -6,6 +6,20 @@ const LAUNCH = { host: 'governance.shieldedlabs.net' };
 
 test.describe('The poll as a site of its own', () => {
   for (const width of [375, 1440]) {
+    test(`the footer follows the page theme at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.emulateMedia({ colorScheme: 'light' });
+      await open(page, '/poll');
+      const footer = page.locator('footer');
+      const surface = () => footer.evaluate(el => getComputedStyle(el.parentElement!).backgroundColor);
+      const light = await surface();
+      await expect(footer).toHaveCSS('background-color', light);
+      await page.getByRole('button', { name: 'Switch to the dark theme' }).click();
+      await expect.poll(surface).not.toBe(light);
+      await expect(footer).toHaveCSS('background-color', await surface());
+      expect(await sidewaysOverflow(page)).toBe(0);
+    });
+
     test(`all poll section links are visible on arrival and jump below the header at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 667 });
       await open(page, '/poll');
