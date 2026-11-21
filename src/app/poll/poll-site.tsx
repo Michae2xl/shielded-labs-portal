@@ -111,18 +111,33 @@ export default function PollSite() {
         <DevFundVoting onNavigate={stay} />
       </main>
       <footer className={s.foot}>
-        <a className={s.labs} href="https://shieldedlabs.net" target="_blank" rel="noopener noreferrer">
-          <ShieldMark size={32} />
-          <span className={s.signature}>
-            <small>Maintained by</small>
-            <strong>Shielded Labs</strong>
-          </span>
-        </a>
-        <nav className={s.network} aria-label="Shielded Labs network">
-          <span className={s.currentSite} aria-current="page">Governance</span>
-          <a href="https://nsm.shieldedlabs.net/" target="_blank" rel="noopener noreferrer">NSM <span aria-hidden="true">↗</span></a>
-          <a className={s.codeLink} href="https://github.com/ShieldedLabs" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-        </nav>
+        <div className={s.footInner}>
+          <div className={s.identity}>
+            <span className={s.caption}>Maintained by</span>
+            <a className={s.labs} href="https://shieldedlabs.net/">
+              <ShieldMark size={42} />
+              <span><strong>Shielded Labs</strong><span className={s.domain}>shieldedlabs.net <i aria-hidden="true">↗</i></span></span>
+            </a>
+          </div>
+          <div className={s.directory}>
+            <div className={s.directoryHead}>
+              <span className={s.caption} id="footer-projects">Explore our projects</span>
+              <a href="https://github.com/ShieldedLabs">GitHub <i aria-hidden="true">↗</i></a>
+            </div>
+            <nav className={s.network} aria-labelledby="footer-projects">
+              {[
+                { name: 'NSM', description: 'Network sustainability', href: 'https://nsm.shieldedlabs.net/' },
+                { name: 'Crosslink', description: 'Hybrid consensus', href: 'https://shieldedlabs.net/crosslink/' },
+                { name: 'Ironwood', description: 'Supply verification', href: 'https://shieldedlabs.net/ironwood/' },
+              ].map(({ name, description, href }) => (
+                <a key={name} href={href}>
+                  <span className={s.projectTitle}>{name} <i aria-hidden="true">↗</i></span>
+                  <span className={s.projectTopic}>{description}</span>
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
       </footer>
     </div>
   );
