@@ -233,10 +233,10 @@
 .githubLink { display: inline-flex; align-items: center; gap: 5px; }
 .githubLink::before {
   content: '';
-  width: 15px;
-  height: 15px;
-  background: currentColor;
-  mask: url('/logos/github.svg') center / contain no-repeat;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  mask: url('/logos/github-mark-16.svg') center / contain no-repeat;
 }
 .network { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .network a { display: block; padding: 8px 0 4px; }
