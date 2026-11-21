@@ -112,11 +112,17 @@ export default function PollSite() {
       </main>
       <footer className={s.foot}>
         <a className={s.labs} href="https://shieldedlabs.net" target="_blank" rel="noopener noreferrer">
-          <ShieldMark size={18} />
-          <span>
-            Maintained by <strong>Shielded Labs</strong>
+          <ShieldMark size={32} />
+          <span className={s.signature}>
+            <small>Maintained by</small>
+            <strong>Shielded Labs</strong>
           </span>
         </a>
+        <nav className={s.network} aria-label="Shielded Labs network">
+          <span className={s.currentSite} aria-current="page">Governance</span>
+          <a href="https://nsm.shieldedlabs.net/" target="_blank" rel="noopener noreferrer">NSM <span aria-hidden="true">↗</span></a>
+          <a className={s.codeLink} href="https://github.com/ShieldedLabs" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
       </footer>
     </div>
   );
