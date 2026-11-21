@@ -3433,6 +3433,86 @@
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
   },
   {
+    "id": "pr-1481-zip-0374",
+    "number": 374,
+    "title": "Partially Created Zcash Transaction Format",
+    "status": "Draft",
+    "statusDetail": "[Revision 0] Draft",
+    "category": "Standards / Wallet",
+    "owners": [
+      "Jack Grigg"
+    ],
+    "created": "2024-12-09",
+    "license": "MIT (and BSD-2-Clause for paragraphs from BIP 174 and BIP 370)",
+    "discussionsTo": "https://github.com/zcash/zips/issues/693",
+    "pullRequest": "https://github.com/zcash/zips/pull/1063",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/70f8a677a229379a06ffec9d2e80189f7f91e89d/zips/zip-0374.md",
+    "official": "https://github.com/zcash/zips/pull/1481",
+    "updatedAt": "2026-11-20T23:58:30Z",
+    "summary": "This ZIP proposes a binary format for transactions that are in the process of being created: it carries the information necessary for each participant in the process — constructing inputs and outputs, computing zero-knowledge proofs,…",
+    "words": 13140,
+    "digest": "0ab00a2921be0db2c6af2d0512d1645bfd12a110084ca12830a1c8a037551943",
+    "base": "zip-0374",
+    "pull": {
+      "number": 1481,
+      "title": "ZIP 374: Specify when a shielded anchor may be absent, and reserve the all-zero anchor",
+      "author": "nuttycom",
+      "draft": true,
+      "url": "https://github.com/zcash/zips/pull/1481",
+      "headSha": "70f8a677a229379a06ffec9d2e80189f7f91e89d",
+      "createdAt": "2026-11-20T23:58:24Z",
+      "updatedAt": "2026-11-20T23:58:30Z",
+      "change": "update",
+      "file": "zip-0374.md",
+      "files": [
+        "zip-0374.md"
+      ]
+    }
+  },
+  {
+    "id": "pr-1479-zip-0318",
+    "number": 318,
+    "title": "Orchard to Ironwood Migration",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Wallet",
+    "owners": [
+      "Schell Carl Scivally",
+      "Pacu Gindre",
+      "Kris Nuttycombe"
+    ],
+    "created": "2026-06-16",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/1315",
+    "pullRequest": null,
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/bae46b873cd8fc765969d9ddabfc09e19c8ceb7f/zips/zip-0318.md",
+    "official": "https://github.com/zcash/zips/pull/1479",
+    "updatedAt": "2026-11-20T23:18:57Z",
+    "summary": "This ZIP specifies best practices for wallets migrating funds from the Orchard pool to the Ironwood pool introduced by the NU6.3 network upgrade 8. It is written with light client wallets in mind, because their reliance on a light wallet…",
+    "words": 12308,
+    "digest": "09726104dd1621402235defc240c9e9183fce5831819d08ab3c7030b82fc5257",
+    "base": "zip-0318",
+    "pull": {
+      "number": 1479,
+      "title": "ZIP 318: Replace \"scheduled broadcast height\" with \"scheduled target height\"",
+      "author": "nuttycom",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1479",
+      "headSha": "bae46b873cd8fc765969d9ddabfc09e19c8ceb7f",
+      "createdAt": "2026-11-20T23:18:50Z",
+      "updatedAt": "2026-11-20T23:18:57Z",
+      "change": "update",
+      "file": "zip-0318.md",
+      "files": [
+        "zip-0318.md"
+      ]
+    }
+  },
+  {
     "id": "pr-1476-draft-nuttycom-deferred-broadcast-sighash",
     "number": null,
     "title": "Sighash Variant for Deferred Broadcast",
