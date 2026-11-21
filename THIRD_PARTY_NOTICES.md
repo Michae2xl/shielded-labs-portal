@@ -37,3 +37,5 @@ ownership of their text. The Markdown is parsed with
 
 The screen checks under `tests/e2e` run with [Playwright](https://github.com/microsoft/playwright) (Apache-2.0),
 a development dependency that drives an installed browser. It is not part of the deployed portal.
+
+The footer uses [GitHub’s mark-github Octicon](https://github.com/primer/octicons/blob/main/icons/mark-github-16.svg). The MIT license is included in `public/logos/github-octicons-LICENSE.txt`.
