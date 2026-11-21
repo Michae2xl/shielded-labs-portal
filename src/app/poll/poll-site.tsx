@@ -122,7 +122,7 @@ export default function PollSite() {
           <div className={s.directory}>
             <div className={s.directoryHead}>
               <a className={s.caption} id="footer-projects" href="https://shieldedlabs.net/projects/">Explore our projects <i aria-hidden="true">↗</i></a>
-              <a href="https://github.com/ShieldedLabs">GitHub <i aria-hidden="true">↗</i></a>
+              <a className={s.githubLink} href="https://github.com/ShieldedLabs">GitHub <i aria-hidden="true">↗</i></a>
             </div>
             <nav className={s.network} aria-labelledby="footer-projects">
               {[

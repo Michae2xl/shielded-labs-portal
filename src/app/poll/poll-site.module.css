@@ -230,6 +230,14 @@
 .foot i { font-style: normal; font-size: .8em; }
 .directoryHead { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; border-bottom: 1px solid var(--c-333333, #333333); padding-bottom: 4px; }
 .directoryHead a { color: var(--c-bdbdbd, #bdbdbd); font-size: 13px; padding: 4px 0; }
+.githubLink { display: inline-flex; align-items: center; gap: 5px; }
+.githubLink::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: currentColor;
+  mask: url('/logos/github.svg') center / contain no-repeat;
+}
 .network { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .network a { display: block; padding: 8px 0 4px; }
 .projectTitle { color: var(--c-eeeeee, #eeeeee); font-family: var(--font-display); font-weight: 550; font-size: 18px; line-height: 1.2; }
