@@ -121,14 +121,14 @@ export default function PollSite() {
           </div>
           <div className={s.directory}>
             <div className={s.directoryHead}>
-              <span className={s.caption} id="footer-projects">Explore our projects</span>
+              <a className={s.caption} id="footer-projects" href="https://shieldedlabs.net/projects/">Explore our projects <i aria-hidden="true">↗</i></a>
               <a href="https://github.com/ShieldedLabs">GitHub <i aria-hidden="true">↗</i></a>
             </div>
             <nav className={s.network} aria-labelledby="footer-projects">
               {[
                 { name: 'NSM', description: 'Network sustainability', href: 'https://nsm.shieldedlabs.net/' },
                 { name: 'Crosslink', description: 'Hybrid consensus', href: 'https://shieldedlabs.net/crosslink/' },
-                { name: 'Ironwood', description: 'Supply verification', href: 'https://shieldedlabs.net/ironwood/' },
+                { name: 'Epoch', description: 'Post-quantum cryptography', href: 'https://shieldedlabs.net/epoch-future-proof-cryptography-for-zcash/' },
               ].map(({ name, description, href }) => (
                 <a key={name} href={href}>
                   <span className={s.projectTitle}>{name} <i aria-hidden="true">↗</i></span>
