@@ -209,7 +209,6 @@
   margin-top: 16px;
   background: var(--c-0a0a0a, #0a0a0a);
   color: var(--c-eeeeee, #eeeeee);
-  border-top: 1px solid var(--c-333333, #333333);
 }
 .footInner {
   display: grid;
@@ -223,12 +222,11 @@
 .labs { display: inline-flex; align-items: center; gap: 10px; margin-top: 8px; }
 .identity { display: grid; justify-items: start; }
 .labs img { display: block; }
-:global(:root[data-gov-theme='light']) .labs img { filter: invert(1); }
 .labs strong, .domain, .projectTopic { display: block; }
 .labs strong { color: var(--c-eeeeee, #eeeeee); font-family: var(--font-display); font-size: clamp(22px, 2.1vw, 28px); line-height: 1.05; letter-spacing: -.035em; }
 .domain { margin-top: 2px; color: color-mix(in srgb, var(--c-d9b25a, #d9b25a) 80%, var(--c-eeeeee, #eeeeee)); font-size: 14px; }
 .foot i { font-style: normal; font-size: .8em; }
-.directoryHead { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; border-bottom: 1px solid var(--c-333333, #333333); padding-bottom: 4px; }
+.directoryHead { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding-bottom: 4px; }
 .directoryHead a { color: var(--c-bdbdbd, #bdbdbd); font-size: 13px; padding: 4px 0; }
 .githubLink { display: inline-flex; align-items: center; gap: 5px; }
 .githubLink::before {
