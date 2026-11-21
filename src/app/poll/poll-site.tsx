@@ -115,7 +115,7 @@ export default function PollSite() {
           <div className={s.identity}>
             <span className={s.caption}>Maintained by</span>
             <a className={s.labs} href="https://shieldedlabs.net/">
-              <ShieldMark size={42} />
+              <ShieldMark size={34} />
               <span><strong>Shielded Labs</strong><span className={s.domain}>shieldedlabs.net <i aria-hidden="true">↗</i></span></span>
             </a>
           </div>
