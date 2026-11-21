@@ -10,3 +10,17 @@ body { margin: 0; background: #111; color: #f5f5f5; font-family: var(--font-inte
 .num-lg { letter-spacing: -0.01em; }
 button:not(:disabled):active, [role="button"]:active { transform: scale(0.96); }
 :where(a, button, [role="button"], [tabindex], select, input):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* Shielded Labs uses a graphite brand footer in both portal themes. */
+:root {
+  --sl-footer-surface: #151619;
+  --sl-footer-text: #faf8f2;
+  --sl-footer-border: #353638;
+  --sl-footer-caption: #c6b993;
+  --sl-footer-domain: #d9c68e;
+  --sl-footer-rule: #424246;
+  --sl-footer-utility: #d1d1ce;
+  --sl-footer-arrow: #adaba4;
+  --sl-footer-secondary: #c4c3c0;
+  --sl-footer-focus: #eed288;
+}
