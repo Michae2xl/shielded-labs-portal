@@ -3674,6 +3674,45 @@
     }
   },
   {
+    "id": "pr-1466-draft-felstead-capping-treasuries",
+    "number": null,
+    "title": "Capping the Treasuries of Zcash Community Grants and the Coinholder-Controlled Fund",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Process",
+    "owners": [
+      "T. S. Felstead"
+    ],
+    "created": "2026-11-15",
+    "license": "MIT",
+    "discussionsTo": "https://github.com/zcash/zips/issues/1464",
+    "pullRequest": "https://github.com/zcash/zips/pull/1466",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/664ea2b543ace1ed8cf92b588a941786ae2ecce1/zips/draft-felstead-capping-treasuries.md",
+    "official": "https://github.com/zcash/zips/pull/1466",
+    "updatedAt": "2026-11-22T14:19:06Z",
+    "summary": "This ZIP applies one test to both grant programmes funded by the Zcash Development Fund.",
+    "words": 5350,
+    "digest": "e4f7cdaa9ec9efa734ccb7db61c5ecc5d7695fc2e85ebc4e82716f625c7ee89a",
+    "base": null,
+    "pull": {
+      "number": 1466,
+      "title": "Draft ZIP: Capping the Treasuries of Zcash Community Grants and the Coinholder-Controlled Fund",
+      "author": "vaspholdings",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1466",
+      "headSha": "664ea2b543ace1ed8cf92b588a941786ae2ecce1",
+      "createdAt": "2026-11-16T21:50:37Z",
+      "updatedAt": "2026-11-22T14:19:06Z",
+      "change": "new",
+      "file": "draft-felstead-capping-treasuries.md",
+      "files": [
+        "draft-felstead-capping-treasuries.md"
+      ]
+    }
+  },
+  {
     "id": "pr-1463-draft-mcgee-future-dev-legal-defense-fund",
     "number": null,
     "title": "Future Dev and Legal Defense Fund Lockbox, and Removal of 50,000 ZEC of ZCG Funds to the Network Sustainability Mechanism",
@@ -4542,7 +4581,7 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/bd3fd08de56d00592bcaebd344b09fbd64eddad5/zips/draft-khadim-aryaethn-frost-member-backup.md",
     "official": "https://github.com/zcash/zips/pull/1432",
-    "updatedAt": "2026-11-22T02:37:14Z",
+    "updatedAt": "2026-11-22T12:31:53Z",
     "summary": "This ZIP defines a backup string for one member of a FROST group that spends shielded ZEC with Orchard-protocol keys (in the Orchard or Ironwood pool). The string holds the member’s identifier, the threshold, the group size, the member’s…",
     "words": 3482,
     "digest": "541463e2d69f271a1fb698fcdfe8028f41454f24fa3ac8036fad11cb01cc0c65",
@@ -4555,7 +4594,7 @@
       "url": "https://github.com/zcash/zips/pull/1432",
       "headSha": "bd3fd08de56d00592bcaebd344b09fbd64eddad5",
       "createdAt": "2026-11-02T16:33:35Z",
-      "updatedAt": "2026-11-22T02:37:14Z",
+      "updatedAt": "2026-11-22T12:31:53Z",
       "change": "new",
       "file": "draft-khadim-aryaethn-frost-member-backup.md",
       "files": [
@@ -6509,7 +6548,7 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/4a58cbdd2754da8995bc294d43b092e467ae1184/zips/zip-0000.rst",
     "official": "https://github.com/zcash/zips/pull/895",
-    "updatedAt": "2026-11-22T02:37:06Z",
+    "updatedAt": "2026-11-22T16:23:36Z",
     "summary": "A Zcash Improvement Proposal (ZIP) is a design document providing information to the Zcash community, or describing a new feature for Zcash or its processes or environment. The ZIP should provide a concise technical specification of the…",
     "words": 6371,
     "digest": "678b75eb27dbd1bc534d69c61845dcbcc648f22b678232c2722fe3ebf772b824",
@@ -6522,7 +6561,7 @@
       "url": "https://github.com/zcash/zips/pull/895",
       "headSha": "4a58cbdd2754da8995bc294d43b092e467ae1184",
       "createdAt": "2024-08-13T22:52:46Z",
-      "updatedAt": "2026-11-22T02:37:06Z",
+      "updatedAt": "2026-11-22T16:23:36Z",
       "change": "update",
       "file": "zip-0000.rst",
       "files": [
@@ -6550,7 +6589,7 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/4a58cbdd2754da8995bc294d43b092e467ae1184/zips/zip-0312.rst",
     "official": "https://github.com/zcash/zips/pull/895",
-    "updatedAt": "2026-11-22T02:37:06Z",
+    "updatedAt": "2026-11-22T16:23:36Z",
     "summary": "This proposal adapts FROST 3, a threshold signature scheme, to make it support key re-randomization as described in 15. This is a requirement in order for it to be used to implement unlinkable spend authorization signatures in the Orchard…",
     "words": 4300,
     "digest": "7544bf00e858cd6dab01a05484a312f0875c8fcb704739abb38882b381d59a61",
@@ -6563,7 +6602,7 @@
       "url": "https://github.com/zcash/zips/pull/895",
       "headSha": "4a58cbdd2754da8995bc294d43b092e467ae1184",
       "createdAt": "2024-08-13T22:52:46Z",
-      "updatedAt": "2026-11-22T02:37:06Z",
+      "updatedAt": "2026-11-22T16:23:36Z",
       "change": "update",
       "file": "zip-0312.rst",
       "files": [
