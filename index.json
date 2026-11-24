@@ -1382,10 +1382,10 @@
     "format": "rst",
     "source": "https://github.com/zcash/zips/blob/main/zips/zip-0248.rst",
     "official": "https://zips.z.cash/zip-0248",
-    "updatedAt": "2026-11-17T22:01:31Z",
+    "updatedAt": "2026-11-17T22:21:33Z",
     "summary": "This ZIP proposes an encoding for v7 Zcash transactions that reduces the impact of future transaction format changes on wallets and other clients. Previous format changes required clients to update their parsers even when they did not use…",
-    "words": 12506,
-    "digest": "db175d8e6d5392bf46a3f95982b6b30f06e27a1499e5921dc1ccd823af061b42"
+    "words": 12769,
+    "digest": "5cd3ee4abc20568bbb83083665ea482eabd9d021df19702bd05af057765eb02e"
   },
   {
     "id": "zip-0250",
@@ -3289,6 +3289,30 @@
     "digest": "2a93ca53c1d9e48dcab22cf8521c28c3d2787ec69bea8c3e62b4fb80317d34c6"
   },
   {
+    "id": "draft-marek-miner-sentiment-polling",
+    "number": null,
+    "title": "Miner Sentiment Polling",
+    "status": "Draft",
+    "statusDetail": null,
+    "category": "Standards / Ecosystem",
+    "owners": [
+      "Marek",
+      "Kris Nuttycombe"
+    ],
+    "created": "2026-10-27",
+    "license": "MIT",
+    "discussionsTo": null,
+    "pullRequest": null,
+    "kind": "draft",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/main/zips/draft-marek-miner-sentiment-polling.md",
+    "official": "https://zips.z.cash/draft-marek-miner-sentiment-polling",
+    "updatedAt": "2026-11-18T23:01:18Z",
+    "summary": "This proposal specifies a mechanism for polling miners. A Poll Definition is a JSON document that gives a set of questions, an Option Code for each option, a Voting Period fixed in block heights, and the method by which the responses to…",
+    "words": 6469,
+    "digest": "6ccf038ad8d1dde32d9ed6f5b2675f256f6d662ab93faae6e6ae37eadb87b998"
+  },
+  {
     "id": "draft-mcgee-future-dev-legal-defense-fund",
     "number": null,
     "title": "Future Dev and Legal Defense Fund Lockbox, and Removal of ZCG Funds to the Network Sustainability Mechanism",
@@ -3530,7 +3554,7 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/e42bf33a2ae4198f4acdb78a91616c8e2cfe180e/zips/draft-nuttycom-deferred-broadcast-sighash.md",
     "official": "https://github.com/zcash/zips/pull/1476",
-    "updatedAt": "2026-11-19T23:11:03Z",
+    "updatedAt": "2026-11-24T22:30:34Z",
     "summary": "ZIP 248 6 lets each signature in a v7 transaction select a signature hash (“sighash”) variant. Its only variant, variant 0, commits to all of the effecting data of the transaction, including the consensus branch ID and the expiry height.",
     "words": 6323,
     "digest": "d9505ef15d3d937ee2a04178a9f0beb352f0e155ee36ce48f469d3b6822f9fcc",
@@ -3543,7 +3567,7 @@
       "url": "https://github.com/zcash/zips/pull/1476",
       "headSha": "e42bf33a2ae4198f4acdb78a91616c8e2cfe180e",
       "createdAt": "2026-11-19T22:45:30Z",
-      "updatedAt": "2026-11-19T23:11:03Z",
+      "updatedAt": "2026-11-24T22:30:34Z",
       "change": "new",
       "file": "draft-nuttycom-deferred-broadcast-sighash.md",
       "files": [
@@ -4200,90 +4224,6 @@
     }
   },
   {
-    "id": "pr-1447-draft-marek-miner-sentiment-polling",
-    "number": null,
-    "title": "Miner Sentiment Polling",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Standards / Ecosystem",
-    "owners": [
-      "Marek",
-      "Kris Nuttycombe"
-    ],
-    "created": "2026-10-27",
-    "license": "MIT",
-    "discussionsTo": null,
-    "pullRequest": null,
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/825c98effcd7b11eefa4c70aa2fca8d67a15c85f/zips/draft-marek-miner-sentiment-polling.md",
-    "official": "https://github.com/zcash/zips/pull/1447",
-    "updatedAt": "2026-11-19T14:23:58Z",
-    "summary": "This proposal specifies a mechanism for polling miners. A Poll Definition is a JSON document that gives a set of questions, an Option Code for each option, a Voting Period fixed in block heights, and the method by which the responses to…",
-    "words": 6469,
-    "digest": "6ccf038ad8d1dde32d9ed6f5b2675f256f6d662ab93faae6e6ae37eadb87b998",
-    "base": null,
-    "pull": {
-      "number": 1447,
-      "title": "ZIP 248 miner signalling fields; Miner Sentiment Polling draft",
-      "author": "nuttycom",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1447",
-      "headSha": "825c98effcd7b11eefa4c70aa2fca8d67a15c85f",
-      "createdAt": "2026-11-06T22:00:35Z",
-      "updatedAt": "2026-11-19T14:23:58Z",
-      "change": "new",
-      "file": "draft-marek-miner-sentiment-polling.md",
-      "files": [
-        "draft-marek-miner-sentiment-polling.md",
-        "zip-0248.rst"
-      ]
-    }
-  },
-  {
-    "id": "pr-1447-zip-0248",
-    "number": 248,
-    "title": "Extensible Transaction Format",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Consensus / Wallet",
-    "owners": [
-      "Jack Grigg",
-      "Kris Nuttycombe",
-      "Daira-Emma Hopwood",
-      "Schell Scivally"
-    ],
-    "created": "2025-12-17",
-    "license": "MIT",
-    "discussionsTo": "https://github.com/zcash/zips/pull/1163",
-    "pullRequest": "https://github.com/zcash/zips/pull/1156",
-    "kind": "proposal",
-    "format": "rst",
-    "source": "https://github.com/zcash/zips/blob/825c98effcd7b11eefa4c70aa2fca8d67a15c85f/zips/zip-0248.rst",
-    "official": "https://github.com/zcash/zips/pull/1447",
-    "updatedAt": "2026-11-19T14:23:58Z",
-    "summary": "This ZIP proposes an encoding for v7 Zcash transactions that reduces the impact of future transaction format changes on wallets and other clients. Previous format changes required clients to update their parsers even when they did not use…",
-    "words": 12769,
-    "digest": "5cd3ee4abc20568bbb83083665ea482eabd9d021df19702bd05af057765eb02e",
-    "base": "zip-0248",
-    "pull": {
-      "number": 1447,
-      "title": "ZIP 248 miner signalling fields; Miner Sentiment Polling draft",
-      "author": "nuttycom",
-      "draft": false,
-      "url": "https://github.com/zcash/zips/pull/1447",
-      "headSha": "825c98effcd7b11eefa4c70aa2fca8d67a15c85f",
-      "createdAt": "2026-11-06T22:00:35Z",
-      "updatedAt": "2026-11-19T14:23:58Z",
-      "change": "update",
-      "file": "zip-0248.rst",
-      "files": [
-        "draft-marek-miner-sentiment-polling.md",
-        "zip-0248.rst"
-      ]
-    }
-  },
-  {
     "id": "pr-1445-zip-0207",
     "number": 207,
     "title": "Funding Streams",
@@ -4581,7 +4521,7 @@
     "format": "md",
     "source": "https://github.com/zcash/zips/blob/40c89aa2938d5a13309ae5448446f3454fb0add5/zips/draft-khadim-aryaethn-frost-member-backup.md",
     "official": "https://github.com/zcash/zips/pull/1432",
-    "updatedAt": "2026-11-24T03:59:23Z",
+    "updatedAt": "2026-11-24T13:19:42Z",
     "summary": "This ZIP defines a backup string for one member of a FROST group that spends shielded ZEC with Orchard-protocol keys (in the Orchard or Ironwood pool). The string holds the member’s identifier, the threshold, the group size, the member’s…",
     "words": 3516,
     "digest": "7a974895ada3c163c57778cf4ad5e2840614be6ffa593bdc1d2248c4933d02b7",
@@ -4594,7 +4534,7 @@
       "url": "https://github.com/zcash/zips/pull/1432",
       "headSha": "40c89aa2938d5a13309ae5448446f3454fb0add5",
       "createdAt": "2026-11-02T16:33:35Z",
-      "updatedAt": "2026-11-24T03:59:23Z",
+      "updatedAt": "2026-11-24T13:19:42Z",
       "change": "new",
       "file": "draft-khadim-aryaethn-frost-member-backup.md",
       "files": [
@@ -4677,45 +4617,6 @@
       "file": "draft-marek-compact-block-relay.md",
       "files": [
         "draft-marek-compact-block-relay.md"
-      ]
-    }
-  },
-  {
-    "id": "pr-1421-draft-marek-miner-sentiment-polling",
-    "number": null,
-    "title": "Miner Sentiment Polling",
-    "status": "Draft",
-    "statusDetail": null,
-    "category": "Process / Ecosystem",
-    "owners": [
-      "Marek"
-    ],
-    "created": "2026-10-27",
-    "license": "MIT",
-    "discussionsTo": null,
-    "pullRequest": null,
-    "kind": "proposal",
-    "format": "md",
-    "source": "https://github.com/zcash/zips/blob/f0ef61170599fbec2f5f9dfd0d35da6980cc431b/zips/draft-marek-miner-sentiment-polling.md",
-    "official": "https://github.com/zcash/zips/pull/1421",
-    "updatedAt": "2026-11-17T11:48:51Z",
-    "summary": "This proposal specifies a process for gauging miners’ sentiment on upcoming network upgrades. For each Election, miners answer the same questions, with the same options, as the ZCAP.",
-    "words": 4068,
-    "digest": "8bcde6792ae09022c7adc683cd1b274ed31a7177b8e97247d9adb701c53f096e",
-    "base": null,
-    "pull": {
-      "number": 1421,
-      "title": "Add draft ZIP: Miner Sentiment Polling",
-      "author": "upbqdn",
-      "draft": true,
-      "url": "https://github.com/zcash/zips/pull/1421",
-      "headSha": "f0ef61170599fbec2f5f9dfd0d35da6980cc431b",
-      "createdAt": "2026-10-28T20:47:12Z",
-      "updatedAt": "2026-11-17T11:48:51Z",
-      "change": "new",
-      "file": "draft-marek-miner-sentiment-polling.md",
-      "files": [
-        "draft-marek-miner-sentiment-polling.md"
       ]
     }
   },
