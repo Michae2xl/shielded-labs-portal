@@ -8,6 +8,7 @@ import { DevFundVoting } from '@/app/shielded-preview/governance-dev-fund';
 import { ShieldMark } from '@/app/shielded-preview/shield';
 import portal from '@/app/shielded-preview/portal.module.css';
 import typography from '@/app/shielded-preview/typography.module.css';
+import GovernanceIntro from './governance-intro';
 import s from './poll-site.module.css';
 import '@/app/governance/governance-theme.css';
 
@@ -91,9 +92,10 @@ export default function PollSite() {
         </div>
       </header>
       <main className={s.main}>
+        <GovernanceIntro />
         <section className={s.hero} aria-labelledby="poll-title">
           <div className={s.intro}>
-            <h1 id="poll-title">ZCG / Dev Fund poll</h1>
+            <h2 id="poll-title">ZCG / Dev Fund poll</h2>
             <p className={s.lead}>
               Coinholders, ZCAP members and community panels vote on five questions about Zcash grant funding and target block time. Miners can signal on the same questions in the blocks they mine.
             </p>

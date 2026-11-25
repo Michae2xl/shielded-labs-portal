@@ -20,7 +20,7 @@ test.describe('The poll as a site of its own', () => {
       expect(await sidewaysOverflow(page)).toBe(0);
     });
 
-    test(`all poll section links are visible on arrival and jump below the header at ${width}px`, async ({ page }) => {
+    test(`all poll section links sit together under the poll title and jump below the header at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 667 });
       await open(page, '/poll');
       const nav = page.getByRole('navigation', { name: 'Poll sections' });
@@ -30,6 +30,8 @@ test.describe('The poll as a site of its own', () => {
         const sections = items.map(a => document.getElementById(a.getAttribute('href')!.slice(1))!);
         return sections.every((el, i) => i === 0 || (sections[i - 1].compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0);
       })).toBe(true);
+      // The governance overview opens the page, so the links start below the first screen.
+      await nav.scrollIntoViewIfNeeded();
       await expect(nav).toBeInViewport({ ratio: 1 });
       for (const link of await links.all()) {
         const hash = (await link.getAttribute('href'))!;
@@ -183,7 +185,8 @@ test.describe('The poll as a site of its own', () => {
 
   test('shows the poll alone: its title, the live turnout, and no way into the rest of the portal', async ({ page }) => {
     await open(page, '/poll');
-    await expect(page.getByRole('heading', { level: 1, name: 'ZCG / Dev Fund poll' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Governance Overview' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'ZCG / Dev Fund poll' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Panels', exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Panel ballots per day' })).toBeVisible();
     await expect(page.getByRole('navigation', { name: 'Governance sections' })).toHaveCount(0);
