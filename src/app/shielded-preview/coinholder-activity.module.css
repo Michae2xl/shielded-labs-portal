@@ -1,0 +1,249 @@
+/* Coinholder activity: three figures with their context, then the shares laid on the poll's days.
+   Colours come from the turnout panel's own tokens (--tp-*), so both themes follow it. */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 12px 0 0;
+  padding-block: 16px 4px;
+  border-top: 1px solid var(--tp-line);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.stats > div {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  padding-inline: 22px;
+}
+.stats > div + div {
+  border-inline-start: 1px solid var(--tp-line);
+}
+.stats dt {
+  color: var(--tp-ink-2);
+  font-size: 13px;
+}
+.stats dd {
+  margin: 0;
+}
+.stats .figure {
+  color: var(--tp-ink);
+  font: 600 clamp(24px, 3cqi, 30px) / 1.15 var(--font-display);
+  letter-spacing: -0.03em;
+}
+.context {
+  display: grid;
+  gap: 7px;
+  padding-block: 2px 6px;
+}
+.line {
+  display: block;
+  color: var(--tp-ink-2);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.line + .line {
+  margin-top: -3px;
+  color: var(--tp-muted);
+  font-size: 12.5px;
+}
+/* This poll's casts beside the last one's: two bars on one scale. */
+.compare {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 5px 8px;
+  color: var(--tp-muted);
+  font-size: 12px;
+  line-height: 1.3;
+  text-align: start;
+}
+.compare i {
+  display: block;
+  height: 6px;
+  min-width: 3px;
+  border-radius: 3px;
+}
+.compare b {
+  color: var(--tp-ink-2);
+  font-weight: 500;
+  text-align: right;
+}
+.barNow {
+  background: var(--tp-s3);
+}
+.barThen {
+  background: var(--tp-now);
+}
+/* Shares on the chain, and the rest still to come. */
+.progress {
+  display: flex;
+  gap: 2px;
+  height: 6px;
+}
+.progress i {
+  flex: none;
+  min-width: 3px;
+  border-radius: 3px;
+  background: var(--tp-s3);
+}
+.progress b {
+  flex: 1;
+  min-width: 0;
+  border-radius: 3px;
+  background: repeating-linear-gradient(135deg, var(--tp-now) 0 2px, transparent 2px 5px);
+}
+.observed {
+  display: block;
+  color: var(--tp-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.days {
+  container: shareDays / inline-size;
+  margin: 14px 0 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--tp-line);
+}
+.daysHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 16px;
+}
+.days .daysHead h4 {
+  margin: 0;
+  color: var(--tp-ink);
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+.legend {
+  display: flex;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  color: var(--tp-ink-2);
+  font-size: 12px;
+  list-style: none;
+}
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+.keySent,
+.sent {
+  background: var(--tp-ink-2);
+}
+.keyWaiting,
+.waiting {
+  border: 1px dashed var(--tp-crosshair);
+}
+.columns {
+  display: grid;
+  grid-template-columns: repeat(var(--days, 16), minmax(0, 1fr));
+  gap: 4px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.column {
+  display: grid;
+  grid-template-rows: 16px 96px 18px;
+  min-width: 0;
+  text-align: center;
+}
+.amount {
+  overflow: hidden;
+  color: var(--tp-ink-2);
+  font-size: 11px;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-self: end;
+  gap: 2px;
+  min-height: 0;
+}
+.stack i {
+  display: block;
+  flex-basis: 0;
+  min-height: 3px;
+  border-radius: 2px;
+}
+.stack i:first-child {
+  border-radius: 4px 4px 2px 2px;
+}
+.date {
+  color: var(--tp-muted);
+  font-size: 11px;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.date small {
+  font-size: inherit;
+}
+.column[data-today] .date {
+  color: var(--tp-ink);
+  font-weight: 650;
+}
+.column[data-today] .amount {
+  color: var(--tp-ink);
+}
+.days .note {
+  margin: 8px 0 0;
+  color: var(--tp-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Narrow: one figure a row, and bars without their counts. */
+@container turnoutPanel (max-width: 720px) {
+  .stats {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 4px 0;
+  }
+  .stats > div {
+    padding: 14px 0;
+  }
+  .stats > div + div {
+    border-inline-start: 0;
+    border-top: 1px solid var(--tp-line);
+  }
+}
+@container shareDays (max-width: 560px) {
+  .columns {
+    gap: 2px;
+  }
+  .column {
+    grid-template-rows: 0 84px 18px;
+  }
+  .amount {
+    visibility: hidden;
+  }
+  .date {
+    font-size: 10px;
+  }
+  .date small {
+    display: none;
+  }
+}

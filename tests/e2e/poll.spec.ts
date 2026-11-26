@@ -126,6 +126,15 @@ test.describe('The poll as a site of its own', () => {
           },
         },
         casts: { state: 'fetched', observedAt: '2026-11-17T16:28:00Z', data: { height: 900, questions: { 1: 51, 2: 50, 3: 49, 4: 48, 5: 47 } } },
+        // The submission servers' queue: shares sent on the first two days, the rest scheduled up to 29 Nov.
+        queue: { state: 'fetched', observedAt: '2026-11-17T16:29:30Z', data: {
+          servers: 15, asked: 15, waiting: 2100, overdue: 0, failed: 0, sent: 18100, lastDueAt: '2026-11-29T23:10:00.000Z', perHour: 40,
+          days: Array.from({ length: 16 }, (_, i) => ({
+            day: Date.parse('2026-11-16T00:00:00Z') + i * 86_400_000,
+            sent: i === 0 ? 9000 : i === 1 ? 9100 : 0,
+            waiting: i === 1 ? 300 : i > 1 && i < 14 ? 150 : 0,
+          })),
+        } },
         roster: 203, chainStatus: 'active',
       }, now);
       await page.setViewportSize({ width, height: 900 });
@@ -138,6 +147,24 @@ test.describe('The poll as a site of its own', () => {
       await expect(totals).toContainText('245');
       await expect(totals).toContainText('18,120');
       for (const value of await totals.locator('dt + dd').all()) await expect(value).toHaveCSS('text-align', 'center');
+      // Casts, the shares on the chain and the shares still queued, then the queue laid on the poll's days.
+      await expect(totals.locator('dt')).toHaveText(['Casts', 'Shares on chain', 'In queue']);
+      await expect(totals).toContainText('≈ 2,100');
+      await expect(totals).toContainText('shares scheduled through 29 Nov');
+      await expect(totals).toContainText('15 servers answering');
+      const byDay = questions.getByRole('region', { name: 'Shares by day', exact: true });
+      await expect(byDay.locator('ol > li')).toHaveCount(16);
+      await expect(byDay.locator('ol > li[data-today]')).toHaveAccessibleName('17 Nov: 9,100 sent, 300 scheduled');
+      const columns = await byDay.locator('ol > li').evaluateAll((items) => items.map((item) => item.getBoundingClientRect()).map((box) => [box.left, box.right, box.top]));
+      const strip = await byDay.boundingBox();
+      // One row of columns, inside the block, none on top of the next.
+      expect(new Set(columns.map(([, , top]) => Math.round(top))).size).toBe(1);
+      columns.forEach(([left, right], i) => {
+        expect(left).toBeGreaterThanOrEqual(strip!.x - 0.5);
+        expect(right).toBeLessThanOrEqual(strip!.x + strip!.width + 0.5);
+        if (i) expect(left).toBeGreaterThanOrEqual(columns[i - 1][1] - 0.5);
+      });
+      expect(await sidewaysOverflow(page)).toBe(0);
       const questionRows = questions.locator('ol > li > details > summary');
       await expect(questionRows).toHaveCount(5);
       const unitPositions = await questionRows.evaluateAll(rows => rows.map(row =>

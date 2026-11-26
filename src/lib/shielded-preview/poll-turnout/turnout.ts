@@ -1,5 +1,6 @@
 import { participationSources as wallets } from '../governance-participation';
 import { toSeries, type SeriesPoint } from './series';
+import type { QueueServer, ShareQueue } from './share-queue';
 import { type AnswerWeight, type CastCount, type ChainQuestion, type ChainRoundStatus, VOTE_CHAIN_HOSTS, voteSummaryUrl } from './vote-chain';
 import zcapHistory from './zcap-history.json';
 import { ZCAP_ELECTION_ID, ZCAP_STATUS_URL } from './siv-history';
@@ -50,6 +51,17 @@ export interface VoteChainSource extends SourceBase {
   kind: 'vote-chain';
   /** The vote-chain round, 64 hex characters. */
   round: string;
+  /** The submission servers that hold this round's shares until their time; each publishes a queue summary. */
+  queueServers?: QueueServer[];
+  /** The last coinholder poll's final counts, in this poll's own units. */
+  earlier?: EarlierPoll;
+}
+/** A finished coinholder poll: every cast and every share it put on the chain. */
+export interface EarlierPoll {
+  label: string;
+  casts: number;
+  shares: number;
+  source: string;
 }
 /** A panel on Helios: the server reads its ballots and voter list. */
 export interface HeliosSource extends SourceBase {
@@ -112,7 +124,32 @@ export const NU7_1_TURNOUT: PollTurnoutConfig = {
         { src: '/wallet-logos/zkool.png', name: 'Zkool', shape: 'square', href: wallets.zkool },
       ],
       round: '290ce255ee4c4d63457a55b3e72e07c579e44b6e578438a01c3eaad5c158991e',
-      // Earlier cast counts and shares / 16 are not comparable to this raw share total.
+      // The fifteen vote servers of the organizers' voting configuration (voting.valargroup.dev/prod/dynamic-voting-config.json, read 26 Nov).
+      queueServers: [
+        { label: 'valargroup', origin: 'https://prod.vote-chain-primary.valargroup.org' },
+        { label: 'ruzcash', origin: 'https://ru.zcash.space' },
+        { label: 'Zcash Labs', origin: 'https://svote.zcashlabs.com' },
+        { label: 'ShieldedLabs', origin: 'https://134-209-215-69.sslip.io' },
+        { label: 'Legends', origin: 'https://mnval01.zcash.legends.sh' },
+        { label: 'stardust-staking', origin: 'https://zvote-1.stardust.rest' },
+        { label: 'zodl', origin: 'https://zvote.zodl.com' },
+        { label: 'katz', origin: 'https://207-180-214-226.sslip.io' },
+        { label: 'Keplr', origin: 'https://zvote.keplr.app' },
+        { label: 'ZF', origin: 'https://zvote.zfnd.org' },
+        { label: 'v.ombie.cash', origin: 'https://v.ombie.cash' },
+        { label: 'Atlas Staking', origin: 'https://vote.atlasstaking.com' },
+        { label: 'polkachu', origin: 'https://zvote.polkachu.com' },
+        { label: 'Crosnest', origin: 'https://zvote.cros-nest.net' },
+        { label: 'Cypherpunk', origin: 'https://vote.infra.cypherpunk.com' },
+      ],
+      // NU7 scope poll, finalized: 6,677 cast_vote transactions and 104,092 shares on the vote chain (its summary, and the RPC's count of both events).
+      earlier: {
+        label: 'NU7 scope poll',
+        casts: 6_677,
+        shares: 104_092,
+        source: 'https://prod.vote-chain-primary.valargroup.org/shielded-vote/v1/vote-summary/16eef7ebc77e0e04fb1c7329abfcc390f4a0c002964671ebb360914a3e5a3f11',
+      },
+      // The panel cards' "last poll" line counts ballots; casts and shares compare through `earlier` instead.
       previous: null,
     },
     {
@@ -184,6 +221,7 @@ export interface TurnoutReads {
   roster: number | null;
   chainStatus: ChainRoundStatus | null;
   casts?: Read<CastCount>;
+  queue?: Read<ShareQueue>;
 }
 
 // ---------- What the route returns ----------
@@ -220,6 +258,10 @@ export interface TurnoutSnapshot {
   phase: PollPhase;
   previousLabel: string;
   casts?: Read<CastCount>;
+  /** Shares still held by the submission servers, and when they are due. */
+  queue?: Read<ShareQueue>;
+  /** The last coinholder poll's final casts and shares. */
+  earlier?: EarlierPoll;
   bodies: BodyTurnout[];
   /** Accepted coinholder shares per question, summed across answers. */
   questions: { id: number; label: string; shares: number | null; results?: AnswerWeight[] }[];
@@ -317,6 +359,8 @@ export function buildSnapshot(config: PollTurnoutConfig, reads: TurnoutReads, no
     phase: pollPhase(config, reads.chainStatus, now),
     previousLabel: config.previousLabel,
     casts: reads.casts,
+    queue: reads.queue,
+    earlier: chain?.kind === 'vote-chain' ? chain.earlier : undefined,
     bodies,
     questions: config.questions.map((q) => ({
       id: q.id,
