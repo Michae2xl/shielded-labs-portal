@@ -1,8 +1,9 @@
 import type { CSSProperties, ReactNode } from 'react';
-import type { BodyTurnout, TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
+import type { TurnoutSnapshot } from '@/lib/shielded-preview/poll-turnout/turnout';
 import { headerUrl, type AnswerWeight } from '@/lib/shielded-preview/poll-turnout/vote-chain';
-import { formatCount, stampLabel } from '@/lib/shielded-preview/poll-turnout/view';
+import { formatCount } from '@/lib/shielded-preview/poll-turnout/view';
 import officialBallot from '@/lib/shielded-preview/poll-turnout/nu71-questions.json';
+import { CoinholderActivity } from './coinholder-activity';
 import s from './poll-turnout.module.css';
 
 const zec = new Intl.NumberFormat('en-US', { maximumFractionDigits: 3 });
@@ -42,32 +43,12 @@ function AnswerBars({ answers }: { answers: AnswerWeight[] }) {
   );
 }
 
-function ReadingTime({ at, stale }: { at?: string | null; stale?: boolean }) {
-  if (!at) return <span className={s.readingTime}>Awaiting a reading</span>;
-  return <span className={s.readingTime}>{stale ? 'Last available' : 'Observed'} <time dateTime={at}>{stampLabel(Date.parse(at))}</time></span>;
-}
-
-export function CoinholderCounts({ snapshot, body }: { snapshot: TurnoutSnapshot; body: BodyTurnout }) {
-  const casts = snapshot.casts;
-  const total = casts?.data ? Object.values(casts.data.questions).reduce((sum, n) => sum + n, 0) : null;
-  return <dl className={s.coinCounts} aria-label="Coinholder activity across all questions">
-    <div>
-      <dt>Casts</dt><dd>{formatCount(total)}</dd>
-      <dd><ReadingTime at={casts?.observedAt} stale={casts?.state === 'stale'} /></dd>
-    </div>
-    <div>
-      <dt>Shares</dt><dd>{formatCount(body.value)}</dd>
-      <dd><ReadingTime at={body.observedAt} stale={body.state === 'stale'} /></dd>
-    </div>
-  </dl>;
-}
-
-export function CoinholderVote({ snapshot, walletLogos }: { snapshot: TurnoutSnapshot; walletLogos: ReactNode }) {
+export function CoinholderVote({ snapshot, walletLogos, now }: { snapshot: TurnoutSnapshot; walletLogos: ReactNode; now: number }) {
   const phase = coinholderPhase(snapshot);
   const published = phase === 'Final results';
   const pending = phase === 'Tally unavailable';
   const statusText = {
-    open: 'A cast is one vote commitment on one question. Its encrypted fragments arrive as shares. A wallet can make several casts. The final tally shows the ZEC behind each answer.',
+    open: 'A cast is one vote commitment on one question. The wallet splits it into 16 encrypted shares and schedules each at a random time before the poll closes, so shares reach the chain after the cast. A wallet can make several casts. The final tally shows the ZEC behind each answer.',
     upcoming: 'When voting opens, coinholders can answer each question using their eligible ZEC.',
     counting: 'Voting has closed. Results will appear when the vote chain publishes the final ZEC amounts.',
     closed: pending ? 'Voting has closed. A complete tally for this round is currently unavailable.' : 'Each bar shows the ZEC behind one answer. The same ZEC can be used on different questions.',
@@ -87,7 +68,7 @@ export function CoinholderVote({ snapshot, walletLogos }: { snapshot: TurnoutSna
           {chain && <a href={chain.source.href} target="_blank" rel="noopener noreferrer">Share totals by question ↗</a>}
         </p>}
       </header>
-      {!published && chain && <CoinholderCounts snapshot={snapshot} body={chain} />}
+      {!published && chain && <CoinholderActivity snapshot={snapshot} body={chain} now={now} />}
       <ol style={{ '--share-digits': Math.max(1, ...snapshot.questions.map(question => formatCount(question.shares).length)) } as CSSProperties}>
         {snapshot.questions.map((question) => {
           const official = snapshot.round === officialBallot.round ? officialBallot.questions.find((q) => q.id === question.id) : undefined;

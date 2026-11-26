@@ -2,6 +2,7 @@ import 'server-only';
 import { parseCsv } from '@/lib/zcg/csv';
 import { HELIOS_PAGE, heliosBallotTimes, heliosUrls, heliosVoterIds } from './helios';
 import { cumulative } from './series';
+import { combineQueues, parseQueueSummary, queueSummaryUrl, type ShareQueue } from './share-queue';
 import { NU7_1_TURNOUT, buildSnapshot, type CountRead, type HeliosSource, type PollTurnoutConfig, type Read, type SivSource, type TurnoutSnapshot, type VoteChainSource } from './turnout';
 import { createSivReader } from './siv-provider';
 import { VOTE_CHAIN_HOSTS, parseChainSummary, readFinalWeights, voteSummaryUrl, type ChainSummary } from './vote-chain';
@@ -14,6 +15,9 @@ const RETRY = 30_000;
 const ROSTER_TTL = 3_600_000;
 const LIMITS = { timeout: 5_000, maxBytes: 2_000_000 };
 const HELIOS_LIMITS = { ...LIMITS, timeout: 15_000 };
+const QUEUE_LIMITS = { timeout: 6_000, maxBytes: 400_000 };
+/** The queue is published when at least this share of the servers answers; the rest are scaled for. */
+const QUEUE_QUORUM = 2 / 3;
 const MAX_VOTER_PAGES = 20;
 const ROSTER_CSV = 'https://docs.google.com/spreadsheets/d/1pg_zSzigrxjdF-1oLz9WDzscglL2_1vzK4jTRNcXiCQ/export?format=csv&gid=0';
 
@@ -86,6 +90,21 @@ export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => 
   const scan = coinholders && createVoteChainScanner(coinholders.round, config.questions.map((q) => q.id), getJson, now);
   const casts = scan && cachedRead(scan, TTL, now);
 
+  // Every submission server's public queue summary, as one queue with each share counted once.
+  const queueServers = coinholders?.queueServers ?? [];
+  const queue = queueServers.length
+    ? cachedRead<ShareQueue>(
+        async (round) => {
+          const answers = await Promise.allSettled(queueServers.map(async (server) => parseQueueSummary(await getJson(queueSummaryUrl(server.origin, round), QUEUE_LIMITS), round)));
+          const read = answers.flatMap((answer) => (answer.status === 'fulfilled' ? [answer.value] : []));
+          if (read.length < Math.ceil(queueServers.length * QUEUE_QUORUM)) throw new Error('Too few queue summaries');
+          return { data: combineQueues(read, queueServers.length, { opensAt: Date.parse(config.opensAt), closesAt: Date.parse(config.closesAt) }, now()) };
+        },
+        TTL,
+        now,
+      )
+    : null;
+
   // The same summary supplies the total and every question. Counts are accepted shares, as on
   // Zakura, not cast transactions or shares / 16. The summary has no historical timestamps.
   async function chain(round: string): Promise<Read<CountRead>> {
@@ -143,11 +162,12 @@ export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => 
 
   return async function getPollTurnout(): Promise<TurnoutSnapshot> {
     const live = config.sources.filter((s): s is VoteChainSource | HeliosSource | SivSource => s.kind !== 'recorded');
-    const [bodyReads, rosterRead, summaryRead, castRead] = await Promise.all([
+    const [bodyReads, rosterRead, summaryRead, castRead, queueRead] = await Promise.all([
       Promise.all(live.map((source) => (source.kind === 'vote-chain' ? readers['vote-chain'](source) : source.kind === 'helios' ? readers.helios(source) : readers.siv(source)))),
       config.sources.some((s) => (s.kind === 'recorded' || s.kind === 'siv') && s.electorate === 'zcap-roster') ? roster('zcap') : null,
       coinholders ? summary(coinholders.round) : null,
       coinholders && casts ? casts(coinholders.round) : null,
+      coinholders && queue ? queue(coinholders.round) : null,
     ]);
     const seed = coinholders && castCheckpoint(coinholders.round, now());
     const castReading = castRead?.data || !seed ? castRead : { state: 'stale' as const, data: seed.count, observedAt: new Date(seed.time).toISOString() };
@@ -158,6 +178,7 @@ export function createTurnoutProvider(fetcher: typeof fetch = fetch, now: () => 
         roster: rosterRead?.data ?? null,
         chainStatus: summaryRead?.data?.status ?? null,
         casts: castReading ?? undefined,
+        queue: queueRead ?? undefined,
       },
       now(),
     );

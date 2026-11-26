@@ -15,8 +15,8 @@ const archive = z.object({ result: z.object({
 // This aggregate lets new server instances replay only the subsequent blocks.
 const NU71_CHECKPOINT = {
   round: '290ce255ee4c4d63457a55b3e72e07c579e44b6e578438a01c3eaad5c158991e',
-  time: Date.parse('2026-11-17T20:05:24.779Z'),
-  count: { height: 10980938, questions: { 1: 326, 2: 326, 3: 327, 4: 327, 5: 331 } } satisfies CastCount,
+  time: Date.parse('2026-11-26T14:53:21.126Z'),
+  count: { height: 11517175, questions: { 1: 2204, 2: 2202, 3: 2204, 4: 2204, 5: 2211 } } satisfies CastCount,
 };
 export function castCheckpoint(round: string, now: number) {
   return round === NU71_CHECKPOINT.round && now >= NU71_CHECKPOINT.time ? NU71_CHECKPOINT : null;

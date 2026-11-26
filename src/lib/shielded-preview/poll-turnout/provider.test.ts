@@ -16,7 +16,16 @@ const ballots = [
 ];
 const voters = (n: number, offset = 0) => Array.from({ length: n }, (_, i) => ({ uuid: `v${String(i + offset).padStart(4, '0')}` }));
 const roster = 'Name,Status\nHidden A,active\nHidden B,active\n';
-type Network = { summary?: typeof live; tally?: unknown; down?: { valar?: boolean; zf?: boolean; helios?: boolean } };
+const secs = (iso: string) => Date.parse(iso) / 1000;
+// One submission server's queue summary: 80 shares sent and 160 waiting, each share held by eight of the fifteen servers.
+const held = {
+  round_id: ROUND, generated_at: secs('2026-11-17T00:00:00Z'),
+  buckets: [
+    { start: secs('2026-11-16T20:10:00Z'), end: secs('2026-11-16T23:10:00Z'), submitted: 80, pending_future: 0, overdue_pending: 0, processing: 0, failed: 0 },
+    { start: secs('2026-11-17T02:10:00Z'), end: secs('2026-11-17T05:10:00Z'), submitted: 0, pending_future: 160, overdue_pending: 0, processing: 0, failed: 0 },
+  ],
+};
+type Network = { summary?: typeof live; tally?: unknown; down?: { valar?: boolean; zf?: boolean; helios?: boolean }; queue?: (host: string) => unknown };
 function network(state: Network = {}) {
   return vi.fn<typeof fetch>(async (input) => {
     const url = new URL(String(input));
@@ -26,6 +35,11 @@ function network(state: Network = {}) {
       sync_info: { latest_block_height: '50', latest_block_time: new Date(T0).toISOString(), earliest_block_height: '1', catching_up: false },
     } });
     if (url.pathname === '/tx_search') return Response.json({ result: { total_count: '0', txs: [] } });
+    if (url.pathname.includes('/queue-summary/')) {
+      const answer = state.queue?.(url.hostname);
+      if (!answer) throw new Error('offline');
+      return Response.json(answer);
+    }
     if (url.pathname.includes('/tally-results/')) return Response.json(state.tally ?? { results: [] });
     if (url.hostname === 'prod.vote-chain-primary.valargroup.org') return down.valar ? new Response('down', { status: 502 }) : Response.json(state.summary ?? live);
     if (url.hostname === 'zvote.zfnd.org') {
@@ -65,7 +79,7 @@ describe('the turnout provider', () => {
   });
   it('uses raw shares for each question and their sum, preserving panel ballots and one-minute caching', async () => {
     let now = T0;
-    const fetcher = network();
+    const fetcher = network({ queue: () => held });
     const get = createTurnoutProvider(fetcher, () => now);
     const [a, b] = await Promise.all([get(), get()]);
     expect(a.bodies.map((body) => [body.name, body.value, body.eligible, body.state])).toEqual([
@@ -163,5 +177,32 @@ describe('coinholder cast index', () => {
     history.push({ height: 55, event: 'cast_vote_batch', questions: [2] });
     expect((await scanner()).data).toEqual({ height: 50, questions: { 1: 36, 2: 35 } });
     expect((await scanner()).data).toEqual({ height: 60, questions: { 1: 36, 2: 36 } });
+  });
+
+  describe('the share queue', () => {
+    const servers = NU7_1_TURNOUT.sources.flatMap((source) => (source.kind === 'vote-chain' ? (source.queueServers ?? []) : []));
+
+    it('asks every submission server and counts each waiting share once', async () => {
+      const fetcher = network({ queue: () => held });
+      const snapshot = await createTurnoutProvider(fetcher, () => T0)();
+      expect(servers).toHaveLength(15);
+      expect(fetcher.mock.calls.filter(([url]) => String(url).includes('/queue-summary/')).map(([url]) => new URL(String(url)).origin).sort()).toEqual(servers.map((s) => s.origin).sort());
+      expect(snapshot.queue).toMatchObject({ state: 'fetched', data: { servers: 15, asked: 15, sent: 150, waiting: 300, lastDueAt: '2026-11-17T05:10:00.000Z' } });
+      expect(snapshot.earlier).toMatchObject({ label: 'NU7 scope poll', casts: 6_677, shares: 104_092 });
+    });
+    it('still answers when a third of the servers are silent, and says nothing when more are', async () => {
+      const silent = (n: number) => new Set(servers.slice(0, n).map((s) => new URL(s.origin).hostname));
+      const five = silent(5);
+      const some = await createTurnoutProvider(network({ queue: (host) => (five.has(host) ? null : held) }), () => T0)();
+      expect(some.queue).toMatchObject({ state: 'fetched', data: { servers: 10, asked: 15, waiting: 300 } });
+      const six = silent(6);
+      const few = await createTurnoutProvider(network({ queue: (host) => (six.has(host) ? null : held) }), () => T0)();
+      expect(few.queue).toMatchObject({ state: 'unavailable', data: null });
+    });
+    it('does not let a summary for another round, or a page that is not a summary, into the count', async () => {
+      const wrong = new URL(servers[0].origin).hostname;
+      const snapshot = await createTurnoutProvider(network({ queue: (host) => (host === wrong ? { ...held, round_id: 'f'.repeat(64) } : held) }), () => T0)();
+      expect(snapshot.queue).toMatchObject({ state: 'fetched', data: { servers: 14, waiting: 300 } });
+    });
   });
 });

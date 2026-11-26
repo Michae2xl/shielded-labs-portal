@@ -191,7 +191,7 @@ export function PollTurnoutCard({ snapshot, failed = false, now: nowProp }: { sn
   return <>
     <section className={s.panel} id="poll-turnout-questions" aria-labelledby="coinholder-question-heading" tabIndex={-1}>
       {snapshot ? <>
-        <CoinholderVote snapshot={snapshot} walletLogos={coinholders && <Logos logos={coinholders.logos} />} />
+        <CoinholderVote snapshot={snapshot} walletLogos={coinholders && <Logos logos={coinholders.logos} />} now={now} />
         {coinholders && <CoinholderShares body={coinholders} questions={snapshot.questions} />}
       </> : <>
         <header className={s.head}><h3 id="coinholder-question-heading">Coinholder activity by question</h3></header>
