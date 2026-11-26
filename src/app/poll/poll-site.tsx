@@ -9,6 +9,7 @@ import { ShieldMark } from '@/app/shielded-preview/shield';
 import portal from '@/app/shielded-preview/portal.module.css';
 import typography from '@/app/shielded-preview/typography.module.css';
 import GovernanceIntro from './governance-intro';
+import SiteTabs, { SiteLogo } from './site-tabs';
 import s from './poll-site.module.css';
 import '@/app/governance/governance-theme.css';
 
@@ -78,16 +79,14 @@ function Status() {
   );
 }
 
-/** The poll page as a site of its own: the governance mark, the poll, and who maintains it. */
+/** The poll page as a site of its own: the Shielded Labs site's tabs, the poll, and who maintains it. */
 export default function PollSite() {
   return (
     <div className={`${portal.portal} ${typography.readable} ${s.site}`}>
       <header className={s.bar}>
         <div className={s.barInner}>
-          <span className={s.brand}>
-            <ShieldMark size={30} />
-            <strong className={s.brandName}>Zcash Governance</strong>
-          </span>
+          <SiteLogo />
+          <SiteTabs />
           <ThemeToggle className={s.theme} />
         </div>
       </header>
