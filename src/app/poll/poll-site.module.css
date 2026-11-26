@@ -1,7 +1,28 @@
-/* The poll as a site of its own: a slim bar with the governance mark, the page, and who maintains it. */
+/* The type of shieldedlabs.net, self-hosted: Raleway for titles and Roboto Flex for everything else.
+   SIL Open Font License in public/fonts/Raleway-OFL.txt and public/fonts/RobotoFlex-OFL.txt. */
+@font-face {
+  font-family: 'Raleway';
+  src: url('/fonts/raleway-normal-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Roboto Flex';
+  src: url('/fonts/roboto-flex-normal-latin.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+/* The poll as a site of its own: the Shielded Labs site's bar and type, the page, and who maintains it. */
 .site {
   min-height: 100vh;
   background: var(--c-0a0a0a, #0a0a0a);
+}
+.site.site.site {
+  --font-display: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
+  --font-inter: 'Roboto Flex', 'Helvetica Neue', Arial, sans-serif;
+  font-family: var(--font-inter);
 }
 .bar {
   position: sticky;
@@ -54,18 +75,22 @@
   padding: 0;
   list-style: none;
 }
-.siteTabs a {
+/* Three classes, to outrank the portal's rule that sets links inside a nav in the title face. */
+.bar .siteNav .siteTabs a {
   display: block;
   padding: 6px 0;
   color: var(--c-c8c8c8, #c8c8c8);
-  font-size: 14px;
-  line-height: 1.5;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.65;
   white-space: nowrap;
   background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
   transition: background-size 250ms ease, color 160ms ease;
 }
-.siteTabs a:hover,
-.siteTabs a[aria-current] {
+.bar .siteNav .siteTabs a:hover,
+.bar .siteNav .siteTabs a[aria-current] {
   color: var(--c-ffffff, #fff);
   background-size: 100% 1px;
 }
@@ -78,7 +103,10 @@
   border-radius: 6px;
   background: transparent;
   color: var(--c-f5f5f5, #f5f5f5);
-  font-size: 14px;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
   line-height: 1;
 }
 .menuBars {
@@ -438,12 +466,12 @@
   .siteTabs li + li {
     border-top: 1px solid var(--c-1f1f1f, #1f1f1f);
   }
-  .siteTabs a {
+  .bar .siteNav .siteTabs a {
     padding: 15px 0;
     font-size: 16px;
     background: none;
   }
-  .siteTabs a[aria-current] {
+  .bar .siteNav .siteTabs a[aria-current] {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.35em;
