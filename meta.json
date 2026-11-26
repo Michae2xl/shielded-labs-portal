@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-25T21:46:09.652568+00:00",
+  "syncedAt": "2026-11-26T21:39:05.187675+00:00",
   "upstream": {
     "repository": "https://github.com/zcash/zips",
     "branch": "main",
@@ -16,7 +16,7 @@
   },
   "failures": [],
   "pulls": {
-    "listed": 85,
+    "listed": 86,
     "rendered": 76,
     "failures": [
       {
