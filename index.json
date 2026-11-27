@@ -3480,6 +3480,45 @@
     "digest": "c2e6bfd5cbc8fab4c7edbeb380abd9420eb1b1051e621434df526632f9db7d02"
   },
   {
+    "id": "pr-1487-zip-0374",
+    "number": 374,
+    "title": "Partially Created Zcash Transaction Format",
+    "status": "Draft",
+    "statusDetail": "[Revision 0] Draft",
+    "category": "Standards / Wallet",
+    "owners": [
+      "Jack Grigg"
+    ],
+    "created": "2024-12-09",
+    "license": "MIT (and BSD-2-Clause for paragraphs from BIP 174 and BIP 370)",
+    "discussionsTo": "https://github.com/zcash/zips/issues/693",
+    "pullRequest": "https://github.com/zcash/zips/pull/1063",
+    "kind": "proposal",
+    "format": "md",
+    "source": "https://github.com/zcash/zips/blob/ec29a177f0ade5d9ab5c394163b4d25b0c50510f/zips/zip-0374.md",
+    "official": "https://github.com/zcash/zips/pull/1487",
+    "updatedAt": "2026-11-27T00:50:09Z",
+    "summary": "This ZIP proposes a binary format for transactions that are in the process of being created: it carries the information necessary for each participant in the process — constructing inputs and outputs, computing zero-knowledge proofs,…",
+    "words": 11876,
+    "digest": "9826d056bae92198a3110441ad78e8c7d236f55506e6606a89efa14811bb9cda",
+    "base": "zip-0374",
+    "pull": {
+      "number": 1487,
+      "title": "ZIP 374: Align the bundle anchor requirements with ZIP 225",
+      "author": "briandevans",
+      "draft": false,
+      "url": "https://github.com/zcash/zips/pull/1487",
+      "headSha": "ec29a177f0ade5d9ab5c394163b4d25b0c50510f",
+      "createdAt": "2026-11-27T00:50:09Z",
+      "updatedAt": "2026-11-27T00:50:09Z",
+      "change": "update",
+      "file": "zip-0374.md",
+      "files": [
+        "zip-0374.md"
+      ]
+    }
+  },
+  {
     "id": "pr-1484-draft-nuttycom-deferred-broadcast-sighash",
     "number": null,
     "title": "Sighash Variant for Deferred Broadcast",
